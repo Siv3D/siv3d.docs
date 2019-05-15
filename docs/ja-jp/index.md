@@ -69,7 +69,3 @@ void Main()
 ### macOS
 1. プロジェクトファイル (siv3d_vX.X.X_macOS/examples/empty/empty.xcodeproj) を Xcode で開きます。
 2. **実行ボタン ▶️** を押すと、プログラムをビルドして実行します。
-
-
-# チュートリアル
-

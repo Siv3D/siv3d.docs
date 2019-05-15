@@ -46,5 +46,7 @@ extra_css:
 nav:
   - English: 
     - Getting started with Siv3D: index.md
+    - Tutorial: tutorial.md
   - 日本語:
     - Siv3D をはじめよう: ja-jp/index.md
+    - チュートリアル: ja-jp/tutorial.md
