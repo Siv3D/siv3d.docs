@@ -1,7 +1,7 @@
 site_dir: '../siv3d.github.io'
 
 # Project information
-site_name: Siv3D Documentation
+site_name: Siv3D
 site_description: "Siv3D: An open source C++17 library for creative coding" 
 site_author: Ryo Suzuki
 site_url: https://siv3d.github.io/
@@ -12,7 +12,7 @@ copyright: Copyright (c) 2018 - present, Ryo Suzuki<br>Copyright (c) 2018 - pres
 # Theme
 theme:
   name: 'material'
-  language: 'ja'
+  language: 'en'
   favicon: 'assets/images/favicon.ico'
   logo:
     icon: 'code'
@@ -23,9 +23,10 @@ theme:
     tabs: true
 extra:
   search:
-    language: 'en, ja'
-    tokenizer: '[\s　、。，．がのをにへとでやかもる「」『』]+'
+    language: 'en'
   social:
+    - type: 'github'
+      link: 'https://github.com/Siv3D/OpenSiv3D'
     - type: 'twitter'
       link: 'https://twitter.com/Siv3D'
 markdown_extensions:
@@ -43,4 +44,7 @@ extra_css:
 
 # Page tree
 nav:
-  - Home: index.md
+  - English: 
+    - Getting started with Siv3D: index.md
+  - 日本語:
+    - Siv3D をはじめよう: ja-jp/index.md
