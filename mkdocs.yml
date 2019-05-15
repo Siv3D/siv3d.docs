@@ -1,0 +1,46 @@
+site_dir: '../siv3d.github.io'
+
+# Project information
+site_name: Siv3D
+site_description: ゲームとメディアアートのための C++ ライブラリ「Siv3D」
+site_author: Ryo Suzuki
+site_url: https://siv3d.github.io/
+
+# Copyright
+copyright: Copyright (c) 2008-2019 Ryo Suzuki<br>Copyright (c) 2016-2019 OpenSiv3D Project
+
+# Theme
+theme:
+  name: 'material'
+  language: 'ja'
+  favicon: 'assets/images/favicon.ico'
+  logo:
+    icon: 'code'
+  palette:
+    primary: 'blue'
+    accent: 'blue'
+  feature:
+    tabs: true
+extra:
+  search:
+    language: 'jp'
+  social:
+    - type: 'twitter'
+      link: 'https://twitter.com/Siv3D'
+markdown_extensions:
+  - admonition
+  - codehilite
+  - fontawesome_markdown
+  - footnotes
+  - meta
+  - pymdownx.inlinehilite
+  - pymdownx.magiclink
+  - pymdownx.superfences
+extra_css:
+  - "https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"
+  - siv3d_styles.css
+
+# Page tree
+nav:
+  - Home: index.md
+
