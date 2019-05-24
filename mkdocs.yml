@@ -47,12 +47,18 @@ nav:
   - English: 
     - Getting started with Siv3D: index.md
     - Tutorial:
-      - 1. Siv3D の基本: tutorial-basic.md
-      - 2. 図形を描く: tutorial-shape.md
+      - 1. First steps: tutorial/basic.md
+      - 2. Drawing shapes: tutorial/shape.md
+    - Sample:
+      - Game: sample/game.md
+      - Application: sample/app.md
   - 日本語:
     - Siv3D をはじめよう: ja-jp/index.md
     - チュートリアル:
-      - 1. Siv3D の基本: ja-jp/tutorial-basic.md
-      - 2. 図形を描く: ja-jp/tutorial-shape.md
+      - 1. Siv3D の基本: ja-jp/tutorial/basic.md
+      - 2. 図形を描く: ja-jp/tutorial/shape.md
     - サンプル:
-      - ゲーム: ja-jp/sample-game.md
+      - ゲーム: ja-jp/sample/game.md
+      - アプリ: ja-jp/sample/app.md
+    - コミュニティ: ja-jp/community/community.md
+    - ショップ: ja-jp/shop/shop.md

@@ -3,7 +3,7 @@
 
 ## ブロックくずし
 
-![](images/sample/game-breakout.gif)
+![](images/game-breakout.gif)
 
 ```C++
 # include <Siv3D.hpp>
