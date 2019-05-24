@@ -3,6 +3,8 @@
 
 ## スケッチ
 
+![](images/app-sketch.gif)
+
 ```C++
 # include <Siv3D.hpp>
 
