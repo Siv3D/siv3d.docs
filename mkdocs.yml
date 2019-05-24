@@ -52,6 +52,8 @@ nav:
     - Sample:
       - Game: sample/game.md
       - Application: sample/app.md
+    - Community: community/community.md
+    - Siv3D Store: store/store.md
   - 日本語:
     - Siv3D をはじめよう: ja-jp/index.md
     - チュートリアル:
@@ -61,4 +63,5 @@ nav:
       - ゲーム: ja-jp/sample/game.md
       - アプリ: ja-jp/sample/app.md
     - コミュニティ: ja-jp/community/community.md
-    - ショップ: ja-jp/shop/shop.md
+    - Siv3D ストア: ja-jp/store/store.md
+
