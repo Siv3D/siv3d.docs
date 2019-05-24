@@ -49,4 +49,9 @@ nav:
     - Tutorial: tutorial.md
   - 日本語:
     - Siv3D をはじめよう: ja-jp/index.md
-    - チュートリアル: ja-jp/tutorial.md
+    - チュートリアル:
+      - 1. Siv3D の基本: ja-jp/tutorial-basic.md
+      - 2. 図形を描く: ja-jp/tutorial-shape.md
+    - サンプル:
+      - ゲーム: ja-jp/sample-game.md
+      
