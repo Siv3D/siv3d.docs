@@ -61,13 +61,13 @@ void Main()
 
 ## Installing OpenSiv3D SDK
 ### Windows
-1. Download **[OpenSiv3D Installer for Windows Desktop](#)** and run the installer.
+1. Download **[OpenSiv3D Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D(0.4.0b)Installer.exe)** and run the installer.
 
 !!! note
     Use the Control Panel to uninstall OpenSiv3D SDK.
 
 ### macOS
-1. Download **[OpenSiv3D Project Templates for macOS](#)** and extract its contents.
+1. Download **[OpenSiv3D Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.4.0b_macOS.zip)** and extract its contents.
 
 
 ## Building an OpenSiv3D Application
