@@ -46,7 +46,9 @@ extra_css:
 nav:
   - English: 
     - Getting started with Siv3D: index.md
-    - Tutorial: tutorial.md
+    - Tutorial:
+      - 1. Siv3D の基本: tutorial-basic.md
+      - 2. 図形を描く: tutorial-shape.md
   - 日本語:
     - Siv3D をはじめよう: ja-jp/index.md
     - チュートリアル:
@@ -54,4 +56,3 @@ nav:
       - 2. 図形を描く: ja-jp/tutorial-shape.md
     - サンプル:
       - ゲーム: ja-jp/sample-game.md
-      
