@@ -12,9 +12,6 @@
 
 void Main()
 {
-	// SetFullscreen の解像度に応じてシーンの解像度も変更するように
-	Scene::SetScaleMode(ScaleMode::ResizeFill);
-
 	// 現在のモニタで使用可能なフルスクリーン解像度を取得
 	const Array<Size> resolutions = Graphics::GetFullscreenResolutions();
 

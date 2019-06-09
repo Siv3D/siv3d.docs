@@ -290,3 +290,88 @@ void Main()
 	}
 }
 ```
+
+## Emoji Tower
+
+```C++
+# include <Siv3D.hpp>
+
+void Main()
+{
+	// 背景色を設定
+	Scene::SetBackground(ColorF(0.3, 0.6, 0.9));
+
+	// 登場する絵文字
+	const Array<String> emojis = { U"🐘", U"🐧", U"🐐", U"🐤" };
+
+	// 画像のスケール
+	constexpr double scale = 0.04;
+
+	// 絵文字の形状情報とテクスチャを作成
+	Array<MultiPolygon> polygons;
+	Array<Texture> textures;
+	for (const auto& emoji : emojis)
+	{
+		// 絵文字の画像から形状情報を作成
+		polygons << Emoji::CreateImage(emoji).alphaToPolygonsCentered().simplified(0.8).scale(scale);
+		
+		// 絵文字の画像からテクスチャを作成
+		textures << Texture(Emoji(emoji));
+	}
+
+	// 物理演算用のワールド
+	P2World world;
+
+	// 床 －
+	const P2Body line = world.createStaticLine(Vec2(0, 0), Line(-12, 0, 12, 0), P2Material(1, 0.1, 1.0));
+	
+	// 登場した絵文字のボディ
+	Array<P2Body> bodies;
+
+	// ボディ ID と絵文字のインデックスの対応テーブル
+	HashTable<P2BodyID, size_t> table;
+
+	// 2D カメラ
+	Camera2D camera(Vec2(0, -8), 20);
+
+	// 絵文字のインデックス
+	size_t index = Random(polygons.size() - 1);
+
+	while (System::Update())
+	{
+		// 物理演算ワールドの更新
+		world.update();
+
+		// 2D カメラの操作と更新
+		camera.update();
+
+		// Transformer2D の作成
+		auto t = camera.createTransformer();
+
+		// 左クリックされたら
+		if (MouseL.down())
+		{
+			// ボディを追加
+			bodies << world.createPolygons(Cursor::PosF(), polygons[index], P2Material(0.1, 0.0, 1.0));
+			
+			// ボディ ID と絵文字のインデックスの対応を追加
+			table.emplace(bodies.back().id(), std::exchange(index, Random(polygons.size() - 1)));
+		}
+
+		// すべてのボディを描画
+		for (const auto& body : bodies)
+		{
+			textures[table[body.id()]].scaled(scale).rotated(body.getAngle()).drawAt(body.getPos());
+		}
+
+		// 床を描画
+		line.draw(Palette::Green);
+		
+		// 現在操作できる絵文字を描画
+		textures[index].scaled(scale).drawAt(Cursor::PosF(), AlphaF(0.5 + Periodic::Sine0_1(1s) * 0.5));
+
+		// 2D カメラ操作のエフェクトを表示
+		camera.draw(Palette::Orange);
+	}
+}
+```
