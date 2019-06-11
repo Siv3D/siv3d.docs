@@ -1,10 +1,7 @@
 
 # Game
-
 ## Breakout
-
 ![](images/game-breakout.gif)
-
 ```C++
 # include <Siv3D.hpp>
 
@@ -91,9 +88,7 @@ void Main()
 ```
 
 ## Pinball
-
 ![](images/game-pinball.gif)
-
 ```C++
 # include <Siv3D.hpp>
 
@@ -292,7 +287,9 @@ void Main()
 ```
 
 ## Emoji Tower
-
+<video width="640" height="480" controls>
+  <source src="image/game-emoji-tower.mp4" type="video/mp4">
+</video>
 ```C++
 # include <Siv3D.hpp>
 
