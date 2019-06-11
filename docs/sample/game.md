@@ -287,9 +287,10 @@ void Main()
 ```
 
 ## Emoji Tower
-<video width="640" height="480" controls>
-  <source src="../image/game-emoji-tower.mp4" type="video/mp4">
+<video width="640" height="480" autoplay loop>
+  <source src="../images/game-emoji-tower.mp4" type="video/mp4">
 </video>
+
 ```C++
 # include <Siv3D.hpp>
 

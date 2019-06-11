@@ -291,6 +291,7 @@ void Main()
 <video width="640" height="480" controls>
   <source src="../images/game-emoji-tower.mp4" type="video/mp4">
 </video>
+
 ```C++
 # include <Siv3D.hpp>
 
