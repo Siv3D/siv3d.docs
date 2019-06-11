@@ -288,9 +288,7 @@ void Main()
 ```
 
 ## 絵文字タワー
-<video width="640" height="480" controls loop>
-  <source src="../images/game-emoji-tower.mp4" type="video/mp4">
-</video>
+<video src="../images/game-emoji-tower.mp4" autoplay loop muted></video>
 
 ```C++
 # include <Siv3D.hpp>
