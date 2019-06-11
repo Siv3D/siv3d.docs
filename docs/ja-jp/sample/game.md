@@ -288,7 +288,7 @@ void Main()
 ```
 
 ## 絵文字タワー
-<video width="640" height="480" controls>
+<video width="640" height="480" controls loop>
   <source src="../images/game-emoji-tower.mp4" type="video/mp4">
 </video>
 
