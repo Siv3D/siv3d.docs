@@ -51,9 +51,11 @@ nav:
     - Tutorial:
       - 1. First steps: tutorial/basic.md
       - 2. Drawing shapes: tutorial/shape.md
+      - 3. Animation: tutorial/animation.md
     - Reference:
       - Fullscreen: reference/fullscreen.md
       - JSON file: reference/json.md
+      - 2D shadow: ja-jp/reference/2d-shadow.md
     - Sample:
       - Game: sample/game.md
       - Application: sample/app.md
@@ -64,9 +66,11 @@ nav:
     - チュートリアル:
       - 1. Siv3D の基本: ja-jp/tutorial/basic.md
       - 2. 図形を描く: ja-jp/tutorial/shape.md
+      - 3. 動きを作る: ja-jp/tutorial/animation.md
     - リファレンス:
       - フルスクリーン: ja-jp/reference/fullscreen.md
       - JSON ファイル: ja-jp/reference/json.md
+      - 2D 図形の影: ja-jp/reference/2d-shadow.md
     - サンプル:
       - ゲーム: ja-jp/sample/game.md
       - アプリ: ja-jp/sample/app.md

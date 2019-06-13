@@ -1,6 +1,6 @@
 
-# フルスクリーン
-## フルスクリーン解像度を選択する
+# Fullscreen
+## Selecting a native fullscreen resolution
 
 !!! warning
 	Windows かつ高 DPI に設定されたディスプレイでは、高 DPI 対応のウィンドウを作成しないと、最大解像度のフルスクリーンを正しく表示できません。`<Siv3D.hpp>` のインクルード前に `SIV3D_WINDOWS_HIGH_DPI` マクロを定義することで高 DPI 対応ウィンドウを作成できます。高 DPI ディスプレイにおいて、高 DPI 対応ウィンドウはドットバイドットで表示されるため、ウィンドウの見た目が小さくなります。
@@ -11,9 +11,6 @@
 
 void Main()
 {
-	// SetFullscreen の解像度に応じてシーンの解像度も変更するように
-	Scene::SetScaleMode(ScaleMode::ResizeFill);
-
 	// 現在のモニタで使用可能なフルスクリーン解像度を取得
 	const Array<Size> resolutions = Graphics::GetFullscreenResolutions();
 
