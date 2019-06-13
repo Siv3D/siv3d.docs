@@ -55,7 +55,7 @@ nav:
     - Reference:
       - Fullscreen: reference/fullscreen.md
       - JSON file: reference/json.md
-      - 2D shadow: ja-jp/reference/2d-shadow.md
+      - 2D shadow: reference/2d-shadow.md
     - Sample:
       - Game: sample/game.md
       - Application: sample/app.md
