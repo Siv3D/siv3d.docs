@@ -52,7 +52,7 @@ nav:
       - 1. First steps: tutorial/basic.md
       - 2. Drawing shapes: tutorial/shape.md
       - 3. Animation: tutorial/animation.md
-      - 4. 2D intersection: ja-jp/tutorial/2d-intersection.md
+      - 4. 2D intersection: tutorial/tutorial/2d-intersection.md
     - Reference:
       - Fullscreen: reference/fullscreen.md
       - JSON file: reference/json.md
