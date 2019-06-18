@@ -53,6 +53,7 @@ nav:
       - 2. Drawing shapes: tutorial/shape.md
       - 3. Animation: tutorial/animation.md
       - 4. 2D intersection: tutorial/2d-intersection.md
+      - 5. Drawing images: tutorial/texture.md
     - Reference:
       - Fullscreen: reference/fullscreen.md
       - JSON file: reference/json.md
@@ -69,6 +70,7 @@ nav:
       - 2. 図形を描く: ja-jp/tutorial/shape.md
       - 3. 動きを作る: ja-jp/tutorial/animation.md
       - 4. あたり判定: ja-jp/tutorial/2d-intersection.md
+      - 5. 画像を描く: ja-jp/tutorial/texture.md
     - リファレンス:
       - フルスクリーン: ja-jp/reference/fullscreen.md
       - JSON ファイル: ja-jp/reference/json.md
