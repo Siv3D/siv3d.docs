@@ -150,9 +150,9 @@ void Main()
 !!! Info
     楕円どうしなど、一部の図形では交差判定が未実装の場合があります。実装状況は [Intersection.hpp](https://github.com/Siv3D/OpenSiv3D/blob/master/Siv3D/include/Siv3D/Intersection.hpp) で確認できます。
 
-## 4.4 図形の包含判定
+## 4.4 図形を内側に含む
 
-ある図形 `g` が `h` を包含しているかは `g.contains(h)` で調べられます。
+ある図形 `g` が別の図形 `h` を完全に内側に含んでいるかは、`g.contains(h)` で調べられます。次のサンプルでは、マウスカーソルに追従する円が長方形や星などの図形の内部に完全に含まれているときに、その図形の色を変更します。
 
 ![](images/4040.gif)
 
