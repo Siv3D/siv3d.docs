@@ -52,6 +52,7 @@ nav:
       - 1. First steps: tutorial/basic.md
       - 2. Drawing shapes: tutorial/shape.md
       - 3. Animation: tutorial/animation.md
+      - 4. 2D intersection: ja-jp/tutorial/2d-intersection.md
     - Reference:
       - Fullscreen: reference/fullscreen.md
       - JSON file: reference/json.md
@@ -67,6 +68,7 @@ nav:
       - 1. Siv3D の基本: ja-jp/tutorial/basic.md
       - 2. 図形を描く: ja-jp/tutorial/shape.md
       - 3. 動きを作る: ja-jp/tutorial/animation.md
+      - 4. あたり判定: ja-jp/tutorial/2d-intersection.md
     - リファレンス:
       - フルスクリーン: ja-jp/reference/fullscreen.md
       - JSON ファイル: ja-jp/reference/json.md

@@ -230,31 +230,214 @@ void Main()
 ```
 
 ### Periodic::Sine0_1()
+指定した周期で、0.0～1.0 の範囲で正弦波（サインカーブ）を描く数値の変化を返す関数です。
+
+![](images/3032.gif)
 
 ```C++
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF(0.25));
 
+	while (System::Update())
+	{
+		// 2 秒周期で、サインカーブの速度での左右移動を繰り返す
+		const double x = 50 + 700 * Periodic::Sine0_1(2s);
+		
+		Circle(x, 300, 50).draw();
+	}
+}
 ```
 
 ### Periodic::Sawtooth0_1()
+指定した周期で、0.0 → 1.0 への変化を繰り返す関数です。
+
+![](images/3033.gif)
 
 ```C++
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF(0.25));
 
+	while (System::Update())
+	{
+		// 2 秒周期で、左 → 右への移動を繰り返す 
+		const double x = 50 + 700 * Periodic::Sawtooth0_1(2s);
+		
+		Circle(x, 300, 50).draw();
+	}
+}
 ```
 
 ### Periodic::Jump0_1()
+指定した周期で、地面からジャンプしたときの速度のような数値変化を繰り返す関数です。
+
+![](images/3034.gif)
 
 ```C++
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF(0.25));
 
+	while (System::Update())
+	{
+		// 2 秒周期で、ジャンプのような移動を繰り返す 
+		const double h = 500 * Periodic::Jump0_1(2s);
+		
+		Circle(400, 550 - h, 50).draw();
+	}
+}
 ```
 
-## 3.4 イージング
+## 3.4 トランジション
+
+### Transition
+値が少しずつ大きくなって最大値に到達する。そこから徐々に小さくなって最小値に戻る、といった挙動をプログラムするときには `Transition` を使うと便利です。`Transition` のコンストラクタには、最小値から最大値に増加する所要時間と、最大値から最小値に減少する所要時間を設定します。あとは毎フレーム、`Transition::update()` に、増加の場合は `true` を、減少の場合は `false` を渡せば、設定された速度で値が変化します。`Transitgion::value()` で現在の値を取得できます。
+
+### MouseL.pressed()
+マウスの左ボタンが押されている（タッチディスプレイの場合は画面がタッチされている）かを、`if (MouseL.pressed())` で調べられます。次のサンプルでは、左ボタンが押されていると扇形が大きくなり、離されていると小さくなります。
+
+![](images/3040.gif)
+
+```C++
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF(0.25));
+
+	// 2.0 秒かけて 0.0 から 1.0 になる速度で増加し
+	// 0.5 秒かけて 1.0 から 0.0 になる速度で減少するトランジション
+	Transition transition(2.0s, 0.5s);
+
+	while (System::Update())
+	{
+		if (MouseL.pressed())
+		{
+			// マウスの左ボタンが押されていたら増加
+			transition.update(true);
+		}
+		else
+		{
+			// 押されていなかったら減少
+			transition.update(false);
+		}
+
+		const double t = transition.value();
+
+		Circle(Scene::Center(), 200).drawPie(0_deg, 360_deg * t);
+	}
+}
+```
+
+`MouseL.pressed()` は `bool` 型の値を返すので、このプログラムは次のように短く書けます。
+
+```C++ hl_lines="14"
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF(0.25));
+
+	// 2.0 秒かけて 0.0 から 1.0 になる速度で増加し、
+	// 0.5 秒かけて 1.0 から 0.0 になる速度で減少するトランジション
+	Transition transition(2.0s, 0.5s);
+
+	while (System::Update())
+	{
+		// マウスの左ボタンが押されていたら増加、押されていなかったら減少
+		transition.update(MouseL.pressed());
+
+		const double t = transition.value();
+
+		Circle(Scene::Center(), 200).drawPie(0_deg, 360_deg * t);
+	}
+}
+```
 
 
+## 3.5 イージング
 
+### Min, Max
+`Min()` 関数は、与えられた引数の中の最小値を返します。`Max()` 関数は最大値を返します。
 
-## 3.5 トランジション
+### 線形補間
+あるベクトル A から別のベクトル B への線形補間は `A.lerp(B, t)` で計算できます。A と B の中間のベクトルは `A.lerp(B, 0.5)` で計算します。
 
+![](images/3050.gif)
 
+```C++ hl_lines="20 23"
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF(0.25));
+
+	constexpr Vec2 begin(100, 300);
+	constexpr Vec2 end(700, 300);
+
+	Stopwatch stopwatch;
+
+	while (System::Update())
+	{
+		if (MouseL.down())
+		{
+			stopwatch.restart();
+		}
+
+		// 移動の割合 0.0～1.0
+		const double t = Min(stopwatch.sF(), 1.0);
+
+		// begin と end の線形補間
+		const Vec2 pos = begin.lerp(end, t);
+
+		Circle(pos, 40).draw();
+	}
+}
+```
+
+### イージング
+0.0 から 1.0 に一定の割合で値を増加させるだけでは単調な動きになってしまいます。はじめは少しずつ加速し、ゴールに近づくとゆっくりになるといったように、速度に変化を与えると、より洗練された視覚効果を実現できます。0.0 → 1.0 の単調増加を、特徴的なカーブに変換できる **イージング関数** を取り入れて、アニメーションの印象を改善しましょう。
+
+![](images/3051.gif)
+
+```C++ hl_lines="23 26"
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF(0.25));
+
+	constexpr Vec2 begin(100, 300);
+	constexpr Vec2 end(700, 300);
+
+	Stopwatch stopwatch;
+
+	while (System::Update())
+	{
+		if (MouseL.down())
+		{
+			stopwatch.restart();
+		}
+
+		// 移動の割合 0.0～1.0
+		const double t = Min(stopwatch.sF(), 1.0);
+
+		// イージング関数を適用
+		const double e = EaseInOutExpo(t);
+
+		// begin と end の線形補間
+		const Vec2 pos = begin.lerp(end, e);
+
+		Circle(pos, 40).draw();
+	}
+}
+```
+
+イージング関数は全部で約 30 種類用意されています。一覧は [Easing Functions Cheat Sheet](https://easings.net/) で確認できます。`EaseInOutExpo()` 以外にも、`EaseOutBounce()` や `EaseInOutBack()` など様々なイージング関数を試してみましょう。
