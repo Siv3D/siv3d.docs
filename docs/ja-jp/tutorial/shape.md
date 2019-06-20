@@ -867,3 +867,32 @@ void Main()
 ```
 
 これら以外の形状の影を作りたい場合は [リファレンス/2D 図形の影](../../reference/2d-shadow) が参考になります。
+
+## 2.21 グラデーション
+`Line` や `Triangle`, `Rect`, `RectF`, `Quad` には、頂点ごとに色を指定し、グラデーションで塗りつぶすオプションがあります。
+
+![](images/2210.png)
+
+```C++
+# include <Siv3D.hpp>
+
+void Main()
+{
+	while (System::Update())
+	{
+		Line(100, 100, 500, 150)
+			.draw(6, Palette::Yellow, Palette::Red);
+
+		Triangle(200, 200, 100)
+			.draw(HSV(0), HSV(120), HSV(240));
+
+		// 左から右へのグラデーション
+		Rect(400, 200, 200, 100)
+			.draw(Arg::left = Palette::Skyblue, Arg::right = Palette::Blue);
+		
+		// 上から下へのグラデーション
+		Rect(200, 400, 400, 100)
+			.draw(Arg::top = ColorF(1.0, 1.0), Arg::bottom = ColorF(1.0, 0.0));
+	}
+}
+```
