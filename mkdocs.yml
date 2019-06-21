@@ -54,6 +54,7 @@ nav:
       - 3. Animation: tutorial/animation.md
       - 4. 2D intersection: tutorial/2d-intersection.md
       - 5. Drawing images: tutorial/texture.md
+      - 6. Array, Grid, and HashTable: tutorial/array.md
     - Reference:
       - Fullscreen: reference/fullscreen.md
       - JSON file: reference/json.md
@@ -71,6 +72,7 @@ nav:
       - 3. 動きを作る: ja-jp/tutorial/animation.md
       - 4. あたり判定: ja-jp/tutorial/2d-intersection.md
       - 5. 画像を描く: ja-jp/tutorial/texture.md
+      - 6. 配列、二次元配列、ハッシュテーブル: ja-jp/tutorial/array.md
     - リファレンス:
       - フルスクリーン: ja-jp/reference/fullscreen.md
       - JSON ファイル: ja-jp/reference/json.md
