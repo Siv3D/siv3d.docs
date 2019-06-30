@@ -59,6 +59,8 @@ nav:
       - Fullscreen: reference/fullscreen.md
       - JSON file: reference/json.md
       - 2D shadow: reference/2d-shadow.md
+      - NavMesh: reference/navmesh.md
+      - Natural language processing: reference/nlp.md
     - Sample:
       - Game: sample/game.md
       - Application: sample/app.md
@@ -77,6 +79,8 @@ nav:
       - フルスクリーン: ja-jp/reference/fullscreen.md
       - JSON ファイル: ja-jp/reference/json.md
       - 2D 図形の影: ja-jp/reference/2d-shadow.md
+      - ナビメッシュ: ja-jp/reference/navmesh.md
+      - 自然言語処理: ja-jp/reference/nlp.md
     - サンプル:
       - ゲーム: ja-jp/sample/game.md
       - アプリ: ja-jp/sample/app.md
