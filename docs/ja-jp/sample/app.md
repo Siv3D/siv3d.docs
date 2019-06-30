@@ -330,7 +330,7 @@ void Main()
 
 
 ## 音楽プレイヤー
-
+<video src="../images/app-audio-player.mp4" autoplay loop muted></video>
 ```C++
 # include <Siv3D.hpp>
 
@@ -412,3 +412,5 @@ void Main()
 	}
 }
 ```
+
+
