@@ -3,6 +3,8 @@
 
 ## 日本語の形態素解析
 プログラムを実行する前に、モデルデータが含まれる `jumanpp-2.0.0-rc2.tar.xz` を https://github.com/ku-nlp/jumanpp/releases からダウンロード・解凍し、`model` フォルダにある `jumandic.jppmdl` (約 450MB) を、プロジェクトの `nlp/japanese/jumanpp` フォルダ（`README.md` と `LICENSE` が入っているフォルダ）にコピーしておく必要があります。
+
+
 ![](images/nlp-japanese.gif)
 ```C++
 # include <Siv3D.hpp>
