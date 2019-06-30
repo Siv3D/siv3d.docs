@@ -64,6 +64,7 @@ nav:
     - Sample:
       - Game: sample/game.md
       - Application: sample/app.md
+      - Geme template: sample/game-template.md
     - Community: community/community.md
     - Siv3D Store: store/store.md
   - 日本語:
@@ -84,6 +85,7 @@ nav:
     - サンプル:
       - ゲーム: ja-jp/sample/game.md
       - アプリ: ja-jp/sample/app.md
+      - ゲーム開発のテンプレート: ja-jp/sample/game-template.md
     - コミュニティ: ja-jp/community/community.md
     - Siv3D ストア: ja-jp/store/store.md
 
