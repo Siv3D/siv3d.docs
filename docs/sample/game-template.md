@@ -6,7 +6,7 @@
 ```C++
 # include <Siv3D.hpp>
 
-// シーンのステート
+// シーンの名前
 enum class State
 {
 	Title,
@@ -20,6 +20,7 @@ struct GameData
 	int32 highScore = 0;
 };
 
+// シーン管理クラス
 using MyApp = SceneManager<State, GameData>;
 
 // タイトルシーン
