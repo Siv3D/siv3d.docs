@@ -59,7 +59,7 @@ nav:
       - Fullscreen: reference/fullscreen.md
       - JSON file: reference/json.md
       - 2D shadow: reference/2d-shadow.md
-      - 2D geometry: ja-jp/reference/2d-geometry.md
+      - 2D geometry: reference/2d-geometry.md
       - NavMesh: reference/navmesh.md
       - Natural language processing: reference/nlp.md
     - Sample:
