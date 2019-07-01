@@ -421,14 +421,14 @@ void Main()
 	// 敵の発生間隔タイマー
 	double enemySpawnTimer = 0.0;
 
-	// 自機ショットのクールダウン時間（秒）
-	constexpr double playerShotCooldownTime = 0.1;
-	// 自機ショットのクールダウンタイマー
+	// 自機ショットのクールタイム（秒）
+	constexpr double playerShotCoolTime = 0.1;
+	// 自機ショットのクールタイムタイマー
 	double playerShotTimer = 0.0;
 
-	// 敵ショットのクールダウン時間（秒）
-	constexpr double enemyShotCooldownTime = 0.90;
-	// 敵ショットのクールダウンタイマー
+	// 敵ショットのクールタイム（秒）
+	constexpr double enemyShotCoolTime = 0.90;
+	// 敵ショットのクールタイムタイマー
 	double enemyShotTimer = 0.0;
 
 	Effect effect;
@@ -440,13 +440,15 @@ void Main()
 
 	while (System::Update())
 	{
+		if (Scene::Time() < 5)continue;
+
 		// ゲームオーバー判定
 		bool gameover = false;
 
 		const double deltaTime = Scene::DeltaTime();
 		enemySpawnTimer += deltaTime;
-		playerShotTimer = Min(playerShotTimer + deltaTime, playerShotCooldownTime);
-		enemyShotTimer = Min(enemyShotTimer + deltaTime, enemyShotCooldownTime);
+		playerShotTimer = Min(playerShotTimer + deltaTime, playerShotCoolTime);
+		enemyShotTimer = Min(enemyShotTimer + deltaTime, enemyShotCoolTime);
 
 		// 敵の発生
 		while (enemySpawnTimer > enemySpawnTime)
@@ -467,7 +469,7 @@ void Main()
 		playerPos.moveBy(move).clamp(Scene::Rect());
 
 		// 自機ショットの発射
-		if (playerShotTimer >= playerShotCooldownTime)
+		if (playerShotTimer >= playerShotCoolTime)
 		{
 			playerShotTimer = 0.0;
 			playerBullets << playerPos.movedBy(0, -50);
@@ -502,7 +504,7 @@ void Main()
 		});
 
 		// 敵ショットの発射
-		if (enemyShotTimer >= enemyShotCooldownTime)
+		if (enemyShotTimer >= enemyShotCoolTime)
 		{
 			enemyShotTimer = 0.0;
 
