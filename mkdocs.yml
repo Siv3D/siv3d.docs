@@ -81,7 +81,7 @@ nav:
       - フルスクリーン: ja-jp/reference/fullscreen.md
       - JSON ファイル: ja-jp/reference/json.md
       - 2D 図形の影: ja-jp/reference/2d-shadow.md
-      - 幾何計算: ja-jp/reference/2d-geometry.md
+      - 2D 計算幾何: ja-jp/reference/2d-geometry.md
       - ナビメッシュ: ja-jp/reference/navmesh.md
       - 自然言語処理: ja-jp/reference/nlp.md
     - サンプル:
