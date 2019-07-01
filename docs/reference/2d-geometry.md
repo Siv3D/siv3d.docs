@@ -1,5 +1,5 @@
 
-# 2D 幾何計算
+# 2D geometry
 
 ## ハウスドルフ距離
 ![](images/2d-geometry-hausdorf.gif)
