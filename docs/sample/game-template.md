@@ -219,8 +219,6 @@ void Main()
 ```
 
 
-
-
 ## タイピングゲームの基本
 ![](images/game-template-typing.gif)
 ```C++
