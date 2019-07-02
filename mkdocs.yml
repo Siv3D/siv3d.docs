@@ -55,6 +55,11 @@ nav:
       - 4. 2D intersection: tutorial/2d-intersection.md
       - 5. Drawing images: tutorial/texture.md
       - 6. Data structures: tutorial/data-structures.md
+      - 7. Formatting and parsing: tutorial/formatting.md
+      - 8. Using fonts: tutorial/font.md
+      - 9. Window: tutorial/window.md
+      - 10. Keyboard: tutorial/keyboard.md
+      - 11. Mouse: tutorial/mouse.md
     - Reference:
       - Fullscreen: reference/fullscreen.md
       - JSON file: reference/json.md
