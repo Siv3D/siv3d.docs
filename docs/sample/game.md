@@ -440,21 +440,19 @@ void Main()
 
 	while (System::Update())
 	{
-		if (Scene::Time() < 5)continue;
-
 		// ゲームオーバー判定
 		bool gameover = false;
 
 		const double deltaTime = Scene::DeltaTime();
 		enemySpawnTimer += deltaTime;
 		playerShotTimer = Min(playerShotTimer + deltaTime, playerShotCoolTime);
-		enemyShotTimer = Min(enemyShotTimer + deltaTime, enemyShotCoolTime);
+		enemyShotTimer += deltaTime;
 
 		// 敵の発生
 		while (enemySpawnTimer > enemySpawnTime)
 		{
 			enemySpawnTimer -= enemySpawnTime;
-			enemySpawnTime = Max(enemySpawnTime * 0.95, 0.6);
+			enemySpawnTime = Max(enemySpawnTime * 0.95, 0.3);
 			enemies << GenerateEnemy();
 		}
 
@@ -506,7 +504,7 @@ void Main()
 		// 敵ショットの発射
 		if (enemyShotTimer >= enemyShotCoolTime)
 		{
-			enemyShotTimer = 0.0;
+			enemyShotTimer -= enemyShotCoolTime;
 
 			for (const auto& enemy : enemies)
 			{
@@ -566,8 +564,8 @@ void Main()
 		// 敵ショット vs 自機
 		for (const auto& enemyBullet : enemyBullets)
 		{
-			// 敵ショットが playerPos に 30 ピクセルよりも近く接近したら
-			if (enemyBullet.distanceFrom(playerPos) < 30)
+			// 敵ショットが playerPos の 20 ピクセル以内に接近したら
+			if (enemyBullet.distanceFrom(playerPos) <= 20)
 			{
 				// ゲームオーバーにする
 				gameover = true;
