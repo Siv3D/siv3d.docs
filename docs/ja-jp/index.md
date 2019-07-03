@@ -62,6 +62,9 @@ void Main()
 - macOS High Sierra v10.13 以降
 - Xcode 10.1 以降
 
+### Linux
+OpenSiv3D Linux 版は、ソースコードからビルドする必要があります。依存しているライブラリやビルド方法については [Linux/README]() を参照してください。
+
 ## OpenSiv3D SDK のインストール
 ### Windows
 1. **[OpenSiv3D Installer for Windows Desktop]()** をダウンロードして実行します。

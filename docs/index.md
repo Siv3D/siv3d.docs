@@ -59,6 +59,9 @@ void Main()
 - macOS High Sierra v10.13 or newer
 - Xcode 10.1 or newer
 
+### Linux
+Linux users must build OpenSiv3D from source. See [Linux/README]() for further information.
+
 ## Installing OpenSiv3D SDK
 ### Windows
 1. Download **[OpenSiv3D Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D(0.4.0b)Installer.exe)** and run the installer.
