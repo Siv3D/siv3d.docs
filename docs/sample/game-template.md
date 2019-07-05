@@ -194,7 +194,7 @@ public:
 void Main()
 {
 	// 使用するフォントアセットを登録
-	FontAsset::Register(U"Title", 120, U"example/font/toroman/toroman.ttf");
+	FontAsset::Register(U"Title", 120, U"example/font/AnnyantRoman/AnnyantRoman.ttf");
 	FontAsset::Register(U"Menu", 30, Typeface::Regular);
 	FontAsset::Register(U"Score", 36, Typeface::Bold);
 

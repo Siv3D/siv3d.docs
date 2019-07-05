@@ -158,17 +158,20 @@ void Main()
 {
 	// Pecita.otf をロードして使う
 	const Font font1(50, U"example/font/Pecita/Pecita.otf");
-	
-	// toroman.ttf をロードして使う
-	const Font font2(50, U"example/font/toroman/toroman.ttf");
 
-	const String text = U"Hello, Siv3D!";
+	// AnnyantRoman.ttf をロードして使う
+	const Font font2(50, U"example/font/AnnyantRoman/AnnyantRoman.ttf");
+
+	// NotoSansCJKjp-Regular.otf をロードして使う
+	const Font font3(50, U"example/font/NotoSansCJKjp/NotoSansCJKjp-Regular.otf");
 
 	while (System::Update())
 	{
-		font1(text).draw(20, 20);
+		font1(U"Hello").draw(20, 20);
 
-		font2(text).draw(20, 70);
+		font2(U"Hello, こんにちは").draw(20, 70);
+
+		font3(U"你好、こんにちは、안녕하세요").draw(20, 120);
 	}
 }
 ```
@@ -251,6 +254,7 @@ void Main()
 
 
 ## 8.8 フォントのスタイルを変える
+`Font` のコンストラクタの第三引数に `FontStyle` を指定することで、イタリックやボールドなどのスタイルをフォントに適用できます。
 
 ![](images/8080.png)
 
@@ -287,6 +291,7 @@ void Main()
 
 
 ## 8.9 異なるフォントでベースラインをそろえる
+文字のベースラインの開始位置を指定して描画したい場合は `.drawBase()` を使います。異なるサイズや種類のフォントを、ベースラインをそろえて描画できます。
 
 ![](images/8090.png)
 
@@ -326,42 +331,285 @@ void Main()
 
 
 ## 8.10 テキスト描画の基準位置をカスタマイズする
+左上や中心以外にも、描画座標の基準点を設定できます。
 
 ![](images/8100.png)
 
 ```C++
+# include <Siv3D.hpp>
 
+void Main()
+{
+	const Font font(50);
+
+	constexpr Vec2 pos1(700, 100);
+
+	constexpr Vec2 pos2(700, 500);
+
+	constexpr Vec2 pos3(100, 500);
+
+	const String text = U"Siv3D";
+
+	while (System::Update())
+	{
+		Triangle(pos1, pos2, pos3).draw(ColorF(0.5));
+
+		// 右上の位置を基準
+		font(text).draw(Arg::topRight = pos1);
+
+		// 右下の位置を基準にする
+		font(text).draw(Arg::bottomRight = pos2);
+
+		// 左下の位置を基準にする
+		font(text).draw(Arg::bottomLeft = pos3);
+
+		// 底辺中央の位置を基準にする
+		font(text).draw(Arg::bottomCenter(400, 500));
+	}
+}
 ```
 
 
-## 8.11 文字に影を付ける
+## 8.11 文字に影の効果を付ける
+座標をずらして 2回 テキストを描くと、影の効果を簡単に作成できます。`Vec2::movedBy(x, y)` を使うと、指定した値だけ要素を加算した `Vec2` を作成できます。
 
 ![](images/8110.png)
 
 ```C++
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF(0.7, 0.9, 0.8));
+
+	const Font font(100, Typeface::Bold);
+
+	constexpr Vec2 center(400, 150);
+
+	const String text = U"Hello, Siv3D!";
+
+	while (System::Update())
+	{
+		// center から (4, 4) ずらした位置を中心にテキストを描く
+		font(text).drawAt(center.movedBy(4, 4), ColorF(0.0, 0.5));
+
+		// center を中心にテキストを描く
+		font(text).drawAt(center);
+	}
+}
 ```
 
 
 ## 8.12 文字単位で描画を制御する
+`font(text)` を `for` ループで次のように使用すると、文字を自由に制御して描画するために必要な `Glyph` 型のオブジェクトを文字ごとに取得できます。`.codePoint` はその文字の UTF-32 コードポイントを、`.index` はテキスト内の文字の位置インデックスを、`.offset` はペンの位置からさらに必要なオフセットを、`.xAdvance` は次の文字への X 座標の距離を表します。
 
 ![](images/8120.png)
 
 ```C++
+# include <Siv3D.hpp>
 
+void Main()
+{
+	const Font font(50, Typeface::Bold);
+
+	const String text = U"The quick brown fox\njumps over the lazy dog.";
+
+	while (System::Update())
+	{
+		constexpr Vec2 basePos(20, 20);
+
+		Vec2 penPos(basePos);
+
+		// 文字単位で描画を制御するためのループ
+		for (const auto& glyph : font(text))
+		{
+			// 改行文字なら
+			if (glyph.codePoint == U'\n')
+			{
+				// ペンの X 座標をリセット
+				penPos.x = basePos.x;
+
+				// ペンの Y 座標をフォントの高さ分進める
+				penPos.y += font.height();
+
+				continue;
+			}
+
+			// 何文字目かに応じて色を変える
+			const ColorF color = HSV(glyph.index * 30);
+
+			// 文字のテクスチャをペンの位置に文字ごとのオフセットを加算して描画
+			glyph.texture.draw(penPos + glyph.offset, color);
+
+			// ペンの X 座標を文字の幅の分進める
+			penPos.x += glyph.xAdvance;
+		}
+	}
+}
 ```
 
 
 ## 8.13 縦書きでテキストを描画する
+`Font::getVerticalGlyphs()` で縦書き用のグリフを取得できるので、それを使うってテキストの縦書きを実現できます。
+
+![](images/8130.png)
+
+```C++
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF(0.8, 0.9, 1.0));
+	
+	const Font font(50, Typeface::Bold);
+
+	while (System::Update())
+	{
+		font(U"「横書き」\nフィーチャー。（！）").draw(40, 40, ColorF(0.25));
+
+		const Vec2 basePos(650, 40);
+		
+		Vec2 penPos(basePos);
+
+		// 縦書き用の字形を使って文字を描画
+		for (const auto& glyph : font.getVerticalGlyphs(U"「縦書き」\nフィーチャー。（！）"))
+		{
+			if (glyph.codePoint == U'\n')
+			{
+				penPos.x -= font.height();
+				penPos.y = basePos.y;
+				continue;
+			}
+
+			glyph.texture.draw(penPos + glyph.offset, ColorF(0.25));
+			penPos.y += glyph.yAdvance;
+		}
+	}
+}
+```
+
+## 8.14 指定した長方形の中にテキストを描く
+`Font::draw()` に `Rect` または `RectF` を渡すと、テキストをその長方形の内部に収まるように描画します。文字があふれる場合、最後の文字が `…` に置き換えられ、関数は `false` を返します。
 
 ![](images/8140.png)
 
 ```C++
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF(0.8, 0.9, 1.0));
+	
+	const Font font(25, Typeface::Bold);
+	const String text = U"The quick brown fox jumps over the lazy dog.";
+
+	constexpr Rect rect1(50, 20, 200, 100);
+	constexpr Rect rect2(50, 160, 300, 100);
+	constexpr Rect rect3(50, 300, 400, 100);
+
+	while (System::Update())
+	{
+		rect1.draw();
+		bool full = font(text).draw(rect1.stretched(-10), ColorF(0.25));
+		if (!full)
+		{
+			// 文字が省略されたら赤枠
+			rect1.drawFrame(0, 5, Palette::Red);
+		}
+
+		rect2.draw();
+		full = font(text).draw(rect2.stretched(-10), ColorF(0.25));
+		if (!full)
+		{
+			// 文字が省略されたら赤枠
+			rect2.drawFrame(0, 5, Palette::Red);
+		}
+
+		rect3.stretched(10).draw();
+		full = font(text).draw(rect3.stretched(-10), ColorF(0.25));
+		if (!full)
+		{
+			// 文字が省略されたら赤枠
+			rect3.drawFrame(0, 5, Palette::Red);
+		}
+	}
+}
 ```
 
+## 8.15 テキストを 1 文字ずつ表示する
+`String::substr()`
 
-## 8.14 フォントあれこれ
-フォントのサイズを動的に変更することはできません。ただし、のちの章で登場する `Transformer2D` を使ってフォントを描画することで、見た目の大きさを変更できます。
+![](images/8150.gif)
+
+```C++
+# include <Siv3D.hpp>
+
+void Main()
+{
+	const Font font(30, Typeface::Bold);
+
+	const String text = U"The quick brown fox\njumps over the lazy dog.";
+
+	while (System::Update())
+	{
+		// 文字カウントを 0.1 秒ごとに増やす
+		const size_t length = static_cast<size_t>(Scene::Time() / 0.1);
+
+		// text の文字数以上の length は切り捨てられる
+		font(text.substr(0, length)).draw(50, 50);
+	}
+}
+```
+
+## 8.16 フォントあれこれ
+
+### フォントのサイズの動的な変更
+フォントのサイズを動的に変更することはできません。のちの章で登場する `Transformer2D` を使って描画スケールを拡大縮小した状態でフォントを描画することで、見た目の大きさを変更できます。
+
+### フォントの最大サイズ
+フォントの最大サイズは `Font::MaxSize` で定義されている `256` です。
+
+### フォントの作成チェック
+`if (font)` で、フォントが作成されているかどうかをチェックできます。
+
+```C++
+# include <Siv3D.hpp>
+
+void Main()
+{
+	// 存在しないフォントファイルを使おうとする
+	const Font font(60, U"aaa/bbb.ttf");
+
+	// フォントの作成ができていなかったら
+	if (!font)
+	{
+		// 例外を投げて終了
+		throw Error(U"Failed to create Font");
+	}
+
+	while (System::Update())
+	{
+
+	}
+}
+```
+
+### 空のフォント
+作成に失敗したフォントを使っても何も表示されません。
+
+```C++
+# include <Siv3D.hpp>
+
+void Main()
+{
+	const Font font(60, U"aaa/bbb.ttf");
+
+	while (System::Update())
+	{
+		// 何も表示されない
+		font(U"Hello, Siv3D").draw(20, 20);
+	}
+}
+```
 
 

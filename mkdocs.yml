@@ -57,9 +57,13 @@ nav:
       - 6. Data structures: tutorial/data-structures.md
       - 7. Formatting and parsing: tutorial/formatting.md
       - 8. Using fonts: tutorial/font.md
-      - 9. Window: tutorial/window.md
-      - 10. Keyboard: tutorial/keyboard.md
-      - 11. Mouse: tutorial/mouse.md
+      - 9. GUI: tutorial/gui.md
+      - 10. Window: tutorial/window.md
+      - 11. Keyboard: tutorial/keyboard.md
+      - 12. Mouse: tutorial/mouse.md
+      - 13. Audio: tutorial/audio.md
+      - 14. Random: tutorial/random.md
+      - 15. 2D render states: tutorial/2d-renderstates.md  
     - Reference:
       - Fullscreen: reference/fullscreen.md
       - JSON file: reference/json.md
@@ -85,9 +89,13 @@ nav:
       - 6. データ構造: ja-jp/tutorial/data-structures.md
       - 7. 文字列と数値の変換: ja-jp/tutorial/formatting.md
       - 8. フォントを使う: ja-jp/tutorial/font.md
-      - 9. 画面とウィンドウ: ja-jp/tutorial/window.md
-      - 10. キーボード入力: ja-jp/tutorial/keyboard.md
-      - 11. マウス入力: ja-jp/tutorial/mouse.md
+      - 9. GUI: ja-jp/tutorial/gui.md
+      - 10. 画面とウィンドウ: ja-jp/tutorial/window.md
+      - 11. キーボード入力: ja-jp/tutorial/keyboard.md
+      - 12. マウス入力: ja-jp/tutorial/mouse.md
+      - 13. オーディオ再生: ja-jp/tutorial/audio.md
+      - 14. ランダム: ja-jp/tutorial/random.md
+      - 15. 2D レンダーステート: ja-jp/tutorial/2d-renderstates.md           
     - リファレンス:
       - フルスクリーン: ja-jp/reference/fullscreen.md
       - JSON ファイル: ja-jp/reference/json.md
