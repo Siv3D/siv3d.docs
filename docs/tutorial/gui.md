@@ -4,8 +4,7 @@
 この章では、ボタンやスライダーなど簡単な GUI を作成する方法を学びます。
 
 ## 9.1 ボタン
-
-`SimpleGUI::Button()` は自身が押されたときに `true` を返します。
+ボタンの表示と入力の取得を実装するときは `SimpleGUI::Button()` 関数を使うと便利です。ボタンのテキストや位置、幅、状態などを設定できます。`SimpleGUI::Button()` は自身が押されたときに `true` を返します。
 
 ![](images/9010.gif)
 
@@ -58,8 +57,7 @@ void Main()
 ```
 
 ## 9.2 スライダー
-
-`SimpleGUI::Slider()` は値が変更されたときに `true` を返します。
+スライダーの表示と値の取得を実装するときは `SimpleGUI::Slider()` 関数を使うと便利です。スライダーのテキストや位置、幅、値の範囲などを設定できます。縦方向のスライダーは `SimpleGUI::VerticalSlider()` を使います。`SimpleGUI::Slider()` と `SimpleGUI::VerticalSlider()` は値が変更されたときに `true` を返します。
 
 ![](images/9020.gif)
 
@@ -112,8 +110,7 @@ void Main()
 
 
 ## 9.3 チェックボックス
-
-`SimpleGUI::CheckBox()` は値が変更されたときに `true` を返します。
+チェックボックスの表示と入力の取得を実装するときは `SimpleGUI::CheckBox()` 関数を使うと便利です。チェックボックスのテキストや位置、幅、状態などを設定できます。`SimpleGUI::CheckBox()` は値が変更されたときに `true` を返します。
 
 ![](images/9030.gif)
 
@@ -151,8 +148,7 @@ void Main()
 
 
 ## 9.4 ラジオボタン
-
-`SimpleGUI::RadioButtons()` は値が変更されたときに `true` を返します。
+ラジオボタンの表示と入力の取得を実装するときは `SimpleGUI::RadioButtons()` 関数を使うと便利です。ラジオボタンのテキストや位置、幅、状態などを設定できます。`SimpleGUI::RadioButtons()` は値が変更されたときに `true` を返します。
 
 ![](images/9040.gif)
 
@@ -196,8 +192,7 @@ void Main()
 
 
 ## 9.5 テキストボックス
-
-`SimpleGUI::TextBox()` は値が変更されたときに `true` を返します。
+テキストボックスを実装するときは `SimpleGUI::TextBox()` 関数を使うと便利です。テキストボックスの位置、幅、文字数の上限、状態などを設定できます。テキストは `TextEditState` 型のオブジェクトによって管理します。`SimpleGUI::TextBox()` は値が変更されたときに `true` を返します。
 
 ![](images/9050.gif)
 
