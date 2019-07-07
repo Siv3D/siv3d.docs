@@ -921,3 +921,182 @@ void Main()
 ```
 
 
+## JPEG Glitch
+<video src="../images/app-jpeg-glitch.mp4" autoplay loop muted></video>
+```C++
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF(0.8, 0.9, 1.0));
+
+	// 画像
+	const Image image(U"example/windmill.png");
+
+	// 表示用の動的テクスチャ
+	DynamicTexture texture(image);
+
+	// JPEG のバイナリデータ
+	const ByteArray original = image.encodeJPEG();
+	
+	// 改変するデータの個数
+	const size_t noiseCount = image.num_pixels() / 4000;
+
+	while (System::Update())
+	{
+		if (SimpleGUI::Button(U"Glitch", Vec2(20, 20)))
+		{
+			// Array を作成
+			Array<Byte> data(original.view().begin(), original.view().end());
+
+			for (size_t i = 0; i < noiseCount; ++i)
+			{
+				// ランダムな位置の 1 バイトについて、ランダムな値に書き換え
+				// ヘッダ部分（先頭）は改変しない
+				data[Random<size_t>(630, data.size() - 1)] = static_cast<Byte>(Random(255));
+			}
+
+			// JPEG データとして読み込んで画像を作成、動的テクスチャに転送
+			texture.fill(Image(ByteArray(std::move(data)), ImageFormat::JPEG));
+		}
+
+		texture.drawAt(Scene::Center());
+	}
+}
+```
+
+
+## マイクで入力した音の周波数解析
+![](images/app-microphone-fft.gif)
+```C++
+# include <Siv3D.hpp>
+
+void Main()
+{
+	// マイクをセットアップ
+	Microphone mic(0);
+
+	if (!mic)
+	{
+		// マイクを利用できない場合、終了
+		throw Error(U"Microphone not available");
+	}
+
+	// 録音をスタート
+	mic.start();
+
+	FFTResult fft;
+
+	while (System::Update())
+	{
+		// FFT の結果を取得
+		mic.fft(fft);
+
+		// 結果を可視化
+		for (auto i : step(800))
+		{
+			const double size = Pow(fft.buffer[i], 0.6f) * 1200;
+			RectF(Arg::bottomLeft(i, 600), 1, size).draw(HSV(240 - i));
+		}
+
+		// 周波数表示
+		Rect(Cursor::Pos().x, 0, 1, Scene::Height()).draw();
+		ClearPrint();
+		Print << U"{} Hz"_fmt(Cursor::Pos().x * fft.resolution);
+	}
+}
+```
+
+
+## Sketch to P2Body
+<video src="../images/app-sketch-to-p2body.mp4" autoplay loop muted></video>
+```C++
+# include <Siv3D.hpp>
+
+void Main()
+{
+	// 物理演算のワールド
+	P2World world;
+
+	// 床
+	const P2Body line = world.createStaticLine(Vec2(0, 0), Line(-16, 0, 16, 0), P2Material(1, 0.1, 1.0));
+
+	// 文字のパーツ
+	Array<P2Body> bodies;
+
+	// キャンバスのサイズ
+	constexpr Size canvasSize(800, 600);
+
+	// ペンの太さ
+	constexpr int32 thickness = 4;
+
+	// 書き込み用の画像データを用意
+	Image image(canvasSize, Color(0, 0));
+
+	// 表示用のテクスチャ（内容を更新するので DynamicTexture）
+	DynamicTexture texture(image);
+
+	// 2D カメラ
+	Camera2D camera(Vec2(0, -10), 20);
+
+	while (System::Update())
+	{
+		// 2D 物理演算ワールドの更新
+		world.update();
+
+		// 2D カメラの更新
+		camera.update();
+
+		if (MouseL.pressed())
+		{
+			// 書き込む線の始点は直前のフレームのマウスカーソル座標
+			// （初回はタッチ操作時の座標のジャンプを防ぐため、現在のマウスカーソル座標にする）
+			const Point from = MouseL.down() ? Cursor::Pos() : Cursor::PreviousPos();
+
+			// 書き込む線の終点は現在のマウスカーソル座標
+			const Point to = Cursor::Pos();
+
+			// image に線を書き込む
+			Line(from, to).overwrite(image, thickness, Palette::Gray);
+
+			// 書き込み終わった image でテクスチャを更新
+			texture.fill(image);
+		}
+		else if (MouseL.up())
+		{
+			// 画像の非透過部分から Polygon を作成（穴無し）
+			if (const Polygon polygon = image.alphaToPolygon(1, false))
+			{
+				// Polygon を適切な位置に移動し、P2Body として追加
+				const Polygon polygon2 = polygon.simplified(2.0)
+					.moveBy(-canvasSize / 2).scale(1.0 / camera.getScale());
+				bodies << world.createPolygon(camera.getCenter(), polygon2);
+			}
+
+			// 画像データをリセット
+			image.fill(Color(0, 0));
+
+			// テクスチャを更新
+			texture.fill(image);
+		}
+
+		{
+			// 2D カメラを適用する Transformer2D の作成
+			auto t = camera.createTransformer();
+
+			for (const auto& body : bodies)
+			{
+				body.draw(HSV(body.id() * 30, 0.8, 1.0));
+			}
+
+			line.draw(Palette::Skyblue);
+		}
+
+		texture.draw();
+
+		camera.draw();
+	}
+}
+```
+
+
