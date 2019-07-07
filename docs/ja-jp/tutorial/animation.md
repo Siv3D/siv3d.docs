@@ -30,6 +30,27 @@ void Main()
 }
 ```
 
+### Scene::DeltaTime()
+`Scene::DeltaTime()` は、直前のフレームからの経過時間 (秒) を `double` 型の値で返します。`Scene::Time()` を使わずに、この値を加算していくことでアニメーションを作成することもできます。
+```C++
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(Palette::White);
+
+	double r = 0.0;
+
+	while (System::Update())
+	{
+		// 経過時間分だけ大きくする
+		r += Scene::DeltaTime() * 50;
+
+		Circle(Scene::Center(), r).draw(ColorF(0.25));
+	}
+}
+```
+
 ### step
 Siv3D に用意されている、ループを短く書ける機能です。`for (auto i : step(N))` は `for (int i = 0; i < N; ++n)`と同じ働きです。
 
@@ -92,8 +113,9 @@ void Main()
 }
 ```
 
+
 ## 3.2 ストップウォッチ
-`Scene::Time()` の欠点は、時間を止めることやリセットができないことです。好きなタイミングで経過時間を測定するには `Stopwatch` クラスを使います。
+経過時間の計測やリセットを便利に行える `Stopwatch` クラスがあります。
 
 ### Stopwatch の経過時間とリスタート
 
