@@ -74,6 +74,7 @@ nav:
       - Math parser: reference/math-parser.md
       - kd-tree: reference/kd-tree.md
       - Object detection: reference/objdetection.md
+      - Gamepad: reference/gamepad.md
     - Sample:
       - Game: sample/game.md
       - Application: sample/app.md
@@ -109,6 +110,7 @@ nav:
       - 数式処理: ja-jp/reference/math-parser.md
       - kd 木: ja-jp/reference/kd-tree.md
       - 物体検出: ja-jp/reference/objdetection.md
+      - ゲームパッド: ja-jp/reference/gamepad.md
     - サンプル:
       - ゲーム: ja-jp/sample/game.md
       - アプリ: ja-jp/sample/app.md

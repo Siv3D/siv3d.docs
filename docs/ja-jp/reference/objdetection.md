@@ -3,7 +3,7 @@
 
 ## イラストからの顔検出
 <video src="../images/obj-detection-face0.mp4" autoplay loop muted></video>
-<small>イラスト提供: [古古米](https://www.pixiv.net/member.php?id=583587) さん</small>
+<small>イラスト提供: 古古米さん</small>
 ```C++
 # include <Siv3D.hpp>
 
