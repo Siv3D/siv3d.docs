@@ -123,6 +123,8 @@ void Main()
 ## Joy-Con
 PC に接続されている Nintendo Switch の Joy-Con の情報は `JoyConL` または `JoyConR` を通して取得できます。
 
+<video src="../images/gamepad-joycon.mp4" autoplay loop muted></video>
+
 ```C++
 # include <Siv3D.hpp>
 
@@ -139,11 +141,6 @@ void Main()
 
 	while (System::Update())
 	{
-		scale += Mouse::Wheel() * -5;
-		angle += 1_deg * MouseR.pressed() - 1_deg * MouseL.pressed();
-		if (KeyC.down())
-			covered = !covered;
-
 		Circle(Vec2(640 - 300, 450), scale / 2).drawFrame(scale * 0.1);
 		Circle(Vec2(640 + 300, 450), scale / 2).drawFrame(scale * 0.1);
 
@@ -188,6 +185,10 @@ void Main()
 		Circle(left, 30).draw(ColorF(0.0, 0.75, 0.9));
 		Circle(right, 30).draw(ColorF(1.0, 0.4, 0.3));
 		effect.update();
+
+		SimpleGUI::Slider(U"Rotation: ", angle, -180_deg, 180_deg, Vec2(20, 20), 120, 200);
+		SimpleGUI::Slider(U"Scale: ", scale, 100.0, 600.0, Vec2(20, 60), 120, 200);
+		SimpleGUI::CheckBox(covered, U"Covered", Vec2(20, 100));
 	}
 }
 ```
@@ -195,6 +196,8 @@ void Main()
 
 ## Pro コントローラー
 PC に接続されている Nintendo Switch の Pro コントローラーの情報は `ProController` を通して取得できます。
+
+![](images/gamepad-procon.png)
 
 ```C++
 # include <Siv3D.hpp>
