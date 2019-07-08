@@ -238,3 +238,64 @@ void Main()
 }
 ```
 
+
+## ゲームパッド
+あらゆる種類のゲームパッドの情報を取得できる汎用的なクラスが `Gamepad` です。ユーザインデックスは `Gamepad.MaxUserCount - 1` で定義される 15 が最大値です。
+
+![](images/gamepad-gamepad.png)
+
+```C++
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Window::Resize(800, 680);
+
+	size_t userIndex = 0;
+	const Array<String> indices = Iota(Gamepad.MaxUserCount).map(Format);
+
+	while (System::Update())
+	{
+		ClearPrint();
+
+		if (const auto gamepad = Gamepad(userIndex))
+		{
+			Print << U"[{}] {}"_fmt(gamepad.getInfo().index, gamepad.getInfo().name);
+
+			for (auto [i, button] : Indexed(gamepad.buttons))
+			{
+				Print << U"button{}: {}"_fmt(i, button.pressed());
+			}
+
+			for (auto [i, axe] : Indexed(gamepad.axes))
+			{
+				Print << U"axe{}: {}"_fmt(i, axe);
+			}
+
+			Print << U"POV: " << gamepad.povD8();
+		}
+
+		SimpleGUI::RadioButtons(userIndex, indices, Vec2(500, 20));
+	}
+}
+```
+
+
+## 接続されているゲームパッドの列挙
+
+```C++
+# include <Siv3D.hpp>
+
+void Main()
+{
+	for (const auto& info : System::EnumerateGamepads())
+	{
+		Print << U"[{}] {}"_fmt(info.index, info.name);
+	}
+
+	while (System::Update())
+	{
+
+	}
+}
+```
