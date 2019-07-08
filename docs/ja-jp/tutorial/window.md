@@ -11,7 +11,7 @@ Siv3D では、図形やテクスチャ、テキストなどを `.draw()` する
 ## 10.1 シーンとウィンドウのサイズを変更する
 シーンの基本サイズとウィンドウの基本サイズは `Scene::DefaultSceneSize` と `Window::DefaultClientSize` でそれぞれ定義されており、どちらも幅 800 ピクセル、高さ 600 ピクセルです。シーンとウィンドウのサイズを変更するには、`Window::Resize()` で新しいサイズを指定します。
 
-シーンのサイズは `Scene::Size()`, シーンの幅は `Scene::Width()`, シーンの高さは `Scene::Height()`, ウィンドウのサイズは `Window::ClientSize()`, ウィンドウの幅は `Window::ClientWidth()`, ウィンドウの高さは `Window::Height()` で取得できます。
+シーンのサイズは `Scene::Size()`, シーンの幅は `Scene::Width()`, シーンの高さは `Scene::Height()`, ウィンドウのサイズは `Window::ClientSize()`, ウィンドウの幅は `Window::ClientWidth()`, ウィンドウの高さは `Window::ClientHeight()` で取得できます。
 
 ![](images/10-1-0.png)
 
