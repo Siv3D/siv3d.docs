@@ -72,6 +72,8 @@ nav:
       - NavMesh: reference/navmesh.md
       - Natural language processing: reference/nlp.md
       - Math parser: reference/math-parser.md
+      - kd-tree: reference/kd-tree.md
+      - Object detection: reference/objdetection.md
     - Sample:
       - Game: sample/game.md
       - Application: sample/app.md
@@ -105,6 +107,8 @@ nav:
       - ナビメッシュ: ja-jp/reference/navmesh.md
       - 自然言語処理: ja-jp/reference/nlp.md
       - 数式処理: ja-jp/reference/math-parser.md
+      - kd 木: ja-jp/reference/kd-tree.md
+      - 物体検出: ja-jp/reference/objdetection.md
     - サンプル:
       - ゲーム: ja-jp/sample/game.md
       - アプリ: ja-jp/sample/app.md
