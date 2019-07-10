@@ -80,7 +80,7 @@ void Main()
 	std::array<Audio, NumKeys> sounds;
 	for (auto i : step(NumKeys))
 	{
-		sounds[i] = Audio(Wave(instrument, static_cast<uint8>(PianoKey::A3 + i), 0.5s));
+		sounds[i] = Audio(instrument, static_cast<uint8>(PianoKey::A3 + i), 0.5s);
 	}
 
 	// 対応するキー
