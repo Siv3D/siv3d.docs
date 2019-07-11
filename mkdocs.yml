@@ -99,7 +99,7 @@ nav:
       - 12. マウス入力: ja-jp/tutorial/mouse.md
       - 13. オーディオ再生: ja-jp/tutorial/audio.md
       - 14. ランダム: ja-jp/tutorial/random.md
-      - 15. 2D レンダーステート: ja-jp/tutorial/2d-renderstates.md           
+      - 15. 2D レンダーステート: ja-jp/tutorial/2d-renderstates.md
     - リファレンス:
       - フルスクリーン: ja-jp/reference/fullscreen.md
       - JSON ファイル: ja-jp/reference/json.md
