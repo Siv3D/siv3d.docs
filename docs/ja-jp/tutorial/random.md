@@ -468,7 +468,7 @@ void Main()
 
 	// 選択肢に対応する確率分布
 	// （$0 は $2000 よりも 1000 倍出やすい）
-	DiscreteDistribution distribution =
+	DiscreteDistribution distribution(
 	{
 		1000,
 		200,
@@ -477,7 +477,7 @@ void Main()
 		5,
 		2,
 		1,
-	};
+	});
 
 	while (System::Update())
 	{
