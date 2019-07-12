@@ -1,7 +1,4 @@
 
-!!! warning
-	この Web サイトでは 2019 年 7 月にリリース予定の OpenSiv3D v0.4.0 の情報を扱っています。
-
 # Siv3D: クリエイターのための C++ ライブラリ
 
 ![](images/demo.gif)
@@ -63,17 +60,17 @@ void Main()
 - Xcode 10.1 以降
 
 ### Linux
-OpenSiv3D Linux 版は、ソースコードからビルドする必要があります。依存しているライブラリやビルド方法については [Linux/README]() を参照してください。
+OpenSiv3D Linux 版は、ソースコードからビルドする必要があります。依存しているライブラリやビルド方法については [Linux/README](https://github.com/Siv3D/OpenSiv3D/blob/master/Linux/README.md) を参照してください。
 
 ## OpenSiv3D SDK のインストール
 ### Windows
-1. **[OpenSiv3D Installer for Windows Desktop]()** をダウンロードして実行します。
+1. **[OpenSiv3D Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D(0.4.0)Installer.exe)** をダウンロードして実行します。
 
 !!! note
     OpenSiv3D SDK を削除するには、コントロールパネルからアンインストールします。
 
 ### macOS
-1. **[OpenSiv3D Project Templates for macOS]()** をダウンロードしてファイルを展開します。
+1. **[OpenSiv3D Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.4.0_macOS.zip)** をダウンロードしてファイルを展開します。
 
 
 ## OpenSiv3D アプリのビルド
