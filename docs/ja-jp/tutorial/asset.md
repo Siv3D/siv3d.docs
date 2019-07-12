@@ -163,7 +163,8 @@ void Main()
 ## 17.6 アセットの非同期ロード
 アセットの登録時に `AssetParameter::LoadAsync()` をパラメータとして渡すと、登録後に別スレッドを使ったアセットの非同期ロードが行われます。複数のアセットを同時に読み込んで、ロード時間を減らしたいときに、このパラメータを使います。非同期ロードが完了すると `TextureAsset::IsReady()` が `true` を返します。それより前にアセットを使用しようとすると、空の `Texture` や `Audio` が返されます。このパラメータは `TextureAsset` と `AudioAsset` にのみ有効です。
 
-次のプログラムでは、非同期ロードが完了するまでループで待機していますが、メインループ内でロードの進捗を可視化しながら待機するといった実装も可能です。
+!!! warning
+    macOS と Linux では、`Texture` の非同期ロードが `System::Update()` で実行されます。非同期ロードを実行中は `System::Update()` の呼び出しを通常通り行ってください。
 
 ```C++
 # include <Siv3D.hpp>
@@ -181,24 +182,32 @@ void Main()
 	TextureAsset::Register(U"Windmill", U"example/windmill.png", AssetParameter::LoadAsync());
 	TextureAsset::Register(U"Siv3D-kun", U"example/siv3d-kun.png", TextureDesc::Mipped, AssetParameter::LoadAsync());
 
-	// 両方ロードされるまで待機
-	for (;;)
-	{
-		const bool r1 = TextureAsset::IsReady(U"Windmill");
-		const bool r2 = TextureAsset::IsReady(U"Siv3D-kun");
-		Print << r1 << U" " << r2;
-
-		if (r1 && r2)
-		{
-			break;
-		}
-	}
+	bool loaded = false;
 
 	while (System::Update())
 	{
-		Draw();
+		if (!loaded)
+		{
+			// 非同期ロードが完了したかチェック
+			const bool r1 = TextureAsset::IsReady(U"Windmill");
+			const bool r2 = TextureAsset::IsReady(U"Siv3D-kun");
+
+			if (r1 && r2) // 両方ともロード完了
+			{
+				loaded = true;
+			}
+		}
+
+		if (loaded)
+		{
+			Draw();
+		}
+		else
+		{
+			// ロード中は円を表示
+			Circle(Scene::Center(), 100).draw();
+		}
 	}
 }
 ```
-
 
