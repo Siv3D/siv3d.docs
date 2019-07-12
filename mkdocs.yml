@@ -80,6 +80,8 @@ nav:
       - Application: sample/app.md
       - Visual effect: sample/visual.md
       - Geme template: sample/game-template.md
+    - Articles:
+      - Mistakes made by new users: articles/mistakes.md
     - Community: community/community.md
     - Siv3D Store: store/store.md
   - 日本語:
@@ -116,6 +118,8 @@ nav:
       - アプリ: ja-jp/sample/app.md
       - ビジュアル表現: ja-jp/sample/visual.md
       - ゲーム開発のテンプレート: ja-jp/sample/game-template.md
+    - 記事:
+      - よくある間違い: ja-jp/articles/mistakes.md
     - コミュニティ: ja-jp/community/community.md
     - Siv3D ストア: ja-jp/store/store.md
 

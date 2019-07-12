@@ -46,28 +46,27 @@ void Main()
 
 	while (System::Update())
 	{
-		const double delta = Scene::DeltaTime();
-		const double speed = 200 * delta;
+		const double delta = 200 * Scene::DeltaTime();
 
 		// 上下左右キーで移動
 		if (KeyLeft.pressed())
 		{
-			pos.x -= speed;
+			pos.x -= delta;
 		}
 
 		if (KeyRight.pressed())
 		{
-			pos.x += speed;
+			pos.x += delta;
 		}
 
 		if (KeyUp.pressed())
 		{
-			pos.y -= speed;
+			pos.y -= delta;
 		}
 
 		if (KeyDown.pressed())
 		{
-			pos.y += speed;
+			pos.y += delta;
 		}
 
 		// [C] キーが押されたら中央に戻る
