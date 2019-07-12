@@ -30,16 +30,16 @@ void Main()
 
 void Main()
 {
-	// NG: わざわざポインタで管理するのは無駄
+	// 非推奨: わざわざポインタで管理する必要はない
 	Texture* pTexture = new Texture(U"example/windmill.png");
 
 	while (System::Update())
 	{
-		// NG: わざわざポインタで管理するのは無駄
+		// 非推奨: わざわざポインタで管理する必要はない
 		pTexture->draw(0, 0);
 	}
 
-	// NG: わざわざポインタで管理するのは無駄
+	// 非推奨: わざわざポインタで管理する必要はない
 	delete pTexture;
 }
 ```

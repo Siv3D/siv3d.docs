@@ -79,6 +79,7 @@ nav:
       - Object detection: reference/objdetection.md
       - Gamepad: reference/gamepad.md
       - Network: reference/network.md
+      - Twitter: reference/twitter.md
     - Sample:
       - Game: sample/game.md
       - Application: sample/app.md
@@ -121,6 +122,7 @@ nav:
       - 物体検出: ja-jp/reference/objdetection.md
       - ゲームパッド: ja-jp/reference/gamepad.md
       - ネットワーク: ja-jp/reference/network.md
+      - Twitter: ja-jp/reference/twitter.md
     - サンプル:
       - ゲーム: ja-jp/sample/game.md
       - アプリ: ja-jp/sample/app.md
