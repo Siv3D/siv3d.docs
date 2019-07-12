@@ -63,7 +63,10 @@ nav:
       - 12. Mouse: tutorial/mouse.md
       - 13. Audio: tutorial/audio.md
       - 14. Random: tutorial/random.md
-      - 15. 2D render states: tutorial/2d-renderstates.md  
+      - 15. 2D render states: tutorial/2d-renderstates.md
+      - 16. Effect: tutorial/effect.md
+      - 17. Asset management: tutorial/asset.md
+      - 99. Releasing your application: tutorial/release.md
     - Reference:
       - Fullscreen: reference/fullscreen.md
       - JSON file: reference/json.md
@@ -75,6 +78,7 @@ nav:
       - kd-tree: reference/kd-tree.md
       - Object detection: reference/objdetection.md
       - Gamepad: reference/gamepad.md
+      - Network: reference/network.md
     - Sample:
       - Game: sample/game.md
       - Application: sample/app.md
@@ -102,6 +106,9 @@ nav:
       - 13. オーディオ再生: ja-jp/tutorial/audio.md
       - 14. ランダム: ja-jp/tutorial/random.md
       - 15. 2D レンダーステート: ja-jp/tutorial/2d-renderstates.md
+      - 16. エフェクト: ja-jp/tutorial/effect.md
+      - 17. アセット管理: ja-jp/tutorial/asset.md
+      - 99. アプリのリリース: ja-jp/tutorial/release.md
     - リファレンス:
       - フルスクリーン: ja-jp/reference/fullscreen.md
       - JSON ファイル: ja-jp/reference/json.md
@@ -113,6 +120,7 @@ nav:
       - kd 木: ja-jp/reference/kd-tree.md
       - 物体検出: ja-jp/reference/objdetection.md
       - ゲームパッド: ja-jp/reference/gamepad.md
+      - ネットワーク: ja-jp/reference/network.md
     - サンプル:
       - ゲーム: ja-jp/sample/game.md
       - アプリ: ja-jp/sample/app.md
