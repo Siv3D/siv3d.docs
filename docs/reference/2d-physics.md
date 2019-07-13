@@ -35,6 +35,9 @@ void Main()
 
 	while (System::Update())
 	{
+		ClearPrint();
+		Print << U"Balls: {}"_fmt(bodies.size());
+
 		// 2D カメラを更新
 		camera.update();
 		{

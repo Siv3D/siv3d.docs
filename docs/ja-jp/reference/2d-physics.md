@@ -136,6 +136,9 @@ void Main()
 
 	while (System::Update())
 	{
+		ClearPrint();
+		Print << U"Balls: {}"_fmt(bodies.size());
+
 		// 落下した P2Body は削除
 		bodies.remove_if([](const P2Body& body) { return body.getPos().y > 20; });
 
