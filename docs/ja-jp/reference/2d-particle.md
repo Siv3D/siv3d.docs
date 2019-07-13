@@ -252,8 +252,6 @@ void Main()
 
 	while (System::Update())
 	{
-		if (Scene::Time() < 5)continue;
-
 		// パドル
 		const Rect paddle(Arg::center(Cursor::Pos().x, 500), 60, 10);
 
