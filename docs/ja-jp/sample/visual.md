@@ -179,7 +179,6 @@ void TextEffect3(const Vec2& penPos, const Glyph& glyph, const ColorF& color, do
 void Main()
 {
 	const Font font(32, Typeface::Bold);
-
 	const String text = U"Lorem ipsum dolor sit amet, consectetur\n"
 						U"adipiscing elit, sed do eiusmod tempor\n"
 						U"incididunt ut labore et dolore magna aliqua.";
@@ -193,11 +192,10 @@ void Main()
 			stopwatch.restart();
 		}
 
-		DrawText(font(text), Vec2(40, 40), Palette::Skyblue, stopwatch.sF(), TextEffect1, 0.1);
-
-		DrawText(font(text), Vec2(40, 200), Palette::Orange, stopwatch.sF(), TextEffect2, 0.1);
-
-		DrawText(font(text), Vec2(40, 360), Palette::Seagreen, stopwatch.sF(), TextEffect3, 0.1);
+		const double t = stopwatch.sF();
+		DrawText(font(text), Vec2(40, 40), Palette::Skyblue, t, TextEffect1, 0.1);
+		DrawText(font(text), Vec2(40, 200), Palette::Orange, t, TextEffect2, 0.1);
+		DrawText(font(text), Vec2(40, 360), Palette::Seagreen, t, TextEffect3, 0.1);
 	}
 }
 ```
