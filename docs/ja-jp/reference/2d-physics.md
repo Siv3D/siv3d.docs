@@ -47,11 +47,11 @@ void Main()
 				bodies << world.createCircle(Cursor::PosF(), 0.5);
 			}
 
-			// 物理演算のワールドを更新
-			world.update(useConstantDeltaTime ? (1.0 / 60.0) : Scene::DeltaTime(), velocityIterations, positionIterations);
-
 			// (y > 10) まで落下した P2Body は削除
 			bodies.remove_if([](const P2Body& body) { return body.getPos().y > 10; });
+
+			// 物理演算のワールドを更新
+			world.update(useConstantDeltaTime ? (1.0 / 60.0) : Scene::DeltaTime(), velocityIterations, positionIterations);
 
 			// 床を描画
 			line.draw(Palette::Skyblue);
@@ -136,10 +136,10 @@ void Main()
 
 	while (System::Update())
 	{
-		world.update(useConstantDeltaTime ? (1.0 / 60.0) : Scene::DeltaTime(), 12, 4);
-
 		// 落下した P2Body は削除
 		bodies.remove_if([](const P2Body& body) { return body.getPos().y > 20; });
+
+		world.update(useConstantDeltaTime ? (1.0 / 60.0) : Scene::DeltaTime(), 12, 4);
 
 		camera.update();
 		{
