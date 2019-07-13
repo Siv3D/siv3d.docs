@@ -11,8 +11,8 @@ void Main()
 	Window::Resize(1280, 720);
 	Scene::SetBackground(ColorF(0.4, 0.7, 1.0));
 
-	constexpr bool useContantDeltaTime = true;
-	if (useContantDeltaTime)
+	constexpr bool useConstantDeltaTime = true;
+	if (useConstantDeltaTime)
 	{
 		Graphics::SetTargetFrameRateHz(60);
 	}
@@ -67,7 +67,7 @@ void Main()
 
 	while (System::Update())
 	{
-		world.update(useContantDeltaTime ? (1.0 / 60.0) : Scene::DeltaTime(), 12, 4);
+		world.update(useConstantDeltaTime ? (1.0 / 60.0) : Scene::DeltaTime(), 12, 4);
 
 		// 落下した P2Body は削除
 		bodies.remove_if([](const P2Body& body) { return body.getPos().y > 20; });
@@ -86,7 +86,6 @@ void Main()
 			ball.draw(ColorF(0.25));
 		}
 
-        // ストッパーを外す
 		if (SimpleGUI::Button(U"Go", Vec2(1100, 20)) && hasStopper)
 		{
 			bodies.pop_back();
@@ -96,7 +95,7 @@ void Main()
 		camera.draw(Palette::Orange);
 	}
 
-	// ジョイント（関連する Body より先に破棄されなければならない）
+	// ジョイント（joints は 関連する Body より先に破棄されなければならない）
 	joints.clear();
 }
 ```
