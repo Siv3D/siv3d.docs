@@ -60,7 +60,7 @@ void Main()
 - Xcode 10.1 以降
 
 ### Linux
-OpenSiv3D Linux 版は、ソースコードからビルドする必要があります。依存しているライブラリやビルド方法については [Linux/README](https://github.com/Siv3D/OpenSiv3D/blob/master/Linux/README.md) を参照してください。
+OpenSiv3D Linux 版は、ソースコードからビルドする必要があります。依存しているライブラリやビルド方法については [Linux/README](https://github.com/Siv3D/OpenSiv3D/blob/master/Linux/README_JP.md) を参照してください。
 
 ## OpenSiv3D SDK のインストール
 ### Windows
