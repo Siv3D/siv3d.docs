@@ -81,6 +81,7 @@ nav:
       - Network: reference/network.md
       - Twitter: reference/twitter.md
       - 2D particle system: reference/2d-particle.md
+      - 2D physics: reference/2d-physics.md
     - Sample:
       - Game: sample/game.md
       - Application: sample/app.md
@@ -125,6 +126,7 @@ nav:
       - ネットワーク: ja-jp/reference/network.md
       - Twitter: ja-jp/reference/twitter.md
       - 2D パーティクルシステム: ja-jp/reference/2d-particle.md
+      - 2D 物理演算: ja-jp/reference/2d-physics.md
     - サンプル:
       - ゲーム: ja-jp/sample/game.md
       - アプリ: ja-jp/sample/app.md
