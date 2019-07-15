@@ -66,6 +66,8 @@ nav:
       - 15. 2D render states: tutorial/2d-renderstates.md
       - 16. Effect: tutorial/effect.md
       - 17. Asset management: tutorial/asset.md
+      - 18. Text file: tutorial/text-file.md
+      - 19. Configuration file: tutorial/config-file.md
       - 99. Releasing your application: tutorial/release.md
     - Reference:
       - Fullscreen: reference/fullscreen.md
@@ -111,6 +113,8 @@ nav:
       - 15. 2D レンダーステート: ja-jp/tutorial/2d-renderstates.md
       - 16. エフェクト: ja-jp/tutorial/effect.md
       - 17. アセット管理: ja-jp/tutorial/asset.md
+      - 18. テキストファイル: ja-jp/tutorial/text-file.md
+      - 19. 設定ファイル: ja-jp/tutorial/config-file.md
       - 99. アプリのリリース: ja-jp/tutorial/release.md
     - リファレンス:
       - フルスクリーン: ja-jp/reference/fullscreen.md
