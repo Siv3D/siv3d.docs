@@ -207,6 +207,8 @@ namespace UI
 
 	constexpr ColorF InfoAreaMouseOverColor(1.0, 0.95, 0.9);
 
+	constexpr ColorF TextColor(0.2);
+
 	constexpr double InfoAreaRound = 8.0;
 }
 
@@ -366,15 +368,15 @@ void Main()
 		// タイトルと説明
 		{
 			UI::InfoArea.rounded(UI::InfoAreaRound).draw(UI::InfoArea.mouseOver() ? UI::InfoAreaMouseOverColor : ColorF(1.0));
-			FontAsset(U"Game.Title")(game.title).draw(UI::InfoArea.pos.movedBy(30, 20), ColorF(0.2));
-			FontAsset(U"Game.Desc")(game.desc).draw(UI::InfoArea.pos.movedBy(30, 80), ColorF(0.2));
+			FontAsset(U"Game.Title")(game.title).draw(UI::InfoArea.pos.movedBy(30, 20), UI::TextColor);
+			FontAsset(U"Game.Desc")(game.desc).draw(UI::InfoArea.stretched(-80, -30, -20, -30), UI::TextColor);
 		}
 
 		// スタッフと開発ツール
 		{
 			UI::StaffArea.rounded(UI::InfoAreaRound).draw(UI::StaffArea.mouseOver() ? UI::InfoAreaMouseOverColor : ColorF(1.0));
-			FontAsset(U"Game.Small")(game.staff).draw(UI::StaffArea.pos.movedBy(30, 10), ColorF(0.2));
-			FontAsset(U"Game.Small")(U"開発ツール: {}"_fmt(game.tools)).draw(UI::StaffArea.pos.movedBy(30, 35), ColorF(0.2));
+			FontAsset(U"Game.Small")(game.staff).draw(UI::StaffArea.pos.movedBy(30, 10), UI::TextColor);
+			FontAsset(U"Game.Small")(U"開発ツール: {}"_fmt(game.tools)).draw(UI::StaffArea.pos.movedBy(30, 35), UI::TextColor);
 		}
 
 		// プレイボタン
@@ -397,7 +399,7 @@ void Main()
 			control += game.useMouse ? U"・マウス\n" : U"";
 			control += game.useKeyboard ? U"・キーボード\n" : U"";
 			control += game.useGamepad ? U"・ゲームパッド\n" : U"";
-			FontAsset(U"Game.Small")(control).draw(UI::ControlArea.pos.movedBy(30, 20), ColorF(0.2));
+			FontAsset(U"Game.Small")(control).draw(UI::ControlArea.pos.movedBy(30, 20), UI::TextColor);
 		}
 	}
 }
