@@ -20,8 +20,6 @@
 
 void Main()
 {
-    Scene::Setback
-
 	// 🐈 の絵文字からテクスチャを作成
 	const Texture texture(Emoji(U"🐈"));
 
