@@ -116,6 +116,7 @@ nav:
       - 18. テキストファイル: ja-jp/tutorial/text-file.md
       - 19. 設定ファイル: ja-jp/tutorial/config-file.md
       - 99. アプリのリリース: ja-jp/tutorial/release.md
+    - API 一覧: ja-jp/api/api.md
     - リファレンス:
       - フルスクリーン: ja-jp/reference/fullscreen.md
       - JSON ファイル: ja-jp/reference/json.md
