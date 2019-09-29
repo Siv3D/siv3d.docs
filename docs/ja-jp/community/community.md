@@ -10,14 +10,14 @@ Siv3D ユーザのためのグループチャットです。目的別のチャ�
 OpenSiv3D のコードについて質問・議論したり、ドキュメントやテストを作ったり、新機能を提案・実装したり、OpenSiv3D で何か作ったりする会です。Siv3D Slack の `#open-siv3d` チャンネルに開催情報が掲載されます。
 
 ## Twitter
-ハッシュタグ `#Siv3D` や `#OpenSiv3D` が付いたツイートを巡回しています。Twitter の仕様で検索結果に表示されないこともあるので、確実に返答が必要な場合は [@Reputeless https://twitter.com/Reputeless] にリプライを送ってください。その際は、迅速な解決につながるよう、問題やエラーメッセージ、コンパイラの出力等をスクリーンショットで添付し、Gist などの URL で問題が発生している部分のソースコードを共有してください。
+ハッシュタグ `#Siv3D` や `#OpenSiv3D` が付いたツイートを巡回しています。Twitter の仕様で検索結果に表示されないこともあるので、確実に返答が必要な場合は [@Reputeless](https://twitter.com/Reputeless) にリプライを送ってください。その際は、迅速な解決につながるよう、問題やエラーメッセージ、コンパイラの出力等をスクリーンショットで添付し、Gist などの URL で問題が発生している部分のソースコードを共有してください。
 
 - [Siv3D に関するツイートを検索](https://twitter.com/search?f=tweets&q=Siv3D%20OR%20OpenSiv3D&src=typd)
 - [@Siv3D](https://twitter.com/Siv3D)
 - [@Reputeless](https://twitter.com/Reputeless) 
 
 ## GitHub Issues
-不具合の報告や新機能、ドキュメントのリクエストは OpenSiv3D の GitHub リポジトリの Issues に投稿してください。フォーマットは自由ですが、情報が不足している場合は破棄される場合があります。
+不具合の報告や新機能、ドキュメントのリクエストは OpenSiv3D の GitHub リポジトリの Issues に投稿してください。フォーマットは自由ですが、情報が不足している場合は棄却される場合があります。
 
 - [OpenSiv3D Issues](https://github.com/Siv3D/OpenSiv3D/issues)
 
