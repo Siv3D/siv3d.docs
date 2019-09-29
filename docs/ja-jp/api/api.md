@@ -4,12 +4,15 @@
 ### 定数
 
 #### `enum class ScaleMode`
-- ResizeFill: ウィンドウのクライアント領域のサイズに合わせてシーンをリサイズする
-- AspectFit: シーンのサイズはそのままで、アスペクト比を維持して拡大縮小してクライアント領域にフィットするように描画する
-
 ウィンドウを手動でリサイズしたときのシーンのサイズの扱いです。ウィンドウをリサイズする関数で `WindowResizeOption::UseDefaultScaleMode` が指定されたときにも参照されます。 
 
-#### `constexpr Size Scene::DefaultSceneSize(Window::DefaultClientSize);`
+##### `ScaleMode::ResizeFill`
+ウィンドウのクライアント領域のサイズに合わせてシーンをリサイズします。
+
+##### `ScaleMode::AspectFit`
+シーンのサイズはそのままで、アスペクト比を維持して拡大縮小してクライアント領域にフィットさせ描画します。
+
+#### `constexpr Size Scene::DefaultSceneSize = Window::DefaultClientSize;`
 シーンの幅と高さ（ピクセル）のデフォルト値です。
 
 #### `constexpr ScaleMode Scene::DefaultScaleMode = ScaleMode::AspectFit;`
@@ -18,11 +21,11 @@
 #### `constexpr TextureFilter Scene::DefaultFilter = TextureFilter::Linear;`
 ウィンドウのクライアント領域がシーンのサイズと異なる場合、シーンを拡大縮小描画するために使うテクスチャフィルタのデフォルト値です。
 
-#### `constexpr ColorF Scene::DefaultBackgroundColor(Palette::DefaultBackground);`
+#### `constexpr ColorF Scene::DefaultBackgroundColor = Palette::DefaultBackground;`
 シーンの背景色のデフォルト色です。
 
-#### `constexpr ColorF Scene::DefaultLetterBoxColor(Palette::DefaultLetterbox);`
-ウィンドウのクライアント領域がシーンよりも大きい場合余白となるスペース「レターボックス」のデフォルト色です。
+#### `constexpr ColorF Scene::DefaultLetterBoxColor = Palette::DefaultLetterbox;`
+ウィンドウのクライアント領域がシーンよりも大きい場合に余白となるスペース「レターボックス」のデフォルト色です。
 
 #### `constexpr double Scene::DefaultMaxDeltaTime = 0.1;`
 `Scene::DeltaTime()` が返す最大の時間（秒）のデフォルト値です。
@@ -79,12 +82,12 @@
 #### `void Scene::SetTextureFilter(TextureFilter textureFilter);`
 - textureFilter: シーンを拡大縮小描画する際に使うテクスチャフィルタ
 
-ウィンドウのクライアント領域がシーンのサイズと異なる場合、シーンを拡大縮小描画するために使うテクスチャフィルタを設定します。デフォルトは `Scene::DefaultFilter` です。ドット絵感を維持したい場合などには `TextureFilter::Nearest` を設定します。
+ウィンドウのクライアント領域がシーンのサイズと異なる場合にシーンを拡大縮小描画するために使うテクスチャフィルタを設定します。デフォルトは `Scene::DefaultFilter` です。ドット絵感を維持したい場合などには `TextureFilter::Nearest` を設定します。
 
 #### `TextureFilter Scene::GetTextureFilter();`
 - 戻り値: シーンを拡大縮小描画する際に使うテクスチャフィルタ
 
-ウィンドウのクライアント領域がシーンのサイズと異なる場合、シーンを拡大縮小描画するために使うテクスチャフィルタの現在の設定を返します。`Scene::SetTextureFilter()` で変更できます。
+ウィンドウのクライアント領域がシーンのサイズと異なる場合にシーンを拡大縮小描画するために使うテクスチャフィルタの現在の設定を返します。`Scene::SetTextureFilter()` で変更できます。
 
 #### `void Scene::SetBackground(const ColorF& color);`
 - color: シーンの背景色
@@ -94,7 +97,7 @@
 #### `void Scene::SetLetterbox(const ColorF& color);`
 - color: レターボックスの色
 
-ウィンドウのクライアント領域がシーンよりも大きい場合余白となるスペース「レターボックス」の色を設定します。色のアルファ成分は無視されます。デフォルトは `Scene::DefaultLetterBoxColor` です。
+ウィンドウのクライアント領域がシーンよりも大きい場合に余白となるスペース「レターボックス」の色を設定します。色のアルファ成分は無視されます。デフォルトは `Scene::DefaultLetterBoxColor` です。
 
 #### `void Scene::SetMaxDeltaTime(double timeSec);`
 - timeSec: 最大の時間（秒）
@@ -109,7 +112,7 @@
 #### `double Scene::DeltaTime();`
 - 戻り値: 前回のフレームからの経過時間（秒）と `Scene::SetMaxDeltaTime()` の小さいほうの値
 
-前回の `System::Update()` からの経過時間を返します。この値をもとにアニメーションやイベントの処理などを行うことで、フレームレートが上下しても対応できます。`System::Update()` によって値が更新されます。
+前回の `System::Update()` からの経過時間（秒）を返します。この値をもとにアニメーションやイベントの処理などを行うことで、フレームレートが上下しても対応できます。`System::Update()` によって値が更新されます。
 
 #### `double Scene::Time();`
 - 戻り値: アプリケーションが起動してからの経過時間（秒）
