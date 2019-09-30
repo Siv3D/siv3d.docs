@@ -1,7 +1,7 @@
 
 # 19. Configuration file
 
-この章では、CSV, INI, JSON, TOML, XML などの設定ファイルを読み書きする方法を学びます。  
+この章では、CSV, INI, JSON, TOML, XML などの設定ファイルを読み込む方法を学びます。  
 OpenSiv3D での設定の記述には、読みやすさと書きやすさに優れた TOML の使用を推奨します。
 
 !!! warning
