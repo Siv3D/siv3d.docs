@@ -62,7 +62,7 @@ void Main()
 ### Linux
 OpenSiv3D Linux 版は、ソースコードからビルドする必要があります。依存しているライブラリやビルド方法については [Linux/README](https://github.com/Siv3D/OpenSiv3D/blob/master/Linux/README_JP.md) を参照してください。
 
-## OpenSiv3D SDK のインストール
+## OpenSiv3D SDK v0.4.0 のインストール
 ### Windows
 1. **[OpenSiv3D Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D(0.4.0)Installer.exe)** をダウンロードして実行します。
 
