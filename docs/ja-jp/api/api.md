@@ -147,17 +147,17 @@
 #### `void System::SetTerminationTriggers(uint32 userActionFlags);`
 - userActionFlags: アプリケーション終了トリガーに設定するユーザアクションのフラグ
 
-アプリケーション終了トリガーに設定するユーザアクションを設定します。
+アプリケーション終了トリガーに設定するユーザアクションを設定します。フラグには `UserAction` の値の組み合わせを使います。
 
 #### `uint32 System::GetTerminationTriggers();`
 - 戻り値: アプリケーション終了トリガーに設定したユーザアクションのフラグ
 
-アプリケーション終了トリガーに設定したユーザアクションのフラグの現在の設定を返します。
+アプリケーション終了トリガーに設定したユーザアクションのフラグの現在の設定を返します。フラグには `UserAction` の値の組み合わせが使われています。
 
 #### `uint32 System::GetUserActions();`
 - 戻り値: 前のフレームで発生したユーザアクションのフラグ
 
-前回のフレームで発生したユーザアクションのフラグを返します。
+前回のフレームで発生したユーザアクションのフラグを返します。フラグには `UserAction` の値の組み合わせが使われています。
 
 #### `void System::Sleep(int32 milliseconds);`
 #### `void System::Sleep(const Duration& duration);`
@@ -171,4 +171,118 @@
 - 戻り値: オープンの成功の可否
 
 指定した URL をデフォルトの Web ブラウザでオープンします。
+
+#### `Array<Monitor> System::EnumerateActiveMonitors()`
+- 戻り値: 使用可能なモニターの一覧
+
+使用可能なモニターの一覧を返します。
+
+#### `size_t System::GetCurrentMonitorIndex()`
+- 戻り値: ウィンドウが配置されているモニターのインデックス
+
+ウィンドウが配置されているモニターのインデックスを取得します。`System::EnumerateActiveMonitors()` の戻り値に対して使えます。
+
+#### `Array<GamepadInfo> System::EnumerateGamepads();`
+- 戻り値: 使用可能なゲームパッドの一覧
+
+使用可能なゲームパッドの一覧を返します。
+
+#### `Array<WebcamInfo> System::EnumerateWebcams();`
+- 戻り値: 使用可能な Web カメラの一覧
+
+使用可能な Web カメラの一覧を返します。
+
+
+## Window 名前空間
+
+### 定数
+
+#### `constexpr Size Window::DefaultClientSize = Size(800, 600);`
+ウィンドウのクライアント領域の幅と高さ（ピクセル）のデフォルト値です。
+
+### 関数
+
+#### `void Window::SetTitle(const String& title);`
+#### `template <class... Args> void Window::SetTitle(const Args&... args);`
+- title: 新しいタイトル
+- args: 新しいタイトル
+
+ウィンドウのタイトルを変更します。改行は無視され、すでに同じタイトルの場合は何もしません。ウィンドウタイトルの変更はシステムに負荷がかかる場合があります。
+
+#### `const String& Window::GetTitle();`
+- 戻り値: 現在のウィンドウタイトル
+
+現在のウィンドウタイトルを返します。
+
+#### `WindowState Window::GetState();`
+- 戻り値: 現在のウィンドウステート
+
+現在のウィンドウステートを返します。
+
+#### `void Window::SetStyle(WindowStyle style);`
+- style: ウィンドウスタイルを変更します。すでに同じタイトルの場合は何もしません。
+
+ウィンドウスタイルを変更します。
+
+#### `WindowStyle Window::GetStyle();`
+- 戻り値: 現在のウィンドウスタイル
+
+現在のウィンドウスタイルを返します。
+
+#### `Size Window::ClientSize();`
+- 戻り値: ウィンドウのクライアント領域の幅と高さ（ピクセル）
+
+現在のウィンドウのクライアント領域の幅と高さ（ピクセル）を返します。
+
+#### `Point Window::ClientCenter();`
+- 戻り値: ウィンドウのクライアント領域の中心座標
+
+現在のウィンドウのクライアント領域における中心座標（ピクセル）を返します。
+
+#### `int32 Window::ClientWidth();`
+- 戻り値: ウィンドウのクライアント領域の幅（ピクセル）
+
+現在のウィンドウのクライアント領域の幅（ピクセル）を返します。
+
+#### `int32 Window::ClientHeight();`
+- 戻り値: ウィンドウのクライアント領域の高さ（ピクセル）
+
+現在のウィンドウのクライアント領域の高さ（ピクセル）を返します。
+
+#### `void Window::SetPos(const Point& pos);`
+#### `void Window::SetPos(int32 x, int32 y);`
+- pos: ウィンドウの左上の位置（スクリーン座標）
+- x, y: ウィンドウの左上の位置（スクリーン座標）
+
+ウィンドウを指定した座標に移動させます。
+
+#### `void Window::Centering();`
+ウィンドウをスクリーンの中心に移動させます。
+
+#### `bool Window::Resize(const Size& size, WindowResizeOption option = WindowResizeOption::ResizeSceneSize, bool centering = true);`
+#### `bool Window::Resize(int32 width, int32 height, WindowResizeOption option = WindowResizeOption::ResizeSceneSize, bool centering = true);`
+- size: ウィンドウのクライアント領域の新しいサイズ（ピクセル）
+- width, height: ウィンドウのクライアント領域の新しいサイズ（ピクセル）
+- option: シーンの解像度を追従させるかを決めるオプション
+- centering: サイズ変更後にウィンドウをスクリーンの中心に移動させるかのフラグ
+- 戻り値: サイズの変更に成功した場合 `true`, それ以外の場合 `false`
+
+ウィンドウのクライアント領域のサイズを変更します。`WindowResizeOption::ResizeSceneSize` が指定されている場合、シーンのサイズも合わせて変更されます。
+
+#### `void Window::Maximize();`
+ウィンドウを最大化します。
+
+#### `void Window::Restore();`
+最大・最小化されたウィンドウを元のサイズに戻します。
+
+#### `void Window::Minimize();`
+ウィンドウを最小化します。
+
+#### `bool Window::SetFullscreen(bool fullscreen, const Optional<Size>& fullscreenResolution = unspecified, WindowResizeOption option = WindowResizeOption::ResizeSceneSize);`
+- fullscreen: フルスクリーンモードにする場合 `false`, ウィンドウモードにする場合 `false`
+- fullscreenResolution: フルスクリーンの解像度
+- option: シーンの解像度を追従させるかを決めるオプション
+- 戻り値: フルスクリーンモードの変更に成功した場合 `true`, それ以外の場合 `false`
+
+フルスクリーンモードの設定をします。`fullscreenResolution` には `unspecified` か `Graphics::GetFullscreenResolutions()` に含まれる値を使います。フルスクリーンモードにする際、`fullscreenResolution` に `unspecified` を指定すると、ディスプレイの解像度（スケーリング適用後）のサイズでフルスクリーンモードに入ります。`unspecified` は切り替えが早く堅牢です。
 
