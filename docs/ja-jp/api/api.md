@@ -142,7 +142,7 @@
 
 #### `void System::Exit();`
 
-プログラムの終了のために、この直後の `System::Update()` が `false` を返すように設定します。この関数自体が終了処理を行うわけではないので、この関数の呼び出しは必須ではありません。
+プログラムを終了するために、この直後の `System::Update()` が `false` を返すように設定します。この関数自体が終了処理を行うわけではないので、この関数の呼び出しは必須ではありません。
 
 #### `void System::SetTerminationTriggers(uint32 userActionFlags);`
 - userActionFlags: アプリケーション終了トリガーに設定するユーザアクションのフラグ
@@ -150,19 +150,25 @@
 アプリケーション終了トリガーに設定するユーザアクションを設定します。
 
 #### `uint32 System::GetTerminationTriggers();`
-- 戻り値: 前のフレームで発生したアプリケーション終了トリガーのフラグ
+- 戻り値: アプリケーション終了トリガーに設定したユーザアクションのフラグ
+
+アプリケーション終了トリガーに設定したユーザアクションのフラグの現在の設定を返します。
 
 #### `uint32 System::GetUserActions();`
 - 戻り値: 前のフレームで発生したユーザアクションのフラグ
+
+前回のフレームで発生したユーザアクションのフラグを返します。
 
 #### `void System::Sleep(int32 milliseconds);`
 #### `void System::Sleep(const Duration& duration);`
 - milliseconds: スリープする時間（ミリ秒）
 - duration: スリープする時間
 
+現在のスレッドの実行を指定した時間だけ停止します。
 
 #### `bool System::LaunchBrowser(const FilePath& url);`
 - url: オープンする URL
 - 戻り値: オープンの成功の可否
 
-指定された URL をデフォルトの Web ブラウザでオープンします。
+指定した URL をデフォルトの Web ブラウザでオープンします。
+
