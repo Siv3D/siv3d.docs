@@ -37,7 +37,7 @@
 - size: 新しいシーンの幅と高さ
 - width, height: 新しいシーンの幅と高さ
 
-シーンの幅と高さを変更します。デフォルト値は `Scene::DefaultSceneSize` です。両方またはどちらかの値を 0 以下にすること、8192 より大きい値を設定することはできません。
+シーンの幅と高さを変更します。デフォルト値は `Scene::DefaultSceneSize` です。両方またはどちらかの値を 0 以下にしたり 8192 より大きくすることはできません。
 
 #### `Size Scene::Size();`
 - 戻り値: シーンの幅と高さ（ピクセル）
@@ -286,3 +286,52 @@
 
 フルスクリーンモードの設定をします。`fullscreenResolution` には `unspecified` か `Graphics::GetFullscreenResolutions()` に含まれる値を使います。フルスクリーンモードにする際、`fullscreenResolution` に `unspecified` を指定すると、ディスプレイの解像度（スケーリング適用後）のサイズでフルスクリーンモードに入ります。`unspecified` は切り替えが早く堅牢です。
 
+## Cursor 名前空間
+
+### 関数
+
+#### `Point Cursor::Pos();`
+
+#### `Point Cursor::PreviousPos();`
+
+#### `Point Cursor::Delta();`
+
+#### `Vec2 Cursor::PosF();`
+
+#### `Vec2 Cursor::PreviousPosF();`
+
+#### `Vec2 Cursor::DeltaF();`
+
+#### `Point Cursor::PosRaw();`
+
+#### `Point Cursor::PreviousPosRaw();`
+
+#### `Point Cursor::DeltaRaw();`
+
+#### `Point Cursor::ScreenPos();`
+
+#### `Point Cursor::PreviousScreenPos();`
+
+#### `Point Cursor::ScreenDelta();`
+
+#### `Array<std::pair<Point, uint64>> Cursor::GetBuffer();`
+
+#### `void Cursor::SetPos(int32 x, int32 y);`
+
+#### `void Cursor::SetPos(const Point& pos);`
+
+#### `bool Cursor::OnClientRect();`
+
+#### `const Mat3x2& Cursor::GetLocalTransform();`
+
+#### `const Mat3x2& Cursor::GetCameraTransform();`
+
+#### `void Cursor::ClipToWindow(bool clip);`
+
+#### `void Cursor::RequestStyle(CursorStyle style);`
+
+#### `void Cursor::SetDefaultStyle(CursorStyle style);`
+
+#### `CursorStyle Cursor::GetRequestedStyle();`
+
+#### `CursorStyle Cursor::GetDefaultStyle();`
