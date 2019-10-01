@@ -52,7 +52,7 @@ void Main()
 ## 必要な環境
 ### Windows
 - Windows 7 SP1 / 8.1 / 10 (64-bit)
-- **Visual Studio 2019 version 16.1**
+- **Visual Studio 2019 version 16.3**
     - Visual Studio Installer で **C++ によるデスクトップ開発** をインストールしてください
 
 ### macOS
@@ -62,15 +62,15 @@ void Main()
 ### Linux
 OpenSiv3D Linux 版は、ソースコードからビルドする必要があります。依存しているライブラリやビルド方法については [Linux/README](https://github.com/Siv3D/OpenSiv3D/blob/master/Linux/README_JP.md) を参照してください。
 
-## OpenSiv3D SDK v0.4.0 のインストール
+## OpenSiv3D SDK v0.4.1 のインストール
 ### Windows
-1. **[OpenSiv3D Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D(0.4.0)Installer.exe)** をダウンロードして実行します。
+1. **[OpenSiv3D Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D(0.4.1)Installer.exe)** をダウンロードして実行します。
 
 !!! note
     OpenSiv3D SDK を削除するには、コントロールパネルからアンインストールします。
 
 ### macOS
-1. **[OpenSiv3D Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.4.0_macOS.zip)** をダウンロードしてファイルを展開します。
+1. **[OpenSiv3D Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.4.1_macOS.zip)** をダウンロードしてファイルを展開します。
 
 
 ## OpenSiv3D アプリのビルド
