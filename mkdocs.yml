@@ -141,6 +141,8 @@ nav:
       - ビジュアル表現: ja-jp/sample/visual.md
       - ゲーム開発のテンプレート: ja-jp/sample/game-template.md
       - ゲームランチャー: ja-jp/sample/game-launcher.md
+    - 新機能紹介:
+      - v0.4.1 の新機能: ja-jp/news/v041.md
     - 記事:
       - よくある間違い: ja-jp/articles/mistakes.md
     - Siv3D ストア: ja-jp/store/store.md
