@@ -200,3 +200,58 @@ void Main()
 }
 ```
 
+
+## RenderTexture を使って図形や文字の影を描く
+<video src="../images/visual-2d-shadow.mp4" autoplay loop muted></video>
+```C++
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF(0.8, 0.9, 1.0));
+	const Font font(100, Typeface::Heavy);
+	const Texture emoji(Emoji(U"🐧"));
+
+	// 影の形状を書き込むレンダーテクスチャ
+	RenderTexture shadow(800, 600);
+	RenderTexture shadowInternal(shadow.size());
+
+	// 影の形状を書き込むためのブレンドステート
+	BlendState bs = BlendState::Default;
+	bs.op = BlendOp::Max;
+	bs.srcAlpha = Blend::SrcAlpha;
+	bs.dstAlpha = Blend::DestAlpha;
+	bs.opAlpha = BlendOp::Max;
+
+	while (System::Update())
+	{
+		const RectF rect(100 + Periodic::Sine0_1(4s) * 400, 200, 200);
+		const Line line(100, 100, 400, 500);
+
+		shadow.clear(ColorF(1.0, 0.0));
+		{
+			// 影の形状を書き込む
+			ScopedRenderTarget2D target(shadow);
+			ScopedRenderStates2D blend(bs);
+
+			font(U"Siv3D").draw(400, 60);
+			rect.draw();
+			line.draw(LineStyle::RoundCap, 10);
+			emoji.rotated(Scene::Time() * 30_deg).drawAt(600, 500);
+		}
+
+		// 書き込まれた影をガウスぼかしして灰色で描画
+		Shader::GaussianBlur(shadow, shadowInternal, shadow);
+		const Vec2 shadowDirection = Circular(10, Scene::Time() * 50_deg);
+		shadow.draw(shadowDirection, ColorF(0.5));
+
+		{
+			// 本来の色で描画する
+			font(U"Siv3D").draw(400, 60, Palette::Orange);
+			rect.draw(Palette::Seagreen);
+			line.draw(LineStyle::RoundCap, 10, Palette::White);
+			emoji.rotated(Scene::Time() * 30_deg).drawAt(600, 500);
+		}
+	}
+}
+```
