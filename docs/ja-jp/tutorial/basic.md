@@ -1,3 +1,4 @@
+description: OpenSiv3D のチュートリアル
 
 # 1. Siv3D の基本
 

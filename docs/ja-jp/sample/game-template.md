@@ -1,3 +1,4 @@
+description: OpenSiv3D ゲーム開発のサンプル
 
 # ゲーム開発のテンプレート
 

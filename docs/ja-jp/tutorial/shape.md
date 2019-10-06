@@ -1,3 +1,4 @@
+description: OpenSiv3D のチュートリアル
 
 # 2. 図形を描く
 

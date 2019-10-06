@@ -1,3 +1,4 @@
+description: OpenSiv3D ゲームプログラムのサンプル
 
 # ゲーム
 
