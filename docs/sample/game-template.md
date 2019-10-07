@@ -1,7 +1,30 @@
 
-# Geme template
+# Game template
+
+## Game project template
+本格的なゲーム開発をすぐに始められるプロジェクトテンプレートです。  
+リポジトリをダウンロードして使用します。
+
+- https://github.com/Siv3D/GameTemplate
+
+### 機能
+
+- 基本的なファイル分割と SceneManager 対応済み
+- OpenSiv3D 用の `.gitignore` が付属
+- Visual Studio 用のソリューションファイルと、Xcode 用のプロジェクトファイルを同梱し、どちらからでも開発可能
+
+### 使用手順
+
+- 最新の OpenSiv3D SDK をインストールします
+- ゲーム開発プロジェクト・テンプレートをダウンロードします
+- macOS の場合、ゲーム開発プロジェクト・テンプレートの `README.md` と同じフォルダに、SDK の `include` と `lib` フォルダをコピーします
+- Visual Studio の場合はソリューションファイル、Xcode の場合はプロジェクトファイルを開きます
+
 
 ## Scene management
+開発初期には開発速度が重要です。  
+次のように Main.cpp にすべてのシーンを実装するのもよいでしょう。
+
 <video src="../images/game-template-scene-en.mp4" autoplay loop muted></video>
 ```C++
 # include <Siv3D.hpp>
@@ -62,7 +85,7 @@ public:
 
 	void draw() const override
 	{
-		const String titleText = U"Breakout";
+		const String titleText = U"ブロックくずし";
 		const Vec2 center(Scene::Center().x, 120);
 		FontAsset(U"Title")(titleText).drawAt(center.movedBy(4, 6), ColorF(0.0, 0.5));
 		FontAsset(U"Title")(titleText).drawAt(center);
@@ -70,8 +93,8 @@ public:
 		m_startButton.draw(ColorF(1.0, m_startTransition.value())).drawFrame(2);
 		m_exitButton.draw(ColorF(1.0, m_exitTransition.value())).drawFrame(2);
 
-		FontAsset(U"Menu")(U"Play").drawAt(m_startButton.center(), ColorF(0.25));
-		FontAsset(U"Menu")(U"Exit").drawAt(m_exitButton.center(), ColorF(0.25));
+		FontAsset(U"Menu")(U"はじめる").drawAt(m_startButton.center(), ColorF(0.25));
+		FontAsset(U"Menu")(U"おわる").drawAt(m_exitButton.center(), ColorF(0.25));
 
 		Rect(0, 500, Scene::Width(), Scene::Height() - 500)
 			.draw(Arg::top = ColorF(0.0, 0.0), Arg::bottom = ColorF(0.0, 0.5));
@@ -219,7 +242,7 @@ void Main()
 ```
 
 
-## タイピングゲームの基本
+## Typing game
 ![](images/game-template-typing.gif)
 ```C++
 # include <Siv3D.hpp>
@@ -266,5 +289,4 @@ void Main()
 	}
 }
 ```
-
 

@@ -2,7 +2,30 @@ description: OpenSiv3D ゲーム開発のサンプル
 
 # ゲーム開発のテンプレート
 
-## シーン遷移
+## ゲーム開発プロジェクト・テンプレート
+本格的なゲーム開発をすぐに始められるプロジェクトテンプレートです。  
+リポジトリをダウンロードして使用します。
+
+- https://github.com/Siv3D/GameTemplate
+
+### 機能
+
+- 基本的なファイル分割と SceneManager 対応済み
+- OpenSiv3D 用の `.gitignore` が付属
+- Visual Studio 用のソリューションファイルと、Xcode 用のプロジェクトファイルを同梱し、どちらからでも開発可能
+
+### 使用手順
+
+- 最新の OpenSiv3D SDK をインストールします
+- ゲーム開発プロジェクト・テンプレートをダウンロードします
+- macOS の場合、ゲーム開発プロジェクト・テンプレートの `README.md` と同じフォルダに、SDK の `include` と `lib` フォルダをコピーします
+- Visual Studio の場合はソリューションファイル、Xcode の場合はプロジェクトファイルを開きます
+
+
+## シーン遷移（1 ファイル版）
+開発初期には開発速度が重要です。  
+次のように Main.cpp にすべてのシーンを実装するのもよいでしょう。
+
 <video src="../images/game-template-scene.mp4" autoplay loop muted></video>
 ```C++
 # include <Siv3D.hpp>
