@@ -69,6 +69,8 @@ nav:
       - 18. Text file: tutorial/text-file.md
       - 19. Configuration file: tutorial/config-file.md
       - 20. Embedded resource: tutorial/resource.md
+      - 21. Binary file: tutorial/binary-file.md
+      - 22. Scene management: tutorial/scene-manager.md
       - 99. Releasing your application: tutorial/release.md
     - Reference:
       - Fullscreen: reference/fullscreen.md
@@ -118,6 +120,8 @@ nav:
       - 18. テキストファイル: ja-jp/tutorial/text-file.md
       - 19. 設定ファイル: ja-jp/tutorial/config-file.md
       - 20. リソースの埋め込み: ja-jp/tutorial/resource.md
+      - 21. バイナリファイル: ja-jp/tutorial/binary-file.md
+      - 22. シーン管理: ja-jp/tutorial/scene-manager.md
       - 99. アプリのリリース: ja-jp/tutorial/release.md
     - API 一覧: ja-jp/api/api.md
     - リファレンス:
