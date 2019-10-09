@@ -76,6 +76,7 @@ nav:
     - Reference:
       - Fullscreen: reference/fullscreen.md
       - JSON file: reference/json.md
+      - Text encoding conversion: reference/unicode.md
       - 2D shadow: reference/2d-shadow.md
       - 2D geometry: reference/2d-geometry.md
       - NavMesh: reference/navmesh.md
@@ -130,6 +131,7 @@ nav:
     - リファレンス:
       - フルスクリーン: ja-jp/reference/fullscreen.md
       - JSON ファイル: ja-jp/reference/json.md
+      - 文字コードの変換: ja-jp/reference/unicode.md
       - 2D 図形の影: ja-jp/reference/2d-shadow.md
       - 2D 計算幾何: ja-jp/reference/2d-geometry.md
       - ナビメッシュ: ja-jp/reference/navmesh.md
