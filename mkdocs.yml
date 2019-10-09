@@ -72,6 +72,7 @@ nav:
       - 21. Binary file: tutorial/binary-file.md
       - 22. Scene management: tutorial/scene-manager.md
       - 99. Releasing your application: tutorial/release.md
+    - API Reference: api/api.md
     - Reference:
       - Fullscreen: reference/fullscreen.md
       - JSON file: reference/json.md
@@ -92,6 +93,8 @@ nav:
       - Application: sample/app.md
       - Visual effect: sample/visual.md
       - Geme template: sample/game-template.md
+    - News:
+      - What's new in v0.4.1: news/v041.md
     - Articles:
       - Mistakes made by new users: articles/mistakes.md
     - Siv3D Store: store/store.md
