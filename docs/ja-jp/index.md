@@ -86,3 +86,9 @@ OpenSiv3D Linux 版は、ソースコードからビルドする必要があり�
 ### macOS
 1. プロジェクトファイル (siv3d_vX.X.X_macOS/examples/empty/empty.xcodeproj) を Xcode で開きます。
 2. **実行ボタン ▶️** を押すと、プログラムをビルドして実行します。
+
+
+## 💗 [スポンサー](https://github.com/sponsors/Reputeless)
+- [sknjpn](https://twitter.com/sknjpn)
+- アゲハマ
+- chobby75
