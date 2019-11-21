@@ -92,3 +92,4 @@ OpenSiv3D Linux 版は、ソースコードからビルドする必要があり�
 - [sknjpn](https://twitter.com/sknjpn)
 - アゲハマ
 - chobby75
+- papparappara

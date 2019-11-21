@@ -91,3 +91,4 @@ Linux users must build OpenSiv3D from source. See [Linux/README](https://github.
 - [sknjpn](https://twitter.com/sknjpn)
 - アゲハマ
 - chobby75
+- papparappara
