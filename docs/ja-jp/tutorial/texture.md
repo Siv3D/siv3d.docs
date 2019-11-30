@@ -361,7 +361,7 @@ void Main()
 
 	while (System::Update())
 	{
-		const double scale = 0.02 + Periodic::Tringle0_1(10s) * 0.4;
+		const double scale = 0.02 + Periodic::Triangle0_1(10s) * 0.4;
 
 		textureUnmipped.scaled(scale).drawAt(300, 300);
 

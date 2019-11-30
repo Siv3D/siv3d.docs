@@ -96,6 +96,7 @@ nav:
       - Geme template: sample/game-template.md
     - News:
       - What's new in v0.4.1: news/v041.md
+      - What's new in v0.4.2: news/v042.md
     - Articles:
       - Mistakes made by new users: articles/mistakes.md
     - Siv3D Store: store/store.md
@@ -153,6 +154,7 @@ nav:
       - ゲームランチャー: ja-jp/sample/game-launcher.md
     - 新機能紹介:
       - v0.4.1 の新機能: ja-jp/news/v041.md
+      - v0.4.2 の新機能: ja-jp/news/v042.md
     - 記事:
       - よくある間違い: ja-jp/articles/mistakes.md
     - Siv3D ストア: ja-jp/store/store.md

@@ -63,16 +63,16 @@ void Main()
 ### Linux
 OpenSiv3D Linux 版は、ソースコードからビルドする必要があります。依存しているライブラリやビルド方法については [Linux/README](https://github.com/Siv3D/OpenSiv3D/blob/master/Linux/README_JP.md) を参照してください。
 
-## OpenSiv3D SDK v0.4.1 のインストール
+## OpenSiv3D SDK v0.4.2 のインストール
 ### Windows
-1. **[OpenSiv3D Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D(0.4.1)Installer.exe)** をダウンロードして実行します。
+1. **[OpenSiv3D Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D(0.4.2)Installer.exe)** をダウンロードして実行します。
 
 !!! note
     OpenSiv3D SDK を削除するには、コントロールパネルからアンインストールします。
 
 ### macOS
-1. **[OpenSiv3D Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.4.1_macOS.zip)** をダウンロードしてファイルを展開します。
-
+1. **[OpenSiv3D Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.4.2_macOS.zip)** をダウンロードしてファイルを展開します。
+2. （macOS Catalina の場合）プログラム実行時に、ファイルアクセス許可のダイアログが出現するのを防ぐため、`ユーザ/デスクトップ` や `ユーザ/ダウンロード` フォルダではなく、`ユーザ/アプリケーション` フォルダへ移動させます。
 
 ## OpenSiv3D アプリのビルド
 ### Windows
@@ -86,6 +86,7 @@ OpenSiv3D Linux 版は、ソースコードからビルドする必要があり�
 ### macOS
 1. プロジェクトファイル (siv3d_vX.X.X_macOS/examples/empty/empty.xcodeproj) を Xcode で開きます。
 2. **実行ボタン ▶️** を押すと、プログラムをビルドして実行します。
+3. （macOS Catalina の場合）ファイルアクセス許可のダイアログが出現する場合、プロジェクトフォルダ全体を、`ユーザ/アプリケーション` フォルダ以下へ移動させることで解決できます。
 
 
 ## 💗 [スポンサー](https://github.com/sponsors/Reputeless)

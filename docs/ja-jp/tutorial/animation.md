@@ -230,7 +230,7 @@ void Main()
 }
 ```
 
-### Periodic::Tringle0_1()
+### Periodic::Triangle0_1()
 0.0 から一定の速度で値が大きくなって 1.0 に、そして一定の速度で小さくなって 0.0 に、という変化を指定した周期で繰り返す関数です。
 
 ![](images/3031.gif)
@@ -245,7 +245,7 @@ void Main()
 	while (System::Update())
 	{
 		// 2 秒周期で、一定速度での左右移動を繰り返す
-		const double x = 50 + 700 * Periodic::Tringle0_1(2s);
+		const double x = 50 + 700 * Periodic::Triangle0_1(2s);
 		
 		Circle(x, 300, 50).draw();
 	}

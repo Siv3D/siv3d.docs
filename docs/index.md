@@ -62,16 +62,16 @@ void Main()
 ### Linux
 Linux users must build OpenSiv3D from source. See [Linux/README](https://github.com/Siv3D/OpenSiv3D/blob/master/Linux/README.md) for further information.
 
-## Installing OpenSiv3D SDK v0.4.1
+## Installing OpenSiv3D SDK v0.4.2
 ### Windows
-1. Download **[OpenSiv3D Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D(0.4.1)Installer.exe)** and run the installer.
+1. Download **[OpenSiv3D Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D(0.4.2)Installer.exe)** and run the installer.
 
 !!! note
     Use the Control Panel to uninstall OpenSiv3D SDK.
 
 ### macOS
-1. Download **[OpenSiv3D Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.4.1_macOS.zip)** and extract its contents.
-
+1. Download **[OpenSiv3D Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.4.2_macOS.zip)** and extract its contents.
+2. (for macOS Catalina users) Move the SDK folder into `User/Applications` folder to prevent a file access permissions dialog from being displayed when a Xcode project is executed. Some folders such as `User/Desktop` and `User/Downloads` require extra access permission.
 
 ## Building an OpenSiv3D Application
 ### Windows
@@ -85,7 +85,7 @@ Linux users must build OpenSiv3D from source. See [Linux/README](https://github.
 ### macOS
 1. Open the project file (siv3d_vX.X.X_macOS/examples/empty/empty.xcodeproj) in Xcode.
 2. Click **Run button ▶️** to build and run the application.
-
+3. (for macOS Catalina users) A file access permissions dialog can be inactivated by placing the project folder under `User/Applications` folder.
 
 ## 💗 [Sponsors](https://github.com/sponsors/Reputeless)
 - [sknjpn](https://twitter.com/sknjpn)
