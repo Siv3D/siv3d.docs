@@ -2,7 +2,8 @@
 # 2D パーティクルシステム
 
 ## パラメータ
-<video src="../images/2d-particle-parameter.mp4" autoplay loop muted></video>
+<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/reference/2d-particle/parameter.mp4?raw=true" autoplay loop muted></video>
+
 ```C++
 # include <Siv3D.hpp>
 
@@ -168,7 +169,8 @@ void Main()
 
 
 ## ゲームへの組み込み
-<video src="../images/2d-particle-breakout.mp4" autoplay loop muted></video>
+<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/reference/2d-particle/breakout.mp4?raw=true" autoplay loop muted></video>
+
 ```C++
 # include <Siv3D.hpp>
 
