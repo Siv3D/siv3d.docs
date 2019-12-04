@@ -2,7 +2,7 @@
 # Application
 
 ## Sketch
-![](images/app-sketch.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/sample/app/clock.gif?raw=true)
 ```C++
 # include <Siv3D.hpp>
 
@@ -58,7 +58,7 @@ void Main()
 ```
 
 ## Piano
-![](images/app-piano.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/sample/app/piano.gif?raw=true)
 ```C++
 # include <Siv3D.hpp>
 
@@ -135,7 +135,7 @@ void Main()
 
 
 ## Kaleidoscope sketch
-![](images/app-kaleidoscope-paint.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/sample/app/kaleidoscope-paint.gif?raw=true)
 ```C++
 # include <Siv3D.hpp>
 
@@ -203,7 +203,8 @@ void Main()
 
 
 ## Image to Polygon
-<video src="../images/app-image-to-polygon.mp4" autoplay loop muted></video>
+<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/sample/app/image-to-polygon.mp4?raw=true" autoplay loop muted></video>
+
 ```C++
 # include <Siv3D.hpp>
 
@@ -256,7 +257,8 @@ void Main()
 
 
 ## Sketch to Polygon
-![](images/app-sketch-to-polygon.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/sample/app/sketch-to-polygon.gif?raw=true)
+
 ```C++
 # include <Siv3D.hpp>
 
@@ -329,7 +331,8 @@ void Main()
 
 
 ## Audio player
-<video src="../images/app-audio-player.mp4" autoplay loop muted></video>
+<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/sample/app/audio-player.mp4?raw=true" autoplay loop muted></video>
+
 ```C++
 # include <Siv3D.hpp>
 
@@ -414,7 +417,8 @@ void Main()
 
 
 ## Text to Polygon
-<video src="../images/app-text-to-polygon.mp4" autoplay loop muted></video>
+<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/sample/app/text-to-polygon.mp4?raw=true" autoplay loop muted></video>
+
 ```C++
 # include <Siv3D.hpp>
 
@@ -514,8 +518,9 @@ void Main()
 ```
 
 
-## マンデルブロ集合
-![](images/app-mandelbrot.png)
+## Mandelbrot set
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/sample/app/mandelbrot.png?raw=true)
+
 ```C++
 # include <Siv3D.hpp>
 
@@ -600,8 +605,9 @@ void Main()
 ```
 
 
-## ライフゲーム エディタ
-![](images/app-game-of-life-editor.gif)
+## Game of life editor
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/sample/app/game-of-life-editor.gif?raw=true)
+
 ```C++
 # include <Siv3D.hpp>
 
@@ -790,8 +796,9 @@ void Main()
 ```
 
 
-## QR コード作成
-![](images/app-qr-encoder.gif)
+## QR encoder
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/sample/app/qr-encoder.gif?raw=true)
+
 ```C++
 # include <Siv3D.hpp>
 
@@ -837,8 +844,9 @@ void Main()
 ```
 
 
-## ドットお絵かき
-![](images/app-dot-sketch.gif)
+## Dot sketch
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/sample/app/dot-sketch.gif?raw=true)
+
 ```C++
 # include <Siv3D.hpp>
 
@@ -873,8 +881,9 @@ void Main()
 ```
 
 
-## 時計
-![](images/app-clock.gif)
+## Clock
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/sample/app/clock.gif?raw=true)
+
 ```C++
 # include <Siv3D.hpp>
 
@@ -922,7 +931,8 @@ void Main()
 
 
 ## JPEG Glitch
-<video src="../images/app-jpeg-glitch.mp4" autoplay loop muted></video>
+<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/sample/app/jpeg-glitch.mp4?raw=true" autoplay loop muted></video>
+
 ```C++
 # include <Siv3D.hpp>
 
@@ -966,8 +976,8 @@ void Main()
 ```
 
 
-## マイクで入力した音の周波数解析
-![](images/app-microphone-fft.gif)
+## FFT from microphone
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/sample/app/microphone-fft.gif?raw=true)
 ```C++
 # include <Siv3D.hpp>
 
@@ -1009,7 +1019,8 @@ void Main()
 
 
 ## Sketch to P2Body
-<video src="../images/app-sketch-to-p2body.mp4" autoplay loop muted></video>
+<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/sample/app/sketch-to-p2body.mp4?raw=true" autoplay loop muted></video>
+
 ```C++
 # include <Siv3D.hpp>
 
@@ -1095,6 +1106,38 @@ void Main()
 		texture.draw();
 
 		camera.draw();
+	}
+}
+```
+
+
+## Image viwer
+<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/sample/app/image-viewer.mp4?raw=true" autoplay loop muted></video>
+
+```C++
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Texture texture;
+
+	while (System::Update())
+	{
+		// ファイルがドロップされた
+		if (DragDrop::HasNewFilePaths())
+		{
+			// ファイルを画像として読み込めた
+			if (const Image image{ DragDrop::GetDroppedFilePaths().front().path })
+			{
+				// 画面のサイズに合うように画像を拡大縮小
+				texture = Texture(image.fitted(Scene::Size()));
+			}
+		}
+
+		if (texture)
+		{
+			texture.drawAt(Scene::Center());
+		}
 	}
 }
 ```
