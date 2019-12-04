@@ -4,7 +4,8 @@
 ## XInput 対応コントローラ
 PC に接続されている XInput 対応コントローラには `XInput` を通してアクセスできます。
 
-<video src="../images/gamepad-xbox.mp4" autoplay loop muted></video>
+<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/reference/gamepad/xbox.mp4?raw=true" autoplay loop muted></video>
+
 ```C++
 # include <Siv3D.hpp>
 
@@ -123,7 +124,7 @@ void Main()
 ## Joy-Con
 PC に接続されている Nintendo Switch の Joy-Con の情報は `JoyConL` または `JoyConR` を通して取得できます。
 
-<video src="../images/gamepad-joycon.mp4" autoplay loop muted></video>
+<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/reference/gamepad/joycon.mp4?raw=true" autoplay loop muted></video>
 
 ```C++
 # include <Siv3D.hpp>
@@ -197,7 +198,7 @@ void Main()
 ## Pro コントローラー
 PC に接続されている Nintendo Switch の Pro コントローラーの情報は `ProController` を通して取得できます。
 
-![](images/gamepad-procon.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/reference/gamepad/procon.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -242,7 +243,7 @@ void Main()
 ## ゲームパッド
 あらゆる種類のゲームパッドの情報を取得できる汎用的なクラスが `Gamepad` です。ユーザインデックスは `Gamepad.MaxUserCount - 1` で定義される 15 が最大値です。
 
-![](images/gamepad-gamepad.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/reference/gamepad/gamepad.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>

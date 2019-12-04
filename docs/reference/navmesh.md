@@ -2,7 +2,8 @@
 # NavMesh
 
 ## 2D マップの作成と NavMesh
-<video src="../images/app-2d-navmesh.mp4" autoplay loop muted></video>
+<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/reference/navmesh/2d.mp4?raw=true" autoplay loop muted></video>
+
 ```C++
 # include <Siv3D.hpp>
 

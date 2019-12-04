@@ -4,7 +4,7 @@
 ## ワールドテンプレート 1
 クリックしたところにボールが発生するシンプルな物理演算ワールドです。
 
-<video src="../images/2d-physics-template1.mp4" autoplay loop muted></video>
+<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/reference/2d-physics/template1.mp4?raw=true" autoplay loop muted></video>
 
 ```C++
 # include <Siv3D.hpp>
@@ -74,7 +74,8 @@ void Main()
 
 
 ## 鉄球による破壊
-<video src="../images/2d-physics-0.mp4" autoplay loop muted></video>
+<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/reference/2d-physics/1.mp4?raw=true" autoplay loop muted></video>
+
 ```C++
 # include <Siv3D.hpp>
 
