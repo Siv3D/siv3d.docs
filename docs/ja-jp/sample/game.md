@@ -3,7 +3,7 @@ description: OpenSiv3D ゲームプログラムのサンプル
 # ゲーム
 
 ## ブロックくずし
-![](images/game-breakout.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/sample/game/breakout.gif?raw=true)
 ```C++
 # include <Siv3D.hpp>
 
@@ -90,7 +90,7 @@ void Main()
 ```
 
 ## ピンボール
-![](images/game-pinball.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/sample/game/pinball.gif?raw=true)
 ```C++
 # include <Siv3D.hpp>
 
@@ -289,7 +289,8 @@ void Main()
 ```
 
 ## 絵文字タワー
-<video src="../images/game-emoji-tower.mp4" autoplay loop muted></video>
+<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/sample/game/emoji-tower.mp4?raw=true" autoplay loop muted></video>
+
 ```C++
 # include <Siv3D.hpp>
 
@@ -375,7 +376,8 @@ void Main()
 
 
 ## シューティングゲーム
-<video src="../images/game-shooter.mp4" autoplay loop muted></video>
+<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/sample/game/shooter.mp4?raw=true" autoplay loop muted></video>
+
 ```C++
 # include <Siv3D.hpp>
 
@@ -629,7 +631,8 @@ void Main()
 
 
 ## 15 パズル
-<video src="../images/game-15puzzle.mp4" autoplay loop muted></video>
+<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/sample/game/15puzzle.mp4?raw=true" autoplay loop muted></video>
+
 ```C++
 # include <Siv3D.hpp>
 
@@ -726,7 +729,8 @@ void Main()
 
 
 ## 数つなぎ
-<video src="../images/game-number-chain.mp4" autoplay loop muted></video>
+<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/sample/game/number-chain.mp4?raw=true" autoplay loop muted></video>
+
 ```C++
 # include <Siv3D.hpp>
 
