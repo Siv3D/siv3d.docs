@@ -1,8 +1,8 @@
 
-# 2D geometry
+# 2D Geometry
 
 ## ハウスドルフ距離
-![](images/2d-geometry-hausdorf.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/reference/2d-geometry/hausdorf.gif?raw=true)
 ```C++
 # include <Siv3D.hpp>
 
@@ -53,7 +53,7 @@ void Main()
 
 
 ## 図形の重なる領域
-![](images/2d-geometry-and.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/reference/2d-geometry/and.gif?raw=true)
 ```C++
 # include <Siv3D.hpp>
 
@@ -80,7 +80,7 @@ void Main()
 ```
 
 ## 図形の引き算
-![](images/2d-geometry-subtract.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/reference/2d-geometry/subtract.gif?raw=true)
 ```C++
 # include <Siv3D.hpp>
 
@@ -108,7 +108,7 @@ void Main()
 
 
 ## 点群の凸包
-![](images/2d-geometry-convexhull-points.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/reference/2d-geometry/convexhull-points.gif?raw=true.gif)
 ```C++
 # include <Siv3D.hpp>
 
@@ -141,7 +141,7 @@ void Main()
 
 
 ## Polygon の凸包
-![](images/2d-geometry-convexhull-polygon.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/reference/2d-geometry/convexhull-polygon.png?raw=true)
 ```C++
 # include <Siv3D.hpp>
 
@@ -163,7 +163,8 @@ void Main()
 
 
 ## Polygon の拡張
-![](images/2d-geometry-append.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/reference/2d-geometry/append.gif?raw=true)
+
 ```C++
 # include <Siv3D.hpp>
 
@@ -193,7 +194,8 @@ void Main()
 
 
 ## Polygon の太らせ、細らせ
-![](images/2d-geometry-buffer.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/reference/2d-geometry/buffer.gif?raw=true)
+
 ```C++
 # include <Siv3D.hpp>
 
