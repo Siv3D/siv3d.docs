@@ -72,7 +72,7 @@ void Main()
 
 	TCPClient client;
 	client.connect(ip, port);
-	Window::SetTitle(U"TCPServer: Waiting for connection...");
+	Window::SetTitle(U"TCPClient: Waiting for connection...");
 
 	Point serverPlayerPos(0, 0);
 
