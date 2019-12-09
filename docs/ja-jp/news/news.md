@@ -1,0 +1,26 @@
+description: Siv3D Web サイトの更新情報
+
+
+##### 2019-12-09
+- Linux の一部環境で v0.4.2 のビルドに失敗する問題を修正
+- OpenSiv3D 実装会 #41 (2020-1-12 @東京工業大学) の参加登録を開始
+
+##### 2019-12-08
+- OpenSiv3D 実装会 #40 を早稲田大学で開催
+
+##### 2019-12-07
+- [Siv3D 実装会 in 仙台 (2020)](https://connpass.com/event/158509/) (2020-01-25 (土) 開催) の参加登録を開始
+
+##### 2019-12-04
+- Siv3D の [ロゴ画像](https://siv3d.github.io/ja-jp/logo/logo/) ページを作成
+- Siv3D の [マスコット](https://siv3d.github.io/ja-jp/mascot/mascot/) ページを作成
+- [OpenSiv3D v0.4.2 ゲームプロジェクトテンプレート](https://github.com/Siv3D/GameTemplate) をリリース
+
+##### 2019-12-02
+- [OpenSiv3D v0.4.2](https://github.com/Siv3D/OpenSiv3D) をリリース | [新機能紹介](https://siv3d.github.io/ja-jp/news/v042/)
+- Visual Studio 2019 **16.4** では、v0.4.2 よりも古い OpenSiv3D がビルドエラーになり使用できません
+
+##### 2019-12-01 
+- お知らせページを作成
+- [Siv3D Advent Calendar 2019](https://qiita.com/advent-calendar/2019/siv3d) がスタート
+
