@@ -9,7 +9,7 @@ description: Siv3D Web サイトの更新情報
 - OpenSiv3D 実装会 #40 を早稲田大学で開催
 
 ##### 2019-12-07
-- [Siv3D 実装会 in 仙台 (2020)](https://connpass.com/event/158509/) (2020-01-25 (土) 開催) の参加登録を開始
+- [Siv3D 勉強会 in 仙台 (2020)](https://connpass.com/event/158509/) (2020-01-25 (土) 開催) の参加登録を開始
 
 ##### 2019-12-04
 - Siv3D の [ロゴ画像](https://siv3d.github.io/ja-jp/logo/logo/) ページを作成
