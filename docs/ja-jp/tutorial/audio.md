@@ -131,7 +131,7 @@ void Main()
 ## 13.5 再生位置を取得する
 オーディオの合計再生時間（秒）は `.lengthSec()`, 合計再生サンプルは `.samples()` で取得できます。現在の再生位置を `.posSec()` では秒、 `.posSample()` ではサンプル数で取得できます。再生位置より少し先行するバッファ送信済みのサンプル位置を `.streamPosSample()` で取得できます。
 
-![](images/13-5-0.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/13/5-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -162,7 +162,7 @@ void Main()
 ## 13.6 再生位置を変更する
 再生位置を変更するには、`.setPosSample()` で移動先の位置をサンプル単位で指定するか、`.setPosSec()` 移動先の位置を時間（秒）で指定します。
 
-![](images/13-6-0.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/13/6-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>

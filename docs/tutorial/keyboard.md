@@ -35,7 +35,7 @@
 | 離した瞬間    |      |         | ✔  |
 | 離され続けている |      |         |    |
 
-![](images/11-1-0.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/11/1-0.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -84,7 +84,7 @@ void Main()
 ## 11.2 キーが押されている時間
 `Key::pressedDuration()` は、そのキーが押され続けている時間を `Duration` 型の値で返します。
 
-![](images/11-2-0.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/11/2-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -103,7 +103,7 @@ void Main()
 ## 11.3 キーの名前
 `Key::name()` は、そのキーの名前を `String` 型の値で返します。
 
-![](images/11-3-0.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/11/3-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -166,7 +166,7 @@ void Main()
 ## 11.5 テキスト入力
 `TextInput::UpdateText()` に `String` 型の変数を渡すことで、テキスト入力を処理できます。
 
-![](images/11-5-0.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/11/5-0.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>

@@ -8,7 +8,7 @@
 
 次のプログラムは、クリックした場所に、時間とともに大きくなる輪を発生させるエフェクトを実装したものです。
 
-<video src="../images/16-1-0.mp4" autoplay loop muted></video>
+<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/16/1-0.mp4?raw=true" autoplay loop muted></video>
 
 ```C++
 # include <Siv3D.hpp>
@@ -93,7 +93,7 @@ void Main()
 ## 16.2 少しこだわったエフェクト
 イージングと組み合わせることもできます。
 
-<video src="../images/16-2-0.mp4" autoplay loop muted></video>
+<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/16/2-0.mp4?raw=true" autoplay loop muted></video>
 
 ```C++
 # include <Siv3D.hpp>
@@ -149,7 +149,7 @@ void Main()
 ## 16.3 上昇する文字
 フォントを使ったエフェクトの例です。
 
-<video src="../images/16-3-0.mp4" autoplay loop muted></video>
+<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/16/3-0.mp4?raw=true" autoplay loop muted></video>
 
 ```C++
 # include <Siv3D.hpp>
@@ -200,7 +200,7 @@ void Main()
 ## 16.4 飛び散る破片
 一つのエフェクトで複数の図形を描く例です。
 
-<video src="../images/16-4-0.mp4" autoplay loop muted></video>
+<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/16/4-0.mp4?raw=true" autoplay loop muted></video>
 
 ```C++
 # include <Siv3D.hpp>
@@ -261,7 +261,7 @@ void Main()
 ## 16.5 エフェクトの一時停止と消去
 `Effect::pause()` でエフェクトの更新を一時停止、`Effect::resume()` でエフェクトの更新を再開、`Effect::clear()` でエフェクトをすべて消去します。
 
-<video src="../images/16-5-0.mp4" autoplay loop muted></video>
+<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/16/5-0.mp4?raw=true" autoplay loop muted></video>
 
 ```C++
 # include <Siv3D.hpp>

@@ -7,7 +7,7 @@ description: OpenSiv3D のチュートリアル
 ## 15.1 加算ブレンド
 `ScopedRenderStates2D` オブジェクトのコンストラクタに `BlendState::Additive` を渡すと、そのオブジェクトのスコープが有効な間、図形や画像が加算ブレンドで描画されます。加算ブレンドでは、背景色に RGB 成分を加算するように描画されるので、重ねて描画した部分が明るくなります。
 
-<video src="../images/15-1-0.mp4" autoplay loop muted></video>
+<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/15/1-0.mp4?raw=true" autoplay loop muted></video>
 
 ```C++
 # include <Siv3D.hpp>
@@ -54,7 +54,7 @@ void Main()
 ## 15.2 描画時に色を加算
 画像や図形を描くときに、本来の色に RGBA 成分を加算して描画するには、`ScopedColorAdd2D` オブジェクトのコンストラクタに、加算したい値を設定します。そのオブジェクトのスコープが有効な間、描画の RGBA 値が加算されます。
 
-<video src="../images/15-2-0.mp4" autoplay loop muted></video>
+<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/15/2-0.mp4?raw=true" autoplay loop muted></video>
 
 ```C++
 # include <Siv3D.hpp>
@@ -88,7 +88,7 @@ void Main()
 
 なお、`.draw()` に色を渡すことで、個別に乗算の色を設定することもできます（チュートリアル 5.10 参照）。`ScopedColorMul2D` はその設定を一括して適用できるものです。
 
-<video src="../images/15-3-0.mp4" autoplay loop muted></video>
+<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/15/3-0.mp4?raw=true" autoplay loop muted></video>
 
 ```C++
 # include <Siv3D.hpp>
@@ -120,7 +120,7 @@ void Main()
 ## 15.4 テクスチャサンプリングのフィルタ
 テクスチャを拡大縮小して描画する際に、デフォルトでは線形補間によって色が滑らかに補間されます。ドット感を保ったまま拡大したいときにはサンプラーステート `SamplerState::ClampNearest` を `ScopedRenderStates2D` で設定します。
 
-![](images/15-4-0.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/15/4-0.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -155,7 +155,7 @@ void Main()
 ## 15.5 ビューポート
 `ScopedViewport2D` オブジェクトを作成すると、シーン内に仮想のシーンを作り、新しい長方形の描画領域を定義できます。描画時にはビューポートの長方形の左上が (0, 0) の描画座標になり、長方形の範囲外にはみ出たものは描画されなくなります。ビューポートは描画の座標にしか影響を及ぼさないので、マウスカーソルの座標も同様に移動させたい場合には、後述する `Transformer2D` と組み合わせます。
 
-![](images/15-5-0.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/15/5-0.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -211,7 +211,7 @@ void Main()
 
 座標変換行列を `Mat3x2` によって定義し、`Transformer2D` オブジェクトのコンストラクタに値を設定します。オブジェクトのスコープが有効な間、その行列による座標変換が描画やマウスカーソルに適用されます。
 
-<video src="../images/15-6-0.mp4" autoplay loop muted></video>
+<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/15/6-0.mp4?raw=true" autoplay loop muted></video>
 
 ```C++
 # include <Siv3D.hpp>
@@ -337,7 +337,7 @@ void Main()
 ### Transformer2D の効果の乗算
 `Transformer2D` の効果が適用されているときに新しい `Transformer2D` を作成すると、座標変換の効果が乗算されます。次のプログラムでは、重ねがけによって複雑な動きを実現しています。
 
-![](images/15-6-1.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/15/6-1.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -375,7 +375,7 @@ void Main()
 
 `Camera2D::draw()` ではマウスでのカメラ操作を補助する矢印 UI を表示します。
 
-<video src="../images/15-7-0.mp4" autoplay loop muted></video>
+<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/15/7-0.mp4?raw=true" autoplay loop muted></video>
 
 ```C++
 # include <Siv3D.hpp>
@@ -428,7 +428,7 @@ void Main()
 ## 15.8 ワイヤフレームモードで描画
 `ScopedRenderStates2D` オブジェクトのコンストラクタに `RasterizerState::WireframeCullNone` を渡すと、図形や画像を構成するポリゴンのワイヤフレームのみが描画されるようになります。
 
-![](images/15-8-0.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/15/8-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -457,7 +457,7 @@ void Main()
 
 `Texture::mapped()` によって、指定したサイズだけテクスチャをくり返しマッピングするような `TextureRegion` を作成できます。それをサンプラーステート `SamplerState::RepeatLinear` が適用されている状態で `.draw()` すると、テクスチャの内容がくり返しマッピングされて描画されます。
 
-![](images/15-9-0.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/15/9-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -488,7 +488,7 @@ void Main()
 ### Scoped～ のはたらき
 `Scoped～` 系のオブジェクトや `Transformer2D` は、ソースコード上では何も働いていないように見えます。しかし、実際はコンストラクタでレンダーステートを設定し、自身が破棄されるとき（スコープが終了するとき）デストラクタでレンダーステートを最初の状態に戻す処理を行っています。
 
-![](images/15-10-1.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/15/10-1.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>

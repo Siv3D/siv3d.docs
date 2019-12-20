@@ -9,7 +9,7 @@
 !!! info
 	`Cursor::Pos()` で取得できるマウスカーソル座標は、直前の `System::Update()` の呼び出し時点での座標のため、実際画面に見えているマウスカーソルよりも古い座標を示す場合があります。
 
-![](images/12-1-0.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/12/1-0.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -27,7 +27,7 @@ void Main()
 ## 12.2 マウスカーソルの移動量
 直前のフレームからのマウスカーソルの移動量は `Cursor::Delta()` を使うと `Point` 型で取得できます。シーンが拡大縮小されている場合には、`Cursor::DeltaF()` を使うと `Vec2` 型で取得できます。
 
-![](images/12-2-0.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/12/2-0.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -95,7 +95,7 @@ void Main()
 | 離した瞬間    |      |         | ✔  |
 | 離され続けている |      |         |    |
 
-![](images/12-3-0.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/12/3-0.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -116,7 +116,7 @@ void Main()
 ## 12.4 ボタンが押されていた時間
 `Key::pressedDuration()` は、そのボタンが押され続けている時間を `Duration` 型の値で返します。
 
-![](images/12-4-0.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/12/4-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -135,7 +135,7 @@ void Main()
 ## 12.5 マウスホイールの回転量
 直前のフレームからのマウスホイールのスクロール量は、`Mouse::Wheel()` によって `double` 型で取得できます。水平ホイールのスクロール量は、`Mouse::WheelH()` によって `double` 型で取得できます。
 
-![](images/12-5-0.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/12/5-0.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>

@@ -7,7 +7,7 @@ description: OpenSiv3D のチュートリアル
 ## 14.1 半々の確率
 `RandomBool()` は 50% の確率で `true`, 50% の確率で `false` を返します。
 
-![](images/14-1-0.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/14/1-0.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -34,7 +34,7 @@ void Main()
 ## 14.2 確率を指定
 `RandomBool()` には 0.0 ～ 1.0 の範囲で `true` になる確率を指定できます。10% の確率で `true` を返してほしい場合は `0.1` を、25% の確率で `true` を返してほしい場合は `0.25` を渡します。
 
-![](images/14-2-0.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/14/2-0.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -61,7 +61,7 @@ void Main()
 ## 14.3 ランダムな数
 `Random<Type>(max)` は 0 から max までのランダムな数を、`Random<Type>(min, max)` は min から　max の範囲でランダムな数を返します。
 
-![](images/14-3-0.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/14/3-0.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -110,7 +110,7 @@ void Main()
 ## 14.4 ランダムな色
 `RandomColorF()` はランダムな色を `HSV(Random(360.0), 1.0, 1.0)` という式で生成して `ColorF` 型で返します。
 
-![](images/14-4-0.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/14/4-0.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -151,7 +151,7 @@ void Main()
 
 `RandomVec2(double)` は、指定した長さを持つランダムなベクトルを `Vec2` 型で返します。
 
-![](images/14-5-0.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/14/5-0.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -185,7 +185,7 @@ void Main()
 
 `RandomVec2(RectF)` は、指定した長方形の内部のランダムな位置を `Vec2` 型で返します。
 
-![](images/14-5-1.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/14/5-1.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -228,7 +228,7 @@ void Main()
 
 `RandomVec2(Circle)` は、指定した円の内部のランダムな位置を `Vec2` 型で返します。
 
-![](images/14-5-2.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/14/5-2.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -271,7 +271,7 @@ void Main()
 
 `RandomVec2(Triangle)`  は、指定した三角形の内部のランダムな位置を `Vec2` 型で返します。
 
-![](images/14-5-3.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/14/5-3.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -313,7 +313,7 @@ void Main()
 ## 14.6 配列中のランダムな要素
 `Array::choice()` は、配列の中のランダムな要素を返します。
 
-![](images/14-6-0.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/14/6-0.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -342,7 +342,7 @@ void Main()
 ## 14.7 配列中のランダムな複数の要素
 `Array::choice()` に個数を渡すと、配列の中から、重複なくその個数だけランダムな要素を選択し、配列で返します。要素の順番は配列内での順序と同じです。
 
-![](images/14-7-0.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/14/7-0.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -371,7 +371,7 @@ void Main()
 ## 14.8 配列のシャッフル
 `Array::shuffle()` は配列の要素の順番をランダムにシャッフルします。`Array::shuffled()` を使うと、自身は変更せずに、シャッフルした新しい配列を作成して返します。 
 
-![](images/14-8-0.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/14/8-0.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -402,7 +402,7 @@ void Main()
 ## 14.9 ランダムに選択
 `Sample()` を使うと、`{}` で渡した複数の選択肢から要素をランダムに選択できます。
 
-![](images/14-9-0.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/14/9-0.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -424,7 +424,7 @@ void Main()
 
 第 1 引数に個数、第 2 引数に選択肢を渡すこともできます。`Arrai::choice()` の時と同様に、要素の順番は最初に渡された順序と同じです。
 
-![](images/14-9-1.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/14/9-1.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -448,7 +448,7 @@ void Main()
 ## 14.10 出現確率
 確率にバイアスがある複数の選択肢からランダムな結果を選択するときは `DiscreteSample` を使います。選択肢を配列で、選択肢の確率分布を `DiscreteDistribution` で準備しておく必要があります。確率分布は `double` 型の値で指定し、合計が特定の数になる必要はありません。{1, 6, 3} なら 10%, 60%, 30% と割り振られます。
 
-![](images/14-10-0.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/14/10-0.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
