@@ -292,47 +292,71 @@ description: OpenSiv3D の API 一覧
 ### 関数
 
 #### `Point Cursor::Pos();`
+- 戻り値: (ピクセル)
 
 #### `Point Cursor::PreviousPos();`
+- 戻り値: (ピクセル)
 
 #### `Point Cursor::Delta();`
+- 戻り値: (ピクセル)
 
 #### `Vec2 Cursor::PosF();`
+- 戻り値: 座標
 
 #### `Vec2 Cursor::PreviousPosF();`
+- 戻り値: 座標
 
 #### `Vec2 Cursor::DeltaF();`
+- 戻り値: 座標
 
 #### `Point Cursor::PosRaw();`
+- 戻り値: 座標
 
 #### `Point Cursor::PreviousPosRaw();`
+- 戻り値: 座標
 
 #### `Point Cursor::DeltaRaw();`
+- 戻り値: 座標
 
 #### `Point Cursor::ScreenPos();`
+- 戻り値: 座標
 
 #### `Point Cursor::PreviousScreenPos();`
+- 戻り値: 座標
 
 #### `Point Cursor::ScreenDelta();`
+- 戻り値: 座標
 
 #### `Array<std::pair<Point, uint64>> Cursor::GetBuffer();`
+- 戻り値: Array<std::pair<Point, uint64>>
 
 #### `void Cursor::SetPos(int32 x, int32 y);`
+- x: 
+- y: 
 
 #### `void Cursor::SetPos(const Point& pos);`
+- pos: 
 
 #### `bool Cursor::OnClientRect();`
+- 戻り値: `true`/`false`
 
 #### `const Mat3x2& Cursor::GetLocalTransform();`
+- 戻り値: `Mat3x2`
 
 #### `const Mat3x2& Cursor::GetCameraTransform();`
+- 戻り値: `Mat3x2`
 
 #### `void Cursor::ClipToWindow(bool clip);`
+- clip: 
 
 #### `void Cursor::RequestStyle(CursorStyle style);`
+- style:
 
 #### `void Cursor::SetDefaultStyle(CursorStyle style);`
+- style:
 
 #### `CursorStyle Cursor::GetRequestedStyle();`
+- 戻り値: `CursorStyle`
 
 #### `CursorStyle Cursor::GetDefaultStyle();`
+- 戻り値: `CursorStyle`
