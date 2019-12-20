@@ -309,7 +309,7 @@ description: OpenSiv3D の API 一覧
 
 #### `CursorStyle::Hidden`
 
-#### `CursorStyle::Default = Allow` 
+#### `CursorStyle::Default = Arrow` 
 
 ### 関数
 
