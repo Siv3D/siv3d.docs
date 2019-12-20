@@ -3,7 +3,7 @@ description: OpenSiv3D ビジュアル表現のプログラムのサンプル
 # ビジュアル表現
 
 ## 紙から切り抜いたような描画
-![](images/visual-paper-cut.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/sample/visual/paper-cut.png?raw=true)
 ```C++
 # include <Siv3D.hpp>
 
@@ -48,7 +48,7 @@ void Main()
 
 
 ## 付箋
-![](images/visual-sticky-note.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/sample/visual/sticky-note.png?raw=true)
 ```C++
 # include <Siv3D.hpp>
 
@@ -85,7 +85,7 @@ void Main()
 ```
 
 ## テクスチャの反射
-![](images/visual-2d-reflection.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/sample/visual/2d-reflection.png?raw=true)
 ```C++
 # include <Siv3D.hpp>
 
@@ -121,7 +121,7 @@ void Main()
 
 
 ## テキストの登場
-<video src="../images/visual-text-floatin.mp4" autoplay loop muted></video>
+<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/sample/visual/text-floating.mp4?raw=true" autoplay loop muted></video>
 ```C++
 # include <Siv3D.hpp>
 
@@ -203,7 +203,7 @@ void Main()
 
 
 ## RenderTexture を使って図形や文字の影を描く
-<video src="../images/visual-2d-shadow.mp4" autoplay loop muted></video>
+<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/sample/visual/2d-shadow.mp4?raw=true" autoplay loop muted></video>
 ```C++
 # include <Siv3D.hpp>
 

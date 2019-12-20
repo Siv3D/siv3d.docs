@@ -4,7 +4,7 @@ description: OpenSiv3D で作るゲームランチャーのサンプル
 
 ゲーム展示イベント等で複数のゲームを展示する際に活用できるランチャーです。各ゲームのフォルダから設定ファイルや画像をロードします。Web アプリにも対応します。 
 
-<video src="../images/game-launcher-launcher.mp4" autoplay loop muted></video>
+<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/sample/game-launcher/launcher.mp4?raw=true" autoplay loop muted></video>
 
 ## ランチャーの配置
 1. ランチャーのプログラムをビルドして作成した Launcher.exe が存在するホームディレクトリに、各ゲームのフォルダを配置します

@@ -25,7 +25,7 @@
 開発初期には開発速度が重要です。  
 次のように Main.cpp にすべてのシーンを実装するのもよいでしょう。
 
-<video src="../images/game-template-scene-en.mp4" autoplay loop muted></video>
+<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/sample/game-template/scene-en.mp4?raw=true" autoplay loop muted></video>
 ```C++
 # include <Siv3D.hpp>
 
@@ -243,7 +243,7 @@ void Main()
 
 
 ## Typing game
-![](images/game-template-typing.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/sample/game-template/typing.gif?raw=true)
 ```C++
 # include <Siv3D.hpp>
 
