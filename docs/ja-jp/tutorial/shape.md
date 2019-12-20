@@ -20,7 +20,7 @@ void Main()
 }
 ```
 
-![](images/2010.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/1-0.png?raw=true)
 
 `Circle()` の最後に指定するパラメータは円の半径です。この値を大きくすれば、描画される円も大きくなります。
 
@@ -37,7 +37,7 @@ void Main()
 }
 ```
 
-![](images/2011.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/1-1.png?raw=true)
 
 
 円がマウスカーソルの座標に連動して動くようにしてみましょう。`Circle()` の最初に指定するパラメータは円の中心の X 座標です。この値をマウスカーソルの X 座標にしてみます。
@@ -54,7 +54,7 @@ void Main()
 }
 ```
 
-![](images/2012.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/1-2.gif?raw=true)
 
 マウスカーソルに追従して、円が左右に動くようになりました。
 
@@ -75,7 +75,7 @@ void Main()
 }
 ```
 
-![](images/2013.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/1-3.gif?raw=true)
 
 Siv3D で X 座標、Y 座標 2 つの値を受け取る関数は、多くの場合、1 つの Point 型を受け取る別バージョンの関数（オーバーロード）を提供しているケースがよくあります。`Circle` も、「X 座標」「Y 座標」「半径」の 3 つの引数ではなく、「中心座標 (`Point` 型)」「半径」の 2 つの引数を受け取るオーバーロードがあります。これを使うと、先ほど同じはたらきをするコードを短く書けます。
 
@@ -155,7 +155,7 @@ void Main()
 }
 ```
 
-![](images/2020.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/2-0.gif?raw=true)
 
 
 ## 2.3 背景の色を変える
@@ -175,7 +175,7 @@ void Main()
 }
 ```
 
-![](images/2030.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/3-0.gif?raw=true)
 
 背景色の変更にコストはかからないので、背景色は毎フレーム変更しても大丈夫です。プログラムの経過時間（秒）を `Scene::Time()` で取得して、時間に応じて背景色の色相を変化させてみましょう。
 
@@ -193,7 +193,7 @@ void Main()
 }
 ```
 
-![](images/2031.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/3-1.gif?raw=true)
 
 ## 2.4 長方形を描く
 長方形を描くときは `Rect` を作成して `.draw()` します。
@@ -223,7 +223,7 @@ void Main()
 }
 ```
 
-![](images/2040.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/4-0.gif?raw=true)
 
 図形は `draw()` した順番に描画されます。このプログラムでは、マウスカーソルに追従する赤い正方形よりも、画面の下にある水色の大きな長方形が上に来ます。
 
@@ -232,7 +232,7 @@ void Main()
 ## 2.5 枠を描く
 図形は、`.draw()` の代わりに `.drawFrame()` することで、枠だけを描けます。`.drawFrame()` の第 1 引数には図形の内側方向への太さを、第 2 引数には外側方向への太さを指定します。図形の `.draw()` や `.drawFrame()` の戻り値はその図形自身なので、`rect.draw().drawFrame()` のように関数を続けて書くこともできます。
 
-![](images/2050.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/5-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -296,7 +296,7 @@ void Main()
 ## 2.6 線分を描く
 始点と終点を指定して線分を描くときは `Line` を作成して `.draw()` します。`.draw()` のパラメータには描画する線分の太さと色を指定します。線分の両端を丸くしたり、点線にしたりするなど、スタイルの変更もできます。
 
-![](images/2060.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/6-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -334,7 +334,7 @@ Siv3D における角度は、`2π = 360°` のラジアン角で表現します
 
 X 座標と Y 座標の組は `Point` 型や `Vec2` 型で表現できます。`Point` 型は各成分が `int32` 型で、`Vec2` 型は `double` 型です。
 
-![](images/2070.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/7-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -365,9 +365,9 @@ void Main()
 ## 2.8 凸な四角形を描く
 `Rect` や `RectF` では、各辺が水平垂直な長方形しか定義できませんでしたが、`Quad` を使うと 4 つの頂点座標を時計回りに指定して四角形を定義できます。ただし、`Quad` で定義される四角形は 180° 以上の内角を含まない形状（すべての角が凸）である必要があります。凹角を含む四角形を定義したい場合は 2.12 で出てくる `Polygon` 型を使います。
 
-![](images/2080.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/8-0.png?raw=true)
 
-![](images/2081.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/8-1.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -387,7 +387,7 @@ void Main()
 
 `Rect` や `RectF` を作成し、`.rotated()` または `.rotatedAt()` を使うと、回転した長方形を `Quad` 型として作成できます。その `Quad` を `.draw()` する一連の操作を次のように 1 行で書けます。また、`Rect::pos` は `Rect` の左上の座標を `Point` 型で、`RectF::pos` は `RectF` の左上の座標を `Vec2` 型で表すメンバ変数です。
 
-![](images/2082.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/8-2.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -411,7 +411,7 @@ void Main()
 
 `Rect` や `RectF` を作成し、`.shearedX()` または `.shearedY()` を使うと、辺をスライドさせた平行四辺形を `Quad` 型として作成できます。
 
-![](images/2083.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/8-3.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -435,7 +435,7 @@ void Main()
 ## 2.9 楕円を描く
 楕円を描くときは `Ellipse` を作成して `.draw()` します。中心の座標と X 軸方向の半径、Y 軸方向の半径を指定して `Ellipse` を作成します。
 
-![](images/2090.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/9-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -457,7 +457,7 @@ void Main()
 ## 2.10 角丸長方形を描く
 角が丸い長方形を描くには、`RoundRect` を作成して `.draw()` します。`RectF` と同じパラメータに加えて、最後に角の曲線の半径を指定します。`Rect` や `RectF` の `.rounded()` メンバ関数を使って、`Rect` や `RectF` から `RoundRect` を作成することもできます。
 
-![](images/2100.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/10-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -499,7 +499,7 @@ void Main()
 | Shape2D::RectBalloon | 長方形の吹き出し | `const RectF& rect, const Vec2& target, double pointingRootRatio = 0.5`                       |
 | Shape2D::Stairs      | 階段形      | `const Vec2& base, double w, double h, uint32 steps, bool upStairs = true`                    |
 
-![](images/2110.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/11-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -547,7 +547,7 @@ void Main()
 ## 2.12 自由に多角形を描く
 `Shape2D` では表現できない多角形を描くには `Polygon` を作成して `.draw()` します。`Polygon` オブジェクトの作成には、メモリの確保や三角形分割の計算に少しだけ実行時コストがかかるため、ループの内側で作成するのは避けるべきです。`Polygon` を作成するときは、各頂点の座標を時計回りに指定します。
 
-![](images/2120.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/12-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -568,7 +568,7 @@ void Main()
 
 穴の開いた `Polygon` を作るには、外周の時計回りの頂点座標リスト (`Array<Vec2>` 型) と、穴の形状の「反時計回り」の頂点座標リストの配列 (`Array<Array<Vec2>>` 型) から `Polygon` を作成します。
 
-![](images/2121.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/12-1.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -592,7 +592,7 @@ void Main()
 ## 2.13 連続した線分を描く
 連続した線分を描くには、`Vec2` 型の頂点の配列から `LineString` を作成して `.draw()` します。`.drawClosed()` では終点と始点を結んだ線も描画されます。
 
-![](images/2130.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/13-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -628,7 +628,7 @@ void Main()
 ## 2.14 Catmull-Rom スプライン曲線を描く
 `LineString` を描く際、`.drawCatmullRom()` または `.drawCatmullRomClosed()` することで、各頂点を必ず通る Catmull-Rom スプライン曲線を描けます。サンプルプログラムでは示していませんが、曲線計算時の品質（分割数）を指定する引数も用意されていて、デフォルトでは `24` になっています。
 
-![](images/2140.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/14-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -664,7 +664,7 @@ void Main()
 ## 2.15 ベジェ曲線を描く
 2 次ベジェ曲線を描きたいときは `Bezier2`, 3 次ベジェ曲線を描きたいときは `Bezier3` を作成して `.draw()` します。サンプルプログラムでは示していませんが、曲線計算時の品質（分割数）を指定する引数も用意されていて、デフォルトでは `24` になっています。
 
-![](images/2150.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/15-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -687,7 +687,7 @@ void Main()
 
 ## 2.16 矢印を描く
 
-![](images/2160.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/16-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -711,7 +711,7 @@ void Main()
 ## 2.17 扇形を描く
 扇形を描くには、扇形をつくる円 `Circle` を作成し、`.drawPie()` の引数に、12 時の方向を 0° とした時計回りの開始角度と、扇の角の大きさを指定します。`.drawPie()` が元の図形を返すことを利用して、`drawPie().drawPie()` のようにつなげて書くこともできます。
 
-![](images/2170.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/17-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -734,7 +734,7 @@ void Main()
 ## 2.18 円弧を描く
 円弧を描くには、円弧をつくる円 `Circle` を作成し、`.drawArc()` の引数に、12 時の方向を 0° とした時計回りの開始角度と、扇の角の大きさ、弧の内側方向の太さ、外側方向の太さを指定します。
 
-![](images/2180.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/18-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -759,7 +759,7 @@ void Main()
 
 多くの図形クラスが `.movedBy()` メンバ関数を持ち、自身の座標を指定したベクトルで平行移動した図形を作成して返します。また、`Rect` や `Circle`, `Line` など一部の図形クラスは `.stretched()` メンバ関数を持ち、自身の幅や高さを変更した図形を作成して返します。
 
-![](images/2190.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/19-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -794,7 +794,7 @@ void Main()
 
 `Polygon` は自身を拡大縮小した新しい `Polygon` を返す `.scaled()` や、回転した `Polygon` を返す `.rotated()`, `.rotatedAt()` などのメンバ関数を持ちます。また、`Shape2D` は `Polygon` に変換可能です。
 
-![](images/2191.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/19-1.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -825,7 +825,7 @@ void Main()
 ## 2.20 円/長方形/角丸長方形の影
 `Rect`, `RectF`, `Circle`, `RoundRect` は、影を描画する `.drawShadow()` メンバ関数を持っています。第 1 引数で影の位置のオフセット、第 2 引数でぼかしの大きさ、第 3 引数で影の大きさのオフセット、第 4 引数で影の色を指定できます。影は塗りつぶしで描かれるため、影のあとに図形を描く必要があります。
 
-![](images/2200.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/20-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -872,7 +872,7 @@ void Main()
 ## 2.21 グラデーション
 `Line` や `Triangle`, `Rect`, `RectF`, `Quad` には、頂点ごとに色を指定し、グラデーションで塗りつぶすオプションがあります。
 
-![](images/2210.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/2/21-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>

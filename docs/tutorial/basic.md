@@ -96,7 +96,7 @@ void Main()
 ```
 `Print` に向かって、出力の記号 `<<` でテキストを送ると、そのテキストが画面に表示されます。
 
-![](images/1050.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/1/5-0.png?raw=true)
 
 !!! 文法
     テキストをプログラムに登場させるときは `" "` で囲みます。Siv3D ではさらに、日本語を扱いやすい UTF-32 という形式でテキストデータを扱うため、`"` の先頭には `U` というプレフィックスを付けます。
@@ -129,7 +129,7 @@ void Main()
 }
 ```
 
-![](images/1060.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/1/6-0.png?raw=true)
 
 ## 1.7 Print したものを消す
 `Print` した内容は蓄積されるので、次のように `Print` をメインループの中で使うと、毎フレーム新しいメッセージが追加されて、古いメッセージを画面の外に追いやります。画面からあふれたメッセージは自動的に消えるので、`Print` のし過ぎを心配する必要はありません。
@@ -150,7 +150,7 @@ void Main()
 }
 ```
 
-![](images/1070.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/1/7-0.png?raw=true)
 
 メッセージが画面外に消えるのを待たずに、プログラムを使って消去したいときには `ClearPrint` 関数を使います。プログラムのメインループの先頭で `ClearPrint` すると、その時点で蓄積されていたメッセージが全部消去され、つねに最新の `Print` した内容だけが表示されるようになります。
 
@@ -200,4 +200,4 @@ void Main()
 }
 ```
 
-![](images/1080.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/1/8-0.gif?raw=true)
