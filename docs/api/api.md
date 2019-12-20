@@ -289,6 +289,28 @@ description: OpenSiv3D の API 一覧
 
 ## マウスカーソル (Cursor)
 
+### 定数
+
+#### `enum class CursorStyle`
+
+#### `CursorStyle::Arrow`
+
+#### `CursorStyle::IBeam`
+
+#### `CursorStyle::Cross`
+
+#### `CursorStyle::Hand`
+
+#### `CursorStyle::NotAllowed`
+
+#### `CursorStyle::ResizeUpDown`
+
+#### `CursorStyle::ResizeLeftRight`
+
+#### `CursorStyle::Hidden`
+
+#### `CursorStyle::Default = Allow` 
+
 ### 関数
 
 #### `Point Cursor::Pos();`
