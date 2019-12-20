@@ -294,31 +294,31 @@ description: OpenSiv3D の API 一覧
 #### `enum class CursorStyle`
 マウスカーソルの形状を表します。
 
-#### `CursorStyle::Arrow`
+##### `CursorStyle::Arrow`
 通常の矢印カーソルです。
 
-#### `CursorStyle::IBeam`
+##### `CursorStyle::IBeam`
 テキスト入力時に使う I の形をしたカーソルです。
 
-#### `CursorStyle::Cross`
+##### `CursorStyle::Cross`
 十字型のカーソルです。
 
-#### `CursorStyle::Hand`
+##### `CursorStyle::Hand`
 人差し指を伸ばした手のアイコンのカーソルです。
 
-#### `CursorStyle::NotAllowed`
+##### `CursorStyle::NotAllowed`
 禁止マークのアイコンのカーソルです。
 
-#### `CursorStyle::ResizeUpDown`
+##### `CursorStyle::ResizeUpDown`
 上下へのリサイズ操作を表現するカーソルです。
 
-#### `CursorStyle::ResizeLeftRight`
+##### `CursorStyle::ResizeLeftRight`
 左右へのリサイズ操作を表現するカーソルです。
 
-#### `CursorStyle::Hidden`
+##### `CursorStyle::Hidden`
 マウスカーソルを非表示にします。
 
-#### `CursorStyle::Default = Arrow` 
+##### `CursorStyle::Default = Arrow` 
 デフォルトのマウスカーソルです。デフォルト値は `CursorStyle::Arrow` です。
 
 ### 関数
