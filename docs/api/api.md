@@ -1,6 +1,6 @@
 description: OpenSiv3D の API 一覧
 
-## Scene 名前空間
+## シーン (Scene)
 
 ### 定数
 
@@ -132,7 +132,7 @@ description: OpenSiv3D の API 一覧
 ウィンドウのクライアント領域上の座標をシーン上の座標に変換します。シーンの範囲外の座標になることもあります。
 
 
-## System 名前空間
+## システム　(System)
 
 ### 関数
 
@@ -194,7 +194,7 @@ description: OpenSiv3D の API 一覧
 使用可能な Web カメラの一覧を返します。
 
 
-## Window 名前空間
+## ウィンドウ (Window)
 
 ### 定数
 
@@ -287,7 +287,7 @@ description: OpenSiv3D の API 一覧
 
 フルスクリーンモードの設定をします。`fullscreenResolution` には `unspecified` か `Graphics::GetFullscreenResolutions()` に含まれる値を使います。フルスクリーンモードにする際、`fullscreenResolution` に `unspecified` を指定すると、ディスプレイの解像度（スケーリング適用後）のサイズでフルスクリーンモードに入ります。`unspecified` は切り替えが早く堅牢です。
 
-## Cursor 名前空間
+## マウスカーソル (Cursor)
 
 ### 関数
 
