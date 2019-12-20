@@ -12,14 +12,14 @@ Siv3D では、プログラムで使う画像や音声、テキストなどの�
 ### Windows の場合
 `App/Resource.rc` に、埋め込みファイルのパスを記述します。`App/Resource.rc` をメモ帳など（Visual Studio は不可）の外部のテキストエディタで開き、`Resource(example/windmill.png)` のように、埋め込みたいファイルのパスを、埋め込むファイルごとに追記します。デフォルトでは Siv3D の内部処理に必要な `engine/` フォルダの各種ファイルが記述されています。プロジェクトを再ビルドすると .exe にファイルが埋め込まれます。
 
-![](images/20-1-0.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/20/mac-0.png?raw=true)
 
 ### macOS の場合
 プロジェクトナビゲータにフォルダをドラッグし「Create folder references」を選択すると、プロジェクトナビゲータ上で青いフォルダアイコンになって表示されます。このフォルダ内のファイルはすべて .app に埋め込まれます。デフォルトでは Siv3D の内部処理に必要な `engine/` フォルダが青いアイコンで表示されています。
 
-![](images/20-1-1.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/20/mac-1.png?raw=true)
 
-![](images/20-1-2.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/20/mac-2.png?raw=true)
 
 ### Linux の場合
 Linux 版ではファイルの埋め込みは実装されていません。代わりに、`resources/` フォルダに必要なリソースファイルを格納し、アプリケーションに同梱します。デフォルトでは Siv3D の内部処理に必要な `engine/` フォルダが `resources/` フォルダに格納されています。

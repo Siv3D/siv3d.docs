@@ -13,7 +13,7 @@ CSV ファイルをパースしてデータを読み込むには `CSVData` を�
 
 CSV データは `Array<Array<String>>` の形式で読み込まれ、添え字演算子 `[row][col]` によって row 行 col 列目のテキストを取得できます。row, col は 0 からカウントすることに注意しましょう。
 
-![](images/19-1-0.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/19/csv-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -108,7 +108,7 @@ INI ファイルをパースしてデータを読み込むには `INIData` を�
 
 INI データはセクションごとに `HashTable<String, String>` の形式で読み込まれ、添え字演算子 `[U"SECTION.NAME"]` によってセクション SECTION にある名前 NAME のテキストを取得できます。
 
-![](images/19-2-0.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/19/ini-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -209,7 +209,7 @@ JSON ファイルをパースしてデータを読み込むには `JSONReader` �
 
 JSON データは次のサンプルの `ShowObject()` 関数のようにして再帰的に全要素を走査できます。また、添え字演算子 `[U"NAME1.NAME2.NAME3..."]` によってパスを指定して目的の値を直接得ることもできます。
 
-![](images/19-3-0.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/19/json-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -336,7 +336,7 @@ TOML ファイルをパースしてデータを読み込むには `TOMLReader` �
 
 TOML データは次のサンプルの `ShowObject()` 関数のようにして再帰的に全要素を走査できます。また、添え字演算子 `[U"NAME1.NAME2.NAME3..."]` によってパスを指定して目的の値を直接得ることもできます。
 
-![](images/19-4-0.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/19/toml-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -497,7 +497,7 @@ XML ファイルをパースしてデータを読み込むには `XMLReader` を
 
 XML データは次のサンプルの `ShowElements()` 関数のようにして再帰的に全要素を走査できます。
 
-![](images/19-5-0.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/19/xml-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
