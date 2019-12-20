@@ -292,47 +292,71 @@ description: OpenSiv3D の API 一覧
 ### 関数
 
 #### `Point Cursor::Pos();`
+- 戻り値: 現在のフレームのマウスカーソルの座標 (ピクセル)
 
 #### `Point Cursor::PreviousPos();`
+- 戻り値: 直前のフレームのマウスカーソルの座標 (ピクセル)
 
 #### `Point Cursor::Delta();`
+- 戻り値: 直前のフレームから現在のフレームまでのマウスカーソルの移動量 (ピクセル)
 
 #### `Vec2 Cursor::PosF();`
+- 戻り値: 
 
 #### `Vec2 Cursor::PreviousPosF();`
+- 戻り値: 
 
 #### `Vec2 Cursor::DeltaF();`
+- 戻り値: 
 
 #### `Point Cursor::PosRaw();`
+- 戻り値: 
 
 #### `Point Cursor::PreviousPosRaw();`
+- 戻り値: 
 
 #### `Point Cursor::DeltaRaw();`
+- 戻り値: 
 
 #### `Point Cursor::ScreenPos();`
+- 戻り値: 
 
 #### `Point Cursor::PreviousScreenPos();`
+- 戻り値: 
 
 #### `Point Cursor::ScreenDelta();`
+- 戻り値: 
 
 #### `Array<std::pair<Point, uint64>> Cursor::GetBuffer();`
+- 戻り値: 直近 1 秒間のマウスカーソル座標を古い順に並べた配列
 
 #### `void Cursor::SetPos(int32 x, int32 y);`
+- x: 
+- y: 
 
 #### `void Cursor::SetPos(const Point& pos);`
+- pos: 
 
 #### `bool Cursor::OnClientRect();`
+- 戻り値: マウスカーソルがウィンドウクライアント上にある場合 `true`, それ以外の場合 `false`
 
 #### `const Mat3x2& Cursor::GetLocalTransform();`
+- 戻り値: マウスカーソル座標を変換するために `Transformer2D` によって設定されている行列
 
 #### `const Mat3x2& Cursor::GetCameraTransform();`
+- 戻り値: マウスカーソル座標を変換するために `BasicCamera2D` によって設定されている行列
 
 #### `void Cursor::ClipToWindow(bool clip);`
+- clip: 
 
 #### `void Cursor::RequestStyle(CursorStyle style);`
+- style:
 
 #### `void Cursor::SetDefaultStyle(CursorStyle style);`
+- style:
 
 #### `CursorStyle Cursor::GetRequestedStyle();`
+- 戻り値: 現在のフレームに対してリクエストされたカーソルスタイル
 
 #### `CursorStyle Cursor::GetDefaultStyle();`
+- 戻り値: デフォルトのカーソルスタイル
