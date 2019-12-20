@@ -2,7 +2,7 @@
 # Application
 
 ## Sketch
-![](https://github.com/Siv3D/siv3d.docs.images/blob/master/sample/app/clock.gif?raw=true)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/sample/app/sketch.gif?raw=true)
 ```C++
 # include <Siv3D.hpp>
 
