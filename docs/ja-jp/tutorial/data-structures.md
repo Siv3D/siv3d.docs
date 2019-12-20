@@ -9,7 +9,7 @@ Siv3D で動的配列を扱うときは `Array<Type>` クラステンプレー�
 ### 要素の追加
 `Array` には `<<` 演算子で要素を追加できます。
 
-![](images/6010.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/6/1-0.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -38,7 +38,7 @@ void Main()
 ### 特定の要素にアクセス
 `[]` を使って 0 から始まるインデックスを指定することで、配列の要素にアクセスできます。インデックスを指定する代わりに、`.front()` で先頭の要素に、`.back()` で末尾の要素にアクセスすることもできます。
 
-![](images/6011.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/6/1-1.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -74,7 +74,7 @@ void Main()
 ### 要素の数、要素の削除
 配列の要素数を調べるには `.size()`, 配列の要素をすべて削除するには `.clear()` を使います。
 
-![](images/6012.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/6/1-2.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -110,7 +110,7 @@ void Main()
 ### 配列が空かを調べる
 配列 `a` が要素を持たない（空）であるかは `.isEmpty()` または `if (!a)` で調べられます。要素を持つかは `if (a)` で調べられます。
 
-![](images/6013.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/6/1-3.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -145,7 +145,7 @@ void Main()
 ### 末尾の要素の削除
 配列の末尾の要素を削除するには `.pop_back()` を使います。空の配列に `.pop_back()` を使うとエラーになるので、空かどうかのチェックを忘れないでください。
 
-![](images/6014.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/6/1-4.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -181,7 +181,7 @@ void Main()
 ### 特定の条件を満たす要素の削除
 配列から特定の条件を満たす要素を削除するには、`.remove_if()` に、要素を引数にとり、削除の可否を `bool` 型で返すラムダ式、または関数オブジェクトを渡します。
 
-![](images/6015.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/6/1-5.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -218,7 +218,7 @@ void Main()
 ### イテレータを使った要素の削除
 `.erase()` に特定の要素を指すイテレータを渡すことで、その要素を配列から削除できます。
 
-![](images/6016.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/6/1-6.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -261,7 +261,7 @@ void Main()
 ### 要素数を指定した初期化
 `Array` のコンストラクタ引数に、要素の個数と初期化する値を渡すことができます。
 
-![](images/6017.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/6/1-7.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -291,7 +291,7 @@ void Main()
 
 ### Grid の基本
 
-![](images/6020.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/6/2-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -339,7 +339,7 @@ void Main()
 ### 要素数を指定した初期化
 `Array` のコンストラクタ引数に、グリッドのサイズと初期化する値を渡すことができます。
 
-![](images/6021.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/6/2-1.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -371,7 +371,7 @@ Siv3D では `String` 型を使って文字列を表現します。`String` は�
 
 ### String の基本
 
-![](images/6030.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/6/3-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -466,7 +466,7 @@ void Main()
 
 ### HashTable の基本
 
-![](images/6040.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/6/4-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>

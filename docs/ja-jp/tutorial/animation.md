@@ -12,7 +12,7 @@ description: OpenSiv3D のチュートリアル
 ### Scene::Center()
 画面の中心座標を返す関数です。画面のサイズが 800x600 のときには `Point(400, 300)` を返します。
 
-<video src="../images/3010.mp4" autoplay loop muted></video>
+<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/3/1-0.mp4?raw=true" autoplay loop muted></video>
 
 ```C++
 # include <Siv3D.hpp>
@@ -55,7 +55,7 @@ void Main()
 ### step
 Siv3D に用意されている、ループを短く書ける機能です。`for (auto i : step(N))` は `for (int i = 0; i < N; ++n)`と同じ働きです。
 
-<video src="../images/3011.mp4" autoplay loop muted></video>
+<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/3/1-1.mp4?raw=true" autoplay loop muted></video>
 
 ```C++
 # include <Siv3D.hpp>
@@ -80,9 +80,9 @@ void Main()
 ### OffsetCircular
 円周に沿った動きをつくるのに最適な円座標クラスです。オフセット `offset` と円座標系の動径座標 `r`, 角度座標 θ (`theta`) の 3 つの要素で位置を表現します。シーン上の座標 `offset` を中心とする半径 `r` の円を考え、その円周上で 12 時の方向を 0° として時計回りに `theta` の位置が `OffsetCircular(offset, r, theta)` です。
 
-![](images/3012.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/3/1-2.png?raw=true)
 
-![](images/3013.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/3/1-3.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -125,7 +125,7 @@ void Main()
 ### MouseL.down()
 マウスの左ボタンがクリック（タッチディスプレイの場合は画面がタッチ）されたかを、`if (MouseL.down())` で調べられます。次のサンプルでは、画面上をマウスでクリックするたびに `Stopwatch` をリスタートします。
 
-<video src="../images/3020.mp4" autoplay loop muted></video>
+<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/3/2-0.mp4?raw=true" autoplay loop muted></video>
 
 ```C++
 # include <Siv3D.hpp>
@@ -161,7 +161,7 @@ void Main()
 
 ストップウォッチが計測中かどうかは `if (Stopwatch::isRunning())` で調べられます。ストップウォッチの計測を一時停止するには `Stopwatch::pause()`, 一時停止を解除して計測を再開するには `Stopwatch::resume()` します。
 
-<video src="../images/3021.mp4" autoplay loop muted></video>
+<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/3/2-1.mp4?raw=true" autoplay loop muted></video>
 
 ```C++
 # include <Siv3D.hpp>
@@ -210,7 +210,7 @@ Siv3D で周期的に移動・点滅・拡大縮小するようなアニメー�
 ### Periodic::Square0_1()
 指定した周期で 0.0 か 1.0 を交互に返す関数です。周期は `2s` (2 秒) や `0.5s` (0.5 秒) のように時間リテラルを使って記述します。周期の前半では 1.0 を、残りの半分では 0.0 を返します。
 
-<video src="../images/3030.mp4" autoplay loop muted></video>
+<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/3/3-0.mp4?raw=true" autoplay loop muted></video>
 
 ```C++
 # include <Siv3D.hpp>
@@ -233,7 +233,7 @@ void Main()
 ### Periodic::Triangle0_1()
 0.0 から一定の速度で値が大きくなって 1.0 に、そして一定の速度で小さくなって 0.0 に、という変化を指定した周期で繰り返す関数です。
 
-![](images/3031.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/3/3-1.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -255,7 +255,7 @@ void Main()
 ### Periodic::Sine0_1()
 指定した周期で、0.0～1.0 の範囲で正弦波（サインカーブ）を描く数値の変化を返す関数です。
 
-![](images/3032.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/3/3-2.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -277,7 +277,7 @@ void Main()
 ### Periodic::Sawtooth0_1()
 指定した周期で、0.0 → 1.0 への変化を繰り返す関数です。
 
-![](images/3033.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/3/3-3.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -299,7 +299,7 @@ void Main()
 ### Periodic::Jump0_1()
 指定した周期で、地面からジャンプしたときの速度のような数値変化を繰り返す関数です。
 
-![](images/3034.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/3/3-4.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -326,7 +326,7 @@ void Main()
 ### MouseL.pressed()
 マウスの左ボタンが押されている（タッチディスプレイの場合は画面がタッチされている）かを、`if (MouseL.pressed())` で調べられます。次のサンプルでは、左ボタンが押されていると扇形が大きくなり、離されていると小さくなります。
 
-![](images/3040.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/3/4-0.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -393,7 +393,7 @@ void Main()
 ### 線形補間
 あるベクトル A から別のベクトル B への線形補間は `A.lerp(B, t)` で計算できます。A と B の中間のベクトルは `A.lerp(B, 0.5)` で計算します。
 
-![](images/3050.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/3/5-0.gif?raw=true)
 
 ```C++ hl_lines="20 23"
 # include <Siv3D.hpp>
@@ -428,7 +428,7 @@ void Main()
 ### イージング
 0.0 から 1.0 に一定の割合で値を増加させるだけでは単調な動きになってしまいます。はじめは少しずつ加速し、ゴールに近づくとゆっくりになるといったように、速度に変化を与えると、より洗練された視覚効果を実現できます。0.0 → 1.0 の単調増加を、特徴的なカーブに変換できる **イージング関数** を取り入れて、アニメーションの印象を改善しましょう。
 
-![](images/3051.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/3/5-1.gif?raw=true)
 
 ```C++ hl_lines="23 26"
 # include <Siv3D.hpp>

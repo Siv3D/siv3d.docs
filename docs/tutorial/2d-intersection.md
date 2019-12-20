@@ -6,7 +6,7 @@
 ## 4.1 マウスオーバー
 ある図形 g の領域にマウスカーソルが重なっているかを、`g.mouseOver()` で調べられます。
 
-![](images/4010.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/4/1-0.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -59,7 +59,7 @@ void Main()
 
 ある図形 g が左クリック（またはタッチ）されたかを、`g.leftClicked()` で調べられます。`leftClicked()` は、接触のアクションのうち、最初に接触した瞬間のみを「クリックされた」と判定します。図形を押し続けていても反応はありません。
 
-![](images/4020.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/4/2-0.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -93,7 +93,7 @@ void Main()
 
 ある図形 g が左クリック（またはタッチ）で押されているかを、`g.leftPressed()` で調べられます。`leftClicked()` と異なり、押され続けていれば、最初の接触以降もつねに「押されている」と判定されます。
 
-![](images/4021.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/4/2-1.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -117,7 +117,7 @@ void Main()
 
 2 つの図形 g と h が交差しているかは、`g.intersects(h)` で調べられます。
 
-![](images/4030.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/4/3-0.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -154,7 +154,7 @@ void Main()
 
 ある図形 `g` が別の図形 `h` を完全に内側に含んでいるかは、`g.contains(h)` で調べられます。次のサンプルでは、マウスカーソルに追従する円が長方形や星などの図形の内部に完全に含まれているときに、その図形の色を変更します。
 
-![](images/4040.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/4/4-0.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -188,7 +188,7 @@ void Main()
 ## 4.5 線分と交差する点
 ある図形 `g` と `h` の詳細な交差情報を `g.intersectsAt(h)` で取得できます。次のようなプログラムで、図形が交差する座標を取得できます。
 
-![](images/4050.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/4/5-0.gif?raw=true)
 
 ```C++ hl_lines="18 34 50"
 # include <Siv3D.hpp>
@@ -278,7 +278,7 @@ void Main()
 | CursorStyle::Hidden          | 非表示       |
 | CursorStyle::Default         | Arrow と同じ |
 
-![](images/4060.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/4/6-0.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>

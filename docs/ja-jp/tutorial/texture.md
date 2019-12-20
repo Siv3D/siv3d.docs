@@ -14,7 +14,7 @@ description: OpenSiv3D のチュートリアル
 ### Texture::drawAt()
 `.drawAt()` では、テクスチャの中心をどこに据えるかを画面の座標で指定します。絵文字やアイコンを描く場合はこちらが便利です。
 
-![](images/5010.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/5/1-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -38,7 +38,7 @@ void Main()
 ### Texture::draw()
 `.draw()` では、テクスチャの左上をどこに据えるかを画面の座標で指定します。背景画像や UI などを描くときにはこちらが便利な場合があります。サンプル画像では、わかりやすいよう座標を赤丸で表示し、テクスチャの境界線を白線で表示しています。
 
-![](images/5011.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/5/1-1.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -100,7 +100,7 @@ OpenSiv3D で使える絵文字は約 2,200 種類あります。ここからプ
 ### Texture::scaled()
 `Texture::scaled()` に拡大縮小倍率を指定すると、`Texture` にサイズ情報が付加された `TextureRegion` を作成できます。`TextureRegion` は `Texture` のように `.draw()` または `.drawAt()` できます。`Texture` を作成するのと異なり、既存の `Texture` から `TextureRegion` を作成するのは非常に軽い実行時負荷です。サンプルでは示していませんが、縦横で異なる倍率に設定することもできます。
 
-![](images/5020.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/5/2-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -128,7 +128,7 @@ void Main()
 ### Texture::resized()
 `Texture::resized()` は、拡大縮小後のサイズを倍率ではなくピクセル単位で指定します。Siv3D 標準の絵文字のサイズは幅が 136 ピクセルなので、136 より大きい数を指定すると拡大、小さい数を指定すると縮小表示になります。サンプルでは示していませんが、縦横で異なるサイズに設定することもできます。
 
-![](images/5021.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/5/2-1.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -159,7 +159,7 @@ void Main()
 ### Texture::rotated()
 テクスチャの中心を軸にして回転します。回転角度はラジアンで指定します。
 
-![](images/5030.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/5/3-0.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -179,7 +179,7 @@ void Main()
 ### Texture::roatedAt()
 テクスチャ上の指定した座標を軸にして回転します。Vec2(0, 0) を指定すればテクスチャの左上が軸になります。回転角度はラジアンで指定します。
 
-![](images/5031.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/5/3-1.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -199,7 +199,7 @@ void Main()
 ## 5.4 テクスチャを上下・左右反転して描画する
 `Texture::flipped()` で上下反転、`Texture::mirrored()` で左右反転した `TextureRegion` を作成できます。それぞれ、引数をとらずに反転する関数、引数の `bool` 値が `true` のときだけ反転する関数の 2 種類のオーバーロードがあります。
 
-![](images/5040.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/5/4-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -227,7 +227,7 @@ void Main()
 
 `Icon` のコンストラクタには、 [アイコン一覧](https://fontawesome.com/icons?d=gallery&s=brands,solid&m=free) で調べられる 16 進数コードと、アイコンのサイズ（ピクセル単位）を渡します。
 
-![](images/5050.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/5/5-0.png?raw=true)
 
 ```
 # include <Siv3D.hpp>
@@ -258,7 +258,7 @@ void Main()
 
 テクスチャを描く際、`.draw()` や `.drawAt()` に、左上、右上、右下、左下の 4 つの頂点の色を渡してグラデーションで描くこともできます。
 
-![](images/5051.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/5/5-1.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -295,7 +295,7 @@ void Main()
 ## 5.6 画像ファイルを読み込んで描画する
 画像ファイルから `Texture` を作成するには、`Texture` のコンストラクタ引数に、読み込みたい画像ファイルのパスを渡します。このファイルパスは、実行ファイルがあるフォルダ（開発中は `App` フォルダ）を基準とする相対パスか、絶対パスを使用します。リリース用のアプリを作るときには、のちの章で説明する「リソース」パスの使用を推奨します。
 
-![](images/5060.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/5/6-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -346,7 +346,7 @@ OpenSiv3D v0.4.0 では、7 種類の画像フォーマットの読み込みが�
 
 次のサンプルで、ミップマップの効果を確認できます。ミップマップを作成していない左のテクスチャは、サイズの変化に伴いちらちらしたノイズが発生します。
 
-<video src="../images/5070.mp4" autoplay loop muted></video>
+<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/5/7-0.mp4?raw=true" autoplay loop muted></video>
 
 ```C++
 # include <Siv3D.hpp>
@@ -373,7 +373,7 @@ void Main()
 ## 5.8 テクスチャの一部を描画する
 テクスチャの全部ではなく、特定の長方形の領域だけを描画したい場合は `Texture::operator()` で、テクスチャ上の描画したい領域を指定して `TextureRegion` を作成します。
 
-![](images/5080.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/5/8-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -402,7 +402,7 @@ void Main()
 ## 5.9 図形の形に合わせてテクスチャを描く
 `Rect` や `RectF`, `Circle`, `Quad`, `RoundRect` に合わせる形で、テクスチャ全体やテクスチャの一部領域を描くことができます。
 
-![](images/5090.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/5/9-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -434,7 +434,7 @@ void Main()
 ## 5.10 テクスチャを透過させる
 テクスチャの `.draw()`, `.drawAt()` の引数に色を渡すとその色で乗算して描画されます。色のアルファ成分に応じてテクスチャは透過します。
 
-<video src="../images/5100.mp4" autoplay loop muted></video>
+<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/5/10-0.mp4?raw=true" autoplay loop muted></video>
 
 ```C++
 # include <Siv3D.hpp>
@@ -487,7 +487,7 @@ void Main()
 ### 空のテクスチャ
 空（から）の `Texture` を描画すると、16x16 の黄色いダミー画像になります。
 
-![](images/5110.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/5/11-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>

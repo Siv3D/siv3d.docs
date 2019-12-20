@@ -6,7 +6,7 @@
 ## 7.1 数値から文字列への変換
 `Format()` を使うと、文字列への変換に対応したあらゆるデータを `String` に変換できます。
 
-![](images/7010.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/7/1-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -60,7 +60,7 @@ void Main()
 
 ### 基本
 
-![](images/7020.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/7/2-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -85,7 +85,7 @@ void Main()
 ### インデックスの指定
 `{0}`, `{1}` のように、`_fmt()` の引数のインデックスを指定できます。
 
-![](images/7021.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/7/2-1.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -110,7 +110,7 @@ void Main()
 ### 小数点以下の桁数
 小数点以下 N 桁を変換したい場合は `{:.Nf}` と記述します。指定しなかった場合は有効桁数 6 桁で変換されます。
 
-![](images/7022.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/7/2-2.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -144,7 +144,7 @@ void Main()
 ### パディング
 N 文字の幅になるよう、文字の左にパティング文字 c を挿入したい場合は `{:c>N}` 、右に挿入したい場合は `{:c<N}`, 左右に均等に挿入したい場合は `{:c^N}` と記述します。c を省略した場合半角スペースとみなされます。
 
-![](images/7023.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/7/2-3.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -175,7 +175,7 @@ void Main()
 ### 基数
 `{:X}` は大文字の十六進数、`{:x}` は小文字の十六進数、`{:o}` は八進数、`{:b}` は二進数に変換します。`#` を付けるとプレフィックスが付きます。
 
-![](images/7024.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/7/2-4.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -201,7 +201,7 @@ void Main()
 ### 符号
 `{:+}` は正の値に + 記号を付加し、`{: }` は正の値に半角空白を付加します。
 
-![](images/7025.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/7/2-5.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -229,7 +229,7 @@ void Main()
 
 ### Parse の基本
 
-![](images/7030.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/7/3-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -266,7 +266,7 @@ void Main()
 ### ParseError の捕捉
 複数の `Parse` を使う場合、変換の失敗の検出には例外を使うと便利です。
 
-![](images/7031.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/7/3-1.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
