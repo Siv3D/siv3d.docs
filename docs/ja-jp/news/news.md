@@ -1,5 +1,7 @@
 description: Siv3D Web サイトの更新情報
 
+##### 2019-12-20
+- [API 一覧](https://siv3d.github.io/ja-jp/api/api/) を更新
 
 ##### 2019-12-09
 - Linux の一部環境で v0.4.2 のビルドに失敗する問題を最新 `master` で修正
