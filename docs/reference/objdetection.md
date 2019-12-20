@@ -2,7 +2,7 @@
 # Object detection
 
 ## イラストからの顔検出
-<video src="../images/obj-detection-face0.mp4" autoplay loop muted></video>
+<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/reference/obj-detection/face-0.mp4?raw=true" autoplay loop muted></video>
 <small>IIllustration by 古古米</small>
 ```C++
 # include <Siv3D.hpp>

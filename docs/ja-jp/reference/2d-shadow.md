@@ -5,7 +5,7 @@
 ## シーンと同じサイズの画像に影を焼きこむ
 影を落とす図形の座標や形状が変化しない場合、シーンと同じ大きさの `Image` にあらかじめ影を焼きこむのが最も簡単な方法です。
 
-![](images/2d-shadow-0.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/reference/2d-shadow/0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>

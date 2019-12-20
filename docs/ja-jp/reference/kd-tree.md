@@ -3,7 +3,7 @@
 
 ## 半径による探索と k 近傍法による探索
 
-<video src="../images/kd-tree-0.mp4" autoplay loop muted></video>
+<video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/reference/kd-tree/0.mp4?raw=true" autoplay loop muted></video>
 
 ```C++
 # include <Siv3D.hpp>

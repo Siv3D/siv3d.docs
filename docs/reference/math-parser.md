@@ -4,7 +4,7 @@
 ## 数式の計算
 `Eval()` に数式を渡すと、`double` 型の精度での計算結果を返します。`EvalOpt()` は戻り値の型が `Optional<double>` で、数式にエラーがある場合は `none` を返します。
 
-![](images/math-parser-simple.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/reference/math-parser/0.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>

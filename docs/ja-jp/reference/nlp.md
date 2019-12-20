@@ -5,7 +5,7 @@
 プログラムを実行する前に、モデルデータが含まれる `jumanpp-2.0.0-rc2.tar.xz` を https://github.com/ku-nlp/jumanpp/releases からダウンロード・解凍し、`model` フォルダにある `jumandic.jppmdl` (約 450MB) を、プロジェクトの `nlp/japanese/jumanpp` フォルダ（`README.md` と `LICENSE` が入っているフォルダ）にコピーしておく必要があります。
 
 
-![](images/nlp-japanese.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/reference/nlp/ja-0.gif?raw=true)
 ```C++
 # include <Siv3D.hpp>
 
