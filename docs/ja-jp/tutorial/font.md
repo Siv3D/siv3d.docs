@@ -9,7 +9,7 @@ description: OpenSiv3D のチュートリアル
 
 `Texture` と同じように、`Font` の作成にはメモリ確保などの実行時負荷がかかります。メインループの中で毎フレーム新しい `Font` を作成するのは避け、作成が 1 回だけで済むようにしましょう。
 
-![](images/8010.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/8/1-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -42,7 +42,7 @@ void Main()
 ## 8.2 改行する
 テキストの中に改行文字 `\n` が含まれていると、そこで改行されます。
 
-![](images/8020.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/8/2-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -62,7 +62,7 @@ void Main()
 ## 8.3 フォントのサイズ
 `Font` のコンストラクタの第一引数にはフォントのサイズを指定します。単位はピクセルです。
 
-![](images/8030.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/8/3-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -103,7 +103,7 @@ Siv3D には異なる太さの 7 種類の書体が同梱されています。`F
 !!! info
     Siv3D には「M+ 1p」という書体の 7 種類のウエイトのフォントファイルが同梱されています。
 
-![](images/8040.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/8/4-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -150,7 +150,7 @@ void Main()
 ## 8.5 フォントファイルからフォントを読み込んで使う
 PC 上にあるフォントファイルから `Font` を作成するには、`Font` のコンストラクタの第二引数に、読み込みたいフォントファイルのパスを渡します。このファイルパスは、実行ファイルがあるフォルダ（開発中は App フォルダ）を基準とする相対パスか、絶対パスを使用します。リリース用のアプリを作るときには、のちの章で説明する「リソース」パスの使用を推奨します。
 
-![](images/8050.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/8/5-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -187,7 +187,7 @@ PC にインストールされているフォントは OS ごとに特殊なフ�
 | SpecialFolder::LocalFonts  | (OS):/WINDOWS/Fonts/ | /Library/Fonts/        | (Documents) |
 | SpecialFolder::UserFonts   | (OS):/WINDOWS/Fonts/ | ~/Library/Fonts/       | (Documents) |
 
-![](images/8060.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/8/6-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -226,7 +226,7 @@ void Main()
 ## 8.7 テキストが表示される領域を調べる
 `Font` の `.draw()` や `.drawAt()` は、描画された領域を `Rect` または `RectF` 型で返します。また、`.region()` や `.regionAt()` を使うと、描画することなくその領域を取得できます。
 
-![](images/8070.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/8/7-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -257,7 +257,7 @@ void Main()
 ## 8.8 フォントのスタイルを変える
 `Font` のコンストラクタの第三引数に `FontStyle` を指定することで、イタリックやボールドなどのスタイルをフォントに適用できます。
 
-![](images/8080.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/8/8-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -294,7 +294,7 @@ void Main()
 ## 8.9 異なるフォントでベースラインをそろえる
 文字のベースラインの開始位置を指定して描画したい場合は `.drawBase()` を使います。異なるサイズや種類のフォントを、ベースラインをそろえて描画できます。
 
-![](images/8090.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/8/9-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -334,7 +334,7 @@ void Main()
 ## 8.10 テキスト描画の基準位置をカスタマイズする
 左上や中心以外にも、描画座標の基準点を設定できます。
 
-![](images/8100.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/8/10-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -374,7 +374,7 @@ void Main()
 ## 8.11 文字に影の効果を付ける
 座標をずらして 2回 テキストを描くと、影の効果を簡単に作成できます。`Vec2::movedBy(x, y)` を使うと、指定した値だけ要素を加算した `Vec2` を作成できます。
 
-![](images/8110.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/8/11-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -404,7 +404,7 @@ void Main()
 ## 8.12 文字単位で描画を制御する
 `font(text)` を `for` ループで次のように使用すると、文字を自由に制御して描画するために必要な `Glyph` 型のオブジェクトを文字ごとに取得できます。`.codePoint` はその文字の UTF-32 コードポイントを、`.index` はテキスト内の文字の位置インデックスを、`.offset` はペンの位置からさらに必要なオフセットを、`.xAdvance` は次の文字への X 座標の距離を表します。
 
-![](images/8120.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/8/12-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -453,7 +453,7 @@ void Main()
 ## 8.13 縦書きでテキストを描画する
 `Font::getVerticalGlyphs()` で縦書き用のグリフを取得できるので、それを使うってテキストの縦書きを実現できます。
 
-![](images/8130.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/8/13-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -492,7 +492,7 @@ void Main()
 ## 8.14 指定した長方形の中にテキストを描く
 `Font::draw()` に `Rect` または `RectF` を渡すと、テキストをその長方形の内部に収まるように描画します。文字があふれる場合、最後の文字が `…` に置き換えられ、関数は `false` を返します。
 
-![](images/8140.png)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/8/14-0.png?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -540,7 +540,7 @@ void Main()
 ## 8.15 テキストを 1 文字ずつ表示する
 `String::substr(0, N)` で、0 文字目から N 文字分の文字列を取得できます。N を時間に応じて増やすことで 1 文字ずつテキストを表示できます。N が文字列の長さよりも大きくなっても、その分は単に無視されます。 
 
-![](images/8150.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/8/15-0.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
