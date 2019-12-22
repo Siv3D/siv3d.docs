@@ -480,3 +480,69 @@ description: OpenSiv3D の API 一覧
 - 戻り値: 現在の協定世界時 (UTC) との時差（分）
 
 現在の協定世界時 (UTC) との時差を分で返します。
+
+## 文字 (Char)
+
+### 関数
+
+#### `bool IsASCII(char32 ch);`
+- ch:
+- 戻り値:
+
+#### `bool IsDigit(char32 ch);`
+- ch:
+- 戻り値:
+
+#### `bool IsLower(char32 ch);`
+- ch:
+- 戻り値:
+
+#### `bool IsUpper(char32 ch);`
+- ch:
+- 戻り値:
+
+#### `char32 ToLower(char32 ch);`
+- ch:
+- 戻り値:
+
+#### `char32 ToUpper(char32 ch);`
+- ch:
+- 戻り値:
+
+#### `bool IsAlpha(char32 ch);`
+- ch:
+- 戻り値:
+
+#### `bool IsAlnum(char32 ch);`
+- ch:
+- 戻り値:
+
+#### `bool IsXdigit(char32 ch);`
+- ch:
+- 戻り値:
+
+#### `bool IsControl(char32 ch);`
+- ch:
+- 戻り値:
+
+#### `bool IsBlank(char32 ch);`
+- ch:
+- 戻り値:
+
+#### `bool IsSpace(char32 ch);`
+- ch:
+- 戻り値:
+
+#### `bool IsPrint(char32 ch);`
+- ch:
+- 戻り値:
+
+#### `bool CaseInsensitiveEquals(char32 a, char32 b);`
+- a:
+- b:
+- 戻り値:
+
+#### `int32 CaseInsensitiveCompare(char32 a, char32 b);`
+- a:
+- b:
+- 戻り値:
