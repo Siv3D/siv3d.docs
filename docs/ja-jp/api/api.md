@@ -480,3 +480,75 @@ description: OpenSiv3D の API 一覧
 - 戻り値: 現在の協定世界時 (UTC) との時差（分）
 
 現在の協定世界時 (UTC) との時差を分で返します。
+
+## 文字 (Char)
+
+### 定数
+
+#### `constexpr char32 detail::halfWidthSpace = U' ';`
+
+#### `constexpr char32 detail::fullWidthSpace = U'　';`
+
+### 関数
+
+#### `bool IsASCII(const char32 ch);`
+- ch:
+- 戻り値:
+
+#### `bool IsDigit(const char32 ch);`
+- ch:
+- 戻り値:
+
+#### `bool IsLower(const char32 ch);`
+- ch:
+- 戻り値:
+
+#### `bool IsUpper(const char32 ch);`
+- ch:
+- 戻り値:
+
+#### `char32 ToLower(const char32 ch);`
+- ch:
+- 戻り値:
+
+#### `char32 ToUpper(const char32 ch);`
+- ch:
+- 戻り値:
+
+#### `bool IsAlpha(const char32 ch);`
+- ch:
+- 戻り値:
+
+#### `bool IsAlnum(const char32 ch);`
+- ch:
+- 戻り値:
+
+#### `bool IsXdigit(const char32 ch);`
+- ch:
+- 戻り値:
+
+#### `bool IsControl(const char32 ch);`
+- ch:
+- 戻り値:
+
+#### `bool IsBlank(const char32 ch);`
+- ch:
+- 戻り値:
+
+#### `bool IsSpace(const char32 ch);`
+- ch:
+- 戻り値:
+
+#### `bool IsPrint(const char32 ch);`
+- ch:
+- 戻り値:
+
+#### `bool CaseInsensitiveEquals(const char32 a, const char32 b);`
+- a:
+- b:
+- 戻り値:
+
+#### `int32 CaseInsensitiveCompare(const char32 a, const char32 b);`
+- a:
+- b:
+- 戻り値:
