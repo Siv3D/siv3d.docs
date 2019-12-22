@@ -485,64 +485,64 @@ description: OpenSiv3D の API 一覧
 
 ### 関数
 
-#### `bool IsASCII(const char32 ch);`
+#### `bool IsASCII(char32 ch);`
 - ch:
 - 戻り値:
 
-#### `bool IsDigit(const char32 ch);`
+#### `bool IsDigit(char32 ch);`
 - ch:
 - 戻り値:
 
-#### `bool IsLower(const char32 ch);`
+#### `bool IsLower(char32 ch);`
 - ch:
 - 戻り値:
 
-#### `bool IsUpper(const char32 ch);`
+#### `bool IsUpper(char32 ch);`
 - ch:
 - 戻り値:
 
-#### `char32 ToLower(const char32 ch);`
+#### `char32 ToLower(char32 ch);`
 - ch:
 - 戻り値:
 
-#### `char32 ToUpper(const char32 ch);`
+#### `char32 ToUpper(char32 ch);`
 - ch:
 - 戻り値:
 
-#### `bool IsAlpha(const char32 ch);`
+#### `bool IsAlpha(char32 ch);`
 - ch:
 - 戻り値:
 
-#### `bool IsAlnum(const char32 ch);`
+#### `bool IsAlnum(char32 ch);`
 - ch:
 - 戻り値:
 
-#### `bool IsXdigit(const char32 ch);`
+#### `bool IsXdigit(char32 ch);`
 - ch:
 - 戻り値:
 
-#### `bool IsControl(const char32 ch);`
+#### `bool IsControl(char32 ch);`
 - ch:
 - 戻り値:
 
-#### `bool IsBlank(const char32 ch);`
+#### `bool IsBlank(char32 ch);`
 - ch:
 - 戻り値:
 
-#### `bool IsSpace(const char32 ch);`
+#### `bool IsSpace(char32 ch);`
 - ch:
 - 戻り値:
 
-#### `bool IsPrint(const char32 ch);`
+#### `bool IsPrint(char32 ch);`
 - ch:
 - 戻り値:
 
-#### `bool CaseInsensitiveEquals(const char32 a, const char32 b);`
+#### `bool CaseInsensitiveEquals(char32 a, char32 b);`
 - a:
 - b:
 - 戻り値:
 
-#### `int32 CaseInsensitiveCompare(const char32 a, const char32 b);`
+#### `int32 CaseInsensitiveCompare(char32 a, char32 b);`
 - a:
 - b:
 - 戻り値:
