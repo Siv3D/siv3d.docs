@@ -483,12 +483,6 @@ description: OpenSiv3D の API 一覧
 
 ## 文字 (Char)
 
-### 定数
-
-#### `constexpr char32 detail::halfWidthSpace = U' ';`
-
-#### `constexpr char32 detail::fullWidthSpace = U'　';`
-
 ### 関数
 
 #### `bool IsASCII(const char32 ch);`
