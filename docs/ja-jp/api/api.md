@@ -382,3 +382,31 @@ description: OpenSiv3D の API 一覧
 
 #### `CursorStyle Cursor::GetDefaultStyle();`
 - 戻り値: デフォルトのカーソルスタイル
+
+## 時間 (Time)
+
+### 関数
+
+#### `uint64 Time::GetSec();`
+- 戻り値:
+
+#### `uint64 Time::GetMillisec();`
+- 戻り値:
+
+#### `uint64 Time::GetMicrosec();`
+- 戻り値:
+
+#### `uint64 Time::GetNanosec();`
+- 戻り値:
+
+#### `uint64 Time::GetSecSinceEpoch();`
+- 戻り値:
+
+#### `uint64 Time::GetMillisecSinceEpoch();`
+- 戻り値:
+
+#### `uint64 Time::GetMicrosecSinceEpoch();`
+- 戻り値:
+
+#### `int32 Time::UTCOffsetMinutes();`
+- 戻り値:
