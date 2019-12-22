@@ -257,7 +257,7 @@ void Main()
 ```
 
 
-## 2D ライトプルーム
+## 2D ライトブルーム
 <video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/sample/visual/2d-light-bloom.mp4?raw=true" autoplay loop muted></video>
 ```C++
 # include <Siv3D.hpp>
