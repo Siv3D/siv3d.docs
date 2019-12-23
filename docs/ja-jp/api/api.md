@@ -546,3 +546,80 @@ description: OpenSiv3D の API 一覧
 - a:
 - b:
 - 戻り値:
+
+## 2D グラフィックス (Graphics2D)
+
+### 関数
+
+#### `ColorF Graphics2D::GetColorMul();`
+- 戻り値:
+
+#### `ColorF Graphics2D::GetColorAdd();`
+- 戻り値:
+
+#### `BlendState Graphics2D::GetBlendState();`
+- 戻り値:
+
+#### `RasterizerState Graphics2D::GetRasterizerState();`
+- 戻り値:
+
+#### `void Graphics2D::SetSamplerState(uint32 slot, const SamplerState& samplerState);`
+- slot:
+- samplerState:
+
+#### `SamplerState Graphics2D::GetSamplerState(uint32 slot = 0);`
+- slot:
+- 戻り値:
+
+#### `Optional<Rect> Graphics2D::GetViewport();`
+- 戻り値:
+
+#### `Optional<PixelShader> Graphics2D::GetCustomPixelShader();`
+- 戻り値:
+
+#### `Optional<RenderTexture> Graphics2D::GetRenderTarget();`
+- 戻り値:
+
+#### `void Graphics2D::SetScissorRect(const Rect& rect);`
+- rect:
+
+#### `Rect Graphics2D::GetScissorRect();`
+- 戻り値:
+
+#### `void Graphics2D::SetLocalTransform(const Mat3x2& transform);`
+- transform:
+
+#### `const Mat3x2& Graphics2D::GetLocalTransform();`
+- 戻り値:
+
+#### `void Graphics2D::SetCameraTransform(const Mat3x2& transform);`
+- transform:
+
+#### `const Mat3x2& Graphics2D::GetCameraTransform();`
+- 戻り値:
+
+#### `double Graphics2D::GetMaxScaling();`
+- 戻り値:
+
+#### `Size Graphics2D::GetRenderTargetSize();`
+- 戻り値:
+
+#### `void Graphics2D::SetSDFParameters(double pixelRange, double offset = 0.0);`
+#### `void Graphics2D::SetSDFParameters(cosnt Float4& parameters);`
+- pixelRange:
+- offset:
+- parameters:
+
+#### `Float4 Graphics2D::GetSDFParameters();`
+- 戻り値:
+
+#### `void Graphics2D::SetTexture(uint32 slot, const Optional<Texture>& texture);`
+- slot:
+- texture:
+
+#### `void Graphics2D::Flush();`
+
+#### `template <class Type> void Graphics2D::SetConstantBuffer(ShaderStage stage, uint32 index, const ConstantBuffer<Type>& buffer);`
+- stage:
+- index:
+- buffer:
