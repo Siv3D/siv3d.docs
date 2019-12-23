@@ -363,3 +363,193 @@ void Main()
 	}
 }
 ```
+
+
+## パターンブラシ
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/sample/visual/pattern-brush.gif?raw=true)
+```C++
+# include <Siv3D.hpp>
+
+// パターン画像を作る
+Image CreatePattern()
+{
+	Image image(16, 16, Palette::White);
+	Circle(0, 4, 2).paint(image, Palette::Black);
+	Circle(8, 4, 2).paint(image, Palette::Black);
+	Circle(16, 4, 2).paint(image, Palette::Black);
+	Circle(4, 12, 2).paint(image, Palette::Black);
+	Circle(12, 12, 2).paint(image, Palette::Black);
+	return image;
+}
+
+// 定数バッファ (PS_1)
+struct PatternBrush
+{
+	// パターンの UV のスケール
+	Float2 uvScale;
+	Float2 _unused = {};
+};
+
+void Main()
+{
+	constexpr Size sceneSize(600, 600);
+
+	// パターン画像のテクスチャ
+	const Texture patternTexture(CreatePattern(), TextureDesc::Mipped);
+
+	// パターンブラシ用のピクセルシェーダ
+	// シェーダファイルの拡張子は、Windows では hlsl, macOS/Linux では frag を選択
+	// {} 内は定数バッファの名前と、対応する定数インデックス
+	const PixelShader ps(U"pattern_brush" SIV3D_SELECT_SHADER(U".hlsl", U".frag"),
+		{ { U"PSConstants2D", 0 }, { U"PatternBrush", 1 } });
+
+	if (!ps)
+	{
+		throw Error(U"Failed to load a shader file");
+	}
+
+	// 定数バッファ
+	ConstantBuffer<PatternBrush> cb;
+	cb->uvScale = Float2(sceneSize) / patternTexture.size();
+
+	// ペンで書き込むレンダーテクスチャ
+	MSRenderTexture renderTexture(sceneSize, Palette::Black);
+
+	// ペンの太さ
+	double thickness = 20;
+
+	while (System::Update())
+	{
+		if (MouseL.pressed())
+		{
+			{
+				ScopedRenderTarget2D rt(renderTexture);
+
+				if (MouseL.down())
+				{
+					Circle(Cursor::PosF(), thickness * 0.5).draw();
+				}
+				else if (MouseL.pressed() && !Cursor::Delta().isZero())
+				{
+					Line(Cursor::PreviousPosF(), Cursor::PosF())
+						.draw(LineStyle::RoundCap, thickness);
+				}
+			}
+
+			Graphics2D::Flush();
+			renderTexture.resolve();
+		}
+
+		Rect(sceneSize).draw();
+		{
+			// パターン画像をインデックス [1] のテクスチャスロットにセット 
+			Graphics2D::SetTexture(1, patternTexture);
+
+			// パターンをくり返しマッピングできるようにする
+			Graphics2D::SetSamplerState(1, SamplerState::RepeatLinear);
+
+			{
+				Graphics2D::SetConstantBuffer(ShaderStage::Pixel, 1, cb);
+				ScopedCustomShader2D shader(ps);
+				renderTexture.draw();
+			}
+		}
+
+		// パターン画像を右上に表示
+		patternTexture.draw(620, 20);
+	}
+}
+```
+
+```C++ tab="pattern_brush.hlsl"
+Texture2D		g_texture0 : register(t0);
+Texture2D		g_texture1 : register(t1);
+SamplerState	g_sampler0 : register(s0);
+SamplerState	g_sampler1 : register(s1);
+
+cbuffer PSConstants2D : register(b0)
+{
+	float4 g_colorAdd;
+	float4 g_sdfParam;
+	float4 g_internal;
+}
+
+// 定数バッファ (PS_1)
+cbuffer PatternBrush : register(b1)
+{
+	float2 g_uvScale;
+}
+// [C++]
+//struct PatternBrush
+//{
+//	Float2 uvScale;
+//	Float2 _unused = {};
+//};
+
+struct PSInput
+{
+	float4 position	: SV_POSITION;
+	float4 color	: COLOR0;
+	float2 uv		: TEXCOORD0;
+};
+
+float4 PS(PSInput input) : SV_TARGET
+{
+	float alpha = g_texture0.Sample(g_sampler0, input.uv).r;
+	
+	float4 texColor = g_texture1.Sample(g_sampler1, input.uv * g_uvScale);
+	
+	texColor.a = alpha;
+
+	return (texColor * input.color) + g_colorAdd;
+}
+```
+
+```C++ tab="pattern_brush.frag"
+#version 410		
+
+uniform sampler2D Texture0;
+uniform sampler2D Texture1;
+
+// PS_0
+layout(std140) uniform PSConstants2D
+{
+	vec4 g_colorAdd;
+	vec4 g_sdfParam;
+	vec4 g_internal;
+};
+
+// PS_1
+layout(std140) uniform PatternBrush
+{
+	vec2  g_uvScale;
+};
+// [C++]
+//struct PatternBrush
+//{
+//	Float2 uvScale;
+//	Float2 _unused = {};
+//};
+
+//
+// PSInput
+//
+layout(location = 0) in vec4 Color;
+layout(location = 1) in vec2 UV;
+		
+//
+// PSOutput
+//
+layout(location = 0) out vec4 FragColor;
+		
+void main()
+{
+	float alpha = texture(Texture0, UV).r;
+	
+	vec4 texColor = texture(Texture1, UV * g_uvScale);
+	
+	texColor.a = alpha;
+
+	FragColor = (texColor * Color) + g_colorAdd;
+}
+```
