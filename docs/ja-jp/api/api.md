@@ -679,20 +679,20 @@ description: OpenSiv3D の API 一覧
 #### `double Graphics::GetDPIScaling();`
 - 戻り値: 
 
-## DisplayMode 構造体 (struct DisplayMode)
+## ディスプレイモード構造体 (struct DisplayMode)
 
 ### メンバ変数
 
-#### `Size DisplayMode::size;`
+#### `Size size;`
 
-#### `double DisplayMode::refreshRateHz;`
+#### `double refreshRateHz;`
 
-## DisplayOutput 構造体 (struct DisplayOutput)
+## ディスプレイ出力構造体 (struct DisplayOutput)
 
 ### メンバ変数
 
-#### `String DisplayOutput::name;`
+#### `String name;`
 
-#### `Rect DisplayOutput::displayRect;`
+#### `Rect displayRect;`
 
-#### `Array<DisplayMode> DisplayOutput::displayModes;`
+#### `Array<DisplayMode> displayModes;`
