@@ -486,140 +486,170 @@ description: OpenSiv3D の API 一覧
 ### 関数
 
 #### `bool IsASCII(char32 ch);`
-- ch:
-- 戻り値:
+- ch: 文字
+- 戻り値: ASCII 文字である場合 `true`, それ以外の場合 `false`
+
+文字 `ch` が ASCII 文字であるかを返します。
 
 #### `bool IsDigit(char32 ch);`
-- ch:
-- 戻り値:
+- ch: 文字
+- 戻り値: 10 進数の数字である場合 `true`, それ以外の場合 `false`
+
+文字 `ch` が 10 進数の数字 (0～9) であるかを返します。
 
 #### `bool IsLower(char32 ch);`
-- ch:
-- 戻り値:
+- ch: 文字
+- 戻り値: アルファベットの小文字である場合 `true`, それ以外の場合 `false`
+
+文字 `ch` がアルファベットの小文字 (a～z) であるかを返します。
 
 #### `bool IsUpper(char32 ch);`
-- ch:
-- 戻り値:
+- ch: 文字
+- 戻り値: アルファベットの大文字である場合 `true`, それ以外の場合 `false`
+
+文字 `ch` がアルファベットの大文字 (A～Z) であるかを返します。
 
 #### `char32 ToLower(char32 ch);`
-- ch:
-- 戻り値:
+- ch: 文字
+- 戻り値: アルファベット ch の小文字
+
+文字 `ch` がアルファベットの大文字 (A～Z) の場合、小文字に変換して返します。それ以外の場合は `ch` を返します。
 
 #### `char32 ToUpper(char32 ch);`
-- ch:
-- 戻り値:
+- ch: 文字
+- 戻り値: アルファベット ch の大文字
+
+文字 `ch` がアルファベットの小文字 (a～z) の場合、大文字に変換して返します。それ以外の場合は `ch` を返します。
 
 #### `bool IsAlpha(char32 ch);`
-- ch:
-- 戻り値:
+- ch: 文字
+- 戻り値: アルファベットである場合 `true`, それ以外の場合 `false`
+
+文字 `ch` がアルファベット (A～Z, a～Z) であるかを返します。
 
 #### `bool IsAlnum(char32 ch);`
-- ch:
-- 戻り値:
+- ch: 文字
+- 戻り値: アルファベットもしくは数字である場合 `true`, それ以外の場合 `false`
+
+文字 `ch` がアルファベット (A～Z, a～Z) もしくは数字 (0～9) であるかを返します。
 
 #### `bool IsXdigit(char32 ch);`
-- ch:
-- 戻り値:
+- ch: 文字
+- 戻り値: 16 進数に使われる文字である場合 `true`, それ以外の場合 `false`
+
+文字 `ch` が 16 進数に使われる文字 (0～9, A～F, a～f) であるかを返します。
 
 #### `bool IsControl(char32 ch);`
-- ch:
-- 戻り値:
+- ch: 文字
+- 戻り値: 制御文字である場合 `true`, それ以外の場合 `false`
+
+文字 `ch` が制御文字 (0x00～0x1F, 0x7F～0x9F) であるかを返します。
 
 #### `bool IsBlank(char32 ch);`
-- ch:
-- 戻り値:
+- ch: 文字
+- 戻り値: 空白文字である場合 `true`, それ以外の場合 `false`
+
+文字 `ch` が空白文字 (半角スペース、タブ、全角スペース) であるかを返します。
 
 #### `bool IsSpace(char32 ch);`
-- ch:
-- 戻り値:
+- ch: 文字
+- 戻り値: 空白類文字である場合 `true`, それ以外の場合 `false`
+
+文字 `ch` が空白類文字 (半角スペース、タブ、全角スペース, `'\n'`, `'\v'`, `'\f'`, `'\r'`) であるかを返します。
 
 #### `bool IsPrint(char32 ch);`
-- ch:
-- 戻り値:
+- ch: 文字
+- 戻り値: 印字可能文字である場合 `true`, それ以外の場合 `false`
+
+文字 `ch` が印字可能文字であるかを返します。
 
 #### `bool CaseInsensitiveEquals(char32 a, char32 b);`
-- a:
-- b:
-- 戻り値:
+- a: 文字
+- b: 文字
+- 戻り値: 大文字と小文字を区別せずに 2 つの文字を比較して、等しい場合 `true`, それ以外の場合 `false`
+
+文字 `a`, `b` が等しいかを返します。大文字小文字の違いは無視され、`'s'` と `'S'` は等しいとみなされます。
 
 #### `int32 CaseInsensitiveCompare(char32 a, char32 b);`
-- a:
-- b:
-- 戻り値:
+- a: 文字
+- b: 文字
+- 戻り値: 大文字と小文字を区別せずに 2 つの文字を比較し、`a` が `b` より小さい場合 `-1`, 等しい場合 `0`, 大きい場合 `1`
+
+大文字小文字の違いを無視して文字 `a`, `b` を比較した結果を返します。
 
 ## 2D グラフィックス (Graphics2D)
 
 ### 関数
 
 #### `ColorF Graphics2D::GetColorMul();`
-- 戻り値:
+- 戻り値: 
 
 #### `ColorF Graphics2D::GetColorAdd();`
-- 戻り値:
+- 戻り値: 
 
 #### `BlendState Graphics2D::GetBlendState();`
-- 戻り値:
+- 戻り値: 
 
 #### `RasterizerState Graphics2D::GetRasterizerState();`
-- 戻り値:
+- 戻り値: 
 
 #### `void Graphics2D::SetSamplerState(uint32 slot, const SamplerState& samplerState);`
-- slot:
-- samplerState:
+- slot: 
+- samplerState: 
 
 #### `SamplerState Graphics2D::GetSamplerState(uint32 slot = 0);`
-- slot:
-- 戻り値:
+- slot: 
+- 戻り値: 
 
 #### `Optional<Rect> Graphics2D::GetViewport();`
-- 戻り値:
+- 戻り値: 
 
 #### `Optional<PixelShader> Graphics2D::GetCustomPixelShader();`
-- 戻り値:
+- 戻り値: 
 
 #### `Optional<RenderTexture> Graphics2D::GetRenderTarget();`
-- 戻り値:
+- 戻り値: 
 
 #### `void Graphics2D::SetScissorRect(const Rect& rect);`
-- rect:
+- rect: 
 
 #### `Rect Graphics2D::GetScissorRect();`
-- 戻り値:
+- 戻り値: 
 
 #### `void Graphics2D::SetLocalTransform(const Mat3x2& transform);`
-- transform:
+- transform: 
 
 #### `const Mat3x2& Graphics2D::GetLocalTransform();`
-- 戻り値:
+- 戻り値: 
 
 #### `void Graphics2D::SetCameraTransform(const Mat3x2& transform);`
-- transform:
+- transform: 
 
 #### `const Mat3x2& Graphics2D::GetCameraTransform();`
-- 戻り値:
+- 戻り値: 
 
 #### `double Graphics2D::GetMaxScaling();`
-- 戻り値:
+- 戻り値: 
 
 #### `Size Graphics2D::GetRenderTargetSize();`
-- 戻り値:
+- 戻り値: 
 
 #### `void Graphics2D::SetSDFParameters(double pixelRange, double offset = 0.0);`
 #### `void Graphics2D::SetSDFParameters(cosnt Float4& parameters);`
-- pixelRange:
-- offset:
-- parameters:
+- pixelRange: 
+- offset: 
+- parameters: 
 
 #### `Float4 Graphics2D::GetSDFParameters();`
-- 戻り値:
+- 戻り値: 
 
 #### `void Graphics2D::SetTexture(uint32 slot, const Optional<Texture>& texture);`
-- slot:
-- texture:
+- slot: 
+- texture: 
 
 #### `void Graphics2D::Flush();`
 
 #### `template <class Type> void Graphics2D::SetConstantBuffer(ShaderStage stage, uint32 index, const ConstantBuffer<Type>& buffer);`
-- stage:
-- index:
-- buffer:
+- stage: 
+- index: 
+- buffer: 
