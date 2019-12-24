@@ -582,77 +582,121 @@ description: OpenSiv3D の API 一覧
 ### 関数
 
 #### `ColorF Graphics2D::GetColorMul();`
-- 戻り値: 
+- 戻り値: 現在の乗算カラー
+
+現在 2D 描画に適用されている乗算カラーを返します。デフォルトでは `ColorF(1, 1, 1, 1)` です。
 
 #### `ColorF Graphics2D::GetColorAdd();`
-- 戻り値: 
+- 戻り値: 現在の加算カラー
+
+現在 2D 描画に適用されている加算カラーを返します。デフォルトでは `ColorF(0, 0, 0, 0)` です。
 
 #### `BlendState Graphics2D::GetBlendState();`
-- 戻り値: 
+- 戻り値: 現在のブレンドステート
+
+現在 2D 描画に適用されているブレンドステートを返します。デフォルトでは `BlendState::Default` です。
 
 #### `RasterizerState Graphics2D::GetRasterizerState();`
-- 戻り値: 
+- 戻り値: 現在のラスタライザーステート
+
+現在 2D 描画に適用されているラスタライザーステートを返します。デフォルトでは `RasterizerState::Default2D` です。
 
 #### `void Graphics2D::SetSamplerState(uint32 slot, const SamplerState& samplerState);`
-- slot: 
-- samplerState: 
+- slot: テクスチャスロットのインデックス (0～ (`SamplerState::MaxSamplerCount - 1`))
+- samplerState: 設定するサンプラーステート
+
+2D 描画に適用するサンプラーステートを、テクスチャスロットを指定して設定します。0 番に指定する場合は `ScopedRenderStates2D` が使えるので、それ以外のスロットの設定を変更する場合にこの関数を使います。テクスチャスロットのインデックスの最大値は `(SamplerState::MaxSamplerCount - 1)` です。
 
 #### `SamplerState Graphics2D::GetSamplerState(uint32 slot = 0);`
-- slot: 
-- 戻り値: 
+- slot: テクスチャスロットのインデックス (0～ (`SamplerState::MaxSamplerCount - 1`))
+- 戻り値: 現在のサンプラーステート
+
+指定したテクスチャスロットで現在 2D 描画に適用されているサンプラーステートを返します。テクスチャスロットのインデックスの最大値は `(SamplerState::MaxSamplerCount - 1)` です。
 
 #### `Optional<Rect> Graphics2D::GetViewport();`
-- 戻り値: 
+- 戻り値: 現在のカスタムビューポート。設定されていない場合 `none`
+
+現在 2D 描画に適用されているカスタムビューポートを返します。設定されていない場合は `none` を返します。
 
 #### `Optional<PixelShader> Graphics2D::GetCustomPixelShader();`
-- 戻り値: 
+- 戻り値: 現在のカスタムピクセルシェーダ。設定されていない場合 `none`
+
+現在 2D 描画に適用されているカスタムピクセルシェーダを返します。設定されていない場合は `none` を返します。
 
 #### `Optional<RenderTexture> Graphics2D::GetRenderTarget();`
-- 戻り値: 
+- 戻り値: 現在のレンダーターゲットに設定されているレンダーテクスチャ. デフォルトのシーンの場合 `none`
+
+現在 2D 描画でレンダーターゲットに設定されているレンダーテクスチャを返します。設定されていない場合は `none` を返します。
 
 #### `void Graphics2D::SetScissorRect(const Rect& rect);`
-- rect: 
+- rect: シザー矩形
+
+2D 描画に適用するシザー矩形を設定します。`RasterizerState` でシザー矩形を有効にした場合に使われます。
 
 #### `Rect Graphics2D::GetScissorRect();`
-- 戻り値: 
+- 戻り値: 現在のシザー矩形
+
+現在 2D 描画に適用されているシザー矩形を返します。デフォルトでは `Rect(0, 0, 0, 0)` です。
 
 #### `void Graphics2D::SetLocalTransform(const Mat3x2& transform);`
-- transform: 
+- transform: 座標変換行列
+
+2D 描画に適用する、ローカルな変換行列を設定します。通常は `Transformer2D` を用いるため、この関数は使いません。
 
 #### `const Mat3x2& Graphics2D::GetLocalTransform();`
-- 戻り値: 
+- 戻り値: 2D 描画座標を変換するために `Transformer2D` によって設定されている行列
+
+2D 描画に適用されている、ローカルな変換行列を返します。
 
 #### `void Graphics2D::SetCameraTransform(const Mat3x2& transform);`
-- transform: 
+- transform: 座標変換行列
+
+2D 描画に適用する、2D カメラによる変換行列を設定します。通常は `BasicCamera2D` を用いるため、この関数は使いません。
 
 #### `const Mat3x2& Graphics2D::GetCameraTransform();`
-- 戻り値: 
+- 戻り値: 2D 描画座標を変換するために `BasicCamera2D` によって設定されている行列
+
+2D 描画に適用されている、2D カメラによる変換行列を返します。
 
 #### `double Graphics2D::GetMaxScaling();`
-- 戻り値: 
+- 戻り値: 2D 描画の最大拡大倍率
+
+現在 2D 描画に適用されている座標変換行列を用いて直径 1 の円を描いたときに、描画される円または楕円の最大の径を返します。どのような座標変換行列においても線分を同じ太さで描画したいときに、この戻り値の値が使えます。
 
 #### `Size Graphics2D::GetRenderTargetSize();`
-- 戻り値: 
+- 戻り値: 現在のレンダーターゲットの解像度
+
+現在 2D 描画でレンダーターゲットに設定されているレンダーテクスチャもしくはデフォルトのシーンの解像度を返します。
 
 #### `void Graphics2D::SetSDFParameters(double pixelRange, double offset = 0.0);`
 #### `void Graphics2D::SetSDFParameters(cosnt Float4& parameters);`
-- pixelRange: 
-- offset: 
-- parameters: 
+- pixelRange: 使用する SDF フォントの `SDFFont::pixelRange()` の値
+- offset: SDF フォント描画の閾値のオフセット
+- parameters: SDF フォントのパラメータ。x 成分が pixelRange, y 成分が offset に対応
+
+SDF フォントを描画するためのパラメータを設定します。
 
 #### `Float4 Graphics2D::GetSDFParameters();`
-- 戻り値: 
+- 戻り値: 現在の SDF フォント描画用のパラメータ
+
+現在 SDF フォント描画用に設定されているパラメータを返します。x 成分が pixelRange, y 成分が offset に対応します。
 
 #### `void Graphics2D::SetTexture(uint32 slot, const Optional<Texture>& texture);`
-- slot: 
-- texture: 
+- slot: テクスチャスロットのインデックス (0～ (`SamplerState::MaxSamplerCount - 1`))
+- texture: テクスチャ
+
+2D 描画に適用する、追加のテクスチャを設定します。テクスチャを `.draw()` すると、そのテクスチャはスロットインデックス 0 にセットされます。それ以外に追加のテクスチャをシェーダで処理したい場合にこの関数を使います。テクスチャスロットのインデックスの最大値は `(SamplerState::MaxSamplerCount - 1)` です。
 
 #### `void Graphics2D::Flush();`
 
+現在のフレームでリクエストされた 2D 描画関連の命令をすべて実行します。`.draw()` や `Graphics2D::～` による 2D 描画命令は、処理の効率化のために一旦エンジン内でストックされ、命令が集約されてから `System::Update()` 内で一斉に実行されます。そのため、`RenderTexture` の中身を `.read()` で読み出す場合や `MSRenderTexture` を `.resolve()` する際に、実際には描画がなされていないケースが生じます。それを回避するためにこの関数を使います。
+
 #### `template <class Type> void Graphics2D::SetConstantBuffer(ShaderStage stage, uint32 index, const ConstantBuffer<Type>& buffer);`
-- stage: 
-- index: 
-- buffer: 
+- stage: 対象のシェーダ
+- index: 定数バッファインデックス (0～13)
+- buffer: 定数バッファのデータ
+
+2D 描画のカスタムシェーダで用いる、定数バッファを設定します。インデックス 0 の定数バッファはエンジンによって予約されているため、変更してはいけません。
 
 ## グラフィックス名前空間 (namespace Graphics)
 
@@ -700,7 +744,7 @@ description: OpenSiv3D の API 一覧
 ディスプレイの表示解像度（ピクセル）
 
 #### `double refreshRateHz;`
-ディスプレイの表示リフレッシュレート
+ディスプレイの表示リフレッシュレート (Hz)
 
 ## ディスプレイ出力構造体 (struct DisplayOutput)
 
