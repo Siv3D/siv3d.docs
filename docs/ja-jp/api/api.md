@@ -656,21 +656,23 @@ description: OpenSiv3D の API 一覧
 
 ## グラフィックス全般 (Graphics)
 
-### クラス・構造体
+## DisplayMode 構造体 (struct DisplayMode)
 
-#### `struct DisplayMode`
+### メンバ変数
 
-##### `Size DisplayMode::size;`
+#### `Size DisplayMode::size;`
 
-##### `double DisplayMode::refreshRateHz;`
+#### `double DisplayMode::refreshRateHz;`
 
-#### `struct DisplayOutput`
+## DisplayOutput 構造体 (struct DisplayOutput)
 
-##### `String DisplayOutput::name;`
+### メンバ変数
 
-##### `Rect DisplayOutput::displayRect;`
+#### `String DisplayOutput::name;`
 
-##### `Array<DisplayMode> DisplayOutput::displayModes;`
+#### `Rect DisplayOutput::displayRect;`
+
+#### `Array<DisplayMode> DisplayOutput::displayModes;`
 
 ### 関数
 
