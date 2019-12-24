@@ -1,5 +1,9 @@
 description: Siv3D Web サイトの更新情報
 
+##### 2019-12-24
+- [コミュニティ/OpenSiv3D 実装会](https://siv3d.github.io/ja-jp/community/dev-day/) ページを作成
+- [API 一覧](https://siv3d.github.io/ja-jp/api/api/) を更新
+
 ##### 2019-12-23
 - [サンプル/ビジュアル表現](https://siv3d.github.io/ja-jp/sample/visual/) を更新
 

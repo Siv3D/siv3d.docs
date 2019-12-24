@@ -100,7 +100,9 @@ nav:
     - Articles:
       - Mistakes made by new users: articles/mistakes.md
     - Siv3D Store: store/store.md
-    - Community: community/community.md
+    - Community: 
+      - Community: community/community.md
+      - Dev Day: community/dev-day.md
     - Logo: logo/logo.md
     - Mascot: mascot/mascot.md
     - Support: support/support.md
@@ -160,7 +162,9 @@ nav:
     - 記事:
       - よくある間違い: ja-jp/articles/mistakes.md
     - Siv3D ストア: ja-jp/store/store.md
-    - コミュニティ: ja-jp/community/community.md
+    - コミュニティ:
+      - コミュニティ: ja-jp/community/community.md
+      - 実装会: ja-jp/community/dev-day.md
     - ロゴ画像: ja-jp/logo/logo.md
     - マスコット: ja-jp/mascot/mascot.md
     - サポート: ja-jp/support/support.md
