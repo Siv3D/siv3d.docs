@@ -653,3 +653,44 @@ description: OpenSiv3D の API 一覧
 - stage: 
 - index: 
 - buffer: 
+
+## グラフィックス全般 (Graphics)
+
+### クラス・構造体
+
+#### `struct DisplayMode`
+
+##### `Size DisplayMode::size;`
+
+##### `double DisplayMode::refreshRateHz;`
+
+#### `struct DisplayOutput`
+
+##### `String DisplayOutput::name;`
+
+##### `Rect DisplayOutput::displayRect;`
+
+##### `Array<DisplayMode> DisplayOutput::displayModes;`
+
+### 関数
+
+#### `void Graphics::SkipClearScreen();`
+
+#### `Array<DisplayOutput> Graphics::EnumOutputs();`
+- 戻り値: 
+
+#### `Array<Size> Graphics::GetFullscreenResolutions(double minRefreshRate = 49.0);`
+- minRefreshRate: 
+- 戻り値: 
+
+#### `void Graphics::SetTargetFrameRateHz(const Optional<double>& targetFrameRateHz);`
+- targetFrameRateHz: 
+
+#### `Optional<double> Graphics::GetTargetFrameRateHz();`
+- 戻り値: 
+
+#### `double Graphics::GetDisplayRefreshRateHz();`
+- 戻り値: 
+
+#### `double Graphics::GetDPIScaling();`
+- 戻り値: 
