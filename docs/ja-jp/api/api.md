@@ -659,40 +659,58 @@ description: OpenSiv3D の API 一覧
 ### 関数
 
 #### `void Graphics::SkipClearScreen();`
+この次のフレームの開始時に、シーンの描画内容を背景色でクリアしないようにします。
 
 #### `Array<DisplayOutput> Graphics::EnumOutputs();`
-- 戻り値: 
+- 戻り値: 対応しているディスプレイ出力の一覧
+
+現在のメインディスプレイが対応しているディスプレイ出力の一覧を返します。
 
 #### `Array<Size> Graphics::GetFullscreenResolutions(double minRefreshRate = 49.0);`
-- minRefreshRate: 
-- 戻り値: 
+- minRefreshRate: 要求する最低限のリフレッシュレート (Hz)
+- 戻り値: フルスクリーンとして使用できる解像度の一覧
+
+リフレッシュレートが `minRefreshRate` (Hz) 以上で、フルスクリーンとして使用できる解像度の一覧を返します。
 
 #### `void Graphics::SetTargetFrameRateHz(const Optional<double>& targetFrameRateHz);`
-- targetFrameRateHz: 
+- targetFrameRateHz: 設定する最大フレームレート (Hz)
+
+アプリケーションのフレームレートの最大値を設定します。`none` を渡すと vSync が有効になり、ディスプレイの設定に沿ったフレームレートになります。デフォルトでは `none` です。コンピュータの性能によっては、実測のフレームレートが、この関数で設定した値を下回る場合があります。
 
 #### `Optional<double> Graphics::GetTargetFrameRateHz();`
-- 戻り値: 
+- 戻り値: アプリケーションのフレームレートの最大値、設定されていない場合は `none`
+
+`Graphics::SetTargetFrameRateHz()` で設定した、アプリケーションのフレームレートの最大値を返します。デフォルトでは `none` です。
 
 #### `double Graphics::GetDisplayRefreshRateHz();`
-- 戻り値: 
+- 戻り値: 現在のメインディスプレイの表示リフレッシュレート (Hz)
+
+現在のメインディスプレイの表示リフレッシュレートを返します。
 
 #### `double Graphics::GetDPIScaling();`
-- 戻り値: 
+- 戻り値: 現在のメインディスプレイの DPI 拡大率 (倍)
+
+現在のメインディスプレイに対してユーザがシステムで設定している DPI 拡大率を返します。
 
 ## ディスプレイモード構造体 (struct DisplayMode)
 
 ### メンバ変数
 
 #### `Size size;`
+ディスプレイの表示解像度（ピクセル）
 
 #### `double refreshRateHz;`
+ディスプレイの表示リフレッシュレート
 
 ## ディスプレイ出力構造体 (struct DisplayOutput)
 
 ### メンバ変数
 
 #### `String name;`
+ディスプレイの名称
 
 #### `Rect displayRect;`
+ディスプレイの仮想座標
 
 #### `Array<DisplayMode> displayModes;`
+フルスクリーンとして利用できる表示モードの一覧
