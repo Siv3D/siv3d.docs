@@ -1,6 +1,6 @@
 description: OpenSiv3D の API 一覧
 
-## シーン (Scene)
+## シーン名前空間 (namespace Scene)
 
 ### 定数
 
@@ -132,7 +132,7 @@ description: OpenSiv3D の API 一覧
 ウィンドウのクライアント領域上の座標をシーン上の座標に変換します。シーンの範囲外の座標になることもあります。
 
 
-## システム (System)
+## システム名前空間 (namespace System)
 
 ### 関数
 
@@ -194,7 +194,7 @@ description: OpenSiv3D の API 一覧
 使用可能な Web カメラの一覧を返します。
 
 
-## ウィンドウ (Window)
+## ウィンドウ名前空間 (namespace Window)
 
 ### 定数
 
@@ -287,7 +287,7 @@ description: OpenSiv3D の API 一覧
 
 フルスクリーンモードの設定をします。`fullscreenResolution` には `unspecified` か `Graphics::GetFullscreenResolutions()` に含まれる値を使います。フルスクリーンモードにする際、`fullscreenResolution` に `unspecified` を指定すると、ディスプレイの解像度（スケーリング適用後）のサイズでフルスクリーンモードに入ります。`unspecified` は切り替えが早く堅牢です。
 
-## マウスカーソル (Cursor)
+## マウスカーソル名前空間 (namespace Cursor)
 
 ### 定数
 
@@ -437,7 +437,7 @@ description: OpenSiv3D の API 一覧
 デフォルトのカーソルスタイルを返します。
 
 
-## 時間 (Time)
+## 時間名前空間 (namespace Time)
 
 ### 関数
 
@@ -481,7 +481,7 @@ description: OpenSiv3D の API 一覧
 
 現在の協定世界時 (UTC) との時差を分で返します。
 
-## 文字 (Char)
+## 文字に関する機能
 
 ### 関数
 
@@ -577,7 +577,7 @@ description: OpenSiv3D の API 一覧
 
 大文字小文字の違いを無視して文字 `a`, `b` を比較した結果を返します。
 
-## 2D グラフィックス (Graphics2D)
+## 2D グラフィックス名前空間 (namespace Graphics2D)
 
 ### 関数
 
@@ -654,7 +654,7 @@ description: OpenSiv3D の API 一覧
 - index: 
 - buffer: 
 
-## グラフィックス全般 (Graphics)
+## グラフィックス名前空間 (namespace Graphics)
 
 ### 関数
 
