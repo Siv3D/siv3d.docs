@@ -656,24 +656,6 @@ description: OpenSiv3D の API 一覧
 
 ## グラフィックス全般 (Graphics)
 
-## DisplayMode 構造体 (struct DisplayMode)
-
-### メンバ変数
-
-#### `Size DisplayMode::size;`
-
-#### `double DisplayMode::refreshRateHz;`
-
-## DisplayOutput 構造体 (struct DisplayOutput)
-
-### メンバ変数
-
-#### `String DisplayOutput::name;`
-
-#### `Rect DisplayOutput::displayRect;`
-
-#### `Array<DisplayMode> DisplayOutput::displayModes;`
-
 ### 関数
 
 #### `void Graphics::SkipClearScreen();`
@@ -696,3 +678,21 @@ description: OpenSiv3D の API 一覧
 
 #### `double Graphics::GetDPIScaling();`
 - 戻り値: 
+
+## DisplayMode 構造体 (struct DisplayMode)
+
+### メンバ変数
+
+#### `Size DisplayMode::size;`
+
+#### `double DisplayMode::refreshRateHz;`
+
+## DisplayOutput 構造体 (struct DisplayOutput)
+
+### メンバ変数
+
+#### `String DisplayOutput::name;`
+
+#### `Rect DisplayOutput::displayRect;`
+
+#### `Array<DisplayMode> DisplayOutput::displayModes;`
