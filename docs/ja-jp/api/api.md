@@ -759,7 +759,7 @@ SDF フォントを描画するためのパラメータを設定します。
 #### `Array<DisplayMode> displayModes;`
 フルスクリーンとして利用できる表示モードの一覧
 
-## GUIユーティリティー (SimpleGUI 名前空間)
+## GUI ユーティリティー (namespace SimpleGUI)
 
 ### 関数
 
@@ -984,7 +984,9 @@ SDF フォントを描画するためのパラメータを設定します。
 #### `bool active = false;`
 
 #### `Stopwatch leftPressStopwatch;`
+
 #### `Stopwatch rightPressStopwatch;`
+
 #### `Stopwatch cursorStopwatch;`
 
 ### コンストラクタ
@@ -995,4 +997,4 @@ SDF フォントを描画するためのパラメータを設定します。
 
 ### メンバ関数
 
-#### `void Clear();`
+#### `void clear();`
