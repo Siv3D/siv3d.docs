@@ -758,3 +758,243 @@ SDF フォントを描画するためのパラメータを設定します。
 
 #### `Array<DisplayMode> displayModes;`
 フルスクリーンとして利用できる表示モードの一覧
+
+## GUI ユーティリティー (namespace SimpleGUI)
+
+### 関数
+
+#### `RectF SimpleGUI::HeadlineRegion(const String& text, const Vec2& pos, const Optional<double>& width = unspecified);`
+- text: 
+- pos: 
+- width: 
+- 戻り値: 
+
+#### `void SimpleGUI::Headline(const String& text, const Vec2& pos, const Optional<double>& width = unspecified, bool enabled = true);`
+- text: 
+- pos: 
+- width: 
+- enabled: 
+
+#### `RectF SimpleGUI::ButtonRegion(const String& label, const Vec2& pos, const Optional<double>& width = unspecified);`
+- label: 
+- pos: 
+- width: 
+- 戻り値: 
+
+#### `RectF SimpleGUI::ButtonRegionAt(const String& label, const Vec2& center, const Optional<double>& width = unspecified);`
+- label: 
+- center: 
+- width: 
+- 戻り値: 
+
+#### `bool SimpleGUI::Button(const String& label, const Vec2& pos, const Optional<double>& width = unspecified, bool enabled = true);`
+- label: 
+- pos: 
+- widht: 
+- enabled: 
+- 戻り値: 
+
+#### `bool SimpleGUI::ButtonAt(const String& label, const Vec2& center, const Optional<double>& width = unspecified, bool enabled = true);`
+- label: 
+- center: 
+- width: 
+- enabled: 
+- 戻り値: 
+
+#### `RectF SimpleGUI::SliderRegion(const Vec2& pos, double labelWidth = 80.0, double sliderWidth = 120.0);`
+- pos: 
+- labelWidth: 
+- sliderWidth: 
+- 戻り値: 
+
+#### `RectF SimpleGUI::SliderRegionAt(const Vec2& center, double labelWidth = 80.0, double sliderWidth = 120.0);`
+- center: 
+- labelWidth: 
+- sliderWidth: 
+- 戻り値: 
+
+#### `bool SimpleGUI::Slider(double& value, const Vec2& pos, double sliderWidth = 120.0, bool enabled = true);`
+#### `bool SimpleGUI::Slider(double& value, double min, double max, const Vec2& pos, double sliderWidth = 120.0, bool enabled = true);`
+#### `bool SimpleGUI::Slider(const String& label, double& value, const Vec2& pos, double labelWidth = 80.0, double sliderWidth = 120.0, bool enabled = true);`
+#### `bool SimpleGUI::Slider(const String& label, double& value, double min, double max, const Vec2& pos, double labelWidth = 80.0, double sliderWidth = 120.0, bool enabled = true);`
+- value: 
+- pos: 
+- sliderWidth: 
+- enabled: 
+- min: 
+- max: 
+- label: 
+- labelWidth: 
+- 戻り値: 
+
+#### `bool SimpleGUI::SliderAt(double& value, const Vec2& center, double sliderWidth = 120.0, bool enabled = true);`
+#### `bool SimpleGUI::SliderAt(double& value, double min, double max, const Vec2& center, double sliderWidth = 120.0, bool enabled = true);`
+#### `bool SimpleGUI::SliderAt(const String& label, double& value, const Vec2& center, double labelWidth = 80.0, double sliderWidth = 120.0, bool enabled = true);`
+#### `bool SimpleGUI::SliderAt(const String& label, double& value, double min, double max, const Vec2& center, double labelWidth = 80.0, double sliderWidth = 120.0, bool enabled = true);`
+- value: 
+- center: 
+- sliderWidth: 
+- enabled: 
+- min: 
+- max: 
+- label: 
+- labelWidth: 
+- 戻り値: 
+
+#### `RectF SimpleGUI::VerticalSliderRegion(const Vec2& pos, double sliderHeight = 120.0);`
+- pos: 
+- sliderHeight: 
+- 戻り値: 
+
+#### `RectF SimpleGUI::VerticalSliderRegionAt(const Vec2& center, double sliderHeight = 120.0);`
+- center: 
+- sliderHeight: 
+- 戻り値: 
+
+#### `bool SimpleGUI::VerticalSlider(double& value, const Vec2& pos, double sliderHeight = 120.0, bool enabled = true);`
+#### `bool SimpleGUI::VerticalSlider(double& value, double min, double max, const Vec2& pos, double sliderHeight = 120.0, bool enabled = true);`
+- value: 
+- pos: 
+- sliderHeight: 
+- enabled: 
+- min: 
+- max: 
+- 戻り値: 
+
+#### `bool SimpleGUI::VerticalSliderAt(double& value, const Vec2& center, double sliderHeight = 120.0, bool enabled = true);`
+#### `bool SimpleGUI::VerticalSliderAt(double& value, double min, double max, const Vec2& center, double sliderHeight = 120.0, bool enabled = true);`
+- value: 
+- center: 
+- sliderHeight: 
+- enabled: 
+- min: 
+- max: 
+- 戻り値: 
+
+#### `RectF SimpleGUI::CheckBoxRegion(const String& label, const Vec2& pos, const Optional<double>& width = unspecified);`
+- label: 
+- pos: 
+- width: 
+- 戻り値: 
+
+#### `RectF SimpleGUI::CheckBoxRegionAt(const String& label, const Vec2& center, const Optional<double>& width = unspecified);`
+- label: 
+- center: 
+- width: 
+- 戻り値: 
+
+#### ` bool CheckBox(bool& checked, const String& label, const Vec2& pos, const Optional<double>& width = unspecified, bool enabled = true);`
+- checked: 
+- label: 
+- pos: 
+- width: 
+- enabled: 
+- 戻り値: 
+
+#### `bool SimpleGUI::CheckBoxAt(bool& checked, const String& label, const Vec2& center, const Optional<double>& width = unspecified, bool enabled = true);`
+- checked: 
+- label: 
+- center: 
+- width: 
+- enabled: 
+- 戻り値: 
+
+#### `RectF SimpleGUI::RadioButtonsRegion(const Array<String>& options, const Vec2& pos, const Optional<double>& width = unspecified);`
+- options: 
+- pos: 
+- width: 
+- 戻り値: 
+
+#### `RectF SimpleGUI::RadioButtonsRegionAt(const Array<String>& options, const Vec2& center, const Optional<double>& width = unspecified);`
+- options: 
+- center: 
+- width: 
+- 戻り値: 
+
+#### `bool SimpleGUI::RadioButtons(size_t& index, const Array<String>& options, const Vec2& pos, const Optional<double>& width = unspecified, bool enabled = true);`
+- index: 
+- options: 
+- pos: 
+- width: 
+- enabled: 
+- 戻り値: 
+
+#### `bool SimpleGUI::RadioButtonsAt(size_t& index, const Array<String>& options, const Vec2& center, const Optional<double>& width = unspecified, bool enabled = true);`
+- index: 
+- options: 
+- center: 
+- width: 
+- enabled: 
+- 戻り値: 
+
+#### `RectF SimpleGUI::TextBoxRegion(const Vec2& pos, double width = 200.0);`
+- pos: 
+- width: 
+- 戻り値: 
+
+#### `RectF SimpleGUI::TextBoxRegionAt(const Vec2& center, double width = 200.0);`
+- center: 
+- width: 
+- 戻り値: 
+
+#### `bool SimpleGUI::TextBox(TextEditState& text, const Vec2& pos, double width = 200.0, const Optional<size_t>& maxChars = unspecified, bool enabled = true);`
+- text: 
+- pos: 
+- width: 
+- maxChars: 
+- enabled: 
+- 戻り値: 
+
+#### `bool SimpleGUI::TextBoxAt(TextEditState& text, const Vec2& center, double width = 200.0, const Optional<size_t>& maxChars = unspecified, bool enabled = true);`
+- text: 
+- center: 
+- width: 
+- maxChars: 
+- enabled: 
+- 戻り値: 
+
+#### `RectF SimpleGUI::ColorPickerRegion(const Vec2& pos);`
+- pos: 
+- 戻り値: 
+
+#### `RectF SimpleGUI::ColorPickerRegionAt(const Vec2& center);`
+- center: 
+- 戻り値: 
+
+#### `bool SimpleGUI::ColorPicker(HSV& hsv, const Vec2& pos, bool enabled = true);`
+- hsv: 
+- pos: 
+- enabled: 
+- 戻り値: 
+
+#### `bool ColorPickerAt(HSV& hsv, const Vec2& center, bool enabled = true);`
+- hsv: 
+- center: 
+- enabled: 
+- 戻り値: 
+
+## テキスト編集構造体 (struct TextEditState)
+
+### メンバ変数
+
+#### `String text;`
+
+#### `size_t cursorPos = 0;`
+
+#### `bool active = false;`
+
+#### `Stopwatch leftPressStopwatch;`
+
+#### `Stopwatch rightPressStopwatch;`
+
+#### `Stopwatch cursorStopwatch;`
+
+### コンストラクタ
+
+#### `TextEditState() = default();`
+#### `TextEditState(const String& defaultText);`
+- defaultText: 
+
+### メンバ関数
+
+#### `void clear();`
