@@ -998,3 +998,121 @@ SDF フォントを描画するためのパラメータを設定します。
 ### メンバ関数
 
 #### `void clear();`
+
+## ストップウォッチクラス (class Stopwatch)
+
+### コンストラクタ
+
+#### `Stopwatch(bool startImmediately = false);`
+#### `Stopwatch(const Duration& time, bool startImmediately = false);`
+- startImmediately: 
+- time: 
+
+### メンバ関数
+
+#### `void start();`
+
+#### `int32 d();`
+- 戻り値: 
+
+#### `int64 d64();`
+- 戻り値: 
+
+#### `double dF();`
+- 戻り値: 
+
+#### `int32 h();`
+- 戻り値: 
+
+#### `int64 h64();`
+- 戻り値: 
+
+#### `double hF();`
+- 戻り値: 
+
+#### `int32 min();`
+- 戻り値: 
+
+#### `int64 min64();`
+- 戻り値: 
+
+#### `double minF();`
+- 戻り値: 
+
+#### `int32 s();`
+- 戻り値: 
+
+#### `int64 s64();`
+- 戻り値: 
+
+#### `double sF();`
+- 戻り値: 
+
+#### `int32 ms();`
+- 戻り値: 
+
+#### `int64 ms64();`
+- 戻り値: 
+
+#### `double msF();`
+- 戻り値: 
+
+#### `int64 us();`
+- 戻り値: 
+
+#### `int64 us64();`
+- 戻り値: 
+
+#### `double usF();`
+- 戻り値: 
+
+#### `Duration elapsed();`
+- 戻り値: 
+
+#### `bool isStarted();`
+- 戻り値: 
+
+#### `bool isPaused();`
+- 戻り値: 
+
+#### `bool isRunning();`
+- 戻り値: 
+
+#### `void pause();`
+
+#### `void resume();`
+
+#### `void reset();`
+
+#### `void restart();`
+
+#### `void set(const Duration& time);`
+- time: 
+
+#### `String format(stringView format = U"H:mm:ss.xx"_sv);`
+- format: 
+- 戻り値: 
+
+### 非メンバ関数
+
+#### `bool operator <(const Stopwatch& s, const MicrosecondsF& time);`
+#### `bool operator <=(const Stopwatch& s, const MicrosecondsF& time);`
+#### `bool operator >(const Stopwatch& s, const MicrosecondsF& time);`
+#### `bool operator >=(const Stopwatch& s, const MicrosecondsF& time);`
+#### `bool operator <(const MicrosecondsF& time, const Stopwatch& s);`
+#### `bool operator <=(const MicrosecondsF& time, const Stopwatch& s);`
+#### `bool operator >(const MicrosecondsF& time, const Stopwatch& s);`
+#### `bool operator >=(const MicrosecondsF& time, const Stopwatch& s);`
+- s: 
+- time: 
+- 戻り値: 
+
+#### `void Formatter(FormatData& formatData, const Stopwatch& value);`
+- formatData: 
+- value: 
+
+#### `template <class CharType> std::basic_ostream<CharType> & operator <<(std::basic_ostream<CharType> output, const Stopwatch& value);`
+- output: 
+- value: 
+- 戻り値: 
+
