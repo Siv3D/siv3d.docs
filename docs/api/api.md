@@ -1,17 +1,19 @@
 description: OpenSiv3D の API 一覧
 
+## シーン関連の定数
+
+### `enum class ScaleMode`
+ウィンドウを手動でリサイズしたときのシーンのサイズの扱いです。ウィンドウをリサイズする関数で `WindowResizeOption::UseDefaultScaleMode` が指定されたときにも参照されます。 
+
+#### `ScaleMode::ResizeFill`
+ウィンドウのクライアント領域のサイズに合わせてシーンをリサイズします。
+
+#### `ScaleMode::AspectFit`
+シーンのサイズはそのままで、アスペクト比を維持して拡大縮小してクライアント領域にフィットさせ描画します。
+
 ## シーン名前空間 (namespace Scene)
 
 ### 定数
-
-#### `enum class ScaleMode`
-ウィンドウを手動でリサイズしたときのシーンのサイズの扱いです。ウィンドウをリサイズする関数で `WindowResizeOption::UseDefaultScaleMode` が指定されたときにも参照されます。 
-
-##### `ScaleMode::ResizeFill`
-ウィンドウのクライアント領域のサイズに合わせてシーンをリサイズします。
-
-##### `ScaleMode::AspectFit`
-シーンのサイズはそのままで、アスペクト比を維持して拡大縮小してクライアント領域にフィットさせ描画します。
 
 #### `constexpr Size Scene::DefaultSceneSize = Window::DefaultClientSize;`
 シーンの幅と高さ（ピクセル）のデフォルト値です。
@@ -287,39 +289,39 @@ description: OpenSiv3D の API 一覧
 
 フルスクリーンモードの設定をします。`fullscreenResolution` には `unspecified` か `Graphics::GetFullscreenResolutions()` に含まれる値を使います。フルスクリーンモードにする際、`fullscreenResolution` に `unspecified` を指定すると、ディスプレイの解像度（スケーリング適用後）のサイズでフルスクリーンモードに入ります。`unspecified` は切り替えが早く堅牢です。
 
-## マウスカーソル名前空間 (namespace Cursor)
+## マウスカーソル関連の定数
 
-### 定数
-
-#### `enum class CursorStyle`
+### `enum class CursorStyle`
 マウスカーソルの形状を表します。
 
-##### `CursorStyle::Arrow`
+#### `CursorStyle::Arrow`
 通常の矢印カーソルです。
 
-##### `CursorStyle::IBeam`
+#### `CursorStyle::IBeam`
 テキスト入力時に使う I の形をしたカーソルです。
 
-##### `CursorStyle::Cross`
+#### `CursorStyle::Cross`
 十字型のカーソルです。
 
-##### `CursorStyle::Hand`
+#### `CursorStyle::Hand`
 人差し指を伸ばした手のアイコンのカーソルです。
 
-##### `CursorStyle::NotAllowed`
+#### `CursorStyle::NotAllowed`
 禁止マークのアイコンのカーソルです。
 
-##### `CursorStyle::ResizeUpDown`
+#### `CursorStyle::ResizeUpDown`
 上下へのリサイズ操作を表現するカーソルです。
 
-##### `CursorStyle::ResizeLeftRight`
+#### `CursorStyle::ResizeLeftRight`
 左右へのリサイズ操作を表現するカーソルです。
 
-##### `CursorStyle::Hidden`
+#### `CursorStyle::Hidden`
 マウスカーソルを非表示にします。
 
-##### `CursorStyle::Default = Arrow` 
+#### `CursorStyle::Default = Arrow` 
 デフォルトのマウスカーソルです。デフォルト値は `CursorStyle::Arrow` です。
+
+## マウスカーソル名前空間 (namespace Cursor)
 
 ### 関数
 
