@@ -1,6 +1,6 @@
 description: OpenSiv3D の API 一覧
 
-## シーン (Scene)
+## シーン名前空間 (namespace Scene)
 
 ### 定数
 
@@ -132,7 +132,7 @@ description: OpenSiv3D の API 一覧
 ウィンドウのクライアント領域上の座標をシーン上の座標に変換します。シーンの範囲外の座標になることもあります。
 
 
-## システム (System)
+## システム名前空間 (namespace System)
 
 ### 関数
 
@@ -194,7 +194,7 @@ description: OpenSiv3D の API 一覧
 使用可能な Web カメラの一覧を返します。
 
 
-## ウィンドウ (Window)
+## ウィンドウ名前空間 (namespace Window)
 
 ### 定数
 
@@ -287,7 +287,7 @@ description: OpenSiv3D の API 一覧
 
 フルスクリーンモードの設定をします。`fullscreenResolution` には `unspecified` か `Graphics::GetFullscreenResolutions()` に含まれる値を使います。フルスクリーンモードにする際、`fullscreenResolution` に `unspecified` を指定すると、ディスプレイの解像度（スケーリング適用後）のサイズでフルスクリーンモードに入ります。`unspecified` は切り替えが早く堅牢です。
 
-## マウスカーソル (Cursor)
+## マウスカーソル名前空間 (namespace Cursor)
 
 ### 定数
 
@@ -437,7 +437,7 @@ description: OpenSiv3D の API 一覧
 デフォルトのカーソルスタイルを返します。
 
 
-## 時間 (Time)
+## 時間名前空間 (namespace Time)
 
 ### 関数
 
@@ -481,7 +481,7 @@ description: OpenSiv3D の API 一覧
 
 現在の協定世界時 (UTC) との時差を分で返します。
 
-## 文字 (Char)
+## 文字に関する機能
 
 ### 関数
 
@@ -577,79 +577,614 @@ description: OpenSiv3D の API 一覧
 
 大文字小文字の違いを無視して文字 `a`, `b` を比較した結果を返します。
 
-## 2D グラフィックス (Graphics2D)
+## 2D グラフィックス名前空間 (namespace Graphics2D)
 
 ### 関数
 
 #### `ColorF Graphics2D::GetColorMul();`
-- 戻り値: 
+- 戻り値: 現在の乗算カラー
+
+現在 2D 描画に適用されている乗算カラーを返します。デフォルトでは `ColorF(1, 1, 1, 1)` です。
 
 #### `ColorF Graphics2D::GetColorAdd();`
-- 戻り値: 
+- 戻り値: 現在の加算カラー
+
+現在 2D 描画に適用されている加算カラーを返します。デフォルトでは `ColorF(0, 0, 0, 0)` です。
 
 #### `BlendState Graphics2D::GetBlendState();`
-- 戻り値: 
+- 戻り値: 現在のブレンドステート
+
+現在 2D 描画に適用されているブレンドステートを返します。デフォルトでは `BlendState::Default` です。
 
 #### `RasterizerState Graphics2D::GetRasterizerState();`
-- 戻り値: 
+- 戻り値: 現在のラスタライザーステート
+
+現在 2D 描画に適用されているラスタライザーステートを返します。デフォルトでは `RasterizerState::Default2D` です。
 
 #### `void Graphics2D::SetSamplerState(uint32 slot, const SamplerState& samplerState);`
-- slot: 
-- samplerState: 
+- slot: テクスチャスロットのインデックス (0～ (`SamplerState::MaxSamplerCount - 1`))
+- samplerState: 設定するサンプラーステート
+
+2D 描画に適用するサンプラーステートを、テクスチャスロットを指定して設定します。0 番に指定する場合は `ScopedRenderStates2D` が使えるので、それ以外のスロットの設定を変更する場合にこの関数を使います。テクスチャスロットのインデックスの最大値は `(SamplerState::MaxSamplerCount - 1)` です。
 
 #### `SamplerState Graphics2D::GetSamplerState(uint32 slot = 0);`
-- slot: 
-- 戻り値: 
+- slot: テクスチャスロットのインデックス (0～ (`SamplerState::MaxSamplerCount - 1`))
+- 戻り値: 現在のサンプラーステート
+
+指定したテクスチャスロットで現在 2D 描画に適用されているサンプラーステートを返します。テクスチャスロットのインデックスの最大値は `(SamplerState::MaxSamplerCount - 1)` です。
 
 #### `Optional<Rect> Graphics2D::GetViewport();`
-- 戻り値: 
+- 戻り値: 現在のカスタムビューポート。設定されていない場合 `none`
+
+現在 2D 描画に適用されているカスタムビューポートを返します。設定されていない場合は `none` を返します。
 
 #### `Optional<PixelShader> Graphics2D::GetCustomPixelShader();`
-- 戻り値: 
+- 戻り値: 現在のカスタムピクセルシェーダ。設定されていない場合 `none`
+
+現在 2D 描画に適用されているカスタムピクセルシェーダを返します。設定されていない場合は `none` を返します。
 
 #### `Optional<RenderTexture> Graphics2D::GetRenderTarget();`
-- 戻り値: 
+- 戻り値: 現在のレンダーターゲットに設定されているレンダーテクスチャ. デフォルトのシーンの場合 `none`
+
+現在 2D 描画でレンダーターゲットに設定されているレンダーテクスチャを返します。設定されていない場合は `none` を返します。
 
 #### `void Graphics2D::SetScissorRect(const Rect& rect);`
-- rect: 
+- rect: シザー矩形
+
+2D 描画に適用するシザー矩形を設定します。`RasterizerState` でシザー矩形を有効にした場合に使われます。
 
 #### `Rect Graphics2D::GetScissorRect();`
-- 戻り値: 
+- 戻り値: 現在のシザー矩形
+
+現在 2D 描画に適用されているシザー矩形を返します。デフォルトでは `Rect(0, 0, 0, 0)` です。
 
 #### `void Graphics2D::SetLocalTransform(const Mat3x2& transform);`
-- transform: 
+- transform: 座標変換行列
+
+2D 描画に適用する、ローカルな変換行列を設定します。通常は `Transformer2D` を用いるため、この関数は使いません。
 
 #### `const Mat3x2& Graphics2D::GetLocalTransform();`
-- 戻り値: 
+- 戻り値: 2D 描画座標を変換するために `Transformer2D` によって設定されている行列
+
+2D 描画に適用されている、ローカルな変換行列を返します。
 
 #### `void Graphics2D::SetCameraTransform(const Mat3x2& transform);`
-- transform: 
+- transform: 座標変換行列
+
+2D 描画に適用する、2D カメラによる変換行列を設定します。通常は `BasicCamera2D` を用いるため、この関数は使いません。
 
 #### `const Mat3x2& Graphics2D::GetCameraTransform();`
-- 戻り値: 
+- 戻り値: 2D 描画座標を変換するために `BasicCamera2D` によって設定されている行列
+
+2D 描画に適用されている、2D カメラによる変換行列を返します。
 
 #### `double Graphics2D::GetMaxScaling();`
-- 戻り値: 
+- 戻り値: 2D 描画の最大拡大倍率
+
+現在 2D 描画に適用されている座標変換行列を用いて直径 1 の円を描いたときに、描画される円または楕円の最大の径を返します。どのような座標変換行列においても線分を同じ太さで描画したいときに、この戻り値の値が使えます。
 
 #### `Size Graphics2D::GetRenderTargetSize();`
-- 戻り値: 
+- 戻り値: 現在のレンダーターゲットの解像度
+
+現在 2D 描画でレンダーターゲットに設定されているレンダーテクスチャもしくはデフォルトのシーンの解像度を返します。
 
 #### `void Graphics2D::SetSDFParameters(double pixelRange, double offset = 0.0);`
 #### `void Graphics2D::SetSDFParameters(cosnt Float4& parameters);`
-- pixelRange: 
-- offset: 
-- parameters: 
+- pixelRange: 使用する SDF フォントの `SDFFont::pixelRange()` の値
+- offset: SDF フォント描画の閾値のオフセット
+- parameters: SDF フォントのパラメータ。x 成分が pixelRange, y 成分が offset に対応
+
+SDF フォントを描画するためのパラメータを設定します。
 
 #### `Float4 Graphics2D::GetSDFParameters();`
-- 戻り値: 
+- 戻り値: 現在の SDF フォント描画用のパラメータ
+
+現在 SDF フォント描画用に設定されているパラメータを返します。x 成分が pixelRange, y 成分が offset に対応します。
 
 #### `void Graphics2D::SetTexture(uint32 slot, const Optional<Texture>& texture);`
-- slot: 
-- texture: 
+- slot: テクスチャスロットのインデックス (0～ (`SamplerState::MaxSamplerCount - 1`))
+- texture: テクスチャ
+
+2D 描画に適用する、追加のテクスチャを設定します。テクスチャを `.draw()` すると、そのテクスチャはスロットインデックス 0 にセットされます。それ以外に追加のテクスチャをシェーダで処理したい場合にこの関数を使います。テクスチャスロットのインデックスの最大値は `(SamplerState::MaxSamplerCount - 1)` です。
 
 #### `void Graphics2D::Flush();`
 
+現在のフレームでリクエストされた 2D 描画関連の命令をすべて実行します。`.draw()` や `Graphics2D::～` による 2D 描画命令は、処理の効率化のために一旦エンジン内でストックされ、命令が集約されてから `System::Update()` 内で一斉に実行されます。そのため、`RenderTexture` の中身を `.read()` で読み出す場合や `MSRenderTexture` を `.resolve()` する際に、実際には描画がなされていないケースが生じます。それを回避するためにこの関数を使います。
+
 #### `template <class Type> void Graphics2D::SetConstantBuffer(ShaderStage stage, uint32 index, const ConstantBuffer<Type>& buffer);`
-- stage: 
-- index: 
-- buffer: 
+- stage: 対象のシェーダ
+- index: 定数バッファインデックス (0～13)
+- buffer: 定数バッファのデータ
+
+2D 描画のカスタムシェーダで用いる、定数バッファを設定します。インデックス 0 の定数バッファはエンジンによって予約されているため、変更してはいけません。
+
+## グラフィックス名前空間 (namespace Graphics)
+
+### 関数
+
+#### `void Graphics::SkipClearScreen();`
+この次のフレームの開始時に、シーンの描画内容を背景色でクリアしないようにします。
+
+#### `Array<DisplayOutput> Graphics::EnumOutputs();`
+- 戻り値: 対応しているディスプレイ出力の一覧
+
+現在のメインディスプレイが対応しているディスプレイ出力の一覧を返します。
+
+#### `Array<Size> Graphics::GetFullscreenResolutions(double minRefreshRate = 49.0);`
+- minRefreshRate: 要求する最低限のリフレッシュレート (Hz)
+- 戻り値: フルスクリーンとして使用できる解像度の一覧
+
+リフレッシュレートが `minRefreshRate` (Hz) 以上で、フルスクリーンとして使用できる解像度の一覧を返します。
+
+#### `void Graphics::SetTargetFrameRateHz(const Optional<double>& targetFrameRateHz);`
+- targetFrameRateHz: 設定する最大フレームレート (Hz)
+
+アプリケーションのフレームレートの最大値を設定します。`none` を渡すと vSync が有効になり、ディスプレイの設定に沿ったフレームレートになります。デフォルトでは `none` です。コンピュータの性能によっては、実測のフレームレートが、この関数で設定した値を下回る場合があります。
+
+#### `Optional<double> Graphics::GetTargetFrameRateHz();`
+- 戻り値: アプリケーションのフレームレートの最大値、設定されていない場合は `none`
+
+`Graphics::SetTargetFrameRateHz()` で設定した、アプリケーションのフレームレートの最大値を返します。デフォルトでは `none` です。
+
+#### `double Graphics::GetDisplayRefreshRateHz();`
+- 戻り値: 現在のメインディスプレイの表示リフレッシュレート (Hz)
+
+現在のメインディスプレイの表示リフレッシュレートを返します。
+
+#### `double Graphics::GetDPIScaling();`
+- 戻り値: 現在のメインディスプレイの DPI 拡大率 (倍)
+
+現在のメインディスプレイに対してユーザがシステムで設定している DPI 拡大率を返します。
+
+## ディスプレイモード構造体 (struct DisplayMode)
+
+### メンバ変数
+
+#### `Size size;`
+ディスプレイの表示解像度（ピクセル）
+
+#### `double refreshRateHz;`
+ディスプレイの表示リフレッシュレート (Hz)
+
+## ディスプレイ出力構造体 (struct DisplayOutput)
+
+### メンバ変数
+
+#### `String name;`
+ディスプレイの名称
+
+#### `Rect displayRect;`
+ディスプレイの仮想座標
+
+#### `Array<DisplayMode> displayModes;`
+フルスクリーンとして利用できる表示モードの一覧
+
+## GUI ユーティリティー (namespace SimpleGUI)
+
+### 関数
+
+#### `RectF SimpleGUI::HeadlineRegion(const String& text, const Vec2& pos, const Optional<double>& width = unspecified);`
+- text: 見出しのテキスト
+- pos: 見出しの左上の座標（ピクセル）
+- width: 見出しの幅（ピクセル）
+- 戻り値: 見出しの領域（ピクセル）
+
+SimpleGUI スタイルで見出しを表示したときの領域を返します。`width` が `unspecified` の場合、見出しのテキストに合わせた幅になります。
+
+#### `void SimpleGUI::Headline(const String& text, const Vec2& pos, const Optional<double>& width = unspecified, bool enabled = true);`
+- text: 見出しのテキスト
+- pos: 見出しの左上の座標（ピクセル）
+- width: 見出しの幅（ピクセル）
+- enabled: アクティブ状態
+
+SimpleGUI スタイルで見出しを描画します。`width` が `unspecified` の場合、見出しのテキストに合わせた幅になります。
+
+#### `RectF SimpleGUI::ButtonRegion(const String& label, const Vec2& pos, const Optional<double>& width = unspecified);`
+- label: ボタンのラベル
+- pos: ボタンの左上の座標（ピクセル）
+- width: ボタンの幅（ピクセル）
+- 戻り値: ボタンの領域（ピクセル）
+
+SimpleGUI スタイルでボタンを表示したときの領域を返します。`width` が `unspecified` の場合、ラベルに合わせた幅になります。
+
+#### `RectF SimpleGUI::ButtonRegionAt(const String& label, const Vec2& center, const Optional<double>& width = unspecified);`
+- label: ボタンのラベル
+- center: ボタンの中心の座標（ピクセル）
+- width: ボタンの幅（ピクセル）
+- 戻り値: ボタンの領域（ピクセル）
+
+SimpleGUI スタイルでボタンを表示したときの領域を返します。`width` が `unspecified` の場合、ラベルに合わせた幅になります。
+
+#### `bool SimpleGUI::Button(const String& label, const Vec2& pos, const Optional<double>& width = unspecified, bool enabled = true);`
+- label: ボタンのラベル
+- pos: ボタンの左上の座標（ピクセル）
+- widht: ボタンの幅（ピクセル）
+- enabled: アクティブ状態
+- 戻り値: ボタンがクリックされた場合 `true`, それ以外の場合 `false`
+
+SimpleGUI スタイルでボタンを表示します。ボタンがクリックされた場合 `true` を返します。
+
+#### `bool SimpleGUI::ButtonAt(const String& label, const Vec2& center, const Optional<double>& width = unspecified, bool enabled = true);`
+- label: ボタンのラベル
+- center: ボタンの中心の座標（ピクセル）
+- width: ボタンの幅（ピクセル）
+- enabled: アクティブ状態
+- 戻り値: ボタンがクリックされた場合 `true`, それ以外の場合 `false`
+
+SimpleGUI スタイルでボタンを表示します。ボタンがクリックされた場合 `true` を返します。
+
+#### `RectF SimpleGUI::SliderRegion(const Vec2& pos, double labelWidth = 80.0, double sliderWidth = 120.0);`
+- pos: スライダーの左上の座標（ピクセル）
+- labelWidth: ラベルの幅（ピクセル）
+- sliderWidth: スライド部分の長さ（ピクセル）
+- 戻り値: スライダーの領域（ピクセル）
+
+SimpleGUI スタイルで水平スライダーを表示したときの領域を返します。
+
+#### `RectF SimpleGUI::SliderRegionAt(const Vec2& center, double labelWidth = 80.0, double sliderWidth = 120.0);`
+- center: スライダーの中心の座標（ピクセル）
+- labelWidth: ラベルの幅（ピクセル）
+- sliderWidth: スライド部分の長さ（ピクセル）
+- 戻り値: スライダーの領域（ピクセル）
+
+SimpleGUI スタイルで水平スライダーを表示したときの領域を返します。
+
+#### `bool SimpleGUI::Slider(double& value, const Vec2& pos, double sliderWidth = 120.0, bool enabled = true);`
+#### `bool SimpleGUI::Slider(double& value, double min, double max, const Vec2& pos, double sliderWidth = 120.0, bool enabled = true);`
+#### `bool SimpleGUI::Slider(const String& label, double& value, const Vec2& pos, double labelWidth = 80.0, double sliderWidth = 120.0, bool enabled = true);`
+#### `bool SimpleGUI::Slider(const String& label, double& value, double min, double max, const Vec2& pos, double labelWidth = 80.0, double sliderWidth = 120.0, bool enabled = true);`
+- value: 操作する値
+- pos: スライダーの左上の座標（ピクセル）
+- sliderWidth: スライド部分の長さ（ピクセル）
+- enabled: アクティブ状態
+- min: 値の最小値
+- max: 値の最大値
+- label: ラベルのテキスト
+- labelWidth: ラベルの幅（ピクセル）
+- 戻り値: ユーザのスライダー操作によって値が変更された場合 `true`, それ以外の場合 `false`
+
+SimpleGUI スタイルで水平スライダーを表示します。ユーザのスライダー操作によって値が変更された場合 `true` を返します。
+
+#### `bool SimpleGUI::SliderAt(double& value, const Vec2& center, double sliderWidth = 120.0, bool enabled = true);`
+#### `bool SimpleGUI::SliderAt(double& value, double min, double max, const Vec2& center, double sliderWidth = 120.0, bool enabled = true);`
+#### `bool SimpleGUI::SliderAt(const String& label, double& value, const Vec2& center, double labelWidth = 80.0, double sliderWidth = 120.0, bool enabled = true);`
+#### `bool SimpleGUI::SliderAt(const String& label, double& value, double min, double max, const Vec2& center, double labelWidth = 80.0, double sliderWidth = 120.0, bool enabled = true);`
+- value: 操作する値
+- center: スライダーの中心の座標（ピクセル）
+- sliderWidth: スライド部分の長さ（ピクセル）
+- enabled: アクティブ状態
+- min: 値の最小値
+- max: 値の最大値
+- label: ラベルのテキスト
+- labelWidth: ラベルの幅（ピクセル）
+- 戻り値: ユーザのスライダー操作によって値が変更された場合 `true`, それ以外の場合 `false`
+
+SimpleGUI スタイルで水平スライダーを表示します。ユーザのスライダー操作によって値が変更された場合 `true` を返します。
+
+#### `RectF SimpleGUI::VerticalSliderRegion(const Vec2& pos, double sliderHeight = 120.0);`
+- pos: スライダーの左上の座標（ピクセル）
+- sliderHeight: スライド部分の高さ（ピクセル）
+- 戻り値: スライダーの領域（ピクセル）
+
+SimpleGUI スタイルで垂直スライダーを表示したときの領域を返します。
+
+#### `RectF SimpleGUI::VerticalSliderRegionAt(const Vec2& center, double sliderHeight = 120.0);`
+- center: スライダーの中心の座標（ピクセル）
+- sliderHeight: スライド部分の高さ（ピクセル）
+- 戻り値: スライダーの領域（ピクセル）
+
+SimpleGUI スタイルで垂直スライダーを表示したときの領域を返します。
+
+#### `bool SimpleGUI::VerticalSlider(double& value, const Vec2& pos, double sliderHeight = 120.0, bool enabled = true);`
+#### `bool SimpleGUI::VerticalSlider(double& value, double min, double max, const Vec2& pos, double sliderHeight = 120.0, bool enabled = true);`
+- value: 操作する値
+- pos: スライダーの左上の座標（ピクセル）
+- sliderHeight: スライド部分の高さ（ピクセル）
+- enabled: アクティブ状態
+- min: 値の最小値
+- max: 値の最大値
+- 戻り値: ユーザのスライダー操作によって値が変更された場合 `true`, それ以外の場合 `false`
+
+SimpleGUI スタイルで垂直スライダーを表示します。ユーザのスライダー操作によって値が変更された場合 `true` を返します。
+
+#### `bool SimpleGUI::VerticalSliderAt(double& value, const Vec2& center, double sliderHeight = 120.0, bool enabled = true);`
+#### `bool SimpleGUI::VerticalSliderAt(double& value, double min, double max, const Vec2& center, double sliderHeight = 120.0, bool enabled = true);`
+- value: 操作する値
+- center: スライダーの中心の座標（ピクセル）
+- sliderHeight: スライド部分の高さ（ピクセル）
+- enabled: アクティブ状態
+- min: 値の最小値
+- max: 値の最大値
+- 戻り値: ユーザのスライダー操作によって値が変更された場合 `true`, それ以外の場合 `false`
+
+SimpleGUI スタイルで垂直スライダーを表示します。ユーザのスライダー操作によって値が変更された場合 `true` を返します。
+
+#### `RectF SimpleGUI::CheckBoxRegion(const String& label, const Vec2& pos, const Optional<double>& width = unspecified);`
+- label: ラベル
+- pos: チェックボックスの左上の座標（ピクセル）
+- width: チェックボックスの幅（ピクセル）
+- 戻り値: チェックボックスの領域（ピクセル）
+
+SimpleGUI スタイルでチェックボックスを表示したときの領域を返します。`width` が `unspecified` の場合、見出しのテキストに合わせた幅になります。
+
+#### `RectF SimpleGUI::CheckBoxRegionAt(const String& label, const Vec2& center, const Optional<double>& width = unspecified);`
+- label: ラベル
+- center: チェックボックスの中心の座標（ピクセル）
+- width: チェックボックスの幅（ピクセル）
+- 戻り値: チェックボックスの領域（ピクセル）
+
+SimpleGUI スタイルでチェックボックスを表示したときの領域を返します。`width` が `unspecified` の場合、見出しのテキストに合わせた幅になります。
+
+#### ` bool CheckBox(bool& checked, const String& label, const Vec2& pos, const Optional<double>& width = unspecified, bool enabled = true);`
+- checked: チェック状態
+- label: ラベル
+- pos: チェックボックスの左上の座標（ピクセル）
+- width: チェックボックスの幅（ピクセル）
+- enabled: アクティブ状態
+- 戻り値: ユーザの操作によって値が変更された場合 `true`, それ以外の場合 `false`
+
+SimpleGUI スタイルでチェックボックスを表示します。ユーザの操作によって値が変更された場合 `true` を返します。`width` が `unspecified` の場合、見出しのテキストに合わせた幅になります。
+
+#### `bool SimpleGUI::CheckBoxAt(bool& checked, const String& label, const Vec2& center, const Optional<double>& width = unspecified, bool enabled = true);`
+- checked: チェック状態
+- label: ラベル
+- center: チェックボックスの中心の座標（ピクセル）
+- width: チェックボックスの幅（ピクセル）
+- enabled: アクティブ状態
+- 戻り値: ユーザの操作によって値が変更された場合 `true`, それ以外の場合 `false`
+
+SimpleGUI スタイルでチェックボックスを表示します。ユーザの操作によって値が変更された場合 `true` を返します。`width` が `unspecified` の場合、見出しのテキストに合わせた幅になります。
+
+#### `RectF SimpleGUI::RadioButtonsRegion(const Array<String>& options, const Vec2& pos, const Optional<double>& width = unspecified);`
+- options: ラジオボタンの選択肢
+- pos: ラジオボタンの左上の座標（ピクセル）
+- width: ラジオボタンの幅（ピクセル）
+- 戻り値: ラジオボタンの領域（ピクセル）
+
+SimpleGUI スタイルでラジオボタンを表示したときの領域を返します。`width` が `unspecified` の場合、見出しのテキストに合わせた幅になります。
+
+#### `RectF SimpleGUI::RadioButtonsRegionAt(const Array<String>& options, const Vec2& center, const Optional<double>& width = unspecified);`
+- options: ラジオボタンの選択肢
+- center: ラジオボタンの中心の座標（ピクセル）
+- width: ラジオボタンの幅（ピクセル）
+- 戻り値: ラジオボタンの領域（ピクセル）
+
+SimpleGUI スタイルでラジオボタンを表示したときの領域を返します。`width` が `unspecified` の場合、見出しのテキストに合わせた幅になります。
+
+#### `bool SimpleGUI::RadioButtons(size_t& index, const Array<String>& options, const Vec2& pos, const Optional<double>& width = unspecified, bool enabled = true);`
+- index: 選択されている選択肢のインデックス
+- options: ラジオボタンの選択肢
+- pos: ラジオボタンの左上の座標（ピクセル）
+- width: ラジオボタンの幅（ピクセル）
+- enabled: アクティブ状態
+- 戻り値: ユーザの操作によって値が変更された場合 `true`, それ以外の場合 `false`
+
+SimpleGUI スタイルでラジオボタンを表示します。ユーザの操作によって値が変更された場合 `true` を返します。`width` が `unspecified` の場合、見出しのテキストに合わせた幅になります。
+
+#### `bool SimpleGUI::RadioButtonsAt(size_t& index, const Array<String>& options, const Vec2& center, const Optional<double>& width = unspecified, bool enabled = true);`
+- index: 選択されている選択肢のインデックス
+- options: ラジオボタンの選択肢
+- center: ラジオボタンの中心の座標（ピクセル）
+- width: ラジオボタンの幅（ピクセル）
+- enabled: アクティブ状態
+- 戻り値: ユーザの操作によって値が変更された場合 `true`, それ以外の場合 `false`
+
+SimpleGUI スタイルでラジオボタンを表示します。ユーザの操作によって値が変更された場合 `true` を返します。`width` が `unspecified` の場合、見出しのテキストに合わせた幅になります。
+
+#### `RectF SimpleGUI::TextBoxRegion(const Vec2& pos, double width = 200.0);`
+- pos: テキストボックスの左上の座標（ピクセル）
+- width: テキストボックスの幅（ピクセル）
+- 戻り値: テキストボックスの領域（ピクセル）
+
+SimpleGUI スタイルでテキストボックスを表示したときの領域を返します。
+
+#### `RectF SimpleGUI::TextBoxRegionAt(const Vec2& center, double width = 200.0);`
+- center: テキストボックスの中心の座標（ピクセル）
+- width: テキストボックスの幅（ピクセル）
+- 戻り値: テキストボックスの領域（ピクセル）
+
+SimpleGUI スタイルでテキストボックスを表示したときの領域を返します。
+
+#### `bool SimpleGUI::TextBox(TextEditState& text, const Vec2& pos, double width = 200.0, const Optional<size_t>& maxChars = unspecified, bool enabled = true);`
+- text: テキスト編集情報
+- pos: テキストボックスの左上の座標（ピクセル）
+- width: テキストボックスの幅（ピクセル）
+- maxChars: 入力文字数の上限、設定しない場合は `unspecified`
+- enabled: アクティブ状態
+- 戻り値: ユーザの操作によってテキストが変更された場合 `true`, それ以外の場合 `false`
+
+SimpleGUI スタイルでテキストボックスを表示します。ユーザの操作によって値が変更された場合 `true` を返します。`maxChars` が `unspecified` の場合、入力文字数の上限はありません。
+
+#### `bool SimpleGUI::TextBoxAt(TextEditState& text, const Vec2& center, double width = 200.0, const Optional<size_t>& maxChars = unspecified, bool enabled = true);`
+- text: テキスト編集情報
+- center: テキストボックスの中心の座標（ピクセル）
+- width: テキストボックスの幅（ピクセル）
+- maxChars: 入力文字数の上限、設定しない場合は `unspecified`
+- enabled: アクティブ状態
+- 戻り値: ユーザの操作によってテキストが変更された場合 `true`, それ以外の場合 `false`
+
+SimpleGUI スタイルでテキストボックスを表示します。ユーザの操作によって値が変更された場合 `true` を返します。`maxChars` が `unspecified` の場合、入力文字数の上限はありません。
+
+#### `RectF SimpleGUI::ColorPickerRegion(const Vec2& pos);`
+- pos: カラーピッカーの左上の座標（ピクセル）
+- 戻り値: カラーピッカーの領域（ピクセル）
+
+SimpleGUI スタイルでカラーピッカーを表示したときの領域を返します。
+
+#### `RectF SimpleGUI::ColorPickerRegionAt(const Vec2& center);`
+- center: カラーピッカーの中心の座標（ピクセル）
+- 戻り値: カラーピッカーの領域（ピクセル）
+
+SimpleGUI スタイルでカラーピッカーを表示したときの領域を返します。
+
+#### `bool SimpleGUI::ColorPicker(HSV& hsv, const Vec2& pos, bool enabled = true);`
+- hsv: 操作する色
+- pos: カラーピッカーの左上の座標（ピクセル）
+- enabled: アクティブ状態
+- 戻り値: ユーザの操作によって色が変更された場合 `true`, それ以外の場合 `false`
+
+SimpleGUI スタイルでカラーピッカーを表示します。ユーザの操作によって色が変更された場合 `true` を返します。
+
+#### `bool ColorPickerAt(HSV& hsv, const Vec2& center, bool enabled = true);`
+- hsv: 操作する色
+- center: カラーピッカーの中心の座標（ピクセル）
+- enabled: アクティブ状態
+- 戻り値: ユーザの操作によって色が変更された場合 `true`, それ以外の場合 `false`
+
+SimpleGUI スタイルでカラーピッカーを表示します。ユーザの操作によって色が変更された場合 `true` を返します。
+
+## テキスト編集構造体 (struct TextEditState)
+
+テキストボックスなどでテキストを編集する際に使う情報です。
+
+### メンバ変数
+
+#### `String text;`
+入力されたテキスト
+
+#### `size_t cursorPos = 0;`
+入力カーソル位置
+
+#### `bool active = false;`
+アクティブ状態
+
+#### `Stopwatch leftPressStopwatch;`
+カーソルの左移動タイミング用のストップウォッチ（内部処理用）
+
+#### `Stopwatch rightPressStopwatch;`
+カーソルの右移動タイミング用のストップウォッチ（内部処理用）
+
+#### `Stopwatch cursorStopwatch;`
+入力カーソルの点滅タイミング用のストップウォッチ（内部処理用）
+
+### コンストラクタ
+
+#### `TextEditState() = default();`
+#### `TextEditState(const String& defaultText);`
+- defaultText: 初期テキスト
+
+テキスト編集構造体を初期化します。
+
+### メンバ関数
+
+#### `void clear();`
+
+テキスト編集情報をすべてクリアし、入力テキストを空にします。
+
+## ストップウォッチクラス (class Stopwatch)
+
+### コンストラクタ
+
+#### `Stopwatch(bool startImmediately = false);`
+#### `Stopwatch(const Duration& time, bool startImmediately = false);`
+- startImmediately: 
+- time: 
+
+### メンバ関数
+
+#### `void start();`
+
+#### `int32 d();`
+- 戻り値: 
+
+#### `int64 d64();`
+- 戻り値: 
+
+#### `double dF();`
+- 戻り値: 
+
+#### `int32 h();`
+- 戻り値: 
+
+#### `int64 h64();`
+- 戻り値: 
+
+#### `double hF();`
+- 戻り値: 
+
+#### `int32 min();`
+- 戻り値: 
+
+#### `int64 min64();`
+- 戻り値: 
+
+#### `double minF();`
+- 戻り値: 
+
+#### `int32 s();`
+- 戻り値: 
+
+#### `int64 s64();`
+- 戻り値: 
+
+#### `double sF();`
+- 戻り値: 
+
+#### `int32 ms();`
+- 戻り値: 
+
+#### `int64 ms64();`
+- 戻り値: 
+
+#### `double msF();`
+- 戻り値: 
+
+#### `int64 us();`
+- 戻り値: 
+
+#### `int64 us64();`
+- 戻り値: 
+
+#### `double usF();`
+- 戻り値: 
+
+#### `Duration elapsed();`
+- 戻り値: 
+
+#### `bool isStarted();`
+- 戻り値: 
+
+#### `bool isPaused();`
+- 戻り値: 
+
+#### `bool isRunning();`
+- 戻り値: 
+
+#### `void pause();`
+
+#### `void resume();`
+
+#### `void reset();`
+
+#### `void restart();`
+
+#### `void set(const Duration& time);`
+- time: 
+
+#### `String format(stringView format = U"H:mm:ss.xx"_sv);`
+- format: 
+- 戻り値: 
+
+### 非メンバ関数
+
+#### `bool operator <(const Stopwatch& s, const MicrosecondsF& time);`
+#### `bool operator <=(const Stopwatch& s, const MicrosecondsF& time);`
+#### `bool operator >(const Stopwatch& s, const MicrosecondsF& time);`
+#### `bool operator >=(const Stopwatch& s, const MicrosecondsF& time);`
+#### `bool operator <(const MicrosecondsF& time, const Stopwatch& s);`
+#### `bool operator <=(const MicrosecondsF& time, const Stopwatch& s);`
+#### `bool operator >(const MicrosecondsF& time, const Stopwatch& s);`
+#### `bool operator >=(const MicrosecondsF& time, const Stopwatch& s);`
+- s: 
+- time: 
+- 戻り値: 
+
+#### `void Formatter(FormatData& formatData, const Stopwatch& value);`
+- formatData: 
+- value: 
+
+#### `template <class CharType> std::basic_ostream<CharType> & operator <<(std::basic_ostream<CharType> output, const Stopwatch& value);`
+- output: 
+- value: 
+- 戻り値: 
+

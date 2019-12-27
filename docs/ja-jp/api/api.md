@@ -764,240 +764,312 @@ SDF フォントを描画するためのパラメータを設定します。
 ### 関数
 
 #### `RectF SimpleGUI::HeadlineRegion(const String& text, const Vec2& pos, const Optional<double>& width = unspecified);`
-- text: 
-- pos: 
-- width: 
-- 戻り値: 
+- text: 見出しのテキスト
+- pos: 見出しの左上の座標（ピクセル）
+- width: 見出しの幅（ピクセル）
+- 戻り値: 見出しの領域（ピクセル）
+
+SimpleGUI スタイルで見出しを表示したときの領域を返します。`width` が `unspecified` の場合、見出しのテキストに合わせた幅になります。
 
 #### `void SimpleGUI::Headline(const String& text, const Vec2& pos, const Optional<double>& width = unspecified, bool enabled = true);`
-- text: 
-- pos: 
-- width: 
-- enabled: 
+- text: 見出しのテキスト
+- pos: 見出しの左上の座標（ピクセル）
+- width: 見出しの幅（ピクセル）
+- enabled: アクティブ状態
+
+SimpleGUI スタイルで見出しを描画します。`width` が `unspecified` の場合、見出しのテキストに合わせた幅になります。
 
 #### `RectF SimpleGUI::ButtonRegion(const String& label, const Vec2& pos, const Optional<double>& width = unspecified);`
-- label: 
-- pos: 
-- width: 
-- 戻り値: 
+- label: ボタンのラベル
+- pos: ボタンの左上の座標（ピクセル）
+- width: ボタンの幅（ピクセル）
+- 戻り値: ボタンの領域（ピクセル）
+
+SimpleGUI スタイルでボタンを表示したときの領域を返します。`width` が `unspecified` の場合、ラベルに合わせた幅になります。
 
 #### `RectF SimpleGUI::ButtonRegionAt(const String& label, const Vec2& center, const Optional<double>& width = unspecified);`
-- label: 
-- center: 
-- width: 
-- 戻り値: 
+- label: ボタンのラベル
+- center: ボタンの中心の座標（ピクセル）
+- width: ボタンの幅（ピクセル）
+- 戻り値: ボタンの領域（ピクセル）
+
+SimpleGUI スタイルでボタンを表示したときの領域を返します。`width` が `unspecified` の場合、ラベルに合わせた幅になります。
 
 #### `bool SimpleGUI::Button(const String& label, const Vec2& pos, const Optional<double>& width = unspecified, bool enabled = true);`
-- label: 
-- pos: 
-- widht: 
-- enabled: 
-- 戻り値: 
+- label: ボタンのラベル
+- pos: ボタンの左上の座標（ピクセル）
+- widht: ボタンの幅（ピクセル）
+- enabled: アクティブ状態
+- 戻り値: ボタンがクリックされた場合 `true`, それ以外の場合 `false`
+
+SimpleGUI スタイルでボタンを表示します。ボタンがクリックされた場合 `true` を返します。
 
 #### `bool SimpleGUI::ButtonAt(const String& label, const Vec2& center, const Optional<double>& width = unspecified, bool enabled = true);`
-- label: 
-- center: 
-- width: 
-- enabled: 
-- 戻り値: 
+- label: ボタンのラベル
+- center: ボタンの中心の座標（ピクセル）
+- width: ボタンの幅（ピクセル）
+- enabled: アクティブ状態
+- 戻り値: ボタンがクリックされた場合 `true`, それ以外の場合 `false`
+
+SimpleGUI スタイルでボタンを表示します。ボタンがクリックされた場合 `true` を返します。
 
 #### `RectF SimpleGUI::SliderRegion(const Vec2& pos, double labelWidth = 80.0, double sliderWidth = 120.0);`
-- pos: 
-- labelWidth: 
-- sliderWidth: 
-- 戻り値: 
+- pos: スライダーの左上の座標（ピクセル）
+- labelWidth: ラベルの幅（ピクセル）
+- sliderWidth: スライド部分の長さ（ピクセル）
+- 戻り値: スライダーの領域（ピクセル）
+
+SimpleGUI スタイルで水平スライダーを表示したときの領域を返します。
 
 #### `RectF SimpleGUI::SliderRegionAt(const Vec2& center, double labelWidth = 80.0, double sliderWidth = 120.0);`
-- center: 
-- labelWidth: 
-- sliderWidth: 
-- 戻り値: 
+- center: スライダーの中心の座標（ピクセル）
+- labelWidth: ラベルの幅（ピクセル）
+- sliderWidth: スライド部分の長さ（ピクセル）
+- 戻り値: スライダーの領域（ピクセル）
+
+SimpleGUI スタイルで水平スライダーを表示したときの領域を返します。
 
 #### `bool SimpleGUI::Slider(double& value, const Vec2& pos, double sliderWidth = 120.0, bool enabled = true);`
 #### `bool SimpleGUI::Slider(double& value, double min, double max, const Vec2& pos, double sliderWidth = 120.0, bool enabled = true);`
 #### `bool SimpleGUI::Slider(const String& label, double& value, const Vec2& pos, double labelWidth = 80.0, double sliderWidth = 120.0, bool enabled = true);`
 #### `bool SimpleGUI::Slider(const String& label, double& value, double min, double max, const Vec2& pos, double labelWidth = 80.0, double sliderWidth = 120.0, bool enabled = true);`
-- value: 
-- pos: 
-- sliderWidth: 
-- enabled: 
-- min: 
-- max: 
-- label: 
-- labelWidth: 
-- 戻り値: 
+- value: 操作する値
+- pos: スライダーの左上の座標（ピクセル）
+- sliderWidth: スライド部分の長さ（ピクセル）
+- enabled: アクティブ状態
+- min: 値の最小値
+- max: 値の最大値
+- label: ラベルのテキスト
+- labelWidth: ラベルの幅（ピクセル）
+- 戻り値: ユーザのスライダー操作によって値が変更された場合 `true`, それ以外の場合 `false`
+
+SimpleGUI スタイルで水平スライダーを表示します。ユーザのスライダー操作によって値が変更された場合 `true` を返します。
 
 #### `bool SimpleGUI::SliderAt(double& value, const Vec2& center, double sliderWidth = 120.0, bool enabled = true);`
 #### `bool SimpleGUI::SliderAt(double& value, double min, double max, const Vec2& center, double sliderWidth = 120.0, bool enabled = true);`
 #### `bool SimpleGUI::SliderAt(const String& label, double& value, const Vec2& center, double labelWidth = 80.0, double sliderWidth = 120.0, bool enabled = true);`
 #### `bool SimpleGUI::SliderAt(const String& label, double& value, double min, double max, const Vec2& center, double labelWidth = 80.0, double sliderWidth = 120.0, bool enabled = true);`
-- value: 
-- center: 
-- sliderWidth: 
-- enabled: 
-- min: 
-- max: 
-- label: 
-- labelWidth: 
-- 戻り値: 
+- value: 操作する値
+- center: スライダーの中心の座標（ピクセル）
+- sliderWidth: スライド部分の長さ（ピクセル）
+- enabled: アクティブ状態
+- min: 値の最小値
+- max: 値の最大値
+- label: ラベルのテキスト
+- labelWidth: ラベルの幅（ピクセル）
+- 戻り値: ユーザのスライダー操作によって値が変更された場合 `true`, それ以外の場合 `false`
+
+SimpleGUI スタイルで水平スライダーを表示します。ユーザのスライダー操作によって値が変更された場合 `true` を返します。
 
 #### `RectF SimpleGUI::VerticalSliderRegion(const Vec2& pos, double sliderHeight = 120.0);`
-- pos: 
-- sliderHeight: 
-- 戻り値: 
+- pos: スライダーの左上の座標（ピクセル）
+- sliderHeight: スライド部分の高さ（ピクセル）
+- 戻り値: スライダーの領域（ピクセル）
+
+SimpleGUI スタイルで垂直スライダーを表示したときの領域を返します。
 
 #### `RectF SimpleGUI::VerticalSliderRegionAt(const Vec2& center, double sliderHeight = 120.0);`
-- center: 
-- sliderHeight: 
-- 戻り値: 
+- center: スライダーの中心の座標（ピクセル）
+- sliderHeight: スライド部分の高さ（ピクセル）
+- 戻り値: スライダーの領域（ピクセル）
+
+SimpleGUI スタイルで垂直スライダーを表示したときの領域を返します。
 
 #### `bool SimpleGUI::VerticalSlider(double& value, const Vec2& pos, double sliderHeight = 120.0, bool enabled = true);`
 #### `bool SimpleGUI::VerticalSlider(double& value, double min, double max, const Vec2& pos, double sliderHeight = 120.0, bool enabled = true);`
-- value: 
-- pos: 
-- sliderHeight: 
-- enabled: 
-- min: 
-- max: 
-- 戻り値: 
+- value: 操作する値
+- pos: スライダーの左上の座標（ピクセル）
+- sliderHeight: スライド部分の高さ（ピクセル）
+- enabled: アクティブ状態
+- min: 値の最小値
+- max: 値の最大値
+- 戻り値: ユーザのスライダー操作によって値が変更された場合 `true`, それ以外の場合 `false`
+
+SimpleGUI スタイルで垂直スライダーを表示します。ユーザのスライダー操作によって値が変更された場合 `true` を返します。
 
 #### `bool SimpleGUI::VerticalSliderAt(double& value, const Vec2& center, double sliderHeight = 120.0, bool enabled = true);`
 #### `bool SimpleGUI::VerticalSliderAt(double& value, double min, double max, const Vec2& center, double sliderHeight = 120.0, bool enabled = true);`
-- value: 
-- center: 
-- sliderHeight: 
-- enabled: 
-- min: 
-- max: 
-- 戻り値: 
+- value: 操作する値
+- center: スライダーの中心の座標（ピクセル）
+- sliderHeight: スライド部分の高さ（ピクセル）
+- enabled: アクティブ状態
+- min: 値の最小値
+- max: 値の最大値
+- 戻り値: ユーザのスライダー操作によって値が変更された場合 `true`, それ以外の場合 `false`
+
+SimpleGUI スタイルで垂直スライダーを表示します。ユーザのスライダー操作によって値が変更された場合 `true` を返します。
 
 #### `RectF SimpleGUI::CheckBoxRegion(const String& label, const Vec2& pos, const Optional<double>& width = unspecified);`
-- label: 
-- pos: 
-- width: 
-- 戻り値: 
+- label: ラベル
+- pos: チェックボックスの左上の座標（ピクセル）
+- width: チェックボックスの幅（ピクセル）
+- 戻り値: チェックボックスの領域（ピクセル）
+
+SimpleGUI スタイルでチェックボックスを表示したときの領域を返します。`width` が `unspecified` の場合、見出しのテキストに合わせた幅になります。
 
 #### `RectF SimpleGUI::CheckBoxRegionAt(const String& label, const Vec2& center, const Optional<double>& width = unspecified);`
-- label: 
-- center: 
-- width: 
-- 戻り値: 
+- label: ラベル
+- center: チェックボックスの中心の座標（ピクセル）
+- width: チェックボックスの幅（ピクセル）
+- 戻り値: チェックボックスの領域（ピクセル）
+
+SimpleGUI スタイルでチェックボックスを表示したときの領域を返します。`width` が `unspecified` の場合、見出しのテキストに合わせた幅になります。
 
 #### ` bool CheckBox(bool& checked, const String& label, const Vec2& pos, const Optional<double>& width = unspecified, bool enabled = true);`
-- checked: 
-- label: 
-- pos: 
-- width: 
-- enabled: 
-- 戻り値: 
+- checked: チェック状態
+- label: ラベル
+- pos: チェックボックスの左上の座標（ピクセル）
+- width: チェックボックスの幅（ピクセル）
+- enabled: アクティブ状態
+- 戻り値: ユーザの操作によって値が変更された場合 `true`, それ以外の場合 `false`
+
+SimpleGUI スタイルでチェックボックスを表示します。ユーザの操作によって値が変更された場合 `true` を返します。`width` が `unspecified` の場合、見出しのテキストに合わせた幅になります。
 
 #### `bool SimpleGUI::CheckBoxAt(bool& checked, const String& label, const Vec2& center, const Optional<double>& width = unspecified, bool enabled = true);`
-- checked: 
-- label: 
-- center: 
-- width: 
-- enabled: 
-- 戻り値: 
+- checked: チェック状態
+- label: ラベル
+- center: チェックボックスの中心の座標（ピクセル）
+- width: チェックボックスの幅（ピクセル）
+- enabled: アクティブ状態
+- 戻り値: ユーザの操作によって値が変更された場合 `true`, それ以外の場合 `false`
+
+SimpleGUI スタイルでチェックボックスを表示します。ユーザの操作によって値が変更された場合 `true` を返します。`width` が `unspecified` の場合、見出しのテキストに合わせた幅になります。
 
 #### `RectF SimpleGUI::RadioButtonsRegion(const Array<String>& options, const Vec2& pos, const Optional<double>& width = unspecified);`
-- options: 
-- pos: 
-- width: 
-- 戻り値: 
+- options: ラジオボタンの選択肢
+- pos: ラジオボタンの左上の座標（ピクセル）
+- width: ラジオボタンの幅（ピクセル）
+- 戻り値: ラジオボタンの領域（ピクセル）
+
+SimpleGUI スタイルでラジオボタンを表示したときの領域を返します。`width` が `unspecified` の場合、見出しのテキストに合わせた幅になります。
 
 #### `RectF SimpleGUI::RadioButtonsRegionAt(const Array<String>& options, const Vec2& center, const Optional<double>& width = unspecified);`
-- options: 
-- center: 
-- width: 
-- 戻り値: 
+- options: ラジオボタンの選択肢
+- center: ラジオボタンの中心の座標（ピクセル）
+- width: ラジオボタンの幅（ピクセル）
+- 戻り値: ラジオボタンの領域（ピクセル）
+
+SimpleGUI スタイルでラジオボタンを表示したときの領域を返します。`width` が `unspecified` の場合、見出しのテキストに合わせた幅になります。
 
 #### `bool SimpleGUI::RadioButtons(size_t& index, const Array<String>& options, const Vec2& pos, const Optional<double>& width = unspecified, bool enabled = true);`
-- index: 
-- options: 
-- pos: 
-- width: 
-- enabled: 
-- 戻り値: 
+- index: 選択されている選択肢のインデックス
+- options: ラジオボタンの選択肢
+- pos: ラジオボタンの左上の座標（ピクセル）
+- width: ラジオボタンの幅（ピクセル）
+- enabled: アクティブ状態
+- 戻り値: ユーザの操作によって値が変更された場合 `true`, それ以外の場合 `false`
+
+SimpleGUI スタイルでラジオボタンを表示します。ユーザの操作によって値が変更された場合 `true` を返します。`width` が `unspecified` の場合、見出しのテキストに合わせた幅になります。
 
 #### `bool SimpleGUI::RadioButtonsAt(size_t& index, const Array<String>& options, const Vec2& center, const Optional<double>& width = unspecified, bool enabled = true);`
-- index: 
-- options: 
-- center: 
-- width: 
-- enabled: 
-- 戻り値: 
+- index: 選択されている選択肢のインデックス
+- options: ラジオボタンの選択肢
+- center: ラジオボタンの中心の座標（ピクセル）
+- width: ラジオボタンの幅（ピクセル）
+- enabled: アクティブ状態
+- 戻り値: ユーザの操作によって値が変更された場合 `true`, それ以外の場合 `false`
+
+SimpleGUI スタイルでラジオボタンを表示します。ユーザの操作によって値が変更された場合 `true` を返します。`width` が `unspecified` の場合、見出しのテキストに合わせた幅になります。
 
 #### `RectF SimpleGUI::TextBoxRegion(const Vec2& pos, double width = 200.0);`
-- pos: 
-- width: 
-- 戻り値: 
+- pos: テキストボックスの左上の座標（ピクセル）
+- width: テキストボックスの幅（ピクセル）
+- 戻り値: テキストボックスの領域（ピクセル）
+
+SimpleGUI スタイルでテキストボックスを表示したときの領域を返します。
 
 #### `RectF SimpleGUI::TextBoxRegionAt(const Vec2& center, double width = 200.0);`
-- center: 
-- width: 
-- 戻り値: 
+- center: テキストボックスの中心の座標（ピクセル）
+- width: テキストボックスの幅（ピクセル）
+- 戻り値: テキストボックスの領域（ピクセル）
+
+SimpleGUI スタイルでテキストボックスを表示したときの領域を返します。
 
 #### `bool SimpleGUI::TextBox(TextEditState& text, const Vec2& pos, double width = 200.0, const Optional<size_t>& maxChars = unspecified, bool enabled = true);`
-- text: 
-- pos: 
-- width: 
-- maxChars: 
-- enabled: 
-- 戻り値: 
+- text: テキスト編集情報
+- pos: テキストボックスの左上の座標（ピクセル）
+- width: テキストボックスの幅（ピクセル）
+- maxChars: 入力文字数の上限、設定しない場合は `unspecified`
+- enabled: アクティブ状態
+- 戻り値: ユーザの操作によってテキストが変更された場合 `true`, それ以外の場合 `false`
+
+SimpleGUI スタイルでテキストボックスを表示します。ユーザの操作によって値が変更された場合 `true` を返します。`maxChars` が `unspecified` の場合、入力文字数の上限はありません。
 
 #### `bool SimpleGUI::TextBoxAt(TextEditState& text, const Vec2& center, double width = 200.0, const Optional<size_t>& maxChars = unspecified, bool enabled = true);`
-- text: 
-- center: 
-- width: 
-- maxChars: 
-- enabled: 
-- 戻り値: 
+- text: テキスト編集情報
+- center: テキストボックスの中心の座標（ピクセル）
+- width: テキストボックスの幅（ピクセル）
+- maxChars: 入力文字数の上限、設定しない場合は `unspecified`
+- enabled: アクティブ状態
+- 戻り値: ユーザの操作によってテキストが変更された場合 `true`, それ以外の場合 `false`
+
+SimpleGUI スタイルでテキストボックスを表示します。ユーザの操作によって値が変更された場合 `true` を返します。`maxChars` が `unspecified` の場合、入力文字数の上限はありません。
 
 #### `RectF SimpleGUI::ColorPickerRegion(const Vec2& pos);`
-- pos: 
-- 戻り値: 
+- pos: カラーピッカーの左上の座標（ピクセル）
+- 戻り値: カラーピッカーの領域（ピクセル）
+
+SimpleGUI スタイルでカラーピッカーを表示したときの領域を返します。
 
 #### `RectF SimpleGUI::ColorPickerRegionAt(const Vec2& center);`
-- center: 
-- 戻り値: 
+- center: カラーピッカーの中心の座標（ピクセル）
+- 戻り値: カラーピッカーの領域（ピクセル）
+
+SimpleGUI スタイルでカラーピッカーを表示したときの領域を返します。
 
 #### `bool SimpleGUI::ColorPicker(HSV& hsv, const Vec2& pos, bool enabled = true);`
-- hsv: 
-- pos: 
-- enabled: 
-- 戻り値: 
+- hsv: 操作する色
+- pos: カラーピッカーの左上の座標（ピクセル）
+- enabled: アクティブ状態
+- 戻り値: ユーザの操作によって色が変更された場合 `true`, それ以外の場合 `false`
+
+SimpleGUI スタイルでカラーピッカーを表示します。ユーザの操作によって色が変更された場合 `true` を返します。
 
 #### `bool ColorPickerAt(HSV& hsv, const Vec2& center, bool enabled = true);`
-- hsv: 
-- center: 
-- enabled: 
-- 戻り値: 
+- hsv: 操作する色
+- center: カラーピッカーの中心の座標（ピクセル）
+- enabled: アクティブ状態
+- 戻り値: ユーザの操作によって色が変更された場合 `true`, それ以外の場合 `false`
+
+SimpleGUI スタイルでカラーピッカーを表示します。ユーザの操作によって色が変更された場合 `true` を返します。
 
 ## テキスト編集構造体 (struct TextEditState)
+
+テキストボックスなどでテキストを編集する際に使う情報です。
 
 ### メンバ変数
 
 #### `String text;`
+入力されたテキスト
 
 #### `size_t cursorPos = 0;`
+入力カーソル位置
 
 #### `bool active = false;`
+アクティブ状態
 
 #### `Stopwatch leftPressStopwatch;`
+カーソルの左移動タイミング用のストップウォッチ（内部処理用）
 
 #### `Stopwatch rightPressStopwatch;`
+カーソルの右移動タイミング用のストップウォッチ（内部処理用）
 
 #### `Stopwatch cursorStopwatch;`
+入力カーソルの点滅タイミング用のストップウォッチ（内部処理用）
 
 ### コンストラクタ
 
 #### `TextEditState() = default();`
 #### `TextEditState(const String& defaultText);`
-- defaultText: 
+- defaultText: 初期テキスト
+
+テキスト編集構造体を初期化します。
 
 ### メンバ関数
 
 #### `void clear();`
+
+テキスト編集情報をすべてクリアし、入力テキストを空にします。
 
 ## ストップウォッチクラス (class Stopwatch)
 
