@@ -1,5 +1,14 @@
 description: Siv3D Web サイトの更新情報
 
+##### 2019-12-29
+- [トレーニング/円を配置する](https://siv3d.github.io/ja-jp/training/1-1/) を更新
+
+##### 2019-12-28
+- [API 一覧](https://siv3d.github.io/ja-jp/api/api/) を更新
+
+##### 2019-12-27
+- [API 一覧](https://siv3d.github.io/ja-jp/api/api/) を更新
+
 ##### 2019-12-24
 - [コミュニティ/OpenSiv3D 実装会](https://siv3d.github.io/ja-jp/community/dev-day/) ページを作成
 - [API 一覧](https://siv3d.github.io/ja-jp/api/api/) を更新
