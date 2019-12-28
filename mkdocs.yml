@@ -94,6 +94,8 @@ nav:
       - Application: sample/app.md
       - Visual effect: sample/visual.md
       - Geme template: sample/game-template.md
+    - Training:
+      - Circles: training/1-1.md
     - News:
       - What's new in v0.4.1: news/v041.md
       - What's new in v0.4.2: news/v042.md
@@ -156,6 +158,8 @@ nav:
       - ビジュアル表現: ja-jp/sample/visual.md
       - ゲーム開発のテンプレート: ja-jp/sample/game-template.md
       - ゲームランチャー: ja-jp/sample/game-launcher.md
+    - トレーニング:
+      - 円を配置する: ja-jp/training/1-1.md
     - 新機能紹介:
       - v0.4.1 の新機能: ja-jp/news/v041.md
       - v0.4.2 の新機能: ja-jp/news/v042.md
