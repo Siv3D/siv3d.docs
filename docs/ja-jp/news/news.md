@@ -1,7 +1,11 @@
 description: Siv3D Web サイトの更新情報
 
+##### 2019-12-31
+- [トレーニング/三目並べ](https://siv3d.github.io/ja-jp/training/2-1/) を作成
+- [外部サイト](https://siv3d.github.io/ja-jp/link/link/) を作成
+
 ##### 2019-12-29
-- [トレーニング/円を配置する](https://siv3d.github.io/ja-jp/training/1-1/) を更新
+- [トレーニング/円を配置する](https://siv3d.github.io/ja-jp/training/1-1/) を作成
 
 ##### 2019-12-28
 - [API 一覧](https://siv3d.github.io/ja-jp/api/api/) を更新
