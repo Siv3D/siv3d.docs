@@ -53,7 +53,7 @@ void Main()
 ```
 
 ### step
-Siv3D に用意されている、ループを短く書ける機能です。`for (auto i : step(N))` は `for (int i = 0; i < N; ++n)`と同じ働きです。
+Siv3D に用意されている、ループを短く書ける機能です。`for (auto i : step(N))` は `for (int i = 0; i < N; ++i)`と同じ働きです。
 
 <video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/3/1-1.mp4?raw=true" autoplay loop muted></video>
 
