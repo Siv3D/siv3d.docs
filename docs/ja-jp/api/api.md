@@ -1251,3 +1251,187 @@ SimpleGUI スタイルでカラーピッカーを表示します。ユーザの�
 - 戻り値: 出力ストリーム
 
 計測された経過時間を出力ストリームに出力します。
+
+## ファイルシステム名前空間 (namespace FileSystem)
+
+### 定数
+
+#### `enum class OpenMode`
+
+##### `OpenMode::Trunc`
+
+##### `OpenMode::Append`
+
+#### `enum class CopyOption`
+
+##### `CopyOption::None`
+
+##### `CopyOption::SkipExisting`
+
+##### `CopyOption::OverwriteExisting`
+
+##### `CopyOption::UpdateExisting`
+
+##### `CopyOption::Default = None`
+
+#### `enum class SpecialFolder`
+
+##### `SpecialFolder::Desktop`
+
+##### `SpecialFolder::Documents`
+
+##### `SpecialFolder::LocalAppData`
+
+##### `SpecialFolder::Pictures`
+
+##### `SpecialFolder::Music`
+
+##### `SpecialFolder::Videos`
+
+##### `SpecialFolder::Caches = LocalAppData`
+
+##### `SpecialFolder::Movies = Videos`
+
+##### `SpecialFolder::SystemFonts`
+
+##### `SpecialFolder::LocalFonts`
+
+##### `SpecialFolder::UserFonts`
+
+### 関数
+
+#### `bool FileSystem::Exists(FilePathView path);`
+- path: 
+- 戻り値: 
+
+#### `bool FileSystem::IsDirectory(FilePathView path);`
+- path: 
+- 戻り値: 
+
+#### `bool FileSystem::IsFile(FilePathView path);`
+- path: 
+- 戻り値: 
+
+#### `bool FileSystem::IsResource(FilePathView path);`
+- path: 
+- 戻り値: 
+
+#### `FilePath FileSystem::FullPath(FilePathView path);`
+- path: 
+- 戻り値: 
+
+#### `Platform::NativeFilePath FileSystem::NativePath(FilePathView path);`
+- path: 
+- 戻り値: 
+
+#### `String FileSystem::Extension(FilePathView path);`
+- path: 
+- 戻り値: 
+
+#### `String FileSystem::FileName(FilePathView path);`
+- path: 
+- 戻り値: 
+
+#### `String FileSystem::BaseName(FilePathView path);`
+- path: 
+- 戻り値: 
+
+#### `FilePath FileSystem::ParentPath(FilePathView path, size_t level = 0, FilePath* baseFullPath = nullptr);`
+- path: 
+- level: 
+- baseFullPath: 
+- 戻り値: 
+
+#### `FilePath FileSystem::VolumePath(FilePathView path);`
+- path: 
+- 戻り値: 
+
+#### `bool FileSystem::IsEmptyDirectory(FilePathView path);`
+- path: 
+- 戻り値: 
+
+#### `int64 FileSystem::Size(FilePathView path);`
+- path: 
+- 戻り値: 
+
+#### `int64 FileSystem::FileSize(FilePathView path);`
+- path: 
+- 戻り値: 
+
+#### `Optional<DateTime> FileSystem::CreationTime(FilePathView path);`
+- path: 
+- 戻り値: 
+
+#### `Optional<DateTime> FileSystem::WriteTime(FilePathView path);`
+- path: 
+- 戻り値: 
+
+#### `Optional<DateTime> FileSystem::AccessTime(FilePathView path);`
+- path: 
+- 戻り値: 
+
+#### `Array<FilePath> FileSystem::DirectoryContents(const FilePath& path, bool recursive = true);`
+- path: 
+- recursive: 
+- 戻り値: 
+
+#### `const FilePath& FileSystem::InitialDirectory();`
+- 戻り値: 
+
+#### `const FilePath& FileSystem::ModulePath();`
+- 戻り値: 
+
+#### `FilePath FileSystem::CurrentDirectory();`
+- 戻り値: 
+
+#### `bool FileSystem::ChangeCurrentDirectory(FilePathView path);`
+- path: 
+- 戻り値: 
+
+#### `FilePath FileSystem::SpecialFolderPath(SpecialFolder folder);`
+- folder: 
+- 戻り値: 
+
+#### `FilePath FileSystem::TemporaryDirectoryPath();`
+- 戻り値: 
+
+#### `FilePath FileSystem::UniqueFilePath(FilePathView directory = TemporaryDirectoryPath());`
+- directory: 
+- 戻り値: 
+
+#### `FilePath FileSystem::RelativePath(FilePathView path, FilePathView start = FileSystem::CurrentDirectory());`
+- path: 
+- start: 
+- 戻り値: 
+
+#### `bool FileSystem::CreateDirectories(FilePathView path);`
+- path: 
+- 戻り値: 
+
+#### `bool FileSystem::CreateParentDirectories(FilePathView path);`
+- path: 
+- 戻り値: 
+
+#### `bool FileSystem::Copy(FilePathView from, FilePathView to, CopyOption copyOption = CopyOption::Default);`
+- from: 
+- to: 
+- copyOption: 
+- 戻り値: 
+
+#### `bool FileSystem::Remove(FilePathView path, bool allowUndo = false);`
+- path: 
+- allowUndo: 
+- 戻り値: 
+
+#### `bool FileSystem::RemoveContents(FilePathView path, bool allowUndo = false);`
+- path: 
+- allowUndo: 
+- 戻り値: 
+
+#### `bool FileSystem::Rename(FilePathView from, FilePathView to);`
+- from: 
+- to: 
+- 戻り値: 
+
+#### `bool FileSystem::IsSandBoxed();`
+- 戻り値: 
