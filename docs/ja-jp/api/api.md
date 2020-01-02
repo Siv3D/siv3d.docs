@@ -1252,51 +1252,51 @@ SimpleGUI スタイルでカラーピッカーを表示します。ユーザの�
 
 計測された経過時間を出力ストリームに出力します。
 
+## ファイルシステム関連の定数
+
+### `enum class OpenMode`
+
+#### `OpenMode::Trunc`
+
+#### `OpenMode::Append`
+
+### `enum class CopyOption`
+
+#### `CopyOption::None`
+
+#### `CopyOption::SkipExisting`
+
+#### `CopyOption::OverwriteExisting`
+
+#### `CopyOption::UpdateExisting`
+
+#### `CopyOption::Default = None`
+
+### `enum class SpecialFolder`
+
+#### `SpecialFolder::Desktop`
+
+#### `SpecialFolder::Documents`
+
+#### `SpecialFolder::LocalAppData`
+
+#### `SpecialFolder::Pictures`
+
+#### `SpecialFolder::Music`
+
+#### `SpecialFolder::Videos`
+
+#### `SpecialFolder::Caches = LocalAppData`
+
+#### `SpecialFolder::Movies = Videos`
+
+#### `SpecialFolder::SystemFonts`
+
+#### `SpecialFolder::LocalFonts`
+
+#### `SpecialFolder::UserFonts`
+
 ## ファイルシステム名前空間 (namespace FileSystem)
-
-### 定数
-
-#### `enum class OpenMode`
-
-##### `OpenMode::Trunc`
-
-##### `OpenMode::Append`
-
-#### `enum class CopyOption`
-
-##### `CopyOption::None`
-
-##### `CopyOption::SkipExisting`
-
-##### `CopyOption::OverwriteExisting`
-
-##### `CopyOption::UpdateExisting`
-
-##### `CopyOption::Default = None`
-
-#### `enum class SpecialFolder`
-
-##### `SpecialFolder::Desktop`
-
-##### `SpecialFolder::Documents`
-
-##### `SpecialFolder::LocalAppData`
-
-##### `SpecialFolder::Pictures`
-
-##### `SpecialFolder::Music`
-
-##### `SpecialFolder::Videos`
-
-##### `SpecialFolder::Caches = LocalAppData`
-
-##### `SpecialFolder::Movies = Videos`
-
-##### `SpecialFolder::SystemFonts`
-
-##### `SpecialFolder::LocalFonts`
-
-##### `SpecialFolder::UserFonts`
 
 ### 関数
 
