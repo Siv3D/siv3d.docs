@@ -1435,3 +1435,33 @@ SimpleGUI スタイルでカラーピッカーを表示します。ユーザの�
 
 #### `bool FileSystem::IsSandBoxed();`
 - 戻り値: 
+
+## キー定数
+
+### マウスボタン
+
+#### `constexpr Key MouseL;`
+
+#### `constexpr Key MouseR;`
+
+#### `constexpr Key MouseM;`
+
+#### `constexpr Key MouseX1;`
+
+#### `constexpr Key MouseX2;`
+
+#### `constexpr Key MouseX3;`
+
+#### `constexpr Key MouseX4;`
+
+#### `constexpr Key MouseX5;`
+
+## マウス名前空間 (namespace Mouse)
+
+### 関数
+
+#### `double Wheel();`
+- 戻り値: 
+
+#### `double WheelH();`
+- 戻り値: 
