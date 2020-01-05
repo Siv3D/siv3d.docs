@@ -1,5 +1,8 @@
 description: Siv3D Web サイトの更新情報
 
+##### 2020-01-05
+- [API 一覧](https://siv3d.github.io/ja-jp/api/api/) を更新
+
 ##### 2019-12-31
 - [トレーニング/三目並べ](https://siv3d.github.io/ja-jp/training/2-1/) を作成
 - [外部サイト](https://siv3d.github.io/ja-jp/external/external/) を作成

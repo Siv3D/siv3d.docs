@@ -1190,11 +1190,17 @@ SimpleGUI スタイルでカラーピッカーを表示します。ユーザの�
 #### `bool isStarted();`
 - 戻り値: 計測開始済みの場合 `true`
 
+ストップウォッチが計測開始済みであるかを返します。
+
 #### `bool isPaused();`
 - 戻り値: 計測開始済みで、一時停止中の場合 `true`
 
+ストップウォッチが計測開始済みで、一時停止中であるかを返します。
+
 #### `bool isRunning();`
 - 戻り値: 計測開始済みで、なおかつ一時停止中でない場合 `true`
+
+ストップウォッチが計測中であるかを返します。
 
 #### `void pause();`
 
@@ -1251,3 +1257,345 @@ SimpleGUI スタイルでカラーピッカーを表示します。ユーザの�
 - 戻り値: 出力ストリーム
 
 計測された経過時間を出力ストリームに出力します。
+
+## ファイルシステム関連の定数
+
+### `enum class OpenMode`
+
+ファイルを書き込み用途でオープンする際、同名のファイルが存在したときの扱いです。`BinaryWriter`, `TextWriter` などで使います。
+
+#### `OpenMode::Trunc`
+
+古い内容を破棄し、サイズをゼロにした状態から書き込みをします。
+
+#### `OpenMode::Append`
+
+古い内容を保持し、ファイルの末尾から新しく書き込みをします。
+
+### `enum class CopyOption`
+
+ファイルをコピーする際、同名のファイルが存在したときの扱いです。`FileSystem::Copy()` などで使います。
+
+#### `CopyOption::None`
+
+ファイル名が既に使われていた場合、コピーを失敗させ、エラー値を返します。
+
+#### `CopyOption::SkipExisting`
+
+ファイル名が既に使われていた場合、エラーを発生させずにスキップします。
+
+#### `CopyOption::OverwriteExisting`
+
+ファイル名が既に使われていた場合、コピー先のファイルを上書きします。
+
+#### `CopyOption::UpdateExisting`
+
+ファイルが既に存在する場合、コピーするファイルがコピー先のファイルよりも新しければ上書きし、そうでなければスキップします。
+
+#### `CopyOption::Default = None`
+
+デフォルトのコピーオプション、`CopyOption::None` です。
+
+### `enum class SpecialFolder`
+
+特殊フォルダを表します。
+
+#### `SpecialFolder::Desktop`
+
+ユーザのデスクトップフォルダです。
+
+#### `SpecialFolder::Documents`
+
+ユーザのドキュメントフォルダです。
+
+#### `SpecialFolder::LocalAppData`
+
+ユーザのキャッシュフォルダです。重要でないキャッシュデータなど、一時ファイルの保存に適しています。
+
+#### `SpecialFolder::Pictures`
+
+ユーザのピクチャーフォルダです。
+
+#### `SpecialFolder::Music`
+
+ユーザのミュージックフォルダです。
+
+#### `SpecialFolder::Videos`
+
+ユーザのビデオフォルダです。
+
+#### `SpecialFolder::Caches = LocalAppData`
+
+ユーザのキャッシュフォルダです。重要でないキャッシュデータなど、一時ファイルの保存に適しています。`SpecialFolder::LocalAppData` の別名です。
+
+#### `SpecialFolder::Movies = Videos`
+
+ユーザのビデオフォルダです。`SpecialFolder::Movies` の別名です。
+
+#### `SpecialFolder::SystemFonts`
+
+システムのフォントフォルダです。Windows では OS ボリュームの `WINDOWS/Fonts/`, macOS では `/System/Library/Fonts/`, Linux では `Documents` ディレクトリを指します。
+
+#### `SpecialFolder::LocalFonts`
+
+ローカルのフォントフォルダです。Windows では OS ボリュームの `WINDOWS/Fonts/`, macOS では `/Library/Fonts/`, Linux では `Documents` ディレクトリを指します。
+
+#### `SpecialFolder::UserFonts`
+
+ユーザのフォントフォルダです。Windows では OS ボリュームの `WINDOWS/Fonts/`, macOS では `~/Library/Fonts/`, Linux では `Documents` ディレクトリを指します。
+
+## ファイルシステム名前空間 (namespace FileSystem)
+
+### 関数
+
+#### `bool FileSystem::Exists(FilePathView path);`
+- path: パス
+- 戻り値: 存在する場合は true, それ以外の場合 false
+
+指定したパスのファイルまたはディレクトリが存在するかを返します。
+
+#### `bool FileSystem::IsDirectory(FilePathView path);`
+- path: パス
+- 戻り値: 存在するディレクトリを指すパスである場合は true, それ以外の場合 false
+
+指定したパスが、存在するディレクトリを指すものであるかを返します。
+
+#### `bool FileSystem::IsFile(FilePathView path);`
+- path: パス
+- 戻り値: 存在するファイルを指すパスである場合は true, それ以外の場合 false
+
+指定したパスが、存在するファイルを指すものであるかを返します。
+
+#### `bool FileSystem::IsResource(FilePathView path);`
+- path: パス
+- 戻り値: 存在するリソースを指すパスである場合は true, それ以外の場合 false
+
+指定したパスが、存在するリソースを指すものであるかを返します。リソースは実行ファイルに埋め込み (Windows) またはバンドル (macOS) されたファイルのことです。Linux では `/resources/` 以下のファイルがリソースとして扱われます。
+
+#### `FilePath FileSystem::FullPath(FilePathView path);`
+- path: パス
+- 戻り値: 絶対パス。失敗した場合は空の文字列
+
+指定したパスの絶対パスを返します。ディレクトリの場合は末尾が `/` になります。
+
+#### `Platform::NativeFilePath FileSystem::NativePath(FilePathView path);`
+- path: パス
+- 戻り値: ネイティブパス。失敗した場合は空の文字列
+
+指定したパスの、OS ネイティブ表現でのパス文字列を返します。
+
+#### `String FileSystem::Extension(FilePathView path);`
+- path: パス
+- 戻り値: 小文字の拡張子。失敗した場合は空の文字列
+
+指定したファイルの .を含まない小文字の拡張子を返します。（例: "png"）
+
+#### `String FileSystem::FileName(FilePathView path);`
+- path: パス
+- 戻り値: ファイル名。失敗した場合は空の文字列
+
+ 指定したファイルの、親ディレクトリを含まない名前を返します。（例: "picture.png"）
+
+#### `String FileSystem::BaseName(FilePathView path);`
+- path: パス
+- 戻り値: ファイル名。失敗した場合は空の文字列
+
+指定したファイルの、親ディレクトリと拡張子を含まない名前を返します。（例: "picture"）
+
+#### `FilePath FileSystem::ParentPath(FilePathView path, size_t level = 0, FilePath* baseFullPath = nullptr);`
+- path: パス
+- level: 親ディレクトリの階層。デフォルトでは 0
+- baseFullPath: `path` の絶対パス（オプション）
+- 戻り値: 親ディレクトリ。失敗した場合は空の文字列
+
+指定したファイルの親ディレクトリを返します。親のさらに親ディレクトリを得たい場合には `level` を増やします。ちょうど 1 つ上位のディレクトリを基準に `0` で、1 ずつ増やします。
+
+#### `FilePath FileSystem::VolumePath(FilePathView path);`
+- path: パス
+- 戻り値: ドライブのパス。失敗した場合は空の文字列
+
+指定したファイルのドライブのパスを返します。（例: "C:/"）
+
+#### `bool FileSystem::IsEmptyDirectory(FilePathView path);`
+- path: パス
+- 戻り値: ディレクトリが空である場合は true, それ以外の場合 false
+
+指定したディレクトリが空であるかを返します。
+
+#### `int64 FileSystem::Size(FilePathView path);`
+- path: パス
+- 戻り値: ファイルやディレクトリが存在しなかったり、空である場合は 0 を返します。
+
+指定したファイルまたはディレクトリのサイズを返します。
+
+#### `int64 FileSystem::FileSize(FilePathView path);`
+- path: パス
+- 戻り値: ファイルが存在しなかったり、空である場合は 0 を返します。
+
+指定したファイルのサイズを返します。
+
+#### `Optional<DateTime> FileSystem::CreationTime(FilePathView path);`
+- path: パス
+- 戻り値: 作成日時。ファイルが存在しない場合 none
+
+ファイルまたはディレクトリの作成日時を返します。
+
+#### `Optional<DateTime> FileSystem::WriteTime(FilePathView path);`
+- path: パス
+- 戻り値: 更新日時。ファイルが存在しない場合 none
+
+ファイルまたはディレクトリの更新日時を返します。
+
+#### `Optional<DateTime> FileSystem::AccessTime(FilePathView path);`
+- path: パス
+- 戻り値: アクセス日時。ファイルが存在しない場合 none
+
+ファイルまたはディレクトリのアクセス日時を返します。
+
+#### `Array<FilePath> FileSystem::DirectoryContents(const FilePath& path, bool recursive = true);`
+- path: ディレクトリのパス
+- recursive: 指定したパスにフォルダが含まれる場合、その中のファイルも再帰的に列挙する場合は `true`
+- 戻り値: ファイルとディレクトリの一覧
+
+指定したディレクトリにあるファイルとディレクトリの一覧を返します。
+
+#### `const FilePath& FileSystem::InitialDirectory();`
+- 戻り値: プログラムが起動したパス
+
+プログラムが起動したパスを返します。
+
+#### `const FilePath& FileSystem::ModulePath();`
+- 戻り値: 現在のアプリケーションの絶対パス
+
+現在のアプリケーションの絶対パスを返します。
+
+#### `FilePath FileSystem::CurrentDirectory();`
+- 戻り値: カレントディレクトリ
+
+実行中のプログラムのカレントディレクトリを返します。
+
+#### `bool FileSystem::ChangeCurrentDirectory(FilePathView path);`
+- path: 新しいディレクトリ
+- 戻り値: 変更に成功した場合 `true`, それ以外の場合 `false`
+
+実行中のプログラムのカレントディレクトリを変更します。
+
+#### `FilePath FileSystem::SpecialFolderPath(SpecialFolder folder);`
+- folder: 特殊フォルダの種類
+- 戻り値: 特殊フォルダのパス
+
+特殊フォルダのパスを返します。
+
+#### `FilePath FileSystem::TemporaryDirectoryPath();`
+- 戻り値: 一時ファイル用のディレクトリのパス
+
+一時ファイル用のディレクトリのパスを返します。パスの末尾には '/' が付きます。
+
+#### `FilePath FileSystem::UniqueFilePath(FilePathView directory = TemporaryDirectoryPath());`
+- directory: 一時ファイル用のディレクトリ
+- 戻り値: 一時ファイル用のファイルパス
+
+一時ファイル用の固有なファイルパスを返します。ファイルの拡張子は ".tmp" です。
+
+#### `FilePath FileSystem::RelativePath(FilePathView path, FilePathView start = FileSystem::CurrentDirectory());`
+- path: パス
+- start: 相対パスの基準位置
+- 戻り値: 相対パス
+
+指定したパスを相対パスに変換します。
+
+#### `bool FileSystem::CreateDirectories(FilePathView path);`
+- path: ディレクトリパス
+- 戻り値: 成功した場合  `true`, それ以外の場合 `false`
+
+空のディレクトリを作成します。
+
+#### `bool FileSystem::CreateParentDirectories(FilePathView path);`
+- path: パス
+- 戻り値: 成功した場合  `true`, それ以外の場合 `false`
+
+指定したパスまでの親ディレクトリを作成します。
+
+#### `bool FileSystem::Copy(FilePathView from, FilePathView to, CopyOption copyOption = CopyOption::Default);`
+- from: コピーするパス
+- to: コピー先のパス
+- copyOption: 名前衝突時のふるまい
+- 戻り値: 成功した場合  `true`, それ以外の場合 `false`
+
+ファイルまたはディレクトリの中身をコピーします。
+
+#### `bool FileSystem::Remove(FilePathView path, bool allowUndo = false);`
+- path: パス
+- allowUndo: 削除したファイルをごみ箱に送る場合 `true`, それ以外の場合 `false`
+- 戻り値: 成功した場合  `true`, それ以外の場合 `false`
+
+ファイルまたはディレクトリを削除します。
+
+#### `bool FileSystem::RemoveContents(FilePathView path, bool allowUndo = false);`
+- path: ディレクトリのパス
+- allowUndo: 削除したファイルをごみ箱に送る場合 `true`, それ以外の場合 `false`
+- 戻り値: 成功した場合  `true`, それ以外の場合 `false`
+
+ディレクトリの中身だけを削除します。
+
+#### `bool FileSystem::Rename(FilePathView from, FilePathView to);`
+- from: 変更前のパス
+- to: 変更後のパス
+- 戻り値: 
+
+ファイルまたはディレクトリの名前を変更します。
+
+#### `bool FileSystem::IsSandBoxed();`
+- 戻り値: macOS のサンドボックスモードで実行されている場合 `true`, それ以外の場合 `false`
+
+macOS のサンドボックスモードで実行されているかを返します。Windows や Linux では常に `false` を返します。
+
+## キー定数
+
+### マウスボタン
+
+#### `constexpr Key MouseL;`
+
+マウスの左ボタンです。
+
+#### `constexpr Key MouseR;`
+
+マウスの右ボタンです。
+
+#### `constexpr Key MouseM;`
+
+マウスの中央ボタンです。マウスによっては存在しません。
+
+#### `constexpr Key MouseX1;`
+
+マウスの拡張ボタン 1 です。マウスによっては存在しません。
+
+#### `constexpr Key MouseX2;`
+
+マウスの拡張ボタン 2 です。マウスによっては存在しません。
+
+#### `constexpr Key MouseX3;`
+
+マウスの拡張ボタン 3 です。マウスによっては存在しません。
+
+#### `constexpr Key MouseX4;`
+
+マウスの拡張ボタン 4 です。マウスによっては存在しません。
+
+#### `constexpr Key MouseX5;`
+
+マウスの拡張ボタン 5 です。マウスによっては存在しません。
+
+## マウス名前空間 (namespace Mouse)
+
+### 関数
+
+#### `double Wheel();`
+- 戻り値: マウスホイールのスクロール量
+
+マウスホイールのスクロール量を返します。
+
+#### `double WheelH();`
+- 戻り値: マウスの水平ホイールのスクロール量
+
+マウスの水平ホイールのスクロール量を返します。
