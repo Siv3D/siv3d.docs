@@ -1,5 +1,8 @@
 description: Siv3D Web サイトの更新情報
 
+##### 2020-01-06
+- [チュートリアル/シーン管理](https://siv3d.github.io/ja-jp/tutorial/scene-manager/) を作成
+
 ##### 2020-01-05
 - [API 一覧](https://siv3d.github.io/ja-jp/api/api/) を更新
 
