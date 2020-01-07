@@ -1,5 +1,9 @@
 description: Siv3D Web サイトの更新情報
 
+##### 2020-01-07
+- [OpenSiv3D で学ぶ C++ 勉強会（千葉大学 CCS 主催）](https://connpass.com/event/159065/) の参加登録を開始
+- [リファレンス/フルスクリーン](https://siv3d.github.io/ja-jp/reference/fullscreen/) を更新
+
 ##### 2020-01-06
 - [チュートリアル/シーン管理](https://siv3d.github.io/ja-jp/tutorial/scene-manager/) を作成
 

@@ -1,6 +1,52 @@
 
 # Fullscreen
+
+## Fundamental fullscreen mode
+
+アプリケーションをフルスクリーンで実行したい場合、
+
+1. シーンのサイズを決定
+2. ウィンドウをリサイズ
+3. フルスクリーン化
+
+という手順を踏むのが基本的な方法です。3. では `Window::SetFullscreen(true, unspecified, WindowResizeOption::KeepSceneSize);` を呼び出して、シーンのサイズはそのままに、枠無しのウィンドウを最大化します。2. をはさむのは、フルスクリーンモードが解除された際に、適切なサイズのウィンドウモードに復帰するためです。
+
+```C++
+# include <Siv3D.hpp>
+
+void Main()
+{
+	constexpr Size sceneSize = DisplayResolution::HD_1366x768;
+
+	// シーンのサイズを 1366x768 に
+	Scene::Resize(sceneSize);
+
+	// ウィンドウのサイズを 1366x768 に
+	Window::Resize(sceneSize, WindowResizeOption::KeepSceneSize);
+
+	// ウィンドウを枠無しで最大化
+	(void)Window::SetFullscreen(true, unspecified, WindowResizeOption::KeepSceneSize);
+
+	while (System::Update())
+	{
+		// 100px 四方の正方形で画面を埋める
+		for (auto p : step(Scene::Size() / 100 + Point(1, 1)))
+		{
+			if (IsOdd(p.x + p.y))
+			{
+				Rect(p * 100, 100).draw(Palette::Seagreen);
+			}
+		}
+
+		Circle(Cursor::Pos(), 20).draw();
+	}
+}
+```
+
+
 ## Selecting a native fullscreen resolution
+
+ユーザのディスプレイ設定を変更し、ネイティブ解像度でフルスクリーンモードを実行したい場合は次のようにします。
 
 !!! warning
 	Windows かつ高 DPI に設定されたディスプレイでは、高 DPI 対応のウィンドウを作成しないと、最大解像度のフルスクリーンを正しく表示できません。`<Siv3D.hpp>` のインクルード前に `SIV3D_WINDOWS_HIGH_DPI` マクロを定義することで高 DPI 対応ウィンドウを作成できます。高 DPI ディスプレイにおいて、高 DPI 対応ウィンドウはドットバイドットで表示されるため、ウィンドウの見た目が小さくなります。
