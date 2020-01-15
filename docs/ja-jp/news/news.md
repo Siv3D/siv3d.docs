@@ -2,6 +2,7 @@ description: Siv3D Web サイトの更新情報
 
 ##### 2020-01-15
 - [勉強会](https://siv3d.github.io/ja-jp/community/study-meeting/) を作成
+- [トラブルシューティング](https://siv3d.github.io/ja-jp/articles/troubleshooting/) を作成
 
 ##### 2020-01-07
 - [OpenSiv3D で学ぶ C++ 勉強会（千葉大学 CCS 主催）](https://connpass.com/event/159065/) の参加登録を開始

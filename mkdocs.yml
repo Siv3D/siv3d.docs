@@ -102,6 +102,7 @@ nav:
       - What's new in v0.4.2: news/v042.md
     - Articles:
       - Mistakes made by new users: articles/mistakes.md
+      - Troubleshooting: articles/troubleshooting.md
     - Siv3D Store: store/store.md
     - Community: 
       - Community: community/community.md
@@ -169,6 +170,7 @@ nav:
       - v0.4.2 の新機能: ja-jp/news/v042.md
     - 記事:
       - よくある間違い: ja-jp/articles/mistakes.md
+      - トラブルシューティング: ja-jp/articles/troubleshooting.md
     - Siv3D ストア: ja-jp/store/store.md
     - コミュニティ:
       - コミュニティ: ja-jp/community/community.md
