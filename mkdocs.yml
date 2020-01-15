@@ -105,6 +105,7 @@ nav:
     - Siv3D Store: store/store.md
     - Community: 
       - Community: community/community.md
+      - Study meeting: community/study-meeting.md
       - Dev Day: community/dev-day.md
     - Logo: logo/logo.md
     - Mascot: mascot/mascot.md
@@ -171,6 +172,7 @@ nav:
     - Siv3D ストア: ja-jp/store/store.md
     - コミュニティ:
       - コミュニティ: ja-jp/community/community.md
+      - 勉強会: ja-jp/community/study-meeting.md
       - 実装会: ja-jp/community/dev-day.md
     - ロゴ画像: ja-jp/logo/logo.md
     - マスコット: ja-jp/mascot/mascot.md
