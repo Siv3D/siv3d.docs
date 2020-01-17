@@ -1,5 +1,8 @@
 description: Siv3D Web サイトの更新情報
 
+##### 2020-01-17
+- [トラブルシューティング](https://siv3d.github.io/ja-jp/articles/troubleshooting/) を更新
+
 ##### 2020-01-15
 - [勉強会](https://siv3d.github.io/ja-jp/community/study-meeting/) を作成
 - [トラブルシューティング](https://siv3d.github.io/ja-jp/articles/troubleshooting/) を作成
