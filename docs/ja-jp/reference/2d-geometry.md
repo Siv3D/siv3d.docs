@@ -69,7 +69,7 @@ void Main()
 
 		rect.draw(ColorF(1.0, 0.8));
 
-		// star と rect の重なる領域を Polgyon の配列で取得
+		// star と rect の重なる領域を Polygon の配列で取得
 		for (const auto& polygon : Geometry2D::And(star, rect.asPolygon()))
 		{
 			polygon.draw(ColorF(1.0, 0.0, 0.0, 0.5))
@@ -96,7 +96,7 @@ void Main()
 
 		rect.drawFrame(2, ColorF(1.0, 0.8));
 
-		// star から rect を引いた領域を Polgyon の配列で取得
+		// star から rect を引いた領域を Polygon の配列で取得
 		for (const auto& polygon : Geometry2D::Subtract(star, rect.asPolygon()))
 		{
 			polygon.draw(ColorF(1.0, 0.0, 0.0, 0.5))
