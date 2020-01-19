@@ -17,3 +17,8 @@
 
 [@voidproc](https://twitter.com/voidproc) さんが執筆されている OpenSiv3D および旧 Siv3D のサンプル集です。
 
+### Windows + VSCode での開発
+
+- https://qiita.com/projectappbird/items/977af22c3a5c4ae68e9f
+
+Windows + VSCode（ただし VS のインストールも必要）で OpenSiv3D アプリを開発する手順を [@projectappbird](https://twitter.com/projectappbird) さんがまとめています。
