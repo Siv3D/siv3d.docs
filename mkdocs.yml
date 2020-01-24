@@ -171,6 +171,8 @@ nav:
     - 記事:
       - よくある間違い: ja-jp/articles/mistakes.md
       - トラブルシューティング: ja-jp/articles/troubleshooting.md
+      - 勉強会ページ:
+        - ja-jp/articles/event/sendai-2020.md
     - Siv3D ストア: ja-jp/store/store.md
     - コミュニティ:
       - コミュニティ: ja-jp/community/community.md
