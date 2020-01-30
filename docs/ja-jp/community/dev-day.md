@@ -23,7 +23,7 @@ OpenSiv3D の開発者やユーザが集まって、プログラムについて�
 
 ## 参加方法は？
 
-- [Siv3D Slack](https://siv3d.github.io/ja-jp/community/community/#siv3d-slack) に登録後、# open-siv3d チャンネルにアクセスし、募集メッセージに対して参加ボタンを押します。
+- [Siv3D ユーザコミュニティ Slack](https://siv3d.github.io/ja-jp/community/community/#siv3d-slack) に登録後、# open-siv3d チャンネルにアクセスし、募集メッセージに対して参加ボタンを押します。
 - 上記のほか、実装会会場担当者の招待でも参加できます
 
 ## 遠隔参加できる？

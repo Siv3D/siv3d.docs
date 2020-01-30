@@ -691,7 +691,7 @@ void Main()
 
 - [OpenSiv3D のリポジトリ](https://github.com/Siv3D/OpenSiv3D) を ★ 登録
     - [全ヘッダ](https://github.com/Siv3D/OpenSiv3D/tree/master/Siv3D/include/Siv3D) が読める
-- [Siv3D Slack](https://siv3d.github.io/ja-jp/community/community/) に登録
+- [Siv3D ユーザコミュニティ Slack](https://siv3d.github.io/ja-jp/community/community/) に登録
 - チュートリアルを進める
 - チュートリアルをよく読む
 - チュートリアルを（略
