@@ -96,3 +96,4 @@ OpenSiv3D Linux 版は、ソースコードからビルドする必要があり�
 - papparappara
 - (匿名 😀)
 - minachun
+- Fuyutsubaki
