@@ -10,3 +10,5 @@
 - アゲハマ
 - chobby75
 - papparappara
+- (anonymous 😀)
+- minachun
