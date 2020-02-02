@@ -103,6 +103,7 @@ nav:
     - Articles:
       - Mistakes made by new users: articles/mistakes.md
       - Troubleshooting: articles/troubleshooting.md
+      - How to build OpenSiv3D: articles/build.md
     - Siv3D Store: store/store.md
     - Community: 
       - Community: community/community.md
@@ -171,6 +172,7 @@ nav:
     - 記事:
       - よくある間違い: ja-jp/articles/mistakes.md
       - トラブルシューティング: ja-jp/articles/troubleshooting.md
+      - OpenSiv3D 本体のビルド手順: ja-jp/articles/build.md
       - 勉強会ページ:
         - ja-jp/articles/event/sendai-2020.md
     - Siv3D ストア: ja-jp/store/store.md
