@@ -174,7 +174,8 @@ nav:
       - トラブルシューティング: ja-jp/articles/troubleshooting.md
       - OpenSiv3D 本体のビルド手順: ja-jp/articles/build.md
       - 勉強会ページ:
-        - ja-jp/articles/event/sendai-2020.md
+        - 仙台 2020: ja-jp/articles/event/sendai-2020.md
+        - 石川 2020: ja-jp/articles/event/ishikawa-2020.md
     - Siv3D ストア: ja-jp/store/store.md
     - コミュニティ:
       - コミュニティ: ja-jp/community/community.md
