@@ -1640,3 +1640,82 @@ macOS のサンドボックスモードで実行されているかを返しま�
 #### `void Clipboard::Clear();`
 
 クリップボードの内容を消去します。
+
+## ダイアログ名前空間 (namespace Dialog)
+
+### 関数
+
+#### `Optional<FilePath> OpenFile(const Array<FileFilter>& filters = {}, const FilePath& defaultPath = U"", const String& title = U"");`
+- filters: 
+- defaultPath: 
+- title: 
+- 戻り値: 
+
+
+
+#### `Array<FilePath> OpenFiles(const Array<FileFilter>& filters = {}, const FilePath& defaultPath = U"", const String& title = U"");`
+- filters: 
+- defaultPath: 
+- title: 
+- 戻り値: 
+
+
+
+#### `Optional<FilePath> SaveFile(const Array<FileFilter>& filters = {}, const FilePath& defaultPath = U"", const String& title = U"");`
+- filters: 
+- defaultPath: 
+- title: 
+- 戻り値: 
+
+
+
+#### `Optional<FilePath> SelectFolder(const FilePath& defaultPath = U"", const String& title = U"");`
+- defaultPath: 
+- title: 
+- 戻り値: 
+
+
+
+#### `Image OpenImage(const FilePath& defaultPath = U"", const String& title = U"");`
+- defaultPath: 
+- title: 
+- 戻り値: 
+
+
+
+#### `Texture OpenTexture(const FilePath& defaultPath = U"", const String& title = U"");`
+#### `Texture OpenTexture(TextureDesc desc, const FilePath& defaultPath = U"", const String& title = U"");`
+- desc: 
+- defaultPath: 
+- title: 
+- 戻り値: 
+
+
+
+#### `Wave OpenWave(const FilePath& defaultPath = U"", const String& title = U"");`
+- defaultPath: 
+- title: 
+- 戻り値: 
+
+
+
+#### `Audio OpenAudio(const FilePath& defaultPath = U"", const String& title = U"");`
+#### `Audio OpenAudio(Arg::loop_<bool> loop, const FilePath& defaultPath = U"", const String& title = U"");`
+- loop: 
+- defaultPath: 
+- title: 
+- 戻り値: 
+
+
+
+#### `Optional<FilePath> SaveImage(const FilePath& defaultPath = U"", const String& title = U"");`
+- defaultPath: 
+- title: 
+- 戻り値: 
+
+#### `Optional<FilePath> SaveWave(const FilePath& defaultPath = U"", const String& title = U"");`
+- defaultPath: 
+- title: 
+- 戻り値: 
+
+
