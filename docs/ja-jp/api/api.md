@@ -1586,6 +1586,264 @@ macOS のサンドボックスモードで実行されているかを返しま�
 
 マウスの拡張ボタン 5 です。マウスによっては存在しません。
 
+### キーボード
+
+#### `constexpr Key KeyCancel;`
+
+#### `constexpr Key KeyBackSpace;`
+
+#### `constexpr Key KeyTab;`
+
+#### `constexpr key KeyClear;`
+
+#### `constexpr Key KeyEnter;`
+
+#### `constexpr Key KeyShift;`
+
+#### `constexpr Key KeyControl;`
+
+#### `constexpr Key KeyAlt;`
+
+#### `constexpr Key KeyPause;`
+
+#### `constexpr Key KeyEscape;`
+
+#### `constexpr Key KeySpace;`
+
+#### `constexpr Key KeyPageUp;`
+
+#### `constexpr Key KeyPageDown;`
+
+#### `constexpr key KeyEnd;`
+
+#### `constexpr Key KeyHome;`
+
+#### `constexpr Key KeyLeft;`
+
+#### `constexpr key KeyUp;`
+
+#### `constexpr Key KeyRight;`
+
+#### `constexpr Key KeyDown;`
+
+#### `constexpr Key KeyPrintScreen;`
+
+#### `constexpr Key KeyInsert;`
+
+#### `constexpr Key KeyDelete;`
+
+#### `constexpr Key Key0;`
+
+#### `constexpr Key Key1;`
+
+#### `constexpr Key Key2;`
+
+#### `constexpr Key Key3;`
+
+#### `constexpr Key Key4;`
+
+#### `constexpr Key Key5;`
+
+#### `constexpr Key Key6;`
+
+#### `constexpr Key Key7;`
+
+#### `constexpr Key Key8;`
+
+#### `constexpr Key Key9;`
+
+#### `constexpr Key KeyA;`
+
+#### `constexpr Key KeyB;`
+
+#### `constexpr Key KeyC;`
+
+#### `constexpr Key KeyD;`
+
+#### `constexpr Key KeyE;`
+
+#### `constexpr Key KeyF;`
+
+#### `constexpr Key KeyG;`
+
+#### `constexpr Key KeyH;`
+
+#### `constexpr Key KeyI;`
+
+#### `constexpr Key KeyJ;`
+
+#### `constexpr Key KeyK;`
+
+#### `constexpr Key KeyL;`
+
+#### `constexpr Key KeyM;`
+
+#### `constexpr Key KeyN;`
+
+#### `constexpr Key KeyO;`
+
+#### `constexpr Key KeyP;`
+
+#### `constexpr Key KeyQ;`
+
+#### `constexpr Key KeyR;`
+
+#### `constexpr Key KeyS;`
+
+#### `constexpr Key KeyT;`
+
+#### `constexpr Key KeyU;`
+
+#### `constexpr Key KeyV;`
+
+#### `constexpr Key KeyW;`
+
+#### `constexpr Key KeyX;`
+
+#### `constexpr Key KeyY;`
+
+#### `constexpr Key KeyZ;`
+
+#### `constexpr Key KeyNum0;`
+
+#### `constexpr Key KeyNum1;`
+
+#### `constexpr Key KeyNum2;`
+
+#### `constexpr Key KeyNum3;`
+
+#### `constexpr Key KeyNum4;`
+
+#### `constexpr Key KeyNum5;`
+
+#### `constexpr Key KeyNum6;`
+
+#### `constexpr Key KeyNum7;`
+
+#### `constexpr Key KeyNum8;`
+
+#### `constexpr Key KeyNum9;`
+
+#### `constexpr Key KeyNumMultiply;`
+
+#### `constexpr Key KeyNumAdd;`
+
+#### `constexpr Key KeyNumEnter;`
+
+#### `constexpr Key KeyNumSubtract;`
+
+#### `constexpr Key KeyNumDecimal;`
+
+#### `constexpr Key KeyNumDivide;`
+
+#### `constexpr Key KeyF1;`
+
+#### `constexpr Key KeyF2;`
+
+#### `constexpr Key KeyF3;`
+
+#### `constexpr Key KeyF4;`
+
+#### `constexpr Key KeyF5;`
+
+#### `constexpr Key KeyF6;`
+
+#### `constexpr Key KeyF7;`
+
+#### `constexpr Key KeyF8;`
+
+#### `constexpr Key KeyF9;`
+
+#### `constexpr Key KeyF10;`
+
+#### `constexpr Key KeyF11;`
+
+#### `constexpr Key KeyF12;`
+
+#### `constexpr Key KeyF13;`
+
+#### `constexpr Key KeyF14;`
+
+#### `constexpr Key KeyF15;`
+
+#### `constexpr Key KeyF16;`
+
+#### `constexpr Key KeyF17;`
+
+#### `constexpr Key KeyF18;`
+
+#### `constexpr Key KeyF19;`
+
+#### `constexpr Key KeyF20;`
+
+#### `constexpr Key KeyF21;`
+
+#### `constexpr Key KeyF22;`
+
+#### `constexpr Key KeyF23;`
+
+#### `constexpr Key KeyF24;`
+
+#### `constexpr Key KeyNumLock;`
+
+#### `constexpr Key KeyLShift;`
+
+#### `constexpr Key KeyRShift;`
+
+#### `constexpr Key KeyLControl;`
+
+#### `constexpr Key KeyRControl;`
+
+#### `constexpr Key KeyLAlt;`
+
+#### `constexpr Key KeyRAlt;`
+
+#### `constexpr Key KeyNextTrack;`
+
+#### `constexpr Key KeyPreiousTrack;`
+
+#### `constexpr Key KeyStopMedia;`
+
+#### `constexpr Key KeyPlayPauseMedia;`
+
+#### `constexpr Key KeyColon_JIS;`
+
+#### `constexpr Key KeySemicolon_US;`
+
+#### `constexpr Key KeySemicolon_JIS;`
+
+#### `constexpr Key KeyEqual_US;`
+
+#### `constexpr Key KeyComma;`
+
+#### `constexpr Key KeyMinus;`
+
+#### `constexpr Key KeyPeriod;`
+
+#### `constexpr Key KeySlash;`
+
+#### `constexpr Key KeyGraveAccent;`
+
+#### `constexpr Key KeyCommand;`
+
+#### `constexpr Key KeyLeftCommand;`
+
+#### `constexpr Key KeyRightCommand;`
+
+#### `constexpr Key KeyLBBracket;`
+
+#### `constexpr Key KeyYen_JIS;`
+
+#### `constexpr Key KeyBackslash_US;`
+
+#### `constexpr Key KeyRBracket;`
+
+#### `constexpr Key KeyCaret_JIS;`
+
+#### `constexpr Key KeyApostrophe_US;`
+
+#### `constexpr Key KeyUnderscore_JIS;`
+
 ## マウス名前空間 (namespace Mouse)
 
 ### 関数
