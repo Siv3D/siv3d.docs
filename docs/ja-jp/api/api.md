@@ -1976,4 +1976,22 @@ macOS のサンドボックスモードで実行されているかを返しま�
 - title: 
 - 戻り値: 
 
+## ユーザーアクション関連の定数
 
+### `enum class UserAction`
+
+#### `UserAction::CloseButtonClicked`
+
+#### `UserAction::EscapeKeyDown`
+
+#### `UserAction::WindowDeactivated`
+
+#### `UserAction::AnyKeyDown`
+
+#### `UserAction::MouseButtonDown`
+
+#### `UserAction::AnyKeyOrMouseDown = (AnyKeyDown | MouseButtonDown)` 
+
+#### `UserAction::Default = (CloseButtonClicked | EscapeKeyDown)`
+
+#### `UserAction::None`
