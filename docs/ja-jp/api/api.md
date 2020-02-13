@@ -2101,3 +2101,19 @@ Z キーです。
 #### `UserAction::Default = (CloseButtonClicked | EscapeKeyDown)`
 
 #### `UserAction::None`
+
+## テキストエンコーディングの定数
+
+### `enum class TextEncoding`
+
+#### `TextEncoding::Unknown`
+
+#### `TextEncoding::UTF8_NO_BOM`
+
+#### `TextEncoding::UTF8`
+
+#### `TextEncoding::UTF16LE`
+
+#### `TextEncoding::UTF16BE`
+
+#### `TextEncoding::Default = UTF8`
