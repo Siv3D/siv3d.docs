@@ -1598,6 +1598,8 @@ macOS のサンドボックスモードで実行されているかを返しま�
 
 #### `constexpr Key KeyEnter;`
 
+エンターキーです。
+
 #### `constexpr Key KeyShift;`
 
 #### `constexpr Key KeyControl;`
@@ -1608,7 +1610,11 @@ macOS のサンドボックスモードで実行されているかを返しま�
 
 #### `constexpr Key KeyEscape;`
 
+エスケープキーです。エスケープキーの入力はデフォルトではアプリケーション終了トリガーに設定されているため、アプリケーション内の操作で使用したい場合は `System::SetTerminationTriggers()` を使って、エスケープキーによる終了トリガーを解除する必要があります。
+
 #### `constexpr Key KeySpace;`
+
+スペースキーです。
 
 #### `constexpr Key KeyPageUp;`
 
@@ -1620,11 +1626,19 @@ macOS のサンドボックスモードで実行されているかを返しま�
 
 #### `constexpr Key KeyLeft;`
 
+左矢印（←）キーです。
+
 #### `constexpr key KeyUp;`
+
+上矢印（↑）キーです。
 
 #### `constexpr Key KeyRight;`
 
+右矢印（→）キーです。
+
 #### `constexpr Key KeyDown;`
+
+下矢印（↓）キーです。
 
 #### `constexpr Key KeyPrintScreen;`
 
@@ -1634,95 +1648,187 @@ macOS のサンドボックスモードで実行されているかを返しま�
 
 #### `constexpr Key Key0;`
 
+0 キーです。
+
 #### `constexpr Key Key1;`
+
+1 キーです。
 
 #### `constexpr Key Key2;`
 
+2 キーです。
+
 #### `constexpr Key Key3;`
+
+3 キーです。
 
 #### `constexpr Key Key4;`
 
+4 キーです。
+
 #### `constexpr Key Key5;`
+
+5 キーです。
 
 #### `constexpr Key Key6;`
 
+6 キーです。
+
 #### `constexpr Key Key7;`
+
+7 キーです。
 
 #### `constexpr Key Key8;`
 
+8 キーです。
+
 #### `constexpr Key Key9;`
+
+9 キーです。
 
 #### `constexpr Key KeyA;`
 
+A キーです。
+
 #### `constexpr Key KeyB;`
+
+B キーです。
 
 #### `constexpr Key KeyC;`
 
+C キーです。
+
 #### `constexpr Key KeyD;`
+
+D キーです。
 
 #### `constexpr Key KeyE;`
 
+E キーです。
+
 #### `constexpr Key KeyF;`
+
+F キーです。
 
 #### `constexpr Key KeyG;`
 
+G キーです。
+
 #### `constexpr Key KeyH;`
+
+H キーです。
 
 #### `constexpr Key KeyI;`
 
+I キーです。
+
 #### `constexpr Key KeyJ;`
+
+J キーです。
 
 #### `constexpr Key KeyK;`
 
+K キーです。
+
 #### `constexpr Key KeyL;`
+
+L キーです。
 
 #### `constexpr Key KeyM;`
 
+M キーです。
+
 #### `constexpr Key KeyN;`
+
+N キーです。
 
 #### `constexpr Key KeyO;`
 
+O キーです。
+
 #### `constexpr Key KeyP;`
+
+P キーです。
 
 #### `constexpr Key KeyQ;`
 
+Q キーです。
+
 #### `constexpr Key KeyR;`
+
+R キーです。
 
 #### `constexpr Key KeyS;`
 
+S キーです。
+
 #### `constexpr Key KeyT;`
+
+T キーです。
 
 #### `constexpr Key KeyU;`
 
+U キーです。
+
 #### `constexpr Key KeyV;`
+
+V キーです。
 
 #### `constexpr Key KeyW;`
 
+W キーです。
+
 #### `constexpr Key KeyX;`
+
+X キーです。
 
 #### `constexpr Key KeyY;`
 
+Y キーです。
+
 #### `constexpr Key KeyZ;`
+
+Z キーです。
 
 #### `constexpr Key KeyNum0;`
 
+テンキーの 0 です。
+
 #### `constexpr Key KeyNum1;`
+
+テンキーの 1 です。
 
 #### `constexpr Key KeyNum2;`
 
+テンキーの 2 です。
+
 #### `constexpr Key KeyNum3;`
+
+テンキーの 3 です。
 
 #### `constexpr Key KeyNum4;`
 
+テンキーの 4 です。
+
 #### `constexpr Key KeyNum5;`
+
+テンキーの 5 です。
 
 #### `constexpr Key KeyNum6;`
 
+テンキーの 6 です。
+
 #### `constexpr Key KeyNum7;`
+
+テンキーの 7 です。
 
 #### `constexpr Key KeyNum8;`
 
+テンキーの 8 です。
+
 #### `constexpr Key KeyNum9;`
+
+テンキーの 9 です。
 
 #### `constexpr Key KeyNumMultiply;`
 
@@ -1909,7 +2015,7 @@ macOS のサンドボックスモードで実行されているかを返しま�
 - title: 
 - 戻り値: 
 
-
+ファイルオープンダイアログを開き、ユーザが選択したファイルパスを返します。選択されなかった場合は `none` を返します。
 
 #### `Array<FilePath> OpenFiles(const Array<FileFilter>& filters = {}, const FilePath& defaultPath = U"", const String& title = U"");`
 - filters: 
@@ -1917,7 +2023,7 @@ macOS のサンドボックスモードで実行されているかを返しま�
 - title: 
 - 戻り値: 
 
-
+ファイルオープンダイアログを開き、ユーザが選択したファイルパス一覧を `Array` 返します。選択されなかった場合は空の `Array` を返します。
 
 #### `Optional<FilePath> SaveFile(const Array<FileFilter>& filters = {}, const FilePath& defaultPath = U"", const String& title = U"");`
 - filters: 
@@ -1925,7 +2031,7 @@ macOS のサンドボックスモードで実行されているかを返しま�
 - title: 
 - 戻り値: 
 
-
+ファイルセーブダイアログを開き、ユーザが入力したファイルパスを返します。キャンセルされた場合は `none` を返します。
 
 #### `Optional<FilePath> SelectFolder(const FilePath& defaultPath = U"", const String& title = U"");`
 - defaultPath: 
