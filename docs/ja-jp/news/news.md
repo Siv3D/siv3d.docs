@@ -2,6 +2,7 @@ description: Siv3D Web サイトの更新情報
 
 ##### 2020-02-20
 - [OpenSiv3D の使用手順](https://siv3d.github.io/ja-jp/) を更新
+- [リファレンス/絵文字の一覧](https://siv3d.github.io/ja-jp/reference/emojis/) を作成
 
 ##### 2020-02-19
 - [API 一覧](https://siv3d.github.io/ja-jp/api/api/) を更新
