@@ -58,7 +58,7 @@
 
 - Windows の場合
     - [プロジェクトを作成](https://siv3d.github.io/ja-jp/#opensiv3d)
-    - Visual Studio のビルドモードを Debug から Release に変更（処理が早くなる）<br><img src="https://github.com/Siv3D/siv3d.docs.images/blob/master/article/event/vs-release-mode.gif?raw=true" style="display: inline; margin:none;" height="200">
+    - Visual Studio のビルドモードを Debug から Release に変更（処理が早くなる）<br><img src="https://github.com/Siv3D/siv3d.docs.images/blob/master/article/event/vs-release-mode.gif?raw=true" style="display: inline; margin:none;" width="400">
 - macOS の場合
     - プロジェクトテンプレート `examples/empty/empty.xcodeproj` を[開く](https://siv3d.github.io/ja-jp/#macos_2)
 
