@@ -1,7 +1,7 @@
 
 # Siv3D: C++ Library for Creative Coding
 
-![](images/demo.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/home/demo.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>

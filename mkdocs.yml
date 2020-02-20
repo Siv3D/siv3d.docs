@@ -78,6 +78,7 @@ nav:
       - 22. Scene management: tutorial/scene-manager.md
       - 99. Releasing your application: tutorial/release.md
     - Reference:
+      - Emoji list: reference/emojis.md
       - Fullscreen: reference/fullscreen.md
       - JSON file: reference/json.md
       - Text encoding conversion: reference/unicode.md
@@ -147,6 +148,7 @@ nav:
       - 22. シーン管理: ja-jp/tutorial/scene-manager.md
       - 99. アプリのリリース: ja-jp/tutorial/release.md
     - リファレンス:
+      - 絵文字の一覧: ja-jp/reference/emojis.md
       - フルスクリーン: ja-jp/reference/fullscreen.md
       - JSON ファイル: ja-jp/reference/json.md
       - 文字コードの変換: ja-jp/reference/unicode.md
@@ -174,8 +176,9 @@ nav:
       - トラブルシューティング: ja-jp/articles/troubleshooting.md
       - OpenSiv3D 本体のビルド手順: ja-jp/articles/build.md
       - 勉強会ページ:
-        - ja-jp/articles/event/sendai-2020.md
+        - ja-jp/articles/event/chiba-2020.md
         - ja-jp/articles/event/ishikawa-2020.md
+        - ja-jp/articles/event/sendai-2020.md
     - Siv3D ストア: ja-jp/store/store.md
     - コミュニティ:
       - コミュニティ: ja-jp/community/community.md

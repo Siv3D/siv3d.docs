@@ -2,7 +2,7 @@ description: ゲームやクリエイティブコーディングのための C++
 
 # Siv3D: クリエイターのための C++ ライブラリ
 
-![](images/demo.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/home/demo.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
