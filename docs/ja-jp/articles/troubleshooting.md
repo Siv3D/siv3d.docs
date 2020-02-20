@@ -6,7 +6,7 @@ description: OpenSiv3D のトラブルシューティング
 
 #### Visual Studio のプロジェクトテンプレート一覧に OpenSiv3D が表示されない
 
-原因: ユーザプロジェクトテンプレートの場所の設定が正しくありません
+原因: ユーザプロジェクト テンプレートの場所の設定が正しくありません
 
 Visual Studio のメニューで、「ツール」→「オプション」→「プロジェクトおよびソリューション」→「全般」→「場所」→「**ユーザプロジェクトテンプレートの場所**」が `~\Documents\Visual Studio 2019\Templates\ProjectTemplates` のように、ドキュメントフォルダ内の ProjectTemplates フォルダに設定されているかを確認してください。
 
