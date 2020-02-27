@@ -1640,3 +1640,89 @@ macOS のサンドボックスモードで実行されているかを返しま�
 #### `void Clipboard::Clear();`
 
 クリップボードの内容を消去します。
+
+## テキストファイル書き込みクラス (class TextWriter)
+
+### コンストラクタ
+
+#### `TextWriter();`
+#### `TextWriter(FilePathView path, TextEncoding encoding);`
+#### `explicit TextWriter(FilePathView path, OpenMode openMode = OpenMode::Trunc, TextEncoding encoding = TextEncoding::Default);`
+- path: 
+- encoding: 
+- openMode: 
+
+
+
+### デストラクタ
+
+#### `~TextWriter();`
+
+
+
+### メンバ関数
+
+#### `bool open(FilePathView path, TextEncoding encoding);`
+#### `bool open(FilePathView path, OpenMode openMode = OpenMode::Trunc, TextEncoding encoding = TextEncoding::Default);`
+- path: 
+- encoding: 
+- openMode: 
+- 戻り値: 
+
+
+
+#### `void close();`
+
+
+
+#### `bool isOpened() const;`
+- 戻り値: 
+
+
+
+#### `void clear();`
+
+
+
+#### `void write(StringView str);`
+#### `void write(char32 ch);`
+#### `void write(const String& str);`
+#### `void write(const char32* const str);`
+#### `void write(const Args& ... args);`
+- str: 
+- ch: 
+- args: 
+
+
+#### `void writeln(StringView view);`
+#### `void writeln(char32 ch);`
+#### `void writeln(const String& str);`
+#### `void writeln(const char32* const str);`
+#### `void writeln(const Args& ... args);`
+- view: 
+- ch: 
+- str: 
+- args: 
+
+
+
+#### `void writeUTF8(std::string_view view);`
+- view: 
+
+
+#### `void writelnUTF8(std::string_view view);`
+- view: 
+
+
+
+#### `const FilePath& path() const;`
+- 戻り値: 
+
+
+
+### 非メンバ関数
+
+#### `explicit operator bool() const;`
+- 戻り値: 
+
+
