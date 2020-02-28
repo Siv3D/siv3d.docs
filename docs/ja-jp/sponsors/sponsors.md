@@ -12,6 +12,7 @@
 - アゲハマ
 - chobby75
 - papparappara
-- (anonymous 😀)
+- (匿名 😀)
 - minachun
 - Fuyutsubaki
+- (匿名 😊)

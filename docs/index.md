@@ -1,7 +1,7 @@
 
 # Siv3D: C++ Library for Creative Coding
 
-![](images/demo.gif)
+![](https://github.com/Siv3D/siv3d.docs.images/blob/master/home/demo.gif?raw=true)
 
 ```C++
 # include <Siv3D.hpp>
@@ -52,7 +52,7 @@ void Main()
 ## Requirements
 ### Windows
 - Windows 7 SP1 / 8.1 / 10 (64-bit)
-- **Visual Studio 2019 version 16.3**
+- **Visual Studio 2019 version 16.4**
     - Install **Desktop development with C++** from the Visual Studio Installer
 
 ### macOS
@@ -83,7 +83,7 @@ Linux users must build OpenSiv3D from source. See [Linux/README](https://github.
 6. On the **Debug** menu, click **Start Debugging**.
 
 ### macOS
-1. Open the project file (siv3d_vX.X.X_macOS/examples/empty/empty.xcodeproj) in Xcode.
+1. Open the project file `examples/empty/empty.xcodeproj` in Xcode.
 2. Click **Run button ▶️** to build and run the application.
 3. (for macOS Catalina users) A file access permissions dialog can be inactivated by placing the project folder under `User/Applications` folder.
 
@@ -95,3 +95,4 @@ Linux users must build OpenSiv3D from source. See [Linux/README](https://github.
 - (anonymous 😀)
 - minachun
 - Fuyutsubaki
+- (anonymous 😊)

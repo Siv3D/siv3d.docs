@@ -48,6 +48,11 @@ extra_css:
 nav:
   - English: 
     - Getting started with Siv3D: index.md
+    - Sample:
+      - Game: sample/game.md
+      - Application: sample/app.md
+      - Visual effect: sample/visual.md
+      - Geme template: sample/game-template.md
     - Tutorial:
       - 1. First steps: tutorial/basic.md
       - 2. Drawing shapes: tutorial/shape.md
@@ -72,8 +77,8 @@ nav:
       - 21. Binary file: tutorial/binary-file.md
       - 22. Scene management: tutorial/scene-manager.md
       - 99. Releasing your application: tutorial/release.md
-    - API Reference: api/api.md
     - Reference:
+      - Emoji list: reference/emojis.md
       - Fullscreen: reference/fullscreen.md
       - JSON file: reference/json.md
       - Text encoding conversion: reference/unicode.md
@@ -89,14 +94,10 @@ nav:
       - Twitter: reference/twitter.md
       - 2D particle system: reference/2d-particle.md
       - 2D physics: reference/2d-physics.md
-    - Sample:
-      - Game: sample/game.md
-      - Application: sample/app.md
-      - Visual effect: sample/visual.md
-      - Geme template: sample/game-template.md
     - Training:
       - Circles: training/1-1.md
       - Tic-tac-toe: training/2-1.md
+    - API Reference: api/api.md
     - News:
       - What's new in v0.4.1: news/v041.md
       - What's new in v0.4.2: news/v042.md
@@ -116,6 +117,12 @@ nav:
     - 💗Sponsors: sponsors/sponsors.md
   - 日本語:
     - Siv3D をはじめよう: ja-jp/index.md
+    - サンプル:
+      - ゲーム: ja-jp/sample/game.md
+      - アプリ: ja-jp/sample/app.md
+      - ビジュアル表現: ja-jp/sample/visual.md
+      - ゲーム開発のテンプレート: ja-jp/sample/game-template.md
+      - ゲームランチャー: ja-jp/sample/game-launcher.md
     - チュートリアル:
       - 1. Siv3D の基本: ja-jp/tutorial/basic.md
       - 2. 図形を描く: ja-jp/tutorial/shape.md
@@ -140,8 +147,8 @@ nav:
       - 21. バイナリファイル: ja-jp/tutorial/binary-file.md
       - 22. シーン管理: ja-jp/tutorial/scene-manager.md
       - 99. アプリのリリース: ja-jp/tutorial/release.md
-    - API 一覧: ja-jp/api/api.md
     - リファレンス:
+      - 絵文字の一覧: ja-jp/reference/emojis.md
       - フルスクリーン: ja-jp/reference/fullscreen.md
       - JSON ファイル: ja-jp/reference/json.md
       - 文字コードの変換: ja-jp/reference/unicode.md
@@ -157,15 +164,10 @@ nav:
       - Twitter: ja-jp/reference/twitter.md
       - 2D パーティクルシステム: ja-jp/reference/2d-particle.md
       - 2D 物理演算: ja-jp/reference/2d-physics.md
-    - サンプル:
-      - ゲーム: ja-jp/sample/game.md
-      - アプリ: ja-jp/sample/app.md
-      - ビジュアル表現: ja-jp/sample/visual.md
-      - ゲーム開発のテンプレート: ja-jp/sample/game-template.md
-      - ゲームランチャー: ja-jp/sample/game-launcher.md
     - トレーニング:
       - 円を配置する: ja-jp/training/1-1.md
       - 三目並べ: ja-jp/training/2-1.md
+    - API 一覧: ja-jp/api/api.md
     - 新機能紹介:
       - v0.4.1 の新機能: ja-jp/news/v041.md
       - v0.4.2 の新機能: ja-jp/news/v042.md
@@ -174,8 +176,9 @@ nav:
       - トラブルシューティング: ja-jp/articles/troubleshooting.md
       - OpenSiv3D 本体のビルド手順: ja-jp/articles/build.md
       - 勉強会ページ:
-        - ja-jp/articles/event/sendai-2020.md
+        - ja-jp/articles/event/chiba-2020.md
         - ja-jp/articles/event/ishikawa-2020.md
+        - ja-jp/articles/event/sendai-2020.md
     - Siv3D ストア: ja-jp/store/store.md
     - コミュニティ:
       - コミュニティ: ja-jp/community/community.md

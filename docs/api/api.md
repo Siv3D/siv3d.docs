@@ -1541,7 +1541,7 @@ SimpleGUI スタイルでカラーピッカーを表示します。ユーザの�
 #### `bool FileSystem::Rename(FilePathView from, FilePathView to);`
 - from: 変更前のパス
 - to: 変更後のパス
-- 戻り値: 
+- 戻り値: 成功した場合  `true`, それ以外の場合 `false`
 
 ファイルまたはディレクトリの名前を変更します。
 
@@ -1585,6 +1585,462 @@ macOS のサンドボックスモードで実行されているかを返しま�
 #### `constexpr Key MouseX5;`
 
 マウスの拡張ボタン 5 です。マウスによっては存在しません。
+
+### キーボード
+
+#### `constexpr Key KeyCancel;`
+
+Cancel キーです。
+
+#### `constexpr Key KeyBackSpace;`
+
+BackSpace キーです。
+
+#### `constexpr Key KeyTab;`
+
+Tab キーです。
+
+#### `constexpr key KeyClear;`
+
+Clear キーです。
+
+#### `constexpr Key KeyEnter;`
+
+エンターキーです。
+
+#### `constexpr Key KeyShift;`
+
+左右いずれかのシフトキーです。
+
+#### `constexpr Key KeyControl;`
+
+左右いずれかのコントロールキーです。
+
+#### `constexpr Key KeyAlt;`
+
+左右いずれかの Alt キーです。
+
+#### `constexpr Key KeyPause;`
+
+Pause キーです。
+
+#### `constexpr Key KeyEscape;`
+
+エスケープキーです。エスケープキーの入力はデフォルトではアプリケーション終了トリガーに設定されているため、アプリケーション内の操作で使用したい場合は `System::SetTerminationTriggers()` を使って、エスケープキーによる終了トリガーを解除する必要があります。
+
+#### `constexpr Key KeySpace;`
+
+スペースキーです。
+
+#### `constexpr Key KeyPageUp;`
+
+PageUp キーです。
+
+#### `constexpr Key KeyPageDown;`
+
+PageDown キーです。
+
+#### `constexpr key KeyEnd;`
+
+End キーです。
+
+#### `constexpr Key KeyHome;`
+
+Home キーです。
+
+#### `constexpr Key KeyLeft;`
+
+左矢印（←）キーです。
+
+#### `constexpr key KeyUp;`
+
+上矢印（↑）キーです。
+
+#### `constexpr Key KeyRight;`
+
+右矢印（→）キーです。
+
+#### `constexpr Key KeyDown;`
+
+下矢印（↓）キーです。
+
+#### `constexpr Key KeyPrintScreen;`
+
+PrintScreen キーです。
+
+#### `constexpr Key KeyInsert;`
+
+Insert キーです。
+
+#### `constexpr Key KeyDelete;`
+
+Delete キーです。
+
+#### `constexpr Key Key0;`
+
+0 キーです。
+
+#### `constexpr Key Key1;`
+
+1 キーです。
+
+#### `constexpr Key Key2;`
+
+2 キーです。
+
+#### `constexpr Key Key3;`
+
+3 キーです。
+
+#### `constexpr Key Key4;`
+
+4 キーです。
+
+#### `constexpr Key Key5;`
+
+5 キーです。
+
+#### `constexpr Key Key6;`
+
+6 キーです。
+
+#### `constexpr Key Key7;`
+
+7 キーです。
+
+#### `constexpr Key Key8;`
+
+8 キーです。
+
+#### `constexpr Key Key9;`
+
+9 キーです。
+
+#### `constexpr Key KeyA;`
+
+A キーです。
+
+#### `constexpr Key KeyB;`
+
+B キーです。
+
+#### `constexpr Key KeyC;`
+
+C キーです。
+
+#### `constexpr Key KeyD;`
+
+D キーです。
+
+#### `constexpr Key KeyE;`
+
+E キーです。
+
+#### `constexpr Key KeyF;`
+
+F キーです。
+
+#### `constexpr Key KeyG;`
+
+G キーです。
+
+#### `constexpr Key KeyH;`
+
+H キーです。
+
+#### `constexpr Key KeyI;`
+
+I キーです。
+
+#### `constexpr Key KeyJ;`
+
+J キーです。
+
+#### `constexpr Key KeyK;`
+
+K キーです。
+
+#### `constexpr Key KeyL;`
+
+L キーです。
+
+#### `constexpr Key KeyM;`
+
+M キーです。
+
+#### `constexpr Key KeyN;`
+
+N キーです。
+
+#### `constexpr Key KeyO;`
+
+O キーです。
+
+#### `constexpr Key KeyP;`
+
+P キーです。
+
+#### `constexpr Key KeyQ;`
+
+Q キーです。
+
+#### `constexpr Key KeyR;`
+
+R キーです。
+
+#### `constexpr Key KeyS;`
+
+S キーです。
+
+#### `constexpr Key KeyT;`
+
+T キーです。
+
+#### `constexpr Key KeyU;`
+
+U キーです。
+
+#### `constexpr Key KeyV;`
+
+V キーです。
+
+#### `constexpr Key KeyW;`
+
+W キーです。
+
+#### `constexpr Key KeyX;`
+
+X キーです。
+
+#### `constexpr Key KeyY;`
+
+Y キーです。
+
+#### `constexpr Key KeyZ;`
+
+Z キーです。
+
+#### `constexpr Key KeyNum0;`
+
+テンキーの 0 です。
+
+#### `constexpr Key KeyNum1;`
+
+テンキーの 1 です。
+
+#### `constexpr Key KeyNum2;`
+
+テンキーの 2 です。
+
+#### `constexpr Key KeyNum3;`
+
+テンキーの 3 です。
+
+#### `constexpr Key KeyNum4;`
+
+テンキーの 4 です。
+
+#### `constexpr Key KeyNum5;`
+
+テンキーの 5 です。
+
+#### `constexpr Key KeyNum6;`
+
+テンキーの 6 です。
+
+#### `constexpr Key KeyNum7;`
+
+テンキーの 7 です。
+
+#### `constexpr Key KeyNum8;`
+
+テンキーの 8 です。
+
+#### `constexpr Key KeyNum9;`
+
+テンキーの 9 です。
+
+#### `constexpr Key KeyNumMultiply;`
+
+#### `constexpr Key KeyNumAdd;`
+
+#### `constexpr Key KeyNumEnter;`
+
+#### `constexpr Key KeyNumSubtract;`
+
+#### `constexpr Key KeyNumDecimal;`
+
+#### `constexpr Key KeyNumDivide;`
+
+#### `constexpr Key KeyF1;`
+
+ファンクションキーの F1 です。
+
+#### `constexpr Key KeyF2;`
+
+ファンクションキーの F2 です。
+
+#### `constexpr Key KeyF3;`
+
+ファンクションキーの F3 です。
+
+#### `constexpr Key KeyF4;`
+
+ファンクションキーの F4 です。
+
+#### `constexpr Key KeyF5;`
+
+ファンクションキーの F5 です。
+
+#### `constexpr Key KeyF6;`
+
+ファンクションキーの F6 です。
+
+#### `constexpr Key KeyF7;`
+
+ファンクションキーの F7 です。
+
+#### `constexpr Key KeyF8;`
+
+ファンクションキーの F8 です。
+
+#### `constexpr Key KeyF9;`
+
+ファンクションキーの F9 です。
+
+#### `constexpr Key KeyF10;`
+
+ファンクションキーの F10 です。
+
+#### `constexpr Key KeyF11;`
+
+ファンクションキーの F11 です。
+
+#### `constexpr Key KeyF12;`
+
+ファンクションキーの F12 です。
+
+#### `constexpr Key KeyF13;`
+
+ファンクションキーの F13 です。
+
+#### `constexpr Key KeyF14;`
+
+ファンクションキーの F14 です。
+
+#### `constexpr Key KeyF15;`
+
+ファンクションキーの F15 です。
+
+#### `constexpr Key KeyF16;`
+
+ファンクションキーの F16 です。
+
+#### `constexpr Key KeyF17;`
+
+ファンクションキーの F17 です。
+
+#### `constexpr Key KeyF18;`
+
+ファンクションキーの F18 です。
+
+#### `constexpr Key KeyF19;`
+
+ファンクションキーの F19 です。
+
+#### `constexpr Key KeyF20;`
+
+ファンクションキーの F20 です。
+
+#### `constexpr Key KeyF21;`
+
+ファンクションキーの F21 です。
+
+#### `constexpr Key KeyF22;`
+
+ファンクションキーの F22 です。
+
+#### `constexpr Key KeyF23;`
+
+ファンクションキーの F23 です。
+
+#### `constexpr Key KeyF24;`
+
+ファンクションキーの F24 です。
+
+#### `constexpr Key KeyNumLock;`
+
+NumLock キーです。
+
+#### `constexpr Key KeyLShift;`
+
+左シフトキーです。左右を問わない場合は `KeyShift` を使います。
+
+#### `constexpr Key KeyRShift;`
+
+右シフトキーです。左右を問わない場合は `KeyShift` を使います。
+
+#### `constexpr Key KeyLControl;`
+
+左コントロールキーです。左右を問わない場合は `KeyControl` を使います。
+
+#### `constexpr Key KeyRControl;`
+
+右コントロールキーです。左右を問わない場合は `KeyControl` を使います。
+
+#### `constexpr Key KeyLAlt;`
+
+左 Alt キーです。左右を問わない場合は `KeyAlt` を使います。
+
+#### `constexpr Key KeyRAlt;`
+
+右 Alt キーです。左右を問わない場合は `KeyAlt` を使います。
+
+#### `constexpr Key KeyNextTrack;`
+
+#### `constexpr Key KeyPreiousTrack;`
+
+#### `constexpr Key KeyStopMedia;`
+
+#### `constexpr Key KeyPlayPauseMedia;`
+
+#### `constexpr Key KeyColon_JIS;`
+
+#### `constexpr Key KeySemicolon_US;`
+
+#### `constexpr Key KeySemicolon_JIS;`
+
+#### `constexpr Key KeyEqual_US;`
+
+#### `constexpr Key KeyComma;`
+
+#### `constexpr Key KeyMinus;`
+
+#### `constexpr Key KeyPeriod;`
+
+#### `constexpr Key KeySlash;`
+
+#### `constexpr Key KeyGraveAccent;`
+
+#### `constexpr Key KeyCommand;`
+
+#### `constexpr Key KeyLeftCommand;`
+
+#### `constexpr Key KeyRightCommand;`
+
+#### `constexpr Key KeyLBBracket;`
+
+#### `constexpr Key KeyYen_JIS;`
+
+#### `constexpr Key KeyBackslash_US;`
+
+#### `constexpr Key KeyRBracket;`
+
+#### `constexpr Key KeyCaret_JIS;`
+
+#### `constexpr Key KeyApostrophe_US;`
+
+#### `constexpr Key KeyUnderscore_JIS;`
 
 ## マウス名前空間 (namespace Mouse)
 
@@ -1651,7 +2107,7 @@ macOS のサンドボックスモードで実行されているかを返しま�
 - title: 
 - 戻り値: 
 
-
+ファイルオープンダイアログを開き、ユーザが選択したファイルパスを返します。選択されなかった場合は `none` を返します。
 
 #### `Array<FilePath> OpenFiles(const Array<FileFilter>& filters = {}, const FilePath& defaultPath = U"", const String& title = U"");`
 - filters: 
@@ -1659,7 +2115,7 @@ macOS のサンドボックスモードで実行されているかを返しま�
 - title: 
 - 戻り値: 
 
-
+ファイルオープンダイアログを開き、ユーザが選択したファイルパス一覧を `Array` 返します。選択されなかった場合は空の `Array` を返します。
 
 #### `Optional<FilePath> SaveFile(const Array<FileFilter>& filters = {}, const FilePath& defaultPath = U"", const String& title = U"");`
 - filters: 
@@ -1667,21 +2123,21 @@ macOS のサンドボックスモードで実行されているかを返しま�
 - title: 
 - 戻り値: 
 
-
+ファイルセーブダイアログを開き、ユーザが入力したファイルパスを返します。キャンセルされた場合は `none` を返します。
 
 #### `Optional<FilePath> SelectFolder(const FilePath& defaultPath = U"", const String& title = U"");`
 - defaultPath: 
 - title: 
 - 戻り値: 
 
-
+フォルダ選択ダイアログを開き、ユーザが入力したフォルダパスを返します。キャンセルされた場合は `none` を返します。
 
 #### `Image OpenImage(const FilePath& defaultPath = U"", const String& title = U"");`
 - defaultPath: 
 - title: 
 - 戻り値: 
 
-
+ファイルオープンダイアログを開き、ユーザが選択したファイルパスの画像ファイルを `Image` で開いた結果を返します。失敗した場合は空の `Image` を返します。
 
 #### `Texture OpenTexture(const FilePath& defaultPath = U"", const String& title = U"");`
 #### `Texture OpenTexture(TextureDesc desc, const FilePath& defaultPath = U"", const String& title = U"");`
@@ -1697,7 +2153,7 @@ macOS のサンドボックスモードで実行されているかを返しま�
 - title: 
 - 戻り値: 
 
-
+ファイルオープンダイアログを開き、ユーザが選択したファイルパスの音声ファイルを `Image` で開いた結果を返します。失敗した場合は空の `Wave` を返します。
 
 #### `Audio OpenAudio(const FilePath& defaultPath = U"", const String& title = U"");`
 #### `Audio OpenAudio(Arg::loop_<bool> loop, const FilePath& defaultPath = U"", const String& title = U"");`
@@ -1718,4 +2174,70 @@ macOS のサンドボックスモードで実行されているかを返しま�
 - title: 
 - 戻り値: 
 
+## ユーザーアクション関連の定数
 
+### `enum UserAction`
+
+アプリケーションを終了させるためのユーザアクションを表します。`|` 演算子で複数の値を組み合わせることができます。
+
+#### `UserAction::CloseButtonClicked`
+
+アプリケーションウィドウの閉じるボタンを押す操作です。
+
+#### `UserAction::EscapeKeyDown`
+
+エスケープキーを押す操作です。
+
+#### `UserAction::WindowDeactivated`
+
+ウィンドウを非アクティブにする操作です。
+
+#### `UserAction::AnyKeyDown`
+
+何らかのキーを押す操作です。
+
+#### `UserAction::MouseButtonDown`
+
+何らかのマウスのボタンを押す操作です。
+
+#### `UserAction::AnyKeyOrMouseDown = (AnyKeyDown | MouseButtonDown)` 
+
+何らかのキー、または何らかのマウスのボタンを押す操作です。
+
+#### `UserAction::Default = (CloseButtonClicked | EscapeKeyDown)`
+
+アプリケーションウィドウの閉じるボタンを押すか、エスケープキーを押す操作です。アプリケーションを終了させるためのユーザアクションのデフォルト値です。
+
+#### `UserAction::None`
+
+アプリケーションを終了させるためのユーザアクションを設定しないことを示します。`System::SetTerminationTriggers()` にこの定数のみを渡した場合、メインループから抜けるには `break` や `return` を使うか、`System::Exit()` を呼ぶ必要があります。
+
+## テキストエンコーディングの定数
+
+### `enum class TextEncoding`
+
+テキストファイルのエンコーディング形式を表します。
+
+#### `TextEncoding::Unknown`
+
+不明なエンコーディングです。
+
+#### `TextEncoding::UTF8_NO_BOM`
+
+BOM 無しの UTF-8 です。
+
+#### `TextEncoding::UTF8`
+
+BOM 付きの UTF-8 です。
+
+#### `TextEncoding::UTF16LE`
+
+UTF-16 (リトルエンディアン) です。
+
+#### `TextEncoding::UTF16BE`
+
+UTF-16 (ビッグエンディアン) です。
+
+#### `TextEncoding::Default = UTF8`
+
+テキストファイルのエンコーディング形式のデフォルト値、BOM 付きの UTF-8 です。
