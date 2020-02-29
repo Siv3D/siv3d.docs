@@ -2147,7 +2147,6 @@ NumLock キーです。
 - 戻り値: 
 
 
-
 #### `Wave OpenWave(const FilePath& defaultPath = U"", const String& title = U"");`
 - defaultPath: 
 - title: 
@@ -2161,8 +2160,6 @@ NumLock キーです。
 - defaultPath: 
 - title: 
 - 戻り値: 
-
-
 
 #### `Optional<FilePath> SaveImage(const FilePath& defaultPath = U"", const String& title = U"");`
 - defaultPath: 
@@ -2241,6 +2238,93 @@ UTF-16 (ビッグエンディアン) です。
 #### `TextEncoding::Default = UTF8`
 
 テキストファイルのエンコーディング形式のデフォルト値、BOM 付きの UTF-8 です。
+
+## テキストファイル書き込みクラス (class TextWriter)
+
+### コンストラクタ
+
+#### `TextWriter();`
+#### `TextWriter(FilePathView path, TextEncoding encoding);`
+#### `TextWriter(FilePathView path, OpenMode openMode = OpenMode::Trunc, TextEncoding encoding = TextEncoding::Default);`
+- path: 
+- encoding: 
+- openMode: 
+
+
+
+### デストラクタ
+
+#### `~TextWriter();`
+
+
+
+### メンバ関数
+
+#### `bool open(FilePathView path, TextEncoding encoding);`
+#### `bool open(FilePathView path, OpenMode openMode = OpenMode::Trunc, TextEncoding encoding = TextEncoding::Default);`
+- path: 
+- encoding: 
+- openMode: 
+
+#### `void close();`
+
+
+
+#### `bool isOpened() const;`
+- 戻り値: 
+
+
+
+#### `void clear();`
+
+
+
+#### `void write(StringView str);`
+#### `void write(char32 ch);`
+#### `void write(const String& str);`
+#### `void write(const char32* const str);`
+#### `void write(const Args& ... args);`
+- str: 
+- ch: 
+- args: 
+
+
+#### `void writeln(StringView view);`
+#### `void writeln(char32 ch);`
+#### `void writeln(const String& str);`
+#### `void writeln(const char32* const str);`
+#### `void writeln(const Args& ... args);`
+- view: 
+- ch: 
+- str: 
+- args: 
+
+
+
+#### `void writeUTF8(std::string_view view);`
+- view: 
+
+
+#### `void writelnUTF8(std::string_view view);`
+- view: 
+
+
+
+#### `const FilePath& path() const;`
+- 戻り値: 
+
+
+
+#### `operator bool() const;`
+- 戻り値: 
+
+
+
+#### `template <class Type> detail::TextWriterBuffer operator <<(const Type& value);`
+- value: 
+- 戻り値: 
+
+
 
 ## Unicode 名前空間 (namespace Unicode)
 
@@ -2360,6 +2444,7 @@ UTF-16 (ビッグエンディアン) です。
 - 戻り値: 
 
 ### UTF16 → UTF32変換クラス (struct Translator_UTF16toUTF32)
+
 
 #### メンバ関数
 
