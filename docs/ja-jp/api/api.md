@@ -2245,7 +2245,7 @@ UTF-16 (ビッグエンディアン) です。
 
 #### `TextWriter();`
 #### `TextWriter(FilePathView path, TextEncoding encoding);`
-#### `explicit TextWriter(FilePathView path, OpenMode openMode = OpenMode::Trunc, TextEncoding encoding = TextEncoding::Default);`
+#### `TextWriter(FilePathView path, OpenMode openMode = OpenMode::Trunc, TextEncoding encoding = TextEncoding::Default);`
 - path: 
 - encoding: 
 - openMode: 
@@ -2325,3 +2325,160 @@ UTF-16 (ビッグエンディアン) です。
 - 戻り値: 
 
 
+
+## Unicode 名前空間 (namespace Unicode)
+
+### 関数
+
+#### `TextEncoding GetTextEncoding(const IReader& reader);` 
+#### `TextEncoding GetTextEncoding(const FilePathView path);`
+- reader: 
+- path: 
+- 戻り値: 
+
+#### `int32 GetBOMSize(TextEncoding encoding);`
+- encoding: 
+- 戻り値: 
+
+#### `bool IsHighSurrogate(const char16 ch);`
+- ch: 
+- 戻り値: 
+
+#### `bool IsLowSurrogate(const char16 ch);`
+- ch: 
+- 戻り値: 
+
+#### `String WidenAscii(std::string_view asciiText);`
+- asciiText: 
+- 戻り値: 
+
+#### `String Widen(std::string_view view);`
+- view: 
+- 戻り値: 
+
+#### `std::string NarrowAscii(StringView asciiText);`
+- asciiText: 
+- 戻り値: 
+
+#### `std::string Narrow(StringView view);`
+- view: 
+- 戻り値: 
+
+#### `std:wstring ToWString(StringView view);`
+- view: 
+- 戻り値: 
+
+#### `String FromWString(std::wstring_view view);`
+- view: 
+- 戻り値: 
+
+#### `String FromUTF8(std::string_view view);`  
+- view: 
+- 戻り値: 
+
+#### `String FromUTF16(std::u16string_view view);`
+- view: 
+- 戻り値: 
+
+#### `String FromUTF32(std::u32string_view view);`
+- view: 
+- 戻り値: 
+
+#### `std::string ToUTF8(StringView view);`
+- view: 
+- 戻り値: 
+
+#### `std::u16string ToUTF16(StringView view);`
+- view: 
+- 戻り値: 
+
+#### `std::u32string ToUTF32(StringView view);`
+- view: 
+- 戻り値: 
+
+#### `std::u16string UTF8ToUTF16(std::string_view view);`
+- view: 
+- 戻り値: 
+
+#### `std::u32string UTF8ToUTF32(std::string_view view);`
+- view: 
+- 戻り値: 
+
+#### `std::string UTF16ToUTF8(std::u16string_view view);`
+- view: 
+- 戻り値: 
+
+#### `std::u32string UTF16ToUTF32(std::u16string_view view);`
+- view: 
+- 戻り値: 
+
+#### `std::string UTF32ToUTF8(std::u32string_view view);`
+- view: 
+- 戻り値: 
+
+#### `std::u16string UTF32ToUTF16(std::u32string_view view);`
+- view: 
+- 戻り値: 
+
+#### `size_t CountCodePoints(std::string_view view);`
+- view: 
+- 戻り値: 
+
+#### `size_t CountCodePoints(std::u16string_view view);`
+- view: 
+- 戻り値: 
+
+#### `size_t CountCodePoints(StringView view);`
+- view: 
+- 戻り値: 
+
+### UTF8 → UTF32変換クラス (struct Translator_UTF8toUTF32)
+
+#### メンバ関数
+
+##### `bool put(char8 code);`
+- code: 
+- 戻り値: 
+
+##### `char32 get() const;`
+- 戻り値: 
+
+### UTF16 → UTF32変換クラス (struct Translator_UTF16toUTF32)
+
+
+#### メンバ関数
+
+##### `bool put(char16 code);`
+- code: 
+- 戻り値: 
+
+##### `char32 get() const;`
+- 戻り値: 
+
+### UTF32 → UTF8変換クラス (struct Translator_UTF32toUTF8)
+
+#### メンバ関数
+
+##### `size_t put(char32 code);`
+- code: 
+- 戻り値: 
+
+##### `const std::array<char8, 4>& get() const;`
+- 戻り値: 
+
+##### `std::array<char8, 4>::const_iterator begin() const;`
+- 戻り値: 
+
+### UTF32 → UTF16変換クラス (struct Translator_UTF32toUTF16)
+
+#### メンバ関数
+
+##### `size_t put(char32 code);`
+- code: 
+- 戻り値: 
+
+##### `const std::array<char16, 2>& get() const;`
+- 戻り値: 
+
+##### `std::array<char16, 2>::const_iterator begin() const;`
+- 戻り値: 
