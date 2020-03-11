@@ -2483,187 +2483,187 @@ UTF-16 (ビッグエンディアン) です。
 ##### `std::array<char16, 2>::const_iterator begin() const;`
 - 戻り値: 
 
-### 日付構造体 (struct Date)
+## 日付クラス (struct Date)
 
-#### メンバ変数
+### メンバ変数
 
-##### `int32 year;`
-
-
-
-##### `int32 month;`
+#### `int32 year;`
 
 
 
-##### `int32 day;`
+#### `int32 month;`
 
 
 
-#### コンストラクタ
+#### `int32 day;`
 
-##### `Date() = default;`
-##### `Date(int32 _year, int32 _month = 1, int32 _day = 1);`
+
+
+### コンストラクタ
+
+#### `Date() = default;`
+#### `Date(int32 _year, int32 _month = 1, int32 _day = 1);`
 _year: 
 _month: 
 _day: 
 
 
 
-#### メンバ関数
+### メンバ関数
 
-##### `DayOfWeek dayOfWeek() const;`
+#### `DayOfWeek dayOfWeek() const;`
 戻り値: 
 
 
 
-##### `String dayOfWeekJP() const;`
+#### `String dayOfWeekJP() const;`
 戻り値: 
 
 
 
-##### `String dayOfWeekEN() const;`
+#### `String dayOfWeekEN() const;`
 戻り値: 
 
 
 
-##### `bool isToday() const;`
+#### `bool isToday() const;`
 戻り値: 
 
 
 
-##### `bool isLeapYear() const;`
+#### `bool isLeapYear() const;`
 戻り値: 
 
 
 
-##### `int32 daysInMonth() const;`
+#### `int32 daysInMonth() const;`
 戻り値: 
 
 
 
-##### `int32 daysInYear() const;`
+#### `int32 daysInYear() const;`
 戻り値: 
 
 
 
-##### `bool isValid() const;`
+#### `bool isValid() const;`
 戻り値: 
 
 
 
-##### `String format(StringView format = U"yyyy/M/d"_sv) const;`
+#### `String format(StringView format = U"yyyy/M/d"_sv) const;`
 format: 
 戻り値: 
 
 
 
-##### `Date& operator +=(const Days& days);`
+#### `Date& operator +=(const Days& days);`
 days: 
 戻り値: 
 
 
 
-##### `Date& operator -=(const Days& days);`
+#### `Date& operator -=(const Days& days);`
 days: 
 戻り値: 
 
 
 
-##### `bool operator ==(const Date& other) const;`
+#### `bool operator ==(const Date& other) const;`
 other: 
 戻り値: 
 
 
 
-##### `bool operator !=(const Date& other) const;`
+#### `bool operator !=(const Date& other) const;`
 other: 
 戻り値: 
 
 
 
-##### `bool operator <(const Date& other) const;`
+#### `bool operator <(const Date& other) const;`
 other: 
 戻り値: 
 
 
 
-##### `bool operator >(const Date& other) const;`
+#### `bool operator >(const Date& other) const;`
 other: 
 戻り値: 
 
 
 
-##### `bool operator <=(const Date& other) const;`
+#### `bool operator <=(const Date& other) const;`
 other: 
 戻り値: 
 
 
 
-##### `bool operator >=(const Date& other) const;`
+#### `bool operator >=(const Date& other) const;`
 other: 
 戻り値: 
 
 
 
-##### `size_t hash() const;`
+#### `size_t hash() const;`
 戻り値: 
 
 
 
-#### `静的メンバ関数`
+### `静的メンバ関数`
 
-##### `Date Yesterday();`
+#### `Date Yesterday();`
 戻り値: 
 
 
 
-##### `Date Today();`
+#### `Date Today();`
 戻り値: 
 
 
 
-##### `Date Tomorrow();`
+#### `Date Tomorrow();`
 戻り値: 
 
 
 
-#### `非メンバ関数`
+### `非メンバ関数`
 
-##### `Date operator +(const Date& date, const Days& days);`
+#### `Date operator +(const Date& date, const Days& days);`
 date: 
 days: 
 戻り値: 
 
 
 
-##### `Date operator -(const Date& date, const Days& days);`
+#### `Date operator -(const Date& date, const Days& days);`
 date: 
 days: 
 戻り値: 
 
 
 
-##### `Days operator -(const Date& to, const Date& from);`
+#### `Days operator -(const Date& to, const Date& from);`
 to: 
 from: 
 戻り値: 
 
 
 
-##### `void Formatter(FormatData& formatData, const Date& value);`
+#### `void Formatter(FormatData& formatData, const Date& value);`
 formatData: 
 value: 
 
 
 
-##### `template <class CharType> std::basic_ostream<CharType> & operator <<(std::basic_ostream<CharType> output, const Date& value)`
+#### `template <class CharType> std::basic_ostream<CharType> & operator <<(std::basic_ostream<CharType> output, const Date& value)`
 output: 
 value: 
 戻り値: 
 
 
 
-##### `template<> size_t std::hash<s3d::Date>::operator()(const s3d::Date &value) const;`
+#### `template<> size_t std::hash<s3d::Date>::operator()(const s3d::Date &value) const;`
 value: 
 戻り値: 
 
