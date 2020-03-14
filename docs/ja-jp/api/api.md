@@ -2668,3 +2668,240 @@ value:
 戻り値: 
 
 
+
+## 日付と時刻クラス (struct DateTime)
+
+### メンバ変数
+
+#### `int32 year;`
+
+`Date::year` を参照
+
+#### `int32 month;`
+
+`Date::month` を参照
+
+#### `int32 day;`
+
+`Date::day` を参照
+
+#### `int32 hour;`
+
+
+
+#### `int32 minute;`
+
+
+
+#### `int32 second;`
+
+
+
+#### `int32 milliseconds;`
+
+
+
+### コンストラクタ
+
+#### `DateTime() = default;`
+#### `constexpr DateTime(int32 _year,int32 _month,int32 _day,int32 _hour = 0,int32 _minute = 0,int32 _second = 0,int32 _milliseconds = 0);`
+#### `constexpr DateTime(const Date& date,int32 _hour = 0,int32 _minute = 0,int32 _second = 0,int32 _milliseconds = 0);`
+_year: 
+_month: 
+_day: 
+_hour: 
+_minute: 
+_second: 
+_milliseconds: 
+date: 
+戻り値: 
+
+
+
+### メンバ関数
+
+#### `DayOfWeek dayOfWeek() const;`
+
+`Date::dayOfWeek` を参照
+
+#### `DayOfWeek dayOfWeekJP() const;`
+
+`Date::dayOfWeekJP` を参照
+
+#### `DayOfWeek dayOfWeekEN() const;`
+
+`Date::dayOfWeekEN` を参照
+
+#### `bool isToday() const;`
+
+`Date::isToday` を参照
+
+#### `bool isLeapYear() const;`
+
+`Date::isLeapYear` を参照
+
+#### `int32 daysInMonth() const;`
+
+`Date::daysInMonth` を参照
+
+#### `int32 daysInYear() const;`
+
+`Date::daysInYear` を参照
+
+#### `constexpr bool isValid() const;`
+戻り値: 
+
+
+
+#### `String format(StringView format = U"yyyy/M/d HH:mm:ss"_sv) const;`
+format: 
+戻り値: 
+
+
+
+#### `DateTime& operator +=(const Days& days);`
+days: 
+戻り値: 
+
+
+
+#### `DateTime& operator -=(const Days& days);`
+days: 
+戻り値: 
+
+
+
+#### `DateTime& operator +=(const Milliseconds& _milliseconds);`
+_milliseconds: 
+戻り値: 
+
+
+
+#### `DateTime& operator -=(const Milliseconds& _milliseconds);`
+_milliseconds: 
+戻り値: 
+
+
+
+#### `bool operator ==(const DateTime& other) const;`
+other: 
+戻り値: 
+
+
+
+#### `bool operator !=(const DateTime& other) const;`
+other: 
+戻り値: 
+
+
+
+#### `bool operator <(const DateTime& other) const;`
+other: 
+戻り値: 
+
+
+
+#### `bool operator >(const DateTime& other) const;`
+other: 
+戻り値: 
+
+
+
+#### `bool operator <=(const DateTime& other) const;`
+other: 
+戻り値: 
+
+
+
+#### `bool operator >=(const DateTime& other) const;`
+other: 
+戻り値: 
+
+
+
+#### `size_t hash() const;`
+戻り値: 
+
+
+
+### 静的メンバ関数
+
+#### `DateTime Yesterday();`
+戻り値: 
+
+
+
+#### `DateTime Today();`
+戻り値: 
+
+
+
+#### `DateTime Tomorrow();`
+戻り値: 
+
+
+
+#### `DateTime Now();`
+戻り値: 
+
+
+
+#### `DateTime NowUTC();`
+戻り値: 
+
+
+
+### 非メンバ関数
+
+#### `DateTime operator +(const DateTime& dateTime, const Days& days);`
+dateTime: 
+days: 
+戻り値: 
+
+
+
+#### `DateTime operator -(const DateTime& dateTime, const Days& days);`
+dateTime: 
+days: 
+戻り値: 
+
+
+
+#### `DateTime operator +(const DateTime& dateTime, const Milliseconds& milliseconds);`
+dateTime: 
+milliseconds: 
+戻り値: 
+
+
+
+#### `DateTime operator -(const DateTime& dateTime, const Milliseconds& milliseconds);`
+dateTime: 
+milliseconds: 
+戻り値: 
+
+
+
+#### `Duration operator -(const DateTime& a, const DateTime& b);`
+a: 
+b: 
+戻り値: 
+
+
+
+#### `void Formatter(FormatData& formatData, const DateTime& value);`
+value: 
+戻り値: 
+
+
+
+#### `template<class CharType> basic_ostream<CharType> &operator<<(basic_ostream<CharType> output, const DateTime &value);`
+value: 
+戻り値: 
+
+
+
+#### `template<> size_t hash<DateTime>::operator()(const DateTime &value) const;`
+value: 
+戻り値: 
+
+
