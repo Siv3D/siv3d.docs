@@ -2905,3 +2905,18 @@ UTF-16 (ビッグエンディアン) です。
 - 戻り値: 
 
 
+## テクスチャ設定の定数
+
+### `enum class TextureDesc`
+
+#### `TextureDesc::Unmipped`
+
+#### `TextureDesc::UnmippedSRGB`
+
+#### `TextureDesc::Mipped`
+
+#### `TextureDesc::MippedSRGB`
+
+#### `TextureDesc::SDF`
+
+#### `TextureDesc::For3D = MippedSRGB`
