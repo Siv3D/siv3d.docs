@@ -2920,3 +2920,13 @@ UTF-16 (ビッグエンディアン) です。
 #### `TextureDesc::SDF`
 
 #### `TextureDesc::For3D = MippedSRGB`
+
+## エンディアン関連の関数
+
+### 関数
+
+#### `uint16 SwapEndian(uint16 value);`
+#### `uint32 SwapEndian(uint32 value);`
+#### `uint64 SwapEndian(uint64 value);`
+- value: 
+- 戻り値: 
