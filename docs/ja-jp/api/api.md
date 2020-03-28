@@ -2930,3 +2930,87 @@ UTF-16 (ビッグエンディアン) です。
 #### `uint64 SwapEndian(uint64 value);`
 - value: 
 - 戻り値: 
+
+
+## テキストファイル読み込みクラス (class TextReader)
+
+テキストファイルを読み込むためのクラスです。
+
+### コンストラクタ
+
+#### `TextReader();`
+#### `TextReader(FilePathView path, const Optional<TextEncoding>& encoding = unspecified);`
+#### `TextReader(Reader&& reader, const Optional<TextEncoding>& encoding = unspecified);`
+#### `TextReader(const std::shared_ptr<IReader>& reader, const Optional<TextEncoding>& encoding = unspecified);`
+- path: ファイルパス
+- encoding: エンコーディング形式、自動で設定する場合は unspecified
+- render: IReader
+
+
+
+### デストラクタ
+
+#### `~TextReader();`
+
+
+
+### メンバ関数
+
+#### `bool open(FilePathView path, const Optional<TextEncoding>& encoding = unspecifie);`
+#### `bool open(const std::shared_ptr<IReader>& reader, const Optional<TextEncoding>& encoding = unspecified);`
+- path: ファイルパス
+- encoding: エンコーディング形式、自動で設定する場合は unspecified
+- reader: IReader
+- 戻り値: ファイルのオープンに成功した場合 true, それ以外の場合は false
+
+テキストファイルを開きます。
+
+#### `void close();`
+
+テキストファイルをクローズします。
+
+#### `bool isOpened() const;`
+- 戻り値: ファイルがオープンされている場合 true, それ以外の場合は false
+
+テキストファイルがオープンされているかを返します。
+
+#### `operator bool() const;`
+- 戻り値: ファイルがオープンされている場合 true, それ以外の場合は false
+
+テキストファイルがオープンされているかを返します。
+
+#### `Optional<char32> readChar();`
+#### `bool readChar(char32& ch);`
+- ch: 読み込み先
+- 戻り値: 
+- 戻り値: 
+
+テキストファイルから 1 文字読み込みます。
+
+#### `Optional<String> readLine();`
+#### `bool readLine(String& str);`
+- str: 読み込み先
+- 戻り値: 
+- 戻り値: 
+
+テキストファイルから 1 行読み込みます。
+
+#### `String readAll();`
+#### `void readAll(String& str);`
+- str: 読み込み先
+- 戻り値: 読み込みに成功した場合 true, ファイルの終端や失敗の場合は false
+
+テキストファイルの内容をすべて読み込みます。
+
+#### `const FilePath& path() const;`
+- 戻り値: ファイルをオープンしている場合ファイルのパス, それ以外の場合は空の文字列
+
+オープンしているファイルのパスを返します。
+
+#### `TextEncoding encoding() const;`
+- 戻り値: 
+
+オープンしているテキストファイルのエンコーディング形式を返します。
+
+
+
