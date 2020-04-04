@@ -1,5 +1,11 @@
 description: Siv3D Web サイトの更新情報
 
+##### 2020-04-04
+- 最新の Xcode 11.4 で OpenSiv3D プロジェクトをビルドすると libturbojpeg.a のリンクに関連するエラーが出る問題を修正しました。現在配布している macOS 版 v0.4.2 は修正済みのものです。古いプロジェクトの libturbojpeg.a を差し替えることでも対応できます
+
+##### 2020-04-03
+- [API 一覧](https://siv3d.github.io/ja-jp/api/api/) を更新
+
 ##### 2020-02-20
 - [OpenSiv3D の使用手順](https://siv3d.github.io/ja-jp/) を更新
 - [リファレンス/絵文字の一覧](https://siv3d.github.io/ja-jp/reference/emojis/) を作成

@@ -2908,18 +2908,25 @@ UTF-16 (ビッグエンディアン) です。
 ## テクスチャ設定の定数
 
 ### `enum class TextureDesc`
+テクスチャの作成オプションを表します。
 
 #### `TextureDesc::Unmipped`
+ミップマップを作成しません。
 
 #### `TextureDesc::UnmippedSRGB`
+ミップマップを作成しない、sRGB 形式のテクスチャです。
 
 #### `TextureDesc::Mipped`
+ミップマップを作成します。
 
 #### `TextureDesc::MippedSRGB`
+ミップマップを作成する、sRGB 形式のテクスチャです。
 
 #### `TextureDesc::SDF`
+SDF 用のテクスチャです。
 
 #### `TextureDesc::For3D = MippedSRGB`
+3D 描画に使うテクスチャです。デフォルト値は `TextureDesc::MippedSRGB` です。
 
 ## エンディアン関連の関数
 
