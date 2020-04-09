@@ -3026,4 +3026,728 @@ SDF 用のテクスチャです。
 #### `size_t GetConcurrency();`
 - 戻り値: 
 
+## 文字列クラス (class String)
+
+### 定数
+
+#### `static constexpr size_type npos = size_type{ static_cast<size_type>(-1) };`
+
+### コンストラクタ
+
+#### `String();`
+#### `String(const String& text);`
+#### `String(const string_type& text);`
+#### `String(const String& text, size_type pos);`
+#### `String(const String& text, size_type pos, size_type count);`
+#### `String(const value_type* text);`
+#### `String(const value_type* text, size_type count);`
+#### `String(std::initializer_list<value_type> ilist);`
+#### `String(size_t count, value_type ch);`
+#### `template <class Iterator> String(Iterator first, Iterator last);`
+#### `String(String&& text);`
+#### `String(string_type&& text);`
+#### `template <class StringViewIsh, class = IsStringViewIsh<StringViewIsh>> String(cosnt StringViewIsh& viewish);`
+- text: 
+- pos: 
+- count: 
+- ilist: 
+- ch: 
+- first: 
+- last: 
+- viewish: 
+
+### メンバ関数
+
+#### `operator StringView();`
+戻り値: 
+
+#### `String& operator =(const String& text);`
+#### `String& operator =(const string_type& text);`
+#### `String& operator =(String&& text);`
+#### `String& operator =(string_type&& text);`
+#### `String& operator =(const value_type* text);`
+#### `String& operator =(std::initializer_list<value_type> ilist);`
+#### `template <class StringViewIsh, class = IsStringViewIsh<StringViewIsh>> String& operator =(const StringViewIsh& viewish);`
+- text: 
+- ilist: 
+- viewish: 
+- 戻り値: 
+
+#### `String& operator <<(value_type ch);`
+- ch: 
+- 戻り値: 
+
+#### `String& assign(const String& text);`
+#### `String& assign(const string_type& text);`
+#### `String& assign(const value_type* text);`
+#### `String& assign(size_t count, value_type ch);`
+#### `String& assign(String&& text);`
+#### `String& assign(string_type&& text);`
+#### `String& assign(std::initializer_list<value_type> ilist);`
+#### `template <class StringViewIsh, class = IsStringViewIsh<StringViewIsh>> String& assign(const StringViewIsh& viewish);`
+#### `template <class Iterator> String& assign(Iterator first, Iterator last);` 
+- text: 
+- count: 
+- ch: 
+- ilist: 
+- viewish: 
+- first: 
+- last: 
+- 戻り値:
+
+#### `String& operator +=(const String& text);`
+#### `String& operator +=(cosnt string_type& text);`
+#### `String& operator +=(const value_type ch);`
+#### `String& operator +=(const value_type* text);`
+#### `String& operator +=(std::initializer_list<value_type> ilist);`
+#### `template <class StringViewIsh, class = IsStringViewIsh<StringViewIsh>> String& operator +=(const StringViewIsh& viewish);`
+- text: 
+- ch: 
+- ilist: 
+- viewish: 
+- 戻り値: 
+
+#### `String& append(const String& text);`
+#### `String& append(const string_type& text);`
+#### `String& append(const value_type ch);`
+#### `String& append(const value_type* text);`
+#### `String& append(const value_type* text, size_t count);`
+#### `String& append(std::initializer_list<value_type> ilist);`
+#### `String& append(size_t count, value_type ch);`
+#### `template <class StringViewIsh, class = IsStringViewIsh<StringViewIsh>> String& append(const StringViewIsh& viewish);`
+#### `template <class Iterator> String& append(Iterator first, Iterator last);`
+- text: 
+- ch: 
+- count: 
+- ilist: 
+- viewish: 
+- first: 
+- last: 
+- 戻り値: 
+
+#### `String& insert(size_t offset, const String& text);`
+#### `String& insert(size_t offset, std::initializer_list<value_type> ilist);`
+#### `String& insert(size_t offset, const value_type* text);`
+#### `template <class StringViewIsh, class = String::IsStringViewIsh<StringViewIsh>> String& insert(size_t offset, const StringViewIsh& text);`
+#### `String& insert(size_t offset, size_t count, value_type ch);`
+#### `iterator insert(const_iterator where, value_type ch);`
+#### `iterator insert(const_iterator where, size_t count, value_type ch);`
+#### `template <class Iterator> iterator insert(const_iterator where, Iterator first, Iterator last);`
+#### `template <class Iterator> String& insert(const_iterator first1, const_iterator last1, Iterator first2, Iterator last2);`
+- offset: 
+- text: 
+- ilist: 
+- count: 
+- ch: 
+- where: 
+- first: 
+- last: 
+- first1: 
+- last1: 
+- first2: 
+- last2: 
+- 戻り値: 
+
+#### `String& erase(size_t offset = 0, size_t count = npos);`
+#### `iterator erase(const_iterator where);`
+#### `iterator erase(const_iterator first, const_iterator last);`
+- offset: 
+- count: 
+- where: 
+- first: 
+- last: 
+- 戻り値: 
+
+#### `void clear();`
+
+#### `iterator begin();`
+#### `const_iterator begin();`
+- 戻り値: 
+
+#### `const_iterator cbegin();`
+- 戻り値: 
+
+#### `iterator end();`
+#### `const_iterator end();`
+- 戻り値: 
+
+#### `const_iterator cend();`
+- 戻り値: 
+
+#### `reverse_iterator rbegin();`
+#### `const_reverse_iterator rbegin();`
+- 戻り値: 
+
+#### `const_reverse_iterator crbegin();`
+- 戻り値: 
+
+#### `reverse_iterator rend();`
+#### `const_reverse_iterator rend();`
+- 戻り値: 
+
+#### `const_reverse_iterator crend();`
+- 戻り値: 
+
+#### `void shrink_to_fit();`
+
+#### `void release();`
+
+#### `value_type& at(size_t offset) &;`
+#### `const value_type& at(size_t offset) &;`
+#### `value_type at(size_t offset) &&;`
+- offset: 
+- 戻り値: 
+
+#### `value_type& operator[](size_t offset) &;`
+#### `const value_type& operator[](size_t offset) &;`
+#### `value_type operator[](size_t offset) &&;`
+- offset: 
+- 戻り値: 
+
+#### `void push_front(value_type ch);`
+- ch: 
+
+#### `void push_back(value_type ch);`
+- ch: 
+
+#### `void pop_front();`
+
+#### `void pop_back();`
+
+#### `value_type& front();`
+#### `const value_type& front();`
+- 戻り値: 
+
+#### `value_type& back();`
+#### `const value_type& back();`
+- 戻り値: 
+
+#### `cosnt value_type* c_srt();`
+- 戻り値: 
+
+#### `const value_type data();`
+#### `value_type* data();`
+- 戻り値: 
+
+#### `string_type& str();`
+#### `cosnt string_type& str();`
+- 戻り値: 
+
+#### `size_t length();`
+- 戻り値: 
+
+#### `size_t size();`
+- 戻り値: 
+
+#### `size_t size_bytes();`
+- 戻り値: 
+
+#### `bool empty();`
+- 戻り値: 
+
+#### `bool isEmpty();`
+- 戻り値: 
+
+#### `operator bool();`
+- 戻り値: 
+
+#### `size_t maxSize();`
+- 戻り値: 
+
+#### `size_t capacity();`
+- 戻り値: 
+
+#### `void resize(size_t newSize);`
+#### `void resize(size_t newSize, value_type ch);`
+- newSize: 
+- ch: 
+
+#### `void reserve(size_t newCapacity);`
+- newCapacity: 
+
+#### `void swap(String& text);`
+- text: 
+
+#### `String substr(size_t offset = 0, size_t count = npos);`
+- offset: 
+- count: 
+- 戻り値: 
+
+#### `size_t indexOf(const String& text, size_t offset = 0);`
+#### `size_t indexOf(const value_type* text, size_t offset = 0);`
+#### `size_t indexOf(value_type ch, size_t offset = 0);`
+- text: 
+- offset: 
+- ch: 
+- 戻り値: 
+
+#### `size_t indexOfNot(value_type ch, size_t offset = 0);`
+- ch: 
+- offset: 
+- 戻り値: 
+
+#### `size_t lastIndexOf(const String& text, size_t offset = npos);`
+#### `size_t lastIndexOf(cosnt value_type* text, size_t offset = npos);`
+#### `size_t lastIndexOf(value_type ch, size_t offset = npos);`
+- text: 
+- offset: 
+- ch: 
+- 戻り値: 
+
+#### `size_t lastIndexNotOf(value_type ch, size_t offset = npos);`
+- ch: 
+- offset: 
+- 戻り値: 
+
+#### `size_t indexOfAny(const String& anyof, size_t offset = 0);`
+#### `size_t indexOfAny(cosnt value_type* anyof, size_t offset = 0);`
+- anyof: 
+- offset: 
+- 戻り値: 
+
+#### `size_t lastIndexOfAny(const String& anyof, size_t offset = npos);`
+#### `size_t lastIndexOfAny(cosnt value_type* anyof size_t offset = npos);`
+- anyof: 
+- offset: 
+- 戻り値:
+
+#### `size_t indexNotOfAny(cosnt String& anyof, size_t offset = 0);`
+#### `size_t indexNotOfAny(const value_type* anyof, size_t offset = 0);`
+- anyof: 
+- offset: 
+- 戻り値: 
+
+#### `size_t lastIndexNotOfAny(const String& anyof, size_t offset = npos);`
+#### `size_t lastIndexNotOfAny(cosnt value_type* anyof, size_t offset = npos);`
+- anyof: 
+- offset: 
+- 戻り値: 
+
+#### `int32 compare(cosnt String& text);`
+#### `int32 compare(StringView view);`
+#### `int32 compare(const value_type* text);`
+- text: 
+- view: 
+- 戻り値: 
+
+#### `int32 case_insensitive_compare(StringView view);`
+- view: 
+- 戻り値: 
+
+#### `bool case_insensitive_equals(StringView view);`
+- view: 
+- 戻り値: 
+
+#### `bool operator ==(const String& text);`
+#### `bool operator !=(cosnt String& text);`
+#### `bool operator <(cosnt String& text);`
+#### `bool operator >(const String& text);`
+#### `bool operator <=(cosnt String& text);`
+#### `bool operator >=(cosnt String& text);`
+- text: 
+- 戻り値: 
+
+#### `template <class Fty = decltype(Id), std::enable_if_t<std::is_invocable_r_v<bool, Fty, char32>>* = nullptr> bool all(Fty f = Id);`
+- f: 
+- 戻り値: 
+
+#### `template <class Fty = decltype(Id), std::enable_if_t<std::is_invocable_r_v<bool, Fty, char32>>* = nullptr> bool any(Fty f = Id);`
+- f: 
+- 戻り値: 
+
+#### `String& capitalize();`
+- 戻り値: 
+
+#### `String capitalized() &;`
+#### `String capitalized() &&;`
+- 戻り値: 
+
+#### `size_t count(value_type ch);`
+#### `size_t count(StringView view);`
+- ch: 
+- view: 
+- 戻り値: 
+
+#### `template <class Fty, std::enable_if_t<std::is_invocable_r_v<bool, Fty, char32>>* = nullptr> size_t count_if(Fty f);`
+- f: 
+- 戻り値: 
+
+#### `String& dropBack(size_t n);`
+- n: 
+- 戻り値: 
+
+#### `String dropped(size_t n);`
+- n: 
+- 戻り値: 
+
+#### `template <class Fty, std::enable_if_t<std::is_invocable_r_v<bool, Fty, char32>>* = nullptr> String dropped_while(Fty f);`
+- f: 
+- 戻り値: 
+
+#### `template <class Fty, std::enable_if_t<std::is_invocable_v<Fty, char32&>>* = nullptr> String& each(Fty f);`
+#### `template <class Fty, std::enable_if_t<std::is_invocable_v<Fty, char32>>* = nullptr> const String& each(Fty f);`
+- f: 
+- 戻り値: 
+
+#### `template <class Fty, std::enable_if_t<std::is_invocable_v<Fty, char32&>>* = nullptr> String& each_index(Fty f);`
+#### `template <class Fty, std::enable_if_t<std::is_invocable_v<Fty, char32>>* = nullptr> const String& each_index(Fty f);`
+- f: 
+- 戻り値: 
+
+#### `bool ends_with(value_type ch);`
+#### `bool ends_with(StringView view);`
+- ch: 
+- view: 
+- 戻り値: 
+
+#### `String expand_tabs(size_t tabSize = 4);`
+- tabSize: 
+- 戻り値: 
+
+#### `value_type fetch(size_t index, value_type defaultValue);`
+- index: 
+- defaultValue: 
+- 戻り値: 
+
+#### `String& fill(value_type value);`
+- value: 
+- 戻り値: 
+
+#### `template <class Fty, std::enable_if_t<std::is_invocalbe_r_v<bool, Fty, char32>>* = nullptr> String filter(Fty f);`
+- f: 
+- 戻り値: 
+
+#### `bool includes(value_type ch);`
+#### `bool includes(const value_type* str);`
+#### `bool includes(const String& str);`
+- ch: 
+- str: 
+- 戻り値: 
+
+#### `template <class Fty, std::enable_if_t<std::is_invocable_r_v<bool, Fty, char32>>* = nullptr> bool includes_if(Fty f);`
+- f: 
+- 戻り値: 
+
+#### `String& keep_if(std::function<bool(value_type)> f);`
+- f: 
+- 戻り値: 
+
+#### `String layout(size_t width);`
+- width: 
+- 戻り値: 
+
+#### `String& lowercase();`
+- 戻り値: 
+
+#### `String lowercased() &;`
+#### `String lowercased() &&;`
+- 戻り値: 
+
+#### `String& lpad(size_t length, value_type fillChar = U' ');`
+- length: 
+- fillChar: 
+- 戻り値: 
+
+#### `String lpadded(size_t length, value_type fillChar = U' ') &;`
+#### `String lpadded(size_t length, value_type fillChar = U' ') &&;`
+- length: 
+- fillChar: 
+- 戻り値: 
+
+#### `String& ltrim();`
+- 戻り値: 
+
+#### `String ltrimmed() &;`
+#### `String ltrimmed() &&;`
+- 戻り値: 
+
+#### `template <class Fty, std::enable_if_t<std::is_invocable_v<Fty, char32>>* = nullptr> auto map(Fty f);`
+- f: 
+- 戻り値: 
+
+#### `std::string narrow();`
+- 戻り値: 
+
+#### `template <class Fty = decltype(Id), std::enable_if_t<std::is_invocable_r_v<bool, Fty, char32>>* = nullptr> bool none(Fty f = Id);`
+- f: 
+- 戻り値: 
+
+#### `String& remove(value_type ch);`
+#### `STring& remove(StringView view);`
+- ch: 
+- view: 
+- 戻り値: 
+
+#### `String removed(value_type ch) &;`
+#### `String removed(value_type ch) &&;`
+#### `String removed(StringView view);`
+- ch: 
+- view: 
+- 戻り値: 
+
+#### `String& remove_at(size_t index);`
+- index: 
+- 戻り値: 
+
+#### `String removed_at(size_t index) &;`
+#### `String removed_at(size_t index) &&;`
+- index: 
+- 戻り値: 
+
+#### `template <class Fty, std::enable_if_t<std::is_invocable_r_v<bool, Fty, char32>>* = nullptr> String& remove_if(Fty f);`
+- f: 
+- 戻り値: 
+
+#### `template <class Fty, std::enable_if_t<std::is_invocable_r_v<bool, Fty, char32>>* = nullptr> String& removed_if(Fty f) &;`
+#### `template <class Fty, std::enable_if_t<std::is_invocable_r_v<bool, Fty, char32>>* = nullptr> String& removed_if(Fty f) &&;`
+- f: 
+- 戻り値: 
+
+#### `String& replace(value_type oldChar, value_type newChar);`
+#### `String& replace(const String& oldStr, const String& newStr);`
+- oldChar: 
+- newChar: 
+- oldStr: 
+- newStr:
+- 戻り値: 
+
+#### `String replaced(value_type oldChar, value_type newChar) &;`
+#### `String replaced(value_type oldChar, value_type newChar) &&;`
+#### `String replaced(const String& oldStr, const String& newStr);`
+- oldChar: 
+- newChar: 
+- oldStr: 
+- newStr: 
+- 戻り値: 
+
+#### `template <class Fty, std::enable_if_t<std::is_invocable_r_v<bool, Fty, char32>>* = nullptr> String& replace_if(Fty f, const value_type newChar);`
+- f: 
+- newChar: 
+- 戻り値: 
+
+#### `template <class Fty, std::enable_if_t<std::is_invocable_r_v<bool, Fty, char32>>* = nullptr> String replaced_if(Fty f, const value_type newChar) &&;`
+#### `template <class Fty, std::enable_if_t<std::is_invocable_r_v<bool, Fty, char32>>* = nullptr> String replaced_if(Fty f, const value_type newChar) &;`
+- f: 
+- newChar: 
+- 戻り値: 
+
+#### `String& reverse();`
+- 戻り値: 
+
+#### `String reversed() &;`
+#### `String reversed() &&;`
+- 戻り値: 
+
+#### `template <class Fty, std::enable_if_t<std::is_invocable_v<Fty, char32&>>* = nullptr> String& reverse_each(Fty f);`
+#### `template <class Fty, std::enable_if_t<std::is_invocable_v<Fty, char32>>* = nullptr> const String& reverse_each(Fty f);`
+- f: 
+- 戻り値: 
+
+#### `String& rotate(std::ptrdiff_t count = 1);`
+- count: 
+- 戻り値: 
+
+#### `String rotated(std::ptrdiff_t count = 1) &;`
+#### `String rotated(std::ptrdiff_t count = 1) &&;`
+- count: 
+- 戻り値: 
+
+#### `String& rpad(size_t length, value_type fillChar = U' ');`
+- length: 
+- fillChar: 
+- 戻り値: 
+
+#### `String rpadded(size_t length, value_type fillChar = U' ') &;`
+#### `String rpadded(size_t length, value_type fillChar = U' ') &&;`
+- length: 
+- fillChar: 
+- 戻り値: 
+
+#### `String& rtrim();`
+- 戻り値: 
+
+#### `String rtrimmed() &;`
+#### `String rtrimmed() &&;`
+- 戻り値: 
+
+#### `String& shuffle();`
+#### `template <class URBG, std::enable_if_t<!std::is_scalar_v<URBG> && std::is_invocable_r_v<size_t, URBG>>* = nullptr> String& shuffle(URBG&& rbg);`
+- rbg: 
+- 戻り値: 
+
+#### `String shuffled() &;`
+#### `String shuffled() &&;`
+#### `template <class URBG, std::enable_if_t<!std::is_scalar_v<URBG> && std::is_invocable_r_v<size_t, URBG>>* = nullptr> String shuffled(URBG&& rbg) &;`
+#### `template <class URBG, std::enable_if_t<!std::is_scalar_v<URBG> && std::is_invocable_r_v<size_t, URBG>>* = nullptr> String shuffled(URBG&& rbg) &&;`
+- rbg: 
+- 戻り値: 
+
+#### `Array<String, std::allocator<String>> split(value_type ch);`
+- ch: 
+- 戻り値: 
+
+#### `std::pair<String, String> split_at(size_t pos);`
+- pos: 
+- 戻り値: 
+
+#### `Array<String, std::allocator<String>> split_lines();`
+- 戻り値: 
+
+#### `bool starts_with(value_type ch);`
+#### `bool starts_with(StringView view);`
+- ch: 
+- view: 
+- 戻り値: 
+
+#### `String& swapcase();`
+- 戻り値: 
+
+#### `String swapcased() &;`
+#### `String swapcased() &&;`
+- 戻り値: 
+
+#### `String& trim();`
+- 戻り値: 
+
+#### `String trimmed() &;`
+#### `String trimmed() &&;`
+- 戻り値: 
+
+#### `String& uppercase();`
+- 戻り値:  
+
+#### `String uppercased() &;`
+#### `String uppercased() &&;`
+- 戻り値: 
+
+#### `std::string toUTF8();`
+- 戻り値: 
+
+#### `std::u16string toUTF16();`
+- 戻り値: 
+
+#### `const std::u32string& toUTF32;`
+- 戻り値: 
+
+#### `std::wstring toWstr();`
+- 戻り値: 
+
+#### `String& rsort();`
+- 戻り値: 
+
+#### `String rsorted() &;`
+#### `String rsorted() &&;`
+- 戻り値: 
+
+#### `String& sort();`
+- 戻り値: 
+
+#### `template <class Fty, std::enable_if_t<std::is_invocable_r_v<bool, Fty, char32, char32>>* = nullptr> String& sort_by(Fty f);`
+- f: 
+- 戻り値: 
+
+#### `String sorted() &;`
+#### `String sorted() &&;`
+- 戻り値: 
+
+#### `template <class Fty, std::enable_if_t<std::is_invocable_r_v<bool, Fty, char32, char32>>* = nullptr> String sorted_by(Fty f) &;`
+#### `template <class Fty, std::enable_if_t<std::is_invocable_r_v<bool, Fty, char32, char32>>* = nullptr> String sorted_by(Fty f) &&;`
+- f: 
+- 戻り値: 
+
+#### `String take(size_t n);`
+- n: 
+- 戻り値: 
+
+#### `template <class Fty, std::enable_if_t<std::is_invocable_r_v<bool, Fty, char32>>* = nullptr> String take_while(Fty f);`
+- f: 
+- 戻り値: 
+
+#### `String& unique();`
+- 戻り値: 
+
+#### `String uniqued() &;`
+#### `String uniqued() &&;`
+- 戻り値: 
+
+#### `String& unique_sorted();`
+- 戻り値: 
+
+#### `String unique_sorted() &;`
+#### `String unique_sorted() &&;`
+- 戻り値: 
+
+#### `String values_at(std::initializer_list<size_t> indices);`
+- indices: 
+- 戻り値: 
+
+#### `String& xml_escape();`
+- 戻り値: 
+
+#### `String xml_escaped();`
+- 戻り値: 
+
+### 非メンバ関数
+
+#### `template <class StringViewIsh, class = String::IsStringViewIsh<StringViewIsh>> String operator +(const String::value_type lhs, const StringViewIsh& rhs);`
+#### `String operator +(const String::value_type lhs, const String& rhs);`
+#### `String operator +(const String::value_type lhs, String&& rhs);`
+#### `template <class StringViewIsh, class = String::IsStringViewIsh<StringViewIsh>> String operator +(const String::value_type* lhs const StringViewIsh& rhs);`
+#### `String operator +(const String::value_type* lhs, const String& rhs);`
+#### `String operator +(cosnt String::value_type* lhs, String&& rhs);`
+#### `template <class StringViewIsh, class = String::IsStringViewIsh<StringViewIsh>> String operator +(cosnt StringViewIsh& lhs, cosnt String::value_type rhs);`
+#### `template <class StringViewIsh, class = String::IsStringViewIsh<StringViewIsh>> String operator +(cosnt StringViewIsh& lhs, cosnt String::value_type* rhs);`
+#### `template <class StringViewIshT, class StringViewIshU, class = String::IsStringViewIsh<StringViewIshT>, class = String::IsStringViewIsh<StringViewIshU>> String operator +(cosnt StringViewIshT& lhs, const StringViewIshU& rhs);`
+#### `template <class StringViewIsh, class = String::IsStringViewIsh<StringViewIsh>> String operator +(const StringViewIsh& lhs, cosnt String& rhs);`
+#### `template <class StringViewIsh, class = String::IsStringViewIsh<StringViewIsh>> String operator +(const StringViewIsh& lhs, String&& rhs);`
+#### `String operator +(cosnt String& lhs, const String::value_type rhs);`
+#### `String operator +(const String& lhs, const String::value_type* rhs);`
+#### `template <class StringViewIsh, class = String::IsStringViewIsh<StringViewIsh>> String operator +(const String& lhs, const StringViewIsh& rhs);`
+#### `String operator +(const String& lhs, const String& rhs);`
+#### `String operator +(const String& lhs, String&& rhs);`
+#### `String operator +(String&& lhs, cosnt String::value_type rhs);`
+#### `String operator +(String&& lhs, const String::value_type* rhs);`
+#### `template <class StringViewIsh, class = String::IsStringViewIsh<StringViewIsh>> String operator +(String&& lhs, const StringViewIsh& rhs);`
+#### `String operator +(String&& lhs, const String& rhs);`
+#### `String operator +(String&& lhs, String&& rhs);`
+#### `bool operator ==(const String::value_type* lhs, const String& rhs);`
+#### `bool operator ==(const String& lhs, const String::value_type* rhs);`
+#### `bool operator !=(const String::value_type* lhs, const String& rhs);`
+#### `bool operator !=(const String& lhs, const String::value_type* rhs);`
+#### `bool operator <(const String::value_type* lhs, const String& rhs);`
+#### `bool operator <(const String& lhs, const String::value_type* rhs);`
+#### `bool operator >(cosnt String::value_type* lhs, cosnt String& rhs);`
+#### `bool operator >(const String& lhs, cosnt String::value_type* rhs);`
+#### `bool operator <=(const String::value_type* lhs, cosnt String& rhs);`
+#### `bool operator <=(const String& lhs, cosnt String::value_type* rhs);`
+#### `bool operator >=(const String::value_type* lhs, cosnt String& rhs);`
+#### `bool operator >=(const String& lhs, const String::value_type* rhs);`
+- lhs: 
+- rhs: 
+- 戻り値: 
+
+#### `String operator ""_s(const char32_t* text, const size_t length);`
+- text: 
+- length: 
+- 戻り値: 
+
+#### `std::ostream& operator <<(std::ostream& output, const String& value);`
+#### `std::wostream& operator <<(std::wostream& output, cosnt String& value);`
+- output: 
+- value: 
+- 戻り値: 
+
+#### `std::istream& operator >>(std::istream& input, String& value);`
+#### `std::wistream& operator >>(std::wistream& input, String& value);`
+- input: 
+- value: 
+- 戻り値: 
+
+#### `size_t std::operator()(const s3d::String& value);`
+- value: 
+- 戻り値: 
+
+#### `void std::swap(s3d::String& a, s3d::String& b);`
+- a: 
+- b: 
 
