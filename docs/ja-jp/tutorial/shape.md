@@ -488,9 +488,9 @@ void Main()
 |----------------------|----------|---------------------------------------------------------------------------------------------|
 | Shape2D::Cross       | ✖ マーク    | `double r, double width, const Vec2& center = Vec2(0, 0), double angle = 0.0`                 |
 | Shape2D::Plus        | ＋マーク     | `double r, double width, const Vec2& center = Vec2(0, 0), double angle = 0.0`                 |
-| Shape2D::Pentagon    | 正五角形     | `uint32 n, double r, const Vec2& center = Vec2(0, 0), double angle = 0.0`                     |
+| Shape2D::Pentagon    | 正五角形     | `double r, const Vec2& center = Vec2(0, 0), double angle = 0.0`                     |
 | Shape2D::Hexagon     | 正六角形     | `double r, const Vec2& center = Vec2(0, 0), double angle = 0.0`                               |
-| Shape2D::Ngon        | 正 N 角形   | `double r, const Vec2& center = Vec2(0, 0), double angle = 0.0`                               |
+| Shape2D::Ngon        | 正 N 角形   | `uint32 n, double r, const Vec2& center = Vec2(0, 0), double angle = 0.0`                               |
 | Shape2D::Star        | 五芒星      | `double r, const Vec2& center = Vec2(0, 0), double angle = 0.0`                               |
 | Shape2D::Nstar       | 星        | `uint32 n, double rOuter, double rInner, const Vec2& center = Vec2(0, 0), double angle = 0.0` |
 | Shape2D::Arrow       | 矢印       | `const Vec2& from, const Vec2& to, double width, const Vec2& headSize`                        |
