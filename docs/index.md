@@ -62,15 +62,15 @@ void Main()
 ### Linux
 Linux users must build OpenSiv3D from source. See [Linux/README](https://github.com/Siv3D/OpenSiv3D/blob/master/Linux/README.md) for further information.
 
-## Installing OpenSiv3D SDK v0.4.2
+## Installing OpenSiv3D SDK v0.4.3
 ### Windows
-1. Download **[OpenSiv3D Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D(0.4.2)Installer.exe)** and run the installer.
+1. Download **[OpenSiv3D Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D(0.4.3)Installer.exe)** and run the installer.
 
 !!! note
     Use the Control Panel to uninstall OpenSiv3D SDK.
 
 ### macOS
-1. Download **[OpenSiv3D Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.4.2_macOS.zip)** and extract its contents.
+1. Download **[OpenSiv3D Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.4.3_macOS.zip)** and extract its contents.
 2. (for macOS Catalina users) Move the SDK folder into `User/Applications` folder to prevent a file access permissions dialog from being displayed when a Xcode project is executed. Some folders such as `User/Desktop` and `User/Downloads` require extra access permission.
 
 ## Building an OpenSiv3D Application

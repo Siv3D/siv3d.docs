@@ -62,15 +62,15 @@ void Main()
 ### Linux
 - OpenSiv3D Linux 版は、ソースコードからビルドする必要があります。依存しているライブラリやビルド方法については [Linux/README](https://github.com/Siv3D/OpenSiv3D/blob/master/Linux/README_JP.md) を参照してください
 
-## OpenSiv3D SDK v0.4.2 のインストール
+## OpenSiv3D SDK v0.4.3 のインストール
 ### Windows
-1. **[OpenSiv3D Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D(0.4.2)Installer.exe)** をダウンロードして実行します。
+1. **[OpenSiv3D Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D(0.4.3)Installer.exe)** をダウンロードして実行します。
 
 !!! note
     OpenSiv3D SDK を削除するには、コントロールパネルからアンインストールします。
 
 ### macOS
-1. **[OpenSiv3D Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.4.2_macOS.zip)** をダウンロードしてファイルを展開します。
+1. **[OpenSiv3D Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.4.3_macOS.zip)** をダウンロードしてファイルを展開します。
 2. （macOS Catalina の場合）プログラム実行時に、ファイルアクセス許可のダイアログが出現するのを防ぐため、`ユーザ/デスクトップ` や `ユーザ/ダウンロード` フォルダではなく、`ユーザ/アプリケーション` フォルダへ移動させます。
 
 ## OpenSiv3D アプリのビルド
@@ -81,7 +81,7 @@ void Main()
 1. Visual Studio 2019 のスタート画面で **新しいプロジェクトの作成** をクリックします。
 2. プロジェクト テンプレートのリストから **OpenSiv3D** を選択し、**次へ** を押します。([⚠️表示されない場合はこちら](https://siv3d.github.io/ja-jp/articles/troubleshooting/))
 3. プロジェクト名と保存場所を入力し（任意）、**作成** を押します。
-4. サンプルプログラムが自動で用意されます（ソリューション エクスプローラーから `Source Files/Main.cpp` を開きます）
+4. サンプルプログラムが自動で用意されます
 5. **ビルド** メニューからプロジェクトをビルドします。
 6. **デバッグ** メニューの **デバッグの開始** でビルドしたプログラムを実行します。
 

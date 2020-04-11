@@ -2270,7 +2270,7 @@ UTF-16 (ビッグエンディアン) です。
 
 
 
-#### `bool isOpened() const;`
+#### `bool isOpen() const;`
 - 戻り値: 
 
 
@@ -2976,7 +2976,7 @@ SDF 用のテクスチャです。
 
 テキストファイルをクローズします。
 
-#### `bool isOpened() const;`
+#### `bool isOpen() const;`
 - 戻り値: ファイルがオープンされている場合 true, それ以外の場合は false
 
 テキストファイルがオープンされているかを返します。
