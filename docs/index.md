@@ -52,7 +52,7 @@ void Main()
 ## Requirements
 ### Windows
 - Windows 7 SP1 / 8.1 / 10 (64-bit)
-- **Visual Studio 2019 version 16.4**
+- **Visual Studio 2019 version 16.4-**
     - Install **Desktop development with C++** from the Visual Studio Installer
 
 ### macOS
