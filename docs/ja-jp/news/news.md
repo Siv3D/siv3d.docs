@@ -1,5 +1,8 @@
 description: Siv3D Web サイトの更新情報
 
+##### 2020-04-11
+- [OpenSiv3D v0.4.3](https://github.com/Siv3D/OpenSiv3D) をリリース | [新機能紹介](https://siv3d.github.io/ja-jp/news/v043/)
+
 ##### 2020-04-04
 - 最新の Xcode 11.4 で OpenSiv3D プロジェクトをビルドすると libturbojpeg.a のリンクに関連するエラーが出る問題を修正しました。現在配布している macOS 版 v0.4.2 は修正済みのものです。古いプロジェクトの libturbojpeg.a を差し替えることでも対応できます
 
