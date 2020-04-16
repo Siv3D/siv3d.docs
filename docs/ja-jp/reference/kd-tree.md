@@ -21,7 +21,7 @@ struct Unit
 };
 
 // Unit を KDTree で扱えるようにするためのアダプタ
-struct UnitAdpater : KDTreeAdapter<Array<Unit>, Vec2, double, 2>
+struct UnitAdapter : KDTreeAdapter<Array<Unit>, Vec2, double, 2>
 {
 	static const element_type* GetPointer(const point_type& point)
 	{
@@ -52,7 +52,7 @@ void Main()
 	}
 
 	// kd-tree を構築
-	KDTree<UnitAdpater> kdTree(units);
+	KDTree<UnitAdapter> kdTree(units);
 
 	// 探索の種類（ラジオボタンのインデックス）
 	size_t searchTypeIndex = 0;
