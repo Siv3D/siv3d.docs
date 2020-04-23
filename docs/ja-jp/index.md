@@ -56,8 +56,8 @@ void Main()
     - Visual Studio Installer で **C++ によるデスクトップ開発** をインストールしてください
 
 ### macOS
-- macOS High Sierra v10.13 以降
-- Xcode 10.1 以降
+- macOS Mojave v10.14 以降
+- Xcode 11.3 以降
 
 ### Linux
 - OpenSiv3D Linux 版は、ソースコードからビルドする必要があります。依存しているライブラリやビルド方法については [Linux/README](https://github.com/Siv3D/OpenSiv3D/blob/master/Linux/README_JP.md) を参照してください
