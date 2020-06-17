@@ -98,4 +98,4 @@ Linux users must build OpenSiv3D from source. See [Linux/README](https://github.
 - (anonymous 😊)
 - (anonymous 🐝)
 - (anonymous 🐠)
-- YASAI03
+- 野菜ジュース
