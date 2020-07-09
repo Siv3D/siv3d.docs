@@ -1,5 +1,8 @@
 description: Siv3D Web サイトの更新情報
 
+##### 2020-07-09
+- Web サイトデザインを更新
+
 ##### 2020-04-11
 - [OpenSiv3D v0.4.3](https://github.com/Siv3D/OpenSiv3D) をリリース | [新機能紹介](https://siv3d.github.io/ja-jp/news/v043/)
 
