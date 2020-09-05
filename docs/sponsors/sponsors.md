@@ -9,7 +9,6 @@
 - [sknjpn](https://twitter.com/sknjpn)
 - アゲハマ
 - chobby75
-- papparappara
 - (anonymous 😀)
 - minachun
 - Fuyutsubaki
@@ -17,3 +16,4 @@
 - (anonymous 🐝)
 - (anonymous 🐠)
 - 野菜ジュース
+- MawkishWaffle

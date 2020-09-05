@@ -95,7 +95,6 @@ void Main()
 - [sknjpn](https://twitter.com/sknjpn)
 - アゲハマ
 - chobby75
-- papparappara
 - (匿名 😀)
 - minachun
 - Fuyutsubaki
@@ -103,3 +102,4 @@ void Main()
 - (匿名 🐝)
 - (匿名 🐠)
 - 野菜ジュース
+- MawkishWaffle

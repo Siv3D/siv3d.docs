@@ -54,7 +54,7 @@ nav:
       - Game: sample/game.md
       - Application: sample/app.md
       - Visual effect: sample/visual.md
-      - Geme template: sample/game-template.md
+      - Game template: sample/game-template.md
     - Tutorial:
       - 1. First steps: tutorial/basic.md
       - 2. Drawing shapes: tutorial/shape.md
