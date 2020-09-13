@@ -17,3 +17,4 @@
 - (anonymous 🐠)
 - 野菜ジュース
 - MawkishWaffle
+- 揺らぐ藻
