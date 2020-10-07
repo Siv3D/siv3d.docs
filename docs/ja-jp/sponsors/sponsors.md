@@ -8,6 +8,7 @@
     - 新機能の早期アクセス
 
 ## スポンサーリスト
+- [TOMOAKI12345](https://github.com/TOMOAKI12345)
 - [sknjpn](https://twitter.com/sknjpn)
 - アゲハマ
 - chobby75

@@ -92,6 +92,7 @@ void Main()
 
 
 ## 💗 [スポンサー](https://github.com/sponsors/Reputeless)
+- [TOMOAKI12345](https://github.com/TOMOAKI12345)
 - [sknjpn](https://twitter.com/sknjpn)
 - アゲハマ
 - chobby75

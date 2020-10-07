@@ -88,6 +88,7 @@ Linux users must build OpenSiv3D from source. See [Linux/README](https://github.
 3. (for macOS Catalina users) A file access permissions dialog can be inactivated by placing the project folder under `User/Applications` folder.
 
 ## 💗 [Sponsors](https://github.com/sponsors/Reputeless)
+- [TOMOAKI12345](https://github.com/TOMOAKI12345)
 - [sknjpn](https://twitter.com/sknjpn)
 - アゲハマ
 - chobby75

@@ -6,6 +6,7 @@
 
 
 ## Sponsors
+- [TOMOAKI12345](https://github.com/TOMOAKI12345)
 - [sknjpn](https://twitter.com/sknjpn)
 - アゲハマ
 - chobby75
