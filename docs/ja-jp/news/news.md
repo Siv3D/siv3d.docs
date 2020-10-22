@@ -1,5 +1,8 @@
 description: Siv3D Web サイトの更新情報
 
+##### 2020-09-27
+- [Zenn](https://zenn.dev/topics/siv3d) に OpenSiv3D のサンプルを投稿しています
+
 ##### 2020-07-09
 - Web サイトデザインを更新
 
