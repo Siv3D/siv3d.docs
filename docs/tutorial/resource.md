@@ -9,7 +9,7 @@ Siv3D では、プログラムで使う画像や音声、テキストなどの�
 アプリケーションにファイルを埋め込む手順は以下のとおりです。
 
 ### Windows の場合
-`App/Resource.rc` に、埋め込みファイルのパスを記述します。`App/Resource.rc` をメモ帳など（Visual Studio は不可）の外部のテキストエディタで開き、`Resource(example/windmill.png)` のように、埋め込みたいファイルのパスを、埋め込むファイルごとに追記します。デフォルトでは Siv3D の内部処理に必要な `engine/` フォルダの各種ファイルが記述されています。プロジェクトを再ビルドすると .exe にファイルが埋め込まれます。
+`App/Resource.rc` に、埋め込みファイルのパスを記述します。`App/Resource.rc` をソリューション エクスプローラー上で右クリックして「コードの表示」で開き、`Resource(example/windmill.png)` のように、埋め込みたいファイルのパスを、埋め込むファイルごとに追記します。デフォルトでは Siv3D の内部処理に必要な `engine/` フォルダの各種ファイルが記述されています。プロジェクトを再ビルドすると .exe にファイルが埋め込まれます。
 
 ![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/20/mac-0.png?raw=true)
 
