@@ -228,7 +228,7 @@ void Main()
 
 ![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/5/5-0.png?raw=true)
 
-```
+```C++
 # include <Siv3D.hpp>
 
 void Main()
