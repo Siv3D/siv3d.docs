@@ -50,34 +50,34 @@ void Main()
 ```
 
 ## 必要な環境
-### Windows
+### Windows 版
 - Windows 7 SP1 / 8.1 / 10 (64-bit)
 - [Visual Studio 2019 version 16.4-](https://visualstudio.microsoft.com/ja/downloads/)
     - Visual Studio Installer で **C++ によるデスクトップ開発** をインストールしてください
 
-### macOS
+### macOS 版
 - macOS Mojave v10.14 以降
 - Xcode 11.3 以降
 
-### Linux
+### Linux 版
 - OpenSiv3D Linux 版は、ソースコードからビルドする必要があります。依存しているライブラリやビルド方法については [Linux/README](https://github.com/Siv3D/OpenSiv3D/blob/master/Linux/README_JP.md) を参照してください
 
-### Web (experimental)
-実験的な Web ブラウザ版は [OpenSiv3D for Web](https://siv3d.kamenokosoft.com/ja/index) プロジェクトページ（外部サイト）を参照してください
+### Web 版 (experimental)
+- 実験的な Web ブラウザ版は [OpenSiv3D for Web](https://siv3d.kamenokosoft.com/ja/index) プロジェクトページ（外部サイト）を参照してください
 
 ## OpenSiv3D SDK v0.4.3 のインストール
-### Windows
+### Windows 版
 1. **[OpenSiv3D Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D(0.4.3)Installer.exe)** をダウンロードして実行します。
 
 !!! note
     OpenSiv3D SDK を削除するには、コントロールパネルからアンインストールします。
 
-### macOS
+### macOS 版
 1. **[OpenSiv3D Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.4.3_macOS.zip)** をダウンロードしてファイルを展開します。
 2. （macOS Catalina の場合）プログラム実行時に、ファイルアクセス許可のダイアログが出現するのを防ぐため、`ユーザ/デスクトップ` や `ユーザ/ダウンロード` フォルダではなく、`ユーザ/アプリケーション` フォルダへ移動させます。
 
 ## OpenSiv3D アプリのビルド
-### Windows
+### Windows 版
 
 <video src="https://github.com/Siv3D/siv3d.docs.images/blob/master/home/windows-project-2.mp4?raw=true" controls muted></video>
 
@@ -88,7 +88,7 @@ void Main()
 5. **ビルド** メニューからプロジェクトをビルドします。
 6. **デバッグ** メニューの **デバッグの開始** でビルドしたプログラムを実行します。
 
-### macOS
+### macOS 版
 1. プロジェクトファイル `examples/empty/empty.xcodeproj` を Xcode で開きます。
 2. **実行ボタン ▶️** を押すと、プログラムをビルドして実行します。
 3. （macOS Catalina の場合）ファイルアクセス許可のダイアログが出現する場合、プロジェクトフォルダ全体を、`ユーザ/アプリケーション` フォルダ以下へ移動させることで解決できます。
