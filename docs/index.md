@@ -62,6 +62,9 @@ void Main()
 ### Linux
 Linux users must build OpenSiv3D from source. See [Linux/README](https://github.com/Siv3D/OpenSiv3D/blob/master/Linux/README.md) for further information.
 
+### Web (experimental)
+Visit [OpenSiv3D for Web](https://siv3d.kamenokosoft.com/) project page.
+
 ## Installing OpenSiv3D SDK v0.4.3
 ### Windows
 1. Download **[OpenSiv3D Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D(0.4.3)Installer.exe)** and run the installer.
