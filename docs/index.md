@@ -103,7 +103,7 @@ Visit [OpenSiv3D for Web](https://siv3d.kamenokosoft.com/) project page.
 - (anonymous 🐠)
 - 野菜ジュース
 - MawkishWaffle
-- 揺らぐ藻
 - jacking75
 - Chris Ohk
 - IZUNA
+- qppon

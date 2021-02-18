@@ -18,7 +18,7 @@
 - (anonymous 🐠)
 - 野菜ジュース
 - MawkishWaffle
-- 揺らぐ藻
 - jacking75
 - Chris Ohk
 - IZUNA
+- qppon
