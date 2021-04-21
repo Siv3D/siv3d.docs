@@ -336,8 +336,8 @@ void Main()
 ```
 
 
-### 要素数を指定した初期化
-`Array` のコンストラクタ引数に、グリッドのサイズと初期化する値を渡すことができます。
+### サイズを指定した初期化
+`Grid` のコンストラクタ引数に、グリッドのサイズと初期化する値を渡すことができます。
 
 ![](https://github.com/Siv3D/siv3d.docs.images/blob/master/tutorial/6/2-1.png?raw=true)
 
