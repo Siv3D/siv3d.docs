@@ -91,19 +91,9 @@ Visit [OpenSiv3D for Web](https://siv3d.kamenokosoft.com/) project page.
 3. (for macOS Catalina users) A file access permissions dialog can be inactivated by placing the project folder under `User/Applications` folder.
 
 ## 💗 [Sponsors](https://github.com/sponsors/Reputeless)
-- [TOMOAKI12345](https://github.com/TOMOAKI12345)
-- [sknjpn](https://twitter.com/sknjpn)
-- アゲハマ
-- chobby75
-- (anonymous 😀)
-- minachun
-- Fuyutsubaki
-- (anonymous 😊)
-- (anonymous 🐝)
-- (anonymous 🐠)
-- 野菜ジュース
-- MawkishWaffle
-- jacking75
-- Chris Ohk
-- IZUNA
-- qppon
+
+|Sponsor tier| |
+|--|--|
+|🌳 Gold Sponsor |[TOMOAKI12345](https://github.com/TOMOAKI12345)|
+|🌴 Silver Sponsor |[sknjpn](https://twitter.com/sknjpn)|
+|🌷 Bronze Sponsor |アゲハマ, chobby75, 匿名 😀, minachun, Fuyutsubaki, 匿名 😊, 匿名 🐝, 匿名 🐠, 野菜ジュース, MawkishWaffle, jacking75, Chris Ohk, IZUNA, qppon, k-sunako, ysaito|
