@@ -269,7 +269,7 @@ void Main()
 | CursorStyle                  | カーソルの形状   |
 |------------------------------|-----------|
 | CursorStyle::Arrow           | 矢印（通常）    |
-| CursorStyle::Ibeam           | I マーク     |
+| CursorStyle::IBeam           | I マーク     |
 | CursorStyle::Cross           | 十字のマーク    |
 | CursorStyle::Hand            | 手のアイコン    |
 | CursorStyle::NotAllowed      | 禁止のマーク    |
