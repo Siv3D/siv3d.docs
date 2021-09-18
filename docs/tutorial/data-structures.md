@@ -1,4 +1,7 @@
 
+!!! warning "This is the documentation for an old version"
+	This is the documentation for an old version of Siv3D (v0.4.3). See [Siv3D Reference v0.6.0](https://zenn.dev/reputeless/books/siv3d-documentation-en) for the latest version.
+
 # 6. Data structures
 この章では、Siv3D でゲームやアプリケーションを実装するうえで重要な、動的配列や二次元配列、文字列、ハッシュテーブルなど基本的なデータ構造のクラスを学びます。
 

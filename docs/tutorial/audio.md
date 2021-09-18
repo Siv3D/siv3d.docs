@@ -1,4 +1,7 @@
 
+!!! warning "This is the documentation for an old version"
+	This is the documentation for an old version of Siv3D (v0.4.3). See [Siv3D Reference v0.6.0](https://zenn.dev/reputeless/books/siv3d-documentation-en) for the latest version.
+
 # 13. Audio
 
 この章では、効果音や音楽の再生を制御する方法を学びます。

@@ -1,4 +1,7 @@
 
+!!! warning "This is the documentation for an old version"
+	This is the documentation for an old version of Siv3D (v0.4.3). See [Siv3D Reference v0.6.0](https://zenn.dev/reputeless/books/siv3d-documentation-en) for the latest version.
+
 # 22. Scene management
 
 シーン管理（または **シーン遷移**）を使うと、複雑なアプリ（とくにゲーム）を効率よく開発できます。シーン管理では、ゲームのタイトル、ゲームプレイ、リザルトなど、個々の場面（シーン）を個別のクラスに実装し、それらを行き来することで全体の流れを設計します。Siv3D の `SceneManager` 機能を使うと、ある場面のクラスから別の場面のクラスにデータを引き継いだり、フェードイン・フェードアウトで滑らかに画面を切り替えたりする処理が自動的に提供されます。

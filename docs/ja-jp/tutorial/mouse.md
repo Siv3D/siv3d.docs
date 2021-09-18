@@ -1,5 +1,8 @@
 description: OpenSiv3D のチュートリアル
 
+!!! warning "このページよりも新しいドキュメントがあります"
+	このドキュメントは古い OpenSiv3D v0.4.3 向けです。2021 年9 月 18 日に最新の OpenSiv3D v0.6.0 がリリースされました。最新のドキュメントは [Siv3D リファレンス v0.6.0](https://zenn.dev/reputeless/books/siv3d-documentation) です。
+
 # 12. マウス入力
 
 この章では、マウスの入力を処理する方法を学びます。

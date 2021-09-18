@@ -1,4 +1,7 @@
 
+!!! warning "This is the documentation for an old version"
+	This is the documentation for an old version of Siv3D (v0.4.3). See [Siv3D Reference v0.6.0](https://zenn.dev/reputeless/books/siv3d-documentation-en) for the latest version.
+
 # 7. Formatting ant parsing
 
 この章では、数値データを文字列に変換する方法と、文字列を数値データに変換する方法を学びます。

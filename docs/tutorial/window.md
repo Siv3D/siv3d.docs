@@ -1,4 +1,7 @@
 
+!!! warning "This is the documentation for an old version"
+	This is the documentation for an old version of Siv3D (v0.4.3). See [Siv3D Reference v0.6.0](https://zenn.dev/reputeless/books/siv3d-documentation-en) for the latest version.
+
 # 10. Scene and window
 
 Siv3D では、図形やテクスチャ、テキストなどを `.draw()` すると、「シーン」と呼ばれる仮想の画面に描画されます。そして、シーンの画像がウィンドウに転送されることで、ユーザは描画された結果を目にすることができます。

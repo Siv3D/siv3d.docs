@@ -1,96 +1,67 @@
 
 # Siv3D: C++ Library for Creative Coding
 
-![](https://github.com/Siv3D/siv3d.docs.images/blob/master/home/demo.gif?raw=true)
+**Siv3D** (シブスリーディー) は、2D / 3D ゲーム、メディアアート、ビジュアライザ、シミュレータなど、**可視化**や**インタラクション**に関わる C++ プログラムを、**非常に短い、楽しく簡単なコード**で記述できる**モダンなフレームワーク**です。MIT ライセンスで配布され、2021 年 8 月時点における直近 1 年間の SDK ダウンロード数は約 1 万回です。動作プラットフォームは Windows / macOS / Linux / Web です。
 
-```C++
+## 機能の概要
+Siv3D を導入することで、次のような操作を組み合わせたアプリケーションを非常に短いコードで記述できます。
+
+- 図形や画像、テキスト、動画、3Dモデルなど、グラフィックスの描画 (Direct3D 11 / OpenGL 4.1 / WebGL 2.0)
+- マウスやキーボード、Webカメラ、マイク、ゲームパッドなど、ヒューマンインタフェースデバイス (HID) の使用
+- ウィンドウ処理、ファイルシステム、ネットワーク
+- 画像処理や音声処理
+- 物理演算や経路探索、幾何などの計算
+- データ構造やアルゴリズム
+
+Siv3D は標準的な C++ で書かれていますが、ユーザはほとんどのプログラムを、Siv3D が提供する便利な型や関数を使って記述します。そのため、描画やインタラクションのための DSL (domain-specific language) としての性格が強いです。例えると Java にとっての [Processing](https://processing.org/) です。
+
+```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// Set background color to sky blue
-	Scene::SetBackground(ColorF(0.8, 0.9, 1.0));
-
-	// Create a new font
-	const Font font(60);
-
-	// Create a new texture that contains a cat emoji
-	const Texture cat(Emoji(U"🐈"));
-
-	// Coordinates of the cat
-	Vec2 catPos(640, 450);
+	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	const Texture food{ U"🍿"_emoji };
+	const Texture chick{ U"🐥"_emoji };
 
 	while (System::Update())
 	{
-		// Put a message in the middle of the screen
-		font(U"Hello, Siv3D!🐣").drawAt(Scene::Center(), Palette::Black);
-
-		// Display the texture with animated size
-		cat.resized(100 + Periodic::Sine0_1(1s) * 20).drawAt(catPos);
-
-		// Draw a translucent red circle that follows the mouse cursor
-		Circle(Cursor::Pos(), 40).draw(ColorF(1, 0, 0, 0.5));
-
-		// When [A] key is down
-		if (KeyA.down())
-		{
-			// Print `Hello!`
-			Print << U"Hello!";
-		}
-
-		// When [Move the cat] button is pushed
-		if (SimpleGUI::Button(U"Move the cat", Vec2(600, 20)))
-		{
-			// Move the cat's coordinates to a random position in the screen
-			catPos = RandomVec2(Scene::Rect());
-		}
+		Circle{ Scene::Center(), 100 }.draw();
+		food.drawAt(Scene::Center());
+		chick.drawAt(Cursor::Pos());
 	}
 }
 ```
 
-# Getting started
-## Requirements
-### Windows
-- Windows 7 SP1 / 8.1 / 10 (64-bit)
-- **Visual Studio 2019 version 16.4-**
-    - Install **Desktop development with C++** from the Visual Studio Installer
+![](https://github.com/Reputeless/Zenn.Public/blob/main/images/doc_v6/demo/chick.gif?raw=true)
 
-### macOS
-- macOS Mojave v10.14 or newer
-- Xcode 11.3 or newer
+[Unity](https://unity.com/ja) のようなゲームエンジンとの一番の違いは、Siv3D はビジュアルツールを持たず、すべてコードで完結するということです（Siv3D で独自のビジュアルツールを組むことはできます）。
 
-### Linux
-Linux users must build OpenSiv3D from source. See [Linux/README](https://github.com/Siv3D/OpenSiv3D/blob/master/Linux/README.md) for further information.
+## Siv3D のここが最高
 
-### Web (experimental)
-Visit [OpenSiv3D for Web](https://siv3d.kamenokosoft.com/) project page.
+### ⚡ 非常に短いコード
+Siv3D のコードは最短で 2 行です。様々なインタラクションを実現する便利な機能が揃っているため、アプリケーションのほとんどは 1 つの .cpp ファイルだけで完成します。思いついたアイデアや成果物のソースコードを、[GitHub Gist](https://gist.github.com/) などのコード共有サイトを使って手軽に保存・シェアできるため、世界中の Siv3D ユーザと技術を学び合うことができます。
 
-## Installing OpenSiv3D SDK v0.4.3
-### Windows
-1. Download **[OpenSiv3D Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D(0.4.3)Installer.exe)** and run the installer.
+### 🛸 最新の C++ を学べる
+Siv3D のサンプルコードとライブラリ API は、すべて最新の C++20 を活用して書かれています。Siv3D を使っているだけで、モダンな C++ の書き方やテクニックを自然と身につけることができます。Siv3D の作者は、日本最大のゲーム開発カンファレンス CEDEC で[最新 C++ の活用に関する講演](https://speakerdeck.com/cpp/cedec2020)をしたり、[C++ の情報ポータル](https://cppmap.github.io/)を作成したりするなど、最先端の C++ の普及に努めています。
 
-!!! note
-    Use the Control Panel to uninstall OpenSiv3D SDK.
+### 🏬 豊富な機能を Siv3D API に統合
+画像処理、音楽再生、物理演算、テキストファイル読み込み、シリアル通信・・・。たくさんの処理のために、ライブラリを探し回り、ドキュメントを読んで使い方を調べ、API の要求に従ってデータ形式を変換するコードをひたすら書く必要はもうありません。Siv3D は 2,200 ファイルのソースコードと 90 のサードパーティ・ソフトウェアが実現する、可視化やインタラクションの様々な機能を、一貫した API で提供します。Siv3D のルールを覚えるだけで、ありとあらゆる機能が思いのままです。
 
-### macOS
-1. Download **[OpenSiv3D Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.4.3_macOS.zip)** and extract its contents.
-2. (for macOS Catalina users) Move the SDK folder into `User/Applications` folder to prevent a file access permissions dialog from being displayed when a Xcode project is executed. Some folders such as `User/Desktop` and `User/Downloads` require extra access permission.
+### ⛰️ オープンソース
+Siv3D は MIT ライセンスのもと [GitHub 上でホスティング](https://github.com/Siv3D/OpenSiv3D)されています。内部のコードが気になったらいつでも調べることができ、改造することもできます。サードパーティ・ライブラリを含め商用利用を妨げる条件はありません。Siv3D で開発した Windows, macOS, Linux, Web 向けのゲームやアプリケーションを販売して得た収益は 100% 開発者が獲得できます。Siv3D のビジョンに共感し、より優れた開発体験を心待ちにしている方は [Siv3D の個人スポンサー](https://github.com/sponsors/Reputeless)として Siv3D プロジェクトを応援してください。
 
-## Building an OpenSiv3D Application
-### Windows
-1. Lanuch Visual Studio 2019 and open a **New Project Dialog** by clicking **Create a new project**.
-2. Select **OpenSiv3D(X.X.X)** project and then click **Next**.
-3. Type a name for the project.
-4. Click **OK** to create the project.
-5. On the **Build** menu, click **Build Solution**.
-6. On the **Debug** menu, click **Start Debugging**.
+### 🐦 軽量・迅速
+Windows 版の OpenSiv3D SDK のインストーラのサイズは 120 MB 未満です。秒でダウンロードが終わり、インストールはわずかなクリックで自動的に終わります。Visual Studio を起動すると、メニューには Siv3D プロジェクトを作成するアイテムが追加済みです。あっという間に、楽しい C++ プログラミングの世界への入り口があなたのパソコンにセットアップされます。アンインストールしたいときは、通常のアプリケーションと同様に OS の設定からワンクリックです。
 
-### macOS
-1. Open the project file `examples/empty/empty.xcodeproj` in Xcode.
-2. Click **Run button ▶️** to build and run the application.
-3. (for macOS Catalina users) A file access permissions dialog can be inactivated by placing the project folder under `User/Applications` folder.
+### 💗 親切なユーザコミュニティ
+Siv3D を使って困ったことがあったら、[Siv3D ユーザコミュニティ Slack](https://zenn.dev/reputeless/books/siv3d-documentation/viewer/community) で質問しましょう。匿名で質問したい場合は BBS も利用できます。毎月オンラインで開催される Siv3D 実装会では、Siv3D の熱心なユーザ達や Siv3D の作者と、Discord 上で雑談や技術的な相談をすることができます。Twitter では定期的に #Siv3D, #OpenSiv3D ハッシュタグを巡回しています。ユーザコミュニティが、作品の宣伝やシェアに協力してくれるでしょう。OSS (オープンソースソフトウェア) 開発に貢献したい学生に対して、Siv3D を練習場にしてサポートするプログラムも毎年実施しています。
 
-## 💗 [Sponsors](https://github.com/sponsors/Reputeless)
+### 🌐 Web ブラウザ上で動く（試験的）
+現在試験的に提供される Web 版 ([OpenSiv3D for Web](https://siv3d.kamenokosoft.com/ja/index)) を使うと、Siv3D で作った C++ アプリケーションを、WebGL2 をサポートするモダンな Web ブラウザ上で実行可能なプログラムに変換できます。スマホやタブレットから、多くの人があたなの作品を体験できます。
+
+
+## 💗 Siv3D [Sponsors](https://github.com/sponsors/Reputeless)
 
 |Sponsor tier| |
 |--|--|

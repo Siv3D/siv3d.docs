@@ -1,3 +1,7 @@
+
+!!! warning "This is the documentation for an old version"
+	This is the documentation for an old version of Siv3D (v0.4.3). See [Siv3D Reference v0.6.0](https://zenn.dev/reputeless/books/siv3d-documentation-en) for the latest version.
+
 # Siv3D で使える絵文字の一覧
 OpenSiv3D で使える絵文字は約 2,200 種類あります。  
 ここからプログラムにコピーして使えます。

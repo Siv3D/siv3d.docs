@@ -1,5 +1,8 @@
 description: OpenSiv3D のチュートリアル
 
+!!! warning "このページよりも新しいドキュメントがあります"
+	このドキュメントは古い OpenSiv3D v0.4.3 向けです。2021 年9 月 18 日に最新の OpenSiv3D v0.6.0 がリリースされました。最新のドキュメントは [Siv3D リファレンス v0.6.0](https://zenn.dev/reputeless/books/siv3d-documentation) です。
+
 # 7. 文字列と数値の変換
 
 この章では、数値データを文字列に変換する方法と、文字列を数値データに変換する方法を学びます。
