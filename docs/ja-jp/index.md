@@ -4,6 +4,14 @@ description: ゲームやクリエイティブコーディングのための C++
 
 **Siv3D** (シブスリーディー) は、2D / 3D ゲーム、メディアアート、ビジュアライザ、シミュレータなど、**可視化**や**インタラクション**に関わる C++ プログラムを、**非常に短い、楽しく簡単なコード**で記述できる**モダンなフレームワーク**です。MIT ライセンスで配布され、2021 年 8 月時点における直近 1 年間の SDK ダウンロード数は約 1 万回です。動作プラットフォームは Windows / macOS / Linux / Web です。
 
+## Siv3D を始める
+
+SDK のインストール方法や最新のチュートリアル、サンプルを解説しています。
+
+- 日本語ドキュメント: https://zenn.dev/reputeless/books/siv3d-documentation
+- English documentation (WIP): https://zenn.dev/reputeless/books/siv3d-documentation-en
+
+
 ## 機能の概要
 Siv3D を導入することで、次のような操作を組み合わせたアプリケーションを非常に短いコードで記述できます。
 
