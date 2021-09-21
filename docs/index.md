@@ -8,7 +8,7 @@
 SDK のインストール方法や最新のチュートリアル、サンプルを解説しています。
 
 - 日本語ドキュメント: https://zenn.dev/reputeless/books/siv3d-documentation
-- English documentation (WIP): https://zenn.dev/reputeless/books/siv3d-documentation-en
+- English version (WIP): https://zenn.dev/reputeless/books/siv3d-documentation-en
 
 ## Features
 Siv3D を導入することで、次のような操作を組み合わせたアプリケーションを非常に短いコードで記述できます。

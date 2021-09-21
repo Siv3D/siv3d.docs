@@ -9,7 +9,7 @@ description: ゲームやクリエイティブコーディングのための C++
 SDK のインストール方法や最新のチュートリアル、サンプルを解説しています。
 
 - 日本語ドキュメント: https://zenn.dev/reputeless/books/siv3d-documentation
-- English documentation (WIP): https://zenn.dev/reputeless/books/siv3d-documentation-en
+- English version (WIP): https://zenn.dev/reputeless/books/siv3d-documentation-en
 
 
 ## 機能の概要
