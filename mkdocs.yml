@@ -78,7 +78,6 @@ nav:
       - 20. Embedded resource: tutorial/resource.md
       - 21. Binary file: tutorial/binary-file.md
       - 22. Scene management: tutorial/scene-manager.md
-      - 99. Releasing your application: tutorial/release.md
     - Reference:
       - Emoji list: reference/emojis.md
       - Fullscreen: reference/fullscreen.md
@@ -145,7 +144,6 @@ nav:
       - 20. リソースの埋め込み: ja-jp/tutorial/resource.md
       - 21. バイナリファイル: ja-jp/tutorial/binary-file.md
       - 22. シーン管理: ja-jp/tutorial/scene-manager.md
-      - 99. アプリのリリース: ja-jp/tutorial/release.md
     - リファレンス:
       - 絵文字の一覧: ja-jp/reference/emojis.md
       - フルスクリーン: ja-jp/reference/fullscreen.md
