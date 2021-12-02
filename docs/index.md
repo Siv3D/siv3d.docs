@@ -5,12 +5,12 @@
 
 **Siv3D** is a **modern C++ framework** for writing C++ programs for visualization and interaction in 2D/3D games, media art, visualizers, simulators, etc. in **very short, fun, and easy code**. Siv3D is released under the **MIT license**. As of August 2021, the SDK has been downloaded approximately 10,000 times in the past year. Siv3D applications run on **Windows, macOS, Linux, and the Web**.
 
-## Getting Started
+## Getting Started (Download)
 
 SDK のインストール方法や最新のチュートリアル、サンプルを解説しています。
 
-- 日本語ドキュメント: https://zenn.dev/reputeless/books/siv3d-documentation
-- English version (WIP): https://zenn.dev/reputeless/books/siv3d-documentation-en
+- 日本語ドキュメント: https://zenn.dev/reputeless/books/siv3d-documentation/viewer/setup
+- English version: https://zenn.dev/reputeless/books/siv3d-documentation-en/viewer/setup
 
 ## Features
 Siv3D を導入することで、次のような操作を組み合わせたアプリケーションを非常に短いコードで記述できます。
