@@ -72,7 +72,7 @@ Siv3D を使って困ったことがあったら、[Siv3D ユーザコミュニ�
 現在試験的に提供される Web 版 ([OpenSiv3D for Web](https://siv3d.kamenokosoft.com/ja/index)) を使うと、Siv3D で作った C++ アプリケーションを、WebGL2 をサポートするモダンな Web ブラウザ上で実行可能なプログラムに変換できます。スマホやタブレットから、多くの人があたなの作品を体験できます。
 
 
-## 💗 Siv3D の [スポンサー](https://github.com/sponsors/Reputeless)
+## 🤝 Siv3D のスポンサー
 
 |Sponsor tier| |
 |:--:|--|
