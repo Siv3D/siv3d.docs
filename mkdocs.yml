@@ -1,185 +1,117 @@
-site_dir: '../siv3d.github.io'
+site_dir: '../siv3d.new.github.io'
 
 # Project information
 site_name: Siv3D
 site_url: https://siv3d.github.io/
 site_author: Ryo Suzuki
-site_description: "Siv3D: An open source C++17 library for creative coding" 
+site_description: "Siv3D: A C++ library for creative coding" 
 
 # Copyright
-copyright: Copyright (c) 2018 - present, Ryo Suzuki<br>Copyright (c) 2018 - present, OpenSiv3D Project
+copyright: Copyright (c) 2012 - 2022, Ryo Suzuki<br>Copyright (c) 2012 - 2022, OpenSiv3D Project
 
 # Theme
 theme:
   name: material
   language: en
   palette:
-    primary: blue
-    accent: blue
+    scheme: siv3d
   logo: 'assets/images/code-white-48dp.svg'
   favicon: 'assets/images/favicon.ico'
   features:
-    - tabs
-plugins:
+  - navigation.instant
+  - navigation.tabs
+  - navigation.indexes
+  - navigation.top
+  - search.suggest
+  - search.highlight
+  - content.code.annotate
+  plugins:
   - search:
-      lang:
-      - en
-      prebuild_index: true
+      lang: 
+        - en
+        - ja
 extra:
+  alternate:
+    - name: English
+      link: 
+      lang: en
+    - name: 日本語
+      link: /ja-jp/
+      lang: ja
   social:
     - icon: fontawesome/brands/github-alt
       link: https://github.com/Siv3D/OpenSiv3D
+    - icon: fontawesome/brands/slack
+      link: https://join.slack.com/t/siv3d/shared_invite/enQtNjM4NzQ0MzEyMzUzLTEzNDBkNWVkMTY0OGU5OWQxOTk3NjczMjk0OGJhYzJjOThjZjQ1YmYzMWU2NzQ5NTQ4ODg3NzE2ZmE0NmVlMTM
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/Reputeless
     - icon: fontawesome/brands/twitter
       link: https://twitter.com/Siv3D
-markdown_extensions:
-  - admonition
-  - codehilite
-  - fontawesome_markdown
-  - footnotes
-  - meta
-  - pymdownx.inlinehilite
-  - pymdownx.magiclink
-  - pymdownx.superfences
-  - toc:
-      permalink: true
 extra_css:
   - "https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"
-  - siv3d_styles.css
+  - stylesheets/extra.css
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - meta
+  - toc:
+      permalink: true
+      toc_depth: 3
+      slugify: !!python/name:pymdownx.slugs.uslugify
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences:
+      preserve_tabs: true
+  - pymdownx.keys
+  - pymdownx.tabbed:
+      alternate_style: true 
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
 
 # Page tree
 nav:
   - English: 
     - Getting started with Siv3D: index.md
-    - Sample:
-      - Game: sample/game.md
-      - Application: sample/app.md
-      - Visual effect: sample/visual.md
-      - Game template: sample/game-template.md
+    - Features: features.md
+    - Release Notes: releases.md
+    - Download:
+      - Windows: download/windows.md
+      - macOS: download/macos.md
+      - Ubuntu: download/ubuntu.md
+      - Web (VS): download/web-vs.md
+      - Web (VSCode): download/web-vscode.md
     - Tutorial:
-      - 1. First steps: tutorial/basic.md
-      - 2. Drawing shapes: tutorial/shape.md
-      - 3. Animation: tutorial/animation.md
-      - 4. 2D intersection: tutorial/2d-intersection.md
-      - 5. Drawing images: tutorial/texture.md
-      - 6. Data structures: tutorial/data-structures.md
-      - 7. Formatting and parsing: tutorial/formatting.md
-      - 8. Using fonts: tutorial/font.md
-      - 9. GUI: tutorial/gui.md
-      - 10. Scene and window: tutorial/window.md
-      - 11. Keyboard: tutorial/keyboard.md
-      - 12. Mouse: tutorial/mouse.md
-      - 13. Audio: tutorial/audio.md
-      - 14. Random: tutorial/random.md
-      - 15. 2D render states: tutorial/2d-renderstates.md
-      - 16. Effect: tutorial/effect.md
-      - 17. Asset management: tutorial/asset.md
-      - 18. Text file: tutorial/text-file.md
-      - 19. Configuration file: tutorial/config-file.md
-      - 20. Embedded resource: tutorial/resource.md
-      - 21. Binary file: tutorial/binary-file.md
-      - 22. Scene management: tutorial/scene-manager.md
-    - Reference:
-      - Emoji list: reference/emojis.md
-      - Fullscreen: reference/fullscreen.md
-      - JSON file: reference/json.md
-      - Text encoding conversion: reference/unicode.md
-      - 2D shadow: reference/2d-shadow.md
-      - 2D geometry: reference/2d-geometry.md
-      - NavMesh: reference/navmesh.md
-      - Natural language processing: reference/nlp.md
-      - Math parser: reference/math-parser.md
-      - kd-tree: reference/kd-tree.md
-      - Object detection: reference/objdetection.md
-      - Gamepad: reference/gamepad.md
-      - Network: reference/network.md
-      - Twitter: reference/twitter.md
-      - 2D particle system: reference/2d-particle.md
-      - 2D physics: reference/2d-physics.md
-    - Training:
-      - Circles: training/1-1.md
-      - Tic-tac-toe: training/2-1.md
-    - API Reference: api/api.md
-    - News:
-      - What's new in v0.4.1: news/v041.md
-      - What's new in v0.4.2: news/v042.md
-      - What's new in v0.4.3: news/v043.md
-    - Articles:
-      - Mistakes made by new users: articles/mistakes.md
-      - Troubleshooting: articles/troubleshooting.md
-    - Community: 
+      - Tutorial: tutorial/tutorial.md
+    - Community:
       - Community: community/community.md
-      - Study meeting: community/study-meeting.md
-      - Dev Day: community/dev-day.md
-    - Support: support/support.md
-    - External websites: external/external.md
-    - 💗Sponsors: sponsors/sponsors.md
-  - 日本語:
+      - Lectures: community/study-meeting.md
+      - Dev-day (Jissoukai): community/dev-day.md
+    - Acknowledgments: acknowledgments.md
+  - 日本語: 
     - Siv3D をはじめよう: ja-jp/index.md
-    - サンプル:
-      - ゲーム: ja-jp/sample/game.md
-      - アプリ: ja-jp/sample/app.md
-      - ビジュアル表現: ja-jp/sample/visual.md
-      - ゲーム開発のテンプレート: ja-jp/sample/game-template.md
-      - ゲームランチャー: ja-jp/sample/game-launcher.md
+    - Siv3D の機能: ja-jp/features.md
+    - リリースノート: ja-jp/releases.md
+    - ダウンロード:
+      - Windows: ja-jp/download/windows.md
+      - macOS: ja-jp/download/macos.md
+      - Ubuntu: ja-jp/download/ubuntu.md
+      - Web (VS): ja-jp/download/web-vs.md
+      - Web (VSCode): ja-jp/download/web-vscode.md
     - チュートリアル:
-      - 1. Siv3D の基本: ja-jp/tutorial/basic.md
-      - 2. 図形を描く: ja-jp/tutorial/shape.md
-      - 3. 動きを作る: ja-jp/tutorial/animation.md
-      - 4. あたり判定: ja-jp/tutorial/2d-intersection.md
-      - 5. 画像を描く: ja-jp/tutorial/texture.md
-      - 6. データ構造: ja-jp/tutorial/data-structures.md
-      - 7. 文字列と数値の変換: ja-jp/tutorial/formatting.md
-      - 8. フォントを使う: ja-jp/tutorial/font.md
-      - 9. GUI: ja-jp/tutorial/gui.md
-      - 10. シーンとウィンドウ: ja-jp/tutorial/window.md
-      - 11. キーボード入力: ja-jp/tutorial/keyboard.md
-      - 12. マウス入力: ja-jp/tutorial/mouse.md
-      - 13. オーディオ再生: ja-jp/tutorial/audio.md
-      - 14. ランダム: ja-jp/tutorial/random.md
-      - 15. 2D レンダーステート: ja-jp/tutorial/2d-renderstates.md
-      - 16. エフェクト: ja-jp/tutorial/effect.md
-      - 17. アセット管理: ja-jp/tutorial/asset.md
-      - 18. テキストファイル: ja-jp/tutorial/text-file.md
-      - 19. 設定ファイル: ja-jp/tutorial/config-file.md
-      - 20. リソースの埋め込み: ja-jp/tutorial/resource.md
-      - 21. バイナリファイル: ja-jp/tutorial/binary-file.md
-      - 22. シーン管理: ja-jp/tutorial/scene-manager.md
-    - リファレンス:
-      - 絵文字の一覧: ja-jp/reference/emojis.md
-      - フルスクリーン: ja-jp/reference/fullscreen.md
-      - JSON ファイル: ja-jp/reference/json.md
-      - 文字コードの変換: ja-jp/reference/unicode.md
-      - 2D 図形の影: ja-jp/reference/2d-shadow.md
-      - 2D 計算幾何: ja-jp/reference/2d-geometry.md
-      - ナビメッシュ: ja-jp/reference/navmesh.md
-      - 自然言語処理: ja-jp/reference/nlp.md
-      - 数式処理: ja-jp/reference/math-parser.md
-      - kd 木: ja-jp/reference/kd-tree.md
-      - 物体検出: ja-jp/reference/objdetection.md
-      - ゲームパッド: ja-jp/reference/gamepad.md
-      - ネットワーク: ja-jp/reference/network.md
-      - Twitter: ja-jp/reference/twitter.md
-      - 2D パーティクルシステム: ja-jp/reference/2d-particle.md
-      - 2D 物理演算: ja-jp/reference/2d-physics.md
-    - トレーニング:
-      - 円を配置する: ja-jp/training/1-1.md
-      - 三目並べ: ja-jp/training/2-1.md
-    - API 一覧: ja-jp/api/api.md
-    - 新機能紹介:
-      - v0.4.1 の新機能: ja-jp/news/v041.md
-      - v0.4.2 の新機能: ja-jp/news/v042.md
-      - v0.4.3 の新機能: ja-jp/news/v043.md
-    - 記事:
-      - よくある間違い: ja-jp/articles/mistakes.md
-      - トラブルシューティング: ja-jp/articles/troubleshooting.md
-      - 勉強会ページ:
-        - ja-jp/articles/event/chiba-2020.md
-        - ja-jp/articles/event/ishikawa-2020.md
-        - ja-jp/articles/event/sendai-2020.md
+      - チュートリアル: ja-jp/tutorial/tutorial.md
+    - 開発に参加する:
+      - 報告や提案: ja-jp/develop/report.md
+      - 自前ビルドの手順: ja-jp/develop/build.md
+      - GitHub でコミットする: ja-jp/develop/commit.md
     - コミュニティ:
       - コミュニティ: ja-jp/community/community.md
-      - 勉強会: ja-jp/community/study-meeting.md
-      - 実装会: ja-jp/community/dev-day.md
-    - サポート: ja-jp/support/support.md
-    - 外部サイト: ja-jp/external/external.md
-    - 💗スポンサー: ja-jp/sponsors/sponsors.md
+      - Siv3D 勉強会: ja-jp/community/study-meeting.md
+      - OpenSiv3D 実装会: ja-jp/community/dev-day.md
+    - 謝辞: ja-jp/acknowledgments.md
+
