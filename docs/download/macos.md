@@ -1,4 +1,4 @@
-# macOS で Siv3D プログラミングを始める
+# Getting Started with Siv3D on macOS
 
 ## 1. システム要件
 ### 1.1 開発者システム要件

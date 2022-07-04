@@ -24,7 +24,7 @@ With Siv3D, you can combine a rich set of classes and functions to efficiently d
 [Learn more](./features/){ .md-button }
 
 
-## The shortest distance to complete your application with only C++ code
+## The best way to complete your application work using only C++
 Program your app using a combination of standard C++ syntax and cleverly designed Siv3D convenience types and functions. With the following concise code, the world begins to move.
 
 ```cpp
@@ -50,25 +50,25 @@ void Main()
 
 ## 7 reasons to use Siv3D
 
-###  1. ⚡ 非常に短いコード
+###  1. ⚡ Very short code
 Siv3D のコードは最短 2 行です。描画や入出力を実現するための便利な関数とクラスが揃っているため、アプリケーションのほとんどは 1 つの .cpp ファイルだけで完成します。あなたのアイデアを、[GitHub :material-open-in-new:](https://github.com/) や [GitHub Gist :material-open-in-new:](https://gist.github.com/) などのコード共有サイトを使って手軽に保存・シェアして、世界中の Siv3D ユーザと技術を交換し、学び合いましょう。
 
-### 2. 🛸 最新の C++ が身につく
+### 2. 🛸 Latest C++
 Siv3D のサンプルとライブラリ API は、最新の C++20 スタイルで書かれているため、Siv3D を使っているだけで、モダンな C++ の書き方やテクニックが自然と身に付きます。Siv3D の作者は、日本最大のゲーム開発カンファレンス CEDEC で [最新 C++ の活用に関する講演 :material-open-in-new:](https://speakerdeck.com/cpp/cedec2020) をしたり、[C++ の情報ポータル :material-open-in-new:](https://cppmap.github.io/) を作成したりするなど、最先端の C++ の普及活動に努めています。
 
-### 3. 🏬 小さな学習、大きな力
+### 3. 🏬 Small learning, big power
 Siv3D は 2,200 ファイルのソースコードと 90 のサードパーティ・ソフトウェアによって構成されている大規模なエンジンですが、利用者はそのパワフルな機能を、使いやすく一貫した Siv3D の API を覚えるだけで自在に扱うことができます。勉強のコストを減らし、自分の作りたいアプリの開発に専念できます。
 
-### 4. ⛰️ オープンソース
+### 4. ⛰️ Open-source
 Siv3D は MIT ライセンスのもと [GitHub 上で開発 :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D) されているため、いつでも内部コードを調べたり、改造したりできます。サードパーティ・ライブラリを含め、商用利用を妨げる条件はありません。開発したゲームやアプリケーションの収益は 100% 開発者が獲得できます。
 
-### 5. 🛩️ 軽量で迅速にスタート
+### 5. 🛩️ Lightweight and quick start
 Siv3D プログラミングを始めるための OpenSiv3D SDK インストーラはわずか 120 MB です（Windows 版）。インストールは数クリックで完了し、Visual Studio を起動すればメニューに Siv3D プロジェクトの項目が追加されているので、すぐにプログラミングを始められます。
 
-### 6. 💗 親切なコミュニティ
+### 6. 💗 Friendly community
 Siv3D で困ったことがあれば、[Siv3D のコミュニティ](community/community/) が役に立ちます。また、全国の学校や地域コミュニティへの [無料出張勉強会](community/study-meeting/) も行っています。オープンソースソフトウェア開発に興味のある学生には、Siv3D を練習場にしたサポートプログラムを毎年提供しています。
 
-### 7. 🌐 Web ブラウザで動く
+### 7. 🌐 Runs in a Web browser
 現在試験的に提供している Web 版（[OpenSiv3D for Web :material-open-in-new:](https://siv3d.kamenokosoft.com/ja/index)）を使うと、Siv3D で作った C++ アプリをブラウザ上で実行できる Web アプリに変換できます。スマホやタブレットでも動作するため、これまでよりもたくさんの人にあなたの作品を届けることができます。
 
 
