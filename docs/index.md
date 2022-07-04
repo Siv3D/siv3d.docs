@@ -1,7 +1,7 @@
 # Siv3D: A C++ Framework for Creative Coding
 <div class="noshadow-76"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/logo/logo.png"></div>
 
-Siv3D (シブスリーディー) は、ゲームやアプリを **楽しく簡単な C++ コード** で開発できるフレームワークです。MIT ライセンスで配布され、Windows / macOS / Linux / Web で動作します。
+**Siv3D** is a framework for developing games and apps with **fun and easy C++ code**, distributed under the MIT license and running on Windows, macOS, Linux, and Web.
 
 #### Download Siv3D | v0.6.4
 
@@ -11,36 +11,36 @@ Siv3D (シブスリーディー) は、ゲームやアプリを **楽しく簡�
 
 [for Web (Windows + Visual Studio) :material-microsoft-visual-studio:](download/web-vs){ .md-button .md-button--primary }[for Web (Visual Studio Code) :material-microsoft-visual-studio-code:](download/web-vscode){ .md-button .md-button--primary }
 
-## ゲームやアプリ開発を効率化する、圧倒的な機能
+## Powerful features to streamline game and app development
 
-- 2D / 3D グラフィックス（図形、画像、テキスト、アイコン、動画、3Dモデルなど）
-- オーディオ（BGM, 効果音、テキスト読み上げ、オーディオフィルタなど）
-- 入力デバイス（マウス、キーボード、Webカメラ、マイク、ゲームパッドなど）
-- ウィンドウ、ファイルシステム、ネットワーク
-- 画像処理、音声処理、物理演算、経路探索、幾何などの計算
+- 2D / 3D graphics (Shapes, images, text, icons, videos, 3D models, etc.)
+- Audio (background music, sound effects, text-to-speech, audio filters, etc.)
+- Input devices (Mouse, keyboard, webcam, microphone, gamepad, etc.)
+- Window, filesystem, networking
+- Image processing, sound processing, physics, path finding, geometry, and other calculations
 
-豊富なクラスや関数を組み合わせて、2D / 3D ゲーム、メディアアート、ビジュアライザ、シミュレータなどのアプリを、短いコードで効率的に開発できます。
+With Siv3D, you can combine a rich set of classes and functions to efficiently develop applications such as 2D / 3D games, media art, visualizers, and simulators with short code.
 
-[Siv3D の豊富な機能を詳しく見る](./features/){ .md-button }
+[Learn more](./features/){ .md-button }
 
 
-## C++ コードだけで、完成までの最短距離
-標準的な C++ の文法と、綿密に設計された Siv3D の便利な型や関数を組み合わせてアプリをプログラムします。次のような簡潔なコードで世界が動き始めます。
+## The shortest distance to complete your application with only C++ code
+Program your app using a combination of standard C++ syntax and cleverly designed Siv3D convenience types and functions. With the following concise code, the world begins to move.
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 }); // 背景色を設定
-	const Texture food{ U"🍿"_emoji }; // 絵文字からテクスチャを作成
-	const Texture chick{ U"🐥"_emoji };	// 絵文字からテクスチャを作成
+	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 }); // Set the background color
+	const Texture food{ U"🍿"_emoji }; // Create a texture from an emoji
+	const Texture chick{ U"🐥"_emoji };	// Create a texture from an emoji
 
-	while (System::Update()) // メインループ
+	while (System::Update()) // Main loop
 	{
-		Circle{ Scene::Center(), 100 }.draw(); // 画面の中心に円を描く
-		food.drawAt(Scene::Center()); // 画面の中心にテクスチャを描く
-		chick.drawAt(Cursor::Pos()); // マウスカーソルの位置にテクスチャを描く
+		Circle{ Scene::Center(), 100 }.draw(); // Draw a circle in the center of the scene
+		food.drawAt(Scene::Center()); // Draw the texture in the center of the scene
+		chick.drawAt(Cursor::Pos()); // Draw the texture at the mouse cursor position
 	}
 }
 ```
@@ -48,7 +48,7 @@ void Main()
 <div class="full"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/demo/chick.gif"></div>
 
 
-## Siv3D を使う 7 つの理由
+## 7 reasons to use Siv3D
 
 ###  1. ⚡ 非常に短いコード
 Siv3D のコードは最短 2 行です。描画や入出力を実現するための便利な関数とクラスが揃っているため、アプリケーションのほとんどは 1 つの .cpp ファイルだけで完成します。あなたのアイデアを、[GitHub :material-open-in-new:](https://github.com/) や [GitHub Gist :material-open-in-new:](https://gist.github.com/) などのコード共有サイトを使って手軽に保存・シェアして、世界中の Siv3D ユーザと技術を交換し、学び合いましょう。
@@ -73,7 +73,7 @@ Siv3D で困ったことがあれば、[Siv3D のコミュニティ](community/c
 
 
 ## Sponsoring Siv3D
-Siv3D のビジョンに共感し、開発や改善を応援してくださる方は、Siv3D へのスポンサー（個人・法人）を検討してください。いくつかの特典も用意しています。
+If you like Siv3D's vision and wish to support its development, please consider becoming an individual or corporate sponsor of Siv3D. Several benefits are also available.
 
 !!! summary "Siv3D Sponsors"
 
