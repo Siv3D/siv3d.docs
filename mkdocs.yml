@@ -1,4 +1,4 @@
-site_dir: '../siv3d.new.github.io'
+site_dir: '../siv3d.github.io'
 
 # Project information
 site_name: Siv3D
@@ -31,13 +31,6 @@ theme:
         - en
         - ja
 extra:
-  alternate:
-    - name: English
-      link: 
-      lang: en
-    - name: 日本語
-      link: /ja-jp/
-      lang: ja
   social:
     - icon: fontawesome/brands/github-alt
       link: https://github.com/Siv3D/OpenSiv3D
