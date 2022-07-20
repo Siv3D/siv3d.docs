@@ -62,8 +62,9 @@ Siv3D の開発者やユーザが集まって、プログラムについて質�
 
 OpenSiv3D 実装会に関するツイートを、ハッシュタグ [#OpenSiv3D実装会 :material-open-in-new:](https://twitter.com/search?q=%22OpenSiv3D%20%E5%AE%9F%E8%A3%85%E4%BC%9A%22&src=typd&f=live) で見つけられます。
 
+
 ## 参加方法は？
-- [Siv3D ユーザコミュニティ Slack](./community) に登録後、`#openspace` チャンネルでの実装会の Discord サーバの招待 URL にアクセスします
+- [Discord Siv3D サーバー](../community) 上で開催されます
 
 
 ## 参加者のコメント

@@ -1,18 +1,20 @@
 # コミュニティ
 
-## 1. Siv3D ユーザコミュニティ Slack
-Siv3D ユーザのためのグループチャットです。目的別のチャンネル（チャットルーム）が用意され、Siv3D について話したり、質問をしたり、自分の作品を紹介したりできます。Siv3D 本体の開発に興味のある方のためのチャンネルもあり、開発状況をいちはやく共有するほか、新機能の共同開発も行っています。閲覧のみや無言も OK で、いつでも勝手に退会可能です。現在 600 人以上が登録しています。下記の招待リンクから参加できます。
+## 1. Siv3D オンラインユーザコミュニティ
+Siv3D ユーザのためのグループチャットです。目的別のチャンネル（チャットルーム）が用意され、Siv3D について話したり、質問をしたり、自分の作品を紹介したりできます。Siv3D 本体の開発に興味のある方のためのチャンネルもあり、開発状況をいちはやく共有するほか、新機能の共同開発も行っています。閲覧のみや無言も OK で、いつでも勝手に退会可能です。現在 Discord と Slack 合わせて 700 人以上が登録しています。
 
-- [Siv3D ユーザコミュニティ Slack に参加する :material-open-in-new:](https://join.slack.com/t/siv3d/shared_invite/enQtNjM4NzQ0MzEyMzUzLTEzNDBkNWVkMTY0OGU5OWQxOTk3NjczMjk0OGJhYzJjOThjZjQ1YmYzMWU2NzQ5NTQ4ODg3NzE2ZmE0NmVlMTM) 
+[:material-discord: Discord Siv3D サーバーに参加する](https://discord.gg/mzevvsY){ .md-button .md-button--primary }
+
+[:material-slack: Siv3D ユーザコミュニティ Slack に参加する](https://join.slack.com/t/siv3d/shared_invite/enQtNjM4NzQ0MzEyMzUzLTEzNDBkNWVkMTY0OGU5OWQxOTk3NjczMjk0OGJhYzJjOThjZjQ1YmYzMWU2NzQ5NTQ4ODg3NzE2ZmE0NmVlMTM){ .md-button .md-button--primary }
+
 
 ## 2. OpenSiv3D 実装会
 Siv3D の開発者やユーザが集まって、プログラムについて質問・相談したり、ドキュメントやテストを作ったり、新機能を提案・議論・実装したり、Siv3D で何かを作ったりする会です。基本個人のペースでゆるゆる進みます。
 
 - ハッシュタグ [#OpenSiv3D実装会 :material-open-in-new:](https://twitter.com/search?q=%23OpenSiv3D%E5%AE%9F%E8%A3%85%E4%BC%9A&src=typed_query&f=live)
+- 開催場所（オンライン）: [Discord Siv3D サーバー](https://discord.gg/mzevvsY)
+- [OpenSiv3D 実装会](dev-day/)
 - 毎月 1～2 回開催
-- 最近は Discord で実施
-  - 参加方法: Siv3D ユーザコミュニティ Slack の #openspace チャンネルに Discord の招待 URL
-  - [OpenSiv3D 実装会](dev-day/)
 
 ## 3. Siv3D 勉強会
 音や画像を使った楽しいプログラミングを体験しながら、ゲームやアプリの開発に役立つ基本的な Siv3D の知識を学ぶイベントです。Siv3D の開発者に直接意見を伝えたり、質問を聞ける機会でもあります。

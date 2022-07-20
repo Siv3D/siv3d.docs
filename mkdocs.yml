@@ -85,6 +85,9 @@ nav:
       - Community: community/community.md
       - Lectures: community/study-meeting.md
       - Dev-day (Jissoukai): community/dev-day.md
+    - Mascot:
+      - Mascot: mascot/mascot.md
+      - Gallery: mascot/gallery.md
     - Acknowledgments: acknowledgments.md
   - 日本語: 
     - Siv3D をはじめよう: ja-jp/index.md
@@ -106,5 +109,8 @@ nav:
       - コミュニティ: ja-jp/community/community.md
       - Siv3D 勉強会: ja-jp/community/study-meeting.md
       - OpenSiv3D 実装会: ja-jp/community/dev-day.md
+    - マスコット:
+      - マスコット: ja-jp/mascot/mascot.md
+      - ギャラリー: ja-jp/mascot/gallery.md
     - 謝辞: ja-jp/acknowledgments.md
 

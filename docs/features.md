@@ -1,8 +1,8 @@
-# Siv3D の機能
+# Features
 
-Siv3D が提供する機能の一覧です。
+Overview of features provided by Siv3D:
 
-## グラフィックス
+## Graphics
 - Advanced 2D graphics
 - Basic 3D graphics (Wavefront OBJ, primitive shapes)
 - Custom vertex / pixel shaders (HLSL, GLSL)
@@ -12,7 +12,7 @@ Siv3D が提供する機能の一覧です。
 - Image processing
 - Video rendering
 
-## オーディオ
+## Audio
 - WAVE, MP3, AAC, OggVorbis, Opus, MIDI, WMA*, FLAC*, AIFF*
 - Adjustable volume, pan, play speed and pitch
 - File streaming (WAVE, MP3, OggVorbis)
@@ -25,7 +25,7 @@ Siv3D が提供する機能の一覧です。
 - SoundFont rendering
 - Text to speech
 
-## 入力デバイス
+## Input
 - Mouse
 - Keyboard
 - Gamepad
@@ -36,7 +36,7 @@ Siv3D が提供する機能の一覧です。
 - Digital drawing tablet
 - Leap Motion
 
-## ウィンドウ
+## Window
 - Fullscreen mode
 - High DPI support
 - Window styles (sizable, borderless)
@@ -45,14 +45,14 @@ Siv3D が提供する機能の一覧です。
 - Message box
 - Toast notification
 
-## ネットワークと通信
+## Networks and Communications
 - HTTP client
 - Multiplayer (Photon SDK) ✨new in v0.6.4
 - TCP communication
 - Serial communication
 - Interprocess communication (pipe)
 
-## 数学
+## Math
 - Vector and matrix classes (`Point`, `Float2`, `Vec2`, `Float3`, `Vec3`, `Float4`, `Vec4`, `Mat3x2`, `Mat3x3`, `Mat4x4`, `SIMD_Float4`, `Quaternion`)
 - 2D shape classes (`Line`, `Circle`, `Ellipse`, `Rect`, `RectF`, `Triangle`, `Quad`, `RoundRect`, `Polygon`, `MultiPolygon`, `LineString`, `Spline2D`, `Bezier2`, `Bezier3`)
 - 3D shape classes (`Plane`, `InfinitePlane`, `Sphere`, `Box`, `OrientedBox`, `Ray`, `Line3D`, `Triangle3D`, `ViewFrustum`, `Disc`, `Cylinder`, `Cone`)
@@ -70,7 +70,7 @@ Siv3D が提供する機能の一覧です。
 - Navigation mesh
 - Extended arithmetic types (`HalfFloat`, `int128`, `uint128`, `BigInt`, `BigFloat`)
 
-## 文字列処理
+## String Processing
 - Advanced String class (`String`, `StringView`)
 - Unicode conversion
 - Regular expression
@@ -79,7 +79,7 @@ Siv3D が提供する機能の一覧です。
 - CSV / INI / JSON / XML / TOML reader classes
 - CSV / INI / JSON writer classes
 
-## その他
+## Misc
 - Basic GUI (button, slider, radio buttons, checkbox, text box, color picker, list box)
 - Integrated 2D physics engine (Box2D)
 - Advanced array / 2D array classes (`Array`, `Grid`)
@@ -102,4 +102,4 @@ Siv3D が提供する機能の一覧です。
 - Power status
 - Scripting (AngelScript)
 
-<small>（\*一部の機能は特定のプラットフォームのみでのサポートです）</small>
+<small>（\*Some features are limited to specific platforms）</small>
