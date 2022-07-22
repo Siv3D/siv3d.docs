@@ -81,6 +81,8 @@ nav:
       - Web (VSCode): download/web-vscode.md
     - Tutorial:
       - Tutorial: tutorial/tutorial.md
+    - API:
+      - Classes: api/classes.md
     - Community:
       - Community: community/community.md
       - Lectures: community/study-meeting.md
@@ -101,6 +103,8 @@ nav:
       - Web (VSCode): ja-jp/download/web-vscode.md
     - チュートリアル:
       - チュートリアル: ja-jp/tutorial/tutorial.md
+    - API:
+      - クラス一覧: ja-jp/api/classes.md
     - 開発に参加する:
       - 報告や提案: ja-jp/develop/report.md
       - 自前ビルドの手順: ja-jp/develop/build.md

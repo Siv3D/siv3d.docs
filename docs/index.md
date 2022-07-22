@@ -77,9 +77,6 @@ If you like Siv3D's vision and wish to support its development, please consider 
 
 !!! summary "Siv3D Sponsors"
 
-	#### Platinum Sponsor 
-	<a href="https://github.com/Kyle873" target="_blank"><figure><img src="https://avatars.githubusercontent.com/u/1127511?v=4" width="120" alt="Kyle873"><figcaption>Kyle Belanger</figcaption></figure></a>
-
 	#### Gold Sponsor 
 	- [TOMOAKI12345](https://github.com/TOMOAKI12345)
 	- [CubeSoft, Inc.](https://www.cube-soft.jp/)
