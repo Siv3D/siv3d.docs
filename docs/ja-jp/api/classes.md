@@ -20,7 +20,7 @@
 | uint128   | 符号無し 128-bit 整数型                                                        |
 | float     | 単精度浮動小数点数型                                                              |
 | double    | ★ 倍精度浮動小数点数型                                                            |
-| size_t    | ★ オブジェクトのサイズを表現する符号なし 64-bit 整数型（0 ～ 18,446,744,073,709,551,615）        |
+| size_t    | ★ オブジェクトのサイズを表現する符号無し 64-bit 整数型（0 ～ 18,446,744,073,709,551,615）        |
 | BigInt    | 任意精度多倍長整数型                                                              |
 | HalfFloat | 半精度浮動小数点数型                                                              |
 | BigFloat  | 有効数字 100 桁の浮動小数点数型                                                      |
@@ -49,7 +49,7 @@
 | DisjointSet&lt;IndexType&gt;                              | Union-Find 木                                               |
 | Grid&lt;Type, Allocator&gt;                               | ★ 動的な二次元配列                                                 |
 | HashSet&lt;Type, Hash, Eq, Alloc&gt;                      | ★ ハッシュテーブルによる Set（C++ 標準ライブラリの `std::unordered_set` の置き換え） |
-| HashTablet&lt;Type, Hash, Eq, Alloc&gt;                   | ★ ハッシュテーブルによる Map（C++ 標準ライブラリの `std::unordered_map` の置き換え） |
+| HashTable&lt;Type, Hash, Eq, Alloc&gt;                    | ★ ハッシュテーブルによる Map（C++ 標準ライブラリの `std::unordered_map` の置き換え） |
 | KDTree&lt;DatasetAdapter&gt;                              | KD 木                                                       |
 | KDTreeAdapter&lt;Dataset, PointType, ElementType, Dim&gt; | KD 木 の情報                                                   |
 | None_t                                                    | `Optional` 型で無効値を表現する型（`std::nullopt_t` の別名）               |
@@ -215,7 +215,7 @@
 | BitmapGlyph                          | ビットマップグリフ                                  |
 | Blend                                | ブレンドモードを表す列挙型                              |
 | BlendOp                              | ブレンド式を表す列挙型                                |
-| BlendState                           | ★ ブレンドステートを表す列挙型                           |
+| BlendState                           | ★ ブレンドステート                                 |
 | Blob                                 | ★ バイナリデータ                                  |
 | BorderType                           | 画像フィルタ処理時の境界線の扱いを表す列挙型                     |
 | Buffer2D                             | 2D 描画バッファ                                  |
