@@ -258,7 +258,7 @@
 | DynamicMesh                          | 中身を更新できる、動的メッシュ                            |
 | DynamicTexture                       | ★ 中身を更新できる、動的テクスチャ                         |
 | EdgePreservingFilterType             | EdgePreservingFilter の種類を表す列挙型             |
-| Effect                               | ★ エフェクトのインタフェース                            |
+| Effect                               | ★ エフェクト                                    |
 | Emission2D                           | 2D パーティクルにおける放出                            |
 | Emoji                                | 標準絵文字                                      |
 | EngineOption                         | エンジンの設定                                    |
