@@ -49,7 +49,7 @@
 | DisjointSet&lt;IndexType&gt;                              | Union-Find 木                                               |
 | Grid&lt;Type, Allocator&gt;                               | ★ 動的な二次元配列                                                 |
 | HashSet&lt;Type, Hash, Eq, Alloc&gt;                      | ★ ハッシュテーブルによる Set（C++ 標準ライブラリの `std::unordered_set` の置き換え） |
-| HashTable&lt;Type, Hash, Eq, Alloc&gt;                    | ★ ハッシュテーブルによる Map（C++ 標準ライブラリの `std::unordered_map` の置き換え） |
+| HashTable&lt;Key, Value, Hash, Eq, Alloc&gt;              | ★ ハッシュテーブルによる Map（C++ 標準ライブラリの `std::unordered_map` の置き換え） |
 | KDTree&lt;DatasetAdapter&gt;                              | KD 木                                                       |
 | KDTreeAdapter&lt;Dataset, PointType, ElementType, Dim&gt; | KD 木 の情報                                                   |
 | None_t                                                    | `Optional` 型で無効値を表現する型（`std::nullopt_t` の別名）               |
