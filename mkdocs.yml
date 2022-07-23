@@ -105,14 +105,14 @@ nav:
       - チュートリアル: ja-jp/tutorial/tutorial.md
     - API:
       - クラス一覧: ja-jp/api/classes.md
-    - 開発に参加する:
-      - 報告や提案: ja-jp/develop/report.md
-      - 自前ビルドの手順: ja-jp/develop/build.md
-      - GitHub でコミットする: ja-jp/develop/commit.md
     - コミュニティ:
       - コミュニティ: ja-jp/community/community.md
       - Siv3D 勉強会: ja-jp/community/study-meeting.md
       - OpenSiv3D 実装会: ja-jp/community/dev-day.md
+    - 開発に参加する:
+      - 報告や提案: ja-jp/develop/report.md
+      - 自前ビルドの手順: ja-jp/develop/build.md
+      - GitHub でコミットする: ja-jp/develop/commit.md
     - マスコット:
       - マスコット: ja-jp/mascot/mascot.md
       - ギャラリー: ja-jp/mascot/gallery.md
