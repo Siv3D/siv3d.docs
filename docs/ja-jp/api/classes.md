@@ -139,6 +139,7 @@
 | Triangle3D                   | 3D 三角形                                |
 | Vec3                         | ★ 3 次元のベクトル（要素は `double`）             |
 | Vec4                         | 4 次元のベクトル（要素は `double`）               |
+| ViewFrustum                  | 視錐台                                   |
 
 
 ## 色
