@@ -1,7 +1,7 @@
 # Getting Started with Siv3D on Ubuntu
 
 ## 1. System requirements
-Ubuntu で OpenSiv3D v0.6.4 プログラミングをするのに必要な開発環境です。
+Here are the system requirements for OpenSiv3D v0.6.4 programming on Ubuntu.
 
 |  |  |
 |--|--|

@@ -25,11 +25,11 @@ This is the environment required to run applications developed with OpenSiv3D v0
 |  |  |
 |--|--|
 | OS | macOS Mojave / Catalina / Big Sur / Monterey |
-| CPU | Intel 製の CPU / Apple Silicon (Rosetta モード) |
-| GPU | OpenGL 4.1 サポート |
+| CPU | Intel CPU / Apple Silicon (Rosetta mode)* |
+| GPU | OpenGL 4.1 compatible hardware |
 | Output Devices | Monitors |
 
-- Apple Silicon (M1 / M2) のネイティブサポートは将来のバージョンで追加されます
+- Native Apple Silicon support will be added in the future release. You can run Siv3D Application in Rosetta mode
 - 2012 年以前の Mac 製品では GPU が OpenGL 4.1 をサポートしていない場合があります
 
 
