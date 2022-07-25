@@ -248,8 +248,8 @@
 | DepthFunc                            | デプステスト関数を表す列挙型                             |
 | DepthStencilState                    | デプス・ステンシルステート                              |
 | Deserializer&lt;Reader&gt;           | デシリアライザ定義用クラステンプレート                        |
+| detail::Gamepad_impl                 | ★ ゲームパッド。`Gamepad(…)` の戻り値                 |
 | detail::XInput_impl                  | ★ Xinput ゲームパッド。`XInput(…)` の戻り値           |
-| detail:Gamepad_impl                  | ★ ゲームパッド。`Gamepad(…)` の戻り値                 |
 | DirectoryWatcher                     | ディレクトリ内でのファイルの操作の監視クラス                     |
 | DragItemType                         | ドラッグするアイテムの種類を表す列挙型                        |
 | DragStatus                           | ドラッグの状態                                    |
@@ -439,7 +439,7 @@
 | ScriptModule                         | スクリプトのモジュール                                |
 | SDFGlyph                             | SDF 方式によるグリフ                               |
 | Serial                               | シリアル通信                                     |
-| Serialize&lt;Writer&gt;              | シリアライザ定義用クラステンプレート                         |
+| Serializer&lt;Writer&gt;             | シリアライザ定義用クラステンプレート                         |
 | ShaderGroup                          | シェーダ言語の差を吸収するクラス                           |
 | ShaderStage                          | シェーダステージを表す列挙型                             |
 | SIMD_Float4                          | SIMD 対応 Float4                             |
