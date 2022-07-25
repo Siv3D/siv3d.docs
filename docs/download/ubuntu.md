@@ -1,25 +1,25 @@
 # Getting Started with Siv3D on Ubuntu
 
-## 1. システム要件
+## 1. System requirements
 Ubuntu で OpenSiv3D v0.6.4 プログラミングをするのに必要な開発環境です。
 
 |  |  |
 |--|--|
 | OS | Ubuntu 20.04 LTS / Ubuntu 22.04 LTS |
-| CPU | Intel または AMD 製の CPU |
-| GPU | OpenGL 4.1 サポート |
-| 映像出力 | モニタなど、何らかの映像出力装置があること |
-| 開発環境 | GCC 9.3.0 (+ Boost 1.71.0) / GCC 11.2 (+ Boost 1.74.0) / Clang 14.0.0 (+ Boost 1.74.0) |
+| CPU | Intel / AMD CPU |
+| GPU | OpenGL 4.1 compatible hardware |
+| Output Devices | Monitors |
+| Compilers | GCC 9.3.0 (+ Boost 1.71.0) / GCC 11.2 (+ Boost 1.74.0) / Clang 14.0.0 (+ Boost 1.74.0) |
 
 - 非公式の ARM 対応版があります。詳しくは Siv3D ユーザコミュニティ Slack の `#linux` チャンネルをご覧ください
 
-## 2. Siv3D の最新コードを入手する
+## 2. Getting the latest source code from the official OpenSiv3D repository
 
 [OpenSiv3D 公式リポジトリの main ブランチ :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D) が最新安定版です。「Code」からリポジトリをクローンするか、ZIP ファイルでソースコードをダウンロードします（「Download ZIP」）。
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/download/ubuntu/repo.png)
 
-## 3. Siv3D をビルドする
+## 3. Building the Siv3D library and the sample application
 1. 次を参考に、必要なツールや依存パッケージをインストールします
 [https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L26-L49](https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L26-L49)
 2. 次を参考に Siv3D ライブラリをビルドし、`libSiv3D.a` を作成します 
