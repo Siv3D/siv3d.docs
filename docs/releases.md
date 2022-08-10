@@ -2,6 +2,9 @@
 
 ## v0.6
 
+???+ summary "v0.6.5 | 2022-08-10"
+
+
 ???+ summary "v0.6.4 | 2022-05-21"
 	#### 新機能
 	- Visual Studio 2022 17.2 以降に対応しました ([#790](https://github.com/Siv3D/OpenSiv3D/issues/790))

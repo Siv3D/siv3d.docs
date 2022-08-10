@@ -1,7 +1,7 @@
 # Getting Started with Siv3D on Ubuntu
 
 ## 1. System requirements
-Here are the system requirements for OpenSiv3D v0.6.4 programming on Ubuntu.
+Here are the system requirements for OpenSiv3D v0.6.5 programming on Ubuntu.
 
 |  |  |
 |--|--|
@@ -31,7 +31,7 @@ Here are the system requirements for OpenSiv3D v0.6.4 programming on Ubuntu.
 
 ??? summary "サンプルコード"
     ```cpp
-    # include <Siv3D.hpp> // OpenSiv3D v0.6.4
+    # include <Siv3D.hpp> // OpenSiv3D v0.6.5
 
     void Main()
     {

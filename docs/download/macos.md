@@ -2,7 +2,7 @@
 
 ## 1. System requirements
 ### 1.1 System requirements for development
-Here are the system requirements for OpenSiv3D v0.6.4 programming on macOS.
+Here are the system requirements for OpenSiv3D v0.6.5 programming on macOS.
 
 |  |  |
 |--|--|
@@ -20,7 +20,7 @@ Here are the system requirements for OpenSiv3D v0.6.4 programming on macOS.
 
 
 ### 1.2 System requirements for running Siv3D application
-This is the environment required to run applications developed with OpenSiv3D v0.6.4 on macOS. You may want to include it in your instructions when distributing your game or application.
+This is the environment required to run applications developed with OpenSiv3D v0.6.5 on macOS. You may want to include it in your instructions when distributing your game or application.
 
 |  |  |
 |--|--|
@@ -34,7 +34,7 @@ This is the environment required to run applications developed with OpenSiv3D v0
 
 
 ## 2. Downloading the Siv3D project template
-1. Download and extract **[OpenSiv3D v0.6.4 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.4_macOS.zip)**.
+1. Download and extract **[OpenSiv3D v0.6.5 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.5_macOS.zip)**.
 1.  (On macOS Catalina or later) Move the SDK folder into `(User name)/Applications` folder to prevent a file access permissions dialog from being displayed when your program launches. Some folders such as `(User name)/Desktop` and `(User name)/Downloads` require an access permission for every build.
 
 ## 3. Building your first application with Siv3D
