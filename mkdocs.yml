@@ -103,6 +103,11 @@ nav:
       - Web (VSCode): ja-jp/download/web-vscode.md
     - チュートリアル:
       - チュートリアル: ja-jp/tutorial/tutorial.md
+      - 1. はじめての Siv3D: ja-jp/tutorial/hello-siv3d.md
+      - 2. Siv3D の基本: ja-jp/tutorial/basic.md
+      - 3. 図形を描く: ja-jp/tutorial/shape.md
+      - 4. 動きを作る: ja-jp/tutorial/animation.md
+      - 5. 画像を描く: ja-jp/tutorial/texture.md
     - API:
       - クラス一覧: ja-jp/api/classes.md
     - コミュニティ:

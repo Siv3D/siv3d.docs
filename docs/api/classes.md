@@ -177,11 +177,12 @@
 ## エラー
 
 | 型名                | 説明                       |
-|-------------------|--------------------------|
-| BadOptionalAccess | 無効な `Optional` へのアクセスエラー |
-| EngineError       | エンジン内部のエラー               |
-| Error             | ★ エラー                    |
-| ParseError        | パース関数のエラー                |
+|---------------------|--------------------------|
+| BadOptionalAccess   | 無効な `Optional` へのアクセスエラー |
+| EngineError         | エンジン内部のエラー               |
+| Error               | ★ エラー                    |
+| NotImplementedError | 未実装の機能を使用したエラー   |
+| ParseError          | パース関数のエラー                |
 
 
 ## 様々なクラス

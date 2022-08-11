@@ -3,9 +3,83 @@
 ## v0.6
 
 ???+ summary "v0.6.5 | 2022-08-10"
+	#### 新機能
+	- Visual Studio 2022 17.3 に対応しました ([#859](https://github.com/Siv3D/OpenSiv3D/issues/859))
+	- `LineString::extractLineString(double, CloseRing)` オーバーロードを追加しました ([#866](https://github.com/Siv3D/OpenSiv3D/issues/866))
+		- [サンプル](https://zenn.dev/link/comments/883084a7d6a77d)
+	- `JSON` がバイナリフォーマット (BSON/CBOR/MessagePack) との相互変換に対応しました ([#842](https://github.com/Siv3D/OpenSiv3D/issues/842))
+		- [サンプル](https://zenn.dev/link/comments/baec402709773f)
+	- ファイルパスを結合する `FileSystem::PathAppend()` を追加しました ([#825](https://github.com/Siv3D/OpenSiv3D/issues/825))
+		- [サンプル](https://zenn.dev/link/comments/d45decf3cb32f2)
+	- `TextEditState` に、Tab キーや Enter キーによる入力完了を取得できるメンバ変数を追加しました ([#808](https://github.com/Siv3D/OpenSiv3D/issues/808))
+		- [サンプル](https://zenn.dev/link/comments/11eff1e53bffcb)
+	- 底辺の中心、頂点、底辺の長さから二等辺三角形を作成する `Triangle::FromPoints()` を追加しました ([#865](https://github.com/Siv3D/OpenSiv3D/issues/865))
+	- 文字列をパーセントエンコードする `PercentEncode()` を追加しました ([#864](https://github.com/Siv3D/OpenSiv3D/issues/864))
+	- `NavMesh::query()` に、結果の格納先を参照で渡すオーバーロードを追加しました ([#861](https://github.com/Siv3D/OpenSiv3D/issues/861))
+	- `Math::` に `Dot()` と `Cross()` を追加しました。これまでは `Vec2, Vec3` などのメンバ関数を使う必要がありました ([#848](https://github.com/Siv3D/OpenSiv3D/issues/848))
+	- 長方形の各辺・中心の X 座標、Y 座標だけを返す関数を追加しました ([#853](https://github.com/Siv3D/OpenSiv3D/issues/853))
+	- 長方形の左上を (0 ,0), 右下を (1, 1) としたときの (relativeX, relativeY) の座標を返すメンバ関数を追加しました ([#850](https://github.com/Siv3D/OpenSiv3D/issues/850))
+	- 同梱する Font Awesome を 5.15.2 → 6.1.1 に更新しました ([#846](https://github.com/Siv3D/OpenSiv3D/issues/846))
+	- `Blob` にメンバ関数を追加しました ([#843](https://github.com/Siv3D/OpenSiv3D/issues/843))
+	- `Font::height(double size)` を追加しました ([#830](https://github.com/Siv3D/OpenSiv3D/issues/830))
+	- 同梱するモノクロ Noto Emoji を更新しました ([#816](https://github.com/Siv3D/OpenSiv3D/issues/816))
+	- 水平方向のアスペクト比を返す `.horizontalAspectRatio()` 関数を `Point`, `Float2`, `Vec2`, `Rect`, `RectF`, `Image`, `Texture`, `Emoji`, `Scene::`, `RoundRect` に追加しました ([#810](https://github.com/Siv3D/OpenSiv3D/issues/810)), ([#812](https://github.com/Siv3D/OpenSiv3D/issues/812))
+	- `Multiplayer_Photon` に、タイムスタンプ関連の関数を追加しました ([#807](https://github.com/Siv3D/OpenSiv3D/issues/807))
+	- `Multiplayer_Photon` に `.joinRandomRoomOrCreate()` を追加しました ([#806](https://github.com/Siv3D/OpenSiv3D/issues/806))
+	- `NotImplementedError` 例外クラスを追加しました ([#787](https://github.com/Siv3D/OpenSiv3D/issues/787))
+
+	#### ユーザビリティ向上	
+	- Linux 版の CMake を改善しました ([#829](https://github.com/Siv3D/OpenSiv3D/pull/829))
+	- Linux 版の CMakeLists.txt において、boost のバージョンを範囲指定するようにしました ([#847](https://github.com/Siv3D/OpenSiv3D/pull/847))
+	- `SimpleGUI::TextBox()` の挙動を改善しました ([#832](https://github.com/Siv3D/OpenSiv3D/pull/832)), ([#804](https://github.com/Siv3D/OpenSiv3D/issues/804))
+	- 誤用防止のため `BigInt operator ""_big(long double x)` を `= delete` 指定しました ([#826](https://github.com/Siv3D/OpenSiv3D/issues/826))
+	- いくつかのヘッダファイルでドキュメントを追加しました
+
+	#### 仕様変更
+	- `BigFloat` の文字列変換を改善しました ([#839](https://github.com/Siv3D/OpenSiv3D/issues/839))
+	- `Multiplayer_Photon::getLocalPlayerID()` の戻り値を `LocalPlayerID` に変更しました ([#809](https://github.com/Siv3D/OpenSiv3D/issues/809))
+	- `AsyncHTTPTask::isReady` を const メンバ関数に変更しました ([#805](https://github.com/Siv3D/OpenSiv3D/pull/805))
+	- 各種サードパーティライブラリを更新しました ([#801](https://github.com/Siv3D/OpenSiv3D/issues/801))
+	- engine ファイルを更新しました ([#817](https://github.com/Siv3D/OpenSiv3D/issues/817))
+
+	#### パフォーマンス向上
+	- `NavMesh::query()` の実行性能を改善しました ([#861](https://github.com/Siv3D/OpenSiv3D/issues/861))
+	- `HLSL` や `GLSL` クラスのコンストラクタを改善しました ([#835](https://github.com/Siv3D/OpenSiv3D/issues/835))
+	- `SimpleGUI` の文字列引数を `const String&` → `StringView` に変更しました ([#827](https://github.com/Siv3D/OpenSiv3D/issues/827))
+	- 算術型から `BigInt`, `BigFloat` を引くときの実行性能を改善しました ([#822](https://github.com/Siv3D/OpenSiv3D/issues/822))
+	- `Rect`, `RectF` の `constexpr` 対応を改善しました ([#813](https://github.com/Siv3D/OpenSiv3D/issues/813))
+
+	#### 不具合・バグ修正
+	- `LineString::extractLineString()` が正しくない結果を返すことがあったバグを修正しました ([#862](https://github.com/Siv3D/OpenSiv3D/issues/862))
+	- 始点と終点が一致する `LineString` の `.calculateRoundBuffer()` に失敗することがあることがあったバグを修正しました ([#860](https://github.com/Siv3D/OpenSiv3D/issues/860))
+	- macOS, Linux 版で NULL がマクロで空文字列に置換される不具合を修正しました ([#858](https://github.com/Siv3D/OpenSiv3D/issues/858))
+	- `RoundRect::drawFrmae()` で不正な値を渡したときに、描画が乱れることがあった不具合を修正しました ([#856](https://github.com/Siv3D/OpenSiv3D/issues/856))
+	- `BasicCamera3D` のメンバ関数名を `.getVerticlaFOV()` → `.getVerticalFOV()` に修正しました ([#854](https://github.com/Siv3D/OpenSiv3D/pull/854))
+	- `Grid::choice()` がコンパイルに失敗するバグを修正しました ([#840](https://github.com/Siv3D/OpenSiv3D/issues/840))
+	- `Base64::Decode()` で、特定条件においてバッファオーバーランが発生することがあったバグを修正しました ([#837](https://github.com/Siv3D/OpenSiv3D/issues/837))
+	- `Parse<double>` が `float` 型の精度で行われていたバグを修正しました ([#831](https://github.com/Siv3D/OpenSiv3D/issues/831))
+	- 一部条件で Line 同士の Intersect, IntersectAt の判定が誤っていたバグを修正しました ([#823](https://github.com/Siv3D/OpenSiv3D/pull/823))
+	- `BigInt`, `BigFloat` の比較演算子のバグを修正しました ([#821](https://github.com/Siv3D/OpenSiv3D/pull/821))
+	- macOS 版、Linux 版の `FileSystem::SelectFolder()` が結果の末尾に `/` を付けなかったバグを修正しました ([#824](https://github.com/Siv3D/OpenSiv3D/issues/824))
+	- macOS 版の `FileSystem::FullPath()` の結果が不正になることがあったバグを修正しました ([#824](https://github.com/Siv3D/OpenSiv3D/issues/824))
+	- `SFMT` のヘッダ・フォルダ名の typo を修正しました ([#818](https://github.com/Siv3D/OpenSiv3D/pull/818))
+	- macOS 版で `TCPClient` の切断が `TCPServer` に伝わらなかった不具合を修正しました ([#799](https://github.com/Siv3D/OpenSiv3D/issues/799))
+
+	#### コントリビューション
+	- [nokotan](https://github.com/nokotan): **Web 版を更新**
+	- [MurakamiShun](https://github.com/MurakamiShun): **Linux 版の CMake を改善**
+	- [m4saka](https://github.com/m4saka): **Line 同士の Intersect, IntersectAt のバグを修正**
+	- [Raclamusi](https://github.com/Raclamusi): `BigInt`, `BigFloat` の改善・バグ修正、ドキュメントの改善
+	- [kestrel-90r](https://github.com/kestrel-90r): ソースファイル名の typo の修正
+	- [ShivAlley](https://github.com/ShivAlley): `Math::` の数学関数を追加
+	- [tas9n](https://github.com/tas9n): `AsyncHTTPTask` の改善
+	- [ROCKTAKEY](https://github.com/ROCKTAKEY): CMakeLists.txt の改善
+	- [yknishidate](https://github.com/yknishidate): コードの改善
+	- [agehama](https://github.com/agehama): ドキュメントの改善
+	- [curay168](https://github.com/curay168): ドキュメントの改善
 
 
-???+ summary "v0.6.4 | 2022-05-21"
+??? summary "v0.6.4 | 2022-05-21"
 	#### 新機能
 	- Visual Studio 2022 17.2 以降に対応しました ([#790](https://github.com/Siv3D/OpenSiv3D/issues/790))
 	- Xcode 13.3 以降に対応しました ([#753](https://github.com/Siv3D/OpenSiv3D/issues/753))

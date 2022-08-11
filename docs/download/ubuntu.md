@@ -24,8 +24,10 @@ Here are the system requirements for OpenSiv3D v0.6.5 programming on Ubuntu.
 [https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L26-L49](https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L26-L49)
 2. 次を参考に Siv3D ライブラリをビルドし、`libSiv3D.a` を作成します 
 [https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L51-L60](https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L51-L60)
-3. 次を参考に Siv3D アプリをビルドします 
-[https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L62-L71](https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L62-L71)
+3. 次を参考に Siv3D をインストールします 
+[https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L65](https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L65)
+4. 次を参考に Siv3D アプリをビルドします 
+[https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L67-L76](https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L67-L76)
 
 デフォルトの Main.cpp に用意されているプログラムは「すぐ終了する空のプログラム」なので、何も面白いものは表示されません。次のようなサンプルコードで上書きしてください。実行中のプログラムは、++esc++ を押すか、ウィンドウを閉じると終了します
 

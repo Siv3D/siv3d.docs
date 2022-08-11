@@ -16,7 +16,7 @@ Overview of features provided by Siv3D:
 - WAVE, MP3, AAC, OggVorbis, Opus, MIDI, WMA*, FLAC*, AIFF*
 - Adjustable volume, pan, play speed and pitch
 - File streaming (WAVE, MP3, OggVorbis)
-- Dynamic audio buffer ✨new in v0.6.4
+- Dynamic audio buffer
 - Fade in and fade out
 - Looping
 - Mixing busses
@@ -47,7 +47,7 @@ Overview of features provided by Siv3D:
 
 ## Networks and Communications
 - HTTP client
-- Multiplayer (Photon SDK) ✨new in v0.6.4
+- Multiplayer (Photon SDK)
 - TCP communication
 - Serial communication
 - Interprocess communication (pipe)
@@ -84,7 +84,7 @@ Overview of features provided by Siv3D:
 - Integrated 2D physics engine (Box2D)
 - Advanced array / 2D array classes (`Array`, `Grid`)
 - Kd-tree
-- Disjoint Set Union ✨new in v0.6.4
+- Disjoint Set Union
 - Asynchronous asset file streaming
 - Data compression (zlib, Zstandard)
 - Transitions between scenes

@@ -16,7 +16,7 @@ Siv3D が提供する機能の一覧です。
 - 音声形式 (WAVE, MP3, AAC, OggVorbis, Opus, MIDI, WMA\*, FLAC\*, AIFF\*)
 - 音量やパン，スピード，ピッチの調整
 - ストリーミング再生 (WAVE, MP3, OggVorbis)
-- 再生中のバッファへの波形書き込み ✨new in v0.6.4
+- 再生中のバッファへの波形書き込み
 - フェードイン，フェードアウト
 - ループ
 - ミキシングバス
@@ -47,7 +47,7 @@ Siv3D が提供する機能の一覧です。
 
 ## ネットワークと通信
 - HTTP クライアント
-- マルチプレイ (Photon SDK) ✨new in v0.6.4
+- マルチプレイ (Photon SDK)
 - TCP 通信
 - シリアル通信
 - プロセス間通信 (pipe)
@@ -84,7 +84,7 @@ Siv3D が提供する機能の一覧です。
 - 2D 物理エンジンの統合 (Box2D)
 - 配列クラス (`Array`, `Grid`)
 - Kd-tree
-- Disjoint Set Union ✨new in v0.6.4
+- Disjoint Set Union
 - 非同期ファイルロード
 - データ圧縮 (zlib, Zstandard)
 - シーン遷移
