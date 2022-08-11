@@ -423,6 +423,9 @@ Siv3D の様々な機能を体験できるおすすめサンプルを紹介し�
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/tutorial/1/s3.png)
 
+テキストボックスに入力したテキストを QR コードに変換します。  
+スマートフォンのカメラで読み取ってみましょう。
+
 ??? summary "QR コード生成のサンプルコードを表示する"
 	```cpp
 	# include <Siv3D.hpp>
@@ -559,6 +562,9 @@ Siv3D の様々な機能を体験できるおすすめサンプルを紹介し�
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/tutorial/1/s5.png)
 
+kd-木は近くにあるユニットを高速に検索できるデータ構造です。  
+シミュレーションゲームなどで役に立つかもしれません。
+
 ??? summary "kd-tree のサンプルコードを表示する"
 	```cpp
 	# include <Siv3D.hpp>
@@ -631,6 +637,9 @@ Siv3D の様々な機能を体験できるおすすめサンプルを紹介し�
 ### 6 | 音楽プレーヤー
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/tutorial/1/s6.png)
+
+パソコンに保存されている音楽ファイルを再生して、スペクトラムも表示します。
+パソコンに再生できる音楽ファイルが無い場合、サンプル用の音楽ファイルが `App/example/test.mp3` にあります。フリーの BGM 素材 (MP3) をダウンロードして試すこともできます。
 
 ??? summary "音楽プレーヤーのサンプルコードを表示する"
 	```cpp
@@ -737,6 +746,8 @@ Siv3D の様々な機能を体験できるおすすめサンプルを紹介し�
 ### 7 | ナビメッシュ
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/tutorial/1/s7.png)
+
+制御点をもとに道路を作り、始点から終点までの最短経路を求めます。
 
 ??? summary "ナビメッシュのサンプルコードを表示する"
 	```cpp
@@ -996,6 +1007,8 @@ Siv3D の様々な機能を体験できるおすすめサンプルを紹介し�
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/tutorial/1/s9.png)
 
+真っ白な画像からスタートして、ランダムな色の円を重ねていくことで、目標の画像に近づけていくプログラムです。
+
 ??? summary "ランダムな色の円で目的の絵を作るサンプルコードを表示する"
 	```cpp
 	# include <Siv3D.hpp>
@@ -1087,6 +1100,8 @@ Siv3D の様々な機能を体験できるおすすめサンプルを紹介し�
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/tutorial/1/s10.png)
 
+マイクで入力した音声波形のスペクトラムをリアルタイムで表示します。
+
 ??? summary "マイクで入力した音の周波数解析のサンプルコードを表示する"
 	```cpp
 	# include <Siv3D.hpp>
@@ -1129,6 +1144,9 @@ Siv3D の様々な機能を体験できるおすすめサンプルを紹介し�
 ### 11 | ピアノ
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/tutorial/1/s10.png)
+
+キーボードを使ってピアノを演奏できるプログラムです。  
+コードを書き換えて楽器の音を変更できます。
 
 ??? summary "ピアノのサンプルコードを表示する"
 	```cpp
@@ -1209,6 +1227,8 @@ Siv3D の様々な機能を体験できるおすすめサンプルを紹介し�
 ### 12 | 3D 描画
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/tutorial/1/s10.png)
+
+3D 描画も扱えます。
 
 ??? summary "3D 描画のサンプルコードを表示する"
 	```cpp
