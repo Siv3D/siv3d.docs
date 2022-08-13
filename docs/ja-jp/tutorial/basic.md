@@ -220,7 +220,8 @@ void Main()
 
 
 ## 2.8 デバッグ表示の消去
-`ClearPrint()` を使うと、`Print` でデバッグ表示した内容を即座に消去します。メインループの先頭で `ClearPrint()` すると、現在のフレームで `Print` した内容だけが表示されるようになります。
+`ClearPrint()` を使うと、`Print` でデバッグ表示した内容を即座に消去します。  
+メインループの先頭で `ClearPrint()` すると、現在のフレームで `Print` した内容だけが表示されるようになります。
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/tutorial/2/8.png)
 ```cpp
@@ -280,8 +281,6 @@ Siv3D の基本的なデータ型は次のとおりです。よく使う重要�
 | StringView   | 文字列のビュークラス                      |
 | FilePath     | ★ ファイルパス文字列（`String` の別名）       |
 | FilePathView | ファイルパス文字列のビュー（`StringView` の別名） |
-| URL          | URL 文字列（`String` の別名）           |
-| URLView      | URL 文字列のビュー（`StringView` の別名）   |
 
 
 #### データ構造
@@ -289,18 +288,12 @@ Siv3D の基本的なデータ型は次のとおりです。よく使う重要�
 | 型名                                                        | 説明                                                         |
 |-----------------------------------------------------------|------------------------------------------------------------|
 | Array&lt;Type, Allocator&gt;                              | ★ 動的配列（C++ 標準ライブラリの `std::vector` の置き換え）                   |
-| DisjointSet&lt;IndexType&gt;                              | Union-Find 木                                               |
 | Grid&lt;Type, Allocator&gt;                               | ★ 動的な二次元配列                                                 |
 | HashSet&lt;Type, Hash, Eq, Alloc&gt;                      | ★ ハッシュテーブルによる Set（C++ 標準ライブラリの `std::unordered_set` の置き換え） |
 | HashTable&lt;Key, Value, Hash, Eq, Alloc&gt;              | ★ ハッシュテーブルによる Map（C++ 標準ライブラリの `std::unordered_map` の置き換え） |
-| KDTree&lt;DatasetAdapter&gt;                              | KD 木                                                       |
-| KDTreeAdapter&lt;Dataset, PointType, ElementType, Dim&gt; | KD 木 の情報                                                   |
 | None_t                                                    | `Optional` 型で無効値を表現する型（`std::nullopt_t` の別名）               |
-| NonNull&lt;Pointer&gt;                                    | ヌルポインタを持たないポインタを管理するクラス                                    |
 | Optional&lt;Type&gt;                                      | ★ 無効値を表現できる型（C++ 標準ライブラリの `std::optional` の置き換え）           |
 | std::array&lt;Type, size_t&gt;                            | ★ 固定長配列                                                    |
-| StringCompare                                             | ハッシュテーブルで文字列をキーにする際の補助クラス                                  |
-| StringHash                                                | ハッシュテーブルで文字列をキーにする際の補助クラス                                  |
 
 Siv3D で整数を扱うときは、`int32`, `uint64` のような明示的なサイズを持つ型名を使い、`int`, `unsigned long long` のような標準の型名は使いません。前者のような型名を使うことで、プラットフォーム間での移植性が高まり、一貫性のある読みやすいコードになります。
 
@@ -409,35 +402,53 @@ void Main()
 
 ### スクリーンショットを保存する
 
-- PrintScreen キーを押す
-- F12 キーを押す
+- ++print-screen++ を押す
+- ++f12++ を押す
 
 実行ファイルと同じディレクトリの `Screenshot` フォルダ、またはピクチャフォルダに実行中の画面のスクリーンショットが保存されます。
 
-（上級者向け）`ScreenCapture::SetShortcutKeys()` を使って、ショートカットキーをカスタマイズできます。
+!!! tip "上級者向け"
+	`ScreenCapture::SetShortcutKeys()` を使って、ショートカットキーをカスタマイズできます。
+
+	```cpp
+	# include <Siv3D.hpp>
+
+	void Main()
+	{
+		// [A] キーが押されたときにスクリーンショットを保存するよう設定
+		ScreenCapture::SetShortcutKeys({ KeyA });
+
+		while (System::Update())
+		{
+			Circle{ Scene::Center(), 100 }.draw();
+		}
+	}
+	```
+
 
 ### ライセンス情報を表示する
 
-- F1 キーを押す
+- ++f1++ を押す
 
 アプリケーションで使われているサードパーティ・ソフトウェアのライセンス情報を Web ブラウザで表示します。
 
-（上級者向け）`LicenseManager::` 名前空間の関数を使い、ライセンス情報を追加したり、一覧を取得したりできます。`LicenseManager::ShowInBrowser()` を呼ぶことで明示的にオープンすることもできます。
+!!! tip "上級者向け"
+	`LicenseManager::` 名前空間の関数を使い、ライセンス情報を追加したり、一覧を取得したりできます。`LicenseManager::ShowInBrowser()` を呼ぶことで明示的にオープンすることもできます。
 
-```cpp
-# include <Siv3D.hpp>
+	```cpp
+	# include <Siv3D.hpp>
 
-void Main()
-{
-	while (System::Update())
+	void Main()
 	{
-		// "Licenses" ボタンが押されたら
-		if (SimpleGUI::Button(U"Licenses", Vec2{ 20, 20 }))
+		while (System::Update())
 		{
-			// ライセンス情報を表示
-			LicenseManager::ShowInBrowser();
+			// "Licenses" ボタンが押されたら
+			if (SimpleGUI::Button(U"Licenses", Vec2{ 20, 20 }))
+			{
+				// ライセンス情報を表示
+				LicenseManager::ShowInBrowser();
+			}
 		}
 	}
-}
-```
+	```
 
