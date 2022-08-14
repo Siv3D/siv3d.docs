@@ -103,11 +103,20 @@ nav:
       - Web (VSCode): ja-jp/download/web-vscode.md
     - チュートリアル:
       - チュートリアル: ja-jp/tutorial/tutorial.md
-      - 1. はじめての Siv3D: ja-jp/tutorial/hello-siv3d.md
-      - 2. Siv3D の基本: ja-jp/tutorial/basic.md
-      - 3. 図形を描く: ja-jp/tutorial/shape.md
-      - 4. 動きを作る: ja-jp/tutorial/animation.md
-      - 5. 画像を描く: ja-jp/tutorial/texture.md
+    - 勉強会コース:
+      - 0. Siv3D とは: ja-jp/learn/about.md
+      - 1. はじめての Siv3D: ja-jp/learn/hello-siv3d.md
+      - 2. Siv3D の基本: ja-jp/learn/basic.md
+      - 3. 図形を描く: ja-jp/learn/shape.md
+      - 4. 動きを作る: ja-jp/learn/animation.md
+      - 5. 画像を描く: ja-jp/learn/texture.md
+      - 演習 A - アイテム集めゲーム : ja-jp/learn/make-1.md
+      - 演習 B - 深さ優先探索の可視化 : ja-jp/learn/make-2.md
+      - 演習 C - 楽譜記述言語自作 : ja-jp/learn/make-3.md
+      - 演習 D - 模写アプリ改造 : ja-jp/learn/make-4.md
+      - 演習 E - 音ゲー基礎 : ja-jp/learn/make-5.md
+      - 演習 F - 脱出ゲーム : ja-jp/learn/make-6.md
+      - 演習 G - ノードベースプログラミング言語自作 : ja-jp/learn/make-6.md
     - API:
       - クラス一覧: ja-jp/api/classes.md
     - コミュニティ:
