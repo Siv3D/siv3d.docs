@@ -1,5 +1,5 @@
 # 0. Siv3D 勉強会
-Siv3D 勉強会で用いる資料を掲載しています。
+Siv3D 勉強会で用いるコース資料です。
 
 <div class="noshadow-76"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/logo/logo.png"></div>
 
@@ -36,4 +36,7 @@ OpenSiv3D for Web (試験的機能) を使うと、Siv3D で作った C++ アプ
 
 ??? summary "破損した JPEG を修復するゲーム"
 	<blockquote class="twitter-tweet"><p lang="ja" dir="ltr">破損した JPEG を修復するゲーム作った（遊んでみて）<a href="https://t.co/5otDapRaOa">https://t.co/5otDapRaOa</a><a href="https://twitter.com/hashtag/OpenSiv3D?src=hash&amp;ref_src=twsrc%5Etfw">#OpenSiv3D</a> <a href="https://twitter.com/hashtag/JPEG_Game?src=hash&amp;ref_src=twsrc%5Etfw">#JPEG_Game</a> <a href="https://t.co/nUxQU2lC3E">pic.twitter.com/nUxQU2lC3E</a></p>&mdash; Ryo Suzuki (@Reputeless) <a href="https://twitter.com/Reputeless/status/1451829140332560389?ref_src=twsrc%5Etfw">October 23, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+??? summary "ゲーム「選挙で勝とう」"
+	<blockquote class="twitter-tweet"><p lang="ja" dir="ltr">思い立って、「選挙で勝とう」というゲームを作成しました。<br><br>参議院選挙も近いので、ぜひ遊んでみてください！！！<a href="https://t.co/VXAK8Egix0">https://t.co/VXAK8Egix0</a> <a href="https://t.co/FfrU8FwJ8x">pic.twitter.com/FfrU8FwJ8x</a></p>&mdash; E869120 (@e869120) <a href="https://twitter.com/e869120/status/1543914754162380800?ref_src=twsrc%5Etfw">July 4, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
