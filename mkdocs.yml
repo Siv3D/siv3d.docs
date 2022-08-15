@@ -119,12 +119,11 @@ nav:
       - 12. オーディオ再生: ja-jp/learn/audio.md
       - 13. その他の機能: ja-jp/learn/misc.md
       - 演習 A - アイテム集めゲーム : ja-jp/learn/make-1.md
-      - 演習 B - 深さ優先探索の可視化 : ja-jp/learn/make-2.md
+      - 演習 B - 幅優先探索の可視化 : ja-jp/learn/make-2.md
       - 演習 C - 楽譜記述言語自作 : ja-jp/learn/make-3.md
       - 演習 D - 模写アプリ改造 : ja-jp/learn/make-4.md
       - 演習 E - 音ゲー基礎 : ja-jp/learn/make-5.md
       - 演習 F - 脱出ゲーム : ja-jp/learn/make-6.md
-#      - 演習 G - ノードベースプログラミング言語自作 : ja-jp/learn/make-6.md
     - API:
       - クラス一覧: ja-jp/api/classes.md
     - コミュニティ:

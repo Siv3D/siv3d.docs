@@ -347,26 +347,34 @@ void Main()
 		}
 	};
 
-	ls2.selectedItemIndex = 3;
-
 	ListBoxState ls3 = ls2;
+
+	ls2.selectedItemIndex = 3;
 
 	while (System::Update())
 	{
-		if (SimpleGUI::ListBox(ls1, Vec2{ 20, 20 }, 120, 156) && ls1.selectedItemIndex)
-		{
+		ClearPrint();
 
+		if (ls1.selectedItemIndex)
+		{
+			Print << ls1.items[*ls1.selectedItemIndex];
 		}
 
-		if (SimpleGUI::ListBox(ls2, Vec2{ 180, 20 }, 240, 156, false) && ls2.selectedItemIndex)
+		if (ls2.selectedItemIndex)
 		{
-
+			Print << ls2.items[*ls2.selectedItemIndex];
 		}
 
-		if (SimpleGUI::ListBox(ls3, Vec2{ 20, 200 }, 1020, 480) && ls3.selectedItemIndex)
+		if (ls3.selectedItemIndex)
 		{
-
+			Print << ls3.items[*ls3.selectedItemIndex];
 		}
+
+		SimpleGUI::ListBox(ls1, Vec2{ 620, 20 }, 120, 156);
+
+		SimpleGUI::ListBox(ls2, Vec2{ 780, 20 }, 240, 156, false);
+
+		SimpleGUI::ListBox(ls3, Vec2{ 20, 200 }, 1020, 480);
 	}
 }
 ```
