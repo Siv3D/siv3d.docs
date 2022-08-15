@@ -30,6 +30,7 @@ void Main()
 
 #### Scene::DeltaTime()
 `Scene::DeltaTime()` は、直前のフレームからの経過時間 (秒) を `double` 型の値で返します。`Scene::Time()` を使うかわりに、この値を加算していくことでアニメーションを作成することもできます。
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -54,6 +55,7 @@ void Main()
 `for (int i = 0; i < N; ++i)` を `for (auto i : step(N))` と書くことができます。
 
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/68UrNsZ9eOY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -78,8 +80,10 @@ void Main()
 
 `OffsetCircular{ offset, r, theta }` は、シーン上の座標 `Vec2 offset` を中心とする半径 `double r` の円を考え、その円周上で 12 時の方向を 0° として時計回りに `double theta` の位置を表します。`OffsetCircular` は `Vec2` に変換できます。
 
-![](/images/doc_v6/tutorial/3/3a.png)
-https://youtu.be/9CdPtsG5vJE
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/animation/3a.png)
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/9CdPtsG5vJE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -107,7 +111,7 @@ void Main()
 
 
 ## 4.4 毎フレーム固定の移動はダメ！ 時間を使おう
-`Scene::Time()` や `Scene::DeltaTime()` を使わなくても、毎フレーム、固定の値を足していくようなプログラムを書けばアニメーションを作れそうですが、それは**大きな間違い**です。
+`Scene::Time()` や `Scene::DeltaTime()` を使わなくても、毎フレーム、固定の値を足していくようなプログラムを書けばアニメーションを作れそうですが、それは**間違い**です。
 
 なぜなら、プログラムが実行されるパソコンのモニタのリフレッシュレートによって、メインループが毎秒何回実行されるかが変わるためです。一般的なモニタのリフレッシュレートは 60Hz で、毎秒 60 回メインループが実行されますが、近年は 120Hz や 144Hz, 240Hz など、より高頻度のリフレッシュレートを持つモニタが増えています。
 
@@ -156,7 +160,9 @@ void Main()
 
 ## 4.5 一定時間ごとに出現
 N 秒に 1 回の頻度でオブジェクトを出現させる、といった処理を書くときも、フレームベースではなく時間ベースのプログラムにします。
-https://youtu.be/nP3bXjQBX3s
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/nP3bXjQBX3s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -188,7 +194,9 @@ void Main()
 
 ## 4.6 マウスのクリック
 マウスの左ボタンがクリック（タッチディスプレイの場合は画面がタッチ）されたかを、`if (MouseL.down())` で調べられます。次のサンプルでは、画面上をマウスでクリックするたびに円が大きくなります。
-https://youtu.be/8c4C0ilM2CY
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/8c4C0ilM2CY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -214,7 +222,9 @@ void Main()
 
 ## 4.7 ストップウォッチ
 `Stopwatch` は、経過時間の計測やリセットを便利に行えるクラスです。`Stopwatch` のコンストラクタ引数に `StartImmediately::Yes` を渡すと、作成と同時に計測を開始します。`Stopwatch::sF()` はその時点での経過時間（秒）を `double` 型で返します。`Stopwatch::restart()` すると、経過時間をリセットして再び 0 から計測を開始（リスタート）します。
-https://youtu.be/b-fETvQ7kb0
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/b-fETvQ7kb0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -246,7 +256,9 @@ void Main()
 ## 4.8 ストップウォッチの一時停止と再開
 
 ストップウォッチが計測中かどうかは `if (Stopwatch::isRunning())` で調べられます。ストップウォッチの計測を一時停止するには `Stopwatch::pause()`, 一時停止を解除して計測を再開するには `Stopwatch::resume()` します。
-https://youtu.be/WFIZBX6bX_8
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/WFIZBX6bX_8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -288,11 +300,11 @@ Siv3D で周期的に移動・点滅・拡大縮小するようなアニメー�
 
 | 周期関数 | 動き |
 |--|--|
-|`Periodic::Square0_1`|![](/images/doc_v6/tutorial/3/9a.png)|
-|`Periodic::Triangle0_1`|![](/images/doc_v6/tutorial/3/9b.png)|
-|`Periodic::Sine0_1`|![](/images/doc_v6/tutorial/3/9c.png)|
-|`Periodic::Sawtooth0_1`|![](/images/doc_v6/tutorial/3/9d.png)|
-|`Periodic::Jump0_1`|![](/images/doc_v6/tutorial/3/9e.png)|
+|`Periodic::Square0_1`|![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/animation/9a.png)|
+|`Periodic::Triangle0_1`|![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/animation/9b.png)|
+|`Periodic::Sine0_1`|![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/animation/9c.png)|
+|`Periodic::Sawtooth0_1`|![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/animation/9d.png)|
+|`Periodic::Jump0_1`|![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/animation/9e.png)|
 
 周期は `2s` (2 秒) や `0.5s` (0.5 秒) のように時間リテラルを使って記述します。
 
@@ -311,7 +323,7 @@ Siv3D で周期的に移動・点滅・拡大縮小するようなアニメー�
 #### Periodic::Jump0_1()
 指定した周期で、地面からジャンプしたときの速度のような数値変化を繰り返す関数です。
 
-https://youtu.be/NHooReSLXaA
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/NHooReSLXaA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ```cpp
 # include <Siv3D.hpp>
@@ -343,7 +355,9 @@ void Main()
 
 ## 4.10 マウスのボタンが押されている
 マウスの左ボタンが押されている（タッチディスプレイの場合は画面がタッチされている）かを、`if (MouseL.pressed())` で調べられます。次のサンプルでは、左ボタンが押されている間だけ円が大きくなります。
-https://youtu.be/U62vWAmBlgE
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/U62vWAmBlgE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -374,7 +388,8 @@ void Main()
 
 次のサンプルでは、左ボタンが押されていると扇形が大きくなり、離されていると小さくなります。
 
-https://youtu.be/2C7CRQGrfGo
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/2C7CRQGrfGo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -434,7 +449,9 @@ void Main()
 
 ## 4.12 線形補間
 あるベクトル A から別のベクトル B への線形補間は `A.lerp(B, t)` で計算できます。`t` は　0.0 ～ 1.0 です。また、`Min()` は、渡された引数のうち最小値を、`Max()` は、渡された引数のうち最大値を返します。
-https://youtu.be/5z00r9Or_qs
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/5z00r9Or_qs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -479,7 +496,9 @@ void Main()
 0.0 から 1.0 に一定の速度で値を増加させるだけでは単調な動きになってしまいます。はじめは少しずつ加速し、ゴールに近づくとゆっくりになるといったように、速度に変化を与えると、より洗練された視覚効果を実現できます。0.0 → 1.0 の単調増加を、特徴的なカーブに変換できる **イージング関数** を使ってアニメーションの印象を改善しましょう。
 
 イージング関数は全部で約 30 種類用意されています。一覧は [Easing Functions Cheat Sheet](https://easings.net/) で確認できます。次のプログラムでは `EaseInOutExpo()` を使っています。ほかにも `EaseOutBounce()` や `EaseInOutBack()` など様々なイージング関数を試してみましょう。
-https://youtu.be/lmmkji7i6PQ
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/lmmkji7i6PQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ```cpp
 # include <Siv3D.hpp>
 
