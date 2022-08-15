@@ -70,7 +70,7 @@ Siv3D プロジェクトを作成すると、最初に次のようなサンプ�
 	}
 	```
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/tutorial/1/1.gif)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/1/1.gif)
 
 - マウスカーソルを移動すると、半透明の赤い円が追随します
 - 右上の「Button」と書かれたボタンを押すと、ネコの位置がランダムに変わります
@@ -142,7 +142,7 @@ Siv3D の様々な機能を体験できるおすすめサンプルを紹介し�
 マウスでパドルを移動させてブロックを全部消しましょう。  
 ただし、クリアしても何も起こりません。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/tutorial/1/s1.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/1/s1.png)
 
 ??? summary "ブロックくずしのサンプルコードを表示する"
 	```cpp
@@ -348,7 +348,7 @@ Siv3D の様々な機能を体験できるおすすめサンプルを紹介し�
 
 万華鏡のような模様を描けます。右クリックすると、書いたものをリセットします。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/tutorial/1/s2.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/1/s2.png)
 
 ??? summary "万華鏡ペイントのサンプルコードを表示する"
 	```cpp
@@ -422,7 +422,7 @@ Siv3D の様々な機能を体験できるおすすめサンプルを紹介し�
 テキストボックスに入力したテキストを QR コードに変換します。  
 スマートフォンのカメラで読み取ってみましょう。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/tutorial/1/s3.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/1/s3.png)
 
 ??? summary "QR コード生成のサンプルコードを表示する"
 	```cpp
@@ -469,7 +469,7 @@ Siv3D の様々な機能を体験できるおすすめサンプルを紹介し�
 四角や丸を描くと物体が生成されて物理演算をします。  
 マウスホイールや右クリックで視点を移動できます。  
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/tutorial/1/s4.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/1/s4.png)
 
 ??? summary "物理演算ワールドのサンプルコードを表示する"
 	```cpp
@@ -560,7 +560,7 @@ Siv3D の様々な機能を体験できるおすすめサンプルを紹介し�
 kd-木は近くにあるユニットを高速に検索できるデータ構造です。  
 シミュレーションゲームなどで役に立ちます。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/tutorial/1/s5.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/1/s5.png)
 
 ??? summary "kd-tree のサンプルコードを表示する"
 	```cpp
@@ -635,7 +635,7 @@ kd-木は近くにあるユニットを高速に検索できるデータ構造�
 パソコンに保存されている音楽ファイルを再生して、スペクトラムも表示します。
 パソコンに再生できる音楽ファイルが無い場合、サンプル用の音楽ファイルが `App/example/test.mp3` にあります。フリーの BGM 素材 (MP3) をダウンロードして試すこともできます。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/tutorial/1/s6.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/1/s6.png)
 
 ??? summary "音楽プレーヤーのサンプルコードを表示する"
 	```cpp
@@ -742,7 +742,7 @@ kd-木は近くにあるユニットを高速に検索できるデータ構造�
 ### 7 | ナビメッシュ
 制御点をもとに道路を作り、始点から終点までの最短経路を求めます。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/tutorial/1/s7.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/1/s7.png)
 
 ??? summary "ナビメッシュのサンプルコードを表示する"
 	```cpp
@@ -808,7 +808,7 @@ kd-木は近くにあるユニットを高速に検索できるデータ構造�
 ライフゲームを実行するプログラムです。  
 ライフゲームとは: [ライフゲーム (Wikipedia)](https://ja.wikipedia.org/wiki/%E3%83%A9%E3%82%A4%E3%83%95%E3%82%B2%E3%83%BC%E3%83%A0)
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/tutorial/1/s8.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/1/s8.png)
 
 ??? summary "ライフゲーム エディタのサンプルコードを表示する"
 	```cpp
@@ -1003,7 +1003,7 @@ kd-木は近くにあるユニットを高速に検索できるデータ構造�
 ### 9 | 模写アプリ
 真っ白な画像からスタートして、ランダムな色の円を重ねていくことで、目標の画像に近づけていくプログラムです。パソコンに適当な画像ファイルが無い場合、サンプル用の画像ファイルが `App/example/` フォルダにあります。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/tutorial/1/s9.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/1/s9.png)
 
 ??? summary "ランダムな色の円で目的の絵を作るサンプルコードを表示する"
 	```cpp
@@ -1095,7 +1095,7 @@ kd-木は近くにあるユニットを高速に検索できるデータ構造�
 ### 10 | マイクで入力した音の周波数解析
 マイクで入力した音声波形のスペクトラムをリアルタイムで表示します。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/tutorial/1/s10.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/1/s10.png)
 
 ??? summary "マイクで入力した音の周波数解析のサンプルコードを表示する"
 	```cpp
@@ -1140,7 +1140,7 @@ kd-木は近くにあるユニットを高速に検索できるデータ構造�
 キーボードを使ってピアノを演奏できるプログラムです。  
 コードを書き換えて楽器の音を変更できます。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/tutorial/1/s11.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/1/s11.png)
 
 ??? summary "ピアノのサンプルコードを表示する"
 	```cpp
@@ -1221,7 +1221,7 @@ kd-木は近くにあるユニットを高速に検索できるデータ構造�
 ### 12 | 3D 描画
 3D 描画も扱えます。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/tutorial/1/s12.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/1/s12.png)
 
 ??? summary "3D 描画のサンプルコードを表示する"
 	```cpp

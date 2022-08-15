@@ -131,7 +131,7 @@ void Main()
 ## 2.5 デバッグ表示
 画面にメッセージを表示してみましょう。`Print` に向かって、出力の記号 `<<` でテキストを送ると、そのテキストが画面に表示されます。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/tutorial/2/5.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/2/5.png)
 
 ```C++
 # include <Siv3D.hpp>
@@ -153,7 +153,7 @@ void Main()
 ## 2.6 さまざまな値の表示
 Siv3D で提供される型のほとんどは `Print` で値の内容を表示できます。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/tutorial/2/6.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/2/6.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -201,7 +201,7 @@ void Main()
 ## 2.7 デバッグ表示のあふれ
 次のように `Print` をメインループの中で使うと、毎フレーム新しいメッセージが追加され、古いメッセージは画面の外に追いやられます。画面外に出た古いメッセージは自動的に消去されます。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/tutorial/2/7.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/2/7.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -223,7 +223,7 @@ void Main()
 `ClearPrint()` を使うと、`Print` でデバッグ表示した内容を即座に消去します。  
 メインループの先頭で `ClearPrint()` すると、現在のフレームで `Print` した内容だけが表示されるようになります。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/tutorial/2/8.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/2/8.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -297,7 +297,7 @@ Siv3D の基本的なデータ型は次のとおりです。よく使う重要�
 
 Siv3D で整数を扱うときは、`int32`, `uint64` のような明示的なサイズを持つ型名を使い、`int`, `unsigned long long` のような標準の型名は使いません。前者のような型名を使うことで、プラットフォーム間での移植性が高まり、一貫性のある読みやすいコードになります。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/tutorial/2/9.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/2/9.png)
 ```cpp
 # include <Siv3D.hpp>
 
@@ -370,7 +370,7 @@ void Main()
 
 `Cursor::Pos()` を使うと、現在のマウスカーソルの座標を `Point` 型で取得できます。`Point` 型の値は X 座標を表す `int32 x` と Y 座標を表す `int32 y` の 2 つの成分を持っています。`Point` 型の値をそのまま丸ごと `Print` に送って表示することもできます。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/tutorial/2/11.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/2/11.png)
 ```cpp
 # include <Siv3D.hpp>
 
