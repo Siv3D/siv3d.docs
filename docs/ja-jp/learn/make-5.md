@@ -1,6 +1,15 @@
-# Siv3D のチュートリアル
+# 演習 E - 音ゲー基礎
 
-Siv3D のチュートリアルは以下のページをご覧ください。
+## 1. 譜面
 
-- 入門者向け [https://zenn.dev/reputeless/books/siv3d-documentation :material-open-in-new:](https://zenn.dev/reputeless/books/siv3d-documentation)
-- 中級者向け [https://github.com/Reputeless/games :material-open-in-new:](https://github.com/Reputeless/games)
+```cpp
+
+```
+
+
+## 2. 入力の判定
+
+```cpp
+
+```
+
