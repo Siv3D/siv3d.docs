@@ -5,7 +5,9 @@
 前章までテキストの表示に使ってきた `Print` は、フォントのサイズや種類、描画位置に自由度がありませんでした。自由にカスタマイズしたフォントを使ってテキストを描きたいときは `Font` を作成し、描画したい内容を `()` でつなげたあと、`.draw()` または `.drawAt()` します。
 
 `Texture` と同じように、`Font` の作成にはメモリ確保などの実行時負荷がかかります。メインループの中で毎フレーム新しい `Font` を作成するのは避け、作成が 1 回だけになるようにしましょう。
-![](/images/doc_v6/tutorial/14/1.png)
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/font/1.png)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -36,7 +38,9 @@ void Main()
 
 ## 8.2 改行する
 テキストの中に改行文字 `'\n'` が含まれていると、そこで改行されます。
-![](/images/doc_v6/tutorial/14/2.png)
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/font/2.png)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -54,7 +58,9 @@ void Main()
 
 ## 8.3 フォントの基本サイズ
 `Font` のコンストラクタの第 1 引数にはフォントの基本サイズを指定します。単位はピクセルです。基本サイズはあとから変更できません。1 つの `Font` からさまざまなサイズのテキストを描く方法はのちほど紹介します。
-![](/images/doc_v6/tutorial/14/3.png)
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/font/3.png)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -109,7 +115,8 @@ Siv3D には異なる太さの 7 種類の日本語フォントと、5 地域向
 |`Typeface::MonochromeEmoji`|モノクロ絵文字フォント|
 |`Typeface::ColorEmoji`|カラー絵文字フォント|
 
-![](/images/doc_v6/tutorial/14/4.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/font/4.png)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -163,7 +170,9 @@ void Main()
 
 ## 8.5 フォールバックフォントの追加
 1 つで全ての文字に対応するフォントはありません。様々な言語や字種が交ざるテキストを 1 つの `Font` で表示したい場合は、フォールバックフォントを設定します。フォールバックフォントを設定すると、基本のフォントで描けない文字が見つかったとき、もしフォールバックフォントで描けたら、そのフォントを使います。フォールバックフォントを設定するには、`.addFallback()` で作成済みの `Font` を渡します。フォールバックフォントは何個でも設定でき、先に設定したものが優先して使われます。
-![](/images/doc_v6/tutorial/14/5.png)
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/font/5.png)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -197,7 +206,9 @@ void Main()
 
 ## 8.6 フォントファイルからフォントを読み込んで使う
 コンピュータ上にあるフォントファイルから `Font` を作成するには、`Font` のコンストラクタに、読み込みたいフォントファイルのパスを渡します。このファイルパスは、実行ファイルがあるフォルダ（App フォルダ）を基準とする相対パスか、絶対パスを使用します。リリース用のアプリを作るときには、のちの章で説明する「リソース」パスの使用を推奨します。
-![](/images/doc_v6/tutorial/14/6.png)
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/font/6.png)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -223,7 +234,8 @@ PC にインストールされているフォントは OS ごとに特殊なフ�
 | `SpecialFolder::LocalFonts`  | (OS):/WINDOWS/Fonts/ | /Library/Fonts/        | /usr/local/share/fonts/<br>(存在する場合) |
 | `SpecialFolder::UserFonts`   | (OS):/WINDOWS/Fonts/ | ~/Library/Fonts/       | /usr/local/share/fonts/<br>(存在する場合) |
 
-![](/images/doc_v6/tutorial/14/7.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/font/7.png)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -260,7 +272,8 @@ void Main()
 ## 8.8 フォントのスタイルを変える
 `Font` のコンストラクタに `FontStyle` を指定することで、イタリックやボールドなどのスタイルをフォントに適用できます。
 
-![](/images/doc_v6/tutorial/14/8.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/font/8.png)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -296,7 +309,8 @@ void Main()
 ## 8.9 ビットマップフォントを使う
 ビットマップフォントはフォントスタイルに `FontStyle::Bitmap` を指定することで、フィルタリングされずドット感を保つことができます。
 
-![](/images/doc_v6/tutorial/14/9.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/font/9.png)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -323,7 +337,8 @@ void Main()
 ## 8.10 ベースラインを指定してテキストを描く
 文字のベースラインの開始位置を指定して描画したい場合は `.drawBase()` を使います。異なるサイズや種類のフォントを、ベースラインをそろえて描画できます。
 
-![](/images/doc_v6/tutorial/14/10.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/font/10.png)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -360,7 +375,8 @@ void Main()
 ## 8.11 テキスト描画の基準位置をカスタマイズする
 左上や中心以外にも、描画座標の基準点を設定できます。
 
-![](/images/doc_v6/tutorial/14/11.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/font/11.png)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -416,7 +432,8 @@ void Main()
 ## 8.12 テキストが表示される領域を調べる
 `Font` の `.draw()` や `.drawAt()` は、描画された領域を `RectF` 型で返します。また、`.region()` や `.regionAt()` を使うと、描画なしでその領域を取得できます。
 
-![](/images/doc_v6/tutorial/14/12.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/font/12.png)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -451,7 +468,8 @@ void Main()
 ## 8.13 指定した長方形の中にテキストを描く
 `Font::draw()` に `Rect` または `RectF` を渡すと、テキストをその長方形の内部に収まるように描画します。長方形内にテキストが収まった場合、関数は `true` を返します。一方、テキストがあふれる場合、最後の文字が `…` に置き換えられ、関数は `false` を返します。
 
-![](/images/doc_v6/tutorial/14/13.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/font/13.png)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -496,7 +514,8 @@ void Main()
 ## 8.14 テキストを 1 文字ずつ表示する
 `String` は、`.substr(0, N)` を使うと、0 文字目から N 文字分の文字列を取得できます。N を時間に応じて増やすことで 1 文字ずつテキストが増えていく処理を実現できます。N が実際の文字列の長さをオーバーしてもその分は無視されるので大丈夫です。 
 
-![](/images/doc_v6/tutorial/14/14.gif)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/font/14.gif)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -521,7 +540,8 @@ void Main()
 ## 8.15 文字に影の効果を付ける（2 回描画する手法）
 座標をずらして 2回 テキストを描くと、影の効果を簡単に作成できます。`Vec2::movedBy(x, y)` を使うと、指定した値だけ要素を加算した `Vec2` を作成できます。
 
-![](/images/doc_v6/tutorial/14/15.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/font/15.png)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -564,7 +584,8 @@ SDF / MSDF フォントで設定する基本サイズは、 Distance Field の�
 
 `.draw()` や `.drawAt()`, `.drawBase()` は、文字のサイズを指定できます。各方式について、基本サイズより大きなテキストを描いたときの結果を見てみましょう。
 
-![](/images/doc_v6/tutorial/14/16.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/font/16.png)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -604,7 +625,8 @@ SDF / MSDF 方式のフォントは、`TextStyle` を `.draw()` や `.drawAt()`,
 
 影のオフセットがとても大きく Distance Field の範囲外に及んだ場合、影が途切れてしまいます。それを防ぐには `Font` の `.setBufferThickness(Distance Field の余白のサイズ)` で、Distance Field を大きめに作成しておきます。デフォルトは 2 です。この値を大きくするとメモリ消費量や描画負荷が増加しますが、影や輪郭の効果をより広く適用できるようになります。
 
-![](/images/doc_v6/tutorial/14/17.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/font/17.png)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -652,7 +674,8 @@ void Main()
 
 のいずれかを設定します。
 
-![](/images/doc_v6/tutorial/14/18.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/font/18.png)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -696,7 +719,8 @@ void Main()
 `Font` の `.getGlyphs(text)` を `for` ループで次のように使用すると、個々の文字を自由に制御して描画するために必要な `Glyph` 型のオブジェクトを文字ごとに取得できます。  
 `Glyph` の `.codePoint` はその文字の UTF-32 コードポイントを、`.getOffset()` はペンの位置からさらに必要なオフセットを、`.xAdvance` は次の文字への X 座標の距離を表します。
 
-![](/images/doc_v6/tutorial/14/19.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/font/19.png)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -753,7 +777,8 @@ for (const auto& value : values)
 
 これを利用して、1 文字ごとに描画する位置をずらしてみましょう。
 
-![](/images/doc_v6/tutorial/14/20.gif)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/font/20.gif)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -881,7 +906,8 @@ void Main()
 Siv3D の `Font` は、初めて描く文字の画像を内部でレンダリングしてキャッシュするため、リアルタイムで動作しているゲームの途中で大量のテキストを初めて表示すると、そのフレームの実行時間が長くなり、フレームレートが一瞬低下することがあります。`.preload(text)` を使うと、`text` に含まれる文字を（重複する場合は除去して）内部にあらかじめ用意するため、ゲームの実行中の負荷を抑制できます。  
 また、`.getTexture()` を使うと、`Font` の内部にキャッシュされている `Texture` を取得できます。
 
-![](/images/doc_v6/tutorial/14/22.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/font/22.png)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -904,7 +930,8 @@ void Main()
 データを持たない空（から）のフォントは何も描きません。フォントファイルの読み込みに失敗したときにも空のフォントが作成されます。  
 フォントが空であるかは `if (font.isEmpty())` もしくは `if (not font)` で調べられます。
 
-![](/images/doc_v6/tutorial/14/23.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/font/23.png)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -941,7 +968,8 @@ void Main()
 ## 8.24 フォントの代入
 `Font` は次のように `=` 演算子を使って代入できます。
 
-![](/images/doc_v6/tutorial/14/24.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/font/24.png)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -969,7 +997,8 @@ void Main()
 ## 8.25 （サンプル）TextStyle プレビュー
 `TextStyle` の効果をプレビューできるサンプルです。マウスの右クリック移動やマウスホイールで視点を変更できます。
 
-![](/images/doc_v6/tutorial/14/25.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/font/25.png)
+
 ```cpp
 # include <Siv3D.hpp>
 
