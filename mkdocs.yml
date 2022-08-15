@@ -109,14 +109,14 @@ nav:
       - 2. Siv3D の基本: ja-jp/learn/basic.md
       - 3. 図形を描く: ja-jp/learn/shape.md
       - 4. 動きを作る: ja-jp/learn/animation.md
-#      - 5. 画像を描く: ja-jp/learn/texture.md
-#      - 6. テキストを描く: ja-jp/learn/font.md
-#      - 7. データ構造: ja-jp/learn/data-structure.md
-#      - 8. GUI: ja-jp/learn/gui.md
-#      - 9. キーボード: ja-jp/learn/keyboard.md
-#      - 10. マウス: ja-jp/learn/mouse.md
-#      - 11. 当たり判定: ja-jp/learn/geometry.md
-#      - 12. その他の機能: ja-jp/learn/misc.md
+      - 5. 画像を描く: ja-jp/learn/texture.md
+      - 6. データ構造: ja-jp/learn/data-structure.md
+      - 7. GUI: ja-jp/learn/gui.md
+      - 8. テキストを描く: ja-jp/learn/font.md
+      - 9. キーボード: ja-jp/learn/keyboard.md
+      - 10. マウス: ja-jp/learn/mouse.md
+      - 11. あたり判定: ja-jp/learn/geometry.md
+      - 12. その他の機能: ja-jp/learn/misc.md
       - 演習 A - アイテム集めゲーム : ja-jp/learn/make-1.md
       - 演習 B - 深さ優先探索の可視化 : ja-jp/learn/make-2.md
       - 演習 C - 楽譜記述言語自作 : ja-jp/learn/make-3.md

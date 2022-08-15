@@ -9,18 +9,24 @@ Siv3D 勉強会で用いるコース資料です。
 - 開始まで時間がある場合、「1. はじめての Siv3D」まで読み進めてみてください。遊べるサンプルも用意しています
 - インストールや実行で問題が発生している場合は運営スタッフや講師にご相談ください
 
+
 ### Siv3D の特徴
 - ゲームやアプリを楽しく簡単な C++ コード で開発できるフレームワーク
 - C++20 など最先端の C++ 規格で API が設計されている
 - Windows / macOS / Linux / Web など各種プラットフォームで動作する
 - オープンソース開発がアクティブで、日本語なので参加のハードルが低い
 
-
 ### 関連リンク
 - [Siv3D リファレンス](https://zenn.dev/reputeless/books/siv3d-documentation)
 - [Siv3D のソースコード (GitHub)](https://github.com/Siv3D/OpenSiv3D)
 - [Twitter #Siv3D #OpenSiv3D ハッシュタグ](https://twitter.com/search?q=Siv3D%20OR%20OpenSiv3D&src=typed_query&f=live)
 - [Siv3D Discord サーバなどのコミュニティ](https://siv3d.github.io/ja-jp/community/community/)
+
+
+### 勉強会講師プロフィール
+- Siv3D 作者
+- Twitter: [@Reputeless](https://twitter.com/Reputeless)
+- 個人 Web サイト: [https://ryo-suzuki-contact.github.io/](https://ryo-suzuki-contact.github.io/)
 
 
 ### Siv3D Web 版デモ

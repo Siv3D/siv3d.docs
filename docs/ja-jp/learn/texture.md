@@ -1,6 +1,4 @@
-# Siv3D のチュートリアル
+# 5. 画像を描く
 
-Siv3D のチュートリアルは以下のページをご覧ください。
 
-- 入門者向け [https://zenn.dev/reputeless/books/siv3d-documentation :material-open-in-new:](https://zenn.dev/reputeless/books/siv3d-documentation)
-- 中級者向け [https://github.com/Reputeless/games :material-open-in-new:](https://github.com/Reputeless/games)
+
