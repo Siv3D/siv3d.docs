@@ -28,7 +28,8 @@ void Main()
 
 `Cursor::Delta() == (Cursor::Pos() - Cursor::PreviousPos())` です。
 
-![](/images/doc_v6/tutorial/17/2.gif)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/mouse/2.gif)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -174,7 +175,8 @@ void Main()
 
 マウスホイールのスクロール量はフレームレートに依存しないため、`Scene::Delta()` で調整する必要はありません。
 
-![](/images/doc_v6/tutorial/17/7.gif)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/mouse/7.gif)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -252,60 +254,7 @@ void Main()
 ```
 
 
-## 10.10 マウスカーソルのスタイル
-マウスカーソルのスタイルを変更したいときは、`Cursor::RequestStyle()` を通して、変更したいカーソルのスタイルをリクエストします。手のアイコンにしたい場合は `CursorStyle::Hand` を、カーソルを非表示にしたい場合は `CursorStyle::Hidden` を指定します。マウスカーソルのリクエストは、そのフレームにのみ適用されるます。変更を維持したい場合は毎フレームにリクエストをし続ける必要があります。
-
-| CursorStyle                  | カーソルの形状   |
-|------------------------------|-----------|
-| CursorStyle::Arrow           | 矢印（通常）    |
-| CursorStyle::IBeam           | I マーク     |
-| CursorStyle::Cross           | 十字のマーク    |
-| CursorStyle::Hand            | 手のアイコン    |
-| CursorStyle::NotAllowed      | 禁止のマーク    |
-| CursorStyle::ResizeUpDown    | 上下のリサイズ   |
-| CursorStyle::ResizeLeftRight | 左右のリサイズ   |
-| CursorStyle::ResizeNWSE      | 左上-右下のリサイズ   |
-| CursorStyle::ResizeNESW      | 右上-左下のリサイズ   |
-| CursorStyle::ResizeAll       | 上下左右方向のリサイズ   |
-| CursorStyle::Hidden          | 非表示       |
-| CursorStyle::Default         | Arrow と同じ |
-
-![](/images/doc_v6/tutorial/7/7.gif)
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(Palette::White);
-
-	constexpr ColorF buttonColor{ 0.2, 0.6, 1.0 };
-	constexpr Circle button{ 400, 300, 60 };
-	Transition press{ 0.05s, 0.05s };
-
-	while (System::Update())
-	{
-		const bool mouseOver = button.mouseOver();
-
-		// 円の上にマウスカーソルがあれば
-		if (mouseOver)
-		{
-			// マウスカーソルを手の形に
-			Cursor::RequestStyle(CursorStyle::Hand);
-		}
-
-		press.update(button.leftPressed());
-
-		const double t = press.value();
-
-		button.movedBy(Vec2{ 0, 0 }.lerp(Vec2{ 0, 4 }, t))
-			.drawShadow(Vec2{ 0, 6 }.lerp(Vec2{ 0, 1 }, t), (12 - t * 7), (5 - t * 4))
-			.draw(buttonColor);
-	}
-}
-```
-
-
-## 10.11 (Windows 版) マウスカーソルの移動を制限する
+## 10.10 (Windows 版) マウスカーソルの移動を制限する
 Windows 版では、`Cursor::ClipToWindow(true)` を呼ぶとマウスカーソルが移動できる領域をウィンドウのクライアント領域上に制限できます。制限を解除するには `Cursor::ClipToWindow(false)` を呼びます。
 
 ```cpp

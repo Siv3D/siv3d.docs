@@ -102,7 +102,8 @@ void Main()
 ## 9.3 キーの名前を取得する
 `Input` の `.name()` は、そのキーの名前を `String` 型の値で返します。
 
-![](/images/doc_v6/tutorial/16/3.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/keyboard/3.png)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -193,7 +194,8 @@ void Main()
 ## 9.6 キーコンフィグ
 `InputGroup` 型は `Input` や、`Input` の `|`, `+` による組み合わせを格納できます。これを応用することで、次のようなキーコンフィグを簡単に実現できます。 
 
-![](/images/doc_v6/tutorial/16/6.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/keyboard/6.png)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -280,7 +282,8 @@ void Main()
 ## 9.7 テキスト入力
 `TextInput::UpdateText()` に `String` 型の変数を渡すことで、テキスト入力を処理できます。`TextInput::GetEditingText()` は未変換の文字入力を取得できます。
 
-![](/images/doc_v6/tutorial/16/7.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/keyboard/7.png)
+
 ```cpp
 # include <Siv3D.hpp>
 

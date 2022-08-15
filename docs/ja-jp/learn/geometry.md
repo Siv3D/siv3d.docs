@@ -3,7 +3,9 @@
 
 ## 11.1 マウスオーバー
 ある図形 `shape` の領域にマウスカーソルが重なっているかを、`shape.mouseOver()` で調べられます。
-![](/images/doc_v6/tutorial/7/1.gif)
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/geometry/1.gif)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -51,7 +53,9 @@ void Main()
 
 ## 11.2 図形のクリック
 ある図形 `shape` が左クリック（またはタッチ）されたかを、`shape.leftClicked()` で調べられます。`.leftClicked()` は、クリックのアクションのうち、最初に押し込んだフレームのみ `true` を返します。図形を押し続けていてもそれ以降は `false` を返します。
-![](/images/doc_v6/tutorial/7/2.gif)
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/geometry/2.gif)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -83,7 +87,9 @@ void Main()
 
 ## 11.3 図形が押されている
 ある図形 `shape` が左クリック（またはタッチ）されているかを、`shape.leftPressed()` で調べられます。`.leftPressed()` は、クリックのアクションのうち、最初に押し込んだフレームおよび、それ以降押され続けている場合に `true` を返します。
-![](/images/doc_v6/tutorial/7/3.gif)
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/geometry/3.gif)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -104,7 +110,9 @@ void Main()
 
 ## 11.4 図形の交差
 2 つの図形 `a` と `b` が交差しているかは、`a.intersects(b)` で調べられます。
-![](/images/doc_v6/tutorial/7/4.gif)
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/geometry/4.gif)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -136,7 +144,9 @@ void Main()
 
 ## 11.5 図形を内側に含む
 ある図形 `a` が別の図形 `b` を完全に内側に含んでいるかは、`a.contains(b)` で調べられます。次のサンプルでは、マウスカーソルに追従する円が長方形や星などの図形の内部に完全に含まれているときに、その図形の色を変更します。
-![](/images/doc_v6/tutorial/7/5.gif)
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/geometry/5.gif)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -168,7 +178,9 @@ void Main()
 
 ## 11.6 線分と交差する点
 ある図形 `a` と `b` の交差位置を求めたい場合は、`a.intersectsAt(b)` を使うと、交差情報を `Optional<Array<Vec2>>` 型の値として得ることができます。図形が交差する場合に有効値をもち、その交差点を配列に格納しています。2 つの線分がピッタリオーバーラップするケースでは、有効値として空の配列を返すことがあります。
-![](/images/doc_v6/tutorial/7/6.gif)
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/geometry/6.gif)
+
 ```cpp
 # include <Siv3D.hpp>
 

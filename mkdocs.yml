@@ -116,7 +116,8 @@ nav:
       - 9. キーボード: ja-jp/learn/keyboard.md
       - 10. マウス: ja-jp/learn/mouse.md
       - 11. あたり判定: ja-jp/learn/geometry.md
-      - 12. その他の機能: ja-jp/learn/misc.md
+      - 12. オーディオ再生: ja-jp/learn/audio.md
+      - 13. その他の機能: ja-jp/learn/misc.md
       - 演習 A - アイテム集めゲーム : ja-jp/learn/make-1.md
       - 演習 B - 深さ優先探索の可視化 : ja-jp/learn/make-2.md
       - 演習 C - 楽譜記述言語自作 : ja-jp/learn/make-3.md
