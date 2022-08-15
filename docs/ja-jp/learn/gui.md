@@ -1,9 +1,11 @@
 # 7. GUI
 この章では、ボタンやスライダーなど簡単な GUI を作成する方法を学びます。
 
-## 11.1 ボタン
+## 7.1 ボタン
 ボタンの表示と入力の取得を実装するときは `SimpleGUI::Button()` 関数を使うと便利です。関数にはボタンのテキストや位置、幅、状態などを設定できます。`SimpleGUI::Button()` は自身が押されたときに `true` を返します。
-![](/images/doc_v6/tutorial/11/1.gif)
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/gui/1.gif)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -53,9 +55,11 @@ void Main()
 ```
 
 
-## 11.2 スライダー
+## 7.2 スライダー
 スライダーの表示と値の取得を実装するときは `SimpleGUI::Slider()` 関数を使うと便利です。関数にはスライダーのテキストや位置、幅、値の範囲などを設定できます。テキストを持たない縦方向のスライダーは `SimpleGUI::VerticalSlider()` を使います。`SimpleGUI::Slider()` と `SimpleGUI::VerticalSlider()` は値が変更されたときに `true` を返します。
-![](/images/doc_v6/tutorial/11/2.gif)
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/gui/2.gif)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -104,9 +108,11 @@ void Main()
 ```
 
 
-## 11.3 チェックボックス
+## 7.3 チェックボックス
 チェックボックスの表示と入力の取得を実装するときは `SimpleGUI::CheckBox()` 関数を使うと便利です。関数にはチェックボックスのテキストや位置、幅、状態などを設定できます。`SimpleGUI::CheckBox()` は値が変更されたときに `true` を返します。
-![](/images/doc_v6/tutorial/11/3.gif)
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/gui/3.gif)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -140,9 +146,11 @@ void Main()
 ```
 
 
-## 11.4 ラジオボタン
+## 7.4 ラジオボタン
 ラジオボタンの表示と入力の取得を実装するときは `SimpleGUI::RadioButtons()` 関数を使うと便利です。関数にはラジオボタンのテキストや位置、幅、状態などを設定できます。`SimpleGUI::RadioButtons()` は値が変更されたときに `true` を返します。
-![](/images/doc_v6/tutorial/11/4.gif)
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/gui/4.gif)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -182,9 +190,11 @@ void Main()
 ```
 
 
-## 11.5 テキストボックス
+## 7.5 テキストボックス
 テキストボックスを実装するときは `SimpleGUI::TextBox()` 関数を使うと便利です。関数にはテキストボックスの位置、幅、文字数の上限、状態などを設定できます。テキストは `TextEditState` 型のオブジェクトによって管理します。`SimpleGUI::TextBox()` はテキストが変更されたときに `true` を返します。
-![](/images/doc_v6/tutorial/11/5.gif)
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/gui/5.gif)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -223,14 +233,14 @@ void Main()
 }
 ```
 
-## 11.6 テキストボックスの入力を Tab キーで進める
+## 7.6 テキストボックスの入力を Tab キーで進める
 `SimpleGUI::TextBox()` では、あるテキストボックスがアクティブな時、エンターキーや Tab キーを押したり、無関係な場所をクリックしたりすると、そのテキストボックスが非アクティブになります。
 
-あるテキストボックスが非アクティブ化したときに、テキスト入力に `U'\t` が含まれていたかを `TextInput::GetRawInput().includes(U'\t')` で調べることで、次のテキストボックスへの移動を実現することができます。
-![](/images/doc_v6/tutorial/11/6.gif)
-```cpp
-# include <Siv3D.hpp>
+あるテキストボックスが非アクティブ化したときに、`TextEditState` の `bool`型のメンバ変数 `.tabKey` を調べることで、次のテキストボックスへの移動を実現することができます。
 
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/gui/6.gif)
+
+```cpp
 void Main()
 {
 	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
@@ -259,7 +269,7 @@ void Main()
 		if (previous && (te0.active == false))
 		{
 			// Tab キーが入力されていた場合、次のテキストボックスをアクティブ化するフラグを true に
-			avtivateNextTextBox = TextInput::GetRawInput().includes(U'\t');
+			avtivateNextTextBox = te0.tabKey;
 		}
 
 		SimpleGUI::TextBox(te1, Vec2{ 100, 140 }, 200);
@@ -268,9 +278,11 @@ void Main()
 ```
 
 
-## 11.7 カラーピッカー
+## 7.7 カラーピッカー
 カラーピッカーは `SimpleGUI::ColorPicker()` 関数を使うと便利です。関数にはカラーピッカーの位置、状態などを設定できます。`SimpleGUI::ColorPicker()` は色が変更されたときに `true` を返します。
-![](/images/doc_v6/tutorial/11/7.gif)
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/gui/7.gif)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -293,9 +305,78 @@ void Main()
 ```
 
 
-## 11.8 見出し
+## 7.8 リストボックス
+リストボックスを実装するときは `SimpleGUI::ListBox()` 関数を使うと便利です。
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Window::Resize(1280, 720);
+	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+
+	ListBoxState ls1{
+		{
+			U"北海道", U"青森県", U"岩手県", U"宮城県", U"秋田県", U"山形県", U"福島県", U"茨城県",
+			U"栃木県", U"群馬県", U"埼玉県", U"千葉県", U"東京都", U"神奈川県", U"新潟県", U"富山県",
+			U"石川県", U"福井県", U"山梨県", U"長野県", U"岐阜県", U"静岡県", U"愛知県", U"三重県",
+			U"滋賀県", U"京都府", U"大阪府", U"兵庫県", U"奈良県", U"和歌山県", U"鳥取県", U"島根県",
+			U"岡山県", U"広島県", U"山口県", U"徳島県", U"香川県", U"愛媛県", U"高知県", U"福岡県",
+			U"佐賀県", U"長崎県", U"熊本県", U"大分県", U"宮崎県", U"鹿児島県", U"沖縄県",
+		}
+	};
+
+	ListBoxState ls2{
+		{
+			U"吾輩は猫である（1905年1月 - 1906年8月、『ホトトギス』/1905年10月 - 1907年5月、大倉書店・服部書店）",
+			U"坊っちゃん（1906年4月、『ホトトギス』/1907年、春陽堂刊『鶉籠』収録）",
+			U"草枕（1906年9月、『新小説』/『鶉籠』収録）",
+			U"二百十日（1906年10月、『中央公論』/『鶉籠』収録）",
+			U"野分（1907年1月、『ホトトギス』/1908年、春陽堂刊『草合』収録）",
+			U"虞美人草（1907年6月 - 10月、『朝日新聞』/1908年1月、春陽堂）",
+			U"坑夫（1908年1月 - 4月、『朝日新聞』/『草合』収録）",
+			U"三四郎（1908年9 - 12月、『朝日新聞』/1909年5月、春陽堂）",
+			U"それから（1909年6 - 10月、『朝日新聞』/1910年1月、春陽堂）",
+			U"門（1910年3月 - 6月、『朝日新聞』/1911年1月、春陽堂）",
+			U"彼岸過迄（1912年1月 - 4月、『朝日新聞』/1912年9月、春陽堂）",
+			U"行人（1912年12月 - 1913年11月、『朝日新聞』/1914年1月、大倉書店）",
+			U"こゝろ（1914年4月 - 8月、『朝日新聞』/1914年9月、岩波書店）",
+			U"道草（1915年6月 - 9月、『朝日新聞』/1915年10月、岩波書店）",
+			U"明暗（1916年5月 - 12月、『朝日新聞』/1917年1月、岩波書店）",
+		}
+	};
+
+	ls2.selectedItemIndex = 3;
+
+	ListBoxState ls3 = ls2;
+
+	while (System::Update())
+	{
+		if (SimpleGUI::ListBox(ls1, Vec2{ 20, 20 }, 120, 156) && ls1.selectedItemIndex)
+		{
+
+		}
+
+		if (SimpleGUI::ListBox(ls2, Vec2{ 180, 20 }, 240, 156, false) && ls2.selectedItemIndex)
+		{
+
+		}
+
+		if (SimpleGUI::ListBox(ls3, Vec2{ 20, 200 }, 1020, 480) && ls3.selectedItemIndex)
+		{
+
+		}
+	}
+}
+```
+
+
+## 7.9 見出し
 GUI の各ウィジェットに見出しを付けたい場合、`SimpleGUI::Headline` を使うと便利です。関数には見出しの位置、幅、状態などを設定できます。ヘッドラインの高さは 40px です。
-![](/images/doc_v6/tutorial/11/8.png)
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/gui/8.png)
+
 ```cpp
 # include <Siv3D.hpp>
 
