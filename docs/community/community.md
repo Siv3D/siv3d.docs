@@ -3,7 +3,7 @@
 ## 1. Discord & Slack
 Siv3D ユーザのためのグループチャットです。目的別のチャンネル（チャットルーム）が用意され、Siv3D について話したり、質問をしたり、自分の作品を紹介したりできます。Siv3D 本体の開発に興味のある方のためのチャンネルもあり、開発状況をいちはやく共有するほか、新機能の共同開発も行っています。閲覧のみや無言も OK で、いつでも勝手に退会可能です。現在 Discord と Slack 合わせて 700 人以上が登録しています。
 
-[:material-discord: Join Siv3D Discord](https://discord.gg/mzevvsY){ .md-button .md-button--primary }
+[:fontawesome-brands-discord: Join Siv3D Discord](https://discord.gg/mzevvsY){ .md-button .md-button--primary }
 
 [:material-slack: Join Siv3D Slack](https://join.slack.com/t/siv3d/shared_invite/enQtNjM4NzQ0MzEyMzUzLTEzNDBkNWVkMTY0OGU5OWQxOTk3NjczMjk0OGJhYzJjOThjZjQ1YmYzMWU2NzQ5NTQ4ODg3NzE2ZmE0NmVlMTM){ .md-button .md-button--primary }
 

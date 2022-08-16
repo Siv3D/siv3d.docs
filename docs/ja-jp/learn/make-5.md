@@ -78,7 +78,7 @@ Array<Note> LoadNotes(const FilePath& path)
 		// 読み込んだ行を半角スペースで分割
 		const Array<String> params = line.split(U' ');
 
-		// 分割した結果が 2 要素出ない場合不正な譜面
+		// 分割した結果が 2 要素でない場合は不正な譜面
 		if (params.size() != 2)
 		{
 			throw Error{ U"不正な譜面です。" };
