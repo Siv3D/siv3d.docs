@@ -17,6 +17,8 @@
     ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/make/folder.png)
 
 
+テキストファイルから数値をパースする方法については、演習 E も参照してください。
+
 ### プログラム
 
 ```cpp

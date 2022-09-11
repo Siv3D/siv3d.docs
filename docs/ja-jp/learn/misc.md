@@ -173,3 +173,27 @@ void Main()
 	}
 }
 ```
+
+
+## 13.5 文字列から数値への変換
+`Parse<int32>(s)` で、文字列 `s` をパースして数値に変換できます。13.2 と組み合わせれば、テキストファイルから数値を読み込むことができます。
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	const int32 a = Parse<int32>(U"123");
+	const double b = Parse<double>(U"-3.14159");
+	const Point c = Parse<Point>(U"(10, 20)");
+
+	Print << a;
+	Print << b;
+	Print << c;
+
+	while (System::Update())
+	{
+
+	}
+}
+```
