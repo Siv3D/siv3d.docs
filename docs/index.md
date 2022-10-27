@@ -85,7 +85,7 @@ If you like Siv3D's vision and wish to support its development, please consider 
 	- [sknjpn](https://twitter.com/sknjpn)
 
 	#### Bronze Sponsor
-	アゲハマ, 😀, minachun, Fuyutsubaki, 😊, 🐝, 🐠, 野菜ジュース, MawkishWaffle, jacking75, Chris Ohk, IZUNA, qppon, k-sunako, ysaito, totono, おおやま, tumf, 🍵, lamuda
+	アゲハマ, 😀, minachun, Fuyutsubaki, 😊, 🐝, 🐠, 野菜ジュース, MawkishWaffle, jacking75, Chris Ohk, IZUNA, qppon, k-sunako, ysaito, totono, おおやま, tumf, 🍵, lamuda, 🐧
 
 	<small>（*匿名の方は絵文字）</small>
 
