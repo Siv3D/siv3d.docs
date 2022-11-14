@@ -286,3 +286,166 @@ void Main()
 }
 ```
 
+### 3.5 メッセージボックス相当の機能を自作する
+
+```cpp
+# include <Siv3D.hpp>
+
+namespace s3dx
+{
+	class SceneMessageBoxImpl
+	{
+	public:
+
+		static constexpr Size MessageBoxSize{ 360, 240 };
+
+		static constexpr Size MessageBoxButtonSize{ 120, 40 };
+
+		static constexpr ColorF MessageBoxBackgroundColor{ 0.96 };
+
+		static constexpr ColorF MessageBoxActiveButtonColor{ 1.0 };
+
+		static constexpr ColorF MessageBoxTextColor{ 0.11 };
+
+		SceneMessageBoxImpl()
+		{
+			System::SetTerminationTriggers(UserAction::NoAction);
+			Scene::SetBackground(ColorF{ 0.11 });
+		}
+
+		~SceneMessageBoxImpl()
+		{
+			System::SetTerminationTriggers(m_triggers);
+			Scene::SetBackground(m_bgColor);
+		}
+
+		MessageBoxResult show(StringView text, const std::pair<String, MessageBoxResult>& button) const
+		{
+			while (System::Update())
+			{
+				drawMessageBox(text);
+				m_buttonC.draw(m_buttonC.mouseOver() ? MessageBoxActiveButtonColor : MessageBoxBackgroundColor).drawFrame(0, 1, MessageBoxTextColor);
+				m_font(button.first).drawAt(m_buttonC.center().moveBy(0, -1), MessageBoxTextColor);
+
+				if (m_buttonC.mouseOver())
+				{
+					Cursor::RequestStyle(CursorStyle::Hand);
+
+					if (MouseL.down())
+					{
+						break;
+					}
+				}
+			}
+
+			return button.second;
+		}
+
+		MessageBoxResult show(const StringView text, const std::pair<String, MessageBoxResult>& button0, const std::pair<String, MessageBoxResult>& button1) const
+		{
+			MessageBoxResult result = MessageBoxResult::Cancel;
+
+			while (System::Update())
+			{
+				drawMessageBox(text);
+				m_buttonL.draw(m_buttonL.mouseOver() ? MessageBoxActiveButtonColor : MessageBoxBackgroundColor).drawFrame(0, 1, MessageBoxTextColor);
+				m_buttonR.draw(m_buttonR.mouseOver() ? MessageBoxActiveButtonColor : MessageBoxBackgroundColor).drawFrame(0, 1, MessageBoxTextColor);
+				m_font(button0.first).drawAt(m_buttonL.center().moveBy(0, -1), MessageBoxTextColor);
+				m_font(button1.first).drawAt(m_buttonR.center().moveBy(0, -1), MessageBoxTextColor);
+
+				if (m_buttonL.mouseOver())
+				{
+					Cursor::RequestStyle(CursorStyle::Hand);
+
+					if (MouseL.down())
+					{
+						result = button0.second;
+						break;
+					}
+				}
+				else if (m_buttonR.mouseOver())
+				{
+					Cursor::RequestStyle(CursorStyle::Hand);
+
+					if (MouseL.down())
+					{
+						result = button1.second;
+						break;
+					}
+				}
+			}
+
+			return result;
+		}
+
+	private:
+
+		Transformer2D m_tr{ Mat3x2::Identity(), Mat3x2::Identity(), Transformer2D::Target::SetLocal };
+
+		ScopedRenderStates2D m_rs{ BlendState::Default2D, SamplerState::Default2D, RasterizerState::Default2D };
+
+		uint32 m_triggers = System::GetTerminationTriggers();
+
+		ColorF m_bgColor = Scene::GetBackground();
+
+		Vec2 m_pos = ((Scene::Size() - MessageBoxSize) * 0.5);
+
+		RectF m_messageBoxRect{ m_pos, MessageBoxSize };
+
+		RectF m_buttonC = RectF{ Arg::bottomCenter(m_messageBoxRect.bottomCenter().movedBy(0, -20)), MessageBoxButtonSize };
+
+		RectF m_buttonL = RectF{ Arg::bottomCenter(m_messageBoxRect.bottomCenter().movedBy(-80, -20)), MessageBoxButtonSize };
+
+		RectF m_buttonR = RectF{ Arg::bottomCenter(m_messageBoxRect.bottomCenter().movedBy(80, -20)), MessageBoxButtonSize };
+
+		Font m_font = SimpleGUI::GetFont();
+
+		void drawMessageBox(StringView text) const
+		{
+			m_messageBoxRect.draw(MessageBoxBackgroundColor).stretched(-5).drawFrame(1, 0, MessageBoxTextColor);
+			m_font(text).draw(14, m_messageBoxRect.stretched(-20, -20, -80, -20), MessageBoxTextColor);
+		}
+	};
+
+	inline MessageBoxResult SceneMessageBoxOK(StringView text)
+	{
+		return SceneMessageBoxImpl{}.show(text, { U"OK", MessageBoxResult::OK });
+	}
+
+	[[nodiscard]]
+	inline MessageBoxResult SceneMessageBoxOKCancel(StringView text)
+	{
+		return SceneMessageBoxImpl{}.show(text, { U"OK", MessageBoxResult::OK }, { U"キャンセル", MessageBoxResult::Cancel });
+	}
+
+	[[nodiscard]]
+	inline MessageBoxResult SceneMessageBoxYesNo(StringView text)
+	{
+		return SceneMessageBoxImpl{}.show(text, { U"はい", MessageBoxResult::Yes }, { U"いいえ", MessageBoxResult::No });
+	}
+}
+
+void Main()
+{
+	// 5 秒間のカウントダウンタイマー
+	Timer timer{ 2s, StartImmediately::Yes };
+
+	while (System::Update())
+	{
+		ClearPrint();
+
+		// 残り時間を表示する
+		Print << U"残り " << timer.format(U"mm:ss");
+
+		// タイマーが 0 に到達したら
+		if (timer.reachedZero())
+		{
+			// OK のメッセージボックスを表示する
+			s3dx::SceneMessageBoxOK(U"体験版で遊べるのはここまでです。");
+
+			// プログラムを終了する
+			return;
+		}
+	}
+}
+```
