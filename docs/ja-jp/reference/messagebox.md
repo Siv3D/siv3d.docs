@@ -428,7 +428,7 @@ namespace s3dx
 void Main()
 {
 	// 5 秒間のカウントダウンタイマー
-	Timer timer{ 2s, StartImmediately::Yes };
+	Timer timer{ 5s, StartImmediately::Yes };
 
 	while (System::Update())
 	{
