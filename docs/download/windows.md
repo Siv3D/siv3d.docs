@@ -9,7 +9,7 @@ Here are the system requirements for OpenSiv3D v0.6.6 programming on Windows.
 | OS | Windows 10 (64-bit) /  Windows 11 |
 | CPU | Intel / AMD CPU |
 | Output Devices | Monitors and speakers |
-| IDE | Microsoft Visual C++ 2022 17.3<br>(Install "Desktop development with C++" from the Visual Studio Installer) |
+| IDE | Microsoft Visual C++ 2022 17.4<br>(Install "Desktop development with C++" from the Visual Studio Installer) |
 
 ??? summary "Visual Studio のエディションについて"
 	Windows 10, Windows 11 のパソコンで Siv3D プログラミングをする場合は**「Visual Studio Community 2022（ビジュアル・スタジオ・コミュニティ 2022）」**を使うのが便利です。これは世界中のプロフェッショナルのソフトウェア開発者が使う「Visual Studio」という統合開発環境の無料版です。学生、個人、少規模の開発であれば、Visual Studio の有料版と同じ機能を無料で使えます。
