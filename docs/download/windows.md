@@ -2,7 +2,7 @@
 
 ## 1. System requirements
 ### 1.1 System requirements for development
-Here are the system requirements for OpenSiv3D v0.6.5 programming on Windows.
+Here are the system requirements for OpenSiv3D v0.6.6 programming on Windows.
 
 |  |  |
 |--|--|
@@ -24,7 +24,7 @@ Here are the system requirements for OpenSiv3D v0.6.5 programming on Windows.
 	そのまま右下の 「インストール」 ボタンを押せば、C++ プログラミングに必要なツールのインストールがはじまります。
 
 ### 1.2 System requirements for running Siv3D application
-This is the environment required to run applications developed with OpenSiv3D v0.6.5 on Windows. You may want to include it in your instructions when distributing your game or application.
+This is the environment required to run applications developed with OpenSiv3D v0.6.6 on Windows. You may want to include it in your instructions when distributing your game or application.
 
 |  |  |
 |--|--|
@@ -34,14 +34,14 @@ This is the environment required to run applications developed with OpenSiv3D v0
 
 ## 2. Installing the Siv3D SDK
 
-1. Download and run **[OpenSiv3D v0.6.5 Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D_0.6.5_Installer.exe)**.
+1. Download and run **[OpenSiv3D v0.6.6 Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D_0.6.6_Installer.exe)**.
 
 ??? warning "どうしても失敗する場合は"
 	インストーラの実行に失敗する場合は、このページの「(補足) SDK を手動インストールする」の方法で SDK をインストールしてください。
 
 ??? summary "The installer will automatically do the following:"
 	- Create a SDK folder (The default location is `Documents`).
-	- Set a user environment variable "SIV3D_0_6_5" with the path to the SDK folder.
+	- Set a user environment variable "SIV3D_0_6_6" with the path to the SDK folder.
 	- Copy the Visual Studio project template for the Siv3D project (The default locations is `Documents/Visual Studio 2022/Templates/ProjectTemplates/`).
 	- Register the uninstaller.
 
@@ -73,18 +73,18 @@ If you have trouble with the SDK installer in Windows, you can manually install 
 ??? summary "SDK を手動インストールする場合の手順"
 	### Getting the Siv3D SDK and setting the SDK folder path to the environment variable
 
-	1. Download and extract [OpenSiv3D_SDK_0.6.5.zip](https://siv3d.jp/downloads/Siv3D/manual/0.6.5/OpenSiv3D_SDK_0.6.5.zip) (File size: 88 MB), and place the contents in your documents folder as follows:
-		- `.../Documents/OpenSiv3D_SDK_0.6.5/addon`
-		- `.../Documents/OpenSiv3D_SDK_0.6.5/include`
-		- `.../Documents/OpenSiv3D_SDK_0.6.5/lib`
-	2. Create a new environment variable `SIV3D_0_6_5` and set the path to the SDK folder (the parent folder of the `addon/`, `include/`, and `lib/` folders)
-		- Example: If you have placed `C:/Users/Siv3D/Documents/OpenSiv3D_SDK_0.6.5/include`, set `C:/Users/Siv3D/Documents/OpenSiv3D_SDK_0.6.5` to the environment variable `SIV3D_0_6_5`.
+	1. Download and extract [OpenSiv3D_SDK_0.6.6.zip](https://siv3d.jp/downloads/Siv3D/manual/0.6.6/OpenSiv3D_SDK_0.6.6.zip) (File size: 88 MB), and place the contents in your documents folder as follows:
+		- `.../Documents/OpenSiv3D_SDK_0.6.6/addon`
+		- `.../Documents/OpenSiv3D_SDK_0.6.6/include`
+		- `.../Documents/OpenSiv3D_SDK_0.6.6/lib`
+	2. Create a new environment variable `SIV3D_0_6_6` and set the path to the SDK folder (the parent folder of the `addon/`, `include/`, and `lib/` folders)
+		- Example: If you have placed `C:/Users/Siv3D/Documents/OpenSiv3D_SDK_0.6.6/include`, set `C:/Users/Siv3D/Documents/OpenSiv3D_SDK_0.6.6` to the environment variable `SIV3D_0_6_6`.
 
 	![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/download/windows/envvariable.png)  
 
 	### Deploying the OpenSiv3D project template (ZIP)
 
-	1. Visual Studio 用プロジェクトテンプレート [OpenSiv3D_0.6.5.zip](https://siv3d.jp/downloads/Siv3D/manual/0.6.5/OpenSiv3D_0.6.5.zip) (サイズ: 約 63 MB) をダウンロードし、そのファイルを**展開せず ZIP ファイルのまま**、Visual Studio 2022 インストール時にドキュメントフォルダに作成される `Visual Studio 2022/Templates/ProjectTemplates/` フォルダの中に配置します  
+	1. Visual Studio 用プロジェクトテンプレート [OpenSiv3D_0.6.6.zip](https://siv3d.jp/downloads/Siv3D/manual/0.6.6/OpenSiv3D_0.6.6.zip) (サイズ: 約 63 MB) をダウンロードし、そのファイルを**展開せず ZIP ファイルのまま**、Visual Studio 2022 インストール時にドキュメントフォルダに作成される `Visual Studio 2022/Templates/ProjectTemplates/` フォルダの中に配置します  
 
 	![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/download/windows/projecttemplate.png)  
 

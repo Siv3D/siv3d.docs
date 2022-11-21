@@ -10,7 +10,7 @@ Siv3D プロジェクトを作成すると、最初に次のようなサンプ�
 
 ??? summary "用意されているサンプルコードを表示する"
 	```cpp
-	# include <Siv3D.hpp> // OpenSiv3D v0.6.5
+	# include <Siv3D.hpp> // OpenSiv3D v0.6.6
 
 	void Main()
 	{

@@ -2,7 +2,65 @@
 
 ## v0.6 世代
 
-???+ summary "v0.6.5 | 2022-08-10"
+???+ summary "v0.6.6 | 2022-11-22"
+	#### 新機能
+	- シンプルなメニューバーを扱う機能を追加しました ([#898](https://github.com/Siv3D/OpenSiv3D/issues/898))
+		- [サンプル](https://zenn.dev/link/comments/2deb08c8839b7c)
+	- 入力処理を打ち切る機能を追加しました ([#897](https://github.com/Siv3D/OpenSiv3D/issues/897))
+		- [サンプル](https://zenn.dev/link/comments/0199a3d4069432s)
+	- `std::set` の置き換えとなる `OrderedTable` 型を追加しました ([#909](https://github.com/Siv3D/OpenSiv3D/pull/909))
+		- [サンプル](https://zenn.dev/link/comments/310475d5bb43b5)
+	- `RoundRect::draw()` において、上下の色グラデーションを指定できるようになりました ([#906](https://github.com/Siv3D/OpenSiv3D/issues/906))
+		- [サンプル](https://zenn.dev/link/comments/b075516ffa7b4e)
+	- `Rect::drawFrame()`, `RectF::drawFrame()`, `RoundRect::draw()`, `RoundRect::drawFrame()` において、上下の色グラデーションを指定できるようになりました ([#906](https://github.com/Siv3D/OpenSiv3D/issues/906))
+		- [サンプル](https://zenn.dev/link/comments/ea380caf8b5979)
+	- （Windows 版）タスクバーにタスクの進捗状況を表示する機能を追加しました ([#904](https://github.com/Siv3D/OpenSiv3D/issues/904))
+		- [サンプル](https://zenn.dev/link/comments/bb445a346947d3)
+	- 2 つの長方形の重なる領域を長方形で返す関数を追加しました ([#872](https://github.com/Siv3D/OpenSiv3D/issues/872))
+		- [サンプル](https://zenn.dev/link/comments/5fd7bc5a3814a8)
+	- `P2Body` に弾丸モードを追加しました ([#901](https://github.com/Siv3D/OpenSiv3D/issues/901))
+	- 時間型が `_fmt()` に対応しました ([#894](https://github.com/Siv3D/OpenSiv3D/issues/894), [#895](https://github.com/Siv3D/OpenSiv3D/pull/895))
+	- 空の長方形を作成する `Rect::Empty()`, `RectF::Empty()` を追加しました ([#881](https://github.com/Siv3D/OpenSiv3D/issues/881))
+	- 長方形が空であるかを返す `Rect::isEmpty()`, `Rect::operator bool()`, `RectF::isEmpty()`, `RectF::operator bool()` を追加しました ([#879](https://github.com/Siv3D/OpenSiv3D/issues/879), [#880](https://github.com/Siv3D/OpenSiv3D/issues/880))
+	- `Array::partition()`, `Array::stable_partition()` を追加しました ([#869](https://github.com/Siv3D/OpenSiv3D/issues/869))
+	- `Camera2DParameters`, `LicenseManager`, `LicenseInfo`, `XInput` がスクリプト内で使えるようになりました ([#868](https://github.com/Siv3D/OpenSiv3D/issues/868))
+
+	#### ユーザビリティ向上	
+	- ヘッダの軽量化のためのリファクタリングを行いました ([#883](https://github.com/Siv3D/OpenSiv3D/issues/883), [#886](https://github.com/Siv3D/OpenSiv3D/issues/886))
+	- Windows 版における、フルスクリーン時にメッセージボックスを表示すると操作不能になる問題を解決しました。シーン内にフォールバックのメッセージボックスが表示されます ([#915](https://github.com/Siv3D/OpenSiv3D/issues/915))
+	- `Array` のテンプレート引数推論を改善しました ([#887](https://github.com/Siv3D/OpenSiv3D/issues/887))
+	- `CITATION.cff` を追加しました ([#882](https://github.com/Siv3D/OpenSiv3D/issues/882))
+	- `Grid::resize()` のオーバーロードを追加しました ([#876](https://github.com/Siv3D/OpenSiv3D/issues/876))
+
+	#### 仕様変更
+	- 各種サードパーティライブラリを更新しました ([#914](https://github.com/Siv3D/OpenSiv3D/issues/914)) 
+	- `PlayingCard` のデザインを微修正しました ([#905](https://github.com/Siv3D/OpenSiv3D/issues/905))
+	- `PlayingCard.hpp` は experimental から正式な機能になりました ([#885](https://github.com/Siv3D/OpenSiv3D/issues/885))
+
+	#### パフォーマンス向上
+	- `DisjointSet` のメモリ消費を削減しました ([#878](https://github.com/Siv3D/OpenSiv3D/issues/878))
+
+	#### 不具合・バグ修正
+	- Web 版の不具合修正、互換性向上を行いました
+	- `XMLReader` の一部のコンストラクタが使えなかった不具合を修正しました ([#896](https://github.com/Siv3D/OpenSiv3D/issues/896)) 
+	- ドキュメントを修正しました ([#871](https://github.com/Siv3D/OpenSiv3D/issues/871), [#903](https://github.com/Siv3D/OpenSiv3D/issues/903))
+	- 正規表現におけるキャプチャの仕様の不具合を修正しました ([#893](https://github.com/Siv3D/OpenSiv3D/issues/893))
+	- `String::removed(StringView)` に空の文字列を渡すと無限ループになるバグを修正しました ([#892](https://github.com/Siv3D/OpenSiv3D/pull/892))
+	- `Allocator` の不具合を修正しました ([#889](https://github.com/Siv3D/OpenSiv3D/issues/889), [#891](https://github.com/Siv3D/OpenSiv3D/pull/891))
+	- `DisjointSet::operator bool()` の戻り値の `true`, `false` が逆だったバグを修正しました ([#877](https://github.com/Siv3D/OpenSiv3D/pull/877))
+	- 各種クラスの `_fmt()` 対応の不具合を修正しました ([#873](https://github.com/Siv3D/OpenSiv3D/issues/873))
+	- `LineString::calculateBufferClosed()`, `LineString::calculateRoundBufferClosed()` が閉じないことがあった不具合を修正しました ([#870](https://github.com/Siv3D/OpenSiv3D/issues/870))
+
+	#### コントリビューション
+	- [nokotan](https://github.com/nokotan): **Web 版を更新**
+	- [MayFlyOvO](https://github.com/MayFlyOvO): **`OrderedTable` の追加**
+	- [Raclamusi](https://github.com/Raclamusi): `Array`, `Allocator`, "fmt" の改善・バグ修正
+	- [AngelCase](https://github.com/AngelCase): `String::removed()` のバグ修正
+	- [yunba28](https://github.com/yunba28): ドキュメントの改善
+	- [sknjpn](https://github.com/sknjpn): ドキュメントの改善
+
+
+??? summary "v0.6.5 | 2022-08-10"
 	#### 新機能
 	- Visual Studio 2022 17.3 に対応しました ([#859](https://github.com/Siv3D/OpenSiv3D/issues/859))
 	- `LineString::extractLineString(double, CloseRing)` オーバーロードを追加しました ([#866](https://github.com/Siv3D/OpenSiv3D/issues/866))

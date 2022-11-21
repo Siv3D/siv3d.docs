@@ -3,11 +3,11 @@
 
 **Siv3D** is a framework for developing games and apps with **fun and easy C++ code**, distributed under the MIT license and running on Windows, macOS, Linux, and Web.
 
-#### Download Siv3D | v0.6.5
+#### Download Siv3D | v0.6.6
 
 [Windows :material-microsoft-windows:](download/windows){ .md-button .md-button--primary }[macOS :material-apple:](download/macos){ .md-button .md-button--primary }[Ubuntu :material-ubuntu:](download/ubuntu){ .md-button .md-button--primary }
 
-#### Download Siv3D for Web (experimental) | v0.6.5
+#### Download Siv3D for Web (experimental) | v0.6.6
 
 [for Web (Windows + Visual Studio) :material-microsoft-visual-studio:](download/web-vs){ .md-button .md-button--primary }[for Web (Visual Studio Code) :material-microsoft-visual-studio-code:](download/web-vscode){ .md-button .md-button--primary }
 
