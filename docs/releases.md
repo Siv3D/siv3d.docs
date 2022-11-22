@@ -7,7 +7,7 @@
 	- シンプルなメニューバーを扱う機能を追加しました ([#898](https://github.com/Siv3D/OpenSiv3D/issues/898))
 		- [サンプル](https://zenn.dev/link/comments/2deb08c8839b7c)
 	- 入力処理を打ち切る機能を追加しました ([#897](https://github.com/Siv3D/OpenSiv3D/issues/897))
-		- [サンプル](https://zenn.dev/link/comments/0199a3d4069432s)
+		- [サンプル](https://zenn.dev/link/comments/0199a3d4069432)
 	- `std::map` の置き換えとなる `OrderedTable` 型を追加しました ([#909](https://github.com/Siv3D/OpenSiv3D/pull/909))
 		- [サンプル](https://zenn.dev/link/comments/310475d5bb43b5)
 	- `RoundRect::draw()` において、上下の色グラデーションを指定できるようになりました ([#906](https://github.com/Siv3D/OpenSiv3D/issues/906))
