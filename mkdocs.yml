@@ -83,6 +83,7 @@ nav:
       - Tutorial: tutorial/tutorial.md
     - Reference:
       - Message box: ja-jp/reference/messagebox.md
+      - Asynchronous Programming: ja-jp/reference/async.md
     - API:
       - Classes: api/classes.md
     - Community:
@@ -107,6 +108,7 @@ nav:
       - チュートリアル: ja-jp/tutorial/tutorial.md
     - リファレンス:
       - メッセージボックス: ja-jp/reference/messagebox.md
+      - 非同期処理: ja-jp/reference/async.md
     - 勉強会コース:
       - 0. Siv3D 勉強会: ja-jp/learn/about.md
       - 1. はじめての Siv3D: ja-jp/learn/hello-siv3d.md
