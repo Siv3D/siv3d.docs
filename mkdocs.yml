@@ -85,6 +85,7 @@ nav:
       - Message box: ja-jp/reference/messagebox.md
       - Asynchronous Programming: ja-jp/reference/async.md
       - User-defined Classes: ja-jp/reference/adapter.md
+    - Siv3D Studio: studio.md
     - API:
       - Classes: api/classes.md
     - Community:
@@ -134,6 +135,7 @@ nav:
       - 演習 F - 脱出ゲーム : ja-jp/learn/make-6.md
     - API:
       - クラス一覧: ja-jp/api/classes.md
+    - Siv3D Studio: ja-jp/studio.md
     - コミュニティ:
       - コミュニティ: ja-jp/community/community.md
       - Siv3D 勉強会: ja-jp/community/study-meeting.md
