@@ -51,7 +51,7 @@ void Main()
 ## Siv3D を使う 7 つの理由
 
 ??? success "1. 非常に短いコード"
-	Siv3D のコードは最短 2 行です。描画や入出力を実現するための便利な関数とクラスが揃っているため、アプリケーションのほとんどは 1 つの .cpp ファイルだけで完成します。あなたのアイデアを、[GitHub :material-open-in-new:](https://github.com/) や [GitHub Gist :material-open-in-new:](https://gist.github.com/) などのコード共有サイトを使って手軽に保存・シェアして、世界中の Siv3D ユーザと技術を交換し、学び合いましょう。
+	Siv3D を使うためのコードは最短 2 行です。描画や入出力を実現するための便利な関数とクラスが揃っているため、アプリケーションのほとんどは 1 つの .cpp ファイルだけで完成します。あなたのアイデアを、[GitHub :material-open-in-new:](https://github.com/) や [GitHub Gist :material-open-in-new:](https://gist.github.com/) などのコード共有サイトを使って手軽に保存・シェアして、世界中の Siv3D ユーザと技術を交換し、学び合いましょう。
 
 ??? success "2. 最新の C++ が身につく"
 	Siv3D のサンプルとライブラリ API は、最新の C++20 スタイルで書かれているため、Siv3D を使っているだけで、モダンな C++ の書き方やテクニックが自然と身に付きます。Siv3D の作者は、日本最大のゲーム開発カンファレンス CEDEC で [最新 C++ の活用に関する講演 :material-open-in-new:](https://speakerdeck.com/cpp/cedec2020) をしたり、[C++ の情報ポータル :material-open-in-new:](https://cppmap.github.io/) を作成したりするなど、最先端の C++ の普及活動に努めています。
