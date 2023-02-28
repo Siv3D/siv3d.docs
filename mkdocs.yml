@@ -7,7 +7,7 @@ site_author: Ryo Suzuki
 site_description: "Siv3D: A C++ library for creative coding" 
 
 # Copyright
-copyright: Copyright (c) 2012 - 2022, Ryo Suzuki<br>Copyright (c) 2012 - 2022, OpenSiv3D Project
+copyright: Copyright (c) 2012 - 2023, Ryo Suzuki<br>Copyright (c) 2012 - 2023, OpenSiv3D Project
 
 # Theme
 theme:
@@ -25,6 +25,7 @@ theme:
   - search.suggest
   - search.highlight
   - content.code.annotate
+  - content.code.copy
   plugins:
   - search:
       lang: 
@@ -111,6 +112,7 @@ nav:
       - メッセージボックス: ja-jp/reference/messagebox.md
       - 非同期処理: ja-jp/reference/async.md
       - 自作クラスと Siv3D の連係: ja-jp/reference/adapter.md
+      - Siv3D で Hello world する 21 の方法: ja-jp/reference/helloworld.md
     - 勉強会コース:
       - 0. Siv3D 勉強会: ja-jp/learn/about.md
       - 1. はじめての Siv3D: ja-jp/learn/hello-siv3d.md
