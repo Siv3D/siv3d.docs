@@ -1,4 +1,4 @@
-# 協賛法人ガイドライン
+# 協賛特典
 
 ## 1. バナー掲載
 
@@ -21,15 +21,15 @@
 ### 1.2 掲載場所
 
 #### Siv3D 公式サイト トップページ
-- 日本語: [https://siv3d.github.io/ja-jp/](https://siv3d.github.io/ja-jp/)
-- 英語: [https://siv3d.github.io/](https://siv3d.github.io/)
+- 日本語: [https://siv3d.github.io/ja-jp/](https://siv3d.github.io/ja-jp/){:target="_blank"}
+- 英語: [https://siv3d.github.io/](https://siv3d.github.io/){:target="_blank"}
   
 #### Siv3D Studio (Web IDE) ランディングページ
 - 日本語: https://siv3d.github.io/ja-jp/studio/ (公開準備中)
 - 英語: https://siv3d.github.io/studio/ (公開準備中)
 
 #### 勉強会イベントページ
-- 例: [https://connpass.com/event/276228/ :material-open-in-new:](https://connpass.com/event/276228/)
+- 例: [https://connpass.com/event/276228/ :material-open-in-new:](https://connpass.com/event/276228/){:target="_blank"}
 
 !!! info
 	2022 年の勉強会は参加者 98 名、6 校訪問。2023 年は 150 人以上、10 校訪問を見込んでいます。
@@ -38,7 +38,7 @@
 Siv3D Discord サーバに参加するアカウント（最大 3 名）に 「corporate sponsor」ロールを付与します。ロールが付与されたアカウントは、チャットにおいてユーザ ID が黄色で表示され、ほかの参加者からスポンサー投稿であることがわかります。
 
 #### 公式フォーラムへの参加方法
-[コミュニティ](https://siv3d.github.io/ja-jp/community/community/) ページ内の「Discord Siv3D サーバに参加する」から、ご自身の Discord アカウントで参加してください。参加後、ユーザ ID (例: `しぶ#1234`）をお知らせください。
+[コミュニティ](https://siv3d.github.io/ja-jp/community/community/){:target="_blank"} ページ内の「Discord Siv3D サーバに参加する」から、ご自身の Discord アカウントで参加してください。参加後、ユーザ ID (例: `しぶ#1234`）をお知らせください。
 
 #### 企業情報の発信に適したチャンネル
 

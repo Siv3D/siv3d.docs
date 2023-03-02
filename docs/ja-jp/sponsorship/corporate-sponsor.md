@@ -1,20 +1,21 @@
-# 法人協賛の募集
+# 協賛企業の募集について
 
-## 1. 概要
+### 企業の皆様へ
+Siv3D は C++ によるゲーム・アプリケーション開発を楽しく簡単にするツールと技法を、すべての人々と共有することを目標に、オープンソースのプログラミングフレームワークの開発・提供、ユーザコミュニティ支援、国内各地での勉強会開催、若い世代のオープンソース参加支援に長年取り組んでおります。Siv3D の趣旨にご賛同のうえ、ご支援・ご協賛を賜りますようお願い申し上げます。
 
+### 協賛に関するお問い合わせ窓口
+- （Siv3D 代表）鈴木 遼 : reputeless@gmail.com
 
-## 2. 協賛特典
-- [協賛法人ガイドライン](../corporate-sponsor-guideline)
+### 協賛申込書
+- [書式-1 協賛申込書 :material-open-in-new:](https://siv3d.jp/sponsorship/書式-1 協賛申込書.xlsx){:target="_blank"}
+- [書式-2 協賛金のお願い :material-open-in-new:](https://siv3d.jp/sponsorship/書式-2 協賛金のお願い.docx){:target="_blank"}
 
-## 3. 資料
+### 協賛特典
+- [協賛特典](../corporate-sponsor-guideline){:target="_blank"}
 
-### 3.1 協賛申込書
-- [書式-1 協賛申込書 :material-open-in-new:](https://siv3d.jp/sponsorship/書式-1 協賛申込書.xlsx)
-- [書式-2 協賛金のお願い :material-open-in-new:](https://siv3d.jp/sponsorship/書式-2 協賛金のお願い.docx)
+### Siv3D 活動報告書
+- [第 2 号 - 2023 年 3 月 :material-open-in-new:](https://siv3d.jp/sponsorship/report2.pdf){:target="_blank"}
+- [第 1 号 - 2022 年 11 月 :material-open-in-new:](https://siv3d.jp/sponsorship/report1.pdf){:target="_blank"}
 
-### 3.2 Siv3D 活動報告書
-- [第 2 号 - 2023 年 3 月 :material-open-in-new:](https://siv3d.jp/sponsorship/report2.pdf)
-- [第 1 号 - 2022 年 11 月 :material-open-in-new:](https://siv3d.jp/sponsorship/report1.pdf)
-
-### 3.3 イベント共催 計画書
-- [テンプレート 1: ゲームジャム（オンライン） :material-open-in-new:](https://siv3d.jp/sponsorship/event1.pdf)
+### イベント共催 企画書例
+- [テンプレート 1: オンラインでのゲームジャム :material-open-in-new:](https://siv3d.jp/sponsorship/event1.pdf){:target="_blank"}
