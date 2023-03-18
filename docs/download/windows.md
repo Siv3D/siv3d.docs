@@ -73,7 +73,7 @@ If you have trouble with the SDK installer in Windows, you can manually install 
 ??? summary "SDK を手動インストールする場合の手順"
 	### Getting the Siv3D SDK and setting the SDK folder path to the environment variable
 
-	1. Download and extract [OpenSiv3D_SDK_0.6.7.zip](https://siv3d.jp/downloads/Siv3D/manual/0.6.7/OpenSiv3D_SDK_0.6.7.zip) (File size: 88 MB), and place the contents in your documents folder as follows:
+	1. Download and extract [OpenSiv3D_SDK_0.6.7.zip](https://siv3d.jp/downloads/Siv3D/manual/0.6.7/OpenSiv3D_SDK_0.6.7.zip) (File size: 90 MB), and place the contents in your documents folder as follows:
 		- `.../Documents/OpenSiv3D_SDK_0.6.7/addon`
 		- `.../Documents/OpenSiv3D_SDK_0.6.7/include`
 		- `.../Documents/OpenSiv3D_SDK_0.6.7/lib`

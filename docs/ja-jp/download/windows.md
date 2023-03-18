@@ -76,7 +76,7 @@ OpenSiv3D インストーラが正常に実行されない場合、代わりに�
 ??? summary "SDK を手動インストールする場合の手順"
 	### SDK ファイルの配置と環境変数の設定
 
-	1. [OpenSiv3D_SDK_0.6.7.zip](https://siv3d.jp/downloads/Siv3D/manual/0.6.7/OpenSiv3D_SDK_0.6.7.zip) (サイズ: 約 88 MB) をダウンロードして展開し、中身をドキュメントフォルダ（`.../Documents`）に次のように配置します
+	1. [OpenSiv3D_SDK_0.6.7.zip](https://siv3d.jp/downloads/Siv3D/manual/0.6.7/OpenSiv3D_SDK_0.6.7.zip) (サイズ: 約 90 MB) をダウンロードして展開し、中身をドキュメントフォルダ（`.../Documents`）に次のように配置します
 		- `.../Documents/OpenSiv3D_SDK_0.6.7/addon`
 		- `.../Documents/OpenSiv3D_SDK_0.6.7/include`
 		- `.../Documents/OpenSiv3D_SDK_0.6.7/lib`
