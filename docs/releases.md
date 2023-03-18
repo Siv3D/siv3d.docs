@@ -2,7 +2,71 @@
 
 ## v0.6
 
-???+ summary "v0.6.6 | 2022-11-22"
+???+ summary "v0.6.7 | 2023-03-18"
+	#### 新機能
+	- OpenAI API (Chat, Image) を扱う機能を追加しました ([#957](https://github.com/Siv3D/OpenSiv3D/issues/957))
+		- [サンプル](https://zenn.dev/link/comments/39ca09ff7febbf)
+	- OSC 通信を扱う機能を追加しました ([#515](https://github.com/Siv3D/OpenSiv3D/issues/515), [#919](https://github.com/Siv3D/OpenSiv3D/issues/919), [#922](https://github.com/Siv3D/OpenSiv3D/pull/922))
+		- [サンプル](https://zenn.dev/link/comments/37cb05690d7a9c)
+	- 円を割線で切り取った形を描く関数 `Circle::drawSegment()`, `Circle::drawSegmentFromAngles()` を追加しました ([#956](https://github.com/Siv3D/OpenSiv3D/issues/956))
+		- [サンプル](https://zenn.dev/link/comments/3deaea6384f9e9)
+	- 長方形を斜め方向のグラデーションで描く関数を追加しました ([#955](https://github.com/Siv3D/OpenSiv3D/issues/955))
+		- [サンプル](https://zenn.dev/link/comments/b184c90a6682d5)
+	- SimpleMenuBar が項目のチェックに対応しました ([#948](https://github.com/Siv3D/OpenSiv3D/issues/948))
+		- [サンプル](https://zenn.dev/link/comments/a1638e9fd4ca82)
+	- JSON のバリデーションを行うクラス `JSONValidator` を追加しました ([#931](https://github.com/Siv3D/OpenSiv3D/issues/931), [#959](https://github.com/Siv3D/OpenSiv3D/pull/959))
+		- [サンプル](https://zenn.dev/link/comments/9a60ef0856e4fa)
+	- コマンドライン引数を直接取得する関数 `System::GetArgc()`, `System::GetArgv()` を追加しました ([#964](https://github.com/Siv3D/OpenSiv3D/issues/964))
+		- [サンプル](https://zenn.dev/link/comments/9c62e50a751464)
+	- アドオンの実行優先度を `update()` と `draw()` を個別に指定できるようにしました ([#949](https://github.com/Siv3D/OpenSiv3D/issues/949))
+		- [サンプル](https://zenn.dev/link/comments/d5204d4530f196)
+	- SimpleHTTP の非同期リクエストに関する関数を拡充しました ([#911](https://github.com/Siv3D/OpenSiv3D/issues/911), [#962](https://github.com/Siv3D/OpenSiv3D/issues/962))
+	- 角度を `[0, TwoPi)` または `[-Pi, Pi)` の範囲に正規化する `Math::NormalizeAngle()` 関数を追加しました ([#927](https://github.com/Siv3D/OpenSiv3D/issues/927))
+	- 時間に対して、デューティー比を指定した矩形波を返す `Periodic::Pulse0_1()` / `Periodic::Pulse1_1()` を追加しました ([#966](https://github.com/Siv3D/OpenSiv3D/issues/966), [#967](https://github.com/Siv3D/OpenSiv3D/pull/967))
+	- `Input` をシリアライズする `Input::Serialize()`, `Input::Deserialize()` を追加しました ([#920](https://github.com/Siv3D/OpenSiv3D/issues/920))
+	- `IAddon` に `postPresent()` を追加しました ([#942](https://github.com/Siv3D/OpenSiv3D/issues/942))
+	- `TextEditState` がシリアライズに対応しました（文字列のみ保存） ([#930](https://github.com/Siv3D/OpenSiv3D/issues/930))
+	- Base64 のデコードに妥当性チェックを追加しました ([#845](https://github.com/Siv3D/OpenSiv3D/issues/845), [#961](https://github.com/Siv3D/OpenSiv3D/pull/961))
+	- `Math::Damp()`, `Math::SmoothDamp()` が `ColorF` 型に対応しました ([#947](https://github.com/Siv3D/OpenSiv3D/pull/947))
+	- C++23 との一貫性のため、`StringView`, `String`, `Array` に、`.includes()`, `.includes_if()` と同機能の `.contains()`, `.contains_if()` を追加しました ([#944](https://github.com/Siv3D/OpenSiv3D/issues/944))
+	- `JSON` の機能を強化しました ([#925](https://github.com/Siv3D/OpenSiv3D/pull/925), [#931](https://github.com/Siv3D/OpenSiv3D/issues/931), [#959](https://github.com/Siv3D/OpenSiv3D/pull/959))
+
+	#### ユーザビリティ向上	
+	- アセットの毎フレーム作成・破棄の問題をメッセージボックスで通知するようにしました ([#926](https://github.com/Siv3D/OpenSiv3D/issues/926))
+
+	#### 仕様変更
+	- デフォルトのサンプルプログラム Hello, Siv3D をリニューアルしました ([#940](https://github.com/Siv3D/OpenSiv3D/issues/940))
+	- Photon アドオンを最新の Photon SDK に対応させました ([#954](https://github.com/Siv3D/OpenSiv3D/issues/954))
+
+	#### パフォーマンス向上
+	- Base64 のデコードを高速化しました ([#845](https://github.com/Siv3D/OpenSiv3D/issues/845), [#961](https://github.com/Siv3D/OpenSiv3D/pull/961))
+	- `Array` や `MultiPolygon` などの一部のメンバ関数のパフォーマンスを改善しました ([#948](https://github.com/Siv3D/OpenSiv3D/pull/948))
+	- `Array::includes()`, `Array::contains()` をパフォーマンスを改善しました ([#945](https://github.com/Siv3D/OpenSiv3D/issues/945))
+
+	#### 不具合・バグ修正
+	- macOS でカレントディレクトリにファイルを作成できないことがあった不具合を修正しました ([#963](https://github.com/Siv3D/OpenSiv3D/issues/963))
+	- `Optional` の挙動が `std::optional` と異なっていたバグを修正しました ([#938](https://github.com/Siv3D/OpenSiv3D/issues/938), [#939](https://github.com/Siv3D/OpenSiv3D/pull/939))
+	- `HTTPResponse` の内容がリダイレクト前のデータになっていたバグを修正しました ([#958](https://github.com/Siv3D/OpenSiv3D/issues/958))
+	- `IReader` を引数に取る `JSON::Load()` がコンパイルエラーになるバグを修正しました ([#937](https://github.com/Siv3D/OpenSiv3D/issues/937))
+	- `Polygon::calculateBuffer()`, `Polygon::calculateRoundBuffer()` が失敗することがあったバグを修正しました ([#965](https://github.com/Siv3D/OpenSiv3D/issues/965))
+	- `SimpleMenuBar` 上でのマスカーソルの挙動を改善しました ([#950](https://github.com/Siv3D/OpenSiv3D/pull/950))
+	- `App/example/script/piano.as` スクリプトで音が鳴らなかったバグを修正しました ([#935](https://github.com/Siv3D/OpenSiv3D/pull/935))
+	- `PlayingCard::Pack` をデフォルト構築してジョーカーのカードを描画するとクラッシュしたバグを修正しました ([#921](https://github.com/Siv3D/OpenSiv3D/issues/921))
+	- `GeoJSONGeometry::get()` が使えなかったバグを修正しました ([#933](https://github.com/Siv3D/OpenSiv3D/issues/933), [#934](https://github.com/Siv3D/OpenSiv3D/pull/934))
+	- シリアライズの一部マクロのバグを修正しました ([#923](https://github.com/Siv3D/OpenSiv3D/pull/923))
+	- Arch Linux でのビルドの問題を修正しました ([#917](https://github.com/Siv3D/OpenSiv3D/issues/917), [#918](https://github.com/Siv3D/OpenSiv3D/pull/918))
+
+	#### コントリビューション
+	- [nokotan](https://github.com/nokotan): **Web 版を更新**
+	- [tomolatoon](https://github.com/tomolatoon): **`JSONValidator` を追加**, **`JSON` の機能強化**
+	- [m4saka](https://github.com/m4saka): **`Optional` のバグを修正**
+	- [Raclamusi](https://github.com/Raclamusi): **Base64 のデコードの改善**, `Array` 等の性能改善
+	- [yksake](https://github.com/yksake): SimpleMenuBar の挙動改善、ドキュメントの改善
+	- [sthairno](https://github.com/sthairno): `GeoJSONGeometry` のバグを修正
+	- [Aikawa3311](https://github.com/Aikawa3311): スクリプトを修正
+
+
+??? summary "v0.6.6 | 2022-11-22"
 	#### 新機能
 	- シンプルなメニューバーを扱う機能を追加しました ([#898](https://github.com/Siv3D/OpenSiv3D/issues/898))
 		- [サンプル](https://zenn.dev/link/comments/2deb08c8839b7c)
