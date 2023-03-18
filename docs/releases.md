@@ -61,10 +61,12 @@
 	- [tomolatoon](https://github.com/tomolatoon): **`JSONValidator` を追加**, **`JSON` の機能強化**
 	- [m4saka](https://github.com/m4saka): **`Optional` のバグを修正**
 	- [Raclamusi](https://github.com/Raclamusi): **Base64 のデコードの改善**, `Array` 等の性能改善
-	- [voidproc](https://github.com/voidproc): **Periodic 関数の追加**,
+	- [voidproc](https://github.com/voidproc): **Periodic 関数の追加**
 	- [yksake](https://github.com/yksake): SimpleMenuBar の挙動改善、ドキュメントの改善
 	- [sthairno](https://github.com/sthairno): `GeoJSONGeometry` のバグを修正
 	- [Aikawa3311](https://github.com/Aikawa3311): スクリプトを修正
+	- [sfpgmr](https://github.com/sfpgmr): シリアライズ API のバグを修正
+	- [hashitaku](https://github.com/hashitaku) Arch Linux でのビルドを修正
 
 
 ??? summary "v0.6.6 | 2022-11-22"
