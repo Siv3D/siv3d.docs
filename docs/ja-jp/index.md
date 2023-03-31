@@ -3,7 +3,7 @@
 
 Siv3D (シブスリーディー) は、ゲームやアプリを **楽しく簡単な C++ コード** で開発できるフレームワークです。MIT ライセンスで配布され、Windows / macOS / Linux / Web で動作します。
 
-#### Siv3D のダウンロード | v0.6.7
+#### Siv3D のダウンロード | v0.6.8
 
 [Windows :material-microsoft-windows:](download/windows){ .md-button .md-button--primary }[macOS :material-apple:](download/macos){ .md-button .md-button--primary }[Ubuntu :material-ubuntu:](download/ubuntu){ .md-button .md-button--primary }
 
@@ -85,6 +85,6 @@ void Main()
 - [sknjpn](https://twitter.com/sknjpn)
 
 #### Bronze Sponsor
-アゲハマ, 😀, minachun, Fuyutsubaki, 😊, 🐝, 🐠, 野菜ジュース, MawkishWaffle, jacking75, Chris Ohk, IZUNA, qppon, k-sunako, ysaito, おおやま, tumf, 🍵, lamuda, 🐧
+アゲハマ, Fuyutsubaki, 😊, 🐝, 野菜ジュース, jacking75, Chris Ohk, qppon, ysaito, おおやま, 🍵, lamuda
 
 [GitHub Sponsors で Siv3D のスポンサーになる :material-github:](https://github.com/sponsors/Reputeless){ .md-button }

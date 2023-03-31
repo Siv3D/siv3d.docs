@@ -71,7 +71,7 @@ void Main()
 ```
 
 ### Siv3D で使える絵文字の一覧
-Siv3D で使える絵文字は約 3,600 種類あります。絵文字を探すときは [emojipedia](https://emojipedia.org/) の Categories から調べるのが便利です。 OpenSiv3D v0.6.6 はオープンソースの絵文字フォント Noto Color Emoji (Unicode 14.0 版) を内蔵しているので、Siv3D アプリはどのプラットフォームでも同じ見た目の絵文字を表示できます。
+Siv3D で使える絵文字は約 3,600 種類あります。絵文字を探すときは [emojipedia](https://emojipedia.org/) の Categories から調べるのが便利です。 OpenSiv3D v0.6.8 はオープンソースの絵文字フォント Noto Color Emoji (Unicode 15.0 版) を内蔵しているので、Siv3D アプリはどのプラットフォームでも同じ見た目の絵文字を表示できます。
 
 ## 5.2 テクスチャを拡大縮小して描画する
 
@@ -203,7 +203,7 @@ void Main()
 ## 5.5 アイコンを描画する
 アイコンコレクションから `Texture` を作成するには、`Texture` のコンストラクタ引数にアイコンオブジェクトを渡します。アイコンは全部で約 8,000 種類用意されています。
 
-`Texture` のコンストラクタには、[Material Design Icons](https://pictogrammers.github.io/@mdi/font/6.5.95/) または [Font Awesome アイコン一覧](https://fontawesome.com/icons?d=gallery&s=brands,solid&m=free) で調べられる 16 進数コードに `_icon` を付けた値と、アイコンの基本サイズ（ピクセル）を渡します。
+`Texture` のコンストラクタには、[Material Design Icons](https://pictogrammers.com/library/mdi/) または [Font Awesome アイコン一覧](https://fontawesome.com/icons?d=gallery&s=brands,solid&m=free) で調べられる 16 進数コードに `_icon` を付けた値と、アイコンの基本サイズ（ピクセル）を渡します。
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/learn/texture/5.png)
 
@@ -263,7 +263,7 @@ void Main()
 ```
 
 ### 対応している画像フォーマット
-OpenSiv3D v0.6.6 では、9 種類の画像フォーマットの読み込みがサポートされています。
+OpenSiv3D v0.6.8 では、9 種類の画像フォーマットの読み込みがサポートされています。
 
 | フォーマット   | 拡張子             | 対応状況       |
 |----------|-----------------|:----------:|

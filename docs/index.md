@@ -3,7 +3,7 @@
 
 **Siv3D** is a framework for developing games and apps with **fun and easy C++ code**, distributed under the MIT license and running on Windows, macOS, Linux, and Web.
 
-#### Download Siv3D | v0.6.7
+#### Download Siv3D | v0.6.8
 
 [Windows :material-microsoft-windows:](download/windows){ .md-button .md-button--primary }[macOS :material-apple:](download/macos){ .md-button .md-button--primary }[Ubuntu :material-ubuntu:](download/ubuntu){ .md-button .md-button--primary }
 
@@ -84,7 +84,7 @@ void Main()
 - [sknjpn](https://twitter.com/sknjpn)
 
 #### Bronze Sponsor
-アゲハマ, 😀, minachun, Fuyutsubaki, 😊, 🐝, 🐠, 野菜ジュース, MawkishWaffle, jacking75, Chris Ohk, IZUNA, qppon, k-sunako, ysaito, おおやま, tumf, 🍵, lamuda, 🐧
+アゲハマ, Fuyutsubaki, 😊, 🐝, 野菜ジュース, jacking75, Chris Ohk, qppon, ysaito, おおやま, 🍵, lamuda
 
 If you like Siv3D's vision and wish to support its development, please consider becoming an individual or corporate sponsor of Siv3D. Several benefits are also available.
 

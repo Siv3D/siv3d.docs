@@ -2,7 +2,36 @@
 
 ## v0.6
 
-???+ summary "v0.6.7 | 2023-03-18"
+???+ summary "v0.6.8 | 2023-04-01"
+	#### 新機能
+	- 指定したファイルをデフォルトのアプリケーションで開く `System::LaunchFile(fileName)` を追加しました ([#888](https://github.com/Siv3D/OpenSiv3D/issues/888), [#981](https://github.com/Siv3D/OpenSiv3D/pull/981))
+		- [サンプル](https://zenn.dev/link/comments/8c7c4076bfbb6d)
+	- 指定したファイルをテキストエディタで開く `System::LaunchFileWithTextEditor(fileName)` を追加しました ([#888](https://github.com/Siv3D/OpenSiv3D/issues/888), [#981](https://github.com/Siv3D/OpenSiv3D/pull/981))
+		- [サンプル](https://zenn.dev/link/comments/4b67ba5b069306)
+	- 同梱カラー絵文字を Unicode 14.0 から Unicode 15.0 に更新しました ([#980](https://github.com/Siv3D/OpenSiv3D/issues/980))
+		- [サンプル](https://zenn.dev/link/comments/7e722e60bed8dc)
+	- 同梱 Material Design Icons を v6.5.95 から v7.2.96 に更新しました（700 種類のアイコンが追加） ([#980](https://github.com/Siv3D/OpenSiv3D/issues/980))
+		- [サンプル](https://zenn.dev/link/comments/adaafc47825fb1)
+	- OpenAI の Embeddings API を扱う機能を追加しました ([#982](https://github.com/Siv3D/OpenSiv3D/issues/982))
+		- [サンプル](https://zenn.dev/link/comments/6a8483ccd76a7f)
+	- ユーザのコンピュータ名や名前、言語を取得する関数を追加しました ([#678](https://github.com/Siv3D/OpenSiv3D/issues/678), [#968](https://github.com/Siv3D/OpenSiv3D/issues/968), [#974](https://github.com/Siv3D/OpenSiv3D/pull/974))
+		- [サンプル](https://zenn.dev/link/comments/381ae3d6c2b201)
+	- ドライブの情報を取得する関数を追加しました（Windows 版）([#709](https://github.com/Siv3D/OpenSiv3D/issues/709), [#978](https://github.com/Siv3D/OpenSiv3D/pull/978))
+		- [サンプル](https://zenn.dev/link/comments/8d3df3d50eb1fa)
+	- インターネットに接続されているかを返す `Network::IsConnected()` を追加しました ([#975](https://github.com/Siv3D/OpenSiv3D/issues/975), [#976](https://github.com/Siv3D/OpenSiv3D/pull/976))
+
+	#### ユーザビリティ向上	
+	- `SimpleGUI::ListBox()` の項目を上下キーで選択できるようになりました ([#984](https://github.com/Siv3D/OpenSiv3D/issues/984))
+
+	#### 不具合・バグ修正
+	- フォールバックに設定した絵文字が特定条件下で正しく表示されなかったバグを修正しました ([#971](https://github.com/Siv3D/OpenSiv3D/issues/971), [#973](https://github.com/Siv3D/OpenSiv3D/pull/973))
+	- `SimpleGUI::ListBox()` の項目数が多いときに、スクロールバーのつまみが細くなる / 消失していたバグを修正しました ([#985](https://github.com/Siv3D/OpenSiv3D/issues/985))
+
+	#### コントリビューション
+	- [Raclamusi](https://github.com/Raclamusi): **絵文字フォントのフォールバックのバグを修正**
+
+
+??? summary "v0.6.7 | 2023-03-18"
 	#### 新機能
 	- OpenAI API (Chat, Image) を扱う機能を追加しました ([#957](https://github.com/Siv3D/OpenSiv3D/issues/957))
 		- [サンプル](https://zenn.dev/link/comments/39ca09ff7febbf)
