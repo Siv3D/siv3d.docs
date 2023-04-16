@@ -2,7 +2,7 @@
 
 ## 1. System requirements
 ### 1.1 System requirements for development
-Here are the system requirements for OpenSiv3D v0.6.8 programming on macOS.
+Here are the system requirements for OpenSiv3D v0.6.9 programming on macOS.
 
 |  |  |
 |--|--|
@@ -20,7 +20,7 @@ Here are the system requirements for OpenSiv3D v0.6.8 programming on macOS.
 
 
 ### 1.2 System requirements for running Siv3D application
-This is the environment required to run applications developed with OpenSiv3D v0.6.8 on macOS. You may want to include it in your instructions when distributing your game or application.
+This is the environment required to run applications developed with OpenSiv3D v0.6.9 on macOS. You may want to include it in your instructions when distributing your game or application.
 
 |  |  |
 |--|--|
@@ -34,7 +34,7 @@ This is the environment required to run applications developed with OpenSiv3D v0
 
 
 ## 2. Downloading the Siv3D project template
-1. Download and extract **[OpenSiv3D v0.6.8 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.8_macOS.zip)**.
+1. Download and extract **[OpenSiv3D v0.6.9 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.9_macOS.zip)**.
 1.  (On macOS Catalina or later) Move the SDK folder into `(User name)/Applications` folder to prevent a file access permissions dialog from being displayed when your program launches. Some folders such as `(User name)/Desktop` and `(User name)/Downloads` require an access permission for every build.
 
 ## 3. Building your first application with Siv3D
@@ -42,6 +42,9 @@ This is the environment required to run applications developed with OpenSiv3D v0
 1. Open `Main.cpp` from the project menu
 1. Click **Run button ▶️** to build and run the application.
 1. The running program can be terminated by pressing the ++esc++ key or by closing the window.
+
+??? summary "Apple Silicon (M1 / M2) Mac でのビルドと実行"
+    Xcode 14.1 以下を使って Rosetta モードでビルドしてください。Apple Silicon (M1 / M2) のネイティブサポートは v0.8.0 から追加予定です。Xcode 14.3 以降は Rosetta モードをサポートしていません。
 
 ??? summary "サンプルプログラムを実行するときのファイルアクセス許可のダイアログの回避"
     macOS Catalina 以降で実行のたびにファイルアクセス許可のダイアログが出現する場合、プロジェクトフォルダ全体を、`(ユーザ名)/デスクトップ` や `(ユーザ名)/ダウンロード` フォルダではなく、`(ユーザ名)/アプリケーション` フォルダ（root のアプリケーションフォルダではなく、ユーザホームのアプリケーションフォルダ）以下へ移動させることで回避できます。

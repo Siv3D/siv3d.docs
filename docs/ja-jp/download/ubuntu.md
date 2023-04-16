@@ -1,7 +1,7 @@
 # Ubuntu で Siv3D プログラミングを始める
 
 ## 1. システム要件
-Ubuntu で OpenSiv3D v0.6.8 プログラミングをするのに必要な開発環境です。
+Ubuntu で OpenSiv3D v0.6.9 プログラミングをするのに必要な開発環境です。
 
 |  |  |
 |--|--|
@@ -33,7 +33,7 @@ Ubuntu で OpenSiv3D v0.6.8 プログラミングをするのに必要な開発�
 
 ??? summary "サンプルコード"
     ```cpp
-    # include <Siv3D.hpp> // OpenSiv3D v0.6.8
+    # include <Siv3D.hpp>
 
     void Main()
     {

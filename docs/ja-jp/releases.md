@@ -2,7 +2,29 @@
 
 ## v0.6 世代
 
-???+ summary "v0.6.8 | 2023-04-01"
+???+ summary "v0.6.9 | 2023-04-16"
+	#### 新機能
+	- 表を描画する `SimpleTable` を追加しました ([#988](https://github.com/Siv3D/OpenSiv3D/issues/988), [#991](https://github.com/Siv3D/OpenSiv3D/pull/991), [#992](https://github.com/Siv3D/OpenSiv3D/pull/992))
+		- [サンプル](https://zenn.dev/link/comments/6a2a05060c1dda)
+	- 複数行のテキストボックス `SimpleGUI::TextArea()` を追加しました ([#789](https://github.com/Siv3D/OpenSiv3D/issues/789), [#994](https://github.com/Siv3D/OpenSiv3D/pull/994), [#996](https://github.com/Siv3D/OpenSiv3D/issues/996))
+		- [サンプル](https://zenn.dev/link/comments/98f2844dae5705)
+
+	#### 仕様変更
+	- `Timer::isRunnning()` は 0 に達したときに `false` を返すよう仕様変更しました ([#987](https://github.com/Siv3D/OpenSiv3D/issues/987))
+	- ``Grid::resize(w, 0)` および `Grid::resize(0, h)` は `w` と `h` を保存するようにしました ([#989](https://github.com/Siv3D/OpenSiv3D/issues/989))
+
+	#### パフォーマンス向上
+	- `Array::fetch()` 等の実装を改善しました ([#990](https://github.com/Siv3D/OpenSiv3D/pull/990))
+
+	#### 不具合・バグ修正
+	- `Array::fetch()` 等の未定義動作を修正しました ([#990](https://github.com/Siv3D/OpenSiv3D/pull/990))
+	- `Grid::assign()` のバグを修正しました ([#995](https://github.com/Siv3D/OpenSiv3D/issues/995))
+
+	#### コントリビューション
+	- [tomolatoon](https://github.com/tomolatoon): `Array::fetch()` 等の修正・改善
+	- [m4saka](https://github.com/m4saka): SimpleTable の typo 修正
+
+??? summary "v0.6.8 | 2023-04-01"
 	#### 新機能
 	- 指定したファイルをデフォルトのアプリケーションで開く `System::LaunchFile(fileName)` を追加しました ([#888](https://github.com/Siv3D/OpenSiv3D/issues/888), [#981](https://github.com/Siv3D/OpenSiv3D/pull/981))
 		- [サンプル](https://zenn.dev/link/comments/8c7c4076bfbb6d)
