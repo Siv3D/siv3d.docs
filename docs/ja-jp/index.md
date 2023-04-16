@@ -85,6 +85,6 @@ void Main()
 - [sknjpn](https://twitter.com/sknjpn)
 
 #### Bronze Sponsor
-アゲハマ, Fuyutsubaki, 😊, 🐝, 野菜ジュース, jacking75, Chris Ohk, qppon, ysaito, おおやま, 🍵, lamuda
+アゲハマ, Fuyutsubaki, 😊, 🐝, 野菜ジュース, jacking75, Chris Ohk, qppon, ysaito, おおやま, 🍵, lamuda, 🌻
 
 [GitHub Sponsors で Siv3D のスポンサーになる :material-github:](https://github.com/sponsors/Reputeless){ .md-button }

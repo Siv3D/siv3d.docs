@@ -11,7 +11,7 @@
 
 	#### 仕様変更
 	- `Timer::isRunnning()` は 0 に達したときに `false` を返すよう仕様変更しました ([#987](https://github.com/Siv3D/OpenSiv3D/issues/987))
-	- ``Grid::resize(w, 0)` および `Grid::resize(0, h)` は `w` と `h` を保存するようにしました ([#989](https://github.com/Siv3D/OpenSiv3D/issues/989))
+	- `Grid::resize(w, 0)` および `Grid::resize(0, h)` は `w` と `h` を保存するようにしました ([#989](https://github.com/Siv3D/OpenSiv3D/issues/989))
 
 	#### パフォーマンス向上
 	- `Array::fetch()` 等の実装を改善しました ([#990](https://github.com/Siv3D/OpenSiv3D/pull/990))
