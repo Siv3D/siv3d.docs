@@ -2,7 +2,22 @@
 
 ## v0.6
 
-???+ summary "v0.6.9 | 2023-04-16"
+???+ summary "v0.6.10 | 2023-05-17"
+	#### 重要
+	- Visual Studio 2022 17.6 でのビルドの問題を修正しました ([#1011](https://github.com/Siv3D/OpenSiv3D/issues/1011))
+		- v0.6.9 以前のプロジェクトでは、[プロジェクトのプロパティから「ISO C++23 標準ライブラリモジュールのビルド」を無効にする](https://github.com/Siv3D/OpenSiv3D/issues/1011){:target="_blank"}ことで解決します。
+
+	#### 新機能
+	- `JSON` において Binary Values に対応しました ([#1010](https://github.com/Siv3D/OpenSiv3D/issues/1010))
+
+	#### パフォーマンス向上
+	- `Optional::Optional(Optional<U>&&)` の実装を改善しました ([#1008](https://github.com/Siv3D/OpenSiv3D/issues/1008))
+
+	#### 不具合・バグ修正
+	- `ParseOr<double>()` と `ParseOpt<double>()` が `float` 精度で行われていたバグを修正しました ([#1009](https://github.com/Siv3D/OpenSiv3D/issues/1009))
+	- バイナリフォーマット (BSON/CBOR/MessagePack) から作成した JSON の要素を一部適切に読み込めなかったバグを修正しました ([#1010](https://github.com/Siv3D/OpenSiv3D/issues/1010))
+
+??? summary "v0.6.9 | 2023-04-16"
 	#### 新機能
 	- 表を描画する `SimpleTable` を追加しました ([#988](https://github.com/Siv3D/OpenSiv3D/issues/988), [#991](https://github.com/Siv3D/OpenSiv3D/pull/991), [#992](https://github.com/Siv3D/OpenSiv3D/pull/992))
 		- [サンプル](https://zenn.dev/link/comments/6a2a05060c1dda)
