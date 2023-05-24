@@ -69,7 +69,7 @@ void Main()
 	Siv3D で困ったことがあれば、[Siv3D のコミュニティ](community/community/) が役に立ちます。また、全国の学校や地域コミュニティへの [無料出張勉強会](community/study-meeting/) も行っています。オープンソースソフトウェア開発に興味のある学生には、Siv3D を練習場にしたサポートプログラムを毎年提供しています。
 
 ??? success "7. Web ブラウザで動く"
-	現在試験的に提供している Web 版（[OpenSiv3D for Web :material-open-in-new:](https://siv3d.kamenokosoft.com/ja/index)）を使うと、Siv3D で作った C++ アプリをブラウザ上で実行できる Web アプリに変換できます。スマホやタブレットでも動作するため、これまでよりもたくさんの人にあなたの作品を届けることができます。
+	現在試験的に提供している Web 版（[OpenSiv3D for Web :material-open-in-new:](https://siv3d.kamenokosoft.com/docs/ja/)）を使うと、Siv3D で作った C++ アプリをブラウザ上で実行できる Web アプリに変換できます。スマホやタブレットでも動作するため、これまでよりもたくさんの人にあなたの作品を届けることができます。
 
 
 ## 法人協賛

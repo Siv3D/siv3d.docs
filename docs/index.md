@@ -69,7 +69,7 @@ void Main()
 	If you are having trouble with Siv3D, the friendly community will be happy to help you. Ask questions on the official [Siv3D Discord channel :material-open-in-new:](https://discord.gg/mzevvsY). Get advice from experienced Siv3D users and developers and make the most of Siv3D.
 
 ??? success "7. Running in a Web Browser"
-	The Web version ([OpenSiv3D for Web :material-open-in-new:](https://siv3d.kamenokosoft.com/index)) which is currently provided on a trial basis, allows you to convert C++ applications created with Siv3D into web applications that run in a web browser. Since it also works on smartphones and tablets, you can reach even more people with your creations.
+	The Web version ([OpenSiv3D for Web :material-open-in-new:](https://siv3d.kamenokosoft.com/docs/en/)) which is currently provided on a trial basis, allows you to convert C++ applications created with Siv3D into web applications that run in a web browser. Since it also works on smartphones and tablets, you can reach even more people with your creations.
 
 ## Corporate Sponsor
 <div class="sponsor"><a href="https://www.bandainamcostudios.com/" target="_blank"><img src="https://siv3d.jp/sponsors/バンダイナムコスタジオ.png" alt="Bandai Namco Studios Inc."></a></div>
