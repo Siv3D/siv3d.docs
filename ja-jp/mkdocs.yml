@@ -1,0 +1,212 @@
+site_dir: '../../siv3d.github.io/ja-jp'
+
+# Project information
+site_name: Siv3D
+site_url: https://siv3d.github.io/ja-jp/
+site_author: Ryo Suzuki
+site_description: "Siv3D: 創造のための C++ フレームワーク" 
+
+# Copyright
+copyright: Copyright (c) 2012 - 2023, Ryo Suzuki<br>Copyright (c) 2012 - 2023, OpenSiv3D Project
+
+# Theme
+theme:
+  name: material
+  language: ja
+  palette:
+    scheme: siv3d
+  logo: 'assets/code-white-48dp.svg'
+  favicon: 'assets/favicon.ico'
+  features:
+  - navigation.instant
+  - navigation.top
+  - navigation.footer
+  - search.suggest
+  - search.highlight
+  - content.code.annotate
+  - content.code.copy
+  plugins:
+  - search:
+      lang:
+        - ja
+extra_css:
+  - "https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"
+  - stylesheets/extra.css
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - meta
+  - toc:
+      permalink: true
+      toc_depth: 3
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences:
+      preserve_tabs: true
+  - pymdownx.keys
+  - pymdownx.tabbed:
+      alternate_style: true 
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+extra:
+  alternate:
+    - name: 日本語
+      link: https://siv3d.github.io/ja-jp/
+      lang: ja
+    - name: English
+      link: https://siv3d.github.io/en-us/
+      lang: en
+
+# Page tree
+nav:
+  - Siv3D をはじめよう: index.md
+  - Siv3D を学ぶ: learn.md
+  - Siv3D の機能: features.md
+  - ダウンロード:
+    - Windows: download/windows.md
+    - macOS: download/macos.md
+    - Ubuntu: download/ubuntu.md
+    - Web: download/web.md
+  - チュートリアル:
+    - 入門チュートリアル 1:
+      - 1. はじめての Siv3D: tutorial/hello.md
+      - 2. Siv3D の基本: tutorial/basic.md
+      - 3. Main 関数の構成: tutorial/mainloop.md
+      - 4. アプリケーションの基本操作: tutorial/app-basic.md
+      - 5. 簡易的なデータ表示: tutorial/print.md
+      - 6. 基本的なデータ型: tutorial/basic-types.md
+      - 7. 背景の色を変える: tutorial/background.md
+      - 8. 円と長方形を描く: tutorial/circle-rect.md
+      - 9. 模様を描く: tutorial/pattern.md
+      - 10. 絵文字を描く: tutorial/emoji.md
+      - 11. テキストを表示する: tutorial/text.md
+      - 12. 変数と動き: tutorial/motion.md
+      - 13. キーボード入力を扱う: tutorial/keyboard.md
+      - 14. マウス入力を扱う: tutorial/mouse.md
+      - 15. ボタンを作る: tutorial/button.md
+      - 16. クッキークリッカー風のゲームを作る: tutorial/cookie-clicker.md
+    - 入門チュートリアル 2:
+      - 17. 図形を描く: tutorial2/shape.md
+      - 18. 動きを作る: tutorial2/motion.md
+      - 19. 文字列クラス: tutorial2/string.md
+      - 20. 動的配列: tutorial2/array.md
+      - 21. 二次元配列: tutorial2/grid.md
+      - 22. ハッシュテーブル: tutorial2/hash-table.md
+      - 23. 無効値を表現できる型: tutorial2/optional.md
+      - 24. あたり判定: tutorial2/2d-intersection.md
+      - 25. テクスチャを描く: tutorial2/texture.md
+      - 26. 動画を描く: tutorial2/video.md
+      - 27. 数値と文字列の変換: tutorial2/format.md
+      - 28. GUI: tutorial2/gui.md
+      - 29. ランダム: tutorial2/random.md
+      - 30. 日付と時刻、時間: tutorial2/time.md
+      - 31. テキストを表示する: tutorial2/font.md
+      - 32. シーンとウィンドウ: tutorial2/scene.md
+      - 33. キーボード入力: tutorial2/keyboard.md
+      - 34. マウス入力: tutorial2/mouse.md
+      - 35. 便利な関数: tutorial2/utility.md
+      - 36. インタラクションの実装: tutorial2/interaction.md
+    - 入門チュートリアル 3:
+      - 37. オーディオ再生: tutorial3/audio.md
+      - 38. アセット管理: tutorial3/asset.md
+      - 39. 2D レンダーステート: tutorial3/2d-render-state.md
+      - 40. エフェクト: tutorial3/effect.md
+      - 41. レンダーテクスチャ: tutorial3/render-texture.md
+      - 42. ファイルシステム: tutorial3/filesystem.md
+      - 43. テキストファイル: tutorial3/text-file.md
+      - 44. 設定ファイル: tutorial3/config-file.md
+      - 45. バイナリファイル: tutorial3/binary-file.md
+      - 46. ファイルダイアログ: tutorial3/file-dialog.md
+      - 47. ドラッグ & ドロップ: tutorial3/dragdrop.md
+      - 48. メッセージボックス: tutorial3/messagebox.md
+      - 49. リソースファイル: tutorial3/resource-file.md
+      - 50. HTTP クライアント: tutorial3/http-client.md
+      - 51. シーン管理: tutorial3/scene-manager.md
+      - 52. ゲームパッド: tutorial3/gamepad.md
+      - 53. 画像編集: tutorial3/image.md
+      - 54. 音声波形: tutorial3/wave.md
+      - 55. マイク入力: tutorial3/microphone.md
+      - 56. Web カメラ: tutorial3/webcam.md
+      - 57. 高度な図形処理: tutorial3/geometry2d.md
+      - 58. プロファイラと最適化: tutorial3/profiler.md
+      - 59. OpenAI API: tutorial3/openai.md
+      - 60. アプリの公開: tutorial3/release.md
+    - 入門チュートリアル 4:
+      - 61. 2D カスタムシェーダ: tutorial4/2d-shader.md
+      - 62. 3D 形状を描く: tutorial4/3d-shape.md
+      - 63. 3D 形状を描く（発展）: tutorial4/3d-shape-advanced.md
+      - 64. 3D の交差判定: tutorial4/3d-intersection.md
+      - 65. TCP 通信: tutorial4/tcp.md
+      - 66. マルチプレイヤー: tutorial4/multiplayer.md
+      - 67. シリアル通信: tutorial4/serial.md
+      - 68. OSC 通信: tutorial4/osc.md
+      - 69. パイプ通信: tutorial4/pipe.md
+      - 70. 文章の読み上げ: tutorial4/text-to-speech.md
+      - 71. QR コード: tutorial4/qr-code.md
+      - 72. ファイルの圧縮: tutorial4/compression.md
+      - 73. 動画編集: tutorial4/video-edit.md
+      - 74. ペンタブレット: tutorial4/pentablet.md
+      - 75. Leap デバイス: tutorial4/leap.md
+      - 76. ナビメッシュ: tutorial4/navmesh.md
+      - 77. 2D 物理演算: tutorial4/physics2d.md
+      - 78. 数式パーサ: tutorial4/math-parser.md
+      - 79. ユーザ環境の取得: tutorial4/user.md
+      - 80. アドオンを作る: tutorial4/addon.md
+  - サンプル:
+    - ゲームのサンプル: samples/games.md
+    - アプリケーションのサンプル: samples/apps.md
+    - Web サービスとの連係サンプル: samples/web.md
+    - 図形のサンプル: samples/shapes.md
+    - 2D 描画のサンプル: samples/2d.md
+    - 画像のサンプル: samples/image.md
+    - 文字表示のサンプル: samples/text.md
+    - UI のサンプル: samples/ui.md
+    - データ可視化のサンプル: samples/visualize.md
+    - モーショングラフィックスのサンプル: samples/motion-graphics.md
+    - 音のサンプル: samples/sound.md
+    - 2D 物理演算のサンプル: samples/physics2d.md
+    - 3D 描画のサンプル: samples/3d.md
+    - ゲームランチャーを作る: samples/gamelauncher.md
+  - API:
+    - クラス一覧: api/classes.md
+  - 記事:
+    - メッセージボックス: reference/messagebox.md
+    - 非同期処理: reference/async.md
+    - 自作クラスと Siv3D の連係: reference/adapter.md
+    - Siv3D で Hello world する 21 の方法: reference/helloworld.md
+    - グローバル変数として作成できないクラス: reference/avoid-global-variable.md
+    - 多態性を使ったクラスの実装: reference/polymorphism.md
+  - 開発に便利なツール:
+    - Siv3D Palette Browser: tools/palette.md
+    - 絵文字とアイコンの検索: tools/emoji.md
+    - Easing Functions Cheat Sheet: tools/easing.md
+    - GitHub Gist: tools/gist.md
+    - Scrapbox: tools/scrapbox.md
+    - Xbox Game Bar : tools/gamebar.md
+    - VSColorOutput: tools/vscoloroutput.md
+    - .gitignore: tools/gitignore.md
+    - ホットリロード: tools/hot-reload.md
+    - 例外の発生個所の表示: tools/msvc-exception.md
+  - コミュニティ:
+    - コミュニティ: community/community.md
+    - これまでのイベント: community/history.md
+  - 開発に参加する:
+    - 報告や提案: develop/report.md
+    - 自前ビルドの手順: develop/build.md
+    - GitHub でコミットする: develop/commit.md
+    - コーディングスタイル: develop/coding-style.md
+  - 協賛企業の募集:
+    - 協賛企業の募集について: sponsorship/corporate-sponsor.md
+    - 協賛特典: sponsorship/corporate-sponsor-guideline.md
+  - リリースノート: releases.md
+  - Siv3D くん: mascot.md
+  - 謝辞: acknowledgments.md

@@ -1,0 +1,212 @@
+site_dir: '../../siv3d.github.io/en-us'
+
+# Project information
+site_name: Siv3D
+site_url: https://siv3d.github.io/en-us/
+site_author: Ryo Suzuki
+site_description: "Siv3D: A C++ Framework for Creators"
+
+# Copyright
+copyright: Copyright (c) 2012 - 2023, Ryo Suzuki<br>Copyright (c) 2012 - 2023, OpenSiv3D Project
+
+# Theme
+theme:
+  name: material
+  language: en
+  palette:
+    scheme: siv3d
+  logo: 'assets/code-white-48dp.svg'
+  favicon: 'assets/favicon.ico'
+  features:
+  - navigation.instant
+  - navigation.top
+  - navigation.footer
+  - search.suggest
+  - search.highlight
+  - content.code.annotate
+  - content.code.copy
+  plugins:
+  - search:
+      lang:
+        - en
+extra_css:
+  - "https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"
+  - stylesheets/extra.css
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - meta
+  - toc:
+      permalink: true
+      toc_depth: 3
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences:
+      preserve_tabs: true
+  - pymdownx.keys
+  - pymdownx.tabbed:
+      alternate_style: true 
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+extra:
+  alternate:
+    - name: 日本語
+      link: https://siv3d.github.io/ja-jp/
+      lang: ja
+    - name: English
+      link: https://siv3d.github.io/en-us/
+      lang: en
+
+# Page tree
+nav:
+  - Getting Started with Siv3D: index.md
+  - Learning Siv3D: learn.md
+  - Siv3D Features: features.md
+  - Download:
+    - Windows: download/windows.md
+    - macOS: download/macos.md
+    - Ubuntu: download/ubuntu.md
+    - Web: download/web.md
+  - Tutorials:
+    - Beginner Tutorial 1:
+      - 1. Your first Siv3D: tutorial/hello.md
+      - 2. Basics of Siv3D: tutorial/basic.md
+      - 3. Composition of Main Function: tutorial/mainloop.md
+      - 4. Basic Application Operations: tutorial/app-basic.md
+      - 5. Simple Data Display: tutorial/print.md
+      - 6. Basic Data Types: tutorial/basic-types.md
+      - 7. Changing Background Color: tutorial/background.md
+      - 8. Drawing Circles and Rectangles: tutorial/circle-rect.md
+      - 9. Drawing Patterns: tutorial/pattern.md
+      - 10. Drawing Emojis: tutorial/emoji.md
+      - 11. Displaying Text: tutorial/text.md
+      - 12. Variables and Movements: tutorial/motion.md
+      - 13. Handling Keyboard Input: tutorial/keyboard.md
+      - 14. Handling Mouse Input: tutorial/mouse.md
+      - 15. Creating a Button: tutorial/button.md
+      - 16. Creating a Cookie Clicker Style Game: tutorial/cookie-clicker.md
+    - Beginner Tutorial 2:
+      - 17. Drawing Shapes: tutorial2/shape.md
+      - 18. Creating Movements: tutorial2/motion.md
+      - 19. String Class: tutorial2/string.md
+      - 20. Dynamic Arrays: tutorial2/array.md
+      - 21. Two-dimensional Arrays: tutorial2/grid.md
+      - 22. Hash Table: tutorial2/hash-table.md
+      - 23. Type that can Express Invalid Values: tutorial2/optional.md
+      - 24. Collision Detection: tutorial2/2d-intersection.md
+      - 25. Drawing Textures: tutorial2/texture.md
+      - 26. Drawing Videos: tutorial2/video.md
+      - 27. Converting Numbers and Strings: tutorial2/format.md
+      - 28. GUI: tutorial2/gui.md
+      - 29. Random: tutorial2/random.md
+      - 30. Date and Time, Timing: tutorial2/time.md
+      - 31. Displaying Text: tutorial2/font.md
+      - 32. Scene and Window: tutorial2/scene.md
+      - 33. Keyboard Input: tutorial2/keyboard.md
+      - 34. Mouse Input: tutorial2/mouse.md
+      - 35. Useful Functions: tutorial2/utility.md
+      - 36. Implementation of Interactions: tutorial2/interaction.md
+    - Beginner Tutorial 3:
+      - 37. Audio Playback: tutorial3/audio.md
+      - 38. Asset Management: tutorial3/asset.md
+      - 39. 2D Render States: tutorial3/2d-render-state.md
+      - 40. Effects: tutorial3/effect.md
+      - 41. Render Texture: tutorial3/render-texture.md
+      - 42. File System: tutorial3/filesystem.md
+      - 43. Text File: tutorial3/text-file.md
+      - 44. Configuration File: tutorial3/config-file.md
+      - 45. Binary File: tutorial3/binary-file.md
+      - 46. File Dialog: tutorial3/file-dialog.md
+      - 47. Drag & Drop: tutorial3/dragdrop.md
+      - 48. Message Box: tutorial3/messagebox.md
+      - 49. Resource File: tutorial3/resource-file.md
+      - 50. HTTP Client: tutorial3/http-client.md
+      - 51. Scene Management: tutorial3/scene-manager.md
+      - 52. Gamepad: tutorial3/gamepad.md
+      - 53. Image Editing: tutorial3/image.md
+      - 54. Audio Waveform: tutorial3/wave.md
+      - 55. Microphone Input: tutorial3/microphone.md
+      - 56. Webcam: tutorial3/webcam.md
+      - 57. Advanced Geometry Processing: tutorial3/geometry2d.md
+      - 58. Profiling and Optimization: tutorial3/profiler.md
+      - 59. OpenAI API: tutorial3/openai.md
+      - 60. Publishing Your App: tutorial3/release.md
+    - Beginner Tutorial 4:
+      - 61. 2D Custom Shader: tutorial4/2d-shader.md
+      - 62. Drawing 3D Shapes: tutorial4/3d-shape.md
+      - 63. Drawing Advanced 3D Shapes: tutorial4/3d-shape-advanced.md
+      - 64. 3D Intersection Detection: tutorial4/3d-intersection.md
+      - 65. TCP Communication: tutorial4/tcp.md
+      - 66. Multiplayer: tutorial4/multiplayer.md
+      - 67. Serial Communication: tutorial4/serial.md
+      - 68. OSC Communication: tutorial4/osc.md
+      - 69. Pipe Communication: tutorial4/pipe.md
+      - 70. Text-to-Speech: tutorial4/text-to-speech.md
+      - 71. QR Code: tutorial4/qr-code.md
+      - 72. File Compression: tutorial4/compression.md
+      - 73. Video Editing: tutorial4/video-edit.md
+      - 74. Pen Tablet: tutorial4/pentablet.md
+      - 75. Leap Device: tutorial4/leap.md
+      - 76. Navmesh: tutorial4/navmesh.md
+      - 77. 2D Physics Simulation: tutorial4/physics2d.md
+      - 78. Math Parser: tutorial4/math-parser.md
+      - 79. Accessing User Environment: tutorial4/user.md
+      - 80. Creating Addons: tutorial4/addon.md
+  - Samples:
+    - Game Samples: samples/games.md
+    - Application Samples: samples/apps.md
+    - Web Service Integration Samples: samples/web.md
+    - Shape Samples: samples/shapes.md
+    - 2D Drawing Samples: samples/2d.md
+    - Image Samples: samples/image.md
+    - Text Display Samples: samples/text.md
+    - UI Samples: samples/ui.md
+    - Data Visualization Samples: samples/visualize.md
+    - Motion Graphics Samples: samples/motion-graphics.md
+    - Sound Samples: samples/sound.md
+    - 2D Physics Simulation Samples: samples/physics2d.md
+    - 3D Drawing Samples: samples/3d.md
+    - Creating a Game Launcher: samples/gamelauncher.md
+  - API:
+    - Class List: api/classes.md
+  - Articles:
+    - Message Box: reference/messagebox.md
+    - Asynchronous Processing: reference/async.md
+    - Connecting Your Class to Siv3D: reference/adapter.md
+    - 21 Ways to Say Hello World in Siv3D: reference/helloworld.md
+    - Classes That Shouldn't be Global Variables: reference/avoid-global-variable.md
+    - Implementing Classes Using Polymorphism: reference/polymorphism.md
+  - Useful Development Tools:
+    - Siv3D Palette Browser: tools/palette.md
+    - Emoji and Icon Search: tools/emoji.md
+    - Easing Functions Cheat Sheet: tools/easing.md
+    - GitHub Gist: tools/gist.md
+    - Scrapbox: tools/scrapbox.md
+    - Xbox Game Bar : tools/gamebar.md
+    - VSColorOutput: tools/vscoloroutput.md
+    - .gitignore: tools/gitignore.md
+    - Hot Reload: tools/hot-reload.md
+    - Showing Where Exceptions Occur: tools/msvc-exception.md
+  - Community:
+    - Community: community/community.md
+    - Past Events: community/history.md
+  - Participate in Development:
+    - Reports and Proposals: develop/report.md
+    - Building from Source: develop/build.md
+    - Committing to GitHub: develop/commit.md
+    - Coding Style: develop/coding-style.md
+  - Corporate Sponsorship:
+    - Information on Corporate Sponsorship: sponsorship/corporate-sponsor.md
+    - Sponsorship Benefits: sponsorship/corporate-sponsor-guideline.md
+  - Release Notes: releases.md
+  - Siv3D Mascot: mascot.md
+  - Acknowledgments: acknowledgments.md
