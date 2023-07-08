@@ -540,7 +540,7 @@ void Main()
 		const RoundRect miniWindow{ Arg::center = Cursor::Pos(), 480, 360 , 24 };
 
 		// ミニウィンドウにぼかしテクスチャの指定領域を貼り付けて描画する
-		miniWindow(blur4.uv(CalculateUVRect(SceneSize, miniWindow.rect))).draw();
+		miniWindow(blur4.uv(CalculateUVRect(sceneSize, miniWindow.rect))).draw();
 
 		// ミニウィンドウを描画する
 		miniWindow.draw(ColorF{ 1.0, 0.85 });
