@@ -474,7 +474,7 @@ void Main()
 
 下記のサンプルコードではシーン全体をぼかしていますが、ぼかす領域が固定である場合、最小限の領域だけにぼかしをかけることで、より高速に処理することができるでしょう。
 
-<video src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/render-texture/7.mp4?raw=true" autoplay loop muted playsinline></video>
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/render-texture/7.jpg)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -543,7 +543,7 @@ void Main()
 		miniWindow(blur4.uv(CalculateUVRect(sceneSize, miniWindow.rect))).draw();
 
 		// ミニウィンドウを描画する
-		miniWindow.draw(ColorF{ 1.0, 0.85 });
+		miniWindow.draw(ColorF{ 1.0, 0.7 });
 	}
 }
 ```
