@@ -326,7 +326,7 @@ void Main()
 
 	const Texture textureWindmill{ U"example/windmill.png", TextureDesc::Mipped };
 	const Texture textureSiv3DKun{ U"example/siv3d-kun.png", TextureDesc::Mipped };
-	constexpr Circle circle{ 200, 400, 60 };
+	const Circle circle{ 200, 400, 60 };
 
 	size_t index = 0;
 

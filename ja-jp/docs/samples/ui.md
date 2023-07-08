@@ -1395,7 +1395,6 @@
 				const ScopedRenderTarget2D target{ m_blurTexture };
 				m_texture.scaled(0.8).drawAt(m_blurTexture.size() * 0.5);
 			}
-			Graphics2D::Flush();
 
 			// ガウスぼかしを 2 回かける
 			Shader::GaussianBlur(m_blurTexture, m_internalTexture, m_blurTexture);

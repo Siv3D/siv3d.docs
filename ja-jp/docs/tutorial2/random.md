@@ -318,7 +318,7 @@ void Main()
 void Main()
 {
 	// Line や Circle, Triangle, Quad も OK
-	constexpr RectF shape{ 100, 100, 400, 300 };
+	const RectF shape{ 100, 100, 400, 300 };
 
 	Array<Vec2> points;
 

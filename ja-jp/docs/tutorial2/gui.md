@@ -209,7 +209,7 @@ void Main()
 	size_t index5 = 0;
 
 	const Array<String> options = { U"Red", U"Green", U"Blue" };
-	constexpr std::array<ColorF, 3> colors = { ColorF{ 0.8, 0.2, 0.2 }, ColorF{ 0.2, 0.8, 0.2 }, ColorF{ 0.2, 0.2, 0.8 } };
+	const std::array<ColorF, 3> colors = { ColorF{ 0.8, 0.2, 0.2 }, ColorF{ 0.2, 0.8, 0.2 }, ColorF{ 0.2, 0.2, 0.8 } };
 
 	Scene::SetBackground(colors[index1]);
 

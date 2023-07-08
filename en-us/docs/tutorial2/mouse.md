@@ -484,8 +484,8 @@ void Main()
 {
 	Scene::SetBackground(Palette::White);
 
-	constexpr ColorF buttonColor{ 0.2, 0.6, 1.0 };
-	constexpr Circle button{ 400, 300, 60 };
+	const ColorF buttonColor{ 0.2, 0.6, 1.0 };
+	const Circle button{ 400, 300, 60 };
 	Transition press{ 0.05s, 0.05s };
 
 	while (System::Update())
