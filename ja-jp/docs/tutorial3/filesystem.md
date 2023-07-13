@@ -2,14 +2,14 @@
 ファイルやディレクトリの情報取得および操作に関する機能を学びます。
 
 ## 42.1 パスを表す型
-（ファイルやディレクトリの）パスを Siv3D のプログラムで表現するときは、`String` 型のエイリアス（別名）である `FilePath` を使うと意図が明確になります。
+ファイルやディレクトリのパスを Siv3D のコードで表現するときは、`String` 型のエイリアス（別名）である `FilePath` を使うと意図が明確になります。
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// String でも良いが、FilePath のほうがファイルパスであることが明確になる
+	// String よりも FilePath のほうがファイルパスであることが明確
 	const FilePath path = U"example/windmill.png";
 
 	const Texture texture{ path };
@@ -21,7 +21,7 @@ void Main()
 }
 ```
 
-パスがディレクトリを指す場合は、末尾に `/` を付与した形で表現します（例: `U"example/"`）。
+ディレクトリパスは、末尾に `/` を付けて表現します。
 
 ```cpp
 # include <Siv3D.hpp>
@@ -43,7 +43,7 @@ void Main()
 
 
 ## 42.2 ファイルやディレクトリが存在するかを調べる
-ファイルやディレクトリが存在するか調べるには `FileSystem::Exists(path)` を使います。ファイルが存在するかを調べるには `FileSystem::IsFile(path)`, ディレクトリ（フォルダ）が存在するかを調べるには `FileSystem::IsDirectory(path)` を使います。
+ファイルやディレクトリが存在するか調べるには `FileSystem::Exists(path)` を使います。ファイルが存在するかを調べるには `FileSystem::IsFile(path)`, ディレクトリが存在するかを調べるには `FileSystem::IsDirectory(path)` を使います。
 
 | 関数 | 説明 |
 |---|---|
@@ -87,7 +87,7 @@ void Main()
 
 
 ## 42.3 絶対パスを取得する
-ファイルパスを絶対パスに変換するには `FileSystem::Fullpath(path)` を使います。
+パスを絶対パスに変換するには `FileSystem::Fullpath(path)` を使います。
 
 ```cpp
 # include <Siv3D.hpp>
@@ -107,7 +107,7 @@ void Main()
 
 
 ## 42.4 相対パスに変換する
-ファイルパスを、現在のカレントディレクトリからの相対パスに変換するには `FileSystem::RelativePath(path)` を使います。
+パスを、現在のカレントディレクトリからの相対パスに変換するには `FileSystem::RelativePath(path)` を使います。
 
 ```cpp
 # include <Siv3D.hpp>
@@ -369,13 +369,13 @@ void Main()
 ```
 
 
-## 42.14 ファイルやフォルダのサイズを取得する
-ファイルのサイズを取得するには `FileSystem::FileSize(path)` を使います。ファイルおよびフォルダのサイズを取得するには `FileSystem::Size(path)` を使います。
+## 42.14 ファイルやディレクトリのサイズを取得する
+ファイルのサイズを取得するには `FileSystem::FileSize(path)` を使います。ファイルおよびディレクトリのサイズを取得するには `FileSystem::Size(path)` を使います。
 
 | 関数 | 説明 |
 |--|--|
 | `FileSystem::FileSize(path)` | ファイルのサイズをバイト単位で返します。ファイルが存在しないか、空である場合は 0 を返します。 |
-| `FileSystem::Size(path)` | ファイルまたはフォルダのサイズをバイト単位で返します。ファイルまたはフォルダが存在しないか、空である場合は 0 を返します。 |
+| `FileSystem::Size(path)` | ファイルまたはディレクトリのサイズをバイト単位で返します。ファイルまたはディレクトリが存在しないか、空である場合は 0 を返します。 |
 
 `FormatDataSize(int64)` を使うと、ファイルサイズを、2 進接頭辞を用いた見やすい形式の文字列に変換できます（例: `120KiB`）。
 
@@ -569,7 +569,7 @@ void Main()
 }
 ```
 
-### 42.18.2 ファイルパスを指定して、その親ディレクトリまでのディレクトリを作成する
+### 42.18.2 パスを指定して、その親ディレクトリまでのディレクトリを作成する
 パスを指定して、その親ディレクトリまでのディレクトリを作成するには、`FileSystem::CreateParentDirectories(path)` を使います。この関数は、指定したパスの親ディレクトリが存在しない場合、そのディレクトリを作成します。作成に成功したか、すでに同名のディレクトリが存在する場合 `true`, それ以外の場合は `false` を返します。パスのうち親ディレクトリ以降の部分（ファイルまたはディレクトリ名）は無視されます。
 
 `FileSystem::CreateParentDirectories(U"aaa/bbb/ccc.txt")` は、`FileSystem::CreateDirectories(U"aaa/bbb/")` と同じです。
