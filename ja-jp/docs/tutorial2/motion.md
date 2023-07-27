@@ -20,7 +20,7 @@
 `Scene::Center()` はシーンの中心座標を `Point` 型で返します。画面のサイズが 800x600 のときには `Point{ 400, 300 }` を返します。
 
 #### サンプルプログラム
-プログラムが起動されてからの時間に基づいて円の半径を変化させるプログラムは次の通りです。
+プログラムが起動されてからの時間に基づいて円の半径を変化させるプログラムは次のとおりです。
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/motion/1.png)
 
@@ -553,7 +553,7 @@ void Main()
 
 #### 関数の概要
 
-`Vec2` 用の `Math::SmoothDamp` 関数の概要とサンプルコードは次の通りです。
+`Vec2` 用の `Math::SmoothDamp` 関数の概要とサンプルコードは次のとおりです。
 
 ```cpp
 Vec2 Math::SmoothDamp(const Vec2& from, const Vec2& to, Vec2& velocity, double smoothTime, const Optional<double>& maxSpeed = unspecified, double deltaTime = Scene::DeltaTime());`

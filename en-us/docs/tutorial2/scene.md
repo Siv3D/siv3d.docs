@@ -510,7 +510,7 @@ void Main()
 ## 32.13 モニタの情報を得る
 接続されているモニタの情報の一覧を取得するには `System::EnumerateMonitors()` を使います。結果は `Array<MonitorInfo>` 型で得られます。
 
-`MonitorInfo` 型のメンバ変数は次の通りです。
+`MonitorInfo` 型のメンバ変数は次のとおりです。
 
 | 変数 | 説明 |
 |--|--|

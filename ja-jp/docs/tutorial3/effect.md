@@ -97,7 +97,7 @@ void Main()
 ```
 
 ## 40.3 イージングをエフェクトで使う
-チュートリアル 18. で学んだイージングを組み合わせると、より洗練された動きを作れます。
+チュートリアル 18 章で学んだイージングを組み合わせると、より洗練された動きを作れます。
 
 <video src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/effect/3.mp4?raw=true" autoplay loop muted playsinline></video>
 
