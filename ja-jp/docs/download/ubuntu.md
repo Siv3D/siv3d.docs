@@ -1,7 +1,7 @@
 # Ubuntu で Siv3D プログラミングを始める
 
 ## 1. システム要件
-Ubuntu で Siv3D プログラミングをするのに必要な開発環境は次のとおりです。
+Ubuntu で Siv3D プログラミングをするのに必要な開発環境は次のとおりです。GCC は Ubuntu のデフォルトのバージョンを使用します。
 
 |  |  |
 |--|--|
@@ -12,23 +12,21 @@ Ubuntu で Siv3D プログラミングをするのに必要な開発環境は次
 | 開発環境 | GCC 9.3.0 (+ Boost 1.71.0) / GCC 11.2 (+ Boost 1.74.0) / Clang 14.0.0 (+ Boost 1.74.0) |
 
 ## 2. Siv3D の最新コードを入手する
-
 [OpenSiv3D 公式リポジトリの main ブランチ :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D) が最新安定版です。「Code」からリポジトリをクローンするか、ZIP ファイルでソースコードをダウンロードします（「Download ZIP」）。
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/download/ubuntu/repo.png)
 
 ## 3. Siv3D をビルドする
-1. 必要なツールや依存パッケージをインストールします。
-[https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L26-L49](https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L26-L49)
+1. 必要な依存パッケージをインストールします。
+[https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ubuntu.yml#L22-L23](https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ubuntu.yml#L22-L23)
 2. Siv3D ライブラリをビルドし、`libSiv3D.a` を作成します。 
-[https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L51-L60](https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L51-L60)
+[https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ubuntu.yml#L25-L34](https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ubuntu.yml#L25-L34)
 3. Siv3D をインストールします。 
-[https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L65](https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L65)
+[https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ubuntu.yml#L36-L39](https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ubuntu.yml#L36-L39)
 4. Siv3D アプリをビルドします。 
-[https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L67-L76](https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L67-L76)
+[https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ubuntu.yml#L41-L50](https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ubuntu.yml#L41-L50)
 
 ## 4. サンプルプログラム
-
 Linux 版のデフォルトの [Main.cpp のコード](https://github.com/Siv3D/OpenSiv3D/blob/main/Linux/App/Main.cpp) は、標準出力をしてすぐに終了する単純なプログラムです。コメントアウト範囲を変更するなどして、次のようなサンプルコードで上書きしてください。実行中のプログラムは、++esc++ を押すか、ウィンドウを閉じると終了します。
 
 ??? summary "サンプルコード"

@@ -19,13 +19,13 @@ The necessary development environment for Siv3D programming on Ubuntu is as foll
 
 ## 3. BUilding Siv3D
 1. Install necessary tools and dependency packages.
-[https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L26-L49](https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L26-L49)
+[https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ubuntu.yml#L22-L23](https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ubuntu.yml#L22-L23)
 2. Build the Siv3D library and create `libSiv3D.a`.
-[https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L51-L60](https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L51-L60)
+[https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ubuntu.yml#L25-L34](https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ubuntu.yml#L25-L34)
 3. Install Siv3D.
-[https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L65](https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L65)
+[https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ubuntu.yml#L36-L39](https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ubuntu.yml#L36-L39)
 4. Build a Siv3D application.
-[https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L67-L76](https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ci.yml#L67-L76)
+[https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ubuntu.yml#L41-L50](https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ubuntu.yml#L41-L50)
 
 ## 4. Sample Program
 
