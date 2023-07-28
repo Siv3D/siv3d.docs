@@ -2256,3 +2256,9 @@
 
 [ゲーム典型 | 2D RPG のマップと移動の基本 :material-open-in-new:](https://github.com/Reputeless/games/blob/main/games/007/A.md){:target="_blank" .md-button}
 
+
+## 20. オートタイル
+
+![](https://raw.githubusercontent.com/Siv3D/Siv3D-Samples/main/Samples/AutoTiles/Screenshot/1.png)
+
+[Siv3D-Sample | オートタイル :material-open-in-new:](https://github.com/Siv3D/Siv3D-Samples/tree/main/Samples/AutoTiles){:target="_blank" .md-button}
