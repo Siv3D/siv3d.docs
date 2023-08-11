@@ -2,7 +2,55 @@
 
 ## v0.6 世代
 
-???+ summary "v0.6.10 | 2023-05-17"
+???+ summary "v0.6.11 | 2023-08-11"
+
+	#### 新機能
+	- 2D の軌跡を描画する機能を追加しました ([#1006](https://github.com/Siv3D/OpenSiv3D/issues/1006), [#1043](https://github.com/Siv3D/OpenSiv3D/pull/1043))
+		- [サンプル](https://zenn.dev/link/comments/7de4b612bbc195)
+	- 「9 スライス」を簡単に扱えるクラスを追加しました ([#1030](https://github.com/Siv3D/OpenSiv3D/issues/1030), [#1036](https://github.com/Siv3D/OpenSiv3D/pull/1036))
+		- [サンプル](https://zenn.dev/link/comments/f62cd1a9e45fb0)
+	- 目標に追従するシンプルな 3D カメラクラス `SimpleFollowCamera3D` を追加しました ([#1048](https://github.com/Siv3D/OpenSiv3D/issues/1048), [#1049](https://github.com/Siv3D/OpenSiv3D/pull/1049))
+		- [サンプル](https://zenn.dev/link/comments/7034d12f405985)
+	- OpenAI Chat API のモデル定数に `GPT3_5_Turbo_16K`（`gpt-3.5-turbo-16k`）を追加しました ([#1050](https://github.com/Siv3D/OpenSiv3D/issues/1055))
+	- `Rect`, `RectF`, `RoundRectF` の `.drawShadow()` に、内部をすべて塗りつぶさないオプションを追加しました ([#1039](https://github.com/Siv3D/OpenSiv3D/issues/1039))
+	- ベクトルの各要素間で最大値 / 最小値を計算する `Math::Max()`, `Math::Min()` を追加しました ([#1032](https://github.com/Siv3D/OpenSiv3D/issues/1032))
+	- `Line::normalizedVector()` を追加しました ([#1029](https://github.com/Siv3D/OpenSiv3D/issues/1029))
+	- `Triangle::isClockwise()` を追加しました ([#1028](https://github.com/Siv3D/OpenSiv3D/issues/1028))
+	- `Transition::reset()` を追加しました ([#1025](https://github.com/Siv3D/OpenSiv3D/issues/1025))
+	- `Math::MoveTowards()` を追加しました ([#1024](https://github.com/Siv3D/OpenSiv3D/issues/1024))
+	- 3 つの頂点から時計回りの `Triangle` を作成する `Triangle::FromPoints(p0, p1, p2)` を追加しました ([#1015](https://github.com/Siv3D/OpenSiv3D/issues/1015))
+	- `Quaternion::RollPitchYaw()` に、`Vec3` を引数にとるオーバーロードを追加しました ([#1014](https://github.com/Siv3D/OpenSiv3D/issues/1014))
+
+	#### ユーザビリティ向上	
+	- 初心者が踏みやすいランタイムエラーを踏んだ際にトラブルシューティングの Web ページを開く機能を追加しました ([#1007](https://github.com/Siv3D/OpenSiv3D/issues/1007), [#1034](https://github.com/Siv3D/OpenSiv3D/issues/1034), [#1035](https://github.com/Siv3D/OpenSiv3D/pull/1035))
+	- エンジン起動前のアセットクラス初期化検知の対象を拡大しました ([#1047](https://github.com/Siv3D/OpenSiv3D/issues/1047))
+	- `SimpleGUI::TextBox()` の挙動を改善しました ([#997](https://github.com/Siv3D/OpenSiv3D/issues/997))
+
+	#### 仕様変更
+	- `Circle::drawPie()`, `Circle::drawArc()`, `Circle::drawSegmentFromAngles()` で負の angle を指定した際にも、通常通り時計回りの三角形が描画されるようにしました ([#1042](https://github.com/Siv3D/OpenSiv3D/issues/1042))
+
+	#### パフォーマンス向上
+	- `Circle`, `Rect`, `RectF`, `RoundrRect` の `.drawShadow()` の CPU コストを 20～50 % 削減しました ([#1037](https://github.com/Siv3D/OpenSiv3D/issues/1037))
+
+	#### 不具合・バグ修正
+	- Windows 版でプログラムの終了時に mutex のエラーでクラッシュすることがあったバグを修正しました ([#1033](https://github.com/Siv3D/OpenSiv3D/issues/1033))
+	- `DrawableText::getXAdvances()` の結果に改行文字の分が含まれていなかったバグを修正しました ([#1038](https://github.com/Siv3D/OpenSiv3D/issues/1038))
+	- `RoundRect::drawShadow()` で `spread` を指定すると描画の r がずれていた不具合を修正しました ([#1040](https://github.com/Siv3D/OpenSiv3D/issues/1040))
+	- `Font::renderPolygon()` で輪郭と穴が逆転することがあったバグを修正しました ([#1019](https://github.com/Siv3D/OpenSiv3D/issues/1019), [#1027](https://github.com/Siv3D/OpenSiv3D/pull/1027))
+	- `Font` 描画時にタブ空白の間隔が乱れることがあったバグを修正しました ([#1002](https://github.com/Siv3D/OpenSiv3D/issues/1002), [#1026](https://github.com/Siv3D/OpenSiv3D/pull/1026))
+	- `Circle::pieAsPolygon()` と `Circle::arcAsPolygon()` が反時計回り頂点の `Polygon` を生成していたバグを修正しました ([#1041](https://github.com/Siv3D/OpenSiv3D/issues/1041))
+	- 一部のコンパイラでのビルドの問題を修正しました ([#1021](https://github.com/Siv3D/OpenSiv3D/pull/1021))
+	- `SimpleGUI::TextBoxAt()` での Home, End キーの動作を修正しました ([#999](https://github.com/Siv3D/OpenSiv3D/pull/999))
+	- ドキュメントや引数の誤字を修正しました ([#1016](https://github.com/Siv3D/OpenSiv3D/issues/1016), [#1017](https://github.com/Siv3D/OpenSiv3D/pull/1017))
+
+	#### コントリビューション
+	- [Raclamusi](https://github.com/Raclamusi): **`Font::renderPolygon()` のバグを修正**, **`Font` のタブ空白描画のバグを修正**
+	- [yksake](https://github.com/yksake): `SimpleGUI::TextBoxAt()` の挙動改善
+	- [polyester-CTRL](https://github.com/polyester-CTRL): 一部のコンパイラでのビルドの問題の修正
+	- [voidproc](https://github.com/voidproc): ドキュメントや引数の誤字修正
+
+
+??? summary "v0.6.10 | 2023-05-17"
 	#### 重要
 	- Visual Studio 2022 17.6 でのビルドの問題を修正しました ([#1011](https://github.com/Siv3D/OpenSiv3D/issues/1011))
 		- v0.6.9 以前のプロジェクトでは、[プロジェクトのプロパティから「ISO C++23 標準ライブラリモジュールのビルド」を無効にする](https://github.com/Siv3D/OpenSiv3D/issues/1011){:target="_blank"}ことで解決します。

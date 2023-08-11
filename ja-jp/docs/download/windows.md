@@ -25,7 +25,7 @@ Windows で Siv3D プログラミングをするのに必要な開発環境は�
 	そのまま右下の 「インストール」 ボタンを押せば、C++ プログラミングに必要なツールのインストールが始まります。
 
 ### 1.2 アプリ動作システム要件
-Windows で Siv3D v0.6.10 を使って開発されたアプリケーションを実行するのに必要な環境は次のとおりです。ゲームやアプリを配布するときの説明書に記載すると良いでしょう。
+Windows で Siv3D v0.6.11 を使って開発されたアプリケーションを実行するのに必要な環境は次のとおりです。ゲームやアプリを配布するときの説明書に記載すると良いでしょう。
 
 |  |  |
 |--|--|
@@ -36,7 +36,7 @@ Windows で Siv3D v0.6.10 を使って開発されたアプリケーションを
 
 ## 2. SDK をインストールする
 
-1. **[OpenSiv3D v0.6.10 Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D_0.6.10_Installer.exe){:target="_blank"}** をダウンロードして実行します。
+1. **[OpenSiv3D v0.6.11 Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D_0.6.11_Installer.exe){:target="_blank"}** をダウンロードして実行します。
 1. 実行時に「Windows によって PC が保護されました」と表示された場合は、**詳細情報**を押して**実行**を押します。
 
 !!! info "インストール後に Windows の再起動を推奨"
@@ -60,6 +60,7 @@ Windows で Siv3D v0.6.10 を使って開発されたアプリケーションを
     過去のバージョンの利用は非推奨です。必要な場合に限り、下記からダウンロードしてください。  
     コンパイラの更新等により、最新の開発環境では過去のバージョンを利用できないことがあります。古い Siv3D プロジェクトをビルドしたい場合は、そのソースコードを最新版のプロジェクトへ移植するのが良い方法です。
 
+    - [OpenSiv3D v0.6.10 Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D_0.6.10_Installer.exe){:target="_blank"}
     - [OpenSiv3D v0.6.9 Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D_0.6.9_Installer.exe){:target="_blank"}
 	- [OpenSiv3D v0.6.8 Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D_0.6.8_Installer.exe){:target="_blank"}
 	- [OpenSiv3D v0.6.7 Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D_0.6.7_Installer.exe){:target="_blank"}
@@ -95,18 +96,18 @@ OpenSiv3D インストーラが正常に実行されない場合、代わりに�
 ??? summary "SDK を手動インストールする場合の手順"
 	### SDK ファイルの配置と環境変数の設定
 
-	1. [OpenSiv3D_SDK_0.6.10.zip](https://siv3d.jp/downloads/Siv3D/manual/0.6.10/OpenSiv3D_SDK_0.6.10.zip) をダウンロードして展開し、中身をドキュメントフォルダ（`.../Documents`）に次のように配置します。
-		- `.../Documents/OpenSiv3D_SDK_0.6.10/addon`
-		- `.../Documents/OpenSiv3D_SDK_0.6.10/include`
-		- `.../Documents/OpenSiv3D_SDK_0.6.10/lib`
-	2. ユーザー環境変数 `SIV3D_0_6_10` を新規作成し、1. で配置した OpenSiv3D SDK のフォルダのパスを設定します。
-		- 例: `C:/Users/Siv3D/Documents/OpenSiv3D_SDK_0.6.10/include` のように配置した場合、`C:/Users/Siv3D/Documents/OpenSiv3D_SDK_0.6.10` を環境変数 `SIV3D_0_6_10` に設定します。
+	1. [OpenSiv3D_SDK_0.6.11.zip](https://siv3d.jp/downloads/Siv3D/manual/0.6.11/OpenSiv3D_SDK_0.6.11.zip) をダウンロードして展開し、中身をドキュメントフォルダ（`.../Documents`）に次のように配置します。
+		- `.../Documents/OpenSiv3D_SDK_0.6.11/addon`
+		- `.../Documents/OpenSiv3D_SDK_0.6.11/include`
+		- `.../Documents/OpenSiv3D_SDK_0.6.11/lib`
+	2. ユーザー環境変数 `SIV3D_0_6_11` を新規作成し、1. で配置した OpenSiv3D SDK のフォルダのパスを設定します。
+		- 例: `C:/Users/Siv3D/Documents/OpenSiv3D_SDK_0.6.11/include` のように配置した場合、`C:/Users/Siv3D/Documents/OpenSiv3D_SDK_0.6.11` を環境変数 `SIV3D_0_6_11` に設定します。
 
 	![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/download/windows/envvariable.png)  
 
 	### Visual Studio プロジェクトテンプレートの配置
 
-	1. Visual Studio 用プロジェクトテンプレート [OpenSiv3D_0.6.10.zip](https://siv3d.jp/downloads/Siv3D/manual/0.6.10/OpenSiv3D_0.6.10.zip) (サイズ: 約 63 MB) をダウンロードし、そのファイルを**展開せず ZIP ファイルのまま**、Visual Studio 2022 インストール時にドキュメントフォルダに作成される `Visual Studio 2022/Templates/ProjectTemplates/` フォルダの中に配置します。  
+	1. Visual Studio 用プロジェクトテンプレート [OpenSiv3D_0.6.11.zip](https://siv3d.jp/downloads/Siv3D/manual/0.6.11/OpenSiv3D_0.6.11.zip) (サイズ: 約 63 MB) をダウンロードし、そのファイルを**展開せず ZIP ファイルのまま**、Visual Studio 2022 インストール時にドキュメントフォルダに作成される `Visual Studio 2022/Templates/ProjectTemplates/` フォルダの中に配置します。  
 
 	![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/download/windows/projecttemplate.png)  
 

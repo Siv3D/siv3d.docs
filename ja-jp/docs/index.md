@@ -3,7 +3,7 @@
 
 **Siv3D（シブスリーディー）**は、音や画像、AI を使ったゲームやアプリを、**モダンな C++ コードで楽しく簡単にプログラミング**できるオープンソースのフレームワークです。豊富なチュートリアルが用意され、オンラインのユーザコミュニティで気軽に質問や相談ができます。動作環境は Windows / macOS / Linux / Web です。
 
-#### Siv3D のダウンロード | v0.6.10
+#### Siv3D のダウンロード | v0.6.11
 
 [Windows :material-microsoft-windows:](download/windows){ .md-button .md-button--primary }[macOS (Intel) :material-apple:](download/macos){ .md-button .md-button--primary }[Ubuntu :material-ubuntu:](download/ubuntu){ .md-button .md-button--primary }
 

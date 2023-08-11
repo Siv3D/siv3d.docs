@@ -3,7 +3,7 @@
 
 **Siv3D** is an open-source framework that allows for **fun and easy programming of games and applications using modern C++ code**, incorporating sound, images, and AI. A wealth of tutorials are available, and you can easily ask questions or seek advice in the online user community. The operating environment is Windows / macOS / Linux / Web.
 
-#### Download Siv3D | v0.6.10
+#### Download Siv3D | v0.6.11
 
 [Windows :material-microsoft-windows:](download/windows){ .md-button .md-button--primary }[macOS (Intel) :material-apple:](download/macos){ .md-button .md-button--primary }[Ubuntu :material-ubuntu:](download/ubuntu){ .md-button .md-button--primary }
 
