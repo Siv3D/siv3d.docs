@@ -24,7 +24,7 @@ Siv3D の開発者やユーザが集まって、プログラムについて質�
 [学校や地域のコミュニティへの無料での訪問 Siv3D 勉強会 :material-open-in-new:](https://www.dropbox.com/s/eiz3ohkqdt70w1g/Siv3D%20%E8%A8%AA%E5%95%8F%E5%8B%89%E5%BC%B7%E4%BC%9A%E3%81%AE%E6%A1%88%E5%86%85.pdf?dl=0) も提供しています。Discord や DM, またはメールでご相談ください。
 
 ## 4. OpenSiv3D チャレンジ
-Siv3D の新機能を作るいくつかのチャレンジ課題の中から好きなものを選び、Siv3D ユーザコミュニティ Slack 内の専用のチャンネルに参加し、メンバーどうし協力 or 競争しながら実装の完成を目指すイベントです。優先的なコードレビューや実装のアドバイスなど、技術サポートを受けられます。
+Siv3D の新機能を作るいくつかのチャレンジ課題の中から好きなものを選び、Siv3D ユーザコミュニティ Discord 内の専用のチャンネルに参加し、メンバーどうし協力 or 競争しながら実装の完成を目指すイベントです。優先的なコードレビューや実装のアドバイスなど、技術サポートを受けられます。
 
 - [OpenSiv3D Challenge 2021 :material-open-in-new:](https://zenn.dev/reputeless/scraps/79865055750784)
 
@@ -39,7 +39,7 @@ Siv3D の新機能を作るいくつかのチャレンジ課題の中から好�
 - [OpenSiv3D Issues :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D/issues)
 
 ## 7. BBS
-匿名で質問を投稿できる旧式の掲示板です。巡回頻度が低いので Slack や Twitter よりも回答が付くまでに時間がかかる場合があります。
+匿名で質問を投稿できる旧式の掲示板です。巡回頻度が低いので Discord や Twitter よりも回答が付くまでに時間がかかる場合があります。
 
 - [Siv3D ユーザ助け合い所 :material-open-in-new:](https://siv3d.jp/bbs/patio.cgi)
 
