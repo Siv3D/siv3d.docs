@@ -111,9 +111,9 @@ Siv3D の基本的なデータ構造の型は次のとおりです。重要な�
 | Optional&lt;Type&gt;                                      | ★ 無効値を表現できる型（C++ 標準ライブラリの `std::optional` の置き換え）           |
 | std::array&lt;Type, size_t&gt;                            | 固定長配列                                                    |
 
-`Array` は、C++ 標準ライブラリの `std::vector` の置き換えです。`std::vector` と同様に、動的に要素を追加・削除できます。処理コストは `std::vector` と同等です。詳しくは [動的配列](../array) で扱います。
+`Array` は、C++ 標準ライブラリの `std::vector` の置き換えです。`std::vector` と同様に、動的に要素を追加・削除できます。処理コストは `std::vector` と同等です。詳しくは [動的配列](../../tutorial2/array) で扱います。
 
-`Optional` は、値が存在するかしないかを表現できる型です。`std::optional` と同様に、`none` という無効値を表現する値を持ちます。詳しくは [無効値を表現する型](../optional) で扱います。
+`Optional` は、値が存在するかしないかを表現できる型です。`std::optional` と同様に、`none` という無効値を表現する値を持ちます。詳しくは [無効値を表現できる型](../../tutorial2/optional) で扱います。
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/basic-types/3.png)
 
