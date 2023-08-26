@@ -423,3 +423,10 @@ Photon との連係方法は、[チュートリアル 66. マルチプレイヤ�
 		}
 	}
 	```
+
+
+## 4. オンライン リーダーボード
+
+![](https://raw.githubusercontent.com/Siv3D/Siv3D-Samples/main/Samples/Leaderboard/Screenshot/1.png)
+
+[Siv3D-Sample | オンライン リーダーボード :material-open-in-new:](https://github.com/Siv3D/Siv3D-Samples/tree/main/Samples/Leaderboard){:target="_blank" .md-button}
