@@ -1478,7 +1478,7 @@
 			, m_pieAngle{ Math::TwoPi / m_itemCount }
 			, m_style{ style }
 			, m_center{ center }
-			, m_transitions{ m_itemCount, Transition{ 0.1s, 0.2s } }
+			, m_transitions{ icons.size(), Transition{ 0.1s, 0.2s } }
 			, m_icons{ icons }
 			, m_enabled(m_itemCount, true)
 		{
