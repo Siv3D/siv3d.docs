@@ -364,7 +364,7 @@ void Main()
 
 
 ## 59.8 複数のメッセージからなる会話から回答を得る
-role と message をペアにした `Array<std::pair<String, String>` を渡すことで、複数のメッセージからなる会話に対して回答を得ることができます。
+role と message をペアにした `Array<std::pair<String, String>>` を渡すことで、複数のメッセージからなる会話に対して回答を得ることができます。
 
 | role | 説明 |
 |--|--|
