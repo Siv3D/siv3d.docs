@@ -204,6 +204,10 @@ nav:
     - 自前ビルドの手順: develop/build.md
     - GitHub でコミットする: develop/commit.md
     - コーディングスタイル: develop/coding-style.md
+  - 勉強会:
+    - 高速チュートリアル: study/quikstart.md
+    - 多態性入門: study/polymorphism.md
+    - OpenAI API の使用: study/openai.md
   - 協賛企業の募集:
     - 協賛企業の募集について: sponsorship/corporate-sponsor.md
     - 協賛特典: sponsorship/corporate-sponsor-guideline.md
