@@ -230,7 +230,7 @@ void Main()
 	- [x] `ClearPrint()` を使って簡易表示を消去する方法を学んだ
 
 
-## 4. 基本的なデータ型
+## 5. 基本的なデータ型
 
 #### 数値型
 よく使う重要なものに ★ を付けています。
@@ -353,7 +353,7 @@ void Main()
 	- [x] Siv3D でよく使う型、`bool`, `int32`, `double`, `size_t`, `char32`, `String`, `Array` を理解した
 
 
-## 5. 背景の色を変える
+## 6. 背景の色を変える
 背景の色は `Scene::SetBackground(色)` で変更できます。  
 色の指定方法はさまざまな方法があります。
 
@@ -406,9 +406,9 @@ void Main()
 	- [x] 色を RGB で指定するには `ColorF{ 赤, 緑, 青 }` または `ColorF{ グレースケール }` を使うことを学んだ
 	- [x] 色を HSV で指定するには `HSV{ 色相, 彩度, 明度 }` または `HSV{ 色相 }` を使うことを学んだ
 
-## 6. 図形を描く
+## 7. 図形を描く
 
-#### 座標系
+#### 7.1 座標系
 ウィンドウ内で、背景色を変えられる部分が **画面（シーン）**です。Siv3D はこの領域に文字や図形、画像を表示できます。
 
 画面のサイズは、基本の状態では**幅 800 ピクセル**、**高さ 600 ピクセル**です。
@@ -434,7 +434,7 @@ void Main()
 
 このコードを実行すると、マウスカーソルの座標が画面の左上に簡易表示されます。
 
-#### 円を描く
+#### 7.2 円を描く
 Siv3D では、何かを描く命令はメインループの中に記述します。円を描くときは `Circle` を作成し、その `.draw()` を呼びます。`Circle` は `Circle{ x, y, r }` のように、中心の X 座標、Y 座標、半径を指定して作成します。
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/circle-rect/2.png)
@@ -561,7 +561,7 @@ void Main()
 ```
 
 
-#### 長方形を描く
+#### 7.3 長方形を描く
 長方形を描くときは `Rect` を作成して `.draw()` します。
 
 `Rect{ x, y, w, h }` は、左上座標が (x, y), 幅が w, 高さが h の長方形です。
@@ -633,7 +633,7 @@ void Main()
 	};
 	```
 
-#### 円や長方形の枠を描く
+#### 7.4 円や長方形の枠を描く
 円や長方形の枠だけを描きたい場合、`.draw()` の代わりに `.drawFrame(innerThickness, outerThickness, color)` を使います。
 
 `innerThickness` は内側方向への太さ、`outerThickness` は外側方向への太さを表す `double` 型の値です。`innerThickness` と `outerThickness` には、それぞれ 0.0 以上の値を指定します。
@@ -669,7 +669,7 @@ void Main()
 ```
 
 
-#### 長方形のグラデーション
+#### 7.5 長方形のグラデーション
 `Rect` や `RectF` を `.draw()` する際、`.draw(Arg::top = 色, Arg::bottom = 色)` のように書くことで、上下方向のグラデーションで長方形を描画できます。
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/circle-rect/9.png)
@@ -718,7 +718,7 @@ void Main()
 	- [x] 円や長方形の枠を描画する方法を学んだ
 	- [x] グラデーションで長方形を描画する方法を学んだ
 
-## 7. 模様を描く
+## 8. 模様を描く
 
 ループと図形描画を組み合わせると、模様やパターンを簡単に描くことができます。
 
@@ -839,7 +839,7 @@ void Main()
 	- [x] ループと図形描画を組み合わせて模様を描画する方法を学んだ
 
 
-## 8. 絵文字を描く
+## 9. 絵文字を描く
 絵文字を自由な場所に描くには、絵文字からテクスチャ（`Texture` クラス）を作成し、そのメンバ関数 `.drawAt()` を使います。
 
 まず、`Texture 変数名{ U"絵文字"_emoji };` で絵文字のテクスチャを作成します。テクスチャの作成はコストがかかるため、**メインループの前**で行います。
@@ -977,7 +977,7 @@ void Main()
 	- [x] テクスチャを `.mirrored(mirrored)` を使って左右反転させる方法を学んだ
 
 
-## 9. 文字列のフォーマット
+## 10. 文字列のフォーマット
 `U"{}"_fmt(x)` と書くと、`{}` には値 `x` を文字列にしたものが入ります。
 
 例えば `U"{} 月 {} 日"_fmt(12, 31)` は `U"12 月 31 日"` という文字列になります。
@@ -1039,7 +1039,7 @@ void Main()
 	- [x] 小数点以下の桁数を指定して数値を文字列に変換する方法を学んだ
 
 
-## 10. テキストを表示する
+## 11. テキストを表示する
 `Print` のような簡易表示ではなく、好きな位置に好きな色でテキストを表示したい場合は、`Font` クラスを使います。
 
 まず、メインループの前に `Font 変数名{ FontMethod::MSDF, 48 };` でフォントを作成します。フォントの作成はコストがかかるため、**メインループの前**で行います。
@@ -1160,7 +1160,7 @@ void Main()
 	- [x] テキストの基準位置を変更する方法を学んだ
 
 
-## 11. キーボード入力
+## 12. キーボード入力
 `if (キー名.down())` で、キーが押されたかを調べることができます。
 
 ??? info "主なキー名"
@@ -1292,7 +1292,7 @@ void Main()
 	- [x] キーが押されているか調べるには `if (キー名.pressed())` を使うことを学んだ
 
 
-## 12. マウス入力
+## 13. マウス入力
 `if (MouseL.down())` でマウスの左ボタンが押されたかを、`if (MouseR.down())` でマウスの右ボタンが押されたかを調べることができます。
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/mouse/1.png)
@@ -1531,9 +1531,9 @@ void Main()
 	- [x] 絵文字（テクスチャ）には `.leftClicked()` や `.mouseOver()` が無いため、代わりに近い大きさの円を使って判定するテクニックを学んだ
 
 
-## 13. ボタンを作る
+## 14. ボタンを作る
 
-#### 13.1 関数の準備
+#### 14.1 関数の準備
 ボタンの処理を行うための関数を作ります。
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/button/1.png)
@@ -1556,7 +1556,7 @@ void Main()
 ```
 
 
-#### 13.2 領域を指定できるようにする
+#### 14.2 領域を指定できるようにする
 好きな場所に好きな大きさのボタンを作れるようにします。関数の引数は、`int32`, `bool`, `double` などの基本的な数値型以外はすべて **const 参照渡し** を使います。
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/button/2.png)
@@ -1581,7 +1581,7 @@ void Main()
 ```
 
 
-#### 13.3 テキストを指定できるようにする
+#### 14.3 テキストを指定できるようにする
 ボタン内に表示するテキストを指定できるようにします。文字列は `String` 型です。
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/button/3.png)
@@ -1610,7 +1610,7 @@ void Main()
 ```
 
 
-#### 13.4 マウスカーソルを手のアイコンにする
+#### 14.4 マウスカーソルを手のアイコンにする
 ボタンの上にマウスカーソルを重ねると、マウスカーソルが手のアイコンに変わるようにします。
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/button/4.png)
@@ -1643,7 +1643,7 @@ void Main()
 }
 ```
 
-#### 13.5 押せるかどうかを指定できるようにする
+#### 14.5 押せるかどうかを指定できるようにする
 押せないボタンを作ります。
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/button/5.png)
@@ -1683,7 +1683,7 @@ void Main()
 }
 ```
 
-#### 13.6 押されたかどうかを返す
+#### 14.6 押されたかどうかを返す
 ボタンが押されたかを戻り値で返すようにします。押せないボタンは、押しても `false` を返します。
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/button/6.png)
@@ -1731,7 +1731,7 @@ void Main()
 }
 ```
 
-#### 13.7 絵文字を追加する
+#### 14.7 絵文字を追加する
 ボタンに絵文字を追加できるようにします。
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/button/7.png)
@@ -1786,7 +1786,7 @@ void Main()
 ```
 
 
-## 14. クッキークリッカー
+## 15. クッキークリッカー
 ここまで学んだことを使って、クッキークリッカー風のゲームを作ります。
 
 !!! info "クッキークリッカーとは"
@@ -1795,7 +1795,7 @@ void Main()
     - [Cookie Clicker 公式ページ :material-open-in-new:](https://orteil.dashnet.org/cookieclicker/){:target="_blank"}
     - [Wikipedia: Cookie Clicker :material-open-in-new:](https://ja.wikipedia.org/wiki/%E3%82%AF%E3%83%83%E3%82%AD%E3%83%BC%E3%82%AF%E3%83%AA%E3%83%83%E3%82%AB%E3%83%BC){:target="_blank"}
 
-#### 14.1 背景とクッキーを描く
+#### 15.1 背景とクッキーを描く
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/cookie-clicker/1.png)
 
@@ -1819,7 +1819,7 @@ void Main()
 ```
 
 
-#### 14.2 クッキーの個数を表示する
+#### 15.2 クッキーの個数を表示する
 この先のステップで、0.1 秒ごとにクッキーの枚数を更新するため、クッキーの枚数は整数ではなく小数で管理します。表示するときは `U"{:.0f}"` で小数以下は表示しないようにします。
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/cookie-clicker/2.png)
@@ -1853,7 +1853,7 @@ void Main()
 ```
 
 
-#### 14.3 クッキーを押せるようにする
+#### 15.3 クッキーを押せるようにする
 クッキーの領域に沿った `Circle` でマウス入力を処理します。
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/cookie-clicker/3.png)
@@ -1902,7 +1902,7 @@ void Main()
 ```
 
 
-#### 14.4 クッキーを押したときのモーションを付ける
+#### 15.4 クッキーを押したときのモーションを付ける
 クッキーを左クリックしたときにクッキーのサイズを小さくし、時間の経過とともにサイズを元に戻します。
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/cookie-clicker/4.png)
@@ -1963,7 +1963,7 @@ void Main()
 ```
 
 
-#### 14.5 アイテムのボタンを作る (1)
+#### 15.5 アイテムのボタンを作る (1)
 アイテム用のボタンを処理する関数を作ります。
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/cookie-clicker/5.png)
@@ -2066,7 +2066,7 @@ void Main()
 ```
 
 
-#### 14.6 アイテムのボタンを作る (2)
+#### 15.6 アイテムのボタンを作る (2)
 ボタンに仮の説明文と数字を加えます。
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/cookie-clicker/6.png)
@@ -2179,7 +2179,7 @@ void Main()
 ```
 
 
-#### 14.7 変数とボタンの表示を連動させる
+#### 15.7 変数とボタンの表示を連動させる
 ゲームの状態とボタンの表示を連動させます。
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/cookie-clicker/7.png)
@@ -2312,7 +2312,7 @@ void Main()
 ```
 
 
-#### 14.8 クッキーの自動生産
+#### 15.8 クッキーの自動生産
 アイテムの所有数に応じてクッキーが自動で増えるようにします。具体的には、0.1 秒ごとに、毎秒のクッキー生産量の 10% を獲得するようにします。
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/cookie-clicker/8.png)
@@ -2466,7 +2466,7 @@ void Main()
 ```
 
 
-#### 14.9 （完成）アイテムのインフレを実装する
+#### 15.9 （完成）アイテムのインフレを実装する
 アイテムの所有数が増えたときに、アイテムの価格がインフレするようにします。
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/cookie-clicker/9.png)
@@ -2624,3 +2624,8 @@ void Main()
 	}
 }
 ```
+
+#### 15.10 さらに発展したクッキークリッカー
+Siv3D の機能をより多く使って、クッキークリッカーをさらに発展させたサンプルです。
+
+- [ゲームのサンプル | クッキークリッカー](https://siv3d.github.io/ja-jp/samples/games/#9-%E3%82%AF%E3%83%83%E3%82%AD%E3%83%BC%E3%82%AF%E3%83%AA%E3%83%83%E3%82%AB%E3%83%BC){:target="_blank"}

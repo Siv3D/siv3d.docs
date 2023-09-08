@@ -290,6 +290,399 @@ void Main()
         - 👻 Ghost: 移動中は半透明になる
         - 🐢 Turtle: 目標の変更までの時間が長く、移動速度も遅い
 
+??? note "チャレンジの実装例"
+	```cpp hl_lines="173-228 230-292 294-349 359-361 367-369 377-379 385-387"
+	# include <Siv3D.hpp>
+
+	// カニ
+	class Crab
+	{
+	public:
+
+		Crab() = default;
+
+		explicit Crab(const Vec2& pos)
+			: m_pos{ pos }
+			, m_targetPos{ pos } {}
+
+		void update()
+		{
+			// 残り時間を減らす
+			m_timer -= Scene::DeltaTime();
+
+			// 残り時間が 0 以下になったら
+			if (m_timer <= 0.0)
+			{
+				// 残り時間をリセットする
+				m_timer = Random(3.0, 6.0);
+
+				// 次の目標位置を設定する
+				m_targetPos = getNextTarget();
+			}
+
+			// 現在の位置を目標の位置に近づける
+			m_pos = Math::SmoothDamp(m_pos, m_targetPos, m_velocity, 0.2, 200.0);
+		}
+
+		void draw() const
+		{
+			TextureAsset(U"Crab").drawAt(m_pos);
+		}
+
+	private:
+
+		// 現在の位置
+		Vec2 m_pos{ 0, 0 };
+
+		// 目標の位置
+		Vec2 m_targetPos{ 0, 0 };
+
+		// 現在の速度
+		Vec2 m_velocity{ 0,0 };
+
+		// 目標変更までの残り時間
+		double m_timer = 0.0;
+
+		Vec2 getNextTarget() const
+		{
+			// Y 座標の移動量は抑えめにする
+			return{ Random(0, 1280), (m_pos.y + Random(-40, 40)) };
+		}
+	};
+
+	// ネコ
+	class Cat
+	{
+	public:
+
+		Cat() = default;
+
+		explicit Cat(const Vec2& pos)
+			: m_pos{ pos }
+			, m_targetPos{ pos } {}
+
+		void update()
+		{
+			// 残り時間を減らす
+			m_timer -= Scene::DeltaTime();
+
+			// 残り時間が 0 以下になったら
+			if (m_timer <= 0.0)
+			{
+				// 残り時間をリセットする
+				m_timer = Random(3.0, 6.0);
+
+				// 次の目標位置を設定する
+				m_targetPos = getNextTarget();
+			}
+
+			// 現在の位置を目標の位置に近づける
+			m_pos = Math::SmoothDamp(m_pos, m_targetPos, m_velocity, 0.2, 200.0);
+		}
+
+		void draw() const
+		{
+			// 速度に応じて左右を反転させる
+			const bool mirrored = (0.0 < m_velocity.x);
+			TextureAsset(U"Cat").mirrored(mirrored).drawAt(m_pos);
+		}
+
+	private:
+
+		// 現在の位置
+		Vec2 m_pos{ 0, 0 };
+
+		// 目標の位置
+		Vec2 m_targetPos{ 0, 0 };
+
+		// 現在の速度
+		Vec2 m_velocity{ 0,0 };
+
+		// 目標変更までの残り時間
+		double m_timer = 0.0;
+
+		Vec2 getNextTarget() const
+		{
+			return{ Random(0, 1280), Random(0, 720) };
+		}
+	};
+
+	// 蝶
+	class Butterfly
+	{
+	public:
+
+		Butterfly() = default;
+
+		explicit Butterfly(const Vec2& pos)
+			: m_pos{ pos }
+			, m_targetPos{ pos } {}
+
+		void update()
+		{
+			// 残り時間を減らす
+			m_timer -= Scene::DeltaTime();
+
+			// 残り時間が 0 以下になったら
+			if (m_timer <= 0.0)
+			{
+				// 残り時間をリセットする
+				m_timer = Random(3.0, 6.0);
+
+				// 次の目標位置を設定する
+				m_targetPos = getNextTarget();
+			}
+
+			// 現在の位置を目標の位置に近づける
+			m_pos = Math::SmoothDamp(m_pos, m_targetPos, m_velocity, 0.2, 200.0);
+		}
+
+		void draw() const
+		{
+			// 上下に揺らすオフセット
+			const double yOffset = (10.0 * Periodic::Sine1_1(0.5s));
+			TextureAsset(U"Butterfly").drawAt(m_pos + Vec2{ 0, yOffset });
+		}
+
+	private:
+
+		// 現在の位置
+		Vec2 m_pos{ 0, 0 };
+
+		// 目標の位置
+		Vec2 m_targetPos{ 0, 0 };
+
+		// 現在の速度
+		Vec2 m_velocity{ 0,0 };
+
+		// 目標変更までの残り時間
+		double m_timer = 0.0;
+
+		Vec2 getNextTarget() const
+		{
+			return{ Random(0, 1280), Random(0, 720) };
+		}
+	};
+
+	// 犬
+	class Dog
+	{
+	public:
+
+		Dog() = default;
+
+		explicit Dog(const Vec2& pos)
+			: m_pos{ pos }
+			, m_targetPos{ pos } {}
+
+		void update()
+		{
+			// 残り時間を減らす
+			m_timer -= Scene::DeltaTime();
+
+			// 残り時間が 0 以下になったら
+			if (m_timer <= 0.0)
+			{
+				// 残り時間をリセットする
+				m_timer = 0.5;
+
+				// 次の目標位置を設定する
+				m_targetPos = getNextTarget();
+			}
+
+			// 現在の位置を目標の位置に近づける
+			m_pos = Math::SmoothDamp(m_pos, m_targetPos, m_velocity, 0.2, 500.0);
+		}
+
+		void draw() const
+		{
+			// 速度に応じて左右を反転させる
+			const bool mirrored = (0.0 < m_velocity.x);
+			TextureAsset(U"Dog").mirrored(mirrored).drawAt(m_pos);
+		}
+
+	private:
+
+		// 現在の位置
+		Vec2 m_pos{ 0, 0 };
+
+		// 目標の位置
+		Vec2 m_targetPos{ 0, 0 };
+
+		// 現在の速度
+		Vec2 m_velocity{ 0,0 };
+
+		// 目標変更までの残り時間
+		double m_timer = 0.0;
+
+		Vec2 getNextTarget() const
+		{
+			return Cursor::Pos();
+		}
+	};
+
+	// 幽霊
+	class Ghost
+	{
+	public:
+
+		Ghost() = default;
+
+		explicit Ghost(const Vec2& pos)
+			: m_pos{ pos }
+			, m_targetPos{ pos } {}
+
+		void update()
+		{
+			// 残り時間を減らす
+			m_timer -= Scene::DeltaTime();
+
+			// 残り時間が 0 以下になったら
+			if (m_timer <= 0.0)
+			{
+				// 残り時間をリセットする
+				m_timer = Random(3.0, 6.0);
+
+				// 次の目標位置を設定する
+				m_targetPos = getNextTarget();
+			}
+
+			// 現在の位置を目標の位置に近づける
+			m_pos = Math::SmoothDamp(m_pos, m_targetPos, m_velocity, 0.2, 200.0);
+		}
+
+		void draw() const
+		{
+			double alpha = 1.0;
+
+			if (2.0 < m_velocity.length()) // 速度が 2.0 以上の場合はアルファを下げる
+			{
+				alpha = 0.3;
+			}
+
+			// 速度に応じて左右を反転させる
+			const bool mirrored = (0.0 < m_velocity.x);
+			TextureAsset(U"Ghost").mirrored(mirrored).drawAt(m_pos, ColorF{ 1.0, alpha });
+		}
+
+	private:
+
+		// 現在の位置
+		Vec2 m_pos{ 0, 0 };
+
+		// 目標の位置
+		Vec2 m_targetPos{ 0, 0 };
+
+		// 現在の速度
+		Vec2 m_velocity{ 0,0 };
+
+		// 目標変更までの残り時間
+		double m_timer = 0.0;
+
+		Vec2 getNextTarget() const
+		{
+			return{ Random(0, 1280), Random(0, 720) };
+		}
+	};
+
+	// カメ
+	class Turtle
+	{
+	public:
+
+		Turtle() = default;
+
+		explicit Turtle(const Vec2& pos)
+			: m_pos{ pos }
+			, m_targetPos{ pos } {}
+
+		void update()
+		{
+			// 残り時間を減らす
+			m_timer -= Scene::DeltaTime();
+
+			// 残り時間が 0 以下になったら
+			if (m_timer <= 0.0)
+			{
+				// 残り時間をリセットする
+				m_timer = Random(8.0, 12.0);
+
+				// 次の目標位置を設定する
+				m_targetPos = getNextTarget();
+			}
+
+			// 現在の位置を目標の位置に近づける
+			m_pos = Math::SmoothDamp(m_pos, m_targetPos, m_velocity, 0.4, 50.0);
+		}
+
+		void draw() const
+		{
+			// 速度に応じて左右を反転させる
+			const bool mirrored = (0.0 < m_velocity.x);
+			TextureAsset(U"Turtle").mirrored(mirrored).drawAt(m_pos);
+		}
+
+	private:
+
+		// 現在の位置
+		Vec2 m_pos{ 0, 0 };
+
+		// 目標の位置
+		Vec2 m_targetPos{ 0, 0 };
+
+		// 現在の速度
+		Vec2 m_velocity{ 0,0 };
+
+		// 目標変更までの残り時間
+		double m_timer = 0.0;
+
+		Vec2 getNextTarget() const
+		{
+			return{ Random(0, 1280), Random(0, 720) };
+		}
+	};
+
+	void Main()
+	{
+		Window::Resize(1280, 720);
+		Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+		TextureAsset::Register(U"Crab", U"🦀"_emoji);
+		TextureAsset::Register(U"Cat", U"🐈"_emoji);
+		TextureAsset::Register(U"Butterfly", U"🦋"_emoji);
+		TextureAsset::Register(U"Dog", U"🐕"_emoji);
+		TextureAsset::Register(U"Ghost", U"👻"_emoji);
+		TextureAsset::Register(U"Turtle", U"🐢"_emoji);
+
+		Crab crab{ Vec2{ 600, 500 } };
+		Cat cat1{ Vec2{ 300, 200 } };
+		Cat cat2{ Vec2{ 1000, 100 } };
+		Butterfly butterfly{ Vec2{ 700, 600 } };
+		Dog dog{ Vec2{ 600, 200 } };
+		Ghost ghost{ Vec2{ 300, 500 } };
+		Turtle turtle{ Vec2{ 800, 400 } };
+
+		while (System::Update())
+		{
+			crab.update();
+			cat1.update();
+			cat2.update();
+			butterfly.update();
+			dog.update();
+			ghost.update();
+			turtle.update();
+
+			crab.draw();
+			cat1.draw();
+			cat2.draw();
+			butterfly.draw();
+			dog.draw();
+			ghost.draw();
+			turtle.draw();
+		}
+	}
+	```
+
 
 ## 3. 継承を使う
 基底クラス `BaseAnimal` を作成し、動物クラスは `BaseAnimal` を継承するようにする。
