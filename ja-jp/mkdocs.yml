@@ -6,6 +6,10 @@ site_url: https://siv3d.github.io/ja-jp/
 site_author: Ryo Suzuki
 site_description: "Siv3D: 創造のための C++ フレームワーク" 
 
+# Repository
+repo_name: Siv3D/OpenSiv3D
+repo_url: https://github.com/Siv3D/OpenSiv3D
+
 # Copyright
 copyright: Copyright (c) 2012 - 2023, Ryo Suzuki<br>Copyright (c) 2012 - 2023, OpenSiv3D Project
 
