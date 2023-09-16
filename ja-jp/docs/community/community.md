@@ -29,7 +29,7 @@ Siv3D の新機能を作るいくつかのチャレンジ課題の中から好�
 - [OpenSiv3D Challenge 2021 :material-open-in-new:](https://zenn.dev/reputeless/scraps/79865055750784)
 
 ## 5. Twitter
-ハッシュタグ `#Siv3D` や `#OpenSiv3D` が付いたツイートを巡回しています。Twitter の仕様で検索結果に表示されないこともあるので、確実に返答が必要な場合は [@Reputeless](https://twitter.com/Reputeless) にリプライを送ってください。その際は、迅速な解決につながるよう、問題やエラーメッセージ、コンパイラの出力等をスクリーンショットで添付し、[GitHub Gist](../../tools/gist){target="_blank"} を使って、問題が発生している部分のソースコードを共有してください。
+ハッシュタグ `#Siv3D` や `#OpenSiv3D` が付いたツイートを巡回しています。Twitter の仕様で検索結果に表示されないこともあるので、確実に返答が必要な場合は [@Reputeless](https://twitter.com/Reputeless) にリプライを送ってください。その際は、迅速な解決につながるよう、問題やエラーメッセージ、コンパイラの出力等をスクリーンショットで添付し、[GitHub Gist](../tools/gist.md){target="_blank"} を使って、問題が発生している部分のソースコードを共有してください。
 
 - [Siv3D に関するツイートを検索 :material-open-in-new:](https://twitter.com/search?q=Siv3D%EF%BD%9COpenSiv3D&src=typed_query&f=live)
 

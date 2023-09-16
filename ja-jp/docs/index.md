@@ -5,13 +5,13 @@
 
 #### Siv3D のダウンロード | v0.6.11
 
-[Windows :material-microsoft-windows:](download/windows){ .md-button .md-button--primary }[macOS (Intel / Rosetta) :material-apple:](download/macos){ .md-button .md-button--primary }[Ubuntu :material-ubuntu:](download/ubuntu){ .md-button .md-button--primary }
+[Windows :material-microsoft-windows:](download/windows.md){ .md-button .md-button--primary }[macOS (Intel / Rosetta) :material-apple:](download/macos.md){ .md-button .md-button--primary }[Ubuntu :material-ubuntu:](download/ubuntu.md){ .md-button .md-button--primary }
 
 <small>Apple Silicon (M1 / M2) は、現在開発中の Siv3D v0.8.0 からネイティブサポートされます。</small>
 
 #### Web 向け Siv3D のダウンロード（非公式）
 
-[for Web (Windows + Visual Studio) :material-microsoft-visual-studio:](download/web){ .md-button .md-button--primary }[for Web (Visual Studio Code) :material-microsoft-visual-studio-code:](download/web){ .md-button .md-button--primary }
+[for Web (Windows + Visual Studio) :material-microsoft-visual-studio:](download/web.md){ .md-button .md-button--primary }[for Web (Visual Studio Code) :material-microsoft-visual-studio-code:](download/web.md){ .md-button .md-button--primary }
 
 ## ゲームやアプリ開発を効率化する、圧倒的な機能
 2D / 3D ゲーム、メディアアート、ビジュアライザ、シミュレータを効率的に開発するための、**便利なクラスや関数**が用意されています。
@@ -23,7 +23,7 @@
 - 画像処理、音声処理、物理演算、経路探索、幾何などの計算
 - AI (OpenAI API へのアクセス)
 
-[Siv3D の機能を詳しく見る](./features/){ .md-button }
+[Siv3D の機能を詳しく見る](features.md){ .md-button }
 
 
 ## 完成までの最短距離
@@ -69,7 +69,7 @@ void Main()
 	Siv3D プログラミングを始めるための OpenSiv3D SDK インストーラはわずか 120 MB です（Windows 版）。インストールは数クリックで完了し、Visual Studio を起動すればメニューに Siv3D プロジェクトの項目が追加されていて、すぐにプログラミングを始められます。
 
 ??? success "6. 親切なコミュニティに参加できる"
-	Siv3D で困ったことがあれば、Discord などの [Siv3D オンラインコミュニティ](community/community/)が役に立ちます。また、学校や地域コミュニティへの[無料出張勉強会](community/study-meeting/)も行っています。オープンソースソフトウェア開発に興味のある学生には、Siv3D を練習場にしたサポートプログラムを毎年提供しています。仲間とともにより良い作品を作りましょう。
+	Siv3D で困ったことがあれば、Discord などの [Siv3D オンラインコミュニティ](community/community.md)が役に立ちます。また、学校や地域コミュニティへの[無料出張勉強会](community/community.md)も行っています。オープンソースソフトウェア開発に興味のある学生には、Siv3D を練習場にしたサポートプログラムを毎年提供しています。仲間とともにより良い作品を作りましょう。
 
 ??? success "7. Web ブラウザで動く"
 	非公式で提供されている Web 版（[OpenSiv3D for Web :material-open-in-new:](https://siv3d.kamenokosoft.com/docs/ja/){:target="_blank"}）を使うと、Siv3D で作った C++ アプリをブラウザ上で動く Web アプリに移植できます。スマホやタブレットをターゲットにして、これまでよりもたくさんの人に作品を届けることができます。
@@ -91,4 +91,4 @@ void Main()
 アゲハマ, Fuyutsubaki, 😊, 🐝, 野菜ジュース, jacking75, Chris Ohk, qppon, ysaito, おおやま, 🍵, lamuda, 🌻, fal_rnd, As Project, 🍑, IZUNA
 
 
-[協賛企業の募集について](./sponsorship/corporate-sponsor){ .md-button } [Siv3D の個人スポンサーになる :material-github:](https://github.com/sponsors/Reputeless){:target="_blank" .md-button} 
+[協賛企業の募集について](sponsorship/corporate-sponsor.md){ .md-button } [Siv3D の個人スポンサーになる :material-github:](https://github.com/sponsors/Reputeless){:target="_blank" .md-button} 

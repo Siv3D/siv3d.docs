@@ -553,7 +553,7 @@ void Main()
 ## 35.18 エラー
 Siv3D のプログラムでエラーを伝える例外を簡単に送出したい場合、`Error` クラスを使うと便利です。この例外が捕捉されなかった場合、Siv3D エンジンはエラーメッセージの内容をメッセージボックスに表示してプログラムを終了します。
 
-Windows 版（Visual Studio）において、例外の発生箇所を IDE 上で表示する方法は、[例外の発生箇所の表示](../../tools/msvc-exception/)を参照してください。
+Windows 版（Visual Studio）において、例外の発生箇所を IDE 上で表示する方法は、[例外の発生箇所の表示](../tools/msvc-exception.md)を参照してください。
 
 ```cpp
 # include <Siv3D.hpp>

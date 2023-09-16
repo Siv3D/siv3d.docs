@@ -2,9 +2,9 @@
 
 ## 1. プログラムのビルドと実行
 
-- [Windows](../../download/windows){:target="_blank"}
-- [macOS](../../download/macos){:target="_blank"}
-- [Linux](../../download/linux){:target="_blank"}
+- [Windows](../download/windows.md){:target="_blank"}
+- [macOS](../download/macos.md){:target="_blank"}
+- [Linux](../download/ubuntu.md){:target="_blank"}
 
 !!! success "振り返りチェックリスト"
 	- [x] 新しいプロジェクトを作成した
