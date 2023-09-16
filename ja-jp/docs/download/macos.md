@@ -36,18 +36,18 @@ macOS で Siv3D v0.6.11 を使って開発されたアプリケーションを�
 1. macOS Catalina 以降の場合、プログラム実行時に、毎回ファイルアクセス許可のダイアログが出現します。これを回避するには、プロジェクトフォルダを `(ユーザ名)/デスクトップ` や `(ユーザ名)/ダウンロード` フォルダではなく、`(ユーザ名)/アプリケーション` フォルダ（root のアプリケーションフォルダではなく、ユーザホームのアプリケーションフォルダ）へ移動させます。
 
 ??? summary "過去のバージョン"
-    過去のバージョンの利用は非推奨です。必要な場合に限り、下記からダウンロードしてください。    
-    コンパイラの更新等により、最新の開発環境では過去のバージョンを利用できないことがあります。古い Siv3D プロジェクトをビルドしたい場合は、そのソースコードを最新版のプロジェクトへ移植するのが良い方法です。
+	過去のバージョンの利用は非推奨です。必要な場合に限り、下記からダウンロードしてください。    
+	コンパイラの更新等により、最新の開発環境では過去のバージョンを利用できないことがあります。古い Siv3D プロジェクトをビルドしたい場合は、そのソースコードを最新版のプロジェクトへ移植するのが良い方法です。
 
-    - [OpenSiv3D v0.6.10 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.10_macOS.zip){:target="_blank"}
-    - [OpenSiv3D v0.6.9 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.9_macOS.zip){:target="_blank"}
-    - [OpenSiv3D v0.6.8 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.8_macOS.zip){:target="_blank"}
-    - [OpenSiv3D v0.6.7 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.7_macOS.zip){:target="_blank"}
-    - [OpenSiv3D v0.6.6 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.6_macOS.zip){:target="_blank"}
-    - [OpenSiv3D v0.6.5 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.5_macOS.zip){:target="_blank"}
-    - [OpenSiv3D v0.6.4 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.4_macOS.zip){:target="_blank"}
-    - [OpenSiv3D v0.6.3 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.3_macOS.zip){:target="_blank"}
-    - [OpenSiv3D v0.6.2 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.2_macOS.zip){:target="_blank"}
+	- [OpenSiv3D v0.6.10 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.10_macOS.zip){:target="_blank"}
+	- [OpenSiv3D v0.6.9 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.9_macOS.zip){:target="_blank"}
+	- [OpenSiv3D v0.6.8 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.8_macOS.zip){:target="_blank"}
+	- [OpenSiv3D v0.6.7 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.7_macOS.zip){:target="_blank"}
+	- [OpenSiv3D v0.6.6 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.6_macOS.zip){:target="_blank"}
+	- [OpenSiv3D v0.6.5 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.5_macOS.zip){:target="_blank"}
+	- [OpenSiv3D v0.6.4 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.4_macOS.zip){:target="_blank"}
+	- [OpenSiv3D v0.6.3 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.3_macOS.zip){:target="_blank"}
+	- [OpenSiv3D v0.6.2 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.2_macOS.zip){:target="_blank"}
 
 
 ## 3. Siv3D アプリをビルドする
@@ -56,8 +56,11 @@ macOS で Siv3D v0.6.11 を使って開発されたアプリケーションを�
 1. **実行ボタン ▶️** を押すと、プログラムをビルドして実行します。
 1. 実行中のプログラムは、++esc++ を押すか、ウィンドウを閉じると終了します。
 
+??? summary "M1 / M2 Mac における Rosetta モードの有効化"
+	Xcode で Rosetta オプションが表示されない場合は Product &gt; Destination &gt; Destination Architectures から、Show both を選択してください。
+
 ??? summary "サンプルプログラムを実行するときのファイルアクセス許可のダイアログの回避"
-    macOS Catalina 以降で実行のたびにファイルアクセス許可のダイアログが出現する場合、プロジェクトフォルダ全体を、`(ユーザ名)/デスクトップ` や `(ユーザ名)/ダウンロード` フォルダではなく、`(ユーザ名)/アプリケーション` フォルダ（root のアプリケーションフォルダではなく、ユーザホームのアプリケーションフォルダ）以下へ移動させることで回避できます。
+	macOS Catalina 以降で実行のたびにファイルアクセス許可のダイアログが出現する場合、プロジェクトフォルダ全体を、`(ユーザ名)/デスクトップ` や `(ユーザ名)/ダウンロード` フォルダではなく、`(ユーザ名)/アプリケーション` フォルダ（root のアプリケーションフォルダではなく、ユーザホームのアプリケーションフォルダ）以下へ移動させることで回避できます。
 
 ??? summary "新しいプロジェクトを増やしたい場合は"
-    プロジェクトテンプレートフォルダ内にある `empty` フォルダを同じ階層にコピーしてください。Xcode 用のプロジェクトジェネレータは将来提供予定です。
+	プロジェクトテンプレートフォルダ内にある `empty` フォルダを同じ階層にコピーしてください。Xcode 用のプロジェクトジェネレータは将来提供予定です。

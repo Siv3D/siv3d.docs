@@ -5,7 +5,7 @@
 
 #### Siv3D のダウンロード | v0.6.11
 
-[Windows :material-microsoft-windows:](download/windows){ .md-button .md-button--primary }[macOS (Intel) :material-apple:](download/macos){ .md-button .md-button--primary }[Ubuntu :material-ubuntu:](download/ubuntu){ .md-button .md-button--primary }
+[Windows :material-microsoft-windows:](download/windows){ .md-button .md-button--primary }[macOS (Intel / Rosetta) :material-apple:](download/macos){ .md-button .md-button--primary }[Ubuntu :material-ubuntu:](download/ubuntu){ .md-button .md-button--primary }
 
 <small>Apple Silicon (M1 / M2) は、現在開発中の Siv3D v0.8.0 からネイティブサポートされます。</small>
 
