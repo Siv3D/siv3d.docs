@@ -68,7 +68,7 @@ Siv3D の文字と文字列の基本的な型は次のとおりです。重要�
 | FilePath     | ★ ファイルパス文字列（`String` の別名）       |
 | FilePathView | ファイルパス文字列のビュー（`StringView` の別名） |
 
-Siv3D の API は、文字列を UTF-32 で処理するため、`std::string` の代わりに `String` を使います。詳しくは [文字列クラス](../string) で扱います。
+Siv3D の API は、文字列を UTF-32 で処理するため、`std::string` の代わりに `String` を使います。詳しくは [文字列クラス](../tutorial2/string.md) で扱います。
 
 `FilePath` は `String` の型エイリアスでどちらも同じ型ですが、プログラムでファイルパス文字列を扱う際に `String` の代わりに `FilePath` を用いることで、変数の目的を明確にできます。
 
@@ -111,9 +111,9 @@ Siv3D の基本的なデータ構造の型は次のとおりです。重要な�
 | Optional&lt;Type&gt;                                      | ★ 無効値を表現できる型（C++ 標準ライブラリの `std::optional` の置き換え）           |
 | std::array&lt;Type, size_t&gt;                            | 固定長配列                                                    |
 
-`Array` は、C++ 標準ライブラリの `std::vector` の置き換えです。`std::vector` と同様に、動的に要素を追加・削除できます。処理コストは `std::vector` と同等です。詳しくは [動的配列](../../tutorial2/array) で扱います。
+`Array` は、C++ 標準ライブラリの `std::vector` の置き換えです。`std::vector` と同様に、動的に要素を追加・削除できます。処理コストは `std::vector` と同等です。詳しくは [動的配列](../tutorial2/array.md) で扱います。
 
-`Optional` は、値が存在するかしないかを表現できる型です。`std::optional` と同様に、`none` という無効値を表現する値を持ちます。詳しくは [無効値を表現できる型](../../tutorial2/optional) で扱います。
+`Optional` は、値が存在するかしないかを表現できる型です。`std::optional` と同様に、`none` という無効値を表現する値を持ちます。詳しくは [無効値を表現できる型](../tutorial2/optional.md) で扱います。
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/basic-types/3.png)
 

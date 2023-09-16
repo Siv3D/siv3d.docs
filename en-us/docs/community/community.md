@@ -6,7 +6,7 @@ There is a Discord server for Siv3D users (posts in English are also welcome). S
 [:fontawesome-brands-discord: Join the Siv3D Discord Server](https://discord.gg/mzevvsY){ .md-button .md-button--primary }
 
 ## 2. Twitter
-The author of Siv3D checks tweets with the hashtags `#Siv3D` and `#OpenSiv3D`. Due to Twitter's system, your tweets may not appear in search results, so if you need a guaranteed response, please reply to [@Reputeless](https://twitter.com/Reputeless). When doing so, to expedite resolution, attach screenshots of the issue or error message, compiler output, etc., and share the section of source code where the issue has occurred using [GitHub Gist](../../tools/gist){target="_blank"}.
+The author of Siv3D checks tweets with the hashtags `#Siv3D` and `#OpenSiv3D`. Due to Twitter's system, your tweets may not appear in search results, so if you need a guaranteed response, please reply to [@Reputeless](https://twitter.com/Reputeless). When doing so, to expedite resolution, attach screenshots of the issue or error message, compiler output, etc., and share the section of source code where the issue has occurred using [GitHub Gist](../tools/gist.md){target="_blank"}.
 
 - [Search tweets related to Siv3D :material-open-in-new:](https://twitter.com/search?q=Siv3D%EF%BD%9COpenSiv3D&src=typed_query&f=live)
 

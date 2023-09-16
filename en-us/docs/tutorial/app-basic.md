@@ -29,7 +29,7 @@ Siv3D アプリケーションは、次のいずれかの方法でスクリー�
 ??? example "Windows での画面の録画"
 	Windows 10, 11 では、Windows に標準で組み込まれている画面の録画機能を使うことで、アプリケーションの動作を動画に保存することができます。詳しくは下記の記事を参照してください。
 	
-	- [Xbox Game Bar](../../tools/gamebar){target="_blank"}
+	- [Xbox Game Bar](../tools/gamebar.md){target="_blank"}
 
 
 ??? example "スクリーンショット保存のショートカットキーのカスタマイズ"

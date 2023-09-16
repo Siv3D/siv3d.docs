@@ -5,13 +5,13 @@
 
 #### Download Siv3D | v0.6.11
 
-[Windows :material-microsoft-windows:](download/windows){ .md-button .md-button--primary }[macOS (Intel / Rosetta) :material-apple:](download/macos){ .md-button .md-button--primary }[Ubuntu :material-ubuntu:](download/ubuntu){ .md-button .md-button--primary }
+[Windows :material-microsoft-windows:](download/windows.md){ .md-button .md-button--primary }[macOS (Intel / Rosetta) :material-apple:](download/macos.md){ .md-button .md-button--primary }[Ubuntu :material-ubuntu:](download/ubuntu.md){ .md-button .md-button--primary }
 
 <small>Apple Silicon (M1 / M2) will be natively supported from Siv3D v0.8.0, which is currently under development.</small>
 
 #### Download Siv3D for Web (Unofficial)
 
-[for Web (Windows + Visual Studio) :material-microsoft-visual-studio:](download/web){ .md-button .md-button--primary }[for Web (Visual Studio Code) :material-microsoft-visual-studio-code:](download/web){ .md-button .md-button--primary }
+[for Web (Windows + Visual Studio) :material-microsoft-visual-studio:](download/web.md){ .md-button .md-button--primary }[for Web (Visual Studio Code) :material-microsoft-visual-studio-code:](download/web.md){ .md-button .md-button--primary }
 
 ## Exceptional Features for Efficient Game and App Development
 Convenient classes and functions are provided for efficient development of 2D / 3D games, media art, visualizers, simulators, etc.
@@ -23,7 +23,7 @@ Convenient classes and functions are provided for efficient development of 2D / 
 - Image processing, audio processing, physics calculations, pathfinding, geometry, etc.
 - AI (Access to OpenAI API)
 
-[Learn more](./features/){ .md-button }
+[Learn more](features.md){ .md-button }
 
 
 ## The Shortest Path to Your Work's Completion
@@ -69,7 +69,7 @@ void Main()
 	The OpenSiv3D SDK installer to start Siv3D programming is just 120 MB (for Windows). Installation is completed in a few clicks, and when you start Visual Studio, you will find an item for a Siv3D project in the menu, and you can start programming immediately.
 
 ??? success "6. Friendly Community"
-	If you have any problems with Siv3D, the Siv3D [online community](community/community/) such as Discord can be of help. For students interested in open source software development, we offer a support program every year that uses Siv3D as a training ground. Let's create better works with your peers.
+	If you have any problems with Siv3D, the Siv3D [online community](community/community.md) such as Discord can be of help. For students interested in open source software development, we offer a support program every year that uses Siv3D as a training ground. Let's create better works with your peers.
 
 ??? success "7. Running in a Web Browser"
 	By using the unofficial Web version ([OpenSiv3D for Web :material-open-in-new:](https://siv3d.kamenokosoft.com/docs/en/){:target="_blank"}), you can port C++ applications made with Siv3D to run as web applications in a browser. Target smartphones and tablets to deliver your work to more people than ever before.
@@ -90,4 +90,4 @@ void Main()
 #### Bronze Sponsor
 アゲハマ, Fuyutsubaki, 😊, 🐝, 野菜ジュース, jacking75, Chris Ohk, qppon, ysaito, おおやま, 🍵, lamuda, 🌻, fal_rnd, As Project, 🍑, IZUNA
 
-[Become a Siv3D Sponsor :material-github:](https://github.com/sponsors/Reputeless){:target="_blank" .md-button} [Sponsorship Opportunities](./sponsorship/corporate-sponsor){ .md-button } 
+[Become a Siv3D Sponsor :material-github:](https://github.com/sponsors/Reputeless){:target="_blank" .md-button} [Sponsorship Opportunities](sponsorship/corporate-sponsor.md){ .md-button } 

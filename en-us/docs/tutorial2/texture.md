@@ -116,7 +116,7 @@ void Main()
 
 
 ## 25.4 画像クラス（Image）からテクスチャを作成する
-プログラムで生成・加工した画像データ（`Image` クラス）からテクスチャを作成できます。`Image` クラスについては [チュートリアル 53. 画像編集](../tutorial3/image) を参照してください。
+プログラムで生成・加工した画像データ（`Image` クラス）からテクスチャを作成できます。`Image` クラスについては [チュートリアル 53. 画像編集](../tutorial3/image.md) を参照してください。
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/texture/4.png)
 
