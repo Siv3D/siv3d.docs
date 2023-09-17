@@ -206,7 +206,7 @@ nav:
   - 開発に参加する:
     - 報告や提案: develop/report.md
     - 自前ビルドの手順: develop/build.md
-    - GitHub でコミットする: develop/commit.md
+    - コントリビューションガイド: develop/commit.md
     - コーディングスタイル: develop/coding-style.md
   - 勉強会:
     - 高速チュートリアル: study/quikstart.md

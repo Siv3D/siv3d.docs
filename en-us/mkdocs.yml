@@ -206,7 +206,7 @@ nav:
   - Participate in Development:
     - Reports and Proposals: develop/report.md
     - Building from Source: develop/build.md
-    - Committing to GitHub: develop/commit.md
+    - Contribution Guide: develop/commit.md
     - Coding Style: develop/coding-style.md
   - Corporate Sponsorship:
     - Information on Corporate Sponsorship: sponsorship/corporate-sponsor.md
