@@ -3,7 +3,7 @@
 
 **Siv3D（シブスリーディー）**は、音や画像、AI を使ったゲームやアプリを、**モダンな C++ コードで楽しく簡単にプログラミング**できるオープンソースのフレームワークです。豊富なチュートリアルが用意され、オンラインのユーザコミュニティで気軽に質問や相談ができます。動作環境は Windows / macOS / Linux / Web です。
 
-#### Siv3D のダウンロード | v0.6.11
+#### Siv3D のダウンロード | v0.6.12
 
 [Windows :material-microsoft-windows:](download/windows.md){ .md-button .md-button--primary }[macOS (Intel / Rosetta) :material-apple:](download/macos.md){ .md-button .md-button--primary }[Ubuntu :material-ubuntu:](download/ubuntu.md){ .md-button .md-button--primary }
 
@@ -12,6 +12,12 @@
 #### Web 向け Siv3D のダウンロード（非公式）
 
 [for Web (Windows + Visual Studio) :material-microsoft-visual-studio:](download/web.md){ .md-button .md-button--primary }[for Web (Visual Studio Code) :material-microsoft-visual-studio-code:](download/web.md){ .md-button .md-button--primary }
+
+
+## バンダイナムコスタジオ杯 Siv3D ゲームジャム
+
+<a href="https://bandainamcostudios.connpass.com/event/295239/" target="_blank"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/bnscup2023.png" alt="バンダイナムコスタジオ杯 | Siv3D ゲームジャム"></a>
+
 
 ## ゲームやアプリ開発を効率化する、圧倒的な機能
 2D / 3D ゲーム、メディアアート、ビジュアライザ、シミュレータを効率的に開発するための、**便利なクラスや関数**が用意されています。

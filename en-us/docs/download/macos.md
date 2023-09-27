@@ -6,24 +6,24 @@ The necessary development environment for Siv3D programming on macOS is as follo
 
 |  |  |
 |--|--|
-| OS | macOS Mojave / Catalina / Big Sur / Monterey |
+| OS | macOS Big Sur / Monterey / Ventura |
 | CPU | Intel CPU / Apple Silicon (Rosetta mode)* |
 | GPU | OpenGL 4.1 compatible hardware |
 | Output Devices | Monitors |
-| IDE | Xcode 11.3 -13.2 (Big Sur requires Xcode 12.5 - 13.2) |
+| IDE | Xcode 12.5 or newer |
 
 - Native support for Apple Silicon (M1 / M2) will be added in the currently under development Siv3D v0.8.0.
 
 ??? summary "If you cannot install Xcode"
-	If your macOS OS version is not the latest, you may not be able to install Xcode via the App Store. In that case, please download a previous version of Xcode, such as Xcode 12.4, from the [Apple Developer site :material-open-in-new:](https://developer.apple.com/download/more/){:target="_blank"}.
+	If your macOS OS version is not the latest, you may not be able to install Xcode via the App Store. In that case, please download a previous version of Xcode, such as Xcode 13.2, from the [Apple Developer site :material-open-in-new:](https://developer.apple.com/download/more/){:target="_blank"}.
 
 
 ### 1.2 System Requirements for Running Siv3D Application
-The necessary environment to run applications developed with Siv3D v0.6.11 on macOS is as follows.
+The necessary environment to run applications developed with Siv3D v0.6.12 on macOS is as follows.
 
 |  |  |
 |--|--|
-| OS | macOS Mojave / Catalina / Big Sur / Monterey |
+| OS | macOS Mojave / Catalina / Big Sur / Monterey / Ventura |
 | CPU | Intel CPU / Apple Silicon (Rosetta mode)* |
 | GPU | OpenGL 4.1 compatible hardware |
 | Output Devices | Monitors |
@@ -32,13 +32,14 @@ The necessary environment to run applications developed with Siv3D v0.6.11 on ma
 
 
 ## 2. Downloading the Siv3D Project Template
-1. Download and extract **[OpenSiv3D v0.6.11 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.11_macOS.zip){:target="_blank"}**.
+1. Download and extract **[OpenSiv3D v0.6.12 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.12_macOS.zip){:target="_blank"}**.
 1. If you are on macOS Catalina or later, a dialog box for file access permission appears every time you run the program. To avoid this, move the project folder to `(Username)/Applications` folder (not the root's Applications folder, but the Applications folder in user's home), rather than `(Username)/Desktop` or `(Username)/Downloads` folders.
 
 ??? summary "Previous versions"
 	The use of past versions is discouraged. If necessary, download them from the following links.
 	Due to updates to the compiler, etc., you may not be able to use past versions in the latest development environment. If you want to build an old Siv3D project, a good way is to port its source code to a project with the latest version.
 
+	- [OpenSiv3D v0.6.11 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.11_macOS.zip){:target="_blank"}
 	- [OpenSiv3D v0.6.10 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.10_macOS.zip){:target="_blank"}
 	- [OpenSiv3D v0.6.9 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.9_macOS.zip){:target="_blank"}
 	- [OpenSiv3D v0.6.8 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.8_macOS.zip){:target="_blank"}

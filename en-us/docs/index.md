@@ -3,7 +3,7 @@
 
 **Siv3D** is an open-source framework that allows for **fun and easy programming of games and applications using modern C++ code**, incorporating sound, images, and AI. A wealth of tutorials are available, and you can easily ask questions or seek advice in the online user community. The operating environment is Windows / macOS / Linux / Web.
 
-#### Download Siv3D | v0.6.11
+#### Download Siv3D | v0.6.12
 
 [Windows :material-microsoft-windows:](download/windows.md){ .md-button .md-button--primary }[macOS (Intel / Rosetta) :material-apple:](download/macos.md){ .md-button .md-button--primary }[Ubuntu :material-ubuntu:](download/ubuntu.md){ .md-button .md-button--primary }
 
@@ -12,6 +12,12 @@
 #### Download Siv3D for Web (Unofficial)
 
 [for Web (Windows + Visual Studio) :material-microsoft-visual-studio:](download/web.md){ .md-button .md-button--primary }[for Web (Visual Studio Code) :material-microsoft-visual-studio-code:](download/web.md){ .md-button .md-button--primary }
+
+
+## Bandai Namco Studios Cup Siv3D Game Jam
+
+<a href="https://bandainamcostudios.connpass.com/event/295239/" target="_blank"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/bnscup2023.png" alt="バンダイナムコスタジオ杯 | Siv3D ゲームジャム"></a>
+
 
 ## Exceptional Features for Efficient Game and App Development
 Convenient classes and functions are provided for efficient development of 2D / 3D games, media art, visualizers, simulators, etc.
