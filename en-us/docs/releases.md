@@ -5,16 +5,54 @@
 ???+ summary "v0.6.12 | 2023-09-27"
 
 	#### 新機能
-
-	#### ユーザビリティ向上	
+	- `Rect`, `RectF` から角度を指定して平行四辺形の `Quad` を作る関数を追加しました ([#1056](https://github.com/Siv3D/OpenSiv3D/issues/1056), [#1070](https://github.com/Siv3D/OpenSiv3D/pull/1070))
+		- [サンプル](https://zenn.dev/link/comments/2f28a4366b3b2f)
+	- 2D および 3D の Morton Order を計算する関数を追加しました ([#1072](https://github.com/Siv3D/OpenSiv3D/issues/1072))
+		- [サンプル](https://zenn.dev/link/comments/a9015b37d00cc2)
+	- Windows 11 で IME を使用する際に、変換候補ウィンドウを描画する `SimpleGUI::IMECandidateWindow()` を追加しました ([#1106](https://github.com/Siv3D/OpenSiv3D/issues/1106), [#1107](https://github.com/Siv3D/OpenSiv3D/pull/1107))
+		- [サンプル](https://zenn.dev/link/comments/f9c5f75094806f)
+	- `Point`, `Vector2D` に `.rotate90(N)` などを追加しました ([#1093](https://github.com/Siv3D/OpenSiv3D/issues/1093), [#1102](https://github.com/Siv3D/OpenSiv3D/pull/1102))
+		- [サンプル](https://zenn.dev/link/comments/664156e39d1e3f)
+	- `SceneManager::init()` に最初のフェードイン時間を指定できるようにしました ([#1078](https://github.com/Siv3D/OpenSiv3D/issues/1078), [#1081](https://github.com/Siv3D/OpenSiv3D/pull/1081))
+		- [サンプル](https://zenn.dev/link/comments/1dae79127cb0c5)
+	- 2 つの `Image` を比較する `==`, `!=` を追加しました ([#1099](https://github.com/Siv3D/OpenSiv3D/issues/1099))
+	- `Image::rotate90(N)` オーバーロードを追加しました ([#1089](https://github.com/Siv3D/OpenSiv3D/issues/1089), [#1090](https://github.com/Siv3D/OpenSiv3D/pull/1090))
+	- `Point3D` 型を追加しました ([#1073](https://github.com/Siv3D/OpenSiv3D/issues/1073), [#1074](https://github.com/Siv3D/OpenSiv3D/pull/1074))
+	- `Point` 型に `operator%` と `operator%=` を追加しました ([#1055](https://github.com/Siv3D/OpenSiv3D/issues/1055), [#1058](https://github.com/Siv3D/OpenSiv3D/pull/1058))
 
 	#### 仕様変更
+	- `ScreenCapture::` の一部関数の引数の一貫性を改善しました ([#1080](https://github.com/Siv3D/OpenSiv3D/issues/1080))
+	- サードパーティライブラリを更新しました ([#1100](https://github.com/Siv3D/OpenSiv3D/issues/1100))
 
 	#### パフォーマンス向上
+	- SDF/MSDF 方式のフォントのプリロードコストを大幅に改善しました ([#1095](https://github.com/Siv3D/OpenSiv3D/issues/1095), [#1096](https://github.com/Siv3D/OpenSiv3D/pull/1096))
+	- `Image::clipped()` などの実行時性能を大幅に改善しました ([#1087](https://github.com/Siv3D/OpenSiv3D/issues/1087), [#1108](https://github.com/Siv3D/OpenSiv3D/pull/1108))
+	- `Shape2D::indices()` が参照ではなく値を返していた非効率を修正しました ([#1065](https://github.com/Siv3D/OpenSiv3D/issues/1065), [#1071](https://github.com/Siv3D/OpenSiv3D/pull/1071))
+	- 右辺値の `Array`, `String`, `Polygon` 等のための効率的なメンバ関数オーバーロードを追加しました ([#1059](https://github.com/Siv3D/OpenSiv3D/issues/1059), [#1060](https://github.com/Siv3D/OpenSiv3D/issues/1060), [#1064](https://github.com/Siv3D/OpenSiv3D/pull/1064))
 
 	#### 不具合・バグ修正
+	- 複雑な字体の SDF/MSDF フォントの文字にノイズが入ることがあった不具合を修正しました ([#1082](https://github.com/Siv3D/OpenSiv3D/issues/1082), [#1096](https://github.com/Siv3D/OpenSiv3D/pull/1096))
+	- ウィンドウが非アクティブなとき、キーを押していないのに `.pressed()` が `true` を返すことがあったバグを修正しました ([#1083](https://github.com/Siv3D/OpenSiv3D/issues/1083))
+	- v0.6.11 で `RoundRect::drawShadow()` の一部ケースの描画に異常が生じたバグを修正しました ([#1076](https://github.com/Siv3D/OpenSiv3D/issues/1076))
+	- `RandomHSV(hMinMax, sMinMax, vMinMax)` の結果が正しくなかったバグを修正しました ([#1084](https://github.com/Siv3D/OpenSiv3D/issues/1084), [#1088](https://github.com/Siv3D/OpenSiv3D/pull/1088))
+	- `String::trimmed()` に空白文字のみで構成される文字列を渡すと実行時エラーになったバグを修正しました ([#1101](https://github.com/Siv3D/OpenSiv3D/issues/1101))
+	- Windows 版における IME の挙動を改善しました ([#1104](https://github.com/Siv3D/OpenSiv3D/issues/1104), [#1107](https://github.com/Siv3D/OpenSiv3D/pull/1107))
+	- `P2Body` が空の `Polygon` を持つときの実行時エラーを修正しました ([#1075](https://github.com/Siv3D/OpenSiv3D/issues/1075))
+	- `Wave::MaxSampleRate` が `Wave::MaxSamlpeRate` になっていた誤字を修正しました ([#1105](https://github.com/Siv3D/OpenSiv3D/pull/1105))
+	- `PhongMaterial::ambientColor` が `PhongMaterial::amibientColor` になっていた誤字を修正しました ([#1105](https://github.com/Siv3D/OpenSiv3D/pull/1105))
+	- `AsyncTask::wait_until()` がコンパイルエラーを起こすバグを修正しました ([#1068](https://github.com/Siv3D/OpenSiv3D/issues/1068))
+	- 一部のシェーダファイルの誤字を修正しました ([#1105](https://github.com/Siv3D/OpenSiv3D/pull/1105))
+	- ドキュメンテーションの誤りを修正しました ([#1054](https://github.com/Siv3D/OpenSiv3D/pull/1054))
 
 	#### コントリビューション
+	- [Raclamusi](https://github.com/Raclamusi): **右辺値の `Array` などのクラス向けの効率的なメンバ関数オーバーロードの実装**, **`Image::clipped()` 等の高速化**, 一部の関数の戻り値の不具合の修正
+	- [yama-can](https://github.com/yama-can): **`Rect::skewedX()` 等の実装**, **`SceneManager::init()` のフェード時間指定の実装**
+	- [comefrombottom](https://github.com/comefrombottom): **`Image::rotate90(n)` 等の実装**, **`Point` や `Vector2D` の `.rotate90()` の実装**
+	- [ozone010](https://github.com/ozone010): **`Point` 型に `operator%` と `operator%=` を追加**
+	- [voidproc](https://github.com/voidproc): ドキュメントとソースコードの誤字修正
+	- [naga-karupi](https://github.com/naga-karupi): `RandomHSV()` のバグ修正
+	- [sfpgmr](https://github.com/sfpgmr): 内部コードの修正
+	- [aoriika05](https://github.com/aoriika05): ドキュメントの修正
 
 
 ???+ summary "v0.6.11 | 2023-08-11"
