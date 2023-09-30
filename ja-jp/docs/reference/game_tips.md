@@ -1,5 +1,5 @@
 # ゲーム開発のヒント集
-この記事では、[Siv3D ゲームジャム :material-open-in-new:](https://bandainamcostudios.connpass.com/event/295239/){:target="_blank"} の参加者に向けて、Siv3D で制作するゲームの品質やユニークさを高めるためのヒントを紹介します。参加人数と同じ数のヒントを用意する予定です。
+この記事では、[Siv3D ゲームジャム :material-open-in-new:](https://bandainamcostudios.connpass.com/event/295239/){:target="_blank"} の参加者に向けて、Siv3D でゲームを制作する際のヒントを紹介します。高品質でユニークなゲーム開発に役立つヒントが見つかるかもしれません。ゲームジャムの参加人数と同じ数のヒントを用意する予定です。
 
 ## 1. ゲームのイメージにあったフォントを選ぶ
 Siv3D v0.6.12 から、MSDF 形式の Font についても、複雑な字形を美しく描画できるようになりました。ここでは、ゲーム開発に使えそうないくつかのユニークなフォントを紹介します。
@@ -66,7 +66,7 @@ Siv3D v0.6.12 から、MSDF 形式の Font についても、複雑な字形を�
 
 
 ## 2. ウィンドウのサイズを変更する
-Siv3D のデフォルトのウィンドウサイズは 800 x 600 ですが特殊なサイズに変更することで、ユニークな制約がうまれ、斬新なゲームを作れるかもしれません。
+Siv3D のデフォルトのウィンドウサイズは 800 x 600 ですが、特殊なサイズに変更することでユニークな制約がうまれ、斬新なゲームを作れるかもしれません。
 
 | 例 | ウィンドウサイズ |
 |:---:|:---:|
@@ -77,7 +77,9 @@ Siv3D のデフォルトのウィンドウサイズは 800 x 600 ですが特殊
 
 ## 3. 背景にひと手間加える
 
-### グラデーション
+単色の背景ではなく、グラデーションや模様を加えることで、ゲームの雰囲気をより引き立たせることができます。
+
+#### グラデーション
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/reference/game_tips/3-1.png)
 
@@ -104,7 +106,7 @@ Siv3D のデフォルトのウィンドウサイズは 800 x 600 ですが特殊
 	```
 
 
-### 放射状のグラデーション
+#### 放射状のグラデーション
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/reference/game_tips/3-2.png)
 
@@ -131,7 +133,7 @@ Siv3D のデフォルトのウィンドウサイズは 800 x 600 ですが特殊
 	```
 
 
-### 市松模様
+#### 市松模様
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/reference/game_tips/3-3.png)
 
@@ -168,7 +170,7 @@ Siv3D のデフォルトのウィンドウサイズは 800 x 600 ですが特殊
 	```
 
 
-### 水玉模様
+#### 水玉模様
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/reference/game_tips/3-4.png)
 
@@ -206,7 +208,7 @@ Siv3D のデフォルトのウィンドウサイズは 800 x 600 ですが特殊
 	```
 
 
-### 斜めのストライプ
+#### 斜めのストライプ
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/reference/game_tips/3-5.png)
 
@@ -238,7 +240,7 @@ Siv3D のデフォルトのウィンドウサイズは 800 x 600 ですが特殊
 	```
 
 ## 4. 大きい数字を桁区切りで表示する
-桁数の多い数字を表示するときは、桁区切りを入れると見やすくなります。`ThousandsSeparate(x)` は数値 `x` を桁区切りした文字列を返します。
+桁数の多い数字を表示するときは、桁区切りを入れると読みやすくなります。`ThousandsSeparate(x)` は数値 `x` を桁区切りした文字列を返します。
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/reference/game_tips/4-1.png)
 
