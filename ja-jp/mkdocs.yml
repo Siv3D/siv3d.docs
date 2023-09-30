@@ -183,6 +183,7 @@ nav:
   - API:
     - クラス一覧: api/classes.md
   - 記事:
+    - ゲーム開発のヒント集: reference/game_tips.md
     - メッセージボックス: reference/messagebox.md
     - 非同期処理: reference/async.md
     - 自作クラスと Siv3D の連係: reference/adapter.md
