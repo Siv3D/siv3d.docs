@@ -123,6 +123,7 @@
 [Siv3D-Sample :material-open-in-new:](https://github.com/Siv3D/Siv3D-Samples){:target="_blank" .md-button} [ゲーム典型 :material-open-in-new:](https://github.com/Reputeless/games){:target="_blank" .md-button} 
 
 ## 記事
+- [ゲーム開発のヒント集](reference/game_tips.md){:target="_blank"}
 - [メッセージボックス](reference/messagebox.md){:target="_blank"}
 - [非同期処理](reference/async.md){:target="_blank"}
 - [自作クラスと Siv3D の連係](reference/adapter.md){:target="_blank"}
