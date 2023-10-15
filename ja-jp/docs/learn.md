@@ -132,8 +132,8 @@
 - [多態性を使ったプログラミング](reference/polymorphism.md){:target="_blank"}
 
 ## ユーザによるサンプル集
-- [Siv3D ミニサンプル集 :material-open-in-new:](https://scrapbox.io/voidproc-siv3d-examples/.md){:target="_blank"}
-- [Siv3D プチサンプル :material-open-in-new:](https://scrapbox.io/Siv3D-small-sample/.md){:target="_blank"}
+- [Siv3D ミニサンプル集 :material-open-in-new:](https://scrapbox.io/voidproc-siv3d-examples/){:target="_blank"}
+- [Siv3D プチサンプル :material-open-in-new:](https://scrapbox.io/Siv3D-small-sample/){:target="_blank"}
 - [Siv3D 残骸置き場 :material-open-in-new:](https://scrapbox.io/raclamusi-siv3d-zangai/){:target="_blank"}
 
 ## 質問できるコミュニティ

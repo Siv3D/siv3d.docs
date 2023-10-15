@@ -131,8 +131,8 @@
 - [Implementing Classes Using Polymorphism](reference/polymorphism.md){:target="_blank"}
 
 ## User-Contributed Samples
-- [Siv3D Mini Sample Collection :material-open-in-new:](https://scrapbox.io/voidproc-siv3d-examples/.md){:target="_blank"}
-- [Siv3D Petite Samples :material-open-in-new:](https://scrapbox.io/Siv3D-small-sample/.md){:target="_blank"}
+- [Siv3D Mini Sample Collection :material-open-in-new:](https://scrapbox.io/voidproc-siv3d-examples/){:target="_blank"}
+- [Siv3D Petite Samples :material-open-in-new:](https://scrapbox.io/Siv3D-small-sample/){:target="_blank"}
 - [Siv3D 残骸置き場 :material-open-in-new:](https://scrapbox.io/raclamusi-siv3d-zangai/){:target="_blank"}
 
 
