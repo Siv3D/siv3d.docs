@@ -213,6 +213,8 @@ nav:
     - 高速チュートリアル: study/quikstart.md
     - 多態性入門: study/polymorphism.md
     - OpenAI API の使用: study/openai.md
+  - イベント:
+    - ゲームジャム: event/gamejam.md
   - 協賛企業の募集:
     - 協賛企業の募集について: sponsorship/corporate-sponsor.md
     - 協賛特典: sponsorship/corporate-sponsor-guideline.md
