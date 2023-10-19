@@ -665,15 +665,314 @@ Siv3D では、キーボード、マウス、ゲームパッドなどの様々�
 	```
 
 
-## 11.
+## 11. 斜め方向の移動量を調整しよう
+++up++ を押すと上に 1, ++right++ を押すと右に 1 移動する単純なコードで、++up++ と ++right++ を同時に押すと、右上に √2 (約 1.41) 移動することになり、移動量が大きくなります。ゲームによってはこの挙動が望ましくない場合があります。次のようなコードで、斜め方向の移動量を調整することができます。
 
-## 12.
+??? memo "コード"
+	```cpp
+	# include <Siv3D.hpp>
 
-## 13.
+	Vec2 GetMove(bool adjust)
+	{
+		Vec2 move{ 0, 0 };
 
-## 14.
+		if (KeyUp.pressed())
+		{
+			move.y -= 1;
+		}
+		else if (KeyDown.pressed())
+		{
+			move.y += 1;
+		}
 
-## 15.
+		if (KeyLeft.pressed())
+		{
+			move.x -= 1;
+		}
+		else if (KeyRight.pressed())
+		{
+			move.x += 1;
+		}
+
+		if (adjust)
+		{
+			// ベクトルの長さを 1 にする。ゼロベクトルの場合は何もしない
+			move.setLength(1.0);
+		}
+
+		return move;
+	}
+
+	void Main()
+	{
+		Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+		const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+
+		// 斜め方向の移動量を調整するか
+		bool adjust = true;
+
+		Circle circle{ 400, 300, 20 };
+
+		while (System::Update())
+		{
+			const double deltaTime = Scene::DeltaTime();
+
+			const Vec2 baseMove = GetMove(adjust);
+
+			circle.moveBy(baseMove * 200 * deltaTime);
+
+			circle.draw(ColorF{ 0.25 });
+
+			SimpleGUI::CheckBox(adjust, U"斜め方向の移動量を調整する", Vec2{ 40, 40 });
+
+			font(U"ベースの移動ベクトルの長さ: {:.2f}"_fmt(baseMove.length())).draw(24, Vec2{ 360, 40 });
+		}
+	}
+	```
+
+
+## 12. 重ねずにランダムに配置する方法を知ろう
+画面に何らかの要素をランダムに配置したい場合、`RandomVec2(sceneRect)` を使うと要素同士が重なったり、分布の偏りが生じたりすることがあります。
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/reference/game_tips/11-1.png)
+
+??? memo "コード"
+	```cpp
+	# include <Siv3D.hpp>
+
+	Array<Vec2> GenerateRandomPoints(const Rect& rect, int32 count)
+	{
+		Array<Vec2> points;
+		
+		for (int32 i = 0; i < count; ++i)
+		{
+			points.push_back(RandomVec2(rect));
+		}
+
+		return points;
+	}
+
+	bool SortByY(const Vec2& a, const Vec2& b)
+	{
+		return (a.y < b.y);
+	}
+
+	void Main()
+	{
+		Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+		constexpr Rect SceneRect{ 0, 0, 800, 600 };
+		const Texture texture{ U"🌷"_emoji };
+
+		Array<Vec2> positions = GenerateRandomPoints(SceneRect, 100)
+			.sorted_by(SortByY); // 手前の絵文字のほうが奥の絵文字よりあとに描画されるようにソートする
+
+		while (System::Update())
+		{
+			if (MouseL.down())
+			{
+				positions = GenerateRandomPoints(SceneRect, 100).sorted_by(SortByY);
+			}
+
+			for (const auto& pos : positions)
+			{
+				texture.scaled(0.4).drawAt(pos);
+			}
+		}
+	}
+	```
+
+`PoissonDisk2D` クラスを使うと、ほどよい距離で重ならない点群を生成することができます。
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/reference/game_tips/11-2.png)
+
+??? memo "コード"
+	```cpp
+	# include <Siv3D.hpp>
+
+	/// @brief ほどよい距離で重ならない点群を生成します。
+	/// @param rect 点群を生成する範囲
+	/// @param radius 点群の点の間の最小距離（目安）
+	/// @param clip true の場合、範囲外の点を切り取ります。
+	/// @return 生成された点群
+	Array<Vec2> GenerateRandomPoints(const Rect& rect, double radius, bool clip = false)
+	{
+		Array<Vec2> points;
+		PoissonDisk2D pd{ rect.size, radius };
+
+		for (const auto& point : pd.getPoints())
+		{
+			const Vec2 pos = (point + rect.pos);
+
+			if (clip && (not rect.contains(pos)))
+			{
+				continue;
+			}
+
+			points << pos;
+		}
+
+		return points;
+	}
+
+	bool SortByY(const Vec2& a, const Vec2& b)
+	{
+		return (a.y < b.y);
+	}
+
+	void Main()
+	{
+		Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+		constexpr Rect SceneRect{ 0, 0, 800, 600 };
+		const Texture texture{ U"🌷"_emoji };
+
+		Array<Vec2> positions = GenerateRandomPoints(SceneRect, 52.0)
+			.sorted_by(SortByY); // 手前の絵文字のほうが奥の絵文字よりあとに描画されるようにソートする
+
+		while (System::Update())
+		{
+			if (MouseL.down())
+			{
+				positions = GenerateRandomPoints(SceneRect, 52.0).sorted_by(SortByY);
+			}
+
+			for (const auto& pos : positions)
+			{
+				texture.scaled(0.4).drawAt(pos);
+			}
+		}
+	}
+	```
+
+
+## 13. マウスを使わないゲームではマウスカーソルを非表示にしよう
+キーボードで操作することをプレイヤーに伝える最も簡単な方法は、マウスカーソルを非表示にすることです。マウスカーソルが表示されていると、プレイヤーはマウスを使って操作しようとしてしまいます。マウスを一切使わないゲームではマウスカーソルを非表示にすることを検討しましょう。
+
+毎フレーム `Cursor::RequestStyle(CursorStyle::Hidden)` を呼び出すことで、マウスカーソルを非表示にすることができます。
+
+??? memo "コード"
+	```cpp
+	# include <Siv3D.hpp>
+
+	void Main()
+	{
+		Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+		while (System::Update())
+		{
+			// 現在のフレームではマウスカーソルを非表示にする
+			Cursor::RequestStyle(CursorStyle::Hidden);
+		}
+	}
+	```
+
+
+## 14. 色のみで区別する UI は避けよう
+色のみで区別する UI は、色の組み合わせによっては P 型や D 型の [色覚特性](https://cudo.jp/?page_id=540){:target="_blank"} を持つ人にとって操作が困難になります。色以外の要素（例えば形状やテキスト）でも区別できるようにするか、色の組み合わせを変えることで、色覚特性を持つ人にも操作しやすい UI にすることができます。
+
+=== "C 型"
+
+	![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/reference/game_tips/14-1.png)
+
+
+=== "D 型色覚の見え方の再現"
+
+	![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/reference/game_tips/14-2.png)
+
+
+```cpp
+# include <Siv3D.hpp>
+
+void DrawItem(const Vec2& pos, const ColorF& color)
+{
+	Circle{ pos, 50 }.draw(color)
+		.drawFrame(1.2, 0, ColorF{ 1.0 });
+}
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.7 });
+
+	while (System::Update())
+	{
+		DrawItem(Vec2{ 100, 100 }, HSV{ 40, 0.8, 1.0 });
+		DrawItem(Vec2{ 240, 100 }, HSV{ 80, 0.8, 1.0 });
+		DrawItem(Vec2{ 380, 100 }, HSV{ 120, 0.8, 1.0 });
+		DrawItem(Vec2{ 520, 100 }, HSV{ 250, 0.8, 1.0 });
+		DrawItem(Vec2{ 660, 100 }, HSV{ 300, 0.8, 1.0 });
+
+		DrawItem(Vec2{ 100, 240 }, HSV{ 40, 0.8, 1.0 });
+		Circle{ 100, 240, 30 }.drawFrame(12, ColorF{ 0.6 });
+
+		DrawItem(Vec2{ 240, 240 }, HSV{ 80, 0.8, 1.0 });
+		RectF{ Arg::center(240, 240), 40 }.rotated(45_deg).drawFrame(12, ColorF{ 0.6 });
+
+		DrawItem(Vec2{ 380, 240 }, HSV{ 120, 0.8, 1.0 });
+		RectF{ Arg::center(380, 240), 70, 12 }.draw(ColorF{ 0.6 });
+
+		DrawItem(Vec2{ 520, 240 }, HSV{ 250, 0.8, 1.0 });
+		Shape2D::Cross(32, 12, Vec2{ 520, 240 }).draw(ColorF{ 0.92 });
+
+		DrawItem(Vec2{ 660, 240 }, HSV{ 300, 0.8, 1.0 });
+		Circle{ 660, 240, 18 }.draw(ColorF{ 0.92 });
+	}
+}
+```
+
+
+## 15. 二次元配列には `Grid` を使おう
+Siv3D には二次元配列専用の `Grid<Type>` クラスがあります。`Array<Array<Type>>` に比べて、`Grid<Type>` はメモリの使用量が少なく、アクセスも高速です。また、`Grid` は `Array` と同様に `for` 文で簡単に走査できます。
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/reference/game_tips/15.png)
+
+??? memo "コード"
+	```cpp
+	# include <Siv3D.hpp>
+
+	void Main()
+	{
+		Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+		const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+		constexpr Point Offset{ 80, 60 };
+
+		// 幅 8, 高さ 6 の二次元配列
+		Grid<int32> grid(Size{ 8, 6 });
+
+		for (auto& element : grid)
+		{
+			element = Random(10);
+		}
+
+		while (System::Update())
+		{
+			for (int32 y = 0; y < grid.height(); ++y)
+			{
+				for (int32 x = 0; x < grid.width(); ++x)
+				{
+					const Rect rect{ (Point{ (x * 80), (y * 80) } + Offset), 80 };
+					const int32 value = grid[y][x];
+					rect.draw(Colormap01F(value / 10.0));
+					rect.drawFrame(1, 0, ColorF{ 0.95 });
+					font(grid[y][x]).drawAt(TextStyle::Shadow(Vec2{ 1.5, 1.5 }, ColorF{ 0.1 }), 32, rect.center());
+				}
+			}
+
+			for (int32 y = 0; y < grid.height(); ++y)
+			{
+				for (int32 x = 0; x < grid.width(); ++x)
+				{
+					const Rect rect{ (Point{ (x * 80), (y * 80) } + Offset), 80 };
+
+					if (rect.mouseOver())
+					{
+						rect.drawFrame(8, 0);
+					}
+				}
+			}
+		}
+	}
+	```
+
 
 ## 16.
 

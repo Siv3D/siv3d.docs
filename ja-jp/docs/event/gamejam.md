@@ -152,4 +152,6 @@ Zoom での参加にあたって、本名表示・カメラオンは必須では
 
 
 ## 9. 開発お役立ち情報
-（準備中）
+- [Siv3D を学ぶ](../learn.md){:target="_blank"}
+- [ゲーム開発のヒント集](../reference/game_tips.md){:target="_blank"}
+
