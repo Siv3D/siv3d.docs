@@ -9,7 +9,7 @@
 ## 2. イベントスケジュール
 Zoom での参加にあたって、本名表示・カメラオンは必須ではありません。
 
-### 2.1 開会式 2023 年 10 月 21 日（土）14:00-15:30（13:30 Zoom 開場）
+### 2.1 開会式 2023 年 10 月 21 日（土）14:00-14:30（13:30 Zoom 開場）
 - イベントに関する説明とテーマの発表を行います。
 
 [開会式に Zoom で参加する :material-open-in-new:](https://bandainamcostudios.zoom.us/j/97097787488?pwd=WnRJSjJQNVQ0RWVKcStJTkEzZWZQUT09){:target="_blank" .md-button .md-button--primary } 
