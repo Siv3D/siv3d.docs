@@ -3,7 +3,7 @@
 <img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/bnscup2023.png" alt="バンダイナムコスタジオ杯 | Siv3D ゲームジャム">
 
 ## 1. エントリーする
-1. [Siv3D Discord サーバー](../community/community.md) に参加します（推奨）
+1. [Siv3D Discord サーバー](../community/community.md){:target="_blank"} に参加します（推奨）
 2. [イベント参加登録ページ（Connpass）:material-open-in-new:](https://bandainamcostudios.connpass.com/event/295239/){:target="_blank"} から参加登録します。
 
 ## 2. イベントスケジュール
