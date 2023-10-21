@@ -175,7 +175,7 @@ ProjectDirectory/
 
 [A 方式のサンプル :material-open-in-new:](https://gist.github.com/Reputeless/7c10a22d080468e239183b16fb670e34){:target="_blank" .md-button } 
 
-Siv3D に同梱されているフォントや絵文字、アイコンのみを使い、1 つのソースファイル `Main.cpp` だけでゲームを完成させた場合、[GitHub Gist](../tools/gist.md) で `Main.cpp` のみを公開するのが最も簡単です。GitHub Gist には複数のファイルを追加できます。必要に応じて `README.md` を追加して説明を書きましょう。
+Siv3D に同梱されているフォントや絵文字、アイコンのみを使い、1 つのソースファイル `Main.cpp` だけでゲームを完成させた場合、[GitHub Gist](../tools/gist.md){:target="_blank"} で `Main.cpp` のみを公開するのが最も簡単です。GitHub Gist には複数のファイルを追加できます。必要に応じて `README.md` を追加して説明を書きましょう。
 
 
 #### B. 複数のソースコード（同一ディレクトリ）からなる場合（GitHub Gist で公開）
@@ -193,7 +193,7 @@ ProjectDirectory/
 
 [B 方式のサンプル :material-open-in-new:](https://gist.github.com/Reputeless/9fdae7c44013e25f290b255dcc8701e7){:target="_blank" .md-button } 
 
-Siv3D に同梱されているフォントや絵文字、アイコンのみを使い、同一ディレクトリ上の複数のソースファイル（.cpp / .hpp）のみでゲームを完成させた場合、[GitHub Gist](../tools/gist.md) でそれらソースファイル（.cpp / .hpp）を公開するのが最も簡単です。GitHub Gist には複数のファイルを追加できます。必要に応じて `README.md` を追加して説明を書きましょう。ファイル数が多い場合は C 方式を選択することもできます。
+Siv3D に同梱されているフォントや絵文字、アイコンのみを使い、同一ディレクトリ上の複数のソースファイル（.cpp / .hpp）のみでゲームを完成させた場合、[GitHub Gist](../tools/gist.md){:target="_blank"} でそれらソースファイル（.cpp / .hpp）を公開するのが最も簡単です。GitHub Gist には複数のファイルを追加できます。必要に応じて `README.md` を追加して説明を書きましょう。ファイル数が多い場合は C 方式を選択することもできます。
 
 
 #### C. 複数の階層化されたソースコードからなる場合（GitHub リポジトリで公開）
