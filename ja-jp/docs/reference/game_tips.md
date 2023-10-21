@@ -953,7 +953,7 @@ Siv3D には二次元配列専用の `Grid<Type>` クラスがあります。`Ar
 					const int32 value = grid[y][x];
 					rect.draw(Colormap01F(value / 10.0));
 					rect.drawFrame(1, 0, ColorF{ 0.95 });
-					font(grid[y][x]).drawAt(TextStyle::Shadow(Vec2{ 1.5, 1.5 }, ColorF{ 0.1 }), 32, rect.center());
+					font(value).drawAt(TextStyle::Shadow(Vec2{ 1.5, 1.5 }, ColorF{ 0.1 }), 32, rect.center());
 				}
 			}
 

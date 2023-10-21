@@ -124,10 +124,11 @@ Zoom での参加にあたって、本名表示・カメラオンは必須では
 - 概要（100 字以内）
 - チームメンバー（名前（HN 可）、メールアドレス、作品担当箇所）
 - 作品紹介ページ（Scraobox）の URL
+- ソースファイル（GitHub リポジトリまたは Gist またはオンラインストレージ）
+	- **10. ソースファイルの提出方法** が参考になります。
+	- 最低限、Siv3D に関連する C++ ソースコードは含めてください。
 - 作品を実行するための必要最小限のファイル（.exe または .app または URL またはそれらを含む .zip）
 	- Visual Studio がビルド時に生成する `Intermediate` フォルダや `.rc`, `.ico` フォルダは不要です。外部ファイルを使っていない Siv3D アプリは実行ファイル単体で動作します。
-- ソースファイル（GitHub リポジトリまたは Gist またはオンラインストレージ）
-	- 最低限、Siv3D に関連する C++ ソースコードは含める
 
 
 ## 8. お問い合わせ / Q & A
@@ -156,6 +157,97 @@ Zoom での参加にあたって、本名表示・カメラオンは必須では
 
 
 ## 9. 開発お役立ち情報
+
 - [Siv3D を学ぶ](../learn.md){:target="_blank"}
 - [ゲーム開発のヒント集](../reference/game_tips.md){:target="_blank"}
 
+
+## 10. ソースファイルの提出方法
+Siv3D のプロジェクトには多くのファイルが含まれます。ソースファイルの提出については、最小限のファイルの提出のみで済ませることができます。おすすめの方針は、`Main.cpp` と、自分で追加・変更したファイルのみを Gist あるいは GitHub リポジトリに公開し、その URL を提出することです。
+
+#### A. 1 つのソースコードで完結する場合（GitHub Gist で公開）
+
+```txt title="ディレクトリ構成例"
+ProjectDirectory/
+│
+└── Main.cpp
+```
+
+[A 方式のサンプル :material-open-in-new:](https://gist.github.com/Reputeless/7c10a22d080468e239183b16fb670e34){:target="_blank" .md-button } 
+
+Siv3D に同梱されているフォントや絵文字、アイコンのみを使い、1 つのソースファイル `Main.cpp` だけでゲームを完成させた場合、[GitHub Gist](../tools/gist.md) で `Main.cpp` のみを公開するのが最も簡単です。GitHub Gist には複数のファイルを追加できます。必要に応じて `README.md` を追加して説明を書きましょう。
+
+
+#### B. 複数のソースコード（同一ディレクトリ）からなる場合（GitHub Gist で公開）
+
+```txt title="ディレクトリ構成例"
+ProjectDirectory/
+│
+├── Main.cpp
+├── Common.hpp
+├── Title.hpp
+├── Title.cpp
+├── Game.hpp
+└── Game.cpp
+```
+
+[B 方式のサンプル :material-open-in-new:](https://gist.github.com/Reputeless/9fdae7c44013e25f290b255dcc8701e7){:target="_blank" .md-button } 
+
+Siv3D に同梱されているフォントや絵文字、アイコンのみを使い、同一ディレクトリ上の複数のソースファイル（.cpp / .hpp）のみでゲームを完成させた場合、[GitHub Gist](../tools/gist.md) でそれらソースファイル（.cpp / .hpp）を公開するのが最も簡単です。GitHub Gist には複数のファイルを追加できます。必要に応じて `README.md` を追加して説明を書きましょう。ファイル数が多い場合は C 方式を選択することもできます。
+
+
+#### C. 複数の階層化されたソースコードからなる場合（GitHub リポジトリで公開）
+
+```txt title="ディレクトリ構成例"
+ProjectDirectory/
+│
+├── Main.cpp
+├── Common.hpp
+│
+├── Title/
+│	├── Title.hpp
+│	└── Title.cpp
+│
+└── Game/
+	├── Game.hpp
+	└── Game.cpp
+```
+
+[C 方式のサンプル :material-open-in-new:](https://github.com/Reputeless/Sample_Siv3D_Project_1){:target="_blank" .md-button } 
+
+Siv3D に同梱されているフォントや絵文字、アイコンのみを使い、階層化されたディレクトリ上の複数のソースファイル（.cpp / .hpp）のみでゲームを完成させた場合、GitHub リポジトリでソースファイル（.cpp / .hpp）を公開するのが最適です。必要に応じて `README.md` を追加して説明を書きましょう。
+
+Siv3D ユーザであれば簡単にプロジェクトを作成できるため、プロジェクトファイル（.sln / .xcodeproj / .vcxproj）は公開しなくても構いません。
+
+
+#### D. 画像や音声、テキストなどの外部ファイルを使用する場合（GitHub リポジトリで公開）
+
+```txt title="ディレクトリ構成例"
+ProjectDirectory/
+│
+├── Main.cpp
+├── Common.hpp
+│
+├── Title/
+│   ├── Title.hpp
+│   └── Title.cpp
+│
+├── Game/
+│   ├── Game.hpp
+│   └── Game.cpp
+│
+└── App/
+    ├── asset/
+    │   ├── image1.png
+    │   └── image2.png
+    │
+    └── config.ini
+```
+
+[D 方式のサンプル :material-open-in-new:](https://github.com/Reputeless/Sample_Siv3D_Project_2){:target="_blank" .md-button } 
+
+App フォルダ内に画像や音声、テキストなどの外部ファイルを配置した場合、GitHub リポジトリでソースファイル（.cpp / .hpp）と `App` フォルダの差分（追加したファイル）を公開するのが最適です。必要に応じて `README.md` を追加して説明を書きましょう。
+
+
+#### E. より複雑な場合（GitHub リポジトリで公開）
+より複雑な場合は、可能な範囲ソースファイル・関連ファイルを GitHub リポジトリで公開してください。必要に応じて、[Siv3D プロジェクト用の .gitignore ファイル](../tools/gitignore.md) も活用してください。
