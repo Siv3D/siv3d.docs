@@ -2,6 +2,8 @@
 
 <img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/bnscup2023.png" alt="バンダイナムコスタジオ杯 | Siv3D ゲームジャム">
 
+## テーマ「すくう」
+
 ## 1. エントリーする
 1. [Siv3D Discord サーバー](../community/community.md){:target="_blank"} に参加します（推奨）
 2. [イベント参加登録ページ（Connpass）:material-open-in-new:](https://bandainamcostudios.connpass.com/event/295239/){:target="_blank"} から参加登録します。
@@ -12,7 +14,8 @@ Zoom での参加にあたって、本名表示・カメラオンは必須では
 ### 2.1 開会式 2023 年 10 月 21 日（土）14:00-14:30（13:30 Zoom 開場）
 - イベントに関する説明とテーマの発表を行います。
 
-[開会式に Zoom で参加する :material-open-in-new:](https://bandainamcostudios.zoom.us/j/97097787488?pwd=WnRJSjJQNVQ0RWVKcStJTkEzZWZQUT09){:target="_blank" .md-button .md-button--primary } 
+[開会式に Zoom で参加する :material-open-in-new:](){:target="_blank" .md-button .md-button--primary } 
+（開会式は終了しました）
 
 ### 2.2 中間発表 2023 年 10 月 28 日（土）14:00-15:30（13:30 Zoom 開場）
 - 司会者が画面共有をして各チームの作品紹介ページを訪れ、1 分ほどコメントや質問をします。担当者はマイクで応答してください。プレゼンテーションの用意は不要です。
@@ -87,6 +90,7 @@ Zoom での参加にあたって、本名表示・カメラオンは必須では
 
 ## 4. スライド
 [開会式スライド :material-open-in-new:](https://www.dropbox.com/scl/fi/sot6j4sgfr6wv6ck0r30k/Siv3D.pdf?rlkey=1yunws0i4lrlg7ozoomdfy2e2&dl=0){:target="_blank" .md-button } 
+[テーマ発表「すくう」 :material-open-in-new:](https://www.dropbox.com/scl/fi/yuxbtwm00b6m8ftv0tp31/.pdf?rlkey=g3oicm3b08bveakpe0ndja6fm&dl=0){:target="_blank" .md-button } 
 
 
 ## 5. 参加者のためのプラットフォーム
