@@ -17,16 +17,19 @@ Zoom での参加にあたって、本名表示・カメラオンは必須では
 [開会式に Zoom で参加する :material-open-in-new:](){:target="_blank" .md-button .md-button--primary } 
 （開会式は終了しました）
 
+[開会式スライド :material-open-in-new:](https://www.dropbox.com/scl/fi/sot6j4sgfr6wv6ck0r30k/Siv3D.pdf?rlkey=1yunws0i4lrlg7ozoomdfy2e2&dl=0){:target="_blank" .md-button } 
+[テーマ発表スライド :material-open-in-new:](https://www.dropbox.com/scl/fi/yuxbtwm00b6m8ftv0tp31/.pdf?rlkey=g3oicm3b08bveakpe0ndja6fm&dl=0){:target="_blank" .md-button } 
+
 ### 2.2 中間発表 2023 年 10 月 28 日（土）14:00-15:30（13:30 Zoom 開場）
 - 司会者が画面共有をして各チームの作品紹介ページを訪れ、1 分ほどコメントや質問をします。担当者はマイクで応答してください。プレゼンテーションの用意は不要です。
-- 中間発表までに、作品紹介ページ（Scrapbox）に進捗を記入しておいてください。
+- 中間発表までに、Scrapbox に作品紹介ページを作成しておいてください。
 
 [中間発表に Zoom で参加する（マイク確認） :material-open-in-new:](https://bandainamcostudios.zoom.us/j/98842197016?pwd=QlRGY3A5WG1Nemp4dkJIS0xTQk8rUT09){:target="_blank" .md-button .md-button--primary } 
 
 ### 2.3 作品発表 2023 年 11 月 5 日（日）14:00-16:00（13:30 Zoom 開場）
 - 各チームの代表が順番に画面を共有し、チームや作品、開発について最大 90 秒トークします。スライドを用意すると良いでしょう。
 - 詳細な情報やプレイ動画は作品紹介ページから閲覧できるため、要点やアピールポイントを伝えることに集中してください。質疑応答はありません。
-- 作品発表までに、作品紹介ページ（Scrapbox）に進捗を記入しておいてください。また、成果物フォームから作品登録を行ってください。
+- 作品発表までに、Scrapbox の作品紹介ページを完成させてください。また、成果物フォームから作品登録を行ってください。
 - 未完成の場合でも、そこまでの進捗と、今後の展望を発表してください。
 
 [作品発表に Zoom で参加する（マイク・画面共有確認） :material-open-in-new:](https://bandainamcostudios.zoom.us/j/93107841408?pwd=cDV0Nkl4Q3Z1ZWRnbmJsU3QweTdRZz09){:target="_blank" .md-button .md-button--primary } 
@@ -88,27 +91,22 @@ Zoom での参加にあたって、本名表示・カメラオンは必須では
 	- Siv3D 及び Siv3D の公式チュートリアル、サンプルコードについては Siv3D プログラム内でライセンス表示されるため、何もせずそのまま利用・改変してよい。
 
 
-## 4. スライド
-[開会式スライド :material-open-in-new:](https://www.dropbox.com/scl/fi/sot6j4sgfr6wv6ck0r30k/Siv3D.pdf?rlkey=1yunws0i4lrlg7ozoomdfy2e2&dl=0){:target="_blank" .md-button } 
-[テーマ発表「すくう」 :material-open-in-new:](https://www.dropbox.com/scl/fi/yuxbtwm00b6m8ftv0tp31/.pdf?rlkey=g3oicm3b08bveakpe0ndja6fm&dl=0){:target="_blank" .md-button } 
+## 4. 参加者のためのプラットフォーム
 
-
-## 5. 参加者のためのプラットフォーム
-
-#### 5.1 情報集約ページ
+#### 4.1 情報集約ページ
 - 本ページです。イベントに関する重要事項を確認できます。
 
-#### 5.2 Siv3D Discord サーバおよび、サーバ内イベント専用チャンネル `#bnscup2023`
+#### 4.2 Siv3D Discord サーバおよび、サーバ内イベント専用チャンネル `#bnscup2023`
 - イベントや開発、Siv3D に関する質問や意見の交換などができます。
 - Siv3D Discord サーバに参加済みで、Discord ID を Connpass での参加登録フォームに記入した場合は `#bnscup2023` チャンネルに招待済みです。
 - あとから `#bnscup2023` チャンネルへの招待を希望する場合は、Siv3D Discord サーバ `#general` チャンネル記載の手順で個別に連絡をください。
 
-#### 5.3 Twitter 𝕏 ハッシュタグ
+#### 4.3 Twitter 𝕏 ハッシュタグ
 - [#bnscup2023 #Siv3D:material-open-in-new:](https://twitter.com/search?q=Siv3D%20OR%20OpenSiv3D%20OR%20%23bnscup2023&src=typed_query&f=live){:target="_blank"}
 - 開発の進捗やイベントに関するコメントを投稿できます。
 
 
-## 6. 作品紹介ページ（Scrapbox）
+## 5. 作品紹介ページ（Scrapbox）
 [作品紹介ページ（Scrapbox）:material-open-in-new:](https://scrapbox.io/bnscup2023/){:target="_blank" .md-button } 
 
 - 作品紹介ページの編集権限を、Siv3D Discord サーバの `#bnscup2023` チャンネル、または開会式前に Connpass システムから送られるメールで受け取ってください。
@@ -117,21 +115,21 @@ Zoom での参加にあたって、本名表示・カメラオンは必須では
 - 他チームの作品紹介ページに質問やコメントを書き込んでの交流も可能です。
 - 編集履歴の保存と定期的なバックアップがあります。
 
-## 7. 成果物フォーム
+## 6. 成果物フォーム
 （準備中、提出内容は下記の予定）
 
 - 作品タイトル
 - 概要（100 字以内）
 - チームメンバー（名前（HN 可）、メールアドレス、作品担当箇所）
 - 作品紹介ページ（Scraobox）の URL
+- 作品を実行するための必要最小限のファイル（.exe または .app または URL またはそれらを含む .zip）
+	- **9. 実行ファイル（作品）の提出方法** が参考になります。
+	- Visual Studio がビルド時に生成する `Intermediate` フォルダや `.rc`, `.ico` フォルダは不要です。外部ファイルを使っていない Siv3D アプリは実行ファイル単体で動作します。	
 - ソースファイル（GitHub リポジトリまたは Gist またはオンラインストレージ）
 	- **10. ソースファイルの提出方法** が参考になります。
 	- 最低限、Siv3D に関連する C++ ソースコードは含めてください。
-- 作品を実行するための必要最小限のファイル（.exe または .app または URL またはそれらを含む .zip）
-	- Visual Studio がビルド時に生成する `Intermediate` フォルダや `.rc`, `.ico` フォルダは不要です。外部ファイルを使っていない Siv3D アプリは実行ファイル単体で動作します。
 
-
-## 8. お問い合わせ / Q & A
+## 7. お問い合わせ / Q & A
 - 運営への連絡や技術的な質問は Siv3D Discord サーバーで受け付けています。
 - プライバシーに関わる場合に限り、メール（Siv3D 代表・鈴木）`reputeless@gmail.com` や Discord の DM での相談も可能です。
 
@@ -156,10 +154,14 @@ Zoom での参加にあたって、本名表示・カメラオンは必須では
 	Connpass のサービスの仕様で、イベントに参加すると、イベント主催者の「グループ」に自動的に加入する仕組みになっています。その後、イベント主催者が Connpass 上で新しいイベントを作成したときに通知が行われることがあります。通知が行われないようにするには、Connpass の「グループ」のメール通知設定を変更するか、あるいはグループから脱退してください。「お知らせを受け取らない」のアンケート項目は、Connpass のお知らせとは異なるものです。
 
 
-## 9. 開発お役立ち情報
+## 8 開発お役立ち情報
 
 - [Siv3D を学ぶ](../learn.md){:target="_blank"}
 - [ゲーム開発のヒント集](../reference/game_tips.md){:target="_blank"}
+
+
+## 9. 実行ファイル（作品）の提出方法
+（準備中）
 
 
 ## 10. ソースファイルの提出方法
