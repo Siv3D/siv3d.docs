@@ -1674,7 +1674,7 @@ void Main()
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial4/physics2d/20.png)
 
-```cpp hl_lines="21-22 47-63"
+```cpp hl_lines="21-22 47-64"
 # include <Siv3D.hpp>
 
 void Main()
@@ -1732,6 +1732,7 @@ void Main()
 			{
 				// マウスジョイントのターゲット位置を更新する
 				mouseJoint.setTargetPos(Cursor::PosF());
+				Line{ mouseJoint.getAnchorPos(), mouseJoint.getTargetPos() }.draw(LineStyle::SquareDot, 4.0, Palette::Orange);
 			}
 			else if (MouseL.up())
 			{
