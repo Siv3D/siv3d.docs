@@ -689,8 +689,6 @@ void Main()
 
 	while (System::Update())
 	{
-		ClearPrint();
-
 		for (accumulatedTime += Scene::DeltaTime(); StepTime <= accumulatedTime; accumulatedTime -= StepTime)
 		{
 			// 2D 物理演算のワールドを StepTime 秒進める
@@ -1376,11 +1374,114 @@ void Main()
 ```
 
 
-
 ## 77.19 スライダージョイント
+スライダージョイント `P2SliderJoint` は、2 つの物体のうち一方が直線上を移動できるよう接続するジョイントです。
 
-```cpp
+```cpp hl_lines="18-30 54-55 62-63 73-102"
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Window::Resize(1280, 720);
+
+	constexpr double StepTime = (1.0 / 200.0);
+
+	double accumulatedTime = 0.0;
+
+	P2World world;
+
+	Array<P2Body> grounds;
+	grounds << world.createRect(P2Static, Vec2{ -200, 0 }, SizeF{ 700, 10 });
+	grounds << world.createCircle(P2Static, Vec2{ -500, -200 }, 20);
+	grounds << world.createCircle(P2Static, Vec2{ 300, -400 }, 20);
+
+	// 右方向のスライダー
+	const P2Body wall = world.createRect(P2Dynamic, Vec2{ -500, -200 }, SizeF{ 20, 320 });
+	P2SliderJoint wallJoint = world.createSliderJoint(grounds[1], wall, Vec2{ -500, -200 }, Vec2{ 1, 0 })
+		.setLimits(20, 400).setLimitEnabled(true) // 移動可能範囲を設定する
+		.setMaxMotorForce(1000) // モーターの最大の力を設定する。これが小さいと動かせない場合がある
+		.setMotorEnabled(true); // モーターを有効にする
+
+	// 下方向のスライダー
+	const P2Body floor = world.createRect(P2Dynamic, Vec2{ 300, -400 }, SizeF{ 250, 10 });
+	P2SliderJoint floorJoint = world.createSliderJoint(grounds[2], floor, Vec2{ 300, -400 }, Vec2{ 0, 1 })
+		.setLimits(100, 410).setLimitEnabled(true) // 移動可能範囲を設定する
+		.setMaxMotorForce(1000) // モーターの最大の力を設定する。これが小さいと動かせない場合がある
+		.setMotorEnabled(true); // モーターを有効にする
+
+	Array<P2Body> bodies;
+
+	Camera2D camera{ Vec2{ 0, -300 }, 1.0 };
+
+	while (System::Update())
+	{
+		for (accumulatedTime += Scene::DeltaTime(); StepTime <= accumulatedTime; accumulatedTime -= StepTime)
+		{
+			world.update(StepTime);
+
+			bodies.remove_if([](const P2Body& body) { return (500 < body.getPos().y); });
+		}
+
+		camera.update();
+		{
+			const auto t = camera.createTransformer();
+
+			for (const auto& ground : grounds)
+			{
+				ground.draw(Palette::Gray);
+			}
+
+			wall.draw();
+			floor.draw();
+
+			for (const auto& body : bodies)
+			{
+				body.draw(HSV{ body.id() * 10.0 });
+			}
+
+			Line{ wallJoint.getAnchorPosA(), wallJoint.getAnchorPosB() }.draw(LineStyle::SquareDot, 4.0, Palette::Orange);
+			Line{ floorJoint.getAnchorPosA(), floorJoint.getAnchorPosB() }.draw(LineStyle::SquareDot, 4.0, Palette::Orange);
+		}
+
+		camera.draw(Palette::Orange);
+
+		if (SimpleGUI::Button(U"Rect", Vec2{ 40, 40 }, 120))
+		{
+			bodies << world.createRect(P2Dynamic, Vec2{ Random(-400, 200), -600 }, SizeF{ 40, 40 }, P2Material{ .density = 0.1 });
+		}
+
+		if (SimpleGUI::Button(U"Wall ←", Vec2{ 40, 80 }, 120))
+		{
+			// モーターの速さを設定する
+			wallJoint.setMotorSpeed(-100);
+		}
+
+		if (SimpleGUI::Button(U"Wall Stop", Vec2{ 40, 120 }, 120))
+		{
+			wallJoint.setMotorSpeed(0);
+		}
+
+		if (SimpleGUI::Button(U"Wall →", Vec2{ 40, 160 }, 120))
+		{
+			wallJoint.setMotorSpeed(100);
+		}
+
+		if (SimpleGUI::Button(U"Floor ↑", Vec2{ 40, 200 }, 120))
+		{
+			floorJoint.setMotorSpeed(-100);
+		}
+
+		if (SimpleGUI::Button(U"Floor Stop", Vec2{ 40, 240 }, 120))
+		{
+			floorJoint.setMotorSpeed(0);
+		}
+
+		if (SimpleGUI::Button(U"Floor ↓", Vec2{ 40, 280 }, 120))
+		{
+			floorJoint.setMotorSpeed(100);
+		}
+	}
+}
 ```
 
 
