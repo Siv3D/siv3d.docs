@@ -74,7 +74,7 @@ void Main()
 
 次のコードを実行すると、時間の経過とともに物体が落下していく様子が確認できます。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/physics2d/2.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial4/physics2d/2.png)
 
 ```cpp hl_lines="16-17 21-24"
 # include <Siv3D.hpp>
@@ -121,7 +121,7 @@ void Main()
 
 物体の状態のチェックは、次のコードのように、1 回の `world.update()` ごとに行うことが望ましいです。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/physics2d/3.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial4/physics2d/3.png)
 
 ```cpp hl_lines="23-28 35-40"
 # include <Siv3D.hpp>
@@ -177,7 +177,7 @@ void Main()
 
 次のコードを実行すると、時間の経過とともにゲームのエリア外に出た物体が削除されていく様子が確認できます。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/physics2d/4.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial4/physics2d/4.png)
 
 ```cpp hl_lines="16-20 26-29 36-37"
 # include <Siv3D.hpp>
@@ -228,7 +228,7 @@ void Main()
 
 39 章で学んだ 2D カメラと組み合わせると、ワールドを柔軟な視点（中心座標、拡大率）で描画でき便利です。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/physics2d/5.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial4/physics2d/5.png)
 
 ```cpp hl_lines="22-23 43-57"
 # include <Siv3D.hpp>
@@ -300,7 +300,7 @@ void Main()
 
 次のコードを実行すると、落下した円は、原点からの高さが -15.1 cm 前後のところで止まります。床は原点から上方向に厚みが 5 cm あり、円の半径は 10 cm なので -15 cm の位置になります。さらに、物体間にはシミュレーションを安定化させるための小さな隙間が自動的に挿入されるため、実際には -15.1 cm 前後になります。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/physics2d/6.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial4/physics2d/6.png)
 
 ```cpp hl_lines="16-17 52-53"
 # include <Siv3D.hpp>
@@ -384,7 +384,7 @@ void Main()
 | 線分 | `world.createLine(type, center, line)` |  |
 | 線分の集合 | `world.createLineString(type, center, lineString)` |  |
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/physics2d/7.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial4/physics2d/7.png)
 
 ```cpp hl_lines="16-22 29-30 37-38 47-57 63-87"
 # include <Siv3D.hpp>
@@ -494,7 +494,7 @@ void Main()
 
 次のコードでは、最後に追加された物体の部品に輪郭を描画し、その部品にマウスオーバーしている場合はカーソルを手の形に変更します。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/physics2d/8.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial4/physics2d/8.png)
 
 ```cpp hl_lines="59-123"
 # include <Siv3D.hpp>
@@ -665,7 +665,7 @@ void Main()
 | `friction` | 部品の摩擦係数です。大きいほど摩擦が働きます。通常は [0.0, 1.0] の範囲です。 | `0.2` |
 | `restitutionThreshold` | 反発が発生する速度の下限 (m/s) です。部品がこれ以上の速さでぶつかると反発します。 | `1.0` |
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/physics2d/9.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial4/physics2d/9.png)
 
 ```cpp hl_lines="22-31"
 # include <Siv3D.hpp>
@@ -749,7 +749,7 @@ void Main()
 | `.setAngle(angle)` | 物体の回転角度 (rad) を設定します。 |
 | `.setAngularVelocity(angularVelocity)` | 物体の角速度 (rad/s) を設定します。 |
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/physics2d/10.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial4/physics2d/10.png)
 
 ```cpp hl_lines="53-81"
 # include <Siv3D.hpp>
@@ -841,7 +841,7 @@ void Main()
 ## 77.11 物体に力を与える
 `P2Body` に対して、`.applyForce(v)` でベクトル `v` の力を与えることができます。力は時間の経過とともに徐々に作用して物体の速度を変化させます。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/physics2d/11.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial4/physics2d/11.png)
 
 ```cpp hl_lines="27-45"
 # include <Siv3D.hpp>
@@ -912,7 +912,7 @@ void Main()
 ## 77.12 物体に衝撃を加える
 `P2Body` に対して、`.applyLinearImpulse(v)` でベクトル `v` の衝撃を与えることができます。衝撃は物体の速度を即座に変化させます。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/physics2d/12.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial4/physics2d/12.png)
 
 ```cpp hl_lines="38-51"
 # include <Siv3D.hpp>
@@ -978,7 +978,7 @@ void Main()
 
 次のコードは、スリープ状態の物体を淡色で表示します。また、スリープした物体を積み重ねたタワーが安定していることを確認できます。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/physics2d/13.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial4/physics2d/13.png)
 
 ```cpp hl_lines="15-28 47-58"
 # include <Siv3D.hpp>
@@ -1050,7 +1050,7 @@ void Main()
 ## 77.14 重力の設定
 `P2World` の `.setGravity(v)` で重力を設定できます。スリープ中の物体は重力の変更に気付かないため、重力を変更した場合はすべての物体を起こす必要があります。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/physics2d/14.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial4/physics2d/14.png)
 
 ```cpp hl_lines="3-10 55-77"
 # include <Siv3D.hpp>
@@ -1144,7 +1144,7 @@ void Main()
 
 次のコードでは、地面と接触している物体を白く描画しています。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/physics2d/15.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial4/physics2d/15.png)
 
 ```cpp hl_lines="15-16 24-25 33-45 56-67"
 # include <Siv3D.hpp>
@@ -1230,7 +1230,7 @@ void Main()
 ## 77.16 ピボットジョイント
 ピボットジョイント `P2PivotJoint` は、2 つの物体を 1 箇所の回転軸（アンカー）で接続するジョイントです。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/physics2d/16.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial4/physics2d/16.png)
 
 ```cpp hl_lines="18-31 55-56 71-76"
 # include <Siv3D.hpp>
@@ -1320,7 +1320,7 @@ void Main()
 
 次のコードでは、左の振り子は空中の天井からの距離を 200 cm に保ち、右の振り子は空中の天井からの距離を 180～220 cm の範囲に保ちます。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/physics2d/17.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial4/physics2d/17.png)
 
 ```cpp hl_lines="18-25 49-53 68-78"
 # include <Siv3D.hpp>
@@ -1409,7 +1409,7 @@ void Main()
 ## 77.18 スライダージョイント
 スライダージョイント `P2SliderJoint` は、2 つの物体のうち一方が直線上を移動できるよう接続するジョイントです。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/physics2d/18.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial4/physics2d/18.png)
 
 ```cpp hl_lines="18-30 54-55 62-63 73-102"
 # include <Siv3D.hpp>
@@ -1523,7 +1523,7 @@ void Main()
 ## 77.19 ホイールジョイント
 ホイールジョイント `P2WheelJoint` は、車の車輪のように、2 つの物体を 1 箇所の回転軸で接続するジョイントです。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/physics2d/19.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial4/physics2d/19.png)
 
 ```cpp hl_lines="3-42 64 72 86-89 99-102 109-132"
 # include <Siv3D.hpp>
@@ -1672,7 +1672,7 @@ void Main()
 ## 77.20 マウスジョイント
 マウスジョイント `P2MouseJoint` は、マウスの位置をターゲット位置として、物体を移動させるためのジョイントです。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/physics2d/20.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial4/physics2d/20.png)
 
 ```cpp hl_lines="21-22 47-63"
 # include <Siv3D.hpp>
