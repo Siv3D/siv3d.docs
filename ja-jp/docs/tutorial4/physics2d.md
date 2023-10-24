@@ -1691,7 +1691,7 @@ void Main()
 	grounds << world.createRect(P2Static, Vec2{ 0, 0 }, SizeF{ 800, 10 });
 
 	const P2Body box = world.createPolygon(P2Dynamic, Vec2{ 0, -200 },
-		LineString{ Vec2{ -100, 0 }, Vec2{ -100, 100 }, Vec2{ 100, 100 }, { Vec2{ 100, 0 }} }.calculateBuffer(2.5));
+		LineString{ Vec2{ -100, 0 }, Vec2{ -100, 100 }, Vec2{ 100, 100 }, { Vec2{ 100, 0 }} }.calculateBuffer(4));
 
 	Array<P2Body> bodies;
 
