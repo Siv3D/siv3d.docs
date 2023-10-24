@@ -725,15 +725,15 @@
 					box.applyForce(Vec2{ 60000, 0 } * StepTime);
 				}
 
-				// [↑] キーが押されていたら
-				if (KeyUp.down())
-				{
-					// ボディに上向きの力を加える
-					box.applyLinearImpulse(Vec2{ 0, -80 });
-				}
-
 				// 2D 物理演算のワールドを更新する
 				world.update(StepTime);
+			}
+
+			// [↑] キーが押されていたら
+			if (KeyUp.down())
+			{
+				// ボディに上向きの力を加える
+				box.applyLinearImpulse(Vec2{ 0, -300 });
 			}
 
 			// 2D カメラを更新する

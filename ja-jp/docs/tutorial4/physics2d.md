@@ -1202,17 +1202,177 @@ void Main()
 
 
 ## 77.17 ピボットジョイント
+ピボットジョイント `P2PivotJoint` は、2 つの物体を 1 箇所の回転軸（アンカー）で接続するジョイントです。
 
-```cpp
+```cpp hl_lines="18-31 55-56 71-76"
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Window::Resize(1280, 720);
+
+	constexpr double StepTime = (1.0 / 200.0);
+
+	double accumulatedTime = 0.0;
+
+	P2World world;
+
+	Array<P2Body> grounds;
+	grounds << world.createRect(P2Static, Vec2{ 0, 0 }, SizeF{ 1000, 10 });
+	grounds << world.createRect(P2Static, Vec2{ 200, -150 }, SizeF{ 100, 20 });
+	grounds << world.createRect(P2Static, Vec2{ -300, -550 }, SizeF{ 40, 40 });
+
+	// フリッパー
+	const Vec2 flipperAnchor = Vec2{ 150, -150 };
+	P2Body flipper = world.createRect(P2Dynamic, flipperAnchor, RectF{ -100, -5, 100, 10 });
+	// flipper と grounds[1] を接続するピボットジョイントを作成する
+	const P2PivotJoint flipperJoint = world.createPivotJoint(grounds[1], flipper, flipperAnchor)
+		.setLimits(-10_deg, 30_deg) // 回転の制限角度を設定する
+		.setLimitsEnabled(true); // 回転の制限を有効にする
+
+	// 振り子
+	const Vec2 pendulumAnchor = Vec2{ -300, -550 };
+	const P2Body pendulum = world.createRect(P2Dynamic, pendulumAnchor, RectF{ -5, 0, 10, 200 })
+		.setAngularDamping(0.2); // 回転を減衰させるパラメータ
+	// pendulum と grounds[2] を接続するピボットジョイントを作成する
+	const P2PivotJoint pendulumJoint = world.createPivotJoint(grounds[2], pendulum, pendulumAnchor);
+
+	Array<P2Body> bodies;
+
+	Camera2D camera{ Vec2{ 0, -300 }, 1.0 };
+
+	while (System::Update())
+	{
+		for (accumulatedTime += Scene::DeltaTime(); StepTime <= accumulatedTime; accumulatedTime -= StepTime)
+		{
+			world.update(StepTime);
+
+			bodies.remove_if([](const P2Body& body) { return (500 < body.getPos().y); });
+		}
+
+		camera.update();
+		{
+			const auto t = camera.createTransformer();
+
+			for (const auto& ground : grounds)
+			{
+				ground.draw(Palette::Gray);
+			}
+
+			flipper.draw();
+			pendulum.draw();
+
+			for (const auto& body : bodies)
+			{
+				body.draw(HSV{ body.id() * 10.0 });
+			}
+		}
+
+		camera.draw(Palette::Orange);
+
+		if (SimpleGUI::Button(U"Rect", Vec2{ 40, 40 }, 100))
+		{
+			bodies << world.createRect(P2Dynamic, Vec2{ Random(20, 100), -600 }, SizeF{ 60, 40 }, P2Material{ .density = 0.1 });
+		}
+
+		// フリッパーの操作
+		if (SimpleGUI::Button(U"Flipper", Vec2{ 40, 80 }, 100))
+		{
+			// フリッパーに回転の衝撃を与える
+			flipper.applyAngularImpulse(5000);
+		}
+	}
+}
 ```
 
 
 
 ## 77.18 距離ジョイント
+距離ジョイント `P2DistanceJoint` は、2 つの物体のアンカーを一定の距離、あるいは一定の距離の範囲に保つジョイントです。
 
-```cpp
+次のコードでは、左の振り子は空中の天井からの距離を 200 cm に保ち、右の振り子は空中の天井からの距離を 180～220 cm の範囲に保ちます。
 
+```cpp hl_lines="18-25 49-53 68-78"
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Window::Resize(1280, 720);
+
+	constexpr double StepTime = (1.0 / 200.0);
+
+	double accumulatedTime = 0.0;
+
+	P2World world;
+
+	Array<P2Body> grounds;
+	grounds << world.createRect(P2Static, Vec2{ 0, 0 }, SizeF{ 1000, 10 });
+	grounds << world.createRect(P2Static, Vec2{ -300, -300 }, SizeF{ 40, 40 });
+	grounds << world.createRect(P2Static, Vec2{ 300, -300 }, SizeF{ 40, 40 });
+
+	// 左の振り子
+	P2Body leftBall = world.createCircle(P2Dynamic, Vec2{ -300, -100 }, 20);
+	const P2DistanceJoint leftJoint = world.createDistanceJoint(grounds[1], Vec2{ -300, -300 }, leftBall, Vec2{ -300, -100 }, 200);
+
+	// 右の振り子
+	P2Body rightBall = world.createCircle(P2Dynamic, Vec2{ 300, -100 }, 20);
+	const P2DistanceJoint rightJoint = world.createDistanceJoint(grounds[2], Vec2{ 300, -300 }, rightBall, Vec2{ 300, -100 }, 200)
+		.setMinLength(180).setMaxLength(220); // 180～220 の距離を設定する
+
+	Array<P2Body> bodies;
+
+	Camera2D camera{ Vec2{ 0, -300 }, 1.0 };
+
+	while (System::Update())
+	{
+		for (accumulatedTime += Scene::DeltaTime(); StepTime <= accumulatedTime; accumulatedTime -= StepTime)
+		{
+			world.update(StepTime);
+
+			bodies.remove_if([](const P2Body& body) { return (500 < body.getPos().y); });
+		}
+
+		camera.update();
+		{
+			const auto t = camera.createTransformer();
+
+			for (const auto& ground : grounds)
+			{
+				ground.draw(Palette::Gray);
+			}
+
+			leftBall.draw();
+			rightBall.draw();
+
+			Line{ leftJoint.getAnchorPosA(), leftJoint.getAnchorPosB() }.draw(LineStyle::SquareDot, 4.0, Palette::Orange);
+			Line{ rightJoint.getAnchorPosA(), rightJoint.getAnchorPosB() }.draw(LineStyle::SquareDot, 4.0, Palette::Orange);
+
+			for (const auto& body : bodies)
+			{
+				body.draw(HSV{ body.id() * 10.0 });
+			}
+		}
+
+		camera.draw(Palette::Orange);
+
+		if (SimpleGUI::Button(U"Rect", Vec2{ 40, 40 }, 100))
+		{
+			bodies << world.createRect(P2Dynamic, Vec2{ Random(-200, 200), -600 }, SizeF{ 40, 40 }, P2Material{ .density = 0.1 });
+		}
+
+		if (SimpleGUI::Button(U"Left", Vec2{ 40, 80 }, 100))
+		{
+			// 左の振り子に右方向への衝撃を与える
+			leftBall.applyLinearImpulse(Vec2{ 100, 0 });
+		}
+
+		if (SimpleGUI::Button(U"Right", Vec2{ 40, 120 }, 100))
+		{
+			// 右の振り子に左方向への衝撃を与える
+			rightBall.applyLinearImpulse(Vec2{ -100, 0 });
+		}
+	}
+}
 ```
 
 
