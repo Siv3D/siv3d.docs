@@ -1764,7 +1764,154 @@ void Main()
 ```
 
 
-## 77.21 干渉フィルタ
+## 77.21 物体とテクスチャの連動
+物理演算の結果をテクスチャを使って表現するには、いくつかの方法があります。
+
+- `P2Body` をそのままテクスチャに置き換える
+- テクスチャから `Polygon` あるいは `MultiPolygon` を作成し、`P2Body` として追加する
+- `Buffer2D` を作成し、`P2Body` の状態を `Transformer2D` に反映させて描画する
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial4/physics2d/21.png)
+
+```cpp hl_lines="8-18 28-30 39 47-60 93-121 126"
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Window::Resize(1280, 720);
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	// パターン 1: 円を絵文字で置き換える
+	const Texture appleTexture{ U"🍎"_emoji };
+
+	// パターン 2: 絵文字から作成した多角形を使う
+	const Texture penguinTexture{ U"🐧"_emoji };
+	const Texture woodTexture{ U"example/texture/wood.jpg", TextureDesc::Mipped };
+	const MultiPolygon penguinPolygon = Emoji::CreateImage(U"🐧").alphaToPolygonsCentered().simplified(2.0);
+
+	// パターン 3: Buffer2D を使う
+	const Polygon boxPolygon = LineString{ Vec2{ -100, 0 }, Vec2{ -100, 100 }, Vec2{ 100, 100 }, { Vec2{ 100, 0 }} }.calculateBuffer(8);
+	const Buffer2D boxObject = boxPolygon.toBuffer2D(Arg::center(0, 50), SizeF{ 200, 200 });
+
+	constexpr double StepTime = (1.0 / 200.0);
+	double accumulatedTime = 0.0;
+
+	P2World world;
+
+	Array<P2Body> grounds;
+	grounds << world.createRect(P2Static, Vec2{ 0, 0 }, SizeF{ 800, 10 });
+
+	Array<P2Body> apples;
+	Array<P2Body> penguins;
+	const P2Body box = world.createPolygon(P2Dynamic, Vec2{ 0, -200 }, boxPolygon);
+
+	// マウスジョイント
+	P2MouseJoint mouseJoint;
+
+	Camera2D camera{ Vec2{ 0, -300 }, 1.0 };
+
+	int32 stepCount = 0;
+
+	bool showBodyOutline = true;
+
+	while (System::Update())
+	{
+		for (accumulatedTime += Scene::DeltaTime(); StepTime <= accumulatedTime; accumulatedTime -= StepTime)
+		{
+			world.update(StepTime);
+
+			apples.remove_if([](const P2Body& apple) { return (500 < apple.getPos().y); });
+			penguins.remove_if([](const P2Body& penguin) { return (500 < penguin.getPos().y); });
+
+			// 一定間隔で円を追加する
+			if (stepCount % 200 == 0)
+			{
+				apples << world.createCircle(P2Dynamic, Vec2{ Random(-300, -100), -600 }, 30, P2Material{ .density = 0.1 });
+			}
+
+			// 一定間隔でペンギンを追加する
+			if (stepCount % 200 == 100)
+			{
+				penguins << world.createPolygons(P2Dynamic, Vec2{ Random(100, 300), -600 }, penguinPolygon, P2Material{ .density = 0.1 });
+			}
+
+			++stepCount;
+		}
+
+		camera.update();
+		{
+			const auto t = camera.createTransformer();
+
+			if (MouseL.down())
+			{
+				// マウスジョイントを作成する
+				mouseJoint = world.createMouseJoint(box, Cursor::PosF())
+					.setMaxForce(box.getMass() * 5000.0)
+					.setLinearStiffness(2.0, 0.8);
+			}
+			else if (MouseL.pressed())
+			{
+				// マウスジョイントのターゲット位置を更新する
+				mouseJoint.setTargetPos(Cursor::PosF());
+				Line{ mouseJoint.getAnchorPos(), mouseJoint.getTargetPos() }.draw(LineStyle::SquareDot, 4.0, Palette::Orange);
+			}
+			else if (MouseL.up())
+			{
+				// マウスジョイントを破棄する
+				mouseJoint.release();
+			}
+
+			for (const auto& ground : grounds)
+			{
+				ground.draw(Palette::Gray);
+			}
+
+			{
+				if (showBodyOutline)
+				{
+					box.drawFrame(2.0);
+				}
+
+				const Transformer2D t{ Mat3x2::Rotate(box.getAngle()).translated(box.getPos()) };
+				boxObject.draw(woodTexture);
+			}
+
+			for (const auto& apple : apples)
+			{
+				appleTexture.resized(68).rotated(apple.getAngle()).drawAt(apple.getPos());
+
+				if (showBodyOutline)
+				{
+					apple.drawFrame(2.0);
+				}
+			}
+
+			for (const auto& penguin : penguins)
+			{
+				penguinTexture.rotated(penguin.getAngle()).drawAt(penguin.getPos());
+
+				if (showBodyOutline)
+				{
+					penguin.drawFrame(2.0);
+				}
+			}
+		}
+
+		camera.draw(Palette::Orange);
+
+		SimpleGUI::CheckBox(showBodyOutline, U"show outline", Vec2{ 40, 40 });
+
+		if (SimpleGUI::Button(U"Reset", Vec2{ 40, 80 }))
+		{
+			apples.clear();
+			penguins.clear();
+		}
+	}
+}
+```
+
+
+## 77.22 干渉フィルタ
 
 
 ```cpp
@@ -1772,7 +1919,7 @@ void Main()
 ```
 
 
-## 77.22 衝突の強さの取得
+## 77.23 衝突の強さの取得
 
 
 ```cpp
