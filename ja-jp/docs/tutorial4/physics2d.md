@@ -1912,21 +1912,21 @@ void Main()
 
 
 ## 77.22 干渉フィルタ
-部品は干渉フィルタ `P2Filter` を持ちます。自身のカテゴリビットフラグを指定し、特定のビットフラグを持つ他の部品と干渉しないようにできます。
+部品は干渉フィルタ `P2Filter` を持ちます。自身が所属するカテゴリービットフラグを指定し、特定のビットフラグを持つ他の部品と干渉しないようにできます。
 
 部品 A, B があるとき、`((A.maskBits & B.categoryBits) != 0) && ((B.maskBits & A.categoryBits) != 0)` のときのみ干渉が発生します。デフォルトでは、部品は `categoryBits = 0x0001`、`maskBits = 0xFFFF` となっており、すべての部品が互いに干渉します。
 
-`groupIndex` による発展的な干渉フィルタもありますが、ここでは説明しません。
+`groupIndex` による追加の干渉制御もありますが、サンプルコード内では扱っていません。
 
 | メンバ変数 | 説明 |
 |---|---|
 | `uint16 categoryBits` | 自身が所属するカテゴリーを表すビットフラグ |
 | `uint16 maskBits` | 物理的に干渉する相手のカテゴリーを表すビットフラグ |
-| `int16 groupIndex` | 2 つの部品のうちいずれかの `groupIndex` が 0 の場合、`categoryBits` と `maskBits` によって干渉の有無が決まる。<br>2 つの部品の両方の `groupIndex` が 非 0 で、互いに異なる場合、`categoryBits` と `maskBits` によって干渉の有無が決まる。<br>2 つの部品の `groupIndex` が 1 以上で、互いに等しい場合、必ず干渉する。<br>2 つの部品の `groupIndex` が -1 以下で、互いに等しい場合、必ず干渉しない。 |
+| `int16 groupIndex` | 2 つの部品のうちいずれかの `groupIndex` が `0` の場合、`categoryBits` と `maskBits` によって干渉の有無が決まる。<br>2 つの部品の両方の `groupIndex` が 非 `0` で、互いに異なる場合、`categoryBits` と `maskBits` によって干渉の有無が決まる。<br>2 つの部品の `groupIndex` が `1` 以上で、互いに等しい場合、必ず干渉する。<br>2 つの部品の `groupIndex` が `-1` 以下で、互いに等しい場合、必ず干渉しない。 |
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial4/physics2d/22.png)
 
-```cpp
+```cpp hl_lines="12-19 25-27 48-49 61 66"
 # include <Siv3D.hpp>
 
 void Main()
@@ -1957,9 +1957,6 @@ void Main()
 
 	Array<P2Body> bodies;
 
-	// マウスジョイント
-	P2MouseJoint mouseJoint;
-
 	Camera2D camera{ Vec2{ 0, -300 }, 1.0 };
 
 	while (System::Update())
@@ -1978,7 +1975,6 @@ void Main()
 			for (const auto& body : bodies)
 			{
 				const bool isTeam1 = (body.shape(0).getFilter().categoryBits == Team1Filter.categoryBits);
-
 				body.draw(isTeam1 ? Team1Color : Team2Color);
 			}
 
