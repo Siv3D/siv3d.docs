@@ -1912,10 +1912,99 @@ void Main()
 
 
 ## 77.22 干渉フィルタ
+部品は干渉フィルタ `P2Filter` を持ちます。自身のカテゴリビットフラグを指定し、特定のビットフラグを持つ他の部品と干渉しないようにできます。
 
+部品 A, B があるとき、`((A.maskBits & B.categoryBits) != 0) && ((B.maskBits & A.categoryBits) != 0)` のときのみ干渉が発生します。デフォルトでは、部品は `categoryBits = 0x0001`、`maskBits = 0xFFFF` となっており、すべての部品が互いに干渉します。
+
+`groupIndex` による発展的な干渉フィルタもありますが、ここでは説明しません。
+
+| メンバ変数 | 説明 |
+|---|---|
+| `uint16 categoryBits` | 自身が所属するカテゴリーを表すビットフラグ |
+| `uint16 maskBits` | 物理的に干渉する相手のカテゴリーを表すビットフラグ |
+| `int16 groupIndex` | 2 つの部品のうちいずれかの `groupIndex` が 0 の場合、`categoryBits` と `maskBits` によって干渉の有無が決まる。<br>2 つの部品の両方の `groupIndex` が 非 0 で、互いに異なる場合、`categoryBits` と `maskBits` によって干渉の有無が決まる。<br>2 つの部品の `groupIndex` が 1 以上で、互いに等しい場合、必ず干渉する。<br>2 つの部品の `groupIndex` が -1 以下で、互いに等しい場合、必ず干渉しない。 |
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial4/physics2d/22.png)
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Window::Resize(1280, 720);
+
+	constexpr double StepTime = (1.0 / 200.0);
+	double accumulatedTime = 0.0;
+
+	P2World world;
+
+	// デフォルトの干渉フィルタ
+	constexpr P2Filter WallFilter{ .categoryBits = 0b0000'0000'0000'0001, .maskBits = 0b1111'1111'1111'1111 };
+
+	// チーム 1 の干渉フィルタ（チーム 1 どうしは干渉しない）
+	constexpr P2Filter Team1Filter{ .categoryBits = 0b0000'0000'0000'0010, .maskBits = 0b0000'0000'0000'0101 };
+
+	// チーム 2 の干渉フィルタ（チーム 2 どうしは干渉しない）
+	constexpr P2Filter Team2Filter{ .categoryBits = 0b0000'0000'0000'0100, .maskBits = 0b0000'0000'0000'0011 };
+
+	constexpr ColorF Team1Color{ 0.4, 1.0, 0.2 };
+	constexpr ColorF Team2Color{ 0.4, 0.2, 1.0 };
+
+	Array<P2Body> grounds;
+	grounds << world.createRect(P2Static, Vec2{ 0, 0 }, SizeF{ 800, 10 });
+	grounds << world.createRect(P2Static, Vec2{ -200, -200 }, SizeF{ 300, 10 }, {}, Team1Filter);
+	grounds << world.createRect(P2Static, Vec2{ 200, -200 }, SizeF{ 300, 10 }, {}, Team2Filter);
+
+	Array<P2Body> bodies;
+
+	// マウスジョイント
+	P2MouseJoint mouseJoint;
+
+	Camera2D camera{ Vec2{ 0, -300 }, 1.0 };
+
+	while (System::Update())
+	{
+		for (accumulatedTime += Scene::DeltaTime(); StepTime <= accumulatedTime; accumulatedTime -= StepTime)
+		{
+			world.update(StepTime);
+
+			bodies.remove_if([](const P2Body& body) { return (500 < body.getPos().y); });
+		}
+
+		camera.update();
+		{
+			const auto t = camera.createTransformer();
+
+			for (const auto& body : bodies)
+			{
+				const bool isTeam1 = (body.shape(0).getFilter().categoryBits == Team1Filter.categoryBits);
+
+				body.draw(isTeam1 ? Team1Color : Team2Color);
+			}
+
+			grounds[0].draw(Palette::Gray);
+			grounds[1].draw(ColorF{ Team1Color, 0.75 });
+			grounds[2].draw(ColorF{ Team2Color, 0.75 });
+		}
+
+		camera.draw(Palette::Orange);
+
+		if (SimpleGUI::Button(U"Team 1", Vec2{ 40, 40 }, 120))
+		{
+			bodies << world.createRect(P2Dynamic, Vec2{ Random(-400, 400), -600 }, SizeF{ 40, 40 }, P2Material{ .density = 0.1 }, Team1Filter);
+		}
+
+		if (SimpleGUI::Button(U"Team 2", Vec2{ 40, 80 }, 120))
+		{
+			bodies << world.createRect(P2Dynamic, Vec2{ Random(-400, 400), -600 }, SizeF{ 40, 20 }, P2Material{ .density = 0.1 }, Team2Filter);
+		}
+
+		if (SimpleGUI::Button(U"Reset", Vec2{ 40, 120 }, 120))
+		{
+			bodies.clear();
+		}
+	}
+}
 ```
 
 
