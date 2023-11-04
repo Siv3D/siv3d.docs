@@ -14,9 +14,6 @@ Zoom での参加にあたって、本名表示・カメラオンは必須では
 ### 2.1 開会式 2023 年 10 月 21 日（土）14:00-14:30（13:30 Zoom 開場）
 - イベントに関する説明とテーマの発表を行います。
 
-[開会式に Zoom で参加する :material-open-in-new:](){:target="_blank" .md-button .md-button--primary } 
-（開会式は終了しました）
-
 [開会式スライド :material-open-in-new:](https://www.dropbox.com/scl/fi/sot6j4sgfr6wv6ck0r30k/Siv3D.pdf?rlkey=1yunws0i4lrlg7ozoomdfy2e2&dl=0){:target="_blank" .md-button } 
 [テーマ発表スライド :material-open-in-new:](https://www.dropbox.com/scl/fi/yuxbtwm00b6m8ftv0tp31/.pdf?rlkey=g3oicm3b08bveakpe0ndja6fm&dl=0){:target="_blank" .md-button } 
 
@@ -24,15 +21,12 @@ Zoom での参加にあたって、本名表示・カメラオンは必須では
 - 司会者が画面共有をして各チームの作品紹介ページを訪れ、1 分ほどコメントや質問をします。担当者はマイクで応答してください。プレゼンテーションの用意は不要です。
 - 中間発表までに、Scrapbox に作品紹介ページを作成しておいてください。
 
-[中間発表に Zoom で参加する（マイク確認） :material-open-in-new:](){:target="_blank" .md-button .md-button--primary } 
-（中間発表は終了しました）
-
 [中間発表スライド :material-open-in-new:](https://www.dropbox.com/scl/fi/cdzwwicuri4wn41e97dga/Siv3D.pdf?rlkey=ywsgxb18jqo9qv5qocoubt3ua&dl=0){:target="_blank" .md-button } 
 
 ### 2.3 作品発表 2023 年 11 月 5 日（日）14:00-16:00（13:30 Zoom 開場）
 - 各チームの代表が順番に画面を共有し、チームや作品、開発について最大 90 秒トークします。スライドを用意すると良いでしょう。
 - 詳細な情報やプレイ動画は作品紹介ページから閲覧できるため、要点やアピールポイントを伝えることに集中してください。質疑応答はありません。
-- 作品発表までに、Scrapbox の作品紹介ページを完成させてください。また、成果物フォームから作品登録を行ってください。
+- 作品発表までに、Scrapbox の作品紹介ページを完成させてください。また、[作品登録フォーム](#6-最終日-作品登録フォーム)から作品登録を行ってください。
 - 未完成の場合でも、そこまでの進捗と、今後の展望を発表してください。
 
 [作品発表に Zoom で参加する（マイク・画面共有確認） :material-open-in-new:](https://bandainamcostudios.zoom.us/j/93107841408?pwd=cDV0Nkl4Q3Z1ZWRnbmJsU3QweTdRZz09){:target="_blank" .md-button .md-button--primary } 
@@ -118,18 +112,11 @@ Zoom での参加にあたって、本名表示・カメラオンは必須では
 - 他チームの作品紹介ページに質問やコメントを書き込んでの交流も可能です。
 - 編集履歴の保存と定期的なバックアップがあります。
 
-## 6. 成果物フォーム
-（準備中、提出内容は下記の予定）
+## 6. 最終日 作品登録フォーム
+11 月 5 日（日）13:55 までの提出にご協力ください。
 
-- 作品タイトル
-- 概要（100 字以内）
-- チームメンバー（名前（HN 可）、メールアドレス、作品担当箇所）
-- 作品を実行するための必要最小限のファイル（.exe または .app または URL またはそれらを含む .zip）
-	- **9. 実行ファイル（作品）の提出方法** が参考になります。
-	- Visual Studio がビルド時に生成する `Intermediate` フォルダや `.rc`, `.ico` フォルダは不要です。外部ファイルを使っていない Siv3D アプリは実行ファイル単体で動作します。	
-- ソースファイル（GitHub リポジトリまたは Gist またはオンラインストレージ）
-	- **10. ソースファイルの提出方法** が参考になります。
-	- 最低限、Siv3D に関連する C++ ソースコードは含めてください。
+[最終日 作品登録フォーム :material-open-in-new:](https://forms.gle/JgpkrJ7X28iPi41a7){:target="_blank" .md-button } 
+
 
 ## 7. お問い合わせ / Q & A
 - 運営への連絡や技術的な質問は Siv3D Discord サーバーで受け付けています。
@@ -168,7 +155,93 @@ Zoom での参加にあたって、本名表示・カメラオンは必須では
 
 
 ## 9. 実行ファイル（作品）の提出方法
-（準備中）
+Siv3D における実行ファイル作成の一般的な情報は、[Zenn Siv3D チュートリアル 41 | アプリの公開 :material-open-in-new:](https://zenn.dev/reputeless/books/siv3d-documentation/viewer/tutorial-release){:target="_blank"} にて解説しています。本節ではゲームジャム参加者向けに、基本的な内容をまとめました。
+
+### 9.1 実行ファイルの作成
+Siv3D をビルドするたび、`App` フォルダに実行ファイル（`プロジェクト名.exe`）が出力されます。プログラム内で外部ファイル（`example/windmill.png`, `タイトル画像.png`, `MyBGM.mp3` など）を明示的に読み込んでいなければ、その実行ファイル単体を提出するだけで作品が動作します。外部ファイルを読み込んでいる場合は、実行ファイルと、それらの外部ファイル一式を提出することになります。
+
+Siv3D 標準の絵文字、アイコン、標準フォント（ファイルパスを指定しないフォント）に関しては、自動的に実行ファイル内に埋め込まれるためファイルの同梱は不要です。例外として、Windows で `GlobalAudio::BusSetPitchShiftFilter()` をコードに書いた場合は、`dll` フォルダを同梱してください。また `example` フォルダの中身は埋め込まれません。
+
+実行ファイルは Debug ビルドと Release ビルドの 2 つの方法でビルドできます。Debug ビルドはデバッグ用の余分な情報や、遅いコードが生成されるため、ゲームのフレームレートが低下しやすいです。必ず Release ビルドした実行ファイルを提出してください。Debug ビルドのプログラムは、ウィンドウタイトルに `Debug Build` と表示されます。
+
+
+### 9.2 外部ファイルの配置
+プログラム内で外部ファイルを読み込んでいる場合、実行ファイルから見た相対的な位置にファイルを配置して同梱してください。実行ファイルが `game.exe` である場合の最終的な提出内容のディレクトリ構造の例を示します。
+
+#### 例 1
+
+```cpp
+void Main()
+{
+	// 外部ファイルの読み込みなし
+}
+```
+```txt
+my_game/
+└── game.exe
+```
+
+#### 例 2
+
+```cpp
+void Main()
+{
+	Texture texture{ U"example/windmill.png" };
+}
+```
+```txt
+my_game/
+├── game.exe
+└── example/
+    └── windmill.png
+```
+
+#### 例 3
+```cpp
+void Main()
+{
+	Texture texture{ U"asset/title.png" };
+	Audio audio{ U"asset/bgm.mp3" };
+}
+```
+```txt
+my_game/
+├── game.exe
+└── asset/
+    ├── title.png
+    └── bgm.mp3
+```
+
+#### 例 4
+```cpp
+void Main()
+{
+	INI texture{ U"config.ini" };
+	JSON json = JSON::Load(U"save.json");
+}
+```
+```txt
+my_game/
+├── game.exe
+├── config.ini
+└── save.json
+```
+
+### 9.3 ファイルの埋め込み（Siv3D に慣れている人向け）
+作品で使用する画像や音声ファイルを実行ファイルに埋め込むことができます。詳しくは [チュートリアル 30 | リソースファイルの埋め込み :material-open-in-new:](https://zenn.dev/reputeless/books/siv3d-documentation/viewer/tutorial-resource){:target="_blank"} を確認してください。
+
+
+### 9.4 実行ファイルのサイズを削減する（Siv3D に慣れている人向け）
+実行ファイルのサイズは、使っていない Siv3D 機能のファイルの埋め込みを削除することで減らすことができます。詳しくは [Zenn Siv3D チュートリアル 41 | アプリの公開 :material-open-in-new:](https://zenn.dev/reputeless/books/siv3d-documentation/viewer/tutorial-release){:target="_blank"} の 41.10 を確認してください。この際、必要なファイルを誤って削除してしまうと、プログラムが正常に動作しなかったり、フォントが表示されなかったりするため、注意が必要です。
+
+Web 版に関しては、これとは別のファイルサイズ削減方法があります。[Web 版の利用ガイド](../download/web.md) を確認するか、Siv3D Discord サーバでご相談ください。
+
+
+### 9.5 ファイル一式の提出
+ゲームの実行に必要なファイル一式を圧縮した 1 つの ZIP ファイルを提出してください。作品登録フォームにおける提出方法は 2 通りあります。
+
+1. ZIP ファイルを Google ドライブや Dropbox 等のオンラインストレージに公開設定でアップロードし、ダウンロード URL を提出する。
+2. フォームから ZIP ファイルを直接アップロードする。
 
 
 ## 10. ソースファイルの提出方法
@@ -260,3 +333,7 @@ App フォルダ内に画像や音声、テキストなどの外部ファイル�
 
 #### E. より複雑な場合（GitHub リポジトリで公開）
 より複雑な場合は、可能な範囲ソースファイル・関連ファイルを GitHub リポジトリで公開してください。必要に応じて、[Siv3D プロジェクト用の .gitignore ファイル](../tools/gitignore.md) も活用してください。
+
+
+#### F. 直接アップロード
+GitHub アカウントを持っていない場合や、上記の方法がわからない場合は、ソースコード一式を ZIP ファイルにまとめたファイルを直接アップロードできます。
