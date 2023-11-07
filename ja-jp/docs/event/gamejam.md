@@ -29,10 +29,12 @@ Zoom での参加にあたって、本名表示・カメラオンは必須では
 - 作品発表までに、Scrapbox の作品紹介ページを完成させてください。また、[作品登録フォーム](#6-最終日-作品登録フォーム)から作品登録を行ってください。
 - 未完成の場合でも、そこまでの進捗と、今後の展望を発表してください。
 
-[作品発表に Zoom で参加する（マイク・画面共有確認） :material-open-in-new:](https://bandainamcostudios.zoom.us/j/93107841408?pwd=cDV0Nkl4Q3Z1ZWRnbmJsU3QweTdRZz09){:target="_blank" .md-button .md-button--primary } 
+[作品紹介ページ（Scrapbox）:material-open-in-new:](https://scrapbox.io/bnscup2023/){:target="_blank" .md-button } 
+
+[全体連絡スライド :material-open-in-new:](https://www.dropbox.com/scl/fi/vjessh9tv94i6poeihej3/Siv3D.pdf?rlkey=y3v6dold675pfz3a2c6v8iili&dl=0){:target="_blank" .md-button } 
 
 ### 2.4 コメントシート・賞品送付
-11 月以降順次、コメントシートおよび、対象者に賞品が送付されます。
+11 月後半に審査会を開催します。以降順次、コメントシートおよび、対象者に賞品が送付されます。
 
 
 ## 3. ルール
@@ -114,8 +116,6 @@ Zoom での参加にあたって、本名表示・カメラオンは必須では
 
 ## 6. 最終日 作品登録フォーム
 11 月 5 日（日）13:55 までの提出にご協力ください。
-
-[最終日 作品登録フォーム :material-open-in-new:](https://forms.gle/JgpkrJ7X28iPi41a7){:target="_blank" .md-button } 
 
 
 ## 7. お問い合わせ / Q & A
