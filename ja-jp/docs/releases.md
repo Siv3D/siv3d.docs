@@ -2,7 +2,36 @@
 
 ## v0.6 世代
 
-???+ summary "v0.6.12 | 2023-09-27"
+???+ summary "v0.6.13 | 2023-11-15"
+
+	#### 新機能
+	- Visual Studio 2022 17.8 に対応しました ([#1136](https://github.com/Siv3D/OpenSiv3D/issues/1136))
+	- `DynamicTexture` でミップマップ生成を行えるようになりました ([#1130](https://github.com/Siv3D/OpenSiv3D/issues/1130), [#1135](https://github.com/Siv3D/OpenSiv3D/pull/1135))
+	- `RenderTexture`, `MSRenderTexture` でミップマップ生成を行えるようになりました ([#1129](https://github.com/Siv3D/OpenSiv3D/issues/1129), [#1134](https://github.com/Siv3D/OpenSiv3D/pull/1134))
+	- `TextureFormat::R16G16_Unorm` を追加しました ([#1122](https://github.com/Siv3D/OpenSiv3D/issues/1122))
+
+	#### 仕様変更
+	- `Texture::isMipped()` を `Texture::hasMipMap()` に変更しました ([#1131](https://github.com/Siv3D/OpenSiv3D/issues/1131))
+
+	#### ユーザビリティ向上	
+	- Windows 版で `<Siv3D/DLL.hpp>` をインクルードしたときに `Polygon` や `RoundRect` が使用できなくなる不便を修正しました ([#1120](https://github.com/Siv3D/OpenSiv3D/issues/1120))
+	- `Font` の一部コンストラクタに `explicit` がついていなかった不便を修正しました ([#1115](https://github.com/Siv3D/OpenSiv3D/issues/1115))
+
+	#### パフォーマンス向上
+	- `Texture` のミップマップ生成を GPU で行うようにしました。`TextureDesc::Mipped` を指定した画像や、絵文字、アイコンからのテクスチャ作成が大幅に高速化されます ([#1133](https://github.com/Siv3D/OpenSiv3D/issues/1133), [#1137](https://github.com/Siv3D/OpenSiv3D/pull/1137))
+	- `Polygon` の `scale` 系関数のバウンディングボックス再計算の速度と精度を改善しました ([#1069](https://github.com/Siv3D/OpenSiv3D/issues/1069), [#1132](https://github.com/Siv3D/OpenSiv3D/pull/1132))
+
+	#### 不具合・バグ修正
+	- OpenGL バックエンドで、テクスチャ描画時にミップマップが使われないことがあったバグを修正しました ([#1128](https://github.com/Siv3D/OpenSiv3D/issues/1128))
+	- `Subdivision2D::findNearest()` の一部のケースで結果の座標が格納されなかったバグを修正しました ([#1116](https://github.com/Siv3D/OpenSiv3D/issues/1116))
+	- `Subdivision2D::initDelaunay()` が `m_addedPoints` をリセットしていなかったバグを修正しました ([#1114](https://github.com/Siv3D/OpenSiv3D/issues/1114))
+	- `Rect`, `RectF` の一部の constexpr メンバ関数が、コンパイル時計算で使用できなかった不具合を修正しました ([#1118](https://github.com/Siv3D/OpenSiv3D/issues/1118))
+
+	#### コントリビューション
+	- [Raclamusi](https://github.com/Raclamusi): **`Polygon` の `scale` 系関数の改善**
+
+
+??? summary "v0.6.12 | 2023-09-27"
 
 	#### 新機能
 	- `Rect`, `RectF` から角度を指定して平行四辺形の `Quad` を作る関数を追加しました ([#1056](https://github.com/Siv3D/OpenSiv3D/issues/1056), [#1070](https://github.com/Siv3D/OpenSiv3D/pull/1070))
