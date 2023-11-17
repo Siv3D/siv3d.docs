@@ -22,6 +22,7 @@
 	- `Polygon` の `scale` 系関数のバウンディングボックス再計算の速度と精度を改善しました ([#1069](https://github.com/Siv3D/OpenSiv3D/issues/1069), [#1132](https://github.com/Siv3D/OpenSiv3D/pull/1132))
 
 	#### 不具合・バグ修正
+	- macOS (Apple Silicon) で音声が再生できなくなっていたバグを修正しました ([#1127](https://github.com/Siv3D/OpenSiv3D/issues/1127))
 	- OpenGL バックエンドで、テクスチャ描画時にミップマップが使われないことがあったバグを修正しました ([#1128](https://github.com/Siv3D/OpenSiv3D/issues/1128))
 	- `Subdivision2D::findNearest()` の一部のケースで結果の座標が格納されなかったバグを修正しました ([#1116](https://github.com/Siv3D/OpenSiv3D/issues/1116))
 	- `Subdivision2D::initDelaunay()` が `m_addedPoints` をリセットしていなかったバグを修正しました ([#1114](https://github.com/Siv3D/OpenSiv3D/issues/1114))

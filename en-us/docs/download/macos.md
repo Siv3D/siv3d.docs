@@ -59,7 +59,7 @@ The necessary environment to run applications developed with Siv3D v0.6.13 on ma
 
 
 ??? summary "Enabling Rosetta mode on M1 / M2 Mac"
-	If the Rosetta option is not displayed in Xcode, select *Show both* from Product &gt; Destination &gt; Destination Architectures.
+	If the Rosetta option is not displayed in Xcode, select *Show Rosetta Destinations* from Product &gt; Destination &gt; Destination Architectures.
 
 ??? summary "Avoiding file access permission dialog when running the sample program"
 	If a file access permission dialog appears every time you run on macOS Catalina or later, you can avoid this by moving the entire project folder to the `(Username)/Applications` folder (not the root's Applications folder, but the Applications folder in the user's home), rather than the `(Username)/Desktop` or `(Username)/Downloads` folders.
