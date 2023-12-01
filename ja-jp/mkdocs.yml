@@ -176,6 +176,7 @@ nav:
     - UI のサンプル: samples/ui.md
     - データ可視化のサンプル: samples/visualize.md
     - モーショングラフィックスのサンプル: samples/motion-graphics.md
+    - アドオンのサンプル: samples/addon.md
     - 音のサンプル: samples/sound.md
     - 2D 物理演算のサンプル: samples/physics2d.md
     - 3D 描画のサンプル: samples/3d.md

@@ -176,6 +176,7 @@ nav:
     - UI Samples: samples/ui.md
     - Data Visualization Samples: samples/visualize.md
     - Motion Graphics Samples: samples/motion-graphics.md
+    - Addon Samples: samples/addon.md
     - Sound Samples: samples/sound.md
     - 2D Physics Simulation Samples: samples/physics2d.md
     - 3D Drawing Samples: samples/3d.md
