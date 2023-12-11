@@ -4,9 +4,10 @@
 
 ## テーマ「すくう」
 
+[入賞作品](./gamejam2023.md){:target="_blank" .md-button } 
+
 ## 1. エントリーする
-1. [Siv3D Discord サーバー](../community/community.md){:target="_blank"} に参加します（推奨）
-2. [イベント参加登録ページ（Connpass）:material-open-in-new:](https://bandainamcostudios.connpass.com/event/295239/){:target="_blank"} から参加登録します。
+（エントリー受付は終了しました）
 
 ## 2. イベントスケジュール
 Zoom での参加にあたって、本名表示・カメラオンは必須ではありません。
