@@ -413,3 +413,130 @@
 		}
 	} 
 	```
+
+
+## 3. ホモグラフィ変換を適用した 2D 描画
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/addon/3.gif)
+
+??? memo "コード"
+	```cpp
+	# include <Siv3D.hpp>
+
+	/// @brief ホモグラフィ変換を適用した 2D 描画を行うアドオン
+	class HomographyAddon : public IAddon
+	{
+	public:
+
+		/// @brief ホモグラフィ変換を適用した 2D 描画を行います。
+		/// @param quad 射影先の四角形
+		/// @param texture 描画するテクスチャ
+		static void Draw(const Quad& quad, const Texture& texture)
+		{
+			if (auto p = Addon::GetAddon<HomographyAddon>(U"HomographyAddon"))
+			{
+				p->setQuad(quad);
+				p->draw(texture);
+			}
+		}
+
+	private:
+
+		bool init() override
+		{
+			setQuad(Quad{ Scene::Rect() });
+			return (m_vs && m_ps);
+		}
+
+		struct Homography
+		{
+			Float4 m1;
+			Float4 m2;
+			Float4 m3;
+		};
+
+		VertexShader m_vs = HLSL{ U"example/shader/hlsl/homography.hlsl", U"VS" }
+			| GLSL{ U"example/shader/glsl/homography.vert", { { U"VSConstants2D", 0 }, { U"VSHomography", 1 } } };
+
+		PixelShader m_ps = HLSL{ U"example/shader/hlsl/homography.hlsl", U"PS" }
+			| GLSL{ U"example/shader/glsl/homography.frag", { { U"PSConstants2D", 0 }, { U"PSHomography", 1 } } };
+
+		ConstantBuffer<Homography> m_vsConstant;
+
+		ConstantBuffer<Homography> m_psConstant;
+
+		Quad m_quad{};
+
+		void setQuad(const Quad& quad)
+		{
+			if (m_quad == quad)
+			{
+				return;
+			}
+
+			m_quad = quad;
+			const Mat3x3 mat = Mat3x3::Homography(quad);
+			m_vsConstant = { Float4{ mat._11_12_13, 0 }, Float4{ mat._21_22_23, 0 }, Float4{ mat._31_32_33, 0 } };
+
+			const Mat3x3 inv = mat.inverse();
+			m_psConstant = { Float4{ inv._11_12_13, 0 }, Float4{ inv._21_22_23, 0 }, Float4{ inv._31_32_33, 0 } };
+		}
+
+		void draw(const Texture& texture) const
+		{
+			const ScopedCustomShader2D shader{ m_vs, m_ps };
+			const ScopedRenderStates2D sampler{ SamplerState::ClampAniso };
+			Graphics2D::SetVSConstantBuffer(1, m_vsConstant);
+			Graphics2D::SetPSConstantBuffer(1, m_psConstant);
+			Rect{ 1 }(texture).draw();
+		}
+	};
+
+	void Main()
+	{
+		Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+		const MSRenderTexture renderTexture{ Size{ 800, 600 } };
+		const Texture texture{ U"example/windmill.png", TextureDesc::Mipped };
+
+		// アドオンを登録する
+		Addon::Register<HomographyAddon>(U"HomographyAddon");
+
+		const Quad q1{ Vec2{ 150, 300 }, Vec2{ 650, 300 }, Vec2{ 800, 600 }, Vec2{ 0, 600 } };
+		const Quad q2{ Vec2{ 400, 50 }, Vec2{ 800, 0 }, Vec2{ 800, 300 }, Vec2{ 400, 250 } };
+
+		// q1 から Scene::Rect() へのホモグラフィ変換行列
+		const Mat3x3 mat = Mat3x3::Homography(q1, Rect{ 800, 600 }.asQuad());
+
+		while (System::Update())
+		{
+			// q1 上の座標を Scene::Rect() 上の座標に変換してセルのインデックスを計算する
+			const Point index = (mat.transformPoint(Cursor::Pos()).asPoint() / 40);
+			{
+				const ScopedRenderTarget2D target{ renderTexture.clear(ColorF{ 1.0 }) };
+
+				for (int32 y = 0; y < 15; ++y)
+				{
+					for (int32 x = 0; x < 20; ++x)
+					{
+						if (Point{ x, y } == index)
+						{
+							Rect{ (x * 40), (y * 40), 40 }.draw(ColorF{ 0.25 });
+						}
+						else if (IsEven(y + x))
+						{
+							Rect{ (x * 40), (y * 40), 40 }.draw(ColorF{ 0.75 });
+						}
+					}
+				}
+			}
+
+			// MSRenderTexture の内容確定と resolve
+			{
+				Graphics2D::Flush();
+				renderTexture.resolve();
+			}
+
+			HomographyAddon::Draw(q1, renderTexture);
+			HomographyAddon::Draw(q2, texture);
+		}
+	}
+	```
