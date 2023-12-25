@@ -600,7 +600,7 @@ void Main()
 
 座標や大きさを `double` 型で扱いたい場合は、`Rect` の代わりに `RectF` 使います。
 
-`Scene::Time()` は、ゲーム開始からの経過時間を秒 （`double` 型）で返します。
+`Scene::Time()` は、プログラム開始からの経過時間を秒 （`double` 型）で返します。
 
 下記のコードでは、長方形の幅 `w` が毎秒 20.0 のペースで増えていきます。`double` 型である `w` に合わせるため、`Rect` ではなく `RectF` を使います。
 
@@ -624,7 +624,7 @@ void Main()
 !!! info "RectF の構造"
 	`RectF` は次のようなクラスです。
 	```cpp
-	struct Rect
+	struct RectF
 	{
 		double x;
 		double y;

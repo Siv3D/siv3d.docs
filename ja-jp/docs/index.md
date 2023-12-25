@@ -14,9 +14,9 @@
 [for Web (Windows + Visual Studio) :material-microsoft-visual-studio:](download/web.md){ .md-button .md-button--primary }[for Web (Visual Studio Code) :material-microsoft-visual-studio-code:](download/web.md){ .md-button .md-button--primary }
 
 
-## バンダイナムコスタジオ杯 Siv3D ゲームジャム
+## バンダイナムコスタジオ杯 Siv3D ゲームジャム【結果発表】
 
-<a href="https://bandainamcostudios.connpass.com/event/295239/" target="_blank"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/bnscup2023.png" alt="バンダイナムコスタジオ杯 | Siv3D ゲームジャム"></a>
+[結果発表ページ](event/gamejam2023.md){ .md-button }
 
 
 ## ゲームやアプリ開発を効率化する、圧倒的な機能

@@ -206,7 +206,7 @@ void Main()
 ## 8.7 長方形を描く (2)
 座標や大きさを `double` 型で扱いたい場合は、`Rect` の代わりに `RectF` 使います。
 
-`Scene::Time()` は、ゲーム開始からの経過時間を秒 （`double` 型）で返します。下記のコードでは、長方形の幅 `w` が毎秒 20.0 のペースで増えていきます。`w` は `double` 型のため、`Rect` ではなく `RectF` を使います。
+`Scene::Time()` は、プログラム開始からの経過時間を秒 （`double` 型）で返します。下記のコードでは、長方形の幅 `w` が毎秒 20.0 のペースで増えていきます。`w` は `double` 型のため、`Rect` ではなく `RectF` を使います。
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/circle-rect/7.png)
 
@@ -228,7 +228,7 @@ void Main()
 !!! info "RectF の構造"
 	簡単に説明すると、`RectF` は次のようなクラスです（実際にはこれ以外にもメンバ関数がたくさんあります）。
 	```cpp
-	struct Rect
+	struct RectF
 	{
 		double x;
 		double y;

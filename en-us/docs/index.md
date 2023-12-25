@@ -14,11 +14,6 @@
 [for Web (Windows + Visual Studio) :material-microsoft-visual-studio:](download/web.md){ .md-button .md-button--primary }[for Web (Visual Studio Code) :material-microsoft-visual-studio-code:](download/web.md){ .md-button .md-button--primary }
 
 
-## Bandai Namco Studios Cup Siv3D Game Jam
-
-<a href="https://bandainamcostudios.connpass.com/event/295239/" target="_blank"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/bnscup2023.png" alt="バンダイナムコスタジオ杯 | Siv3D ゲームジャム"></a>
-
-
 ## Exceptional Features for Efficient Game and App Development
 Convenient classes and functions are provided for efficient development of 2D / 3D games, media art, visualizers, simulators, etc.
 

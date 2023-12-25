@@ -1720,3 +1720,11 @@
 		}
 	}
 	```
+
+
+## 15. 数値パッド
+
+![](https://raw.githubusercontent.com/Siv3D/Siv3D-Samples/main/Samples/Numpad/Screenshot/1.png)
+
+[Siv3D-Sample | 数値パッド :material-open-in-new:](https://github.com/Siv3D/Siv3D-Samples/blob/main/Samples/Numpad){:target="_blank" .md-button}
+
