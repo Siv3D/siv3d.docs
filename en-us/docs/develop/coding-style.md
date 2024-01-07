@@ -67,7 +67,7 @@ void Main()
 - クラス名は PascalCase
 - `public`  メンバのみを持つ場合は `struct`, それ以外は `class` を使う
 - `class` の場合、必要でない限り `public:` → `protected:` → `private:` の順に記述する
-- 非静的 `privete` メンバ変数は `m_` から始めて camelCase で続ける
+- 非静的 `private` メンバ変数は `m_` から始めて camelCase で続ける
 - 非静的メンバ関数は camelCase 
 - 静的メンバ関数は PascalCase
 - 静的メンバ定数は PascalCase 
