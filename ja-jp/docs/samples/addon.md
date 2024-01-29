@@ -297,7 +297,7 @@
 				notification.time += deltaTime;
 			}
 
-			m_notifications.remove_if([](const Notification& notification) { return (10.0 < notification.time); });
+			m_notifications.remove_if([lifeTime = m_lifeTime](const Notification& notification) { return (lifeTime < notification.time); });
 
 			for (size_t i = 0; i < m_notifications.size(); ++i)
 			{
