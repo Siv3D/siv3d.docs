@@ -2,7 +2,72 @@
 
 ## v0.6 世代
 
-???+ summary "v0.6.13 | 2023-11-15"
+???+ summary "v0.6.14 | 2024-02-05"
+
+	#### 前バージョンからの更新ガイド
+	- [v0.6.13 からのアップグレード手順（Windows）](https://zenn.dev/link/comments/fd6585920f0136)
+
+	#### 新機能
+	- **`Shader::QuadWarp` を追加しました** ([#998](https://github.com/Siv3D/OpenSiv3D/issues/998), [#1183](https://github.com/Siv3D/OpenSiv3D/pull/1183))
+		- [サンプル](https://zenn.dev/link/comments/00f59036fb188f)
+	- **OpenAI の Vision, TextToSpeech を含む新しい API やモデルに対応しました** ([#1126](https://github.com/Siv3D/OpenSiv3D/issues/1126), [#1176](https://github.com/Siv3D/OpenSiv3D/pull/1176), [#1181](https://github.com/Siv3D/OpenSiv3D/issues/1181), [#1194](https://github.com/Siv3D/OpenSiv3D/issues/1194))
+		- [サンプル](https://zenn.dev/link/comments/b4a570bf1e2a26)
+	- **`Shape2D::Astroid()` を追加しました** ([#1191](https://github.com/Siv3D/OpenSiv3D/issues/1191))
+		- [サンプル](https://zenn.dev/link/comments/bff536cae6cede)
+	- **`Shader::GaussianBlur()` のフィルタサイズのオプションを追加しました** ([#1147](https://github.com/Siv3D/OpenSiv3D/issues/1147), [#1148](https://github.com/Siv3D/OpenSiv3D/pull/1148))
+		- [サンプル](https://zenn.dev/link/comments/7308f87190f48c)
+	- **シャドウのサンプルシェーダを追加しました** ([#1140](https://github.com/Siv3D/OpenSiv3D/issues/1140), [#1200](https://github.com/Siv3D/OpenSiv3D/issues/1200))
+		- [サンプル](https://zenn.dev/link/comments/123b071121fbaf)
+	- `MultiPlayer_Photon::sendEvent()` で送信先のプレイヤーを指定できるようにしました ([#1170](https://github.com/Siv3D/OpenSiv3D/issues/1170))
+	- `Trail`, `TrailMotion` に `.clear()` を追加しました ([#1149](https://github.com/Siv3D/OpenSiv3D/issues/1149))
+	- `Point`, `Vec2`, `Color`, `ColorF` 等に、1 要素だけを変更したコピーを返す `.with～()` を追加しました ([#1143](https://github.com/Siv3D/OpenSiv3D/issues/1143))
+	- `MultiPolygon` に `.computeConvexHull()` を追加しました ([#1195](https://github.com/Siv3D/OpenSiv3D/issues/1195))
+	- `MultiPolygon` に `.centroid()` を追加しました ([#1186](https://github.com/Siv3D/OpenSiv3D/issues/1186), [#1190](https://github.com/Siv3D/OpenSiv3D/pull/1190))
+	- `MultiPolygon` に `.area()`, `.perimeter()` を追加しました ([#1185](https://github.com/Siv3D/OpenSiv3D/issues/1185), [#1187](https://github.com/Siv3D/OpenSiv3D/pull/1187))
+	- `Rect`, `RectF` に `.rotate90()` 系のメンバ関数を追加しました ([#1094](https://github.com/Siv3D/OpenSiv3D/pull/1094))
+	- `JSON` に `.getUTF8String()`, `.assignUTF8String()` を追加しました ([#1177](https://github.com/Siv3D/OpenSiv3D/issues/1177))
+	- `PutText()` に `const char32*` や `StringView` を受け取るオーバーロードを追加しました ([#1159](https://github.com/Siv3D/OpenSiv3D/issues/1159))
+	- `Mat3x3::Homography()` のオーバーロードを追加しました ([#1163](https://github.com/Siv3D/OpenSiv3D/issues/1163))
+	- 将来の UI 機能の実装のために `Cursor::SetCapture()`, `Cursor::IsCaptured()` を追加しました ([#1045](https://github.com/Siv3D/OpenSiv3D/issues/1045))
+
+	#### 仕様変更
+	- **オーディオの同時再生可能数を 16 から 64 に増やしました** ([#1123](https://github.com/Siv3D/OpenSiv3D/issues/1123))
+	- カラー絵文字のバージョンを Unicode 15.0 から Unicode 15.1 に引き上げました ([#1144](https://github.com/Siv3D/OpenSiv3D/issues/1144))
+	- `DirectoryWatcher` のコンストラクタ引数を `FilePathView` に変更しました ([#1197](https://github.com/Siv3D/OpenSiv3D/issues/1197))
+	- OpenAI 関連の API の名前空間と関数を設計しなおしました ([#1176](https://github.com/Siv3D/OpenSiv3D/issues/1176))
+	- `FontAsset` の一部の関数の引数を `const String&` から `StringView` に変更しました ([#1158](https://github.com/Siv3D/OpenSiv3D/issues/1158))
+	- fmt ライブラリを 8.1.1 から 10.1.1 に更新しました ([#1160](https://github.com/Siv3D/OpenSiv3D/issues/1160))
+	- zstd ライブラリを 1.5.1 から 1.5.5 に更新しました ([#1161](https://github.com/Siv3D/OpenSiv3D/issues/1161), [#1162](https://github.com/Siv3D/OpenSiv3D/pull/1162))
+
+	#### パフォーマンス向上
+	- `MultiPolygon` のメンバ関数のオーバーヘッドを少しだけ削減しました ([#1188](https://github.com/Siv3D/OpenSiv3D/issues/1188), [#1189](https://github.com/Siv3D/OpenSiv3D/pull/1189))
+
+	#### 不具合・バグ修正
+	- `JSON` の複数の不具合を修正しました ([#1117](https://github.com/Siv3D/OpenSiv3D/issues/1117), [#1165](https://github.com/Siv3D/OpenSiv3D/pull/1165), [#1166](https://github.com/Siv3D/OpenSiv3D/issues/1166), [#1192](https://github.com/Siv3D/OpenSiv3D/issues/1192))
+	- `Circle::drawArc(LineStyle::RoundCap)` で両端がグラデーションしなかった問題および内側と外側の色が反対だったバグを修正しました ([#1013](https://github.com/Siv3D/OpenSiv3D/issues/1013), [#1193](https://github.com/Siv3D/OpenSiv3D/issues/1193), [#1198](https://github.com/Siv3D/OpenSiv3D/pull/1198))
+	- `RandomInt8()`, `RandomInt16()`, `RandomInt32()`, `RandomInt64()` が最小値を返さなかったバグを修正しました ([#1196](https://github.com/Siv3D/OpenSiv3D/issues/1196))
+	- `Parse<double>(U"")` が `ParseError` を投げずに 0 を返していたバグを修正しました ([#1173](https://github.com/Siv3D/OpenSiv3D/issues/1173), [#1174](https://github.com/Siv3D/OpenSiv3D/pull/1174))
+	- `MultiPlayer_Photon` で `joinRoomReturn` が呼ばれなかったバグを修正しました ([#1169](https://github.com/Siv3D/OpenSiv3D/issues/1169))
+	- `Cursor::SetPos()` がシーンサイズと適切に連動していなかったバグを修正しました ([#1167](https://github.com/Siv3D/OpenSiv3D/issues/1167), [#1168](https://github.com/Siv3D/OpenSiv3D/pull/1168))
+	- `RoundRect::drawShadow()` において、`blur` が大きいときの描画の乱れを修正しました ([#1164](https://github.com/Siv3D/OpenSiv3D/pull/1164))
+	- `ConstantBuffer` のコピーが正しく行われなかったバグを修正しました ([#1154](https://github.com/Siv3D/OpenSiv3D/issues/1154), [#1155](https://github.com/Siv3D/OpenSiv3D/pull/1155))
+	- `RectF` の一部のコンストラクタで `int32` を受け取ると縮小変換の警告が出た問題を修正しました ([#1184](https://github.com/Siv3D/OpenSiv3D/issues/1184))
+	- 一部の Windows 環境で VSync 無効時にフレームレートが制限されていた問題を修正しました ([#1179](https://github.com/Siv3D/OpenSiv3D/pull/1179))
+	- `ImageDecoder::GetImageInfo()` で取得される GIF 画像の解像度が正しくなかったバグを修正しました ([#1172](https://github.com/Siv3D/OpenSiv3D/pull/1172))
+	- 幅や高さが 16384px より大きい GIF ファイルを読み込むとクラッシュした問題を修正しました ([#1171](https://github.com/Siv3D/OpenSiv3D/pull/1171))
+	- `DebugCamera3D::drawTouchUI()` に `const` がついていなかった問題を修正しました ([#1091](https://github.com/Siv3D/OpenSiv3D/issues/1091))
+	- 図形クラスの一部の constepr メンバ関数が非アクティブな共用体メンバを使用していた問題を修正しました ([#1139](https://github.com/Siv3D/OpenSiv3D/issues/1139), [#1141](https://github.com/Siv3D/OpenSiv3D/issues/1141))
+	- フルスクリーン + レンダーターゲット変更時にメッセージボックスが適切に表示されなかった問題を修正しました ([#1150](https://github.com/Siv3D/OpenSiv3D/issues/1150))
+
+	#### コントリビューション
+	- [Ogame3334](https://github.com/Ogame3334): **`MultiPolygon` の機能追加・改善**
+	- [m4saka](https://github.com/m4saka): VSync 関連の問題の修正, GIF 関連の不具合の修正
+	- [Raclamusi](https://github.com/Raclamusi): **`Circle::drawArc()` の修正**, 図形クラスの `constexpr` 対応の改善
+	- [sashi0034](https://github.com/sashi0034): `Cursor::SetPos()` の修正
+	- [comefrombottom](https://github.com/comefrombottom): `Rect`, `RectF` への機能追加
+
+
+??? summary "v0.6.13 | 2023-11-15"
 
 	#### 新機能
 	- Visual Studio 2022 17.8 に対応しました ([#1136](https://github.com/Siv3D/OpenSiv3D/issues/1136))
