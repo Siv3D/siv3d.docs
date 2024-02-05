@@ -19,7 +19,7 @@ The necessary development environment for Siv3D programming on macOS is as follo
 
 
 ### 1.2 System Requirements for Running Siv3D Application
-The necessary environment to run applications developed with Siv3D v0.6.13 on macOS is as follows.
+The necessary environment to run applications developed with Siv3D v0.6.14 on macOS is as follows.
 
 |  |  |
 |--|--|
@@ -32,13 +32,14 @@ The necessary environment to run applications developed with Siv3D v0.6.13 on ma
 
 
 ## 2. Downloading the Siv3D Project Template
-1. Download and extract **[OpenSiv3D v0.6.13 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.13_macOS.zip){:target="_blank"}**.
+1. Download and extract **[OpenSiv3D v0.6.14 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.14_macOS.zip){:target="_blank"}**.
 1. If you are on macOS Catalina or later, a dialog box for file access permission appears every time you run the program. To avoid this, move the project folder to `(Username)/Applications` folder (not the root's Applications folder, but the Applications folder in user's home), rather than `(Username)/Desktop` or `(Username)/Downloads` folders.
 
 ??? summary "Previous versions"
 	The use of past versions is discouraged. If necessary, download them from the following links.
 	Due to updates to the compiler, etc., you may not be able to use past versions in the latest development environment. If you want to build an old Siv3D project, a good way is to port its source code to a project with the latest version.
 
+	- [OpenSiv3D v0.6.13 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.13_macOS.zip){:target="_blank"}
 	- [OpenSiv3D v0.6.12 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.12_macOS.zip){:target="_blank"}
 	- [OpenSiv3D v0.6.11 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.11_macOS.zip){:target="_blank"}
 	- [OpenSiv3D v0.6.10 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.10_macOS.zip){:target="_blank"}
