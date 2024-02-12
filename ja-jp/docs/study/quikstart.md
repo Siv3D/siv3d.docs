@@ -20,6 +20,6 @@ Siv3D 経験者向けの、より高度な内容を学ぶコースです。
 
 | コース | 内容 |
 | --- | --- |
-| [AI 活用例](openai.md) | Siv3D で AI (OpenAI API) を活用する方法を学びます。 |
+| [生成 AI 活用例](openai.md) | Siv3D で生成 AI (OpenAI API) を活用する方法を学びます。 |
 | [多態性入門](polymorphism.md) | C++ のテクニック「多態性」の基本を学びます。 |
 

@@ -221,7 +221,7 @@ nav:
     - 7 コマ目（時間と乱数）: study/quikstart_7.md
     - 8 コマ目（配列と図形の交差）: study/quikstart_8.md
     - 9 コマ目（ゲーム開発）: study/quikstart_9.md
-    - AI 活用例: study/openai.md
+    - 生成 AI 活用例: study/openai.md
     - 多態性入門: study/polymorphism.md
   - イベント:
     - ゲームジャム: event/gamejam.md
