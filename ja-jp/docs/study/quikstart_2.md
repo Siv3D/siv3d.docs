@@ -152,7 +152,7 @@ void Main()
 {
 	double x = 1.23;
 
-	Print << pi;
+	Print << x;
 
 	x = 4.56; // 代入
 
@@ -257,7 +257,7 @@ void Main()
 	coins << 10;
 	coins << 5;
 	coins << 1;
-	conins << 50;
+	coins << 50;
 
 	Print << coins; // { 10, 5, 1, 50 }
 

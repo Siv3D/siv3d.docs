@@ -137,7 +137,7 @@ void Main()
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/games/1.gif)
 
 !!! info "コードのコピーは右上のボタンで"
-	サンプルコードをコピーするには、右上の「クリップボードへコピー」ボタンをクリックしてください。
+	サンプルコードをコピーするには、サンプルコードの右上にある「クリップボードへコピー」ボタンをクリックしてください。
 
 ??? memo "コード"
 	```cpp
@@ -246,6 +246,9 @@ void Main()
 
 ### 2.2 Text to P2Body
 キーボードで入力した文字を物理演算の世界に落とし込むサンプルです。文字を入力して、++enter++ キーを押すと、文字が物理演算の世界に落ちていきます。++clear++ ボタンを押すと、物理演算の世界にある文字が消えます。
+
+!!! info "重い処理は Release ビルドで"
+	このサンプルは重い計算を行うため、Release ビルドで実行することを推奨します。
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/p2/6.png)
 
@@ -373,7 +376,7 @@ void Main()
 	```
 
 ### 2.3 ピアノ
-キーボードでピアノを演奏するサンプルです。キーボードの ++tab++, ++1++, ++q++, ++w++, ++3++, ++e++, ++4++, ++r++, ++t++, ++6++, ++y++, ++7++, ++u++, ++8++, ++i++, ++o++, ++0++, ++p++, ++minus++, ++enter++ キーを押すと、それぞれの音が鳴ります。
+キーボードでピアノを演奏するサンプルです。++tab++, ++1++, ++q++, ++w++, ++3++, ++e++, ++4++, ++r++, ++t++, ++6++, ++y++, ++7++, ++u++, ++8++, ++i++, ++o++, ++0++, ++p++, ++minus++, ++enter++ キーで演奏します。
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/sound/1.png)
 
@@ -571,7 +574,7 @@ void Main()
 
 
 ### 2.5 QR コード作成
-テキストを入力すると、そのテキストを含む QR コードが表示されます。スマートフォンのカメラで読み取ると、テキストが表示されます。
+テキストを入力すると、そのテキストの QR コードが表示されます。スマートフォンのカメラで読み取ると、テキストが表示されます。
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/apps/2.png)
 

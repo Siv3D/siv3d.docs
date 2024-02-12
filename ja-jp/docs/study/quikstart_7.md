@@ -227,9 +227,9 @@ void Main()
 		{
 			// ランダムな座標を代入
 			pos = RandomVec2(Rect{ 50, 50, 700, 500 });
-
-			emoji.drawAt(pos);
 		}
+
+		emoji.drawAt(pos);
 	}
 }
 ```

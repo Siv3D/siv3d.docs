@@ -4,6 +4,7 @@
 絵文字をクリックするとカウントが増えるアプリです。
 
 - カウントをリセットする操作を追加してみましょう。
+- 絵文字の上でマウスカーソルが手の形になるようにしてみましょう（6 コマ目 2.5 を参照）。
 
 ![](https://raw.githubusercontent.com/Reputeless/lecture-files/main/sophia/image/13-8.1.png)
 

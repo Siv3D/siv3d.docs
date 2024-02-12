@@ -127,7 +127,7 @@ void Main()
 	{
 		const int32 cursorX = Cursor::Pos().x;
 
-		// マウスカーソルの X 座標が 400 以下のとき true, 400 より大きいとき false になる
+		// マウスカーソルの X 座標が 400 以上のとき true, 400 未満のとき false になる
 		emoji.mirrored(400 <= cursorX).drawAt(400, 300);
 	}
 }
@@ -164,9 +164,9 @@ void Main()
 ```
 
 !!! warning "フレームレートに依存した動き"
-	このコードは、フレームレートに依存した動きになります。フレームレートが低いときには、絵文字がゆっくり動き、フレームレートが高いときには、絵文字が速く動きます。本格的なゲーム開発では、前フレームからの経過時間（秒）を `double` 型で返す `Scene::DeltaTime()` を使って、フレームレートに依存しない動きをつくることが推奨されます。
+	この章にで書かれている「動き」のコードは、フレームレートに依存した速度で動きます。フレームレートが低いときには、絵文字がゆっくり動き、フレームレートが高いときには、絵文字が速く動きます。本格的なゲーム開発では、前フレームからの経過時間（秒）を `double` 型で返す `Scene::DeltaTime()` を使って、フレームレートに依存しない動きをつくるべきです。
 
-	```cpp title="フレームレートに依存しない動き"
+	```cpp title="フレームレートに依存しない動きの書き方（適切な実装）"
 	#include <Siv3D.hpp>
 
 	void Main()
@@ -328,15 +328,15 @@ void Main()
 
 	while (System::Update())
 	{
-		circle.draw(Palette::White);
-
 		// 円の半径を毎フレーム 0.5 増やす
 		circle.r += 0.5;
 
-		rect.draw(Palette::Seagreen);
-
 		// 矩形の X 座標を毎フレーム 0.5 左にずらす
 		rect.x -= 0.5;
+
+		circle.draw(Palette::White);
+
+		rect.draw(Palette::Seagreen);
 	}
 }
 ```
