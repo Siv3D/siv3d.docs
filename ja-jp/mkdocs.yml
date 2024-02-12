@@ -212,8 +212,17 @@ nav:
     - コーディングスタイル: develop/coding-style.md
   - 勉強会:
     - 高速チュートリアル: study/quikstart.md
+    - 1 コマ目（体験）: study/quikstart_1.md
+    - 2 コマ目（基本）: study/quikstart_2.md
+    - 3 コマ目（色と図形）: study/quikstart_3.md
+    - 4 コマ目（絵文字と動き）: study/quikstart_4.md
+    - 5 コマ目（テキストの表示）: study/quikstart_5.md
+    - 6 コマ目（キーとマウス）: study/quikstart_6.md
+    - 7 コマ目（時間と乱数）: study/quikstart_7.md
+    - 8 コマ目（配列と図形の交差）: study/quikstart_8.md
+    - 9 コマ目（ゲーム開発）: study/quikstart_9.md
+    - AI 活用例: study/openai.md
     - 多態性入門: study/polymorphism.md
-    - OpenAI API の使用: study/openai.md
   - イベント:
     - ゲームジャム: event/gamejam.md
     - ゲームジャム入賞作品: event/gamejam2023.md
