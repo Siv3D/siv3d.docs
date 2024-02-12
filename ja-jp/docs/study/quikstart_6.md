@@ -15,15 +15,10 @@
 	- ++enter++ は `KeyEnter`
 	- ++backspace++ は `KeyBackspace`
 	- ++tab++ キーは `KeyTab`
-	- ++esc++ キーは `KeyEscape`
-	- ++page-up++ , ++page-down++ は `KeyPageUp`, `KeyPageDown`
-	- ++delete++ キーは `KeyDelete`
-	- Numpad の ++num0++ , ++num1++ , ++num2++ , ... は `KeyNum0`, `KeyNum1`, `KeyNum2`, ...
 	- ++shift++ は `KeyShift`
 	- ++left-shift++ (左シフト), ++right-shift++ (右シフト) は `KeyLShift`, `KeyRShift`
 	- ++control++ は `KeyControl`
 	- (macOS) ++command++ は `KeyCommand`
-	- ++comma++ , ++period++ , ++slash++ キーは `KeyComma`, `KeyPeriod`, `KeySlash`
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/keyboard/1.png)
 
@@ -177,10 +172,6 @@ void Main()
 		}
 	}
 	```
-
-!!! success "振り返りチェックリスト"
-	- [x] キーが押されたか調べるには `if (キー名.down())` を使うことを学んだ
-	- [x] キーが押されているか調べるには `if (キー名.pressed())` を使うことを学んだ
 
 
 ## 2. マウス入力
@@ -422,7 +413,7 @@ void Main()
 		// 円は描かない
 		//circle.draw();
 
-        // circle.center は Vec2{ circle.x, circle.y } と同じ
+		// circle.center は Vec2{ circle.x, circle.y } と同じ
 		emoji.drawAt(circle.center, Palette::Orange);
 	}
 }

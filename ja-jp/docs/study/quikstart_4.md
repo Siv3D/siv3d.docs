@@ -35,8 +35,8 @@ void Main()
 ```
 
 !!! info "絵文字を探す"
-    - 絵文字の種類は [emojipedia :material-open-in-new:](https://emojipedia.org/){:target="_blank"} で探すと便利です。全部で 3700 種類以上が用意されています。
-    - Windows の場合は、++windows+period++ で出てくる、OS 標準の絵文字入力メニューも使えます。
+	- 絵文字の種類は [emojipedia :material-open-in-new:](https://emojipedia.org/){:target="_blank"} で探すと便利です。全部で 3700 種類以上が用意されています。
+	- Windows の場合は、++windows+period++ で出てくる、OS 標準の絵文字入力メニューも使えます。
 
 ### 1.2 絵文字の大きさを変える
 デフォルトの絵文字の大きさは余白（透明部分）も含めて 136x128 ピクセルです。`.drawAt(x, y)` の前に `.scaled(s)` を挟むことで、テクスチャが `s` 倍拡大縮小されます。

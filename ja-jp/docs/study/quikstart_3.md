@@ -209,11 +209,9 @@ void Main()
 
 0.0 は完全に透明、1.0 は完全に不透明で、0.5 のときは背景色と描画色が 50% ずつ混ざった色になります。
 
-不透明度 `a` （アルファ）は、`ColorF{ r, g, b, a }`, `ColorF{ gray, a }`, `HSV{ h, s, v, a }`, `HSV{ h, a }` のように、最後の引数に指定します。
+不透明度 `a` （アルファ）は、`ColorF{ r, g, b, a }`, `ColorF{ gray, a }`, `HSV{ h, s, v, a }`, `HSV{ h, a }` のように、最後の引数に指定します。不透明度を指定しなかった場合の不透明度は 1.0 です。
 
-不透明度を指定しない場合は、デフォルトで 1.0 になります。
-
-`Scene::SetBackground()` に指定する色については、不透明度は無視されるため無意味です。
+`Scene::SetBackground()` に指定する色については、不透明度は無視されます。
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/circle-rect/5.png)
 
@@ -390,7 +388,7 @@ void Main()
 ```
 
 
-### 3.4 線分を描く
+### 3.5 線分を描く
 `Line{ x1, y1, x2, y2 }` で線分を作成できます。`Line` は `.draw(太さ, 色)` で描画できます。
 
 ![](https://raw.githubusercontent.com/Reputeless/lecture-files/main/sophia/image/14-1.1.png)
@@ -414,7 +412,7 @@ void Main()
 ```
 
 
-### 3.5 三角形を描く
+### 3.6 三角形を描く
 `Triangle{ x1, y1, x2, y2, x3, y3 }` に時計回りで座標を指定することで三角形を作成できます。`Triangle` は `.draw(色)` で描画できます。
 
 ![](https://raw.githubusercontent.com/Reputeless/lecture-files/main/sophia/image/14-1.2.png)
@@ -435,7 +433,7 @@ void Main()
 ```
 
 
-### 3.6 四角形を描く
+### 3.7 四角形を描く
 `Quad{ x1, y1, x2, y2, x3, y3, x4, y4 }` に時計回りで座標を指定することで四角形を作成できます。ただし凹の角（180° より大きい角）があってはいけません。長方形を描く場合は `Rect` や `RectF` を使ったほうが便利です。`Quad` は `.draw(色)` で描画できます。
 
 ![](https://raw.githubusercontent.com/Reputeless/lecture-files/main/sophia/image/14-1.3.png)
@@ -456,9 +454,8 @@ void Main()
 ```
 
 
-### 3.7 これ以外の図形
-Siv3D にはこれ以外にも多くの種類の図形を簡単に描画できます。詳しくは [17. 図形描画](../tutorial2/shape.md) を参照してください。
-
+### 3.8 これ以外の図形
+Siv3D にはこれ以外にも多くの種類の図形を簡単に描画できます。詳しくは [17. 図形描画](../tutorial2/shape.md){:target="_blank"} を参照してください。
 
 
 ## 4. 模様を描く

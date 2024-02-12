@@ -3,9 +3,7 @@
 ## 1. 時間
 
 ### 1.1 前フレームからの経過時間を調べる
-- `Scene::DeltaTime()` は前フレームからの経過時間（秒）を `double` 型で返します。
-- 60 Hz の場合は約 0.0166 です。
-- これを加算することで経過時間を調べることができます。
+`Scene::DeltaTime()` は前フレームからの経過時間（秒）を `double` 型で返します。60 Hz の場合は約 0.0166 です。これを加算することで経過時間を調べることができます。
 
 ![](https://raw.githubusercontent.com/Reputeless/lecture-files/main/sophia/image/14-3.1.png)
 
@@ -35,7 +33,7 @@ void Main()
 
 
 ### 1.2 残り時間をカウントダウンする
-- 残り時間から `Scene::DeltaTime()` の値を引いていくことで、時間のカウントダウンができます。
+残り時間から `Scene::DeltaTime()` の値を引いていくことで、時間のカウントダウンができます。
 
 ![](https://raw.githubusercontent.com/Reputeless/lecture-files/main/sophia/image/14-3.2.png)
 
@@ -71,7 +69,7 @@ void Main()
 
 
 ### 1.3 一定時間ごとにイベントを発生させる
-- `Scene::DeltaTime()` を加算し、一定時間が経過したときにイベントを発生させるサンプルです。
+`Scene::DeltaTime()` を加算し、一定時間が経過したときにイベントを発生させるサンプルです。3 秒ごとに `Hello!` と `Print` します。
 
 ![](https://raw.githubusercontent.com/Reputeless/lecture-files/main/sophia/image/14-3.3.png)
 
@@ -110,7 +108,7 @@ void Main()
 ## 2. 乱数
 
 ### 2.1 乱数を生成する
-`Random(a, b)` は a 以上 b 以下の数を返します。ただし `a < b` とします。
+`Random(a, b)` は a 以上 b 以下の数を返します。ただし `a < b` です。
 
 - 例: `Random(0, 100)`, `Random(0.8, 1.2)`
 
@@ -128,7 +126,7 @@ void Main()
 		// 左クリックされたら
 		if (MouseL.down())
 		{
-            // 0 以上 2 以下のランダムな整数を作る
+			// 0 以上 2 以下のランダムな整数を作る
 			int32 n = Random(0, 2);
 
 			if (n == 0)
@@ -152,7 +150,7 @@ void Main()
 ### 2.2 ランダムな場所に移動する
 画面を左クリックするたびに絵文字がランダムな場所に移動するサンプルです。
 
-```cpp
+```cpp hl_lines="18-22"
 #include <Siv3D.hpp>
 
 void Main()
@@ -184,31 +182,55 @@ void Main()
 
 `Vec2` 型を使うと、次のように書くこともできます。
 
-```cpp
+```cpp hl_lines="16-17"
 #include <Siv3D.hpp>
 
 void Main()
 {
-    Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
 
-    const Texture emoji{ U"☃️"_emoji };
+	const Texture emoji{ U"☃️"_emoji };
 
-    Vec2 pos{ 400, 300 };
+	Vec2 pos{ 400, 300 };
 
-    while (System::Update())
-    {
-        // 左クリックされたら
-        if (MouseL.down())
-        {
-            // ランダムな X 座標を代入
-            pos.x = Random(50, 750);
+	while (System::Update())
+	{
+		// 左クリックされたら
+		if (MouseL.down())
+		{
+			// ランダムな座標を代入
+			pos = Vec2{ Random(50, 750), Random(50, 550) };
+		}
 
-            // ランダムな Y 座標を代入
-            pos.y = Random(50, 550);
-        }
+		emoji.drawAt(pos);
+	}
+}
+```
 
-        emoji.drawAt(pos);
-    }
+`rect` で指定した範囲内のランダムな座標を返す `RandomVec2(rect)` を使うこともできます。
+
+```cpp hl_lines="16-17"
+#include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+
+	const Texture emoji{ U"☃️"_emoji };
+
+	Vec2 pos{ 400, 300 };
+
+	while (System::Update())
+	{
+		// 左クリックされたら
+		if (MouseL.down())
+		{
+			// ランダムな座標を代入
+			pos = RandomVec2(Rect{ 50, 50, 700, 500 });
+
+			emoji.drawAt(pos);
+		}
+	}
 }
 ```
 

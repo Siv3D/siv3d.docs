@@ -71,7 +71,7 @@ void Main()
 
 - `font(テキスト).draw(サイズ, x, y, color);`
 - `font(テキスト).draw(サイズ, pos, color);`
-    - `pos` は `Vec2{ x, y }` で、`Vec2` は 2 次元の座標を表すクラスです。
+	- `pos` は `Vec2{ x, y }` で、`Vec2` は 2 次元の座標を表すクラスです。
 
 のようにして、テキストを、サイズ、位置、色を指定して表示します。`color` を省略すると白色になります。「テキスト」の部分は、文字列以外に数値などもそのまま渡せます。
 
@@ -180,21 +180,76 @@ void Main()
 
 
 ### 2.4 テキストを指定した長方形内に描く
+`Font::draw()` に、座標の代わりに `Rect` または `RectF` を渡すと、テキストをその長方形の中に収まるように描画します。テキストのすべての文字が長方形内に収まった場合、関数は `true` を返します。一方、テキストがあふれる場合、最後の文字が `…` に置き換えられ、関数は `false` を返します。
 
+`Rect` の `.stretched(t)` を使うと、長方形の上下左右をそれぞれ t ピクセル拡大（負の場合は縮小）した長方形を得ることができます。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+
+	const Font font{ FontMethod::MSDF, 48 };
+
+	const String text = U"Siv3D (シブスリーディー) は、ゲームやアプリを楽しく簡単な C++ コードで開発できるフレームワークです。";
+
+	const Rect rect1{ 100, 100, 400, 160 };
+
+	const Rect rect2{ 100, 300, 400, 160 };
+
+	while (System::Update())
+	{
+		rect1.draw();
+
+		font(text).draw(18, rect1, Palette::Black);
+
+		rect2.draw();
+
+		// rect2.stretched(-20) は rect2 を上下左右 20 ピクセル縮めた Rect
+		rect2.stretched(-20).draw(ColorF{ 0.9 });
+
+		font(text).draw(18, rect2.stretched(-20), Palette::Black);
+	}
+}
 ```
 
+### 2.5 文字に輪郭や影をつける
+文字に影や輪郭をつけるには、次のいずれかのテキストスタイルを使います。輪郭スケールの単位はピクセルではありません。最大でも 0.2 が目安です。
 
-### 2.5 文字に影や輪郭をつける
+- `TextStyle::Outline(輪郭スケール, 輪郭の色)`
+- `TextStyle::Shadow(影のオフセット, 影の色)`
+- `TextStyle::OutlineShadow(輪郭スケール, 輪郭の色, 影のオフセット, 影の色)`
 
-
-影のオフセットが大きい場合、影が途切れてしまうことがあります。それを防ぐには `Font` のメンバ関数 `.setBufferThickness(影のための余裕サイズ)` で、影の領域を大きめに確保しておきます。デフォルトは 2 ですが 4 にすると安全です。
+影のオフセットが大きい場合、影が途切れてしまうことがあります。それを防ぐには `Font` のメンバ関数 `.setBufferThickness(影のための余裕サイズ)` で、影の領域を大きめに確保しておきます。デフォルトは 2 ですが、4 にすると安全です。
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.7, 0.9, 0.8 });
 
+	const Font font{ FontMethod::SDF, 48, Typeface::Bold };
+
+	// 文字の影のための余白を大きめに確保
+	font.setBufferThickness(4);
+
+	const String text = U"Hello, Siv3D!";
+
+	while (System::Update())
+	{
+		// 輪郭
+		font(text).draw(TextStyle::Outline(0.2, ColorF{ 0.1 }), 60, Vec2{ 40, 100 });
+
+		// 影
+		font(text).draw(TextStyle::Shadow(Vec2{ 1.5, 1.5 }, ColorF{ 0.1 }), 60, Vec2{ 40, 200 });
+
+		// 輪郭＋影
+		font(text).draw(TextStyle::OutlineShadow(0.2, ColorF{ 0.1 }, Vec2{ 1.5, 1.5 }, ColorF{ 0.1 }), 60, Vec2{ 40, 300 });
+	}
+}
 ```
 
 

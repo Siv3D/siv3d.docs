@@ -1,8 +1,8 @@
 # 勉強会 8 コマ目（配列と図形の交差）
 
-## 2. 配列を使う
+## 1. 配列を使う
 
-### 2.1 配列の使い方
+### 1.1 配列の使い方
 - `Siv3D` では `std::vector<T>` の代わりに `Array<T>` を使います。
 - `Array` は、`v.push_back(x);` の代わりに `v << x;` と記述できるなど、便利な機能がいくつか追加されています。
 
@@ -34,7 +34,7 @@ void Main()
 ```
 
 
-### 2.2 配列の要素数
+### 1.2 配列の要素数
 - 配列の要素数を調べる場合は `.size()` を使います。
 
 ![](https://raw.githubusercontent.com/Reputeless/lecture-files/main/sophia/image/14-4.2.png)
@@ -67,9 +67,8 @@ void Main()
 ```
 
 
-### 2.3 すべての値を調べる
+### 1.3 すべての値を調べる
 - `for (const auto& elem : v)` による繰り返しで各要素にアクセスします。
-	- 第 7 回 1.4 参照
 
 ![](https://raw.githubusercontent.com/Reputeless/lecture-files/main/sophia/image/14-4.3.png)
 
@@ -97,7 +96,7 @@ void Main()
 ```
 
 
-### 2.4 すべての値を変更する
+### 1.4 すべての値を変更する
 - `for (auto& elem : v)` による繰り返しで各要素にアクセスしつつ、要素を変更できます。
 
 ![](https://raw.githubusercontent.com/Reputeless/lecture-files/main/sophia/image/14-4.3.png)
@@ -131,10 +130,9 @@ void Main()
 ```
 
 
+## 2. クラスを配列に追加する
 
-## 3. クラスを配列に追加する
-
-### 3.1 Circle の配列 (1)
+### 2.1 Circle の配列 (1)
 - `Circle` の配列を作成できます。
 
 ![](https://raw.githubusercontent.com/Reputeless/lecture-files/main/sophia/image/14-5.1.png)
@@ -164,7 +162,7 @@ void Main()
 ```
 
 
-### 3.2 Circle の配列 (2)
+### 2.2 Circle の配列 (2)
 - 一定時間ごとに円を配列に追加するサンプルです。
 
 ![](https://raw.githubusercontent.com/Reputeless/lecture-files/main/sophia/image/14-5.2.png)
@@ -205,7 +203,7 @@ void Main()
 ```
 
 
-### 3.3 Circle の配列 (3)
+### 2.3 Circle の配列 (3)
 - スペースキーを押したとき、円を配列に追加するサンプルです。
 
 ![](https://raw.githubusercontent.com/Reputeless/lecture-files/main/sophia/image/14-5.3.png)
@@ -266,9 +264,9 @@ void Main()
 ```
 
 
-## 4. 配列から要素を削除する
+## 3. 配列から要素を削除する
 
-### 4.1 配列から要素を削除する
+### 3.1 配列から要素を削除する
 - `Array` は、`.remove_if(チェック関数)` を使うことで、チェックに引っかかる要素を配列から削除できます。
 - チェック関数の戻り値は `bool` 型、引数は配列の要素と同じ型にします。
 
@@ -304,7 +302,7 @@ void Main()
 ```
 
 
-### 4.2 配列からチェックに引っかかる円を削除する
+### 3.2 配列からチェックに引っかかる円を削除する
 - 画面の外に出そうな円を削除するサンプルです。
 
 ![](https://raw.githubusercontent.com/Reputeless/lecture-files/main/sophia/image/14-6.2.png)
@@ -374,9 +372,9 @@ void Main()
 ```
 
 
-## 5. 図形同士の交差を調べる
+## 4. 図形同士の交差を調べる
 
-### 5.1 図形同士の交差
+### 4.1 図形同士の交差
 - 図形 A と 図形 B が重なっているかは `if (A.intersects(B))` で調べられます。
 
 ![](https://raw.githubusercontent.com/Reputeless/lecture-files/main/sophia/image/14-7.1.png)
@@ -410,7 +408,7 @@ void Main()
 ```
 
 
-### 5.2 複数の図形との交差判定 (1)
+### 4.2 複数の図形との交差判定 (1)
 - 複数の図形と交差判定をするサンプルです。
 
 ![](https://raw.githubusercontent.com/Reputeless/lecture-files/main/sophia/image/14-7.2.png)
@@ -455,7 +453,7 @@ void Main()
 ```
 
 
-### 5.3 複数の図形との交差判定 (2)
+### 4.3 複数の図形との交差判定 (2)
 - 複数の図形と交差判定をし、交差した円を削除するサンプルです。
 - 交差した円の Y 座標を `-999` に変更することで、その後のチェックに引っかかるようにし、配列から削除します。
 
@@ -511,3 +509,4 @@ void Main()
 	}
 }
 ```
+
