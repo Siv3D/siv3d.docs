@@ -301,7 +301,7 @@ void Main()
 !!! info "RectF の構造"
 	`RectF` は次のようなクラスです。
 	```cpp
-	struct Rect
+	struct RectF
 	{
 		double x;
 		double y;

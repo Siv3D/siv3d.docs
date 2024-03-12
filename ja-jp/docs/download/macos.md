@@ -60,7 +60,7 @@ macOS で Siv3D v0.6.14 を使って開発されたアプリケーションを�
 1. 実行中のプログラムは、++esc++ を押すか、ウィンドウを閉じると終了します。
 
 ??? summary "M1 / M2 Mac における Rosetta モードの有効化"
-	Xcode で Rosetta オプションが表示されない場合は Product &gt; Destination &gt; Destination Architectures から、Show Rosetta Destinations を選択してください。
+	Xcode で Rosetta オプションが表示されない場合は Product &gt; Destination &gt; Destination Architectures から、Show Rosetta Destinations を選択してください。Xcode 15.3 以降は Product &gt; Destination &gt; Show All Run Destinations を押すことで Rosetta オプションが表示されます。
 
 ??? summary "サンプルプログラムを実行するときのファイルアクセス許可のダイアログの回避"
 	macOS Catalina 以降で実行のたびにファイルアクセス許可のダイアログが出現する場合、プロジェクトフォルダ全体を、`(ユーザ名)/デスクトップ` や `(ユーザ名)/ダウンロード` フォルダではなく、`(ユーザ名)/アプリケーション` フォルダ（root のアプリケーションフォルダではなく、ユーザホームのアプリケーションフォルダ）以下へ移動させることで回避できます。
