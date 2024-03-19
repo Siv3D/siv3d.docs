@@ -223,6 +223,8 @@ nav:
     - 9 コマ目（ゲーム開発）: study/quikstart_9.md
     - 生成 AI 活用例: study/openai.md
     - 多態性入門: study/polymorphism.md
+    - 奥行型 UI の作成: studi/quadwarp.md
+    - 3D のボードゲームテンプレート: study/boardgame.md
   - イベント:
     - ゲームジャム: event/gamejam.md
     - ゲームジャム入賞作品: event/gamejam2023.md

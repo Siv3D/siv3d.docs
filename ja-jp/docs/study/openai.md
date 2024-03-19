@@ -213,8 +213,8 @@ public:
 	{
 		m_request.messages.emplace_back(OpenAI::Chat::Role::System, baseRule);
 
-		// GPT-4 を使う場合はコメントアウト
-		//m_request.model = OpenAI::Chat::Model::GPT4_Turbo_Preview;
+		// GPT-4 Turbo を使う
+		m_request.model = OpenAI::Chat::Model::GPT4_Turbo_Preview;
 
 		m_task = OpenAI::Chat::CompleteAsync(m_API_KEY, m_request);
 	}
