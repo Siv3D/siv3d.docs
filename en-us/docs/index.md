@@ -87,8 +87,9 @@ void Main()
 
 #### Silver Sponsor
 - [sknjpn](https://twitter.com/sknjpn)
+- 野菜ジュース
 
 #### Bronze Sponsor
-アゲハマ, Fuyutsubaki, 😊, 🐝, 野菜ジュース, jacking75, Chris Ohk, qppon, ysaito, おおやま, ShivAlley, lamuda, 🌻, fal_rnd, As Project, IZUNA, 柏崎でぃすこ
+アゲハマ, Fuyutsubaki, 😊, 🐝, jacking75, Chris Ohk, qppon, ysaito, おおやま, ShivAlley, lamuda, 🌻, fal_rnd, As Project, IZUNA, 柏崎でぃすこ
 
 [Become a Siv3D Sponsor :material-github:](https://github.com/sponsors/Reputeless){:target="_blank" .md-button} [Sponsorship Opportunities](sponsorship/corporate-sponsor.md){ .md-button } 
