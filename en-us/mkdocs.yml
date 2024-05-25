@@ -181,6 +181,10 @@ nav:
     - 2D Physics Simulation Samples: samples/physics2d.md
     - 3D Drawing Samples: samples/3d.md
     - Creating a Game Launcher: samples/gamelauncher.md
+  - Course:
+    - Calculator: course/calculator.md
+    - Using Polymorphism: course/polymorphism.md
+    - 3D-like UI: course/quadwarp.md
   - API:
     - Class List: api/classes.md
   - Articles:

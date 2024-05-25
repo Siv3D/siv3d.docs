@@ -181,6 +181,10 @@ nav:
     - 2D 物理演算のサンプル: samples/physics2d.md
     - 3D 描画のサンプル: samples/3d.md
     - ゲームランチャーを作る: samples/gamelauncher.md
+  - コース:
+    - 電卓アプリを作る: course/calculator.md
+    - 多態性の活用: course/polymorphism.md
+    - 奥行き型 UI の作成: course/quadwarp.md
   - API:
     - クラス一覧: api/classes.md
   - 記事:
