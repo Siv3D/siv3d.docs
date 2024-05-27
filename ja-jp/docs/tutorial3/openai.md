@@ -4,7 +4,7 @@ OpenAI API と連携する生成 AI の機能を学びます。
 ## 59.1 OpenAI API の概要
 
 ### 59.1.1 OpenAI API とは
-OpenAI API は、OpenAI が提供する AI 生成モデルを利用するための API です。OpenAI API を利用することで、AI 生成モデルを簡単に利用することができます。
+OpenAI API は、OpenAI が提供する生成 AI モデルを利用するための API です。OpenAI API を利用することで、生成 AI モデルを簡単に利用することができます。
 
 ### 59.1.2 利用の流れ
 OpenAI API の利用は、次のような流れになります。
@@ -18,24 +18,26 @@ Siv3D では `OpenAI::～` に用意された関数を使うことで、一連�
 ### 59.1.3 Siv3D で利用できる OpenAI API
 
 - **Chat:** 一連の会話に続くメッセージを回答する
-- **Image:** 英語での説明に基づいた画像を返す
-- **Embedding:** 単語や文章を意味に基づいた埋め込みベクトルに変換する
+- **Image:** プロンプトに基づいた画像を生成する
+- **Embedding:** 単語や文章を、埋め込みベクトルに変換する
+- **Vision:** 画像に関する質問に回答する
+- **Speech:** テキストを音声に変換する
 
 ### 59.1.4 OpenAI API の利用料金
-OpenAI が返答するとき、入出力のトークン数に応じて、API の利用料金が発生します。詳しくは [OpenAI | Pricing :material-open-in-new:](https://openai.com/pricing){:target="_blank"} を参照してください。
+OpenAI が返答するとき、入力や出力の長さ（トークン数）に応じて、API の利用料金が発生します。詳しくは [OpenAI | Pricing :material-open-in-new:](https://openai.com/pricing){:target="_blank"} を参照してください。
 
-API の利用料金が高額になることが心配な場合は、Usage limits（毎月の上限）を設定できます。デフォルトでは毎月 120 ドルです。
+API の利用料金が高額になることが心配な場合は、OpenAI アカウントのダッシュボードから Usage limits（毎月の上限）を設定できます。
 
 
 ## 59.2 準備 | OpenAI API キーの発行と管理
 
 ### 59.2.1 OpenAI API キーの発行
-OpenAI の API キーは、"sk-" で始まる数十文字の文字列です。
+OpenAI の API キーは、"sk-" から始まる数十文字の文字列です。
 
-OpenAI アカウントにサインインし、支払い手段の登録を済ませた状態で [https://platform.openai.com/account/api-keys :material-open-in-new:](https://platform.openai.com/account/api-keys){:target="_blank"} の「Create new secret key」から OpenAI API キーを発行できます（一度しか表示されません）。
+OpenAI アカウントにサインインし、[https://platform.openai.com/api-keys :material-open-in-new:](https://platform.openai.com/api-keys){:target="_blank"} の「Create new secret key」から OpenAI API キーを発行できます（一度しか表示されません）。
 
 ### 59.2.2 API キーを安全に保存する
-コードをコミット・公開したときに API キーが流出しないよう、開発中は API キーを環境変数に保存し、環境変数を読み取るコードで API キーを取得するようにします。
+コードをコミット・公開したときに API キーが流出しないよう、開発中は API キーを環境変数に保存し、環境変数を読み取るコードで API キーを取得することが望ましいです。
 
 ```cpp
 // 環境変数 "MY_OPENAI_API_KEY" から API キーを取得する
@@ -87,9 +89,9 @@ void Main()
 ```
 
 ## 59.3 Chat の基本
-`OpenAI::Chat::Complete()` は、OpenAI の Chat API を利用して、一連の会話に続く回答を取得する関数です。OpenAI からのレスポンスが返ってくるまで関数は制御を返さない（待ちが発生する）点に注意します。待っている間に別のことをしたい場合は 59.5 で扱う非同期版の関数を使います。
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/openai/t1.png)
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/openai/3.png)
+`OpenAI::Chat::Complete()` は、OpenAI の Chat API を利用して、一連の会話に続く回答を取得する関数です。OpenAI からのレスポンスが返ってくるまで関数は制御を返さない（待ちが発生する）点に注意します。待っている間に別のことをしたい場合は 59.5 で扱う非同期版の関数を使います。
 
 ```cpp
 # include <Siv3D.hpp>
@@ -99,9 +101,13 @@ void Main()
 	// 環境変数から API キーを取得する
 	const String API_KEY = EnvironmentVariable::Get(U"MY_OPENAI_API_KEY");
 
-	// 回答を String で得る
-	const String answer = OpenAI::Chat::Complete(API_KEY, U"日本で一番高い山は？");
+	// プロンプト
+	const String prompt = U"ファンタジーゲームの定番の敵キャラクターを 3 つ挙げて。";
 
+	// 回答を String で得る
+	const String answer = OpenAI::Chat::Complete(API_KEY, prompt);
+
+	// 出力
 	Print << answer;
 
 	while (System::Update())
@@ -113,9 +119,8 @@ void Main()
 
 
 ## 59.4 テキストボックスからの入力を Chat に送る
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/openai/t2.png)
 
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/openai/4.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -143,11 +148,11 @@ void Main()
 		if (SimpleGUI::Button(U"送信", Vec2{ 660, 40 }, 80,
 			(not textEditState.text.isEmpty()))) // テキストボックスが空でないときだけボタンを有効にする
 		{
-			// 質問文
-			const String input = textEditState.text;
+			// プロンプト
+			const String prompt = textEditState.text;
 
 			// 回答文
-			answer = OpenAI::Chat::Complete(API_KEY, input);
+			answer = OpenAI::Chat::Complete(API_KEY, prompt);
 		}
 
 		// 回答がある場合
@@ -162,7 +167,7 @@ void Main()
 
 ## 59.5 非同期で Chat の回答を取得する
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/openai/5.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/openai/t4.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -197,11 +202,11 @@ void Main()
 			// 前回の回答を消去する
 			answer.clear();
 
-			// 質問文
-			const String input = textEditState.text;
+			// プロンプト
+			const String prompt = textEditState.text;
 
 			// タスクを作成する
-			task = OpenAI::Chat::CompleteAsync(API_KEY, input);
+			task = OpenAI::Chat::CompleteAsync(API_KEY, prompt);
 		}
 
 		// ChatGPT の応答を待つ間はローディング画面を表示する
@@ -229,7 +234,9 @@ void Main()
 
 ## 59.6 入力 UI の工夫
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/openai/6.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/openai/t3.png)
+
+あらかじめ用意したプロンプトテンプレートに、ユーザーが入力したテキストを組み合わせることで、短い入力から回答を得ることができます。
 
 ```cpp
 # include <Siv3D.hpp>
@@ -264,11 +271,11 @@ void Main()
 			// 前回の回答を消去する
 			answer.clear();
 
-			// 質問文
-			const String input = (U"RPG ゲームで" + textEditState.text + U"に登場する敵モンスターを 1 種類考えてください。");
+			// プロンプト
+			const String prompt = (U"RPG ゲームで" + textEditState.text + U"に登場する敵モンスターを 1 種類考えてください。");
 
 			// タスクを作成する
-			task = OpenAI::Chat::CompleteAsync(API_KEY, input);
+			task = OpenAI::Chat::CompleteAsync(API_KEY, prompt);
 		}
 
 		// ChatGPT の応答を待つ間はローディング画面を表示する
@@ -296,7 +303,7 @@ void Main()
 
 ## 59.7 回答を JSON 形式で得る
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/openai/7.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/openai/t5.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -331,13 +338,13 @@ void Main()
 			// 前回の回答を消去する
 			answer.clear();
 
-			// 質問文
-			String input = (U"RPG ゲームで" + textEditState.text + U"に登場する敵モンスターを 1 種類考えてください。\n");
-			input += U"出力は次のような JSON 形式で、日本語で出力してください。回答に JSON データ以外を含まないで下さい。\n";
-			input += UR"({ "name": "敵の名前", "desc" : "説明" })"; // UR"()" は生文字列リテラル https://cpprefjp.github.io/lang/cpp11/raw_string_literals.html
+			// プロンプト
+			String prompt = (U"RPG ゲームで" + textEditState.text + U"に登場する敵モンスターを 1 種類考えてください。\n");
+			prompt += U"出力は次のような JSON 形式で、日本語で出力してください。回答に JSON データ以外を含まないで下さい。\n";
+			prompt += UR"({ "name": "敵の名前", "desc" : "説明" })"; // UR"()" は生文字列リテラル https://cpprefjp.github.io/lang/cpp11/raw_string_literals.html
 
 			// タスクを作成する
-			task = OpenAI::Chat::CompleteAsync(API_KEY, input);
+			task = OpenAI::Chat::CompleteAsync(API_KEY, prompt);
 		}
 
 		// ChatGPT の応答を待つ間はローディング画面を表示する
@@ -364,15 +371,17 @@ void Main()
 
 
 ## 59.8 複数のメッセージからなる会話から回答を得る
-role と message をペアにした `Array<std::pair<String, String>>` を渡すことで、複数のメッセージからなる会話に対して回答を得ることができます。
+ChatGPT API はリクエストごとに記憶はリセットされます。コンテキストを保持したまま連続した会話を行う場合は、ロールと履歴からなる一連の会話履歴を送信する必要があります。
 
-| role | 説明 |
-|--|--|
-| system | 前提条件や役割などを AI に指示 |
-| user | ユーザの発言 |
-| assistant | AI の発言 |
+| ロール | 説明 |
+| --- | --- |
+| `Rolu::System` | AI の監督者 |
+| `Role::User` | 利用者 |
+| `Role::Assistant` | AI |
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/openai/8.png)
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/openai/t6.png)
+
 
 ```cpp
 # include <Siv3D.hpp>
@@ -382,15 +391,30 @@ void Main()
 	// 環境変数から API キーを取得する
 	const String API_KEY = EnvironmentVariable::Get(U"MY_OPENAI_API_KEY");
 
-	Print << OpenAI::Chat::Complete(API_KEY, {
-		{ U"system", U"回答はできる限り簡潔にして、末尾に！を付けてください。" },
-		{ U"user", U"白い食べ物は？" },
-		{ U"assistant", U"豆腐！" },
-		{ U"user", U"では黒いのは？" } });
+	OpenAI::Chat::Request request;
+
+	// 会話プロンプト（ロールとメッセージのペアの配列）を構築する
+	request.messages.emplace_back(OpenAI::Chat::Role::System,
+		U"あなたは 90% 猫、10% ChatGPT の「CatGPT」としてふるまいなさい。語尾に「ニャン」を付けなさい。");
+
+	request.messages.emplace_back(OpenAI::Chat::Role::User,
+		U"あなたの名前は？");
+
+	request.messages.emplace_back(OpenAI::Chat::Role::Assistant,
+		U"私は CatGPT だニャン");
+
+	request.messages.emplace_back(OpenAI::Chat::Role::User,
+		U"どのように過ごしていますか？"); // 最後は user で終わる必要がある
+
+	// 回答を String で得る
+	const String answer = OpenAI::Chat::Complete(API_KEY, request);
+
+	// 出力
+	Print << answer;
 
 	while (System::Update())
 	{
-	
+
 	}
 }
 ```
@@ -398,24 +422,30 @@ void Main()
 
 ## 59.9 プロンプトから画像を生成する（同期）
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/openai/9.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/openai/t7.png)
+
+
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Window::Resize(512, 512);
+	Window::Resize(Size{ 1792, 1024 } / 2);
 
+	// 環境変数から API キーを取得する
 	const String API_KEY = EnvironmentVariable::Get(U"MY_OPENAI_API_KEY");
 
-	const Texture texture{ OpenAI::Image::Create(API_KEY,
-		U"There are tall mountains in the distance. The sky is clear.",
-		OpenAI::ImageSize512) };
+	// リクエスト内容
+	OpenAI::Image::RequestDALLE3 request;
+	request.prompt = U"A peaceful fantasy landscape with rolling meadows leading to a range of majestic mountains in the distance. The scene is serene, with lush green grass, colorful wildflowers, and a clear blue sky. In the foreground, there are gentle hills, and a sparkling river winding through the meadow. The mountains are snow-capped and majestic, with forests at their base. The overall atmosphere is calm and enchanting, evoking a sense of wonder and tranquility.";
+	request.imageSize = OpenAI::Image::RequestDALLE3::ImageSize1792x1024;
+
+	const Texture texture{ OpenAI::Image::Create(API_KEY, request) };
 
 	while (System::Update())
 	{
-		texture.draw();
+		texture.scaled(0.5).draw();
 	}
 }
 ```
@@ -423,20 +453,28 @@ void Main()
 
 ## 59.10 プロンプトから画像を生成する（非同期）
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/openai/10.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/openai/t8.png)
+
+
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+	Window::Resize(Size{ 1792, 1024 } / 2);
 
+	// 環境変数から API キーを取得する
 	const String API_KEY = EnvironmentVariable::Get(U"MY_OPENAI_API_KEY");
 
-	Array<Texture> textures;
+	// リクエスト内容
+	OpenAI::Image::RequestDALLE3 request;
+	request.prompt = U"A dramatic scene of Mount Fuji erupting with lava and ash clouds, with volcanic ash falling over Tokyo. The sky is dark and filled with ash, creating an apocalyptic atmosphere. Tokyo's skyline is visible in the distance, covered in a layer of ash. The overall mood is intense and somber.";
+	request.imageSize = OpenAI::Image::RequestDALLE3::ImageSize1792x1024;
 
-	AsyncTask task = OpenAI::Image::CreateAsync(API_KEY, U"Mount Fuji has erupted, and volcanic ash is falling on Tokyo.", 4, OpenAI::ImageSize256);
+	AsyncTask<Image> task = OpenAI::Image::CreateAsync(API_KEY, request);
+
+	Texture texture;
 
 	while (System::Update())
 	{
@@ -447,17 +485,12 @@ void Main()
 
 		if (task.isReady())
 		{
-			for (const auto& image : task.get())
-			{
-				textures << Texture{ image };
-			}
+			texture = Texture{ task.get() };
 		}
 
-		for (size_t i = 0; i < textures.size(); ++i)
+		if (texture)
 		{
-			const double x = (i % 2) * 256.0;
-			const double y = (i / 2) * 256.0;
-			textures[i].draw(x, y);
+			texture.scaled(0.5).draw();
 		}
 	}
 }
@@ -466,7 +499,8 @@ void Main()
 
 ## 59.11 Embedding を用いて類似する文章を検索する
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/openai/11.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/openai/t9.png)
+
 
 ```cpp
 # include <Siv3D.hpp>
@@ -506,6 +540,7 @@ void Main()
 
 	Scene::SetBackground(ColorF{ 0.92 });
 
+	// 環境変数から API キーを取得する
 	const String API_KEY = EnvironmentVariable::Get(U"MY_OPENAI_API_KEY");
 
 	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
@@ -603,6 +638,302 @@ void Main()
 	if (initTask.isValid())
 	{
 		initTask.wait();
+	}
+}
+```
+
+
+## 59.12 Vision を用いて画像に関する質問に回答する
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/openai/t10.png)
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Window::Resize(1280, 720);
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+
+	// 環境変数から API キーを取得する
+	const String API_KEY = EnvironmentVariable::Get(U"MY_OPENAI_API_KEY");
+
+	const Texture texture{ U"example/windmill.png" };
+
+	OpenAI::Vision::Request request;
+	request.images << OpenAI::Vision::ImageData::Base64FromFile(U"example/windmill.png");
+	request.questions = U"何が写っていますか？";
+
+	// 非同期タスク
+	AsyncHTTPTask task = OpenAI::Vision::CompleteAsync(API_KEY, request);
+
+	// 回答を格納する変数
+	String answer;
+
+	while (System::Update())
+	{
+		// ChatGPT の応答を待つ間はローディング画面を表示する
+		if (task.isDownloading())
+		{
+			Circle{ Scene::Center(), 50 }.drawArc((Scene::Time() * 120_deg), 300_deg, 4, 4);
+		}
+
+		// 非同期処理が完了し、正常なレスポンスである場合
+		if (task.isReady() && task.getResponse().isOK())
+		{
+			// 非同期処理の結果を取得する
+			answer = OpenAI::Vision::GetContent(task.getAsJSON());
+		}
+
+		texture.fitted(Size{ 400, 300 }).draw(40, 40);
+
+		// 回答がある場合
+		if (answer)
+		{
+			font(answer).draw(20, Rect{ 40, 340, 1200, 240 }, ColorF{ 0.25 });
+		}
+	}
+}
+```
+
+## 59.13 Speech を用いてテキストを音声に変換する
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/openai/t11.png)
+
+
+```cpp
+# include <Siv3D.hpp>
+
+class Task
+{
+public:
+
+	enum class State
+	{
+		Running,
+		Failed,
+		Completed,
+	};
+
+	Task() = default;
+
+	void update()
+	{
+		if (m_isReady)
+		{
+			return;
+		}
+
+		if (m_task.isReady())
+		{
+			m_isReady = true;
+			m_isFailed = (not m_task.get());
+			m_completeTime = Time::GetMillisec();
+		}
+	}
+
+	void play()
+	{
+		if (not m_isReady)
+		{
+			return;
+		}
+
+		if (not m_audio)
+		{
+			m_audio = Audio{ Audio::Stream, m_path };
+		}
+
+		m_audio.play();
+	}
+
+	const String& getText() const
+	{
+		return m_request.input;
+	}
+
+	const Audio& getAudio() const
+	{
+		return m_audio;
+	}
+
+	State getState() const
+	{
+		if (not m_isReady)
+		{
+			return State::Running;
+		}
+		else if (m_isFailed)
+		{
+			return State::Failed;
+		}
+		else
+		{
+			return State::Completed;
+		}
+	}
+
+	static Task Create(const StringView apiKey, const OpenAI::Speech::Request& request, const FilePathView saveDirectory)
+	{
+		Task task;
+		task.m_request = request;
+		task.m_path = FileSystem::PathAppend(saveDirectory, U"{}.{}"_fmt(UUIDValue::Generate().str(), request.responseFormat));
+		task.m_task = OpenAI::Speech::CreateAsync(apiKey, request, task.m_path);
+		task.m_startTime = Time::GetMillisec();
+		return task;
+	}
+
+	double getTime() const
+	{
+		if (not m_isReady)
+		{
+			return 0.0;
+		}
+		else
+		{
+			return (m_completeTime - m_startTime) / 1000.0;
+		}
+	}
+
+private:
+
+	OpenAI::Speech::Request m_request;
+
+	FilePath m_path;
+
+	AsyncTask<bool> m_task;
+
+	uint64 m_startTime = 0;
+
+	uint64 m_completeTime = 0;
+
+	Audio m_audio;
+
+	bool m_isReady = false;
+
+	bool m_isFailed = false;
+};
+
+void DrawTaskShadow(int32 taskIndex)
+{
+	const Rect rect{ 40, (40 + taskIndex * 60), 1200, 56 };
+	rect.drawShadow({ 0, 2 }, 6, 0.0, ColorF{ 0.0, 0.5 }, false);
+}
+
+void DrawTask(int32 taskIndex, Task& task, const Font& font)
+{
+	const double fontSize = 20.0;
+	const Rect rect{ 40, (40 + taskIndex * 60), 1200, 56 };
+
+	rect.draw();
+	{
+		const auto text = font(task.getText());
+		const double textWidth = text.region(fontSize).w;
+		const double overWidth = (textWidth - 846.0 + 100);
+		const Audio& audio = task.getAudio();
+		const Rect textRect = Rect{ rect.pos.movedBy(54, 14), 846, 30 };
+		const ScopedViewport2D viewport{ textRect };
+
+		if (0 < overWidth)
+		{
+			const double audioProgress = (audio.posSec() / audio.lengthSec());
+			const double xOffset = (overWidth * audioProgress);
+			text.draw(fontSize, Vec2{ 10 - xOffset, 0 }, ColorF{ 0.11 });
+		}
+		else
+		{
+			text.draw(fontSize, Vec2{ 10, 0 }, ColorF{ 0.11 });
+		}
+	}
+
+	Rect{ rect.pos.movedBy(900, 00), 300, 56 }.draw(Arg::left(0.8, 0.9, 1.0), Arg::right(0.9, 0.95, 1.0));
+
+	if (task.getState() == Task::State::Completed)
+	{
+		Rect{ rect.pos, 50, rect.h }.draw(ColorF{ 0.2, 0.7, 0.5 });
+		font(U"#{}"_fmt(taskIndex)).draw(fontSize, Arg::leftCenter(rect.pos.movedBy(12, 28)), ColorF{ 1.0 });
+
+		if (SimpleGUI::Button(U"\U000F040A", rect.pos.movedBy(920, 10)))
+		{
+			task.play();
+		}
+
+		font(U"生成時間 {:.2f} 秒"_fmt(task.getTime())).draw(fontSize, Arg::rightCenter(rect.pos.movedBy(1180, 28)), ColorF{ 0.1, 0.2, 0.5 });
+	}
+	else
+	{
+		font(U"#{}"_fmt(taskIndex)).draw(fontSize, Arg::leftCenter(rect.pos.movedBy(12, 28)), ColorF{ 0.11 });
+	}
+}
+
+void Main()
+{
+	Window::Resize(1280, 720);
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+	const Font font{ FontMethod::MSDF, 48, Typeface::Medium };
+
+	// 環境変数から API キーを取得する
+	const String API_KEY = EnvironmentVariable::Get(U"MY_OPENAI_API_KEY");
+
+	Array<Task> tasks;
+
+	TextAreaEditState textAreaEditState;
+	const Array<String> voices = {
+		U"Alloy", U"Echo", U"Fable", U"Onyx", U"Nova", U"Shimmer",
+	};
+	size_t voiceIndex = 0;
+	size_t qualityIndex = 0;
+
+	size_t randomTextIndex = 0;
+
+	const Array<String> randomTexts = {
+		U"The transcriptions API takes as input the audio file you want to transcribe and the desired output file format for the transcription of the audio. We currently support multiple input and output file formats.",
+		U"Please note that our Usage Policies require you to provide a clear disclosure to end users that the TTS voice they are hearing is AI-generated and not a human voice.",
+		U"Siv3D には 2D, 3D ゲーム、メディアアート、ビジュアライザ、シミュレータを効率的に開発するための、便利なクラスや関数が用意されています。",
+		U"Siv3D の API とサンプルは、最新の C++ 規格「C++20」で書かれています。Siv3D を使っているだけで、現代的な C++ の書き方が身に付きます。",
+	};
+
+	while (System::Update())
+	{
+		for (auto& task : tasks)
+		{
+			task.update();
+		}
+
+		for (int32 i = 0; auto & task : tasks)
+		{
+			DrawTaskShadow(i++);
+		}
+
+		for (int32 i = 0; auto & task : tasks)
+		{
+			DrawTask(i++, task, font);
+		}
+
+		SimpleGUI::TextArea(textAreaEditState, Vec2{ 40, 560 }, SizeF{ 1000, 100 });
+
+		if (SimpleGUI::Button(U"Random", Vec2{ 1060, 600 }, 140))
+		{
+			textAreaEditState = TextAreaEditState{ randomTexts[randomTextIndex] };
+			++randomTextIndex %= randomTexts.size();
+		}
+
+		SimpleGUI::HorizontalRadioButtons(voiceIndex, voices, Vec2{ 40, 520 });
+
+		SimpleGUI::HorizontalRadioButtons(qualityIndex, { U"速度", U"品質" }, Vec2{ 840, 520 });
+
+		if (SimpleGUI::Button(U"Generate", Vec2{ 1060, 520 }, 140, (not textAreaEditState.text.isEmpty())))
+		{
+			OpenAI::Speech::Request request;
+			request.model = (qualityIndex == 0) ? OpenAI::Speech::Model::TTS1 : OpenAI::Speech::Model::TTS1HD;
+			request.input = textAreaEditState.text;
+			request.voice = voices[voiceIndex].lowercased();
+			tasks << Task::Create(API_KEY, request, U"speech/");
+
+			textAreaEditState.clear();
+		}
 	}
 }
 ```
