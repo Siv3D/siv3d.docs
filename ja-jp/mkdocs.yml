@@ -184,6 +184,7 @@ nav:
   - コース:
     - 電卓アプリを作る: course/calculator.md
     - 多態性の活用: course/polymorphism.md
+    - レーダーチャート: course/radar-chart.md
     - 奥行き型 UI の作成: course/quadwarp.md
   - API:
     - クラス一覧: api/classes.md

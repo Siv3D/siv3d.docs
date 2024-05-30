@@ -2,7 +2,7 @@
 
 | | | | |
 |:--:|:--:|:--:|:--:|
-| **難易度** | 入門 | **時間** | 60 分～ |
+| **難易度** | 入門 | **時間** | 30 分～ |
 
 ## 1. 背景色を設定する
 
@@ -307,7 +307,7 @@
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/course/calculator/8.png)
 
 - 配列 `Array<Button>` を使って、より多くのボタンを管理します。
-- `for (auto& button : buttons) { }` 内に、各ボタンに対する処理を記述します。
+- `for (const auto& button : buttons) { }` 内に、各ボタンに対する処理を記述します。
 - ボタンがクリックされた場合は、そのボタンのテキストに応じて、入力式 `expression` を更新します。
 
 ??? note "コード"
@@ -347,7 +347,7 @@
 		while (System::Update())
 		{
 			// 各ボタンについて
-			for (auto& button : buttons)
+			for (const auto& button : buttons)
 			{
 				// ボタンの背景を描画する
 				button.rect.rounded(8).draw(); 
@@ -450,7 +450,7 @@
 		while (System::Update())
 		{
 			// 各ボタンについて
-			for (auto& button : buttons)
+			for (const auto& button : buttons)
 			{
 				// ボタンの背景を描画する
 				button.rect.rounded(8).draw(); 
@@ -607,7 +607,7 @@
 		while (System::Update())
 		{
 			// 各ボタンについて
-			for (auto& button : buttons)
+			for (const auto& button : buttons)
 			{
 				// ボタンの背景を描画する
 				button.rect.rounded(8).draw(); 
@@ -769,7 +769,7 @@
 		while (System::Update())
 		{
 			// 各ボタンについて
-			for (auto& button : buttons)
+			for (const auto& button : buttons)
 			{
 				// ボタンの背景を描画する
 				button.rect.rounded(8).draw(button.backgroundColor);
@@ -818,7 +818,7 @@
 	```
 
 
-## 演習
+## 発展
 ここから先は、自分で考えてプログラムを改良してみましょう。
 
 ### 機能のアイデア

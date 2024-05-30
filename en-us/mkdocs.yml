@@ -184,6 +184,7 @@ nav:
   - Course:
     - Calculator: course/calculator.md
     - Using Polymorphism: course/polymorphism.md
+    - Radar Chart: course/radar-chart.md
     - 3D-like UI: course/quadwarp.md
   - API:
     - Class List: api/classes.md
