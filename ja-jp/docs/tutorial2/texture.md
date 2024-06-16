@@ -389,7 +389,7 @@ void Main()
 }
 ```
 
-不透明度（アルファ値）を使うこともできます。元のテクスチャのピクセル色が `ColorF{ sr, sg, sb }` で、書き込み先のピクセルの色が `ColorF{ dr, dg, db }` であるとき、色 `ColorF{ r, g, b, a }` を乗算すると、描画される色は `ColorF{ (sr * a + dr * (1 - a)), (sg * a + dg * (1 - a)), (sb * a + db * (1 - a)) }` になります（通常のブレンドモード時）。
+不透明度（アルファ値）を使うこともできます。元のテクスチャのピクセル色が `ColorF{ sr, sg, sb }` で、書き込み先のピクセルの色が `ColorF{ dr, dg, db }` であるとき、色 `ColorF{ r, g, b, a }` を乗算すると、描画される色は `ColorF{ (sr * r * a + dr * (1 - a)), (sg  * g * a + dg * (1 - a)), (sb * b * a + db * (1 - a)) }` になります（通常のブレンドモード時）。
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/texture/9b.png)
 
