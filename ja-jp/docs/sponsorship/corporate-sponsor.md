@@ -19,6 +19,8 @@ reputeless@gmail.com
 - [協賛特典](corporate-sponsor-guideline.md){:target="_blank"}
 
 ### Siv3D 活動報告書
+- 第 7 号 - 2024 年 6 月 :material-open-in-new:
+- [第 6 号 - 2024 年 3 月 :material-open-in-new:](https://siv3d.jp/sponsorship/report6.pdf){:target="_blank:"}
 - [第 5 号 - 2023 年 12 月 :material-open-in-new:](https://siv3d.jp/sponsorship/report5.pdf){:target="_blank"}
 - [第 4 号 - 2023 年 9 月 :material-open-in-new:](https://siv3d.jp/sponsorship/report4.pdf){:target="_blank"}
 - [第 3 号 - 2023 年 6 月 :material-open-in-new:](https://siv3d.jp/sponsorship/report3.pdf){:target="_blank"}
