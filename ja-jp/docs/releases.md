@@ -2,7 +2,56 @@
 
 ## v0.6 世代
 
-???+ summary "v0.6.14 | 2024-02-05"
+???+ summary "v0.6.15 | 2024-07-03"
+
+	#### 前バージョンからの更新ガイド
+	- [v0.6.14 からのアップグレード手順（Windows）](https://zenn.dev/link/comments/8aaf45fc5ae077)
+
+	#### 新機能
+	- **指定した矩形内にテキストを描画できるかを、実際の描画を行わずに取得する関数 `font(text).fits(fontSize, rect)` を追加しました** ([#1202](https://github.com/Siv3D/OpenSiv3D/issues/1202))
+		- [サンプル](https://zenn.dev/link/comments/76d0b5f552197f)
+	- **Winows 版において、複数のファイルのドラッグを開始できるようにしました** ([#1218](https://github.com/Siv3D/OpenSiv3D/issues/1218))
+		- [サンプル](https://zenn.dev/link/comments/4cb4905d78ae52)
+	- ゼロベクトルの際に指定した値を返す `Vec2::normalized_or(Vec2)` 等を追加しました ([#1152](https://github.com/Siv3D/OpenSiv3D/issues/1152))
+	- `Dialog::SaveFile()` でデフォルトのファイル名を指定できるようにしました ([#1199](https://github.com/Siv3D/OpenSiv3D/issues/1199))
+	- `Circular` に `.lerp()` を追加しました ([#1203](https://github.com/Siv3D/OpenSiv3D/issues/1203), [#1206](https://github.com/Siv3D/OpenSiv3D/pull/1206))
+	- BMP ファイルの準拠度を拡張しました ([#1204](https://github.com/Siv3D/OpenSiv3D/issues/1204), [#1207](https://github.com/Siv3D/OpenSiv3D/pull/1207))
+	- `Texture` から `ID3D11Texture2D*` を取得する機能を追加しました ([#1219](https://github.com/Siv3D/OpenSiv3D/issues/1219))
+	- `Image::inBounds()` を追加しました ([#1229](https://github.com/Siv3D/OpenSiv3D/issues/1229))
+	- プログラムが IDE で実行されているかを取得する関数を追加しました ([#1230](https://github.com/Siv3D/OpenSiv3D/issues/1230))
+	- `Camera2D::getGrabbedPos()` を追加しました ([#1242](https://github.com/Siv3D/OpenSiv3D/issues/1242))
+
+	#### 仕様変更
+	- **Windows 版について、コマンドプロンプトやスタートメニューの検索経由でアプリを起動しても、必ず実行ファイルのディレクトリがカレントディレクトリになるようにしました** ([#1227](https://github.com/Siv3D/OpenSiv3D/issues/1227))
+	- **OpenAI::Char / Vision のデフォルトモデルを最新モデルの GPT-4o に変更しました** ([#1234](https://github.com/Siv3D/OpenSiv3D/issues/1234))
+	- **ゼロベクトルに対する `.normalize()`, `.normalized()` はゼロベクトルを返すよう仕様変更しました** ([#1237](https://github.com/Siv3D/OpenSiv3D/issues/1237))
+	- `LineString::calculateBuffer()` と `LineString::calculateRoundBuffer()` は 1 点の場合にも形状（正方形、円）を返すよう仕様変更しました ([#1209](https://github.com/Siv3D/OpenSiv3D/issues/1209), [#1210](https://github.com/Siv3D/OpenSiv3D/pull/1210))
+	- LunaSVG のバージョンを v2.3.9 に更新しました ([#1211](https://github.com/Siv3D/OpenSiv3D/issues/1211))
+	- 非 SSE 環境での `String::levenshteinDistanceFrom()` の実装を変更しました ([#1239](https://github.com/Siv3D/OpenSiv3D/issues/1239))
+	- Windows 版の `Dialog::SaveFile()` で、デフォルトパスに `./` を指定できるようにしました ([#1240](https://github.com/Siv3D/OpenSiv3D/issues/1240))
+
+	#### パフォーマンス向上
+	- `Image::rotate90()`, `Image::rotate270()` などを高速化しました ([#1182](https://github.com/Siv3D/OpenSiv3D/issues/1182), [#1225](https://github.com/Siv3D/OpenSiv3D/pull/1225)))
+
+	#### 不具合・バグ修正
+	- **`Parse<double>(U"")` が例外を投げず `assert` となっていたバグを修正しました** ([#1226](https://github.com/Siv3D/OpenSiv3D/issues/1226))
+	- **`Platform::Windows::Keyboard::GetEvents()` でクラッシュが発生することがあったバグを修正しました** ([#1221](https://github.com/Siv3D/OpenSiv3D/issues/1221))
+	- `AsyncTask` のテンプレートパラメータ制約を修正しました ([#1213](https://github.com/Siv3D/OpenSiv3D/pull/1213)))
+	- `Statistics::Mode()`, `Statistics::MultiMode()` のビルドエラーを修正しました ([#1214](https://github.com/Siv3D/OpenSiv3D/issues/1214))
+	- `CSV` を `Reader` からロードする際のビルドエラーを修正しました ([#1215](https://github.com/Siv3D/OpenSiv3D/issues/1215))
+	- ドキュメントの誤字を修正しました ([#1216](https://github.com/Siv3D/OpenSiv3D/pull/1216)))
+	- `Point::length()`, `Point::lengthSq()` を整数オーバーフローしにくい実装に変更しました ([#1217](https://github.com/Siv3D/OpenSiv3D/issues/1217))
+	- `FileSystem::Extension()`, `FileSystem::FileName()`, `FileSystem::BaseName()` の一貫性を改善しました ([#1223](https://github.com/Siv3D/OpenSiv3D/issues/1223))
+	- エンジン初期化時に `RegisterDragDrop` に失敗してもエンジン初期化を続行するようにしました ([#1238](https://github.com/Siv3D/OpenSiv3D/issues/1238))
+	- `StringView::lastIndexOfAny()` のデフォルト引数を 0 から npos に修正しました ([#1241](https://github.com/Siv3D/OpenSiv3D/issues/1241))
+
+	#### コントリビューション
+	- [Raclamusi](https://github.com/Raclamusi): **BMP ファイルの準拠度の拡張**, **`Image::rotate90()`, `Image::rotate270()` 等の高速化**, **`LineString::calculateBuffer()` と `LineString::calculateRoundBuffer()` の仕様変更**, `AsyncTask` の修正
+	- [zaligan](https://github.com/zaligan): **`Circular::lerp()` の実装**
+	- [Plinano](https://github.com/Plinano): ドキュメントの修正
+
+
+??? summary "v0.6.14 | 2024-02-05"
 
 	#### 前バージョンからの更新ガイド
 	- [v0.6.13 からのアップグレード手順（Windows）](https://zenn.dev/link/comments/fd6585920f0136)
