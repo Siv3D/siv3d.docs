@@ -199,7 +199,7 @@
 	- [aoriika05](https://github.com/aoriika05): ドキュメントの修正
 
 
-???+ summary "v0.6.11 | 2023-08-11"
+??? summary "v0.6.11 | 2023-08-11"
 
 	#### 新機能
 	- 2D の軌跡を描画する機能を追加しました ([#1006](https://github.com/Siv3D/OpenSiv3D/issues/1006), [#1043](https://github.com/Siv3D/OpenSiv3D/pull/1043))
