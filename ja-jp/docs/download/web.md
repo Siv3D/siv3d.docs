@@ -8,9 +8,9 @@ Web ブラウザで実行できる Siv3D が非公式で提供されています
 	- Visual Studio 2022 の場合は、全部で 3 つのソフトウェアをダウンロード・インストールします。
 
 !!! info "有志による最新版の提供"
-	上記では Siv3D v0.6.6 相当の SDK が提供されていますが、より新しいバージョンの Siv3D への準拠度を高めた SDK が有志によって開発・提供されています。上記 [OpenSiv3D for Web のインストール手順 :material-open-in-new:](https://siv3d.kamenokosoft.com/docs/ja/){:target="_blank"} で導入するソフトウェアのうち、Siv3D SDK について下記リンクからダウンロードできる SDK に置き換えてください。Windows + Visual Studio の場合は「OpenSiv3D_0.6.13_Web-Installer-wasm.exe」です。
+	上記では Siv3D v0.6.6 相当の SDK が提供されていますが、より新しいバージョンの Siv3D への準拠度を高めた SDK が有志によって開発・提供されています。上記 [OpenSiv3D for Web のインストール手順 :material-open-in-new:](https://siv3d.kamenokosoft.com/docs/ja/){:target="_blank"} で導入するソフトウェアのうち、Siv3D SDK について下記リンクからダウンロードできる SDK に置き換えてください。Windows + Visual Studio の場合は「OpenSiv3D_0.6.15_Web-Installer-wasm.exe」です。
 
-	- [OpenSiv3D v0.6.13 Web SDK :material-open-in-new:](https://drive.google.com/drive/folders/15DxoEOpQnpREQpaak8xyicpAjLMpi7EX){:target="_blank"}
+	- [OpenSiv3D v0.6.15 Web SDK :material-open-in-new:](https://drive.google.com/drive/folders/13fk1Mdwy2feXpb452crOibz_UCK-YFSn){:target="_blank"}
 
 
 ## 2. Web 版プロジェクトのビルド
