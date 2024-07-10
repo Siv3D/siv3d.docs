@@ -18,9 +18,9 @@ An unofficial version of Siv3D that can generate programs that run in a web brow
 - Please refer to [OpenSiv3D for Web :material-open-in-new:](https://siv3d.kamenokosoft.com/docs/en/). If you are using Visual Studio 2022, download and install three pieces of software.
 
 !!! info "Latest Version Provided by Volunteers"
-    The link above provides an SDK equivalent to Siv3D v0.6.6, but a more updated SDK, which is more compliant with newer versions of Siv3D, is being developed and provided by volunteers. Replace the Siv3D SDK from the software introduced in the above [installation instructions for OpenSiv3D for Web :material-open-in-new:](https://siv3d.kamenokosoft.com/docs/en/){:target="_blank"} with the SDK downloadable from the link below. For Windows + Visual Studio, use "OpenSiv3D_0.6.15_Web-Installer-wasm.exe."
+    The link above provides an SDK equivalent to Siv3D v0.6.6, but a more updated SDK, which is more compliant with newer versions of Siv3D, is being developed and provided by volunteers. Replace the Siv3D SDK from the software introduced in the above [installation instructions for OpenSiv3D for Web :material-open-in-new:](https://siv3d.kamenokosoft.com/docs/en/){:target="_blank"} with the SDK downloadable from the link below.
 
-	- [OpenSiv3D v0.6.15 Web SDK :material-open-in-new:](https://drive.google.com/drive/folders/13fk1Mdwy2feXpb452crOibz_UCK-YFSn){:target="_blank"}
+	- [OpenSiv3D for Web SDK :material-open-in-new:](https://gist.github.com/Raclamusi/449a2c2f5bc23a271eb8dc844bf24d54){:target="_blank"}
 
 
 ## 2. Building a Web Project
