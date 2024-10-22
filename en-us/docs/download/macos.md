@@ -6,7 +6,7 @@ The necessary development environment for Siv3D programming on macOS is as follo
 
 |  |  |
 |--|--|
-| OS | macOS Big Sur / Monterey / Ventura |
+| OS | macOS Big Sur / Monterey / Ventura / Sonoma |
 | CPU | Intel CPU / Apple Silicon (Rosetta mode)* |
 | GPU | OpenGL 4.1 compatible hardware |
 | Output Devices | Monitors |
@@ -23,7 +23,7 @@ The necessary environment to run applications developed with Siv3D v0.6.15 on ma
 
 |  |  |
 |--|--|
-| OS | macOS Mojave / Catalina / Big Sur / Monterey / Ventura |
+| OS | macOS Mojave / Catalina / Big Sur / Monterey / Ventura / Sonoma |
 | CPU | Intel CPU / Apple Silicon (Rosetta mode)* |
 | GPU | OpenGL 4.1 compatible hardware |
 | Output Devices | Monitors |
@@ -61,8 +61,13 @@ The necessary environment to run applications developed with Siv3D v0.6.15 on ma
 1. To exit a running program, press ++esc++ or close the window.
 
 
-??? summary "Enabling Rosetta mode on M1 - M3 Mac"
-	If the Rosetta option is not displayed in Xcode, select *Show Rosetta Destinations* from Product &gt; Destination &gt; Destination Architectures. From Xcode 15.3 onwards, the Rosetta option can be displayed by pressing Product &gt; Destination &gt; Show All Run Destinations.
+??? summary "Enabling Rosetta Mode on M1 - M3 Macs"
+	To display the Rosetta option in Xcode, follow these steps:  
+
+	- For **Xcode 15.3 or later**, go to `Product > Destination > Show All Run Destinations`.  
+	- For **Xcode 15.2 or earlier**, go to `Product > Destination > Destination Architectures` and select **Show Rosetta Destinations**.  
+	
+	Once the Rosetta option appears, select it.
 
 ??? summary "Avoiding file access permission dialog when running the sample program"
 	If a file access permission dialog appears every time you run on macOS Catalina or later, you can avoid this by moving the entire project folder to the `(Username)/Applications` folder (not the root's Applications folder, but the Applications folder in the user's home), rather than the `(Username)/Desktop` or `(Username)/Downloads` folders.
