@@ -1,5 +1,5 @@
 # 創造のための C++ フレームワーク Siv3D
-<div class="logo"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/logo/logo.png" width="1450" height="450"></div>
+<div class="logo"><img src="https://siv3d.jp/logo.png" width="1450" height="450"></div>
 
 **Siv3D（シブスリーディー）**は、音や画像、AI を使ったゲームやアプリを、**モダンな C++ コードで楽しく簡単にプログラミング**できるオープンソースのフレームワークです。豊富なチュートリアルが用意され、オンラインのユーザコミュニティで気軽に質問や相談ができます。動作環境は Windows / macOS / Linux / Web です。
 
