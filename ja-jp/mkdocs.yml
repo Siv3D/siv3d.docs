@@ -11,7 +11,7 @@ repo_name: Siv3D/OpenSiv3D
 repo_url: https://github.com/Siv3D/OpenSiv3D
 
 # Copyright
-copyright: Copyright (c) 2012 - 2023, Ryo Suzuki<br>Copyright (c) 2012 - 2023, OpenSiv3D Project
+copyright: Copyright (c) 2012 - 2024, Ryo Suzuki<br>Copyright (c) 2012 - 2024, OpenSiv3D Project
 
 # Theme
 theme:
@@ -23,6 +23,7 @@ theme:
   favicon: 'assets/favicon.ico'
   features:
   - navigation.instant
+  - navigation.instant.progress
   - navigation.top
   - navigation.footer
   - search.suggest
@@ -41,6 +42,7 @@ markdown_extensions:
   - attr_list
   - def_list
   - footnotes
+  - md_in_html
   - meta
   - toc:
       permalink: true
@@ -64,10 +66,10 @@ markdown_extensions:
 extra:
   alternate:
     - name: 日本語
-      link: https://siv3d.github.io/ja-jp/
+      link: /ja-jp/
       lang: ja
     - name: English
-      link: https://siv3d.github.io/en-us/
+      link: /en-us/
       lang: en
 
 # Page tree
