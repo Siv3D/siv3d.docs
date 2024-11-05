@@ -45,7 +45,7 @@
 | 2025-01-25 | Siv3D 勉強会 in 東京電機大学 2025 | 東京電機大学の学生・教職員 |
 | 2024-12-15 | Siv3D 勉強会 in 京都 2024 | だれでも |
 | 2024-12-14 | [Siv3D 実装会 in 京都 2024 :material-open-in-new:](https://connpass.com/event/332833/) | だれでも |
-| 2024-12-01～25 | [Siv3D Advent Calendar 2024 :material-open-in-new:](https://qiita.com/advent-calendar/2024/siv3d) | だれでも |
+| 2024-12-01～25 | [Siv3D Advent Calendar 2024 :material-open-in-new:](https://qiita.com/advent-calendar/2024/siv3d) | オンライン・だれでも |
 | 2024-12-01 | Siv3D 実装会 in 熊本 2024 | だれでも |
 
 [過去のイベント](community/history.md){ .md-button } [:fontawesome-brands-discord: Discord Siv3D サーバーに参加する](https://discord.gg/mzevvsY){ .md-button .md-button--primary }
