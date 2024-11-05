@@ -66,10 +66,10 @@ markdown_extensions:
 extra:
   alternate:
     - name: 日本語
-      link: /ja-jp/
+      link: https://siv3d.github.io/ja-jp/
       lang: ja
     - name: English
-      link: /en-us/
+      link: https://siv3d.github.io/en-us/
       lang: en
 
 # Page tree
