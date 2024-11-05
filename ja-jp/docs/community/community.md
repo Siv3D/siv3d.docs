@@ -19,7 +19,7 @@ Siv3D の開発者やユーザが集まって、プログラムについて質�
 ## 3. Siv3D 勉強会
 Siv3D で音や画像、AI を活用するプログラミングを体験しながら、Siv3D でのゲーム・アプリ開発を学ぶイベントです。Siv3D の開発者に直接意見を伝えたり、質問できる機会でもあります。
 
-[学校や地域のコミュニティへの無料での訪問 Siv3D 勉強会 :material-open-in-new:](https://www.dropbox.com/s/eiz3ohkqdt70w1g/Siv3D%20%E8%A8%AA%E5%95%8F%E5%8B%89%E5%BC%B7%E4%BC%9A%E3%81%AE%E6%A1%88%E5%86%85.pdf?dl=0) も提供しています。Discord や DM, またはメールでご相談ください。
+[学校や地域のコミュニティへの無料での訪問 Siv3D 勉強会 :material-open-in-new:](https://www.dropbox.com/s/eiz3ohkqdt70w1g/Siv3D%20%E8%A8%AA%E5%95%8F%E5%8B%89%E5%BC%B7%E4%BC%9A%E3%81%AE%E6%A1%88%E5%86%85.pdf?dl=0){:target="_blank"} も提供しています。Discord や DM, またはメールでご相談ください。
 
 ## 4. OpenSiv3D チャレンジ / インターンシップ
 Siv3D の新機能を作るいくつかのチャレンジ課題の中から好きなものを選び、Siv3D ユーザコミュニティ Discord 内の専用のチャンネルに参加し、メンバーどうし協力 or 競争しながら実装の完成を目指すイベントです。優先的なコードレビューや実装のアドバイスなど、技術サポートを受けられます。
@@ -32,9 +32,9 @@ Siv3D の新機能を作るいくつかのチャレンジ課題の中から好�
 ## 6. GitHub
 不具合の報告や新機能、ドキュメントのリクエストは OpenSiv3D の GitHub リポジトリの Issues に投稿してください。フォーマットは自由ですが、情報が不足している場合は棄却される場合があります。
 
-- [OpenSiv3D Issues :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D/issues)
+- [OpenSiv3D Issues :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D/issues){:target="_blank"}
 
 ## 7. BBS
 匿名で質問を投稿できる旧式の掲示板です。巡回頻度が低いので Discord や Twitter よりも回答が付くまでに時間がかかる場合があります。
 
-- [Siv3D ユーザ助け合い所 :material-open-in-new:](https://siv3d.jp/bbs/patio.cgi)
+- [Siv3D ユーザ助け合い所 :material-open-in-new:](https://siv3d.jp/bbs/patio.cgi){:target="_blank"}
