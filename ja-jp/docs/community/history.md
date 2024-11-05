@@ -1,5 +1,12 @@
 # これまでのイベント
 
+## イベントの開催について
+一定人数の参加者を集めれば、全国どこにでも無料で訪問して Siv3D 勉強会を開催しています。Discord や DM, またはメールでご相談ください。
+
+[Siv3D 無料訪問勉強会の案内（PDF 資料） :material-open-in-new:](https://www.dropbox.com/s/eiz3ohkqdt70w1g/Siv3D%20%E8%A8%AA%E5%95%8F%E5%8B%89%E5%BC%B7%E4%BC%9A%E3%81%AE%E6%A1%88%E5%86%85.pdf?dl=0){ .md-button }
+
+## 2024 年
+
 | 日付 | イベント | 主催 | 会場 |
 | ---- | ---- | ---- | ---- |
 | 2024-10-26 | [Siv3D 勉強会 in 福岡（2024） :material-open-in-new:](https://connpass.com/event/333071/){:target="_blank"} | 福岡学生ゲーム制作コミュニティ「作るっちゃん」 | トーカン博多第 5 ビル（福岡） |
@@ -8,6 +15,11 @@
 | 2024-06-08 | [Siv3D 勉強会 in 早稲田大学（2024） :material-open-in-new:](https://connpass.com/event/319315/){:target="_blank"} | 早稲田コンピュータエンタテインメント（WCE） | 早稲田大学 西早稲田キャンパス（東京） |
 | 2024-03-20 | [Siv3D 勉強会 in 東京電機大学（2024） :material-open-in-new:](https://tdugame.connpass.com/event/311787/){:target="_blank"} | 東京電機大学 DENPAL / 東京電機大学コンピュータクラブ部 | 東京電機大学 鳩山キャンパス（埼玉） |
 | 2024-02-13 | [Siv3D 勉強会 in 岩手（2024） :material-open-in-new:](https://connpass.com/event/305505/){:target="_blank"} | 岩手県立大学 有志 | 岩手県立大学 滝沢キャンパス（岩手） |
+
+## 2023 年
+
+| 日付 | イベント | 主催 | 会場 |
+| ---- | ---- | ---- | ---- |
 | 2023-11-24 | Siv3D 講演 | ShivAlley | ECC コンピュータ専門学校（大阪） |
 | 2023-10-21<br>～11-05 | [バンダイナムコスタジオ杯 \| Siv3D ゲームジャム :material-open-in-new:](https://connpass.com/event/295239/){:target="_blank"} | バンダイナムコスタジオ、Siv3D | オンライン |
 | 2023-09-09 | [Siv3D 勉強会 in 大阪電気通信大学 (2023, オンライン) :material-open-in-new:](https://connpass.com/event/294608/){:target="_blank"} | OECU プログラミングサークル | オンライン |
@@ -18,6 +30,11 @@
 | 2023-03-01 | [Siv3D 勉強会 in 東京都市大学 (オンライン) 【1日目・初心者向け】 :material-open-in-new:](https://connpass.com/event/276228/){:target="_blank"} | 東京都市大学 コンピュータ技術研究会 (CTRL) | オンライン |
 | 2023-02-23 | [Siv3D勉強会 in 会津大学 PandD【2 日目 中級者以上向け】 :material-open-in-new:](https://connpass.com/event/273774/){:target="_blank"} | PandD | 会津大学（福島） |
 | 2023-02-22 | [Siv3D勉強会 in 会津大学 PandD【1 日目 初心者向け】 :material-open-in-new:](https://connpass.com/event/273764/){:target="_blank"} | PandD | 会津大学（福島） |
+
+## 2022 年
+
+| 日付 | イベント | 主催 | 会場 |
+| ---- | ---- | ---- | ---- |
 | 2022-09-12 | [Siv3D 勉強会 in 仙台高専（2022） :material-open-in-new:](https://connpass.com/event/258216/){:target="_blank"} | 仙台高専学生有志 | 仙台高等専門学校 広瀬キャンパス（宮城） |
 | 2022-09-09 | [Siv3D 勉強会 in 大阪電気通信大学（2022, オンライン） :material-open-in-new:](https://connpass.com/event/258770/){:target="_blank"} | 大阪電気通信大学学生有志 | オンライン |
 | 2022-08-29 | [Siv3D 勉強会 in 国際理工カレッジ（2022） :material-open-in-new:](https://kokuri-student.connpass.com/event/253477/){:target="_blank"} | 専門学校国際理工カレッジ学生有志 | 専門学校国際理工カレッジ（千葉） |
@@ -25,14 +42,38 @@
 | 2022-08-22 | [Siv3D 勉強会 in NPCA 夏合宿 :material-open-in-new:](https://connpass.com/event/256287/){:target="_blank"} | 灘中学校・高等学校パソコン研究部 (NPCA) | （非公開） |
 | 2022-08-16 | [Siv3D 勉強会 in 古河中等教育学校（2022） :material-open-in-new:](https://kss-pc-club.connpass.com/event/256286/){:target="_blank"} | 古河中等教育学校 パソコン部 | （非公開） |
 | 2022-03-28 | [Siv3D 勉強会 (2022 春) :material-open-in-new:](https://siv3d.connpass.com/event/242313/){:target="_blank"} | Siv3D | オンライン |
+
+
+## 2020 年
+
+| 日付 | イベント | 主催 | 会場 |
+| ---- | ---- | ---- | ---- |
 | 2020-02-21 | [OpenSiv3D で学ぶ C++ 勉強会【千葉大学 CCS】 :material-open-in-new:](https://connpass.com/event/159065/){:target="_blank"} | 千葉大学電子計算機研究会（CCS） | 千葉市生涯学習センター（千葉） |
 | 2020-01-25 | [Siv3D 勉強会 in 仙台高専（2020） :material-open-in-new:](https://connpass.com/event/158509/){:target="_blank"} | 仙台高等専門学校ソフトウェア研究部会 | 名取市 増田公民館（宮城） |
+
+
+## 2019 年
+
+| 日付 | イベント | 主催 | 会場 |
+| ---- | ---- | ---- | ---- |
 | 2019-08-15 | [Siv3D 勉強会 in 沖縄（2019） :material-open-in-new:](https://connpass.com/event/140750/){:target="_blank"} | 沖縄高専 有志 | 沖縄高専（沖縄） |
 | 2019-03-03 | [Siv3D 勉強会 in 静岡（2019） :material-open-in-new:](https://connpass.com/event/115466/){:target="_blank"} | CoderDojo 静岡 | 静岡市番町市民活動センター（静岡） |
+
+
+## 2018 年
+
+| 日付 | イベント | 主催 | 会場 |
+| ---- | ---- | ---- | ---- |
 | 2018-12-08 | [Siv3D 勉強会 in 石川 2018 :material-open-in-new:](https://connpass.com/event/106038/){:target="_blank"} | Siv3D | 金沢市 IT ビジネスプラザ武蔵（石川） |
 | 2018-09-30 | [Siv3D 勉強会 in 長野（2018） :material-open-in-new:](https://connpass.com/event/97989/){:target="_blank"} | 長野高専 情報技術研究部 | 長野高専（長野） |
 | 2018-07-07 | [Siv3D 勉強会 in 筑波（2018） :material-open-in-new:](https://amusement-creators.connpass.com/event/91201/){:target="_blank"} | 筑波大学 Amusement Creators | 筑波大学サテライトオフィス（茨城） |
 | 2018-05-12 | [Siv3D 勉強会 in 広島（2018） :material-open-in-new:](https://hsc.connpass.com/event/85387/){:target="_blank"} | Hiroshima Student Community (HSC) | サテライトキャンパスひろしま（広島） |
+
+
+## ～2017 年
+
+| 日付 | イベント | 主催 | 会場 |
+| ---- | ---- | ---- | ---- |
 | 2017-05-01 | [Siv3Dハンズオンセミナー@NITIC :material-open-in-new:](https://connpass.com/event/55839/){:target="_blank"} | 石川高専 電子情報研究部 | 石川高専（石川） |
 | 2014-11-09 | [Meet Siv3D! (November 2014) :material-open-in-new:](https://siv3d.doorkeeper.jp/events/16164){:target="_blank"} | Siv3D | 茅場町 Co-Edo（東京） |
 
