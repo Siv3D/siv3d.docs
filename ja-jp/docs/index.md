@@ -140,31 +140,31 @@ C++ のスキルを活かしたいプログラマーや、C++ での開発を学
 
     ---
 
-    Siv3D は MIT ライセンスで [オープンソース開発 :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D){:target="_blank"} されているため、誰でも内部のコードを調べたり、改造したりできます。サードパーティ・ライブラリを含め、商用利用を妨げる条件はありません。開発したゲームやアプリケーションの収益は 100% 開発者が獲得できます。
+    Siv3D は [オープンソース :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D){:target="_blank"} です。誰でも内部のコードを調べたり、改造したりできます。サードパーティ・ライブラリを含め、商用利用を妨げる条件はありません。開発したゲームやアプリケーションの収益は 100% 開発者が獲得できます。
 
 -   __2. すぐに始められる__
 
     ---
 
-    Windows 用の Siv3D SDK インストーラはわずか 120 MB です。インストールは数クリックで完了し、すぐに Visual Studio のメニューに表示されます。開発に必要な情報は公式のチュートリアルにそろっているため、書籍や入門記事を探す必要がありません。
+    Windows 向けの Siv3D SDK インストーラはわずか 120 MB, インストールは数クリックで完了し、すぐに Visual Studio のメニューに表示されます。開発に必要な情報が公式のチュートリアルにそろっていて、書籍や入門記事を探す必要はありません。
 
 -   __3. 非常に短いコード__
 
     ---
 
-    Siv3D には描画や入出力を実現するための便利な関数とクラスが豊富に揃っています。1 つの .cpp ファイルだけで簡単なアプリケーションが完成します。作品のソースコードを GitHub や GitHub Gist で瞬時にシェアして、世界中の Siv3D ユーザと技術を交換し、学び合いましょう。
+    描画や入出力を実現するための便利な関数とクラスが豊富に揃っていて、1 つの .cpp ファイルで簡単なアプリケーションが完成します。ソースコードを GitHub や GitHub Gist で瞬時にシェアして、世界中の Siv3D ユーザと技術を交換しましょう。
 
 -  __4. 小さな学習、大きな力__
 
     ---
 
-    Siv3D は 2,200 ファイルのソースコードと 90 のサードパーティ・ソフトウェアによって構成される大規模なエンジンです。そのパワフルな機能を、使いやすく一貫した Siv3D の API を覚えるだけで自在に扱うことができます。学習に必要なコストを最小限に抑え、作品開発に集中できます。
+    Siv3D は 2,200 ファイルのソースコードと 90 のサードパーティ・ソフトウェアからなる大規模エンジンです。そのパワフルな機能を、一貫した Siv3D の API を覚えるだけで自在に扱えます。学習コストを最小限に抑え、作品開発に集中できます。
 
 -  __5. 親切なコミュニティ__
 
     ---
 
-    Siv3D で困ったことがあれば、Discord などの [オンラインコミュニティ](community/community.md) が助けになります。学校や地域コミュニティへの [無料訪問勉強会](community/community.md) も行っています。オープンソースソフトウェア開発に興味のある学生には、Siv3D を練習場にしたサポートプログラムを毎年提供しています。
+    Siv3D で困ったことがあれば、Discord の [オンラインコミュニティ](community/community.md) が助けになります。学校への [無料訪問勉強会](community/community.md) も行っています。オープンソース開発に興味のある学生には、Siv3D を練習場とするサポートプログラムを提供しています。
 
 -   __6. Web ブラウザで動く__
 
@@ -191,8 +191,6 @@ C++ のスキルを活かしたいプログラマーや、C++ での開発を学
 ### 過去のイベント
 [バンダイナムコスタジオ杯 Siv3D ゲームジャム | 結果発表ページ](event/gamejam2023.md){ .md-button }
 
-### 協賛企業の募集について
-[協賛企業の募集について](sponsorship/corporate-sponsor.md){ .md-button } 
 
 ## 個人スポンサー
 
@@ -207,4 +205,6 @@ C++ のスキルを活かしたいプログラマーや、C++ での開発を学
 #### Bronze Sponsor
 アゲハマ, Fuyutsubaki, 😊, 🐝, jacking75, Chris Ohk, qppon, ysaito, おおやま, ShivAlley, lamuda, 🌻, fal_rnd, As Project, IZUNA, 柏崎でぃすこ, nasatame
 
-[Siv3D の個人スポンサーになる :material-github:](https://github.com/sponsors/Reputeless){:target="_blank" .md-button} 
+---
+
+[協賛企業の募集について](sponsorship/corporate-sponsor.md){ .md-button } [Siv3D の個人スポンサーになる :material-github:](https://github.com/sponsors/Reputeless){:target="_blank" .md-button} 
