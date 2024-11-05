@@ -75,3 +75,6 @@ extra:
 # Page tree
 nav:
   - Siv3D をはじめよう: index.md
+  - コミュニティ:
+    - コミュニティ: community/community.md
+    - これまでのイベント: community/history.md
