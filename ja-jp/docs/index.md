@@ -1,7 +1,14 @@
 # 創造のための C++ フレームワーク Siv3D
 <div class="logo"><img src="https://siv3d.jp/logo.png" width="1450" height="450"></div>
 
-**Siv3D（シブスリーディー）**は、音や画像、AI を使ったゲームやアプリを、モダンな C++ コードで楽しく簡単に開発できる無料の国産フレームワークです。豊富なサンプルコードとチュートリアルが用意され、オンラインのユーザコミュニティで気軽に質問や相談ができます。
+**Siv3D（シブスリーディー）**は、音や画像、AI を使ったゲームやアプリを、モダンな C++ コードで楽しく簡単に開発できるオープンソースのフレームワークです。豊富なサンプルコードとチュートリアルが用意され、オンラインのユーザコミュニティで気軽に質問や相談ができます。
+
+
+## Siv3D をダウンロードする
+
+[Windows :material-microsoft-windows:](download/windows.md){ .md-button .md-button--primary }[macOS :material-apple:](download/macos.md){ .md-button .md-button--primary }[Ubuntu :material-ubuntu:](download/ubuntu.md){ .md-button .md-button--primary }[Web * :material-web:](download/web.md){ .md-button .md-button--primary }
+
+<small>* Web 版は有志による非公式の拡張機能で、設定がやや複雑なため Siv3D 中級者以上向けです。</small>
 
 <div class="grid cards" markdown>
 
@@ -11,7 +18,7 @@
 
     Windows / macOS / Ubuntu / Web
 
--   :material-share-outline:{ .lg .middle }　__オープンソース__
+-   :material-share-outline:{ .lg .middle }　__ライセンス__
 
     ---
 
@@ -31,13 +38,7 @@
 
 </div>
 
-## Siv3D をダウンロードする
-
-[Windows :material-microsoft-windows:](download/windows.md){ .md-button .md-button--primary }[macOS :material-apple:](download/macos.md){ .md-button .md-button--primary }[Ubuntu :material-ubuntu:](download/ubuntu.md){ .md-button .md-button--primary }[Web * :material-web:](download/web.md){ .md-button .md-button--primary }
-
-<small>* Web 版は有志による非公式の拡張機能で、Siv3D 中級者以上向けです。</small>
-
-## 直近のイベント
+## コミュニティ
 
 | 日付 | イベント | 対象者 |
 | --- | --- | --- |
@@ -47,12 +48,13 @@
 | 2024-12-01～25 | [Siv3D Advent Calendar 2024 :material-open-in-new:](https://qiita.com/advent-calendar/2024/siv3d) | だれでも |
 | 2024-12-01 | Siv3D 実装会 in 熊本 2024 | だれでも |
 
+[過去のイベント](community/history.md){ .md-button } [:fontawesome-brands-discord: Discord Siv3D サーバーに参加する](https://discord.gg/mzevvsY){ .md-button .md-button--primary }
+
 
 ## 基本情報
+2D/3D グラフィックス描画、音声再生、入力処理、物理演算、画像処理、AI、ネットワーク通信など、実用的なソフトウェアの開発に必要なクラスや関数が豊富に提供されます。
 
-Siv3D には、2D/3D のグラフィックス描画、音声再生、入力処理、物理演算、画像処理、AI、ネットワーク通信など、実用的なソフトウェアの開発に必要な機能が豊富に揃っています。
-
-すべての基本機能が C++ コードだけで完結するのが特徴で、Unity や Unreal Engine などの商用ゲームエンジンと異なり、独自のエディタやスクリプトを用いず、純粋な C++ コーディングだけでゲームやアプリケーションを完成させられます。
+Unity や Unreal Engine などの商用ゲームエンジンと異なり、独自のエディタやスクリプトを用いず、純粋な C++ コードだけでゲームやアプリケーションを完成させられます。
 
 C++ のスキルを活かしたいプログラマーや、C++ での開発を学びたい人にとって、Siv3D は有力な選択肢です。
 
@@ -90,7 +92,7 @@ C++ のスキルを活かしたいプログラマーや、C++ での開発を学
 
 === "実行結果"
 
-    ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/demo/chick.gif)
+    ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2024/index/emoji_cursor.gif)
 
 ## Siv3D の用途
 
@@ -100,7 +102,6 @@ C++ のスキルを活かしたいプログラマーや、C++ での開発を学
 	<script async class="docswell-embed" src="https://www.docswell.com/assets/libs/docswell-embed/docswell-embed.min.js" data-src="https://www.docswell.com/slide/5XEY92/embed" data-aspect="0.5625"></script>
 
 ??? success "2. フリーゲーム・商用ゲームの開発（クリックで詳細）"
-
 	Siv3D を使って本格的なゲームを開発し、Steam などのゲーム配信プラットフォームでリリースすることができます。Siv3D で作られたゲームの例をいくつか紹介します。
 
 	<iframe src="https://store.steampowered.com/widget/2487390/" frameborder="0" width="646" height="190"></iframe>
@@ -111,18 +112,21 @@ C++ のスキルを活かしたいプログラマーや、C++ での開発を学
 
 
 ??? success "3. プログラミングコンテストにおける情報可視化・GUI（クリックで詳細）"
-
+	C++ で問題を解く際に、Siv3D を使って情報の可視化や GUI を作成することで、問題解決の効率を向上させることができます。全国高等専門学校プログラミングコンテスト（高専プロコン）第 34 回大会（2023 年）の競技部門では、優勝、準優勝、3 位、特別賞を、Siv3D を活用したチームが独占しました。また、第 33 回大会、第 29 大会の優勝チームも Siv3D を使いました。直近の大会では出場校の 3 分の 1 以上が Siv3D を使っています。
 
 ??? success "4. 研究のためのソフトウェア開発（クリックで詳細）"
+	Siv3D を使って実験用のアプリを作ったり、シミュレーションの結果をアニメーションで表現したりすることができます。Siv3D は、研究者が自分のアイデアを形にするための強力なツールとして活用されています。大学生や研究者による Siv3D の利用事例を紹介します。
 
+	<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/Zk99iQE-TxE?si=EoWZOfbDDoCRRxFS" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+	<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/AAbWaGPMjg0?si=RC7OVc9PtSoLUi7x" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ??? success "5. オープンソース活動への参加（クリックで詳細）"
 	プログラミングの経験や実装力を生かして、Siv3D 本体の開発やバグの報告、サンプルコードの作成、記事執筆など、Siv3D での開発体験を向上するためのオープンソース活動に参加できます。これまで中学生を含む 60 人以上が、Siv3D 本体にソースコードをコミットしています。
 
 ??? success "6. Web ブラウザ向けの作品配信（クリックで詳細）"
-	有志ユーザによって提供されている Web 版（[OpenSiv3D for Web :material-open-in-new:](download/web.md){:target="_blank"}）を使うと、Siv3D で作った C++ アプリをブラウザ上で動く Web アプリに移植できます。スマホやタブレットをターゲットにして、たくさんの人に作品を届けることができます。
+	有志ユーザによって提供されている Web 版（[OpenSiv3D for Web :material-open-in-new:](download/web.md){:target="_blank"}）を使うことで、Siv3D で作った C++ アプリを、ブラウザ上で動く Web アプリに移植できます。スマホやタブレットをターゲットにして、たくさんの人に作品を届けることができます。Siv3D 製の Web アプリの例を紹介します。
 
-	#### Siv3D 製の Web アプリの例
 	<blockquote class="twitter-tweet"><p lang="ja" dir="ltr">ゲーム「選挙で勝とう 2024」を作成しました！<br><br>舞台は日本の衆議院選挙。ある党の党首のつもりになって、12 日間の選挙を戦う全く新しいゲームです。ぜひ遊んでみてください！！！<br><br>URL: <a href="https://t.co/tnIySuWA4A">https://t.co/tnIySuWA4A</a> <a href="https://t.co/ZcNHVy61ex">pic.twitter.com/ZcNHVy61ex</a></p>&mdash; E869120 (@e869120) <a href="https://twitter.com/e869120/status/1849277131513053548?ref_src=twsrc%5Etfw">October 24, 2024</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 	<blockquote class="twitter-tweet"><p lang="ja" dir="ltr">大学の講義で教えるために、浮動小数点数 (float 型) の仕組みを学べるアプリを Siv3D で作りました。<a href="https://t.co/BNSwkqAHzt">https://t.co/BNSwkqAHzt</a><br>(PC でのアクセス推奨) <a href="https://twitter.com/hashtag/Siv3D?src=hash&amp;ref_src=twsrc%5Etfw">#Siv3D</a> <a href="https://twitter.com/hashtag/OpenSiv3D?src=hash&amp;ref_src=twsrc%5Etfw">#OpenSiv3D</a> <a href="https://t.co/OAmZfo5R9D">pic.twitter.com/OAmZfo5R9D</a></p>&mdash; Ryo Suzuki (@Reputeless) <a href="https://twitter.com/Reputeless/status/1542160459658416129?ref_src=twsrc%5Etfw">June 29, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
@@ -138,23 +142,23 @@ C++ のスキルを活かしたいプログラマーや、C++ での開発を学
 
     Siv3D は MIT ライセンスで [オープンソース開発 :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D){:target="_blank"} されているため、誰でも内部のコードを調べたり、改造したりできます。サードパーティ・ライブラリを含め、商用利用を妨げる条件はありません。開発したゲームやアプリケーションの収益は 100% 開発者が獲得できます。
 
--   __2. 非常に短いコード__
+-   __2. すぐに始められる__
+
+    ---
+
+    Windows 用の Siv3D SDK インストーラはわずか 120 MB です。インストールは数クリックで完了し、すぐに Visual Studio のメニューに表示されます。開発に必要な情報は公式のチュートリアルにそろっているため、書籍や入門記事を探す必要がありません。
+
+-   __3. 非常に短いコード__
 
     ---
 
     Siv3D には描画や入出力を実現するための便利な関数とクラスが豊富に揃っています。1 つの .cpp ファイルだけで簡単なアプリケーションが完成します。作品のソースコードを GitHub や GitHub Gist で瞬時にシェアして、世界中の Siv3D ユーザと技術を交換し、学び合いましょう。
 
--  __3. 小さな学習、大きな力__
+-  __4. 小さな学習、大きな力__
 
     ---
 
     Siv3D は 2,200 ファイルのソースコードと 90 のサードパーティ・ソフトウェアによって構成される大規模なエンジンです。そのパワフルな機能を、使いやすく一貫した Siv3D の API を覚えるだけで自在に扱うことができます。学習に必要なコストを最小限に抑え、作品開発に集中できます。
-
--   __4. 軽量で迅速なスタート__
-
-    ---
-
-    Siv3D プログラミングを始めるための Windows 用 OpenSiv3D SDK インストーラはわずか 120 MB です。インストールは数クリックで完了し、Visual Studio を起動するとメニューに表示される Siv3D プロジェクトの項目から、すぐにプログラミングを始められます。
 
 -  __5. 親切なコミュニティ__
 
@@ -168,6 +172,18 @@ C++ のスキルを活かしたいプログラマーや、C++ での開発を学
 
     Siv3D で作った C++ プログラムをほぼそのままで、ブラウザ上で動く Web アプリに移植できます。スマホやタブレットをターゲットにすることで、よりたくさんの人に作品を届けることができます。
 </div>
+
+
+## Siv3D で作られたゲームの例
+
+| Mutable 50 \| sashi | マクスウェルのパズルな悪魔 \| muratsubo Games |
+| --- | --- |
+| <iframe src="https://www.youtube-nocookie.com/embed/UAZB_YyMgmQ?si=j50IwGk5kx2cTI7Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> | <iframe src="https://www.youtube-nocookie.com/embed/mGzAnk1hgNU?si=BVSVHigjTNrtKj2J" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> |
+
+| For the GHOSTs \| サークル 原産国 | One week, My room \| サークル 常夜灯 |
+| --- | --- |
+| <iframe src="https://www.youtube-nocookie.com/embed/3ns8QqGWry4?si=v6JKWmueG9RVxVL0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> | <iframe src="https://www.youtube-nocookie.com/embed/S--QI455r3Q?si=jEabVpHLloiLO_gy" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> |
+
 
 ## 法人協賛
 <div class="sponsor"><a href="https://www.bandainamcostudios.com/" target="_blank"><img src="https://siv3d.jp/sponsors/バンダイナムコスタジオ.png" alt="バンダイナムコスタジオ"></a></div>
@@ -190,6 +206,5 @@ C++ のスキルを活かしたいプログラマーや、C++ での開発を学
 
 #### Bronze Sponsor
 アゲハマ, Fuyutsubaki, 😊, 🐝, jacking75, Chris Ohk, qppon, ysaito, おおやま, ShivAlley, lamuda, 🌻, fal_rnd, As Project, IZUNA, 柏崎でぃすこ, nasatame
-
 
 [Siv3D の個人スポンサーになる :material-github:](https://github.com/sponsors/Reputeless){:target="_blank" .md-button} 
