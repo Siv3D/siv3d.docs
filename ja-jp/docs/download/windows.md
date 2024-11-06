@@ -2,7 +2,7 @@
 
 ## 1. システム要件
 ### 1.1 開発者システム要件
-Windows で Siv3D プログラミングをするのに必要な開発環境は次のとおりです。
+Windows PC での Siv3D プログラミングに必要な開発環境は次のとおりです。
 
 |  |  |
 |--|--|
@@ -10,22 +10,21 @@ Windows で Siv3D プログラミングをするのに必要な開発環境は�
 | CPU | Intel または AMD 製の CPU |
 | 映像出力 | モニタなど、何らかの映像出力装置があること |
 | 音声出力 | 何らかの音声出力装置があること |
-| 開発環境 | Microsoft Visual C++ 2022 17.9<br>(インストーラ内で「C++ によるデスクトップ開発」を追加インストールしてください) |
+| 開発環境 | Microsoft Visual C++ 2022 17.11<br>（インストーラ内で「C++ によるデスクトップ開発」を追加インストールしてください） |
 
-??? summary "Visual Studio のエディションについて"
-	Windows 10, Windows 11 のパソコンで Siv3D プログラミングをする場合は**「Visual Studio Community 2022（ビジュアル・スタジオ・コミュニティ 2022）」**を使うのが便利です。これは世界中のプロフェッショナルのソフトウェア開発者が使う「Visual Studio」という統合開発環境の無料版です。学生、個人、少規模の開発であれば、Visual Studio の有料版と同じ機能を無料で使えます。
+??? summary "インストールする Visual Studio のエディション"
+	Windows で Siv3D プログラミングをする場合、**「Visual Studio Community 2022（ビジュアル・スタジオ・コミュニティ 2022）」**を使うのが便利です。これは世界中のプロのソフトウェア開発者が使う「Visual Studio」という統合開発環境の無料版です。学生や個人の開発であれば、Visual Studio の有料版と同じ機能を無料で使えます。
 
-??? summary "Visual Studio のインストールについて"
-	[Visual Studio ダウンロードページ :material-open-in-new:](https://visualstudio.microsoft.com/ja/downloads/){:target="_blank"} から**「Visual Studio 2022 コミュニティ」**のインストーラをダウンロードし実行します。
-
-	インストーラを実行すると、プログラミング言語や開発ツールを選択する、次のような画面が出てきます。この中から**「C++ によるデスクトップ開発」**を選択します（右側の「インストールの詳細」に表示される項目は Visual Studio のバージョンによって異なるため、気にする必要はありません）。
+??? summary "Visual Studio のインストール手順"
+	- [Visual Studio ダウンロードページ :material-open-in-new:](https://visualstudio.microsoft.com/ja/downloads/){:target="_blank"} から**「Visual Studio 2022 コミュニティ」**のインストーラをダウンロードし、実行します。
+	- インストーラを実行すると、プログラミング言語や開発ツールを選択する、次のような画面が出てきます。この中から**「C++ によるデスクトップ開発」**を選択します（右側の「インストールの詳細」に表示される項目は Visual Studio のバージョンによって異なるため、気にする必要はありません）。
 
 	![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/download/windows/vs_installer_desktop.png)
 
-	そのまま右下の 「インストール」 ボタンを押せば、C++ プログラミングに必要なツールのインストールが始まります。
+	- そのまま右下の 「インストール」 ボタンを押せば、C++ プログラミングに必要なツールのインストールが始まります。
 
 ### 1.2 アプリ動作システム要件
-Windows で Siv3D v0.6.15 を使って開発されたアプリケーションを実行するのに必要な環境は次のとおりです。ゲームやアプリを配布するときの説明書に記載すると良いでしょう。
+Siv3D v0.6.15 を使って開発されたアプリケーションを Windows PC で実行するのに必要な環境は次のとおりです。ゲームやアプリを配布するときの説明書に記載すると良いでしょう。
 
 |  |  |
 |--|--|
@@ -39,26 +38,26 @@ Windows で Siv3D v0.6.15 を使って開発されたアプリケーションを
 1. **[OpenSiv3D v0.6.15 Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D_0.6.15_Installer.exe){:target="_blank"}** をダウンロードして実行します。
 1. 実行時に「Windows によって PC が保護されました」と表示された場合は、**詳細情報**を押して**実行**を押します。
 
-!!! info "インストール後に Windows の再起動を推奨"
-	インストーラによって設定された環境変数を Visual Studio に確実に反映させるため、インストール後に Windows を再起動することを推奨します。
-
-??? warning "どうしても失敗する場合は"
-	インストーラの実行に失敗する場合は、このページの「(補足) SDK を手動インストールする」の方法で SDK をインストールしてください。
+??? info "管理者権限がない場合"
+	管理者権限がなく、インストーラの実行ができない場合、このページ下部の「(補足) SDK を手動インストールする」の方法で SDK をインストールしてください。
 
 ??? summary "インストーラが自動的に行うこと"
+	Siv3D のインストーラは、以下の作業を行います。
+
 	- SDK の配置（デフォルトではドキュメントフォルダ）
 	- SDK を配置したパスへのユーザ環境変数の設定
 	- Siv3D プロジェクト用の Visual Studio プロジェクトテンプレートのコピー (通常は `ドキュメント/Visual Studio 2022/Templates/ProjectTemplates/`)
 	- アンインストーラの登録
 
-??? summary "インストールした OpenSiv3D SDK を削除するには"
-	OpenSiv3D SDK は、通常のアプリケーションと同様、Windows の「設定」からアンインストールします。
+??? summary "インストールした SDK を削除するには"
+	OpenSiv3D SDK は、通常の Windows アプリケーションと同様、Windows の「設定」からアンインストールします。
 
 	![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/download/windows/uninstall.png)
 
 ??? summary "過去のバージョン"
-	過去のバージョンの利用は非推奨です。必要な場合に限り、下記からダウンロードしてください。  
-	コンパイラの更新等により、最新の開発環境では過去のバージョンを利用できないことがあります。古い Siv3D プロジェクトをビルドしたい場合は、そのソースコードを最新版のプロジェクトへ移植するのが良い方法です。
+	過去のバージョンの利用は非推奨ですが、必要な場合に限り、下記からダウンロードしてください。
+
+	コンパイラの更新等により、最新の開発環境では過去のバージョンでのビルドに失敗することがあります。古い Siv3D プロジェクトを動かしたい場合は、そのソースコードを最新版のプロジェクトへ移植するのが良い方法です。
 
 	- [OpenSiv3D v0.6.14 Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D_0.6.14_Installer.exe){:target="_blank"}
 	- [OpenSiv3D v0.6.13 Installer for Windows Desktop](https://siv3d.jp/downloads/Siv3D/OpenSiv3D_0.6.13_Installer.exe){:target="_blank"}
@@ -83,17 +82,37 @@ Windows で Siv3D v0.6.15 を使って開発されたアプリケーションを
 1. プロジェクト テンプレートの項目から **OpenSiv3D** を選択し、**次へ** を押します。
 1. プロジェクト名と保存場所を入力し（任意）、**作成** を押します。
 
+??? warning "プロジェクト テンプレートの項目に「OpenSiv3D」が見つからない場合"
+	OneDrive が有効化されている最近の Windows PC では「ドキュメント」フォルダが 2 つ存在することがあります。その場合、Visual Studio が参照するドキュメントフォルダと、「Siv3D プロジェクト用の Visual Studio プロジェクトテンプレート」の配置されたドキュメントフォルダが一致せず、Visual Studio がプロジェクトテンプレートを見つけられない問題が発生します。
+	
+	まずは、`OpenSiv3D_●.●.●.zip` というプロジェクトテンプレートファイルが、`C:\Users\●●●\Documents\Visual Studio 2022\Templates\ProjectTemplates` に存在することを確認します。その後、以下の 2 つの解決法のいずれかを選びます。
+
+	#### 解決法 A | Visual Studio が参照するドキュメントフォルダを変更する
+
+	Visual Studio を起動し、**ツール** メニューから **オプション** を選択します。**プロジェクトおよびソリューション** > **場所** を選び、**ユーザー プロジェクト テンプレートの場所** を、OneDrive のドキュメントフォルダから、通常のドキュメントフォルダに変更します。
+
+	- 変更前: `C:\Users\●●●\OneDrive\Documents\Visual Studio 2022\Templates\ProjectTemplates`
+	- 変更後: `C:\Users\●●●\Documents\Visual Studio 2022\Templates\ProjectTemplates`
+
+	#### 解決法 B | プロジェクトテンプレートを、Visual Studio が参照するドキュメントフォルダに移動させる
+
+	「解決法 A」で指している OneDrive のフォルダへ、プロジェクトテンプレートを移動させます。
+
+	- 移動前: `C:\Users\●●●\Documents\Visual Studio 2022\Templates\ProjectTemplates\OpenSiv3D_●.●.●.zip`
+	- 移動後: `C:\Users\●●●\OneDrive\Documents\Visual Studio 2022\Templates\ProjectTemplates\OpenSiv3D_●.●.●.zip`
+
+
 
 ## 4. Siv3D アプリをビルドする
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/download/msvc.png)
 
-1. プロジェクトを作成すると、サンプルプログラム (Main.cpp) が最初から用意されています。
+1. プロジェクトを作成すると、サンプルプログラム（Main.cpp）が最初から用意されています。
 1. **ビルド** メニューからプロジェクトをビルドします。
-1. **デバッグ** メニューの **デバッグの開始** を押すと、ビルドしたプログラムが実行されます。
+1. **デバッグ** メニューの **デバッグの開始** を押すと、ビルドしたプログラムを実行します。
 1. 実行中のプログラムは、++esc++ を押すか、ウィンドウを閉じると終了します。
 
 ??? warning "「Siv3D.hpp が見つからない」エラーが出る場合"
-	インストーラによって設定された Siv3D SDK のインストール先の情報が、Visual Studio に反映されていないのが原因です。Windows を再起動し、再度新しい Siv3D プロジェクトを作成すると解決します。
+	インストーラによって設定された Siv3D SDK のインストール先を示す環境変数が、Visual Studio に反映されていないことが原因です。作成したプロジェクトは破棄し、Windows を再起動したのち、再度新しい Siv3D プロジェクトを作成することで解決します。
 
 ## （補足）SDK を手動インストールする
 OpenSiv3D インストーラが正常に実行されない場合、代わりに手作業で OpenSiv3D をインストールできます。手順は次のとおりです。
