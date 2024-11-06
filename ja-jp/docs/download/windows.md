@@ -85,7 +85,7 @@ Siv3D v0.6.15 を使って開発されたアプリケーションを Windows PC 
 ??? warning "プロジェクト テンプレートの項目に「OpenSiv3D」が見つからない場合"
 	OneDrive が有効化されている最近の Windows PC では「ドキュメント」フォルダが 2 つ存在することがあります。その場合、Visual Studio が参照するドキュメントフォルダと、「Siv3D プロジェクト用の Visual Studio プロジェクトテンプレート」の配置されたドキュメントフォルダが一致せず、Visual Studio がプロジェクトテンプレートを見つけられない問題が発生します。
 	
-	まずは、`OpenSiv3D_●.●.●.zip` というプロジェクトテンプレートファイルが、`C:\Users\●●●\Documents\Visual Studio 2022\Templates\ProjectTemplates` に存在することを確認します。その後、以下の 2 つの解決法のいずれかを選びます。
+	まずは、`OpenSiv3D_●.●.●.zip` という**プロジェクトテンプレートファイル**が、`C:\Users\●●●\Documents\Visual Studio 2022\Templates\ProjectTemplates` に存在することを確認します。その後、以下の 2 つの解決法のいずれかを選びます。
 
 	#### 解決法 A | Visual Studio が参照するドキュメントフォルダを変更する
 
@@ -96,7 +96,7 @@ Siv3D v0.6.15 を使って開発されたアプリケーションを Windows PC 
 
 	#### 解決法 B | プロジェクトテンプレートを、Visual Studio が参照するドキュメントフォルダに移動させる
 
-	「解決法 A」で指している OneDrive のフォルダへ、プロジェクトテンプレートを移動させます。
+	「解決法 A」で指している OneDrive のフォルダへ、プロジェクトテンプレートファイルを移動させます。
 
 	- 移動前: `C:\Users\●●●\Documents\Visual Studio 2022\Templates\ProjectTemplates\OpenSiv3D_●.●.●.zip`
 	- 移動後: `C:\Users\●●●\OneDrive\Documents\Visual Studio 2022\Templates\ProjectTemplates\OpenSiv3D_●.●.●.zip`
