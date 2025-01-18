@@ -38,3 +38,8 @@ Siv3D の新機能を作るいくつかのチャレンジ課題の中から好�
 匿名で質問を投稿できる旧式の掲示板です。巡回頻度が低いので Discord や Twitter よりも回答が付くまでに時間がかかる場合があります。
 
 - [Siv3D ユーザ助け合い所 :material-open-in-new:](https://siv3d.jp/bbs/patio.cgi){:target="_blank"}
+
+## 8. ユーザによるサンプル集
+- [Siv3D ミニサンプル集 :material-open-in-new:](https://scrapbox.io/voidproc-siv3d-examples/){:target="_blank"}
+- [Siv3D プチサンプル :material-open-in-new:](https://scrapbox.io/Siv3D-small-sample/){:target="_blank"}
+- [Siv3D 残骸置き場 :material-open-in-new:](https://scrapbox.io/raclamusi-siv3d-zangai/){:target="_blank"}
