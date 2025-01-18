@@ -1,14 +1,14 @@
-# 2. ほかのサンプルを試す
-たった数十～数百行のコードで本格的なゲームを開発できるのが Siv3D の特徴です。いくつかの例を動かしてみましょう。
+# 2. サンプルを試す
+Siv3D を使うと、数十～数百行のコードでゲームやアプリを開発できます。いくつかの例を体験してみましょう。
 
 ソースコードをクリップボードにコピーするには、コードの右上の :material-content-copy: をクリックします。
 
 
 ## 2.1 ブロックくずし
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/games/1.gif)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/samples/1.gif)
 
-Siv3D でのゲームプログラミングの雰囲気を体験できる、ブロックくずしのサンプルです。
+ブロックくずしのサンプルです。
 
 ??? memo "コード"
 	```cpp
@@ -114,7 +114,7 @@ Siv3D でのゲームプログラミングの雰囲気を体験できる、ブ�
 	}
 	```
 
-よりコンパクトになるよう書き換えると次のようになります。各種ゲームエンジン・ゲームフレームワークの中でも、この短さ（25 LoC）でブロックくずしを記述できるのは Siv3D だけです。
+よりコンパクトに書き換えると次のようになります。各種ゲームエンジン・ゲームフレームワークの中でも、この短さ（25 LoC）でブロックくずしを記述できるのは Siv3D だけです。
 
 ??? memo "コンパクトにしたコード"
 	```cpp
@@ -179,9 +179,9 @@ Siv3D でのゲームプログラミングの雰囲気を体験できる、ブ�
 
 ## 2.2 タイピングゲーム
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/games/5.gif)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/samples/2.gif)
 
-タイピングゲームの基本機能は次のように実装できます。ゲームループ内でやりたいこと（テキスト入力の更新、描画、ステート更新）が、そのまま直感的にコードに反映されている点が特徴です。
+タイピングゲームの基本機能は次のように実装できます。やりたいこと（テキスト入力の更新、描画、ステート更新）が、そのまま直感的にコードに反映されている点が特徴です。
 
 ??? memo "コード"
 	```cpp
@@ -242,7 +242,7 @@ Siv3D でのゲームプログラミングの雰囲気を体験できる、ブ�
 
 ## 2.3 絵文字タワー
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/games/6.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/samples/3.png)
 
 「絵文字をクリックでドロップし、物理的に積み上がるタワーを作る」という一連の機能（画像からポリゴン生成、物理シミュレーション、カメラ操作、描画）を、コンパクトなコードで完結させています。
 
@@ -364,7 +364,7 @@ Siv3D でのゲームプログラミングの雰囲気を体験できる、ブ�
 
 ## 2.4 スロットマシン
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/games/22.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/samples/4.png)
 
 ++space++ で操作するスロットマシンのサンプルです。効果音は標準搭載のサウンドフォントを使ってプログラムで生成しています。コードのハイライト部分を改造することで、絵柄や出現確率、賞金などの設定を変更できます。
 
@@ -604,9 +604,9 @@ Siv3D でのゲームプログラミングの雰囲気を体験できる、ブ�
 
 ## 2.5 クッキークリッカー
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/games/9.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/samples/5.png)
 
-クリックと生産設備の購入でアイテムの数を増やす「クッキークリッカー」系ゲームのサンプルです。セーブデータの作成と読み込みが含まれているため、ゲームを終了しても途中から再開できます。
+クリックと生産設備の購入でアイテムの数を増やす「クッキークリッカー」系ゲームのサンプルです。セーブデータの作成と読み込みが含まれていて、ゲームを終了しても途中から再開できます。
 
 ??? memo "コード"
     ```cpp
@@ -1024,7 +1024,7 @@ Siv3D でのゲームプログラミングの雰囲気を体験できる、ブ�
 
 ## 2.6 マインスイーパー
 
-![](https://raw.githubusercontent.com/Siv3D/Siv3D-Samples/main/Samples/Minesweeper/Screenshot/3.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/samples/6.png)
 
 マインスイーパーのサンプルです。マウスの左クリックでセルを開き、右クリックで旗を立てます。爆弾を踏まないように、爆弾の位置を推測しながらセルを開いていきます。
 
@@ -1452,20 +1452,173 @@ Siv3D でのゲームプログラミングの雰囲気を体験できる、ブ�
 
 ## 2.7 QR コード作成
 
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/samples/7.png)
+
+テキストボックスに入力した文字列を QR コードに変換して表示するサンプルです。スマートフォンのカメラで読み取ってみましょう。
+
+??? memo "コード"
+	```cpp
+	# include <Siv3D.hpp>
+
+	void Main()
+	{
+		// ウィンドウのサイズを変更する
+		Window::Resize(1280, 720);
+
+		// 変換するテキスト
+		TextEditState textEdit{ U"Abc" };
+
+		// 前回のテキスト
+		String previous;
+
+		// QR コードを表示するための動的テクスチャ
+		DynamicTexture texture;
+
+		while (System::Update())
+		{
+			// テキスト入力
+			SimpleGUI::TextBox(textEdit, Vec2{ 20,20 }, 1240);
+
+			// テキストの更新があれば QR コードを再作成する
+			if (const String current = textEdit.text;
+				current != previous)
+			{
+				// 入力したテキストを QR コードに変換する
+				if (const auto qr = QR::EncodeText(current))
+				{
+					// 枠を付けて拡大した画像で動的テクスチャを更新する
+					texture.fill(QR::MakeImage(qr).scaled(500, 500, InterpolationAlgorithm::Nearest));
+				}
+
+				previous = current;
+			}
+
+			// QR コードを表示する
+			texture.drawAt(640, 400);
+		}
+	}
+	```
 
 
 ## 2.8 音楽プレイヤー
 
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/samples/8.png)
 
+パソコンに保存されている音楽ファイルを再生します。
+
+??? memo "コード"
+	```cpp
+	# include <Siv3D.hpp>
+
+	void Main()
+	{
+		// 音楽
+		Audio audio;
+
+		// FFT の結果
+		FFTResult fft;
+
+		// 再生位置の変更の有無
+		bool seeking = false;
+
+		while (System::Update())
+		{
+			ClearPrint();
+
+			// 再生・演奏時間
+			const String time = (FormatTime(SecondsF{ audio.posSec() }, U"M:ss")
+				+ U'/' + FormatTime(SecondsF{ audio.lengthSec() }, U"M:ss"));
+
+			// プログレスバーの進み具合
+			double progress = static_cast<double>(audio.posSample()) / audio.samples();
+
+			if (audio.isPlaying())
+			{
+				// FFT 解析
+				FFT::Analyze(fft, audio);
+
+				// 結果を可視化する
+				for (auto i : step(Min(Scene::Width(), static_cast<int32>(fft.buffer.size()))))
+				{
+					const double size = Pow(fft.buffer[i], 0.6f) * 1000;
+					RectF{ Arg::bottomLeft(i, 480), 1, size }.draw(HSV{ 240.0 - i });
+				}
+
+				// マウスカーソル位置の周波数を表示する
+				Rect{ Cursor::Pos().x, 0, 1, Scene::Height() }.draw();
+				Print << U"{:.2f} Hz"_fmt(Cursor::Pos().x * fft.resolution);
+			}
+
+			// 再生
+			if (SimpleGUI::Button(U"Play", Vec2{ 40, 500 }, 120, audio && !audio.isPlaying()))
+			{
+				// フェードイン時間 0.2 秒で再生する
+				audio.play(0.2s);
+			}
+
+			// 一時停止
+			if (SimpleGUI::Button(U"Pause", Vec2{ 170, 500 }, 120, audio.isPlaying()))
+			{
+				// フェードアウト時間 0.2 秒で一時停止する
+				audio.pause(0.2s);
+			}
+
+			// フォルダから音楽ファイルを開く
+			if (SimpleGUI::Button(U"Open", Vec2{ 300, 500 }, 120))
+			{
+				audio.stop(0.5s);
+				audio = Dialog::OpenAudio();
+				audio.play();
+			}
+
+			// スライダー
+			if (SimpleGUI::Slider(time, progress, Vec2{ 40, 540 }, 130, 590, (not audio.isEmpty())))
+			{
+				// フェードアウト時間 0.05 秒で一時停止する
+				audio.pause(0.05s);
+
+				// 再生が停止するまで待機する
+				while (audio.isPlaying())
+				{
+					System::Sleep(0.01s);
+				}
+
+				// 再生位置を変更する
+				audio.seekSamples(static_cast<size_t>(audio.samples() * progress));
+
+				// ノイズを避けるため、スライダーから手を離すまで再生は再開しない
+				seeking = true;
+			}
+			else if (seeking && MouseL.up())
+			{
+				// 再生を再開
+				audio.play(0.05s);
+				seeking = false;
+			}
+		}
+
+		// 終了時、再生中だった場合、音量をフェードアウトさせる
+		if (audio.isPlaying())
+		{
+			audio.fadeVolume(0.0, 0.3s);
+			System::Sleep(0.3s);
+		}
+	}
+	```
 
 
 ## 2.9 シンプルな 3D 描画
 
-![](https://res.cloudinary.com/zenn/image/fetch/s--HYMDGZGC--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_1200/https://storage.googleapis.com/zenn-user-upload/deployed-images/28f3cb75f8b0da398acd0c4c.png%3Fsha%3Dc9a2175cf2d09e6789155e135f0b6e492bec97e5)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/samples/9.png)
 
 短いコードで 3D 描画を行うことができます。次のサンプルは Siv3D の 3D 描画機能を使った最もシンプルな例です。
 
-++w++, ++s++, ++a++, ++d++ キーでカメラを操作し、++shift++ または ++ctrl++ キーとの同時押しでカメラの移動速度を変更できます。++e++ キーで上昇、++x++ キーで下降、++up++, ++down++, ++left++, ++right++ キーで視点を移動できます。
+| 操作 | 説明 |
+| --- | --- |
+| ++w++ ++s++ ++a++ ++d++ | カメラの前後左右移動 |
+| ++e++ ++x++ | カメラの上下移動 |
+| ++shift++ または ++ctrl++ を移動キーと同時押し | カメラの移動速度変更 |
+| ++up++ ++down++ ++left++ ++right++ | カメラの視点移動 |
 
 ??? memo "コード"
 	```cpp
@@ -1536,8 +1689,122 @@ Siv3D でのゲームプログラミングの雰囲気を体験できる、ブ�
 	```
 
 
-## 2.10 地形
+## 2.10 地形の編集
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/samples/10.png)
+
 左上の高さマップをクリックして地形の標高を編集することができます。
 
+??? memo "コード"
+	```cpp
+	# include <Siv3D.hpp>
 
+	void Main()
+	{
+		Window::Resize(1280, 720);
+
+		// 地形用の頂点シェーダ
+		const VertexShader vsTerrain = HLSL{ U"example/shader/hlsl/terrain_forward.hlsl", U"VS" }
+			| GLSL{ U"example/shader/glsl/terrain_forward.vert", {{ U"VSPerView", 1 }, { U"VSPerObject", 2 }, { U"VSPerMaterial", 3 }} };
+
+		// 地形用のピクセルシェーダ
+		const PixelShader psTerrain = HLSL{ U"example/shader/hlsl/terrain_forward.hlsl", U"PS" }
+			| GLSL{ U"example/shader/glsl/terrain_forward.frag", {{ U"PSPerFrame", 0 }, { U"PSPerView", 1 }, { U"PSPerMaterial", 3 }} };
+
+		// 地形の法線計算用のピクセルシェーダ
+		const PixelShader psNormal = HLSL{ U"example/shader/hlsl/terrain_normal.hlsl", U"PS" }
+			| GLSL{ U"example/shader/glsl/terrain_normal.frag", {{U"PSConstants2D", 0}} };
+
+		// シェーダの読み込みに失敗した場合は終了する
+		if ((not vsTerrain) || (not psTerrain) || (not psNormal))
+		{
+			return;
+		}
+
+		// 空の色
+		const ColorF backgroundColor = ColorF{ 0.4, 0.6, 0.8 }.removeSRGBCurve();
+
+		// 地形で使用するテクスチャ
+		const Texture terrainTexture{ U"example/texture/grass.jpg", TextureDesc::MippedSRGB };
+		const Texture rockTexture{ U"example/texture/rock.jpg", TextureDesc::MippedSRGB };
+
+		// ブラシのテクスチャ
+		const Texture brushTexture{ U"example/particle.png" };
+
+		// 3D シーン用のレンダーテクスチャ
+		const MSRenderTexture renderTexture{ Scene::Size(), TextureFormat::R8G8B8A8_Unorm_SRGB, HasDepth::Yes };
+
+		// 地形のメッシュ
+		const Mesh gridMesh{ MeshData::Grid({ 128, 128 }, 128, 128) };
+
+		// デバッグ用のカメラ
+		DebugCamera3D camera{ renderTexture.size(), 30_deg, Vec3{ 10, 16, -32 } };
+
+		// 高さマップと法線マップ
+		RenderTexture heightmap{ Size{ 256, 256 }, ColorF{ 0.0 }, TextureFormat::R32_Float };
+		RenderTexture normalmap{ Size{ 256, 256 }, ColorF{ 0.0, 0.0, 0.0 }, TextureFormat::R16G16_Float };
+
+		while (System::Update())
+		{
+			camera.update(2.0);
+
+			// 3D
+			{
+				Graphics3D::SetCameraTransform(camera);
+
+				const ScopedCustomShader3D shader{ vsTerrain, psTerrain };
+				const ScopedRenderTarget3D target{ renderTexture.clear(backgroundColor) };
+				const ScopedRenderStates3D ss{ { ShaderStage::Vertex, 0, SamplerState::ClampLinear} };
+				Graphics3D::SetVSTexture(0, heightmap);
+				Graphics3D::SetPSTexture(1, normalmap);
+				Graphics3D::SetPSTexture(2, rockTexture);
+
+				gridMesh.draw(terrainTexture);
+			}
+
+			// RenderTexture を 2D シーンに描画
+			{
+				Graphics3D::Flush();
+				renderTexture.resolve();
+				Shader::LinearToScreen(renderTexture);
+			}
+
+			if (const bool gen = SimpleGUI::Button(U"Random", Vec2{ 270, 10 });
+				(gen || (MouseL | MouseR).pressed())) // 地形を編集
+			{
+				// 高さマップの編集
+				if (gen)
+				{
+					const PerlinNoiseF perlin{ RandomUint64() };
+					Grid<float> grid(256, 256);
+					for (auto p : step(grid.size()))
+					{
+						grid[p] = (perlin.octave2D0_1(p / 256.0f, 5) * 16.0f);
+					}
+					const RenderTexture noise{ grid };
+					const ScopedRenderTarget2D target{ heightmap };
+					noise.draw();
+				}
+				else
+				{
+					const ScopedRenderTarget2D target{ heightmap };
+					const ScopedRenderStates2D blend{ BlendState::Additive };
+					brushTexture.scaled(1.0 + MouseL.pressed()).drawAt(Cursor::PosF(), ColorF{ Scene::DeltaTime() * 15.0 });
+				}
+
+				// 法線マップの更新
+				{
+					const ScopedRenderTarget2D target{ normalmap };
+					const ScopedCustomShader2D shader{ psNormal };
+					const ScopedRenderStates2D blend{ BlendState::Opaque, SamplerState::ClampLinear };
+					heightmap.draw();
+				}
+			}
+
+			// 高さマップと法線マップを左に表示する
+			heightmap.draw(ColorF{ 0.1 });
+			normalmap.draw(0, 260);
+		}
+	}
+	```
 
