@@ -9,6 +9,7 @@
 
 | 日付 | イベント | 主催 | 会場 |
 | ---- | ---- | ---- | ---- |
+| 2024-12-01 | [Siv3D 実装会 in 熊本 2024 :material-open-in-new:](https://connpass.com/event/336845/){:target="_blank"} | Siv3D | （非公開） |
 | 2024-10-26 | [Siv3D 勉強会 in 福岡（2024） :material-open-in-new:](https://connpass.com/event/333071/){:target="_blank"} | 福岡学生ゲーム制作コミュニティ「作るっちゃん」 | トーカン博多第 5 ビル（福岡） |
 | 2024-08-27 | [Siv3D 実装会 in 大阪 2024 :material-open-in-new:](https://connpass.com/event/322782/){:target="_blank"} | Siv3D | イノゲート大阪（大阪） |
 | 2024-08-26 | [Siv3D 勉強会 in 大阪電気通信大学 (2024) :material-open-in-new:](https://connpass.com/event/322782/){:target="_blank"} | OECU プログラミングサークル | 大阪電気通信大学 寝屋川キャンパス（大阪） |

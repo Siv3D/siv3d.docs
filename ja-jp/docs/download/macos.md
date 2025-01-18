@@ -64,8 +64,8 @@ macOS で Siv3D v0.6.15 を使って開発されたアプリケーションを�
 ??? summary "M1 - M3 Mac における Rosetta モードの有効化"
 	Xcode で Rosetta オプションを表示するには、  
 
-	- Xcode 15.3 以降では **Product &gt; Destination &gt; Show All Run Destinations** を押します。  
-	- Xcode 15.2 以前の場合は **Product &gt; Destination &gt; Destination Architectures** から、**Show Rosetta Destinations** を選択します。  
+	- Xcode 15.3 以降では、メニューバーから **Product &gt; Destination &gt; Show All Run Destinations** を押します。  
+	- Xcode 15.2 以前の場合は、メニューバーから **Product &gt; Destination &gt; Destination Architectures** から、**Show Rosetta Destinations** を選択します。  
 	
 	Rosetta オプションが表示されたら、それを選択します。
 
