@@ -1609,7 +1609,7 @@ Siv3D を使うと、数十～数百行のコードでゲームやアプリを�
 
 ## 2.9 シンプルな 3D 描画
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/samples/9.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/samples/9.jpg)
 
 短いコードで 3D 描画を行うことができます。次のサンプルは Siv3D の 3D 描画機能を使った最もシンプルな例です。
 
@@ -1691,7 +1691,7 @@ Siv3D を使うと、数十～数百行のコードでゲームやアプリを�
 
 ## 2.10 地形の編集
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/samples/10.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/samples/10.jpg)
 
 左上の高さマップをクリックして地形の標高を編集することができます。
 
