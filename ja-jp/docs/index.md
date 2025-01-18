@@ -106,7 +106,9 @@ C++ のスキルを活かしたいプログラマーや、C++ での開発を学
 	<iframe src="https://store.steampowered.com/widget/2770160/" frameborder="0" width="646" height="190"></iframe>
 	<iframe src="https://store.steampowered.com/widget/3147480/" frameborder="0" width="646" height="190"></iframe>
 	<iframe src="https://store.steampowered.com/widget/2492380/" frameborder="0" width="646" height="190"></iframe>
+	<iframe src="https://store.steampowered.com/widget/3382090/" frameborder="0" width="646" height="190"></iframe>
 	<iframe src="https://store.steampowered.com/widget/2943760/" frameborder="0" width="646" height="190"></iframe>
+	<iframe src="https://store.steampowered.com/widget/3328960/" frameborder="0" width="646" height="190"></iframe>
 
 
 ??? success "3. プログラミングコンテストにおける情報可視化・GUI（クリックで詳細）"
