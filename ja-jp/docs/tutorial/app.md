@@ -1,5 +1,5 @@
 # 5. アプリの基本操作
-Siv3D アプリケーションの基本的な操作について学びます。
+Siv3D アプリケーションの基本的な操作を学びます。
 
 ## 5.1 プログラムを終了してウィンドウを閉じる
 - 次のいずれかの操作で、実行中のプログラムを終了できます（チュートリアル 3.5 参照）
@@ -7,7 +7,7 @@ Siv3D アプリケーションの基本的な操作について学びます。
 	2. ++esc++ キーを押す
 	3. プログラムの中で `System::Exit()` を呼び出す
 - プログラムの終了と同時に、ウィンドウも閉じられます
-- 終了操作をカスタマイズする方法は、チュートリアル 5.4 を参照してください
+- 終了操作をカスタマイズする方法は、チュートリアル 5.6 を参照してください
 
 ## 5.2 スクリーンショットを保存する
 - プログラムの実行中、次のいずれかのショートカットキーでスクリーンショットを保存します
@@ -27,7 +27,7 @@ Siv3D アプリケーションの基本的な操作について学びます。
 
 
 ## 5.3 スクリーンショット用のショートカットキーを変更する
-- 実行中のプログラムのスクリーンショットの保存のショートカットキーをカスタマイズするには、`ScreenCapture::SetShortcutKeys({ キーのリスト })` を使います
+- スクリーンショット保存のショートカットキーをカスタマイズするには、`ScreenCapture::SetShortcutKeys({ キーのリスト })` を使います
 
 ```cpp title="スクリーンショットのショートカットキーを変更する"
 # include <Siv3D.hpp>
@@ -92,11 +92,85 @@ void Main()
 ## 5.5 キー操作で全画面表示にする（Windows のみ）
 - Windows では、次のキー操作でウィンドウを全画面表示にできます
 	- ++alt+enter++ を押す
-- 再び ++alt+enter++ を押すと元のウィンドウ表示に戻ります
+	- 再び ++alt+enter++ を押すと元のウィンドウ表示に戻ります
+- ゲーム画面の展示やプレゼンテーションなどで便利です
 
 
 ## 5.6 終了操作を変更する
+- `System::Update()` は、アプリケーションを終了させる特別な **ユーザアクション** が実行されると、以降 `false` を返すようになります
+- 終了操作のユーザアクションは、`System::SetTerminationTriggers()` に `UserAction` フラグを渡すことで変更できます
+	- 複数のユーザアクションを設定する場合は、ビット OR 演算子 `|` を使います
+- デフォルトでは、以下の 2 つのユーザアクションが終了操作として設定されています
 
+| ユーザアクション | 説明 |
+|:--|:--|
+| `UserAction::CloseButtonClicked` | ウィンドウの閉じるボタンを押す |
+| `UserAction::EscapeKeyDown` | ++esc++ を押す |
+
+
+### 5.6.1 ++esc++ で終了しないようにする
+- ++esc++ を押しても終了しないようにするには、次のようにします
+
+```cpp hl_lines="5-6"
+# include <Siv3D.hpp>
+
+void Main()
+{
+	// ウィンドウを閉じるユーザアクションのみを終了操作に設定する。
+	System::SetTerminationTriggers(UserAction::CloseButtonClicked);
+
+	while (System::Update())
+	{
+
+	}
+}
+```
+
+### 5.6.2 プログラムによってのみ終了させる
+- `System::SetTerminationTriggers()` に `UserAction::NoAction` だけを渡すと、ウィンドウの閉じるボタンや ++esc++ キーは終了操作とみなされなくなります
+- その場合、`System::Exit()` を呼び出すか、`Main()` で `return` しない限り、アプリケーションを終了させる必要があります
+
+```cpp hl_lines="5-6"
+# include <Siv3D.hpp>
+
+void Main()
+{
+	// 終了操作を設定しない。
+	System::SetTerminationTriggers(UserAction::NoAction);
+
+	while (System::Update())
+	{
+		// プログラムの開始から 5 秒経過したら
+		if (5.0 <= Scene::Time())
+		{
+			System::Exit();
+		}
+	}
+}
+```
+
+
+### 5.6.3 デフォルトの終了操作に戻す
+- 終了操作をデフォルト設定（ウィンドウを閉じる操作、++esc++ を押す操作）に戻すには、`System::SetTerminationTriggers()` に `UserAction::Default` を渡します
+- `UserAction::Default` は `(UserAction::CloseButtonClicked | UserAction::EscapeKeyDown)` と同じです
+
+```cpp hl_lines="8-9"
+# include <Siv3D.hpp>
+
+void Main()
+{
+	// 終了操作を設定しない。
+	System::SetTerminationTriggers(UserAction::NoAction);
+
+	// デフォルトの終了操作に戻す。
+	System::SetTerminationTriggers(UserAction::Default);
+
+	while (System::Update())
+	{
+
+	}
+}
+```
 
 
 ## 振り返りチェックリスト

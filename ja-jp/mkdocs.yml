@@ -87,6 +87,7 @@ nav:
     - 3. Siv3D の基本: tutorial/basics.md
     - 4. Main 関数とメインループ: tutorial/main.md
     - 5. アプリの基本操作: tutorial/app.md
+    - 6. 簡易的な出力: tutorial/print.md
   - 入門チュートリアル 2:
     - 21. 図形を描く: tutorial2/shape.md
   - 入門チュートリアル 3:
