@@ -6,7 +6,7 @@
 - Siv3D のプログラムで文字列を扱うときは、ダブルクォーテーションの前に `U` を付けます
     - 文字列を Unicode（UTF-32）文字列として扱うための記法です
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/print/1.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/print/1.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -33,7 +33,7 @@ void Main()
 - 簡易出力したものは画面に残り続けます
 - 画面に収まらなくなった場合、古いものから順に消えていきます
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/print/2.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/print/2.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -56,7 +56,7 @@ void Main()
 - 画面の簡易表示をすべて消去するには、`ClearPrint()` を使います
 - メインループの先頭で常に `ClearPrint()` すると、現在のフレーム内で出力した内容だけを画面に表示することができます。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/print/3.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/print/3.png)
 
 ```cpp
 # include <Siv3D.hpp>
