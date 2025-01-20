@@ -4,7 +4,7 @@
 ## 6.1 文字列や数値を簡易表示する
 - `Print` に対して、文字列や数値を `<<` 演算子で渡すと、画面の左上に簡易表示できます
 - Siv3D のプログラムで文字列を扱うときは、ダブルクォーテーションの前に `U` を付けます
-    - 文字列を Unicode (UTF-32) 文字列として扱うための記法です
+    - 文字列を Unicode（UTF-32）文字列として扱うための記法です
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/print/1.png)
 
