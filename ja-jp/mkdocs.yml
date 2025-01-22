@@ -89,6 +89,8 @@ nav:
     - 5. アプリの基本操作: tutorial/app.md
     - 6. 簡易的な出力: tutorial/print.md
     - 7. 基本的な型とクラス: tutorial/basic-types.md
+    - 8. 背景の色を変える: tutorial/background.md
+    - 9. 円と長方形を描く: tutorial/circle-rect.md
   - 入門チュートリアル 2:
     - 21. 図形を描く: tutorial2/shape.md
   - 入門チュートリアル 3:

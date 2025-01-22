@@ -224,10 +224,12 @@ void Main()
 	HashSet<int32> a = { 1, 2, 3, 4, 5 };
 	HashTable<int32, String> b = { { 1, U"one" }, { 2, U"two" }, { 3, U"three" } };
 	Optional<int32> c = 42;
+	Optional<int32> d = none;
 
 	Print << a;
 	Print << b;
 	Print << c;
+	Print << d;
 
 	while (System::Update())
 	{
