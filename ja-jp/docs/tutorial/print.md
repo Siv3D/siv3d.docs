@@ -58,7 +58,7 @@ void Main()
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/print/3.png)
 
-```cpp
+```cpp hl_lines="9-10"
 # include <Siv3D.hpp>
 
 void Main()

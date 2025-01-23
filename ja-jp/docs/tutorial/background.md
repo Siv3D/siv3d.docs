@@ -2,11 +2,13 @@
 画面の背景の色を変える方法を学びます。
 
 ## 8.1 背景を白色にする
-背景の色を変更するには `Scene::SetBackground(色)` を呼びます。白色は `Palette::White` です。一度変更した背景色は、再度変更するまでそのままです。
+- 背景の色を変更するには `Scene::SetBackground(色)` を使います
+- 白色は `Palette::White` です
+- 一度変更した背景色は、再度変更するまでそのままです
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/background/1.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/background/1.png)
 
-```cpp
+```cpp hl_lines="5-6"
 # include <Siv3D.hpp>
 
 void Main()
@@ -23,11 +25,11 @@ void Main()
 
 
 ## 8.2 背景を黒色にする
-黒色は `Palette::Black` です。
+- 黒色は `Palette::Black` です
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/background/2.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/background/2.png)
 
-```cpp
+```cpp hl_lines="5-6"
 # include <Siv3D.hpp>
 
 void Main()
@@ -44,11 +46,11 @@ void Main()
 
 
 ## 8.3 背景をそれ以外の色にする
-`Palette::***` には、[HTML カラー :material-open-in-new:](https://voidproc.github.io/siv3d-palette-browser/){:target="_blank"} の色名を使えます。
+- `Palette::***` では [HTML カラー :material-open-in-new:](https://voidproc.github.io/siv3d-palette-browser/){:target="_blank"} の色名を使えます
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/background/3.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/background/3.png)
 
-```cpp
+```cpp hl_lines="5-6"
 # include <Siv3D.hpp>
 
 void Main()
@@ -65,13 +67,13 @@ void Main()
 
 
 ## 8.4 背景色を RGB で指定する (1)
-色を RGB で指定するには、`ColorF{ r, g, b }` を使います。`r`, `g`, `b` はそれぞれ 0.0 から 1.0 の範囲の値で、それぞれ赤、緑、青の成分を表します。
+- 色を RGB で指定するには、`ColorF{ r, g, b }` を使います
+- `r`, `g`, `b` はそれぞれ 0.0 から 1.0 の範囲の値で、それぞれ赤、緑、青の成分を表します
+- 例えば、淡い水色は `ColorF{ 0.8, 0.9, 1.0 }` （r: 80 %, g: 90 %, b: 100 %）です
 
-例えば、淡い水色は `ColorF{ 0.8, 0.9, 1.0 }` になります。これは r = 80%, g = 90%, b = 100% です。
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/background/4.png)
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/background/4.png)
-
-```cpp
+```cpp hl_lines="5-6"
 # include <Siv3D.hpp>
 
 void Main()
@@ -88,13 +90,14 @@ void Main()
 
 
 ## 8.5 背景色を RGB で指定する (2)
-RGB の各成分が等しい場合、`ColorF{ gray }` と書くことができます。例えば `ColorF{ 0.8 }` は `ColorF{ 0.8, 0.8, 0.8 }` と同じです。
+- RGB の各成分が等しい `ColorF{ 0.6, 0.6, 0.6 }` のような色は、グレースケールの色（白～灰色～黒）になります
+- このような色は `ColorF{ gray }` と短く書くことができます
+- 例えば `ColorF{ 0.8 }` は `ColorF{ 0.8, 0.8, 0.8 }` と同じです
+- 白色は `ColorF{ 1.0 }`, 灰色は `ColorF{ 0.5 }`, 黒色は `ColorF{ 0.0 }` です
 
-白色は `ColorF{ 1.0 }`, 灰色は `ColorF{ 0.5 }`, 黒色は `ColorF{ 0.0 }` と表現できます。
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/background/5.png)
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/background/5.png)
-
-```cpp
+```cpp hl_lines="5-6"
 # include <Siv3D.hpp>
 
 void Main()
@@ -111,9 +114,8 @@ void Main()
 
 
 ## 8.6 背景色を HSV で指定する (1)
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/background/6-2.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/background/hue.png)
 
-<small>図表は https://bootcamp.uxdesign.cc/hsb-hsv-color-system-d14697d7c485 より引用</small>
 
 HSV 表色系で色を指定するには、`HSV{ h, s, v }` を使います。
 
@@ -128,9 +130,9 @@ HSV 表色系で色を指定するには、`HSV{ h, s, v }` を使います。
 
 淡い青色は `HSV{ 220.0, 0.4, 1.0 }` になります。これは h = 220.0°, s = 0.4, v = 1.0 です。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/background/6.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/background/6.png)
 
-```cpp
+```cpp hl_lines="5-6"
 # include <Siv3D.hpp>
 
 void Main()
@@ -148,9 +150,9 @@ void Main()
 ## 8.7 背景色を HSV で指定する (2)
 `s` が 1.0, `v` が 1.0 の場合、`HSV{ h }` と書くこともできます。例えば `HSV{ 220.0 }` は `HSV{ 220.0, 1.0, 1.0 }` と同じです。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/background/7.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/background/7.png)
 
-```cpp
+```cpp hl_lines="5-6"
 # include <Siv3D.hpp>
 
 void Main()
@@ -168,9 +170,9 @@ void Main()
 ## 8.8 背景色を時間の経過とともに変化させる
 背景色の変更は軽量な仕事です。`Scene::SetBackground()` はメインループ内に書いても問題ありません。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/background/8.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/background/8.png)
 
-```cpp
+```cpp hl_lines="7 10"
 # include <Siv3D.hpp>
 
 void Main()

@@ -31,7 +31,7 @@ Siv3D アプリケーションの基本的な操作を学びます。
 ## 5.3 スクリーンショット用のショートカットキーを変更する
 - 現在の Siv3D アプリでスクリーンショットを保存するショートカットキーを変更するには、`ScreenCapture::SetShortcutKeys({ キーのリスト })` を使います
 
-```cpp title="スクリーンショットのショートカットキーを変更する"
+```cpp title="スクリーンショットのショートカットキーを変更する" hl_lines="5-6"
 # include <Siv3D.hpp>
 
 void Main()
@@ -48,7 +48,7 @@ void Main()
 
 - 複数のキーの指定もできます
 
-```cpp title="スクリーンショットのショートカットキーを変更する"
+```cpp title="スクリーンショットのショートカットキーを変更する" hl_lines="5-6"
 # include <Siv3D.hpp>
 
 void Main()
@@ -73,7 +73,7 @@ void Main()
 ??? example "ライセンス情報を追加する"
 	- `LicenseManager::AddLicense()` を使って、ライセンス情報の先頭に新しい項目を追加できます
 
-	```cpp title="ライセンス情報を追加する"
+	```cpp title="ライセンス情報を追加する" hl_lines="5-8"
 	# include <Siv3D.hpp>
 
 	void Main()
