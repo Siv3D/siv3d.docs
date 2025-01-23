@@ -11,7 +11,7 @@ repo_name: Siv3D/OpenSiv3D
 repo_url: https://github.com/Siv3D/OpenSiv3D
 
 # Copyright
-copyright: Copyright (c) 2012 - 2024, Ryo Suzuki<br>Copyright (c) 2012 - 2024, OpenSiv3D Project
+copyright: Copyright (c) 2012 - 2025, Ryo Suzuki<br>Copyright (c) 2012 - 2025, OpenSiv3D Project
 
 # Theme
 theme:
@@ -90,9 +90,10 @@ nav:
     - 6. 簡易的な出力: tutorial/print.md
     - 7. 基本的な型とクラス: tutorial/basic-types.md
     - 8. 背景の色を変える: tutorial/background.md
-    - 9. 円を描く: tutorial/circle.md
-    - 10. 長方形を描く: tutorial/rect.md
-    - 11. 模様を描く: tutorial/pattern.md
+    - 9. 画面と座標: tutorial/scene.md
+    - 10. 円を描く: tutorial/circle.md
+    - 11. 長方形を描く: tutorial/rect.md
+    - 12. 模様を描く: tutorial/pattern.md
   - 入門チュートリアル 2:
     - 21. 図形を描く: tutorial2/shape.md
   - 入門チュートリアル 3:

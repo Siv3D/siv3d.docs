@@ -129,6 +129,7 @@ void Main()
 - 0.0 に近づくほど白っぽい色（淡い色）になります
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/background/saturation.png)
+
 ### 明度
 
 - `v` は明度（value）で、最も暗い 0.0 から最も明るい 1.0 の範囲で色の明るさを制御します
