@@ -90,7 +90,9 @@ nav:
     - 6. 簡易的な出力: tutorial/print.md
     - 7. 基本的な型とクラス: tutorial/basic-types.md
     - 8. 背景の色を変える: tutorial/background.md
-    - 9. 円と長方形を描く: tutorial/circle-rect.md
+    - 9. 円を描く: tutorial/circle.md
+    - 10. 長方形を描く: tutorial/rect.md
+    - 11. 模様を描く: tutorial/pattern.md
   - 入門チュートリアル 2:
     - 21. 図形を描く: tutorial2/shape.md
   - 入門チュートリアル 3:
