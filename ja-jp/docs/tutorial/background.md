@@ -114,21 +114,35 @@ void Main()
 
 
 ## 8.6 背景色を HSV で指定する (1)
+- **色相**、**彩度**、**明度**の 3 要素で色を指定する **HSV 表色系**を使うこともできます
+- HSV 表色系で色を指定するには、`HSV{ h, s, v }` を使います。
+
+### 色相
+- `h` は色相 (hue) で、0.0° から 360.0° までの角度で色を表します
+- 色の系統（赤・黄・緑・青・紫など）を直感的に扱うことができ、角度を回転（加減算）させることで、色相環（下図）に沿ったなめらかな色変化が可能です
+- 角度と同じで 370.0° は 10.0° と同じ色を表します。-10.0° は 350.0° と同じ色を表します。
+
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/background/hue.png)
 
+### 彩度
+- `s` は彩度（saturation）で、最も淡い 0.0 から最も鮮やかな 1.0 の範囲で色の鮮やかさを表現します
+- 0.0 に近づくほど白っぽい色（淡い色）になります
 
-HSV 表色系で色を指定するには、`HSV{ h, s, v }` を使います。
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/background/saturation.png)
+### 明度
 
+- `v` は明度（value）で、最も暗い 0.0 から最も明るい 1.0 の範囲で色の明るさを制御します
+- 0.0 に近づくほど黒っぽい色（暗い色）になります
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/background/value.png)
 
 | 成分 | 値の範囲 | 説明 |
 | --- | --- | --- |
-| h | 0.0 から 360.0（範囲外も可能）| 色相 (hue)<br>色相環（上図）に対応する色を表す。|
-| s | 0.0 から 1.0 | 彩度 (saturation) <br>小さいほど白っぽい色（淡い色）になる。|
-| v | 0.0 から 1.0 | 明度 (value)<br>小さいほど黒っぽい色（暗い色）になる。 |
+| h | 0.0 から 360.0（範囲外も可能）| **色相**：色相環に対応する色を表す。|
+| s | 0.0 から 1.0 | **彩度**：小さいほど白っぽい色（淡い色）になる。|
+| v | 0.0 から 1.0 | **明度**：小さいほど黒っぽい色（暗い色）になる。 |
 
-`h` は色相 (hue) で通常 0.0 から 360.0 の範囲の値ですが、角度と同じで 370.0 は 10.0 と同じ色を表します。-10.0 は 350.0 と同じ色を表します。`s` は彩度 (saturation) で 0.0 から 1.0 の範囲の値です。`v` は明度 (value) で 0.0 から 1.0 の範囲の値です。
-
-淡い青色は `HSV{ 220.0, 0.4, 1.0 }` になります。これは h = 220.0°, s = 0.4, v = 1.0 です。
+- 例えば `HSV{ 220.0, 0.4, 1.0 }`（h: 220.0°, s: 0.4, v: 1.0）は淡い青色になります
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/background/6.png)
 
@@ -148,7 +162,8 @@ void Main()
 ```
 
 ## 8.7 背景色を HSV で指定する (2)
-`s` が 1.0, `v` が 1.0 の場合、`HSV{ h }` と書くこともできます。例えば `HSV{ 220.0 }` は `HSV{ 220.0, 1.0, 1.0 }` と同じです。
+- `HSV{ h }` と短く書いた場合、`HSV{ h, 1.0, 1.0 }` と同じです
+- 例えば `HSV{ 220.0 }` は `HSV{ 220.0, 1.0, 1.0 }` です
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/background/7.png)
 
@@ -168,7 +183,9 @@ void Main()
 ```
 
 ## 8.8 背景色を時間の経過とともに変化させる
-背景色の変更は軽量な仕事です。`Scene::SetBackground()` はメインループ内に書いても問題ありません。
+- 背景色の変更は軽量な仕事です。`Scene::SetBackground()` をメインループ内に書いても問題ありません
+- 次のコードでは、アプリケーションが起動してからの経過時間（秒）を `Scene::Time()` で取得し、それに 60 をかけた値を背景色の色相として使っています
+	- つまり、6 秒かけて色が一周する、背景色のアニメーションです
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/background/8.png)
 
@@ -179,7 +196,7 @@ void Main()
 {
 	while (System::Update())
 	{
-		const double hue = (Scene::Time() * 60.0);
+		const double hue = (Scene::Time() * 60);
 
 		// 背景色を HSV で指定する
 		Scene::SetBackground(HSV{ hue });
@@ -187,7 +204,7 @@ void Main()
 }
 ```
 
-このコードでは、アプリケーションが起動してからの経過時間を`Scene::Time()` で秒単位で取得し、60.0 でかけた値を色相として使っています。つまり、6 秒かけて色が一周する背景色のアニメーションになっています。
+
 
 
 ## 振り返りチェックリスト
@@ -195,4 +212,4 @@ void Main()
 - [x] `Palette::***` を使って色名で色を指定することを学んだ
 - [x] `ColorF{ r, g, b }` または `ColorF{ gray }` を使って RGB で色を指定することを学んだ
 - [x] `HSV{ h, s, v }` または `HSV{ h }` を使って HSV で色を指定することを学んだ
-- [x] `Scene::SetBackground()` はメインループ内で呼び出しても問題ないことを学んだ
+- [x] `Scene::SetBackground()` は軽量なので、メインループ内でも使えることを学んだ
