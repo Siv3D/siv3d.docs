@@ -79,7 +79,7 @@ struct Vec2
 };
 ```
 
-- 9.3 で登場した `Cursor::Pos()` は、マウスカーソルの座標を `Point` 型で返す関数です
+- 9.3 で登場した `Cursor::Pos()` は、マウスカーソルの座標を `Point` 型で返します
 
 ```cpp title="マウスカーソルの座標を簡易表示する" hl_lines="9 12-13"
 # include <Siv3D.hpp>
