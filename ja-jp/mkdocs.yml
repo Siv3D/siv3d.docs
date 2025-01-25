@@ -94,6 +94,7 @@ nav:
     - 10. 円を描く: tutorial/circle.md
     - 11. 長方形を描く: tutorial/rect.md
     - 12. 模様を描く: tutorial/pattern.md
+    - 13. 絵文字を描く: tutorial/emoji.md
   - 入門チュートリアル 2:
     - 21. 図形を描く: tutorial2/shape.md
   - 入門チュートリアル 3:
