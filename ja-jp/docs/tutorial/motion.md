@@ -92,7 +92,7 @@ void Main()
 - 右に進んでいる最中に画面の右端（実際の 800 ピクセルから絵文字のサイズを考慮して 60 ピクセル引いた位置）に到達したら、`velocity` を負の値に変更します
 - 同様に、左に進んでいる最中に画面の左端（60 ピクセル）に到達したら、`velocity` を再び正の値に戻します
 
-```cpp title="絵文字が往復するプログラム" hl_lines="13 20 25"
+```cpp title="絵文字が往復するプログラム" hl_lines="13"
 # include <Siv3D.hpp>
 
 void Main()
@@ -112,17 +112,13 @@ void Main()
 		// 位置を更新する
 		pos.x += (Scene::DeltaTime() * velocity);
 
-		if ((0.0 < velocity) && (740 < pos.x)) // 画面右端に到達したら
+		if (((0.0 < velocity) && (740 < pos.x)) // 画面右端に到達するか
+			|| ((velocity < 0.0) && (pos.x < 60))) // 画面左端に到達したら
 		{
 			// 速度を反転する
 			velocity *= -1;
 		}
-		else if ((velocity < 0.0) && (pos.x < 60)) // 画面左端に到達したら
-		{
-			// 速度を反転する
-			velocity *= -1;
-		}
-		
+
 		emoji.drawAt(pos);
 	}
 }
@@ -156,21 +152,17 @@ void Main()
 		// 位置を更新する
 		pos += (Scene::DeltaTime() * velocity);
 
-		if ((0.0 < velocity.x) && (740 < pos.x)) // 画面右端に到達したら
+		if (((0.0 < velocity.x) && (740 < pos.x)) // 画面右端に到達するか
+			|| ((velocity.x < 0.0) && (pos.x < 60))) // 画面左端に到達したら
 		{
-			velocity.x *= -1;
-		}
-		else if ((velocity.x < 0.0) && (pos.x < 60)) // 画面左端に到達したら
-		{
+			// x 方向の速度を反転する
 			velocity.x *= -1;
 		}
 
-		if ((0.0 < velocity.y) && (540 < pos.y)) // 画面下端に到達したら
+		if (((0.0 < velocity.y) && (540 < pos.y)) // 画面下端に到達するか
+			|| ((velocity.y < 0.0) && (pos.y < 60))) // 画面上端に到達したら
 		{
-			velocity.y *= -1;
-		}
-		else if ((velocity.y < 0.0) && (pos.y < 60)) // 画面上端に到達したら
-		{
+			// y 方向の速度を反転する
 			velocity.y *= -1;
 		}
 
