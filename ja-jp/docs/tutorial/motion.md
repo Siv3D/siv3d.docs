@@ -62,6 +62,8 @@ void Main()
 - `Vec2` 型の変数を使って、絵文字を動かします
 - 絵文字は毎秒 100 ピクセルの速度で右に移動します
 
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/motion/2.png)
+
 ```cpp title="絵文字が毎秒 100 ピクセルの速度で右に移動するプログラム" hl_lines="10 15"
 # include <Siv3D.hpp>
 
@@ -86,11 +88,13 @@ void Main()
 ```
 
 
-## 14.3 絵文字を往復させる
+## 14.3 往復移動
 - 14.2 のプログラムを拡張し、絵文字が画面端に到達したら反対方向に移動するようにします
 - 移動速度を表す変数 `double velocity` を導入し、右に進む場合は `velocity` が正の値、左に進む場合は負の値とします
 - 右に進んでいる最中に画面の右端（実際の 800 ピクセルから絵文字のサイズを考慮して 60 ピクセル引いた位置）に到達したら、`velocity` を負の値に変更します
 - 同様に、左に進んでいる最中に画面の左端（60 ピクセル）に到達したら、`velocity` を再び正の値に戻します
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/motion/3.png)
 
 ```cpp title="絵文字が往復するプログラム" hl_lines="13"
 # include <Siv3D.hpp>
@@ -125,12 +129,14 @@ void Main()
 ```
 
 
-## 14.4 絵文字をバウンドさせる
-- 14.3 のプログラムをさらに拡張し、上下左右方向で移動と跳ね返りを行います
+## 14.4 斜め移動 + バウンド
+- 14.3 のプログラムをさらに拡張し、斜め方向の移動とバウンドを実装します
 - 各方向の移動速度を表す変数 `Vec2 velocity` を導入します
-	- x 成分に左右方向の速度、y 成分に上下方向の速度を格納します
+	- x 成分には左右方向の速度、y 成分には上下方向の速度を格納します
 - `Vec2` は `+=` や `*` などの演算子を使って、x 成分と y 成分をまとめて操作できます
 - `pos += (Scene::DeltaTime() * velocity);` のようなコードで簡潔に記述できます
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/motion/4.png)
 
 ```cpp title="絵文字がバウンドするプログラム" hl_lines="13 18"
 # include <Siv3D.hpp>
@@ -172,8 +178,10 @@ void Main()
 ```
 
 
-## 14.5 絵文字を回転させる
+## 14.5 回転
 - 回転角度を表す変数 `double angle` を導入し、毎秒 180 度の速度で回転させます
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/motion/5.png)
 
 ```cpp title="絵文字が毎秒 180 度の速度で回転するプログラム" hl_lines="10"
 # include <Siv3D.hpp>
@@ -199,7 +207,7 @@ void Main()
 ```
 
 
-## 14.6 図形の変数
+## 14.6 図形クラスのメンバ変数
 
 ### `Circle` クラス
 - `Circle` クラスは次のようなメンバ変数を持っています
@@ -209,10 +217,12 @@ struct Circle
 {
 	union
 	{
+		// 中心座標
 		Vec2 center;
 		struct { double x, y; };
 	};
 
+	// 半径
 	double r;
 };
 ```
@@ -227,12 +237,14 @@ struct Rect
 {
 	union
 	{
+		// 左上の座標
 		Point pos;
 		struct { int32 x, y; };
 	};
 
 	union
 	{
+		// 幅と高さ
 		Point size;
 		struct { int32 w, h; };
 	};
@@ -250,12 +262,14 @@ struct RectF
 {
 	union
 	{
+		// 左上の座標
 		Vec2 pos;
 		struct { double x, y; };
 	};
 
 	union
 	{
+		// 幅と高さ
 		Vec2 size;
 		struct { double w, h; };
 	};
@@ -268,10 +282,36 @@ struct RectF
 ## 14.7 図形を動かす
 - 14.6 で説明したメンバ変数を活用して図形を動かします
 
-```cpp
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/motion/7.png)
 
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	Circle circle{ 400, 300, 10 };
+	RectF rect{ 100, 200, 100, 200 };
+
+	while (System::Update())
+	{
+		const double deltaTime = Scene::DeltaTime();
+		circle.r += (deltaTime * 40.0);
+		rect.x += (deltaTime * 100.0);
+
+		circle.draw();
+		rect.draw(ColorF{ 0.8, 0.9, 1.0 });
+	}
+}
 ```
 
 
 ## 振り返りチェックリスト
+- [x] 固定値を加算するモーションの問題点を学んだ
+- [x] 時間ベースのモーションの作り方を学んだ
+- [x] 絵文字を動かす方法を学んだ
+- [x] 往復やバウンドなどの実装方法を学んだ
+- [x] 回転するモーションの作り方を学んだ
+- [x] 図形クラスのメンバ変数を使って図形を動かす方法を学んだ
 
