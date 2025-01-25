@@ -1,54 +1,43 @@
 # 11. 長方形を描く
 画面に長方形を描く方法を学びます。
 
+## 11.1 長方形を描く
+- 長方形を描くときは `Rect` クラスのオブジェクトを作成し、その `.draw()` を呼びます
+- `Rect` は次のように作成します
+	- 左上の座標 (x, y), 幅 w, 高さ h を指定して `Rect{ x, y, w, h }`（長方形）
+	- 左上の座標 (x, y), 一片の長さ s を指定して `Rect{ x, y, s }`（正方形）
+	- 値はいずれも整数 (`int32`) で指定します
 
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/rect/1.png)
 
-#### 3.7.3 長方形を描く
-長方形を描くときは `Rect` を作成して `.draw()` します。
-
-`Rect{ x, y, w, h }` は、左上座標が (x, y), 幅が w, 高さが h の長方形です。
-
-`Rect{ x, y, s }` は引数を省略したオーバーロードで、左上座標が (x, y), 幅と高さが s の正方形です。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/circle-rect/6.png)
-
-```cpp
+```cpp title="長方形を描く"
 # include <Siv3D.hpp>
 
 void Main()
 {
 	while (System::Update())
 	{
-		// 長方形を描く 
 		Rect{ 20, 40, 400, 100 }.draw();
 
-		// 正方形を描く 
 		Rect{ 100, 200, 80 }.draw(Palette::Orange);
+
+		Rect{ 400, 300, 360, 260 }.draw(ColorF{ 0.8, 0.9, 1.0 });
 	}
 }
 ```
 
-!!! info "Rect の構造"
-	`Rect` は次のようなクラスです。
-	```cpp
-	struct Rect
-	{
-		int32 x;
-		int32 y;
-		int32 w;
-		int32 h;
-	};
-	```
 
-座標や大きさを `double` 型で扱いたい場合は、`Rect` の代わりに `RectF` 使います。
+## 11.2 長方形を描く（浮動小数点数）
+- 座標や大きさを `double` 型で扱いたい場合は、`Rect` の代わりに `RectF` を使います
+- `RectF` は次のように作成します
+	- 左上の座標 (x, y), 幅 w, 高さ h を指定して `RectF{ x, y, w, h }`（長方形）
+	- 左上の座標 (x, y), 一片の長さ s を指定して `RectF{ x, y, s }`（正方形）
+	- 値は整数または浮動小数点数 (`double`) で指定します
+- 次のサンプルで `Scene::Time()` は、アプリケーションが起動してからの経過時間（秒）を `double` 型で返します。この値に 20.0 をかけた値を長方形の幅として描画します
 
-`Scene::Time()` は、プログラム開始からの経過時間を秒 （`double` 型）で返します。
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/rect/2.png)
 
-下記のコードでは、長方形の幅 `w` が毎秒 20.0 のペースで増えていきます。`double` 型である `w` に合わせるため、`Rect` ではなく `RectF` を使います。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/circle-rect/7.png)
-
-```cpp
+```cpp title="時間経過で横幅が変わる長方形を描く"
 # include <Siv3D.hpp>
 
 void Main()
@@ -57,23 +46,40 @@ void Main()
 	{
 		const double w = (Scene::Time() * 20.0);
 
-		// 長方形を描く 
-		RectF{ 20, 40, w, 100 }.draw();
+		RectF{ 0, 250, w, 100 }.draw();
 	}
 }
 ```
 
-!!! info "RectF の構造"
-	`RectF` は次のようなクラスです。
-	```cpp
-	struct Rect
-	{
-		double x;
-		double y;
-		double w;
-		double h;
-	};
-	```
+- `w` は `double` 型なので、`RectF` ではなく`Rect` を使うとコンパイルエラーになります
+
+
+## 11.3 中心を指定して長方形を作成する
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/rect/3.png)
+
+
+## 11.4 長方形の枠を描く
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/rect/4.png)
+
+
+## 11.5 上下のグラデーション
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/rect/5.png)
+
+
+## 11.6 左右のグラデーション
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/rect/6.png)
+
+
+## 振り返りチェックリスト
+
+
+
+
+
 
 #### 3.7.4 円や長方形の枠を描く
 円や長方形の枠だけを描きたい場合、`.draw()` の代わりに `.drawFrame(innerThickness, outerThickness, color)` を使います。

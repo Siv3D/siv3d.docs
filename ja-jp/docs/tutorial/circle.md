@@ -2,8 +2,8 @@
 画面に円を描く方法を学びます。
 
 ## 10.1 円を描く
-- 描画命令はメインループの中に書きます
-	- 毎フレーム背景色で画面がクリアされるため、毎フレーム描画する必要があります
+- 描画命令を**メインループの中**に書きます
+	- 毎フレーム背景色で画面がクリアされるため、円を表示し続けたい場合は、円を毎フレーム描画する必要があります
 - 円を描くときは `Circle` クラスのオブジェクトを作成し、その `.draw()` を呼びます
 - `Circle` は中心の X 座標、Y 座標、半径を指定して `Circle{ x, y, r }` のように作成します
 
@@ -25,8 +25,8 @@ void Main()
 
 
 ## 10.2 マウスに追随する円を描く
-- `Circle` は `Point` 型や `Vec2` 型の値を使って `Circle{ pos, r }` のように 2 つの引数からも作成できます
-- 現在のマウスカーソル座標を `Point` 型で返す `Cursor::Pos()` と組み合わせて、マウスに追随する円を描くことができます
+- `Circle` は `Point` 型や `Vec2` 型の値を使って `Circle{ pos, r }` のように 2 つの引数から作成できます
+- 現在のマウスカーソル座標を `Point` 型で返す `Cursor::Pos()` と組み合わせ、マウスに追随する円を描くことができます
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/circle/2.png)
 
@@ -85,10 +85,11 @@ void Main()
 	- `ColorF{ r, g, b, a }`, `ColorF{ gray, a }`
 	- `HSV{ h, s, v, a }`, `HSV{ h, a }`
 - `ColorF{ 0.0, 0.6, 0.2 }` のように、不透明度を指定しない場合、`a` は 1.0 になります
+- `Scene::SetBackground()` で背景色を設定するときは、不透明度の値には意味がないため無視されます
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/circle/4.png)
 
-```cpp title="半透明の円を描く"
+```cpp title="半透明の円を描く" hl_lines="11"
 # include <Siv3D.hpp>
 
 void Main()
@@ -104,15 +105,13 @@ void Main()
 }
 ```
 
-- `Scene::SetBackground()` で背景色を設定するとき、不透明度の値には意味がないため無視されます
-
 
 ## 10.5 円の枠を描く
 - 円の枠だけを描きたい場合、`.draw()` の代わりに `.drawFrame()` を使います
 - `.drawFrame()` は次の 2 通りの書き方があります
 	- `.drawFrame(太さ, color)`
 	- `.drawFrame(内側方向の太さ, 外側方向の太さ, color)`
-- 内側方向、外側方向とは、基準円から内側、外側に向かっての太さを表し、最終的な太さはそれらの和になります
+- 内側方向・外側方向は、基準円から内側、外側に向かっての太さを表し、最終的な太さはそれらの和になります
 - 太さはいずれも 0.0 以上の値を指定します
 - `color` を省略した場合、`.draw()` と同様に白色になります
 
@@ -125,9 +124,9 @@ void Main()
 {
 	while (System::Update())
 	{
-		Circle{ 100, 300, 60 }.drawFrame(4);
+		Circle{ 100, 300, 60 }.drawFrame(8);
 
-		Circle{ 300, 300, 60 }.drawFrame(4, 4);
+		Circle{ 300, 300, 60 }.drawFrame(4, 4); // .drawFrame(8) と同じ
 
 		Circle{ 500, 300, 80 }.drawFrame(10, 0, HSV{ 70.0, 0.8, 1.0 });
 
