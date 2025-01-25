@@ -95,6 +95,13 @@ nav:
     - 11. 長方形を描く: tutorial/rect.md
     - 12. 模様を描く: tutorial/pattern.md
     - 13. 絵文字を描く: tutorial/emoji.md
+    - 14. 図形や絵文字を動かす: tutorial/motion.md
+    - 15. テキストを表示する: tutorial/text.md
+    - 16. マウス入力を扱う: tutorial/mouse.md
+    - 17. キーボード入力を扱う: tutorial/keyboard.md
+    - 18. 時間を扱う: tutorial/time.md
+    - 19. ボタンを作る: tutorial/button.md
+    - 20. クッキークリッカー風のゲームを作る: tutorial/cookie-clicker.md
   - 入門チュートリアル 2:
     - 21. 図形を描く: tutorial2/shape.md
   - 入門チュートリアル 3:
