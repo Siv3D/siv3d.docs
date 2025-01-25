@@ -113,7 +113,7 @@ void Main()
 	- `.drawFrame(内側方向の太さ, 外側方向の太さ, color)`
 - 内側方向・外側方向は、基準円から内側、外側に向かっての太さを表し、最終的な太さはそれらの和になります
 - 太さはいずれも 0.0 以上の値を指定します
-- `color` を省略した場合、`.draw()` と同様に白色になります
+- `color` を省略すると、`.draw()` のときと同様に白色になります
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/circle/5.png)
 
