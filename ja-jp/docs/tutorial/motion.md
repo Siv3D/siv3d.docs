@@ -172,18 +172,105 @@ void Main()
 ```
 
 
-
-
 ## 14.5 絵文字を回転させる
+- 回転角度を表す変数 `double angle` を導入し、毎秒 180 度の速度で回転させます
 
+```cpp title="絵文字が毎秒 180 度の速度で回転するプログラム" hl_lines="10"
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Texture emoji{ U"🍣"_emoji };
+
+	// 絵文字の回転角度
+	double angle = 0_deg;
+
+	while (System::Update())
+	{
+		// 角度を更新する
+		angle += (Scene::DeltaTime() * 180_deg);
+
+		// 絵文字を現在の位置と角度で描画する
+		emoji.rotated(angle).drawAt(400, 300);
+	}
+}
+```
 
 
 ## 14.6 図形の変数
 
+### `Circle` クラス
+- `Circle` クラスは次のようなメンバ変数を持っています
+
+```cpp
+struct Circle
+{
+	union
+	{
+		Vec2 center;
+		struct { double x, y; };
+	};
+
+	double r;
+};
+```
+
+- 円 `circle` の中心の X 座標は、`circle.center.x` でも `circle.x` でもアクセスできることを意味します
+
+### `Rect` クラス
+- `Rect` クラスは次のようなメンバ変数を持っています
+
+```cpp
+struct Rect
+{
+	union
+	{
+		Point pos;
+		struct { int32 x, y; };
+	};
+
+	union
+	{
+		Point size;
+		struct { int32 w, h; };
+	};
+};
+```
+
+- 長方形 `rect` の左上の座標の X 座標は、`rect.pos.x` でも `rect.x` でもアクセスできることを意味します
+- 長方形 `rect` の幅は、`rect.size.x` でも `rect.w` でもアクセスできることを意味します
+
+### `RectF` クラス
+- `RectF` クラスは次のようなメンバ変数を持っています
+
+```cpp
+struct RectF
+{
+	union
+	{
+		Vec2 pos;
+		struct { double x, y; };
+	};
+
+	union
+	{
+		Vec2 size;
+		struct { double w, h; };
+	};
+};
+```
+
+- `RectF` クラスは `Rect` クラスと同様のメンバ変数を持っていますが、`int32` ではなく `double` 型で座標やサイズを扱います
 
 
 ## 14.7 図形を動かす
+- 14.6 で説明したメンバ変数を活用して図形を動かします
 
+```cpp
+
+```
 
 
 ## 振り返りチェックリスト
