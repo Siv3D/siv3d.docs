@@ -111,17 +111,18 @@ nav:
     - 26. 【ミニゲーム】アイテム集め: tutorial2/shape.md
     - 27. 図形を描く ①: tutorial2/shape.md
     - 28. 図形を描く ②: tutorial2/shape.md
-    - 29. 円座標: tutorial2/shape.md
-    - 30. ボタンを作る: tutorial2/shape.md
-    - 31. 【ミニゲーム】クッキークリッカー: tutorial2/shape.md
+    - 29. ボタンを作る: tutorial2/shape.md
+    - 30. 【ミニゲーム】クッキークリッカー: tutorial2/shape.md
+    - 31. 円座標: tutorial2/shape.md
     - 32. テクスチャを描く ①: tutorial2/shape.md
     - 33. テクスチャを描く ②: tutorial2/shape.md
     - 34. 動画を描く ②: tutorial2/shape.md
-    - 35. 文字列クラス: tutorial2/shape.md
-    - 36. 無効値を表現できる型: tutorial2/shape.md
-    - 37. 数値と文字列の変換: tutorial2/shape.md
-    - 38. 二次元配列: tutorial2/shape.md
-    - 39. 高度な図形処理: tutorial2/shape.md
+    - 35. 文字を描く ①: tutorial2/shape.md
+    - 36. 文字を描く ②: tutorial2/shape.md
+    - 37. 文字列クラス: tutorial2/shape.md
+    - 38. 無効値を表現できる型: tutorial2/shape.md
+    - 39. 数値と文字列の変換: tutorial2/shape.md
+    - 40. 二次元配列: tutorial2/shape.md
   - 入門チュートリアル 3:
     - 41. 図形を描く: tutorial3/empty.md
   - 入門チュートリアル 4:
