@@ -148,7 +148,7 @@ void Main()
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/emoji/6.png)
 
-```cpp
+```cpp title="マウスカーソルの X 座標に応じて絵文字を左右反転させる"
 # include <Siv3D.hpp>
 
 void Main()

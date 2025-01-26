@@ -134,7 +134,7 @@ void Main()
 - 各方向の移動速度を表す変数 `Vec2 velocity` を導入します
 	- x 成分には左右方向の速度、y 成分には上下方向の速度を格納します
 - `Vec2` は `+=` や `*` などの演算子を使って、x 成分と y 成分をまとめて操作できます
-- `pos += (Scene::DeltaTime() * velocity);` のようなコードで簡潔に記述できます
+- `pos += (Scene::DeltaTime() * velocity);` のように記述できます
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/motion/4.png)
 
@@ -227,7 +227,7 @@ struct Circle
 };
 ```
 
-- 円 `circle` の中心の X 座標は、`circle.center.x` でも `circle.x` でもアクセスできることを意味します
+- 円 `circle` の中心の X 座標は、`circle.center.x` でも `circle.x` でも同じです
 
 ### `Rect` クラス
 - `Rect` クラスは次のようなメンバ変数を持っています
@@ -251,8 +251,10 @@ struct Rect
 };
 ```
 
-- 長方形 `rect` の左上の座標の X 座標は、`rect.pos.x` でも `rect.x` でもアクセスできることを意味します
-- 長方形 `rect` の幅は、`rect.size.x` でも `rect.w` でもアクセスできることを意味します
+- 長方形 `rect` の左上の座標の X 座標は、`rect.pos.x` でも `rect.x` でも同じです
+- 長方形 `rect` の左上の座標の Y 座標は、`rect.pos.y` でも `rect.y` でも同じです
+- 長方形 `rect` の幅は、`rect.size.x` でも `rect.w` でも同じです
+- 長方形 `rect` の高さは、`rect.size.y` でも `rect.h` でも同じです
 
 ### `RectF` クラス
 - `RectF` クラスは次のようなメンバ変数を持っています

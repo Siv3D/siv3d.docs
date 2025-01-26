@@ -27,7 +27,7 @@
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/keyboard/1.png)
 
-```cpp
+```cpp title="押されたキーの名前を出力する"
 # include <Siv3D.hpp>
 
 void Main()
@@ -62,7 +62,7 @@ void Main()
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/keyboard/2.png)
 
-```cpp
+```cpp title="押されているキーの名前を出力する"
 # include <Siv3D.hpp>
 
 void Main()
@@ -98,7 +98,7 @@ void Main()
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/keyboard/3.png)
 
-```cpp
+```cpp title="左右の矢印キーで絵文字が左右に動く"
 # include <Siv3D.hpp>
 
 // 現在のフレームでの移動量を計算する関数
