@@ -230,8 +230,6 @@ void Main()
 - 対象をマウスで操作できることをユーザに伝えるために、マウスカーソルを手の形に変更することがあります
 - `Cursor::RequestStyle(CursorStyle::Hand);` を呼ぶと、そのフレームはマウスカーソルを手の形にできます
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/mouse/7.png)
-
 ```cpp title="マウスカーソルが図形の上にあるとき、カーソルを手の形にする" hl_lines="13"
 # include <Siv3D.hpp>
 
