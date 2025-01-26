@@ -2,7 +2,7 @@
 色や位置を指定して、数値やテキストを画面に表示する方法を学びます。
 
 ## 15.1 数値を文字列に変換する（1）
-- 変数の値を文字列に変換する際に最も便利なのはフォーマット文字列です
+- 変数の値を文字列に変換する際に最も便利なのは**フォーマット文字列**です
 - `U"{}"_fmt(x)` と書くと、 `{}` には値 `x` を文字列にしたものが挿入されます
 - 例えば `U"{} 月 {} 日"_fmt(month, day)` と書くと、 `month` と `day` の値が文字列に変換され、`U"12 月 31 日"` のような文字列が生成されます
 
@@ -30,7 +30,7 @@ void Main()
 
 - `Print` では次のように書くこともできますが、ひとまとまりの文字列として扱え、書式（**15.2** 参照）を制御できる `_fmt()` のほうが、今後のプログラムでは便利です
 
-```cpp title="_fmt() を使わない場合"
+```cpp title="フォーマット文字列を使わない方法"
 # include <Siv3D.hpp>
 
 void Main()
@@ -52,8 +52,8 @@ void Main()
 
 
 ## 15.2 数値を文字列に変換する（2）
-- フォーマット文字列 `_fmt()` には、さまざまな書式設定があります
-- 浮動小数点数の値 `x` を、小数点以下の桁数を指定して変換する場合 `U"{:.2f}"_fmt(x)` のように書きます
+- フォーマット文字列には、さまざまな書式設定があります
+- 浮動小数点数の値 `x` を、**小数点以下の桁数**を指定して変換する場合 `U"{:.2f}"_fmt(x)` のように書きます
 	- この場合、小数点以下 2 桁まで（それ以降は四捨五入）の文字列が生成されます
 	- 例えば、`U"{:.3f}"_fmt(3.141592)` は `U"3.142"` になります-
 - 小数点以下を表示したくない場合は `U"{:.0f}"_fmt(x)` と書きます
@@ -227,11 +227,15 @@ void Main()
 		font(U"TopLeft").draw(40, Arg::topLeft(20, 20), ColorF{ 0.1 });
 		font(U"TopRight").draw(40, Arg::topRight(780, 20), ColorF{ 0.1 });
 
-		font(U"LeftCenter").draw(40, Arg::leftCenter(20, 300), ColorF{ 0.1 });
-		font(U"RightCenter").draw(40, Arg::rightCenter(780, 300), ColorF{ 0.1 });
-
 		font(U"BottomLeft").draw(40, Arg::bottomLeft(20, 580), ColorF{ 0.1 });
 		font(U"BottomRight").draw(40, Arg::bottomRight(780, 580), ColorF{ 0.1 });
+
+		Rect{ 200, 100, 400, 200 }.draw(ColorF{ 0.8, 0.9, 1.0 });
+		font(U"LeftCenter").draw(20, Arg::leftCenter(200, 200), ColorF{ 0.1 });
+		font(U"RightCenter").draw(20, Arg::rightCenter(600, 200), ColorF{ 0.1 });
+
+		// マウスカーソル位置を下辺中央とするようにテキストを描画する
+		font(U"BottomCenter").draw(40, Arg::bottomCenter = Cursor::Pos(), ColorF{0.1});
 	}
 }
 ```
