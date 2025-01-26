@@ -192,6 +192,9 @@ void Main()
 	```
 
 ??? success "解答例"
+
+	- `not isRolling` は `!isRolling` と同じ意味です。Siv3D では視認性のために `!` を `not` で書くスタイルを採用しています
+
 	```cpp
 	# include <Siv3D.hpp>
 
