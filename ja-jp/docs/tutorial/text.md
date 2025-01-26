@@ -98,7 +98,10 @@ Font font{ FontMethod::MSDF, 48 };
 
 
 ## 15.4 テキストを描く
-- フォントを作成したら、`()` 演算子に文字列を渡し、`.draw(フォントサイズ, 左上の位置, 色)` で文字列を描画します
+- フォントを作成したら、`()` 演算子に文字列を渡し、次の方法で文字列を描画します
+	- `.draw(フォントサイズ, pos, 色)` 
+	- `.draw(フォントサイズ, x, y, 色)`
+	- 座標は左上の位置です。色を省略した場合は白（`Palette::White`）が使われます
 - 文字列には改行文字 `\n` を含めることができます
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/text/4.png)
@@ -159,14 +162,32 @@ void Main()
 }
 ```
 
-## 15.6 テキストの基準位置
+- これ以外のフォントについては **チュートリアル ??** で詳しく説明します
 
+
+## 15.6 中心位置を指定してテキストを描く
+- 左上位置ではなく、中心の座標を指定してテキストを表示するには、次の方法を使います
+	- `.drawAt(フォントサイズ, pos, color);`
+	- `.drawAt(フォントサイズ, x, y, color);`
+	- 中心座標が pos あるいは (x, y) になるようにテキストが表示されます。
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/text/6.png)
 
 ```cpp
 
 ```
+
+
+## 15.7 それ以外の位置を基準にテキストを描く
+
+
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/text/7.png)
+
+```cpp
+
+```
+
 
 ## 振り返りチェックリスト
 
