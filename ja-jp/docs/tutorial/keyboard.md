@@ -149,7 +149,7 @@ void Main()
 - ++up++ キーで絵文字を上に移動
 - ++down++ キーで絵文字を下に移動
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/keyboard/4-1.png)
+<video src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/keyboard/4-1.mp4?raw=true" autoplay loop muted playsinline></video>
 
 ??? info "ヒント"
 	- 17.3 のコードを拡張します
@@ -215,7 +215,7 @@ void Main()
 - 最も左の項目の選択中に ++left++ キーを押しても選択肢は変わらない
 - 最も右の項目の選択中に ++right++ キーを押しても選択肢は変わらない
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/keyboard/4-2.png)
+<video src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/keyboard/4-2.mp4?raw=true" autoplay loop muted playsinline></video>
 
 ??? info "ヒント"
 	```cpp
