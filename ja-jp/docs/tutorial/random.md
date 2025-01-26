@@ -4,6 +4,7 @@
 ## 18.1 ランダムな整数を生成する
 - `Random(a, b)` は、**`a` 以上 `b` 以下**の整数をランダムに生成します
 	- `a` < `b` である必要があります
+- 生成される乱数のパターンは、毎回異なります
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/random/1.png)
 
@@ -89,7 +90,7 @@ void Main()
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/random/3.png)
 
-```cpp
+```cpp title="クリックするたびに絵文字の拡大縮小倍率をランダムに変更する" hl_lines="17"
 # include <Siv3D.hpp>
 
 void Main()
@@ -123,7 +124,7 @@ void Main()
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/random/4.png)
 
-```cpp
+```cpp title="クリックするたびに絵文字がランダムな場所に移動する" hl_lines="15"
 # include <Siv3D.hpp>
 
 void Main()
