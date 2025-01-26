@@ -139,7 +139,7 @@ void Main()
 ## 15.5 太字のフォント
 - Siv3D に同梱されているフォントは数種類あります
 - とくに指定しない場合は `Typeface::Regular` が使われます
-- `Typeface::Bold` を指定すると、太字のフォントを作成できます
+- `Typeface::Bold` を指定すると、**太字のフォント**を作成できます
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/text/5.png)
 
@@ -166,7 +166,7 @@ void Main()
 
 
 ## 15.6 中心位置を指定してテキストを描く
-- 左上位置ではなく、中心の座標を指定してテキストを表示するには、次の方法を使います
+- 左上位置ではなく、**中心の座標**を指定してテキストを表示するには、次の方法を使います
 	- `.drawAt(フォントサイズ, pos, color);`
 	- `.drawAt(フォントサイズ, x, y, color);`
 	- 中心座標が pos あるいは (x, y) になるようにテキストが表示されます。
@@ -174,22 +174,75 @@ void Main()
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/text/6.png)
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ FontMethod::MSDF, 48 };
+
+	while (System::Update())
+	{
+		font(U"Hello").drawAt(60, Vec2{ 400, 300 }, ColorF{ 0.2 });
+
+		font(U"Siv3D").drawAt(80, Cursor::Pos());
+	}
+}
 ```
 
 
 ## 15.7 それ以外の位置を基準にテキストを描く
+- **右端の中心位置**を指定してテキストを表示するには、次の方法を使います
+	- `.draw(フォントサイズ, Arg::rightCenter = pos, color);`
+	- `.draw(フォントサイズ, Arg::rightCenter(x, y), color);`
+	- 右端の中心座標が pos あるいは (x, y) になるようにテキストが表示されます
+- 基準位置は全部で 9 種類あります
 
-
+| 基準位置 | 説明 |
+| --- | --- |
+| `Arg::topLeft` | 左上。`.draw()` と同じ。 |
+| `Arg::topCenter` | 上中央 |
+| `Arg::topRight` | 右上 |
+| `Arg::leftCenter` | 左中央 |
+| `Arg::center` | 中央。`.drawAt()` と同じ。 |
+| `Arg::rightCenter` | 右中央 |
+| `Arg::bottomLeft` | 左下 |
+| `Arg::bottomCenter` | 下中央 |
+| `Arg::bottomRight` | 右下 |
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/text/7.png)
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ FontMethod::MSDF, 48 };
+
+	while (System::Update())
+	{
+		font(U"TopLeft").draw(40, Arg::topLeft(20, 20), ColorF{ 0.1 });
+		font(U"TopRight").draw(40, Arg::topRight(780, 20), ColorF{ 0.1 });
+
+		font(U"LeftCenter").draw(40, Arg::leftCenter(20, 300), ColorF{ 0.1 });
+		font(U"RightCenter").draw(40, Arg::rightCenter(780, 300), ColorF{ 0.1 });
+
+		font(U"BottomLeft").draw(40, Arg::bottomLeft(20, 580), ColorF{ 0.1 });
+		font(U"BottomRight").draw(40, Arg::bottomRight(780, 580), ColorF{ 0.1 });
+	}
+}
 ```
 
 
 ## 振り返りチェックリスト
-
-
+- [x] フォーマット文字列 `U"{}"_fmt()` を使って、数値を文字列に変換する方法を学んだ
+- [x] `U"{:.2f}"_fmt(x)` のように、小数点以下の桁数を指定して浮動小数点数を文字列に変換する方法を学んだ
+- [x] Siv3D の同梱フォントファイルからフォントを作成する方法を学んだ
+- [x] フォントの `.draw()` で文字列を画面に描画する方法を学んだ
+- [x] `Typeface::Bold` を指定して太字のフォントを作成する方法を学んだ
+- [x] `.drawAt()` で中心位置を指定して文字列を描画する方法を学んだ
+- [x] `Arg::rightCenter` などを使って、9 種類の基準位置で文字列を描画する方法を学んだ
 
