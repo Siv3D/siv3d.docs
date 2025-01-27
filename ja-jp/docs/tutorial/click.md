@@ -315,9 +315,9 @@ void Main()
 
 
 ## 20.6 ゲームのリセット
-- ゲーム終了画面で ++Enter++ キーを押すと、スコアと残り時間がリセットされてゲームが再開されるようにします
+- ゲーム終了画面で ++enter++ キーを押すと、スコアと残り時間をリセットしてゲームを再プレイできるようにします
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/click/7.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/click/6.png)
 
 ```cpp hl_lines="65-74 94"
 #include <Siv3D.hpp>
