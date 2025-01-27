@@ -103,30 +103,68 @@ nav:
     - 19. 時間を扱う: tutorial/time.md
     - 20. クリックゲーム: tutorial/click.md
   - 入門チュートリアル 2:
-    - 21. 配列の基本 ①: tutorial2/array.md
-    - 22. 配列の基本 ②: tutorial2/array-2.md
-    - 23. 図形どうしの交差判定: tutorial2/intersection.md
-    - 24. 便利な関数: tutorial2/utility.md
-    - 25. ゲームの画面を作る: tutorial2/game-ui.md
-    - 26. アイテム集め: tutorial2/collect.md
-    - 27. 図形を描く ①: tutorial2/shape.md
-    - 28. 図形を描く ②: tutorial2/shape-2.md
-    - 29. ボタンを作る: tutorial2/button.md
-    - 30. クッキークリッカー: tutorial2/cookie-clicker.md
-    - 31. 円座標: tutorial2/circular.md
-    - 32. テクスチャを描く ①: tutorial2/texture.md
-    - 33. テクスチャを描く ②: tutorial2/texture-2.md
-    - 34. 動画を描く ②: tutorial2/video.md
-    - 35. 文字を描く ①: tutorial2/shape.md
-    - 36. 文字を描く ②: tutorial2/shape.md
-    - 37. 文字列クラス: tutorial2/shape.md
-    - 38. 無効値を表現できる型: tutorial2/shape.md
-    - 39. 数値と文字列の変換: tutorial2/shape.md
-    - 40. 二次元配列: tutorial2/shape.md
+    - 21. 配列の基本: tutorial2/array.md
+    - 22. 図形どうしの交差判定: tutorial2/intersection.md
+    - 23. 便利な関数: tutorial2/utility.md
+    - 24. ゲームの画面を作る: tutorial2/game-ui.md
+    - 25. アイテム集め: tutorial2/collect.md
+    - 26. 図形を描く: tutorial2/shape.md
+    - 27. ボタンを作る: tutorial2/button.md
+    - 28. クッキークリッカー: tutorial2/cookie-clicker.md
+    - 29. 円座標: tutorial2/circular.md
+    - 30. テクスチャを描く: tutorial2/texture.md
+    - 31. 動画を描く: tutorial2/video.md
+    - 32. 文字を描く ①: tutorial2/font.md
+    - 33. 文字列クラス: tutorial2/string.md
+    - 34. 無効値を表現できる型: tutorial2/optional.md
+    - 35. 数値と文字列の変換: tutorial2/format.md
+    - 36. 二次元配列: tutorial2/grid.md
+    - 37. シーンとウィンドウ: tutorial2/scene.md
+    - 38. GUI: tutorial2/gui.md
+    - 39. 動きをつくる: tutorial2/motion.md
+    - 40. インタラクションの実装: tutorial2/interaction.md
   - 入門チュートリアル 3:
-    - 41. 図形を描く: tutorial3/empty.md
+    - 41. オーディオ再生: tutorial3/empty.md
+    - 42. キーボード入力: tutorial3/empty.md
+    - 43. マウス入力: tutorial3/empty.md
+    - 44. 日付と時刻、時間: tutorial3/empty.md
+    - 45. 図形の交差判定: tutorial3/empty.md
+    - 46. ハッシュテーブル: tutorial3/empty.md
+    - 47. 2D レンダーステート: tutorial3/empty.md
+    - 48. 2D カメラ: tutorial3/empty.md
+    - 49. アセット管理: tutorial3/empty.md
+    - 50. エフェクト: tutorial3/empty.md
+    - 51. レンダーテクスチャ: tutorial3/empty.md
+    - 52. ファイルシステム: tutorial3/empty.md
+    - 53. テキストファイル: tutorial3/empty.md
+    - 54. 設定ファイル: tutorial3/empty.md
+    - 55. バイナリファイル: tutorial3/empty.md
+    - 56. ファイルダイアログ: tutorial3/empty.md
+    - 57. ゲームパッド: tutorial3/empty.md
+    - 58. リソースファイル: tutorial3/empty.md
+    - 59. シーン管理: tutorial3/empty.md
+    - 60. アプリの公開: tutorial3/empty.md
   - 入門チュートリアル 4:
-    - 61. 図形を描く: tutorial4/empty.md
+    - 61. ドラッグ & ドロップ: tutorial3/empty.md
+    - 62. クリップボード: tutorial3/empty.md
+    - 63. メッセージボックス: tutorial4/empty.md
+    - 64. HTTP クライアント: tutorial4/empty.md
+    - 65. 画像編集: tutorial4/empty.md
+    - 66. 音声波形: tutorial4/empty.md
+    - 67. マイク入力: tutorial4/empty.md
+    - 68. Web カメラ: tutorial4/empty.md
+    - 69. 2D 物理演算: tutorial4/empty.md
+    - 70. OpenAI API: tutorial4/empty.md
+    - 71. 2D カスタムシェーダ: tutorial4/empty.md
+    - 72. 3D 形状を描く ①: tutorial4/empty.md
+    - 73. 3D 形状を描く ②: tutorial4/empty.md
+    - 74. 3D の交差判定: tutorial4/empty.md
+    - 75. TCP 通信: tutorial4/empty.md
+    - 76. マルチプレイヤー: tutorial4/empty.md
+    - 77. シリアル通信: tutorial4/empty.md
+    - 78. 数式パーサ: tutorial4/empty.md
+    - 79. ユーザ環境の取得: tutorial4/empty.md
+    - 80. アドオンを作る: tutorial4/empty.md
   - サンプル集:
     - ゲームのサンプル: samples/games.md
     - アプリケーションのサンプル: samples/apps.md
