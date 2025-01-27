@@ -44,7 +44,7 @@ void Main()
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/click/2.png)
 
-```cpp
+```cpp hl_lines="21-26"
 #include <Siv3D.hpp>
 
 // ランダムな座標を返す関数
@@ -90,7 +90,7 @@ void Main()
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/click/3.png)
 
-```cpp
+```cpp hl_lines="13 21-22 36 45-46"
 #include <Siv3D.hpp>
 
 // ランダムな座標を返す関数
@@ -145,7 +145,7 @@ void Main()
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/click/4.png)
 
-```cpp
+```cpp hl_lines="18-19 24-25 33 43-44 47-53 58-59"
 #include <Siv3D.hpp>
 
 // ランダムな座標を返す関数
@@ -218,7 +218,7 @@ void Main()
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/click/5.png)
 
-```cpp
+```cpp hl_lines="30-31 35 37-38 40-41 64 75-84"
 #include <Siv3D.hpp>
 
 // ランダムな座標を返す関数
@@ -313,7 +313,7 @@ void Main()
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/click/7.png)
 
 
-```cpp
+```cpp hl_lines="65-74 94"
 #include <Siv3D.hpp>
 
 // ランダムな座標を返す関数
