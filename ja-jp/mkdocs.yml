@@ -103,7 +103,7 @@ nav:
     - 19. 時間を扱う: tutorial/time.md
     - 20. クリックゲーム: tutorial/click.md
   - 入門チュートリアル 2:
-    - 21. 配列の基本: tutorial2/array.md
+    - 21. 配列: tutorial2/array.md
     - 22. 図形どうしの交差判定: tutorial2/intersection.md
     - 23. 便利な関数: tutorial2/utility.md
     - 24. ゲームの画面を作る: tutorial2/game-ui.md
