@@ -101,22 +101,22 @@ nav:
     - 17. キーボード入力を扱う: tutorial/keyboard.md
     - 18. 乱数を生成する: tutorial/random.md
     - 19. 時間を扱う: tutorial/time.md
-    - 20. 【ミニゲーム】クリックゲーム: tutorial/click.md
+    - 20. クリックゲーム: tutorial/click.md
   - 入門チュートリアル 2:
-    - 21. 配列の基本 ①: tutorial2/shape.md
-    - 22. 配列の基本 ②: tutorial2/shape.md
-    - 23. 図形どうしの交差判定: tutorial2/shape.md
-    - 24. 便利な関数: tutorial2/shape.md
-    - 25. ゲームの画面を作る: tutorial2/shape.md
-    - 26. 【ミニゲーム】アイテム集め: tutorial2/shape.md
+    - 21. 配列の基本 ①: tutorial2/array.md
+    - 22. 配列の基本 ②: tutorial2/array-2.md
+    - 23. 図形どうしの交差判定: tutorial2/intersection.md
+    - 24. 便利な関数: tutorial2/utility.md
+    - 25. ゲームの画面を作る: tutorial2/game-ui.md
+    - 26. アイテム集め: tutorial2/collect.md
     - 27. 図形を描く ①: tutorial2/shape.md
-    - 28. 図形を描く ②: tutorial2/shape.md
-    - 29. ボタンを作る: tutorial2/shape.md
-    - 30. 【ミニゲーム】クッキークリッカー: tutorial2/shape.md
-    - 31. 円座標: tutorial2/shape.md
-    - 32. テクスチャを描く ①: tutorial2/shape.md
-    - 33. テクスチャを描く ②: tutorial2/shape.md
-    - 34. 動画を描く ②: tutorial2/shape.md
+    - 28. 図形を描く ②: tutorial2/shape-2.md
+    - 29. ボタンを作る: tutorial2/button.md
+    - 30. クッキークリッカー: tutorial2/cookie-clicker.md
+    - 31. 円座標: tutorial2/circular.md
+    - 32. テクスチャを描く ①: tutorial2/texture.md
+    - 33. テクスチャを描く ②: tutorial2/texture-2.md
+    - 34. 動画を描く ②: tutorial2/video.md
     - 35. 文字を描く ①: tutorial2/shape.md
     - 36. 文字を描く ②: tutorial2/shape.md
     - 37. 文字列クラス: tutorial2/shape.md
