@@ -2,6 +2,8 @@
 アイテムをクリックするゲームを作ります。
 
 ## 20.1 アイテムの描画とクリック判定
+- クリック対象の絵文字と、クリック判定用の円を用意します
+- クリックすされた場合、ランダムな位置に移動します
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/click/1.png)
 
@@ -41,6 +43,7 @@ void Main()
 
 
 ## 20.2 マウスオーバー判定
+- クリック対象がマウスオーバーされている場合、マウスカーソルを手の形に変更します
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/click/2.png)
 
@@ -87,6 +90,8 @@ void Main()
 
 
 ## 20.3 スコアの表示
+- アイテムをクリックするとスコアが加算されるようにします
+- スコアを画面に表示します
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/click/3.png)
 
@@ -142,6 +147,7 @@ void Main()
 ```
 
 ## 20.4 妨害アイテムの追加
+- クリックすると減点されてしまう妨害アイテムを追加します
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/click/4.png)
 
@@ -214,7 +220,7 @@ void Main()
 
 
 ## 20.5 残り時間
-
+- ゲームに制限時間を設け、時間切れになるとアイテムをクリックできないようにします
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/click/5.png)
 
@@ -309,9 +315,9 @@ void Main()
 
 
 ## 20.6 ゲームのリセット
+- ゲーム終了画面で ++Enter++ キーを押すと、スコアと残り時間がリセットされてゲームが再開されるようにします
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/click/7.png)
-
 
 ```cpp hl_lines="65-74 94"
 #include <Siv3D.hpp>
