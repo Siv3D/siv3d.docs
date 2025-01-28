@@ -375,6 +375,7 @@ void Main()
 
 ## 23.10 自作クラスの配列を作る（2）
 - 自身が何回押されたかのカウントを持つ `RectCounter` クラスを作成し、配列で扱います
+- `Rect` の `.center()` は、長方形の中心座標を `Point` 型で返します
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape-array/10.png)
 
