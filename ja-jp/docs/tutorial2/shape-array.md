@@ -32,7 +32,7 @@ void Main()
 ## 23.2 すべての Circle を描画する
 - 範囲 for 文（const 参照）を使って、すべての `Circle` を描画します
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape-array/1.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape-array/2.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -63,7 +63,7 @@ void Main()
 ## 23.3 すべての Circle を動かす
 - 範囲 for 文（参照）を使って、すべての `Circle` を動かします
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape-array/1.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape-array/3.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -101,7 +101,7 @@ void Main()
 ## 23.4 クリックで Circle を追加する
 - クリックした位置に、ランダムな半径の `Circle` を追加します
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape-array/1.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape-array/4.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -133,7 +133,7 @@ void Main()
     - `.remove_if()` での要素削除については [**チュートリアル 22.17**](./array.md) 参照
 - 「その円が左クリックされたか」を判定するラムダ式を `.remove_if()` に渡します
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape-array/1.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape-array/5.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -170,7 +170,7 @@ void Main()
 - `.remove_if()` 方式に比べ、削除に合わせた追加の処理（得点の加算、これ以上の削除の打ち切りなど）を書きやすい特徴があります
 - 要素へのアクセスは、`.erase()` による削除を行う前に行う必要があります
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape-array/1.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape-array/6.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -224,7 +224,7 @@ void Main()
 - `Circle` が自動的に移動し、一定の位置に到達したら削除するようにします
 - 「Y 座標が 500.0 を超えたか」を判定するラムダ式を `.remove_if()` に渡します
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape-array/1.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape-array/7.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -264,7 +264,7 @@ void Main()
 ## 23.8 一定時間ごとに Circle を追加する
 - [**チュートリアル 19.3**](../tutorial/time.md) の「一定時間おきに何かをする」を応用して、0.5 秒ごとに `Circle` を追加します
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape-array/1.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape-array/8.png)
 
 ```cpp title="0.5 秒ごとに円を追加する（上限 10 個）"
 # include <Siv3D.hpp>
@@ -318,7 +318,7 @@ void Main()
 ## 23.9 自作クラスの配列を作る（1）
 - `Circle` と色相を持つ `ColorCircle` クラスを作成し、配列で扱います
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape-array/1.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape-array/9.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -361,7 +361,7 @@ void Main()
 ## 23.10 自作クラスの配列を作る（2）
 - 自身が何回押されたかのカウントを持つ `RectCounter` クラスを作成し、配列で扱います
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape-array/1.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape-array/10.png)
 
 ```cpp
 # include <Siv3D.hpp>
