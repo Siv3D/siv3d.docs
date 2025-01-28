@@ -51,6 +51,7 @@ void Main()
 
 	while (System::Update())
 	{
+		// すべての円を描画する
 		for (const auto& circle : circles)
 		{
 			circle.draw();
@@ -84,11 +85,13 @@ void Main()
 	{
 		const double deltaTime = Scene::DeltaTime();
 
+		// すべての円を動かす
 		for (auto& circle : circles)
 		{
 			circle.y += (deltaTime * 50.0);
 		}
 
+		// すべての円を描画する
 		for (const auto& circle : circles)
 		{
 			circle.draw();
@@ -114,11 +117,14 @@ void Main()
 
 	while (System::Update())
 	{
+		// 左クリックされたら
 		if (MouseL.down())
 		{
+			// クリックした位置に、ランダムな半径の円を追加する
 			circles << Circle{ Cursor::Pos(), Random(5.0, 40.0) };
 		}
 
+		// すべての円を描画する
 		for (const auto& circle : circles)
 		{
 			circle.draw();
@@ -155,6 +161,7 @@ void Main()
 		// 左クリックされた円を削除する
 		circles.remove_if([](const Circle& circle) { return circle.leftClicked(); });
 
+		// すべての円を描画する
 		for (const auto& circle : circles)
 		{
 			circle.draw();
@@ -194,13 +201,16 @@ void Main()
 
 	while (System::Update())
 	{
+		// 各円について
 		for (auto it = circles.begin(); it != circles.end();)
 		{
+			// その円が左クリックされたていたら
 			if (it->leftClicked())
 			{
-				// 半径 * 10 をスコアに加算
+				// 半径 * 10 をスコアに加算する
 				score += (it->r * 10); // 要素へのアクセスは削除前に行う
 
+				// その円を削除する
 				it = circles.erase(it);
 			}
 			else
@@ -209,6 +219,7 @@ void Main()
 			}
 		}
 
+		// すべての円を描画する
 		for (const auto& circle : circles)
 		{
 			circle.draw();
@@ -252,6 +263,7 @@ void Main()
 		// Y 座標が 500.0 を超えた円を削除する
 		circles.remove_if([](const Circle& circle) { return (500.0 < circle.y); });
 
+		// すべての円を描画する
 		for (const auto& circle : circles)
 		{
 			circle.draw();
@@ -344,11 +356,14 @@ void Main()
 
 	while (System::Update())
 	{
+		// 左クリックされたら
 		if (MouseL.down())
 		{
+			// ColorCircle を追加する
 			circles << ColorCircle{ Circle{ Cursor::Pos(), Random(5.0, 40.0) }, Random(0.0, 360.0) };
 		}
 
+		// すべての ColorCircle を描画する
 		for (const auto& circle : circles)
 		{
 			circle.draw();
@@ -407,11 +422,13 @@ void Main()
 
 	while (System::Update())
 	{
+		// すべての RectCounter を更新する
 		for (auto& rectCounter : rectCounters)
 		{
 			rectCounter.update();
 		}
 
+		// すべての RectCounter を描画する
 		for (const auto& rectCounter : rectCounters)
 		{
 			rectCounter.draw(font);
