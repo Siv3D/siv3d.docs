@@ -31,7 +31,9 @@ void Main()
 
 
 ## 25.2 プレイヤーを描く
-- XXX
+- プレイヤーの情報を管理する `Player` クラスを作ります
+- プレイヤーの領域をメンバ変数 `Circle circle` で、プレイヤーの絵文字をメンバ変数 `Texture texture` で扱います
+- メンバ関数 `.draw()` でプレイヤーを描画します
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/collect/2.png)
 
@@ -79,7 +81,8 @@ void Main()
 
 
 ## 25.3 プレイヤーの移動を実装する
-- XXX
+- `Player` クラスにメンバ関数 `.update()` を追加し、プレイヤーの移動を実装します
+- プレイヤーが画面外に出ないよう、移動できる X 座標の範囲を `Clamp` 関数を用いて制限します
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/collect/3.png)
 
@@ -165,7 +168,10 @@ void Main()
 
 
 ## 25.4 アイテムクラスをつくる
-- XXX
+- 空から落ちてくるアイテムを表す `Item` クラスを作成します
+- アイテムの領域をメンバ変数 `Circle circle` で、アイテムの種類をメンバ変数 `int32 type` で表します
+- `type` が `0` のときはキャンディー、`1` のときはケーキを表すことにします
+- メンバ関数 `.draw()` でアイテムを描画しますが、仮実装として `type` が `0` のときは赤い円、`1` のときは白い円を描画します
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/collect/4.png)
 
@@ -293,7 +299,7 @@ void Main()
 
 ## 25.5 絵文字の配列を参照してアイテムを描画する
 - `Item` クラスには `Texture` メンバ変数を作りません
-- たくさん登場するアイテム 1 つひとつに毎回新しい `Texture` を用意するのは効率が悪いためです
+- たくさん登場するアイテム 1 つひとつに、毎回新しい `Texture` を用意するのは効率が悪いためです
 - 必要最小限のテクスチャを事前に配列で用意し、それを参照して描画するようにします
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/collect/5.png)
@@ -420,7 +426,8 @@ void Main()
 
 
 ## 25.6 アイテムを落下させる
-- XXX
+- `Item` クラスにメンバ関数 `.update()` を追加し、アイテムを落下させます
+- 地面に落下したアイテムは `.remove_if()` で削除します
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/collect/6.png)
 
@@ -567,7 +574,7 @@ void Main()
 
 
 ## 25.7 一定時間おきにアイテムを出現させる
-- XXX
+- 0.8 秒ごとに、空中のランダムな位置にアイテムを出現させます
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/collect/7.png)
 
@@ -733,7 +740,7 @@ void Main()
 
 
 ## 25.8 スコアを導入する
-- XXX
+- アイテムをゲットしたときに増やすスコアを導入します
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/collect/8.png)
 
@@ -914,7 +921,8 @@ void Main()
 
 
 ## 25.9 アイテムとプレイヤーのあたり判定
-- XXX
+- 各アイテムとプレイヤーの円が重なっているかどうかを判定します
+- 重なっている場合はアイテムを削除し、スコアを増やします
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/collect/9.png)
 
@@ -1113,7 +1121,7 @@ void Main()
 
 
 ## 25.10 残り時間を導入する
-- XXX
+- 残り時間を表す変数 `double remainingTime` を導入します
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/collect/10.png)
 
@@ -1324,8 +1332,9 @@ void Main()
 }
 ```
 
-## 25.11 時間切れになったら操作を受け付けないようにする
-- XXX
+## 25.11 【完成】時間切れになったら操作を受け付けないようにする
+- 残り時間が 0 になったら、アイテムをすべて消去し、プレイヤーの操作を受け付けないようにします
+- これで、ゲームの完成です
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/collect/11.png)
 
