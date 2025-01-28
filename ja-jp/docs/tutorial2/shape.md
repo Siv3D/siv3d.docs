@@ -14,7 +14,6 @@ Siv3D に用意されているさまざまな 2D 図形の描画を学びます�
 | `vec2.asCircle(半径)` | `Vec2` 型の値を中心座標として、半径を指定して円を作成します |
 
 - 円をくには、`Circle` の `.draw()` を使います
-- 色を省略した場合は白（`Palette::White`）が使われます
 
 | コード | 説明 |
 |---|---|
@@ -45,7 +44,6 @@ void Main()
 ## 26.2 円の枠
 - 円の枠を描くには、`Circle` の `.drawFrame()` を使います
 - 太さが正常な範囲にない場合（負など）の挙動は未規定です
-- 色を省略した場合は白（`Palette::White`）が使われます
 
 | コード | 説明 |
 |---|---|
@@ -82,7 +80,6 @@ void Main()
 - 開始角度は、12 時の方向を 0 とする、時計回りのラジアンで指定します
 - 扇の角度は、時計回り方向の角度の大きさで指定します
 	- 負の場合は反時計回り方向に扇が描かれます
-- 色を省略した場合は白（`Palette::White`）が使われます
 
 | コード | 説明 |
 |---|---|
@@ -115,7 +112,6 @@ void Main()
 - 円弧の角度は、時計回り方向の角度の大きさで指定します
 	- 負の場合は反時計回り方向に円弧が描かれます
 - 太さが正常な範囲にない場合（負など）の挙動は未規定です
-- 色を省略した場合は白（`Palette::White`）が使われます
 
 | コード | 説明 |
 |---|---|
@@ -147,7 +143,6 @@ void Main()
 ## 26.5 弓形
 - 弓形を描くには、`Circle` の `.drawSegment()` または `.drawSegmentFromAngles()` を使います
 - 角度はラジアンで指定します
-- 色を省略した場合は白（`Palette::White`）が使われます
 
 | コード | 説明 |
 |---|---|
@@ -205,7 +200,6 @@ void Main()
 | `Rect::FromPoints(角の座標, その対角線上の角の座標)`<br>`RectF::FromPoints(角の座標, その対角線上の角の座標)` | 与えられた 2 点から長方形を作成します。<br>サイズが正の値である有効な長方形が作られます |
 
 - 長方形を描くには、`Rect` または `RectF` の `.draw()` を使います
-- 色を省略した場合は白（`Palette::White`）が使われます
 
 | コード | 説明 |
 |---|---|
@@ -388,31 +382,40 @@ void Main()
 
 ## 26.10 線分
 - 線分は `Line` で表現します
-
-
-`Line` は次のように作成できます。
+- `Line` は次のように作成できます
 
 | コード | 説明 |
 |---|---|
-| `Line{ 始点の X 座標, 始点の Y 座標, 終点の X 座標, 終点の Y 座標 }` | 線分を作成します。 |
-| `Line{ 始点の座標, 終点の座標 }` | 線分を作成します。 |
-| `Line{ 始点, 終点の X 座標, 終点の Y 座標 }` | 線分を作成します。 |
-| `Line{ 始点の X 座標, 始点の Y 座標, 終点 }` | 線分を作成します。 |
-| `Line{ 始点の X 座標, 始点の Y 座標, Arg::angle = 方向, 長さ }` | 線分を作成します。 |
-| `Line{ 始点の座標, Arg::angle = 方向, 長さ }` | 線分を作成します。 |
-| `Line{ 始点の X 座標, 始点の Y 座標, Arg::direction = 方向ベクトル }` | 線分を作成します。 |
-| `Line{ 始点の座標, Arg::direction = 方向ベクトル }` | 線分を作成します。 |
+| `Line{ 始点の X 座標, 始点の Y 座標, 終点の X 座標, 終点の Y 座標 }` | 線分を作成します |
+| `Line{ 始点の座標, 終点の座標 }` | 線分を作成します |
+| `Line{ 始点, 終点の X 座標, 終点の Y 座標 }` | 線分を作成します |
+| `Line{ 始点の X 座標, 始点の Y 座標, 終点 }` | 線分を作成します |
+| `Line{ 始点の X 座標, 始点の Y 座標, Arg::angle = 方向, 長さ }` | 線分を作成します |
+| `Line{ 始点の座標, Arg::angle = 方向, 長さ }` | 線分を作成します |
+| `Line{ 始点の X 座標, 始点の Y 座標, Arg::direction = 方向ベクトル }` | 線分を作成します |
+| `Line{ 始点の座標, Arg::direction = 方向ベクトル }` | 線分を作成します |
+| `rect.top()`, `rect.bottom()`, `rect.left()`, `rect.right()` | 長方形（`Rect` または `RectF`）の<br>上・下・左・右の辺を表す線分を作成します |
 
-作成した `Line` は、`.draw()` で描画できます。
+- 線分を描くには、`Line` の `.draw()` を使います
 
 | コード | 説明 |
 |---|---|
-| `.draw(色)` | 線分を描きます。 |
-| `.draw(始点の色, 終点の色)` | グラデーションする線分を描きます。 |
-| `.draw(太さ, 色)` | 線分を描きます。 |
-| `.draw(太さ, 始点の色, 終点の色)` | グラデーションする線分を描きます。 |
-| `.draw(線のスタイル, 太さ, 色)` | 線分を描きます。 |
-| `.draw(線のスタイル, 太さ, 始点の色, 終点の色)` | グラデーションする線分を描きます。 |
+| `.draw(色)` | 線分を描きます |
+| `.draw(始点の色, 終点の色)` | グラデーションする線分を描きます |
+| `.draw(太さ, 色)` | 線分を描きます |
+| `.draw(太さ, 始点の色, 終点の色)` | グラデーションする線分を描きます |
+| `.draw(線のスタイル, 太さ, 色)` | 線分を描きます |
+| `.draw(線のスタイル, 太さ, 始点の色, 終点の色)` | グラデーションする線分を描きます |
+
+- 線のスタイルは次のいずれかを指定できます
+
+| コード | 説明 |
+|---|---|
+| `LineStyle::SquareCap` | 両端が四角い線（デフォルト） |
+| `LineStyle::Uncapped` | 両端が平らな線 |
+| `LineStyle::RoundCap` | 両端が丸い線 |
+| `LineStyle::SquareDot` | 四角いドットの線 |
+| `LineStyle::RoundDot` | 丸いドットの線 |
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/8.png)
 
@@ -421,52 +424,61 @@ void Main()
 
 void Main()
 {
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
 	while (System::Update())
 	{
-		// 座標 (100, 100) から (400, 150) まで太さ 4px の線分を描く
-		Line{ 100, 100, 400, 150 }.draw(4, Palette::Yellow);
+		Line{ 100, 100, 400, 150 }.draw(4);
 
-		// 座標 (400, 300) からマウスカーソルの座標まで太さ 10px の線分を描く
-		Line{ 400, 300, Cursor::Pos() }.draw(10, Palette::Skyblue);
+		Line{ 400, 300, Cursor::Pos() }.draw(10, Palette::Seagreen);
 
-		// 通常の線
 		Line{ 100, 400, 700, 400 }.draw(12, Palette::Orange);
 
-		// 両端が丸い線
-		Line{ 100, 450, 700, 450 }.draw(LineStyle::RoundCap, 12, Palette::Orange);
+		Line{ 100, 450, 700, 450 }.draw(LineStyle::RoundCap, 12, ColorF{ 0.1 });
 
-		// 四角いドットの線
-		Line{ 100, 500, 700, 500 }.draw(LineStyle::SquareDot, 12, Palette::Orange);
+		Line{ 100, 500, 700, 500 }.draw(LineStyle::SquareDot, 12,  ColorF{ 0.1 });
 
-		// 丸いドットの線
-		Line{ 100, 550, 700, 550 }.draw(LineStyle::RoundDot, 12, Palette::Orange);
+		Line{ 100, 550, 700, 550 }.draw(LineStyle::RoundDot, 12,  ColorF{ 0.1 });
 	}
 }
 ```
 
+- 水平、垂直な線分を描きたい場合は、`Rect` や `RectF` を使うことも検討してください
+	- 長方形として描画したほうが、品質や実行性能の面で有利です
+
 
 ## 26.11 三角形
-三角形を描くには、`Triangle` を作成して `.draw()` します。`Triangle` を作成するには次のような方法があります。
+- 三角形は `Triangle` で表現します
+- `Triangle` は次のように作成できます
 
 | コード | 説明 |
 |---|---|
-| `Triangle{ 一辺の長さ }` | 正三角形の重心座標を (0, 0) として、一辺の長さを指定して正三角形を作成します。 |
-| `Triangle{ 一辺の長さ, 回転角度 }` | 正三角形の重心座標を (0, 0) として、一辺の長さを指定して、回転した正三角形を作成します。 |
-| `Triangle{ 重心の X 座標, 重心の Y 座標, 一辺の長さ }` | 重心座標と一辺の長さを指定して正三角形を作成します。 |
-| `Triangle{ 重心の座標, 一辺の長さ }` | 重心座標と一辺の長さを指定して正三角形を作成します。 |
-| `Triangle{ 重心の X 座標, 重心の Y 座標, 一辺の長さ, 回転角度 }` | 重心座標と一辺の長さを指定して、回転した正三角形を作成します。 |
-| `Triangle{ 重心の座標, 一辺の長さ, 回転角度 }` | 重心座標と一辺の長さを指定して、回転した正三角形を作成します。 |
-| `Triangle{ x0, y0, x1, y1, x2, y2 }` | 3 つの頂点座標を時計回りに指定して三角形を作成します。 |
-| `Triangle{ pos0, pos1, pos2 }` | 3 つの頂点座標を時計回りに指定して三角形を作成します。 |
+| `Triangle{ 一辺の長さ }` | 正三角形の重心座標を (0, 0) として、一辺の長さを指定して正三角形を作成します |
+| `Triangle{ 一辺の長さ, 回転角度 }` | 正三角形の重心座標を (0, 0) として、一辺の長さを指定して、回転した正三角形を作成します |
+| `Triangle{ 重心の X 座標, 重心の Y 座標, 一辺の長さ }` | 重心座標と一辺の長さを指定して正三角形を作成します |
+| `Triangle{ 重心の座標, 一辺の長さ }` | 重心座標と一辺の長さを指定して正三角形を作成します |
+| `Triangle{ 重心の X 座標, 重心の Y 座標, 一辺の長さ, 回転角度 }` | 重心座標と一辺の長さを指定して、回転した正三角形を作成します |
+| `Triangle{ 重心の座標, 一辺の長さ, 回転角度 }` | 重心座標と一辺の長さを指定して、回転した正三角形を作成します |
+| `Triangle{ x0, y0, x1, y1, x2, y2 }` | 3 つの頂点座標を時計回りに指定して三角形を作成します |
+| `Triangle{ pos0, pos1, pos2 }` | 3 つの頂点座標を時計回りに指定して三角形を作成します |
+| `Triangle::FromPoints(pos0, pos1, pos2)` | 3 つの頂点座標を指定して三角形を作成します。<br>有効な三角形が作られるように頂点の順序が調整されます |
 
-作成した `Triangle` は、`.draw()` で描画できます。
+!!! warning "注意"
+	- 反時計回りに頂点を指定した三角形は、描画はできますが、それ以外の機能（あたり判定など）が正しく動作しない場合があります
+
+- 三角形を描くには、`Triangle` の `.draw()` を使います
 
 | コード | 説明 |
 |---|---|
-| `.draw(色)` | 三角形を描きます。 |
-| `.draw(色, 色, 色)` | 3 つの頂点の色を指定して三角形を描きます。 |
+| `.draw(色)` | 三角形を描きます |
+| `.draw(色0, 色1, 色2)` | 3 つの頂点の色を指定して三角形を描きます |
 
-反時計回りに頂点を指定した三角形は、描画はできますが、それ以外の機能（あたり判定など）は正しく動作しない場合があります。
+- 三角形の枠を描くには、`Triangle` の `.drawFrame()` を使います
+
+| コード | 説明 |
+|---|---|
+| `.drawFrame(太さ, 色)` | 三角形の枠を描きます |
+| `.drawFrame(内側の太さ, 外側の太さ, 色)` | 三角形の枠を描きます |
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/9.png)
 
@@ -475,6 +487,8 @@ void Main()
 
 void Main()
 {
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
 	while (System::Update())
 	{
 		// 座標 (100, 100), (400, 300), (100, 300) で構成される三角形を描く
@@ -490,16 +504,36 @@ void Main()
 		Triangle{ 500, 100, 80, 30_deg }.draw(HSV{ 0 }, HSV{ 120 }, HSV{ 240 });
 
 		// 3 つの頂点座標を Point や Vec2 型で指定する
-		Triangle{ Cursor::Pos(), Vec2{ 700, 500 }, Vec2{ 100, 500 } }.draw(Palette::Skyblue);
+		Triangle{ Cursor::Pos(), Vec2{ 700, 500 }, Vec2{ 100, 500 } }.draw(ColorF{ 0.2 });
 	}
 }
 ```
 
 
-## 26.12 凸な四角形を描く
-`Rect` や `RectF` では、各辺が X 軸、Y 軸に平行な長方形しか定義できませんでしたが、`Quad` を使うと 4 つの頂点座標を時計回りに指定して四角形を定義できます。ただし、`Quad` で定義される四角形は 180° 以上の内角を含まない形状（すべての角が凸）である必要があります。凹角を含む四角形を定義したい場合はのちにで出てくる `Polygon` 型を使います。
+## 26.12 凸な四角形
+- 4 つの頂点を持つ凸な四角形は `Quad` で表現します
+	- 台形や平行四辺形は `Quad` で表現します
+- `Rect` や `RectF` の辺は X 軸・Y 軸に平行ですが、`Quad` はその制約がありません
+- `Quad` は次のように作成できます
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/10a.png)
+| コード | 説明 |
+|---|---|
+| `Quad{ 頂点0, 頂点1, 頂点2, 頂点3 }` | 4 つの頂点座標を指定して四角形を作成します |
+| `Quad{ x0, y0, x1, y1, x2, y2, x3, y3 }` | 4 つの頂点座標を指定して四角形を作成します |
+| `rect.rotated(回転角度)` | 長方形（`Rect` または `RectF`）を回転させて四角形を作成します |
+| `rect.rotatedAt(回転の中心座標, 回転角度)` | 長方形（`Rect` または `RectF`）を回転させて四角形を作成します |
+| `rect.shearedX(スライド距離)` | 長方形（`Rect` または `RectF`）の上下の辺を X 軸方向にスライドさせた平行四辺形を作成します |
+| `rect.shearedY(スライド距離)` | 長方形（`Rect` または `RectF`）の左右の辺を Y 軸方向にスライドさせた平行四辺形を作成します |
+| `rect.skewedX(傾斜角度)` | 長方形（`Rect` または `RectF`）の左右の辺を傾斜させた平行四辺形を作成します |
+| `rect.skewedY(傾斜角度)` | 長方形（`Rect` または `RectF`）の上下の辺を傾斜させた平行四辺形を作成します |
+
+!!! warning "注意"
+	- 4 つの頂点が反時計回りの場合や、凹角を持つ場合の挙動は未規定です
+
+	![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/10a.png)
+
+### 26.12.1 頂点を 4 つ指定
+- 4 つの頂点座標を指定して `Quad` を作成します
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/10b.png)
 
@@ -508,17 +542,19 @@ void Main()
 
 void Main()
 {
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
 	while (System::Update())
 	{
-		// 4 つの頂点座標を指定して四角形を描く
 		Quad{ Vec2{ 100, 100 }, Vec2{ 150, 100 }, Vec2{ 300, 300 }, Vec2{ 100, 300 } }.draw();
 
-		Quad{ Vec2{ 300, 400 }, Vec2{ 500, 100 }, Vec2{ 600, 200 }, Vec2{ 500, 500 } }.draw(Palette::Skyblue);
+		Quad{ 300, 400, 500, 100, 600, 200, 500, 500 }.draw(ColorF{ 0.2 });
 	}
 }
 ```
 
-`Rect` や `RectF` を作成し、`.rotated()` または `.rotatedAt()` を使うと、長方形を回転させて `Quad` を作成できます。その `Quad` を `.draw()` する一連の操作を次のように 1 行で書けます。`Rect::pos` は `Rect` の左上の座標を `Point` 型で、`RectF::pos` は `RectF` の左上の座標を `Vec2` 型で表すメンバ変数です。
+### 26.12.2 長方形の回転
+- 長方形を回転させて `Quad` を作成します
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/10c.png)
 
@@ -527,22 +563,29 @@ void Main()
 
 void Main()
 {
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
 	const Rect rect{ 150, 200, 400, 100 };
+
+	double angle = 0.0_deg;
 
 	while (System::Update())
 	{
+		angle += (Scene::DeltaTime() * 30_deg);
+
 		rect.draw();
 
-		// 時計回りに 45° 回転した長方形を描く
-		rect.rotated(45_deg).draw(Palette::Orange);
+		// 長方形の中心が回転軸
+		rect.rotated(angle).draw(Palette::Seagreen);
 
-		// 長方形の左上の座標を回転の軸として時計回りに 60° 回転した長方形を描く
-		rect.rotatedAt(rect.pos, 60_deg).draw(Palette::Skyblue);
+		// 長方形の左上が回転軸
+		rect.rotatedAt(rect.pos, angle).draw(Palette::Skyblue);
 	}
 }
 ```
 
-`Rect` や `RectF` を作成し、`.shearedX()` または `.shearedY()` を使うと、長方形の辺を X 軸または Y 軸に沿ってスライドさせた平行四辺形を `Quad` 型として作成できます。
+### 26.12.3 長方形のスライド・傾斜
+- 長方形の辺をスライド・傾斜させて `Quad` を作成します
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/10d.png)
 
@@ -551,22 +594,50 @@ void Main()
 
 void Main()
 {
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
 	while (System::Update())
 	{
 		// 長方形の辺を X 軸方向に 30px ずつスライドさせた平行四辺形を描く
-		Rect{ 100, 50, 200, 100 }.drawFrame(1, 0)
-			.shearedX(30).draw(Palette::Skyblue);
+		Rect{ 100, 100, 200, 150 }.drawFrame(4, 0)
+			.shearedX(30).draw(ColorF{ 0.2 });
 
 		// 長方形の辺を Y 軸方向に -50px ずつスライドさせた平行四辺形を描く
-		Rect{ 400, 150, 300, 200 }.drawFrame(1, 0)
-			.shearedY(-50).draw(Palette::Orange);
+		Rect{ 500, 100, 200, 150 }.drawFrame(4, 0)
+			.shearedY(-50).draw(ColorF{ 0.2 });
+
+		// 長方形の左右の辺を 30° 傾けた平行四辺形を描く
+		Rect{ 100, 400, 200, 150 }.drawFrame(4, 0)
+			.skewedX(30_deg).draw(Palette::Seagreen);
+
+		// 長方形の上下の辺を -10° 傾けた平行四辺形を描く
+		Rect{ 500, 400, 200, 150 }.drawFrame(4, 0)
+			.skewedY(-10_deg).draw(Palette::Seagreen);
 	}
 }
 ```
 
 
 ## 26.13 楕円
-楕円を描くときは `Ellipse` を作成して `.draw()` します。
+- 楕円は `Ellipse` で表現します
+- `Ellipse` は次のように作成できます
+
+| コード | 説明 |
+|---|---|
+| `Ellipse{ 中心の X 座標, 中心の Y 座標, X 軸方向の半径, Y 軸方向の半径 }` | 楕円を作成します |
+| `Ellipse{ 中心の座標, X 軸方向の半径, Y 軸方向の半径 }` | 楕円を作成します |
+| `Ellipse{ 中心の X 座標, 中心の Y 座標, X・Y 軸方向の半径 }` | 楕円を作成します |
+| `Ellipse{ 中心の座標, X・Y 軸方向の半径 }` | 楕円を作成します |
+| `Ellipse{ Circle{ ... } }` | 楕円を作成します |
+| `Ellipse{ Rect{ ... } }` | 長方形に内接する楕円を作成します |
+| `Ellipse{ RectF{ ... } }` | 長方形に内接する楕円を作成します |
+
+- 楕円を描くには、`Ellipse` の `.draw()` を使います
+
+| コード | 説明 |
+|---|---|
+| `.draw(色)` | 楕円を描きます |
+
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/11.png)
 
@@ -587,8 +658,7 @@ void Main()
 ```
 
 
-
-## 26.14 多角形を描く
+## 26.14 多角形
 複雑な図形を簡単に作成できるいくつかの関数が用意されています。これらの関数の戻り値である `Shape2D` 型のオブジェクトを `.draw()`, `.drawFrame()` することで図形を描けます。関数のうち、引数に `double angle` をとるものは、時計回りの回転の角度を指定できます。
 
 | 関数名                  | 形状       | 引数                                                                                    |
