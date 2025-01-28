@@ -220,7 +220,7 @@ void Main()
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/2d-render-state/6.png)
 
 ```cpp
-#include <Siv3D.hpp>
+# include <Siv3D.hpp>
 
 void Main()
 {
@@ -250,7 +250,7 @@ void Main()
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/2d-render-state/7.png)
 
 ```cpp
-#include <Siv3D.hpp>
+# include <Siv3D.hpp>
 
 void Main()
 {

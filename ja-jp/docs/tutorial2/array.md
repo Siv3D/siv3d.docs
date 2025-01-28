@@ -31,7 +31,7 @@ Array<String> c = { U"Apple", U"Bird", U"Cat", U"Dog" };
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/xxxx/1.png)
 
 ```cpp
-#include <Siv3D.hpp>
+# include <Siv3D.hpp>
 
 void Main()
 {
@@ -77,7 +77,7 @@ void Main()
 - `.size()` は配列の要素数を `size_t` 型で返します
 
 ```cpp
-#include <Siv3D.hpp>
+# include <Siv3D.hpp>
 
 void Main()
 {
@@ -103,7 +103,7 @@ void Main()
 - `.isEmpty()` は配列が空であるか（要素数が 0 であるか）を `bool` 型で返します
 
 ```cpp
-#include <Siv3D.hpp>
+# include <Siv3D.hpp>
 
 void Main()
 {
@@ -130,7 +130,7 @@ true
 - 配列が空である場合、配列は `false` と評価されます
 
 ```cpp
-#include <Siv3D.hpp>
+# include <Siv3D.hpp>
 
 void Main()
 {
@@ -166,7 +166,7 @@ v2 is empty
 - 配列の末尾への追加は、それ以外の場所（先頭や途中）への追加に比べて最も効率的です
 
 ```cpp
-#include <Siv3D.hpp>
+# include <Siv3D.hpp>
 
 void Main()
 {
@@ -198,7 +198,7 @@ void Main()
 - 配列の末尾の要素の削除は、それ以外の場所（先頭や途中）の要素の削除に比べて最も効率的です
 
 ```cpp
-#include <Siv3D.hpp>
+# include <Siv3D.hpp>
 
 void Main()
 {
@@ -237,7 +237,7 @@ void Main()
 - 要素数が 0 のときに呼び出しても問題ありません（何もしません）
 
 ```cpp
-#include <Siv3D.hpp>
+# include <Siv3D.hpp>
 
 void Main()
 {
@@ -264,7 +264,7 @@ void Main()
 - 要素数が増える場合、新しい要素はデフォルト値で初期化されます
 
 ```cpp
-#include <Siv3D.hpp>
+# include <Siv3D.hpp>
 
 void Main()
 {
@@ -295,7 +295,7 @@ void Main()
 - 各要素へのアクセスは、通常は const 参照で行います
 
 ```cpp
-#include <Siv3D.hpp>
+# include <Siv3D.hpp>
 
 void Main()
 {
@@ -326,7 +326,7 @@ void Main()
 - ループ内で要素を変更する場合、const 参照の代わりに参照を使って要素にアクセスします
 
 ```cpp
-#include <Siv3D.hpp>
+# include <Siv3D.hpp>
 
 void Main()
 {
@@ -356,7 +356,7 @@ void Main()
 - 範囲外にアクセスしてはいけません
 
 ```cpp
-#include <Siv3D.hpp>
+# include <Siv3D.hpp>
 
 void Main()
 {
@@ -389,7 +389,7 @@ void Main()
 - いずれも要素数が 0 のときに呼び出してはいけません
 
 ```cpp
-#include <Siv3D.hpp>
+# include <Siv3D.hpp>
 
 void Main()
 {
@@ -420,7 +420,7 @@ void Main()
 - `.end()` は終端位置のイテレータを返します
 
 ```cpp
-#include <Siv3D.hpp>
+# include <Siv3D.hpp>
 
 void Main()
 {
@@ -446,81 +446,7 @@ void Main()
 ```
 
 
-## 22.15 条件を満たす要素を削除する（イテレータ）
-- イテレータによるループを利用して、条件を満たす要素を削除するには次のようにします
-
-```cpp title="配列から 30 未満の要素を削除する"
-#include <Siv3D.hpp>
-
-void Main()
-{
-	Array<int32> v = { 10, 50, 30, 20, 40 };
-
-	for (auto it = v.begin(); it != v.end();)
-	{
-		if (*it < 30)
-		{
-			it = v.erase(it);
-		}
-		else
-		{
-			++it;
-		}
-	}
-
-	Print << v;
-
-	while (System::Update())
-	{
-
-	}
-}
-```
-```txt title="出力"
-{50, 30, 40}
-```
-
-
-## 22.16 条件を満たす要素を削除する（メンバ関数）
-- `.remove_if(関数)` で、条件を満たす要素を削除します
-- 条件は、要素を引数にとり `bool` を返す関数オブジェクトで指定します
-
-```cpp
-#include <Siv3D.hpp>
-
-void Main()
-{
-	{
-		Array<int32> v = { 11, 22, 33, 44, 55 };
-
-		// 偶数の要素を削除する
-		v.remove_if(IsEven);
-
-		Print << v;
-	}
-
-	{
-		Array<int32> v = { 10, 50, 30, 20, 40 };
-
-		// 30 未満の要素を削除する
-		v.remove_if([](int32 x) { return x < 30; });
-
-		Print << v;
-	}
-
-	while (System::Update())
-	{
-
-	}
-}
-```
-```txt title="出力"
-{11, 33, 55}
-{50, 30, 40}
-```
-
-
-## 22.17 その他の挿入・削除操作
+## 22.15 その他の挿入・削除操作
 - .push_front(値) で、先頭に要素を追加します
 - .pop_front() で、先頭の要素を削除します
 - `.insert(イテレータ, 値)` で、指定したイテレータの位置に要素を挿入します
@@ -531,7 +457,7 @@ void Main()
 	- 通常は避けるか、小さい配列でのみ使用するべきです
 
 ```cpp
-#include <Siv3D.hpp>
+# include <Siv3D.hpp>
 
 void Main()
 {
@@ -586,12 +512,88 @@ void Main()
 ```
 
 
+## 22.16 条件を満たす要素を削除する（イテレータ方式）
+- イテレータによるループを利用して、条件を満たす要素を削除するには次のようにします
+
+```cpp title="配列から 30 未満の要素を削除する"
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Array<int32> v = { 10, 50, 30, 20, 40 };
+
+	for (auto it = v.begin(); it != v.end();)
+	{
+		if (*it < 30)
+		{
+			it = v.erase(it);
+		}
+		else
+		{
+			++it;
+		}
+	}
+
+	Print << v;
+
+	while (System::Update())
+	{
+
+	}
+}
+```
+```txt title="出力"
+{50, 30, 40}
+```
+
+
+## 22.17 条件を満たす要素を削除する（`.remove_if()` 方式）
+- `.remove_if(条件を記述した関数)` で、条件を満たす要素を削除します
+	- イテレータ方式よりも簡潔に書けます
+- 「条件を記述した関数」は、要素を引数（値渡しまたは const 参照渡し）で受け取り `bool` を返す関数オブジェクトです
+	- 関数やラムダ式を使います
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	{
+		Array<int32> v = { 11, 22, 33, 44, 55 };
+
+		// 偶数の要素を削除する
+		v.remove_if(IsEven);
+
+		Print << v;
+	}
+
+	{
+		Array<int32> v = { 10, 50, 30, 20, 40 };
+
+		// 30 未満の要素を削除する
+		v.remove_if([](int32 x) { return x < 30; });
+
+		Print << v;
+	}
+
+	while (System::Update())
+	{
+
+	}
+}
+```
+```txt title="出力"
+{11, 33, 55}
+{50, 30, 40}
+```
+
+
 ## 22.18 配列をソートする
 - `.sort()` で配列を昇順にソートします
 - `.rsort()` で配列を降順にソートします
 
 ```cpp
-#include <Siv3D.hpp>
+# include <Siv3D.hpp>
 
 void Main()
 {
@@ -625,7 +627,7 @@ void Main()
 - `.reverse()` で配列を逆順にします
 
 ```cpp
-#include <Siv3D.hpp>
+# include <Siv3D.hpp>
 
 void Main()
 {
@@ -649,7 +651,7 @@ void Main()
 - `.shuffle()` で配列の要素をシャッフルします
 
 ```cpp
-#include <Siv3D.hpp>
+# include <Siv3D.hpp>
 
 void Main()
 {
@@ -673,7 +675,7 @@ void Main()
 - `.sum()` で配列の要素の合計を計算します
 
 ```cpp
-#include <Siv3D.hpp>
+# include <Siv3D.hpp>
 
 void Main()
 {
@@ -696,7 +698,7 @@ void Main()
 - .fill(値) で、すべての要素に同じ値を代入します
 
 ```cpp
-#include <Siv3D.hpp>
+# include <Siv3D.hpp>
 
 void Main()
 {
@@ -721,7 +723,7 @@ void Main()
 - 関数は、要素を引数にとり、変換後の要素を返す関数オブジェクトです
 
 ```cpp
-#include <Siv3D.hpp>
+# include <Siv3D.hpp>
 
 void Main()
 {

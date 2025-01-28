@@ -107,7 +107,7 @@ Font font{ FontMethod::MSDF, 48 };
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/text/4.png)
 
 ```cpp
-#include <Siv3D.hpp>
+# include <Siv3D.hpp>
 
 void Main()
 {

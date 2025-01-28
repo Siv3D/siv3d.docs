@@ -8,7 +8,7 @@ Siv3D プログラミングを便利にする、いくつかの小さな関数�
 - 2 つの引数の型が異なる場合は `Min<size_t>(a, b)` のように明示的に型を指定します
 
 ```cpp
-#include <Siv3D.hpp>
+# include <Siv3D.hpp>
 
 void Main()
 {
@@ -46,7 +46,7 @@ void Main()
 - 3 つの引数の型は同じである必要があります
 
 ```cpp
-#include <Siv3D.hpp>
+# include <Siv3D.hpp>
 
 void Main()
 {
@@ -73,7 +73,7 @@ void Main()
     - `InRange(120, 0, 100)` は `false` を返します
 
 ```cpp
-#include <Siv3D.hpp>
+# include <Siv3D.hpp>
 
 void Main()
 {
@@ -97,7 +97,7 @@ false
 - `IsEven(n)` は整数 `n` が偶数であるかを `bool` 型で返します
 	
 ```cpp
-#include <Siv3D.hpp>
+# include <Siv3D.hpp>
 
 void Main()
 {
@@ -129,7 +129,7 @@ true
     - `Abs(3.14)` は `3.14` を返します
 
 ```cpp
-#include <Siv3D.hpp>
+# include <Siv3D.hpp>
 
 void Main()
 {
@@ -160,7 +160,7 @@ void Main()
     - `AbsDiff(2.71, 3.14)` は `0.43` を返します
 
 ```cpp
-#include <Siv3D.hpp>
+# include <Siv3D.hpp>
 
 void Main()
 {

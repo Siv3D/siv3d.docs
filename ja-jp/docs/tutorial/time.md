@@ -8,7 +8,7 @@
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/time/1.png)
 
 ```cpp hl_lines="10 16"
-#include <Siv3D.hpp>
+# include <Siv3D.hpp>
 
 void Main()
 {
@@ -47,7 +47,7 @@ void Main()
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/time/2.png)
 
 ```cpp title="10 秒カウントダウン" hl_lines="10 13 21"
-#include <Siv3D.hpp>
+# include <Siv3D.hpp>
 
 void Main()
 {
@@ -99,7 +99,7 @@ void Main()
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/time/3.png)
 
 ```cpp title="2 秒ごとにレベルを上げる" hl_lines="10 13 24 27 33"
-#include <Siv3D.hpp>
+# include <Siv3D.hpp>
 
 void Main()
 {
@@ -154,7 +154,7 @@ void Main()
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/time/4.png)
 
 ```cpp title="開始直後と、以降 2 秒ごとに敵の数を増やす" hl_lines="13"
-#include <Siv3D.hpp>
+# include <Siv3D.hpp>
 
 void Main()
 {
