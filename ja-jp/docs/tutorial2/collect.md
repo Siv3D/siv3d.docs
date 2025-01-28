@@ -1,4 +1,4 @@
-# XX. XXXXX
+# 25. アイテム集めゲーム
 
 ## XX.X XXXXX
 - XXX
