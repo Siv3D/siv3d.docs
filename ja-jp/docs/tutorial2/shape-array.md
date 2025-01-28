@@ -130,8 +130,8 @@ void Main()
 
 ## 23.5 クリックで Circle を削除する（`.remove_if()` 方式）
 - `.remove_if()` を使って、左クリックされた `Circle` を削除します
-    - `.remove_if()` については [**チュートリアル 22.17**](./array.md) 参照
-- 「その円が左クリックされた」かを判定するラムダ式を `.remove_if()` に渡します
+    - `.remove_if()` での要素削除については [**チュートリアル 22.17**](./array.md) 参照
+- 「その円が左クリックされたか」を判定するラムダ式を `.remove_if()` に渡します
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/shape-array/1.png)
 
@@ -166,7 +166,7 @@ void Main()
 
 ## 23.6 クリックで Circle を削除する（イテレータ方式）
 - イテレータ方式で、左クリックされた `Circle` を削除します
-    - イテレータ方式については [**チュートリアル 22.16**](./array.md) 参照
+    - イテレータ方式での要素削除については [**チュートリアル 22.16**](./array.md) 参照
 - `.remove_if()` 方式に比べ、削除に合わせた追加の処理（得点の加算、これ以上の削除の打ち切りなど）を書きやすい特徴があります
 - 要素へのアクセスは、`.erase()` による削除を行う前に行う必要があります
 
@@ -220,32 +220,203 @@ void Main()
 ```
 
 
-
-## 23.7 条件を満たす Circle を削除する
-- 
+## 23.7 所定の位置に移動した Circle を削除する
+- `Circle` が自動的に移動し、一定の位置に到達したら削除するようにします
+- 「Y 座標が 500.0 を超えたか」を判定するラムダ式を `.remove_if()` に渡します
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/shape-array/1.png)
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	Array<Circle> circles;
+
+	for (int32 i = 0; i < 6; ++i)
+	{
+		circles << Circle{ (100 + i * 100), Random(0.0, 200.0), 30 };
+	}
+
+	while (System::Update())
+	{
+		const double deltaTime = Scene::DeltaTime();
+
+		for (auto& circle : circles)
+		{
+			circle.y += (deltaTime * 100.0);
+		}
+
+		// Y 座標が 500.0 を超えた円を削除する
+		circles.remove_if([](const Circle& circle) { return (500.0 < circle.y); });
+
+		for (const auto& circle : circles)
+		{
+			circle.draw();
+		}
+	}
+}
 ```
 
 
 ## 23.8 一定時間ごとに Circle を追加する
-- 
+- [**チュートリアル 19.3**](../tutorial/time.md) の「一定時間おきに何かをする」を応用して、一定時間ごとに `Circle` を追加します
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/shape-array/1.png)
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	Array<Circle> circles;
+
+	// 円が出現する周期（秒）
+	const double spawnInterval = 0.5;
+
+	// 円の数の上限（個）
+	const size_t maxCircles = 10;
+
+	// 蓄積時間（秒）
+	double accumulatedTime = 0.0;
+
+	while (System::Update())
+	{
+		// 前フレームからの経過時間（秒）
+		const double deltaTime = Scene::DeltaTime();
+
+		// 蓄積時間を増やす
+		accumulatedTime += deltaTime;
+
+		// 蓄積時間が周期を超えたら
+		if (spawnInterval < accumulatedTime)
+		{
+			// 円の数が上限数に達していなければ
+			if (circles.size() < maxCircles)
+			{
+				// 円を追加する
+				circles << Circle{ Random(100, 700), Random(100, 500), 30 };
+			}
+
+			// 蓄積時間を周期分減らす
+			accumulatedTime -= spawnInterval;
+		}
+
+		for (const auto& circle : circles)
+		{
+			circle.draw();
+		}
+	}
+}
 ```
 
 
-## 23.9 自作クラスの配列を作る
-- 
+## 23.9 自作クラスの配列を作る（1）
+- `Circle` と色相を持つ `ColorCircle` クラスを作成し、配列で扱います
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/shape-array/1.png)
 
 ```cpp
+# include <Siv3D.hpp>
 
+struct ColorCircle
+{
+	Circle circle;
+
+	double hue;
+
+	// 円を描画する関数
+	void draw() const
+	{
+		circle.draw(HSV{ hue, 0.75, 0.9 });
+	}
+};
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	Array<ColorCircle> circles;
+
+	while (System::Update())
+	{
+		if (MouseL.down())
+		{
+			circles << ColorCircle{ Circle{ Cursor::Pos(), Random(5.0, 40.0) }, Random(0.0, 360.0) };
+		}
+
+		for (const auto& circle : circles)
+		{
+			circle.draw();
+		}
+	}
+}
 ```
+
+
+## 23.10 自作クラスの配列を作る（2）
+- 自身が何回押されたかのカウントを持つ `RectCounter` クラスを作成し、配列で扱います
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/shape-array/1.png)
+
+```cpp
+# include <Siv3D.hpp>
+
+struct RectCounter
+{
+	Rect rect;
+
+	int32 count = 0;
+
+	// カウンターを更新する関数
+	void update()
+	{
+		if (rect.mouseOver())
+		{
+			Cursor::RequestStyle(CursorStyle::Hand);
+		}
+
+		if (rect.leftClicked())
+		{
+			++count;
+		}
+	}
+
+	// カウンターを描画する関数
+	void draw(const Font& font) const
+	{
+		rect.draw();
+		rect.drawFrame(2, ColorF{ 0.1 });
+		font(U"{}"_fmt(count)).drawAt(rect.center(), ColorF{ 0.1 });
+	}
+};
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+
+	Array<RectCounter> rectCounters;
+	rectCounters << RectCounter{ Rect{ 100, 100, 100, 100 } };
+	rectCounters << RectCounter{ Rect{ 300, 100, 100, 100 } };
+	rectCounters << RectCounter{ Rect{ 500, 100, 100, 100 } };
+
+	while (System::Update())
+	{
+		for (auto& rectCounter : rectCounters)
+		{
+			rectCounter.update();
+		}
+
+		for (const auto& rectCounter : rectCounters)
+		{
+			rectCounter.draw(font);
+		}
+	}
+}
+```
+
