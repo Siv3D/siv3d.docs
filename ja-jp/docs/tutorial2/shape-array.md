@@ -262,11 +262,11 @@ void Main()
 
 
 ## 23.8 一定時間ごとに Circle を追加する
-- [**チュートリアル 19.3**](../tutorial/time.md) の「一定時間おきに何かをする」を応用して、一定時間ごとに `Circle` を追加します
+- [**チュートリアル 19.3**](../tutorial/time.md) の「一定時間おきに何かをする」を応用して、0.5 秒ごとに `Circle` を追加します
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/shape-array/1.png)
 
-```cpp
+```cpp title="0.5 秒ごとに円を追加する（上限 10 個）"
 # include <Siv3D.hpp>
 
 void Main()
