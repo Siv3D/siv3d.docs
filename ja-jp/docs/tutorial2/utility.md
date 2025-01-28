@@ -1,11 +1,48 @@
-# XX. XXXXX
+# 22. 便利な関数
+Siv3D プログラミングに役立つ便利関数を学びます。
 
-## XX.X XXXXX
+## 22.1 最小値・最大値
 - XXX
-	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/xxxx/1.png)
 
 ```cpp
 
 ```
 
+## 22.2 指定した範囲に収める
+- XXX
+
+```cpp
+
+```
+
+
+## 22.3 指定した範囲内であるかを調べる
+- XXX
+
+```cpp
+
+```
+
+
+## 22.4 奇数・偶数を判定する
+- XXX
+	
+```cpp
+
+```
+
+
+## 22.5 絶対値
+- XXX
+
+```cpp
+
+```
+
+
+## 22.6 差の絶対値
+- XXX
+
+```cpp
+
+```

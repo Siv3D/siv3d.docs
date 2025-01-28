@@ -104,8 +104,8 @@ nav:
     - 20. クリックゲーム: tutorial/click.md
   - 入門チュートリアル 2:
     - 21. 配列: tutorial2/array.md
-    - 22. 図形どうしの交差判定: tutorial2/intersection.md
-    - 23. 便利な関数: tutorial2/utility.md
+    - 22. 便利な関数: tutorial2/utility.md
+    - 23. 図形どうしの交差判定: tutorial2/intersection.md
     - 24. ゲームの画面を作る: tutorial2/game-ui.md
     - 25. アイテム集め: tutorial2/collect.md
     - 26. 図形を描く: tutorial2/shape.md
