@@ -103,22 +103,22 @@ nav:
     - 19. 時間を扱う: tutorial/time.md
     - 20. クリックゲーム: tutorial/click.md
   - 入門チュートリアル 2:
-    - 21. 配列: tutorial2/array.md
-    - 22. 便利な関数: tutorial2/utility.md
-    - 23. 図形どうしの交差判定: tutorial2/intersection.md
-    - 24. ゲームの画面を作る: tutorial2/game-ui.md
-    - 25. アイテム集め: tutorial2/collect.md
-    - 26. 図形を描く: tutorial2/shape.md
-    - 27. ボタンを作る: tutorial2/button.md
-    - 28. クッキークリッカー: tutorial2/cookie-clicker.md
-    - 29. 円座標: tutorial2/circular.md
-    - 30. テクスチャを描く: tutorial2/texture.md
-    - 31. 動画を描く: tutorial2/video.md
-    - 32. 文字を描く: tutorial2/font.md
-    - 33. 文字列クラス: tutorial2/string.md
-    - 34. 無効値を表現できる型: tutorial2/optional.md
-    - 35. 数値と文字列の変換: tutorial2/format.md
-    - 36. 二次元配列: tutorial2/grid.md
+    - 21. 便利な関数: tutorial2/utility.md
+    - 22. 配列: tutorial2/array.md
+    - 23. 図形の配列: tutorial2/shape-array.md
+    - 24. 図形どうしの交差判定: tutorial2/intersection.md
+    - 25. ゲームの画面を作る: tutorial2/game-ui.md
+    - 26. アイテム集め: tutorial2/collect.md
+    - 27. 図形を描く: tutorial2/shape.md
+    - 28. ボタンを作る: tutorial2/button.md
+    - 29. クッキークリッカー: tutorial2/cookie-clicker.md
+    - 30. 円座標: tutorial2/circular.md
+    - 31. テクスチャを描く: tutorial2/texture.md
+    - 32. 動画を描く: tutorial2/video.md
+    - 33. 文字を描く: tutorial2/font.md
+    - 34. 文字列クラス: tutorial2/string.md
+    - 35. 無効値を表現できる型: tutorial2/optional.md
+    - 36. 数値と文字列の変換: tutorial2/format.md
     - 37. シーンとウィンドウ: tutorial2/scene.md
     - 38. GUI: tutorial2/gui.md
     - 39. 動きをつくる: tutorial2/motion.md
@@ -127,6 +127,7 @@ nav:
     - 41. オーディオ再生: tutorial3/empty.md
     - 42. キーボード入力: tutorial3/empty.md
     - 43. マウス入力: tutorial3/empty.md
+    - 37. 二次元配列: tutorial3/grid.md
     - 44. 日付と時刻、時間: tutorial3/empty.md
     - 45. 図形の交差判定: tutorial3/empty.md
     - 46. ハッシュテーブル: tutorial3/empty.md
