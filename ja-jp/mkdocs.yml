@@ -114,7 +114,7 @@ nav:
     - 29. 円座標: tutorial2/circular.md
     - 30. テクスチャを描く: tutorial2/texture.md
     - 31. 動画を描く: tutorial2/video.md
-    - 32. 文字を描く ①: tutorial2/font.md
+    - 32. 文字を描く: tutorial2/font.md
     - 33. 文字列クラス: tutorial2/string.md
     - 34. 無効値を表現できる型: tutorial2/optional.md
     - 35. 数値と文字列の変換: tutorial2/format.md
