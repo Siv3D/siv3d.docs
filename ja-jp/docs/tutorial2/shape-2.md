@@ -102,7 +102,7 @@ void Main()
 
 	const Rect rect{ 100, 100, 300 };
 
-	Circle circle{ 600, 300, 100 };
+	const Circle circle{ 600, 300, 100 };
 
 	while (System::Update())
 	{
@@ -129,7 +129,7 @@ void Main()
 | `.rotatedAt(回転の基準点, 回転角度)` | 図形を指定した角度で回転した新しい図形を作成して返します |
 
 - 図形を直接回転させる場合は、`.rotate()`, `.rotateAt()` メンバ関数を使います
-    - 戻り値は `void` です
+	- 戻り値は `void` です
 
 | コード | 説明 |
 |---|---|
