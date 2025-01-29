@@ -308,20 +308,20 @@ void Main()
 {
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-	const Texture emojiBread{ U"🍞"_emoji };
+	const Texture breadEmoji{ U"🍞"_emoji };
 
-	const Texture emojiRice{ U"🍚"_emoji };
+	const Texture riceEmoji{ U"🍚"_emoji };
 
 	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
 
 	while (System::Update())
 	{
-		if (Button(Rect{ 80, 300, 300, 80 }, emojiBread, font, U"Bread", true))
+		if (Button(Rect{ 80, 300, 300, 80 }, breadEmoji, font, U"Bread", true))
 		{
 			Print << U"Bread";
 		}
 
-		if (Button(Rect{ 420, 300, 300, 80 }, emojiRice, font, U"Rice", true))
+		if (Button(Rect{ 420, 300, 300, 80 }, riceEmoji, font, U"Rice", true))
 		{
 			Print << U"Rice";
 		}
