@@ -122,49 +122,49 @@ nav:
     - 37. GUI: tutorial2/gui.md
     - 38. 動きをつくる: tutorial2/motion.md
     - 39. インタラクションの実装: tutorial2/interaction.md
+    - 40. オーディオ再生: tutorial3/audio.md
   - 入門チュートリアル 3:
-    - 41. オーディオ再生: tutorial3/empty.md
-    - 42. キーボード入力: tutorial3/empty.md
-    - 43. マウス入力: tutorial3/empty.md
-    - 44. 日付と時刻、時間: tutorial3/empty.md
-    - 45. 図形の交差判定: tutorial3/empty.md
-    - 46. シーンとウィンドウ: tutorial2/scene.md
-    - 47. ハッシュテーブル: tutorial3/empty.md
-    - 48. 2D レンダーステート: tutorial3/empty.md
-    - 49. 2D カメラ: tutorial3/empty.md
-    - 50. アセット管理: tutorial3/empty.md
-    - 51. エフェクト: tutorial3/empty.md
-    - 52. レンダーテクスチャ: tutorial3/empty.md
-    - 53. ファイルシステム: tutorial3/empty.md
-    - 54. テキストファイル: tutorial3/empty.md
-    - 55. 設定ファイル: tutorial3/empty.md
-    - 56. バイナリファイル: tutorial3/empty.md
-    - 57. ファイルダイアログ: tutorial3/empty.md
-    - 58. リソースファイル: tutorial3/empty.md
-    - 59. シーン管理: tutorial3/empty.md
+    - 41. キーボード入力: tutorial3/keyboard.md
+    - 42. マウス入力: tutorial3/mouse.md
+    - 43. ストップウォッチとタイマー: tutorial3/stopwatch.md
+    - 44. 図形の交差判定: tutorial3/geometry2d.md
+    - 45. ハッシュテーブル: tutorial3/empty.md
+    - 46. 2D レンダーステート: tutorial3/empty.md
+    - 47. 2D カメラ: tutorial3/empty.md
+    - 48. シーンとウィンドウ: tutorial3/scene.md
+    - 49. アセット管理: tutorial3/empty.md
+    - 50. エフェクト: tutorial3/empty.md
+    - 51. レンダーテクスチャ: tutorial3/empty.md
+    - 52. ファイルシステム: tutorial3/empty.md
+    - 53. テキストファイル: tutorial3/empty.md
+    - 54. 設定ファイル: tutorial3/empty.md
+    - 55. バイナリファイル: tutorial3/empty.md
+    - 56. ファイルダイアログ: tutorial3/empty.md
+    - 57. リソースファイル: tutorial3/empty.md
+    - 58. シーン管理: tutorial3/empty.md
+    - 59. ゲームパッド: tutorial3/empty.md
     - 60. アプリの公開: tutorial3/empty.md
   - 入門チュートリアル 4:
-    - 61. ゲームパッド: tutorial3/empty.md
-    - 62. ドラッグ & ドロップ: tutorial3/empty.md
-    - 63. クリップボード: tutorial3/empty.md
-    - 64. メッセージボックス: tutorial4/empty.md
-    - 65. HTTP クライアント: tutorial4/empty.md
-    - 66. 画像編集: tutorial4/empty.md
-    - 67. 音声波形: tutorial4/empty.md
-    - 68. マイク入力: tutorial4/empty.md
-    - 69. Web カメラ: tutorial4/empty.md
-    - 70. 2D 物理演算: tutorial4/empty.md
-    - 71. OpenAI API: tutorial4/empty.md
-    - 72. 2D カスタムシェーダ: tutorial4/empty.md
-    - 73. 3D 形状を描く ①: tutorial4/empty.md
-    - 74. 3D 形状を描く ②: tutorial4/empty.md
-    - 75. 3D の交差判定: tutorial4/empty.md
-    - 76. TCP 通信: tutorial4/empty.md
-    - 77. マルチプレイヤー: tutorial4/empty.md
-    - 78. シリアル通信: tutorial4/empty.md
-    - 79. 数式パーサ: tutorial4/empty.md
-    - 80. ユーザ環境の取得: tutorial4/empty.md
-    - 81. アドオンを作る: tutorial4/empty.md
+    - 61. ドラッグ & ドロップ: tutorial3/empty.md
+    - 62. クリップボード: tutorial3/empty.md
+    - 63. メッセージボックス: tutorial4/empty.md
+    - 64. HTTP クライアント: tutorial4/empty.md
+    - 65. 画像編集: tutorial4/empty.md
+    - 66. 音声波形: tutorial4/empty.md
+    - 67. マイク入力: tutorial4/empty.md
+    - 68. Web カメラ: tutorial4/empty.md
+    - 69. 2D 物理演算: tutorial4/empty.md
+    - 70. OpenAI API: tutorial4/empty.md
+    - 71. 2D カスタムシェーダ: tutorial4/empty.md
+    - 72. 3D 形状を描く ①: tutorial4/empty.md
+    - 73. 3D 形状を描く ②: tutorial4/empty.md
+    - 74. 3D の交差判定: tutorial4/empty.md
+    - 75. TCP 通信: tutorial4/empty.md
+    - 76. マルチプレイヤー: tutorial4/empty.md
+    - 77. シリアル通信: tutorial4/empty.md
+    - 78. 数式パーサ: tutorial4/empty.md
+    - 79. ユーザ環境の取得: tutorial4/empty.md
+    - 80. アドオンを作る: tutorial4/empty.md
   - サンプル集:
     - ゲームのサンプル: samples/games.md
     - アプリケーションのサンプル: samples/apps.md
