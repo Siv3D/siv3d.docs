@@ -317,7 +317,7 @@ void Main()
 | `.drawFrame(太さ, Arg::top = 上側の色, Arg::bottom = 下側の色)` | 上下にグラデーションする角丸長方形の枠を描きます |
 | `.drawFrame(内側の太さ, 外側の太さ, Arg::top = 上側の色, Arg::bottom = 下側の色)` | 上下にグラデーションする角丸長方形の枠を描きます |
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/12.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/8.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -353,7 +353,7 @@ void Main()
 - `tl` は左上の角、`tr` は右上の角、`br` は右下の角、`bl` は左下の角の曲線の半径です
 - 一部の角が丸い長方形を描くには、`Polygon` の `.draw()` を使います
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/13.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/9.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -417,7 +417,7 @@ void Main()
 | `LineStyle::SquareDot` | 四角いドットの線 |
 | `LineStyle::RoundDot` | 丸いドットの線 |
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/8.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/10.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -480,7 +480,7 @@ void Main()
 | `.drawFrame(太さ, 色)` | 三角形の枠を描きます |
 | `.drawFrame(内側の太さ, 外側の太さ, 色)` | 三角形の枠を描きます |
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/9.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/11.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -532,7 +532,7 @@ void Main()
 !!! warning "注意"
 	- 4 つの頂点が反時計回りの場合や、凹角を持つ場合の挙動は未規定です
 
-	![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/10a.png)
+	![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/12-0.png)
 
 - 四角形を描くには、`Quad` の `.draw()` を使います
 
@@ -551,7 +551,7 @@ void Main()
 ### 26.12.1 頂点を 4 つ指定
 - 4 つの頂点座標を指定して `Quad` を作成します
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/10b.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/12-1.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -572,7 +572,7 @@ void Main()
 ### 26.12.2 長方形の回転
 - 長方形を回転させて `Quad` を作成します
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/10c.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/12-2.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -603,7 +603,7 @@ void Main()
 ### 26.12.3 長方形のスライド・傾斜
 - 長方形の辺をスライド・傾斜させて `Quad` を作成します
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/10d.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/12-3.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -665,46 +665,60 @@ void Main()
 | `.drawFrame(内側の太さ, 外側の太さ, 色)` | 楕円の枠を描きます |
 
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/11.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/13.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
 	while (System::Update())
 	{
-		// 中心 (300, 200), X 軸方向の半径 200, Y 軸方向の半径　100 の楕円を描く
-		Ellipse{ 300, 200, 200, 100 }.draw(Palette::Skyblue);
+		Ellipse{ 300, 200, 200, 100 }.draw();
 
-		// 中心 (600, 400), X 軸方向の半径 50, Y 軸方向の半径　150 の楕円を描く
-		Ellipse{ 600, 400, 50, 150 }.draw(Palette::Orange);
+		Ellipse{ 600, 400, 50, 150 }.draw(ColorF{ 0.2 });
 	}
 }
 ```
 
 
-## 26.14 多角形
-複雑な図形を簡単に作成できるいくつかの関数が用意されています。これらの関数の戻り値である `Shape2D` 型のオブジェクトを `.draw()`, `.drawFrame()` することで図形を描けます。関数のうち、引数に `double angle` をとるものは、時計回りの回転の角度を指定できます。
+## 26.14 よく使われる形
+- よく使われる形を 1 行で描画できる関数が用意されています
+- これらの関数は頂点配列を格納した `Shape2D` 型のオブジェクトを返します
 
-| 関数名                  | 形状       | 引数                                                                                    |
-|----------------------|----------|---------------------------------------------------------------------------------------------|
-| Shape2D::Cross       | ✖ マーク    | `double r, double width, const Vec2& center = Vec2{ 0, 0 }, double angle = 0.0`          |
-| Shape2D::Plus        | ＋マーク     | `double r, double width, const Vec2& center = Vec2{ 0, 0 }, double angle = 0.0`          |
-| Shape2D::Pentagon    | 正五角形     | `double r, const Vec2& center = Vec2{ 0, 0 }, double angle = 0.0`                     |
-| Shape2D::Hexagon     | 正六角形     | `double r, const Vec2& center = Vec2{ 0, 0 }, double angle = 0.0`                         |
-| Shape2D::Ngon        | 正 N 角形   | `uint32 n, double r, const Vec2& center = Vec2{ 0, 0 }, double angle = 0.0`                |
-| Shape2D::Star        | 五芒星      | `double r, const Vec2& center = Vec2{ 0, 0 }, double angle = 0.0`                             |
-| Shape2D::Nstar       | 星        | `uint32 n, double rOuter, double rInner, const Vec2& center = Vec2{ 0, 0 }, double angle = 0.0` |
-| Shape2D::Arrow       | 矢印       | `const Vec2& from, const Vec2& to, double width, const Vec2& headSize`       |
-| Shape2D::Arrow       | 矢印       | `const Line& line, double width, const Vec2& headSize`                        |
-| Shape2D::DoubleHeadedArrow | 両方向矢印 | `const Vec2& from, const Vec2& to, double width, const Vec2& headSize`  |
-| Shape2D::DoubleHeadedArrow | 両方向矢印 | `const Line& line, double width, const Vec2& headSize`  |
-| Shape2D::Rhombus     | ひし形      | `double w, double h, const Vec2& center = Vec2{ 0, 0 }, double angle = 0.0`    |
-| Shape2D::RectBalloon | 長方形の吹き出し | `const RectF& rect, const Vec2& target, double pointingRootRatio = 0.5`   |
-| Shape2D::Stairs      | 階段形      | `const Vec2& base, double w, double h, uint32 steps, bool upStairs = true`  |
-| Shape2D::Heart      | ハート形   | `double r, const Vec2& center = Vec2{ 0, 0 }, double angle = 0.0`  |
-| Shape2D::Squircle      | 四角と円の中間形 | `double r, const Vec2& center, uint32 quality`   |
+| コード | 形状 |
+|---|---|
+| `Shape2D::Cross(半径, 太さ, 中心座標 = { 0, 0 }, 回転角度 = 0.0)` | ✖ マーク |
+| `Shape2D::Plus(半径, 太さ, 中心座標 = { 0, 0 }, 回転角度 = 0.0)` | ＋マーク |
+| `Shape2D::Pentagon(半径, 中心座標 = { 0, 0 }, 回転角度 = 0.0)` | 正五角形 |
+| `Shape2D::Hexagon(半径, 中心座標 = { 0, 0 }, 回転角度 = 0.0)` | 正六角形 |
+| `Shape2D::Ngon(辺の数, 半径, 中心座標 = { 0, 0 }, 回転角度 = 0.0)` | 正 N 角形 |
+| `Shape2D::Star(半径, 中心座標 = { 0, 0 }, 回転角度 = 0.0)` | 五芒星 |
+| `Shape2D::NStar(尖端の数, 外周の半径, 内周の半径, 中心座標 = { 0, 0 }, 回転角度 = 0.0)` | 星 |
+| `Shape2D::Arrow(始点, 終点, 太さ, 三角形の幅と高さ)` | 矢印 |
+| `Shape2D::Arrow(線分, 太さ, 三角形の幅と高さ)` | 矢印 |
+| `Shape2D::DoubleHeadedArrow(始点, 終点, 太さ, 三角形の幅と高さ)` | 両方向矢印 |
+| `Shape2D::DoubleHeadedArrow(線分, 太さ, 三角形の幅と高さ)` | 両方向矢印 |
+| `Shape2D::Rhombus(幅, 高さ, 中心座標 = { 0, 0 }, 回転角度 = 0.0)` | ひし形 |
+| `Shape2D::RectBalloon(長方形, ターゲット座標, 吹き出しの根元の比率 = 0.5)` | 長方形の吹き出し |
+| `Shape2D::Stairs(基準座標, 幅, 高さ, 階段数, 右上に上がるか = true)` | 階段形 |
+| `Shape2D::Heart(半径, 中心座標 = { 0, 0 }, 回転角度 = 0.0)` | ハート形 |
+| `Shape2D::Squircle(半径, 中心座標, 品質)` | 四角と円の中間形 |
+| `Shape2D::Astroid(中心座標 外接楕円の X 軸半径, 外接楕円の Y 軸半径, 回転角度 = 0.0)` | 星芒形 |
+
+- これらの形を描画するには、`Shape2D` の `.draw()` を使います
+
+| コード | 説明 |
+|---|---|
+| `.draw(色)` | 形を描きます |
+
+- これらの形の枠を描画するには、`Shape2D` の `.drawFrame()` を使います
+
+| コード | 説明 |
+|---|---|
+| `.drawFrame(太さ, 色)` | 形の枠を描きます |
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/14.png)
 
@@ -713,56 +727,68 @@ void Main()
 
 void Main()
 {
-	// ウィンドウおよびシーンを 1000x600 にリサイズ
-	Window::Resize(1000, 600);
+	// ウィンドウサイズを 1280x720 に変更する
+	Window::Resize(1280, 720);
+
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
 	while (System::Update())
 	{
-		Shape2D::Cross(80, 10, Vec2{ 100, 100 }).draw(Palette::Skyblue);
+		Shape2D::Cross(80, 10, Vec2{ 100, 100 }).draw();
 
-		Shape2D::Plus(80, 10, Vec2{ 300, 100 }).draw(Palette::Skyblue);
+		Shape2D::Plus(80, 10, Vec2{ 300, 100 }).draw();
 
-		Shape2D::Pentagon(80, Vec2{ 500, 100 }).draw(Palette::Skyblue);
+		Shape2D::Pentagon(80, Vec2{ 500, 100 }).draw();
 
-		Shape2D::Hexagon(80, Vec2{ 700, 100 }).draw(Palette::Skyblue);
+		Shape2D::Hexagon(80, Vec2{ 700, 100 }).draw();
 
 		// 30° 回転させる
-		Shape2D::Hexagon(80, Vec2{ 900, 100 }, 30_deg).draw(Palette::Skyblue);
+		Shape2D::Hexagon(80, Vec2{ 900, 100 }, 30_deg).draw();
+
+		Shape2D::Hexagon(80, Vec2{ 1100, 100 }, 30_deg).drawFrame(4, ColorF{ 0.2 });
 
 
 		// 正十角形
-		Shape2D::Ngon(10, 80, Vec2{ 100, 300 }).draw(Palette::Skyblue);
+		Shape2D::Ngon(10, 80, Vec2{ 100, 300 }).draw();
 
-		Shape2D::Star(80, Vec2{ 300, 300 }).draw(Palette::Skyblue);
+		Shape2D::Star(80, Vec2{ 300, 300 }).draw();
 
 		// rOuter は外周の半径、rInner は内周の半径
-		Shape2D::NStar(10, 80, 60, Vec2{ 500, 300 }).draw(Palette::Skyblue);
+		Shape2D::NStar(10, 80, 60, Vec2{ 500, 300 }).draw();
 
 		// headSize は三角形の幅と高さ
-		Shape2D::Arrow(Line{ 640, 340, 760, 260 }, 20, Vec2{ 40, 30 }).draw(Palette::Skyblue);
+		Shape2D::Arrow(Line{ 640, 340, 760, 260 }, 20, Vec2{ 40, 30 }).draw();
 
-		Shape2D::DoubleHeadedArrow(Line{ 840, 340, 960, 260 }, 20, Vec2{ 40, 30 }).draw(Palette::Skyblue);
+		Shape2D::DoubleHeadedArrow(Line{ 840, 340, 960, 260 }, 20, Vec2{ 40, 30 }).draw();
 
+		Shape2D::Rhombus(160, 120, Vec2{ 1100, 300 }).draw();
 
-		Shape2D::Rhombus(160, 120, Vec2{ 100, 500 }).draw(Palette::Skyblue);
 
 		// 吹き出しの長方形と、三角形の頂点の置を指定。三角形のサイズは pointingRootRatio で決まる
-		Shape2D::RectBalloon(RectF{ 220, 420, 160, 120 }, Vec2{ 220, 580 }).draw(Palette::Skyblue);
+		Shape2D::RectBalloon(RectF{ 20, 420, 160, 120 }, Vec2{ 20, 580 }, 0.5).draw();
 
 		// base には階段の最も高い段の底の端の座標を指定。steps は段数、upStairs を false にすると下りの階段に
-		Shape2D::Stairs(Vec2{ 560, 560 }, 120, 120, 4).draw(Palette::Skyblue);
+		Shape2D::Stairs(Vec2{ 360, 560 }, 120, 120, 4).draw();
 
-		Shape2D::Heart(80, Vec2{ 700, 500 }).draw(Palette::Skyblue);
+		Shape2D::Heart(80, Vec2{ 500, 500 }).draw();
 
 		// 第 3 引数は角の丸の分割品質
-		Shape2D::Squircle(60, Vec2{ 900, 500 }, 64).draw(Palette::Skyblue);
+		Shape2D::Squircle(60, Vec2{ 700, 500 }, 64).draw();
+
+		Shape2D::Astroid(Vec2{ 900, 500 }, 60, 80).draw();
 	}
 }
 ```
 
 
 ## 26.15 自由に多角形を描く
-`Shape2D` では表現できない多角形を描くには `Polygon` を作成して `.draw()` します。`Polygon` を作成するときは、各頂点の座標を時計回りに指定します。`Polygon` オブジェクトの作成には、メモリの確保や三角形分割の計算に実行時コストがかかるため、とくに頂点数が多いものはループの内側で作成するのを避けるべきです。
+- 任意の多角形は `Polygon` で表現します
+- `Polygon` は次のように作成できます
+
+
+- `Polygon` オブジェクトの作成には、メモリの確保や三角形分割の計算に実行時コストがかかります
+- とくに頂点数が多いものは、ループの内側で作成するのを避けるべきです。
+
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/15.png)
 
@@ -784,7 +810,10 @@ void Main()
 }
 ```
 
-`Polygon` よりも少ない実行時コストで図形を描きたい場合は、`Shape2D` や `Buffer2D` クラスの低レイヤ操作を使います。`Shape2D` では、頂点配列のほかにインデックス配列を自前で用意する必要があります。`Buffer2D` ではさらにテクスチャをマッピングするための UV 座標も必要になるため、プログラムが複雑になります。今回のチュートリアルでは扱いません。
+- `Polygon` よりも少ない実行時コストで図形を描きたい場合は、`Shape2D` や `Buffer2D` など低レイヤのクラスを使います
+- `Shape2D` では、頂点配列に加えてインデックス配列を自前で用意する必要があります
+- `Buffer2D` では、さらにテクスチャをマッピングするための UV 座標も用意します
+- いずれも本章では扱いません
 
 
 ## 26.16 穴の開いた角形を描く
