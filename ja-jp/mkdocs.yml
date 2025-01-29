@@ -114,8 +114,8 @@ nav:
     - 29. クッキークリッカー: tutorial2/cookie-clicker.md
     - 30. 円座標: tutorial2/circular.md
     - 31. テクスチャを描く: tutorial2/texture.md
-    - 33. 動画を描く: tutorial2/video.md
-    - 34. 文字を描く: tutorial2/font.md
+    - 32. 動画を描く: tutorial2/video.md
+    - 33. 文字を描く: tutorial2/font.md
     - 34. 文字列クラス: tutorial2/string.md
     - 35. 無効値を表現できる型: tutorial2/optional.md
     - 36. 数値と文字列の変換: tutorial2/format.md

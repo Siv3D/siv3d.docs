@@ -636,7 +636,7 @@ void Main()
 ### 26.13.3 長方形のスライド・傾斜
 - 長方形の辺をスライド・傾斜させて `Quad` を作成します
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/12-3.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/13-3.png)
 
 ```cpp
 # include <Siv3D.hpp>

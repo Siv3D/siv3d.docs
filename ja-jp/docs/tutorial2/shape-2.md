@@ -2,7 +2,7 @@
 図形に対して、平行移動・拡大縮小・回転・太らせるなどの操作を行う方法を学びます。
 
 ## 27.1 図形を移動させる
-- 多くの図形クラスが、自身を**指定したベクトルで平行移動した新しい図形**を作成して返す `.movedBy()` メンバ関数を持っています
+- 一部の図形クラスは、自身を**指定したベクトルで平行移動した新しい図形**を作成して返す `.movedBy()` メンバ関数を持っています
 
 | コード | 説明 |
 |---|---|
@@ -20,11 +20,31 @@
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape-2/1.png)
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Rect rect{ 100, 100, 300 };
+
+	Circle circle{ 600, 100, 100 };
+
+	while (System::Update())
+	{
+		circle.moveBy(0, (Scene::DeltaTime() * 100.0));
+
+		rect.draw();
+
+		rect.movedBy(40, 40).draw(Palette::Seagreen);
+
+		circle.draw(ColorF{ 0.2 });
+	}
+}
 ```
 
 ## 27.2 図形を拡大縮小する（ピクセル指定）
-- `Rect` や `RectF`, `Line` など一部の図形クラスは、自身の**幅や高さを変更した新しい図形**を作成して返す `.stretched()` メンバ関数を持っています
+- 一部の図形クラスは、自身の**幅や高さを変更した新しい図形**を作成して返す `.stretched()` メンバ関数を持っています
 
 | コード | 説明 |
 |---|---|
@@ -37,7 +57,27 @@
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape-2/2.png)
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Rect rect{ 100, 100, 300 };
+
+	const Line line{ 500, 100, 600, 500 };
+
+	while (System::Update())
+	{
+		rect.draw();
+
+		rect.stretched(-20).draw(ColorF{ 0.2 });
+
+		line.stretched(40).draw(12);
+
+		line.draw(4, ColorF{ 0.2 });
+	}
+}
 ```
 
 
@@ -51,28 +91,81 @@
 | `.scaledAt(拡大縮小の基準点, 倍率)` | 図形を指定した倍率で拡大縮小した新しい図形を作成して返します |
 | `.scaledAt(拡大縮小の基準点, 幅の倍率, 高さの倍率)` | 図形を指定した幅と高さの倍率で拡大縮小した新しい図形を作成して返します |
 
-
-`Polygon` は自身を拡大縮小した新しい `Polygon` を返す `.scaled()` や、回転した `Polygon` を返す `.rotated()`, `.rotatedAt()` などのメンバ関数を持ちます。また、`Shape2D` は `Polygon` に変換可能です。
-
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape-2/3.png)
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Rect rect{ 100, 100, 300 };
+
+	Circle circle{ 600, 300, 100 };
+
+	while (System::Update())
+	{
+		rect.draw();
+
+		rect.scaled(0.5).draw(Palette::Seagreen);
+
+		rect.scaledAt(rect.pos, 0.5).draw(ColorF{ 0.2 });
+
+		circle.draw();
+
+		circle.scaled(0.8).draw(ColorF{ 0.2 });
+	}
+}
 ```
 
 
 ## 27.4 図形を回転させる
+- 一部の図形クラスは、自身を**指定した角度で回転した新しい図形**を作成して返す `.rotated()`, `.rotatedAt()` メンバ関数を持っています
+
+| コード | 説明 |
+|---|---|
+| `.rotated(回転角度)` | 図形を指定した角度で回転した新しい図形を作成して返します |
+| `.rotatedAt(回転の基準点, 回転角度)` | 図形を指定した角度で回転した新しい図形を作成して返します |
+
+- 図形を直接回転させる場合は、`.rotate()`, `.rotateAt()` メンバ関数を使います
+    - 戻り値は `void` です
+
+| コード | 説明 |
+|---|---|
+| `.rotate(回転角度)` | 図形を指定した角度で回転します |
+| `.rotateAt(回転の基準点, 回転角度)` | 図形を指定した角度で回転します |
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape-2/4.png)
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Triangle triangle{ Vec2{ 200, 300 }, 200 };
+
+	const Polygon polygon = Shape2D::Star(200, Vec2{ 600, 300 });
+
+	double angle = 0.0_deg;
+
+	while (System::Update())
+	{
+		angle += (Scene::DeltaTime() * 30_deg);
+
+		triangle.rotated(angle).draw(ColorF{ 0.2 });
+
+		polygon.rotatedAt(Vec2{ 600, 300 }, angle).draw(ColorF{ 0.2 });
+	}
+}
 ```
-
 
 
 ## 27.5 多角形を太らせる
 - `Polygon` は、自身を**指定した太さで太らせた新しい多角形**を作成して返す `.calculateBuffer()`, `.calculateRoundBuffer()` メンバ関数を持っています
+- この関数は計算コストが大きいため、ループ中での使用は避けるべきです
 
 | コード | 説明 |
 |---|---|
@@ -82,6 +175,25 @@
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape-2/5.png)
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Polygon polygon1 = Shape2D::Star(150, Vec2{ 200, 300 });
+	const Polygon polygon2 = polygon1.calculateBuffer(20);
+
+	const Polygon polygon3 = Shape2D::Star(150, Vec2{ 600, 300 });
+	const Polygon polygon4 = polygon3.calculateRoundBuffer(20);
+
+	while (System::Update())
+	{
+		polygon2.draw(ColorF{ 0.2 });
+		polygon1.drawFrame(4);
+
+		polygon4.draw(ColorF{ 0.2 });
+		polygon3.drawFrame(4);
+	}
+}
 ```
-
