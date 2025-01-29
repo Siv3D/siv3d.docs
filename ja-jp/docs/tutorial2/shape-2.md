@@ -259,3 +259,47 @@ void Main()
 	}
 }
 ```
+
+
+## 27.7 円座標
+- 円状に並ぶオブジェクトを扱う場合、X 軸 Y 軸を使った座標系の代わりに、基準点からの距離と角度で位置を表現する**円座標**を使うと便利です
+- Siv3D では、円座標を扱うための `Circular` クラスと `OffsetCircular` クラスが用意されています
+	- 角度は 12 時の方向を 0 とする、時計回りのラジアンで指定します
+
+| コード | 説明 |
+|---|---|
+| `Circular{ r, theta }` | 原点を中心として半径 `r`, 角度 `theta` の位置を表します |
+| `OffsetCircular{ offset, r, theta }` | `offset` を中心として半径 `r`, 角度 `theta` の位置を表します |
+
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape-2/7-1.png)
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape-2/7-2.png)
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 1.0, 0.98, 0.96 });
+
+	double angle = 0.0_deg;
+
+	while (System::Update())
+	{
+		angle += (Scene::DeltaTime() * 30_deg);
+
+		for (int32 i = 0; i < 12; ++i)
+		{
+			const double theta = (i * 30_deg + angle);
+
+			const Vec2 pos = OffsetCircular{ Vec2{ 400, 300 }, 200, theta };
+
+			pos.asCircle(28)
+				.drawShadow(Vec2{ 0, 4 }, 12, 4)
+				.draw(HSV{ (i * 30), 0.8, 1.0 })
+				.drawFrame(3, 2, ColorF{ 1.0 });
+		}
+	}
+}
+```
