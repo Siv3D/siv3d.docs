@@ -1,9 +1,9 @@
-# XX. XXXXX
+# 39. インタラクションの実装
 
-## XX.X XXXXX
+## 39.1 XXXXX
 - XXX
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/xxxx/1.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/interaction/1.png)
 
 ```cpp
 

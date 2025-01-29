@@ -1,9 +1,9 @@
-# XX. XXXXX
+# 35. 数値と文字列の変換
 
-## XX.X XXXXX
+## 35.1 XXXXX
 - XXX
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/xxxx/1.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/format/1.png)
 
 ```cpp
 

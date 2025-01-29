@@ -319,7 +319,7 @@
 	```
 
 
-## 20.6 ゲームのリセット
+## 20.6 【完成】ゲームのリセット
 - ゲーム終了画面で ++enter++ キーを押すと、スコアと残り時間をリセットしてゲームを再プレイできるようにします
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/click/6.png)

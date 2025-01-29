@@ -1,9 +1,9 @@
-# XX. XXXXX
+# 40. オーディオ再生
 
-## XX.X XXXXX
+## 40.1 XXXXX
 - XXX
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/xxxx/1.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/audio/1.png)
 
 ```cpp
 

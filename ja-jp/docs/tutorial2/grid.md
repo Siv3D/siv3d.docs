@@ -1,9 +1,9 @@
-# XX. XXXXX
+# 36. 二次元配列
 
-## XX.X XXXXX
+## 36.1 XXXXX
 - XXX
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/xxxx/1.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/grid/1.png)
 
 ```cpp
 

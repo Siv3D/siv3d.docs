@@ -1,9 +1,9 @@
-# XX. XXXXX
+# 37. GUI
 
-## XX.X XXXXX
+## 37.1 XXXXX
 - XXX
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/xxxx/1.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/1.png)
 
 ```cpp
 
