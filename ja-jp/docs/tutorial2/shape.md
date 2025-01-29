@@ -65,11 +65,11 @@ void Main()
 
 	while (System::Update())
 	{
-		Circle{ 150, 300, 120 }.drawFrame(10, Palette::Seagreen);
+		Circle{ 150, 300, 100 }.drawFrame(10, Palette::Seagreen);
 
-		Circle{ 400, 300, 120 }.draw().drawFrame(2, 8, Palette::Seagreen);
+		Circle{ 400, 300, 100 }.draw().drawFrame(2, 8, Palette::Seagreen);
 
-		Circle{ 650, 300, 120 }.drawFrame(20, ColorF{ 0.0, 0.0 }, ColorF{ 0.0, 1.0 });
+		Circle{ 650, 300, 100 }.drawFrame(20, ColorF{ 0.0, 0.0 }, ColorF{ 0.0, 1.0 });
 	}
 }
 ```
@@ -324,18 +324,17 @@ void Main()
 
 void Main()
 {
-	const Rect rect{ 100, 350, 500, 200 };
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Rect rect{ 100, 300, 500, 200 };
 
 	while (System::Update())
 	{
-		// RectF{ 100, 100, 200, 100 } の角を 10px 丸めた角丸長方形を描く
-		RoundRect{ 100, 100, 200, 100, 10 }.draw();
+		RoundRect{ 100, 100, 200, 100, 20 }.draw();
 
-		// RectF{ Arg::center(400, 300), 200, 80 } の角を 5px 丸めた角丸長方形を描く
-		RoundRect{ Arg::center(400, 300), 200, 80, 5 }.draw(Palette::Skyblue);
+		RoundRect{ Arg::center(600, 150), 200, 80, 10 }.draw();
 
-		// 長方形 rect の角を 40px 丸めた角丸長方形を描く
-		rect.rounded(40).draw(Palette::Orange);
+		rect.rounded(40).draw(ColorF{ 0.2 });
 	}
 }
 ```
@@ -371,10 +370,10 @@ void Main()
 			.rounded(40, 40, 0, 0).draw();
 
 		Rect{ 100, 300, 200, 200 }
-			.rounded(40, 0, 40, 0).draw(ColorF{ 0.8, 0.9, 1.0 });
+			.rounded(40, 0, 40, 0).draw(ColorF{ 0.2 });
 
 		Rect{ 400, 300, 200, 200 }
-			.rounded(20, 40, 60, 80).draw(ColorF{ 0.8, 0.9, 1.0 });
+			.rounded(20, 40, 60, 80).draw(ColorF{ 0.2 });
 	}
 }
 ```
@@ -434,11 +433,11 @@ void Main()
 
 		Line{ 100, 400, 700, 400 }.draw(12, Palette::Orange);
 
-		Line{ 100, 450, 700, 450 }.draw(LineStyle::RoundCap, 12, ColorF{ 0.1 });
+		Line{ 100, 450, 700, 450 }.draw(LineStyle::RoundCap, 12, ColorF{ 0.2 });
 
-		Line{ 100, 500, 700, 500 }.draw(LineStyle::SquareDot, 12,  ColorF{ 0.1 });
+		Line{ 100, 500, 700, 500 }.draw(LineStyle::SquareDot, 12,  ColorF{ 0.2 });
 
-		Line{ 100, 550, 700, 550 }.draw(LineStyle::RoundDot, 12,  ColorF{ 0.1 });
+		Line{ 100, 550, 700, 550 }.draw(LineStyle::RoundDot, 12,  ColorF{ 0.2 });
 	}
 }
 ```
@@ -629,7 +628,7 @@ void Main()
 		rect.rotated(angle).draw(Palette::Seagreen);
 
 		// 長方形の左上が回転軸
-		rect.rotatedAt(rect.pos, angle).draw(Palette::Skyblue);
+		rect.rotatedAt(rect.pos, angle).draw(ColorF{ 0.2 });
 	}
 }
 ```
@@ -657,11 +656,11 @@ void Main()
 			.shearedY(-50).draw(ColorF{ 0.2 });
 
 		// 長方形の左右の辺を 30° 傾けた平行四辺形を描く
-		Rect{ 100, 400, 200, 150 }.drawFrame(4, 0)
+		Rect{ 100, 350, 200, 150 }.drawFrame(4, 0)
 			.skewedX(30_deg).draw(Palette::Seagreen);
 
 		// 長方形の上下の辺を -10° 傾けた平行四辺形を描く
-		Rect{ 500, 400, 200, 150 }.drawFrame(4, 0)
+		Rect{ 500, 350, 200, 150 }.drawFrame(4, 0)
 			.skewedY(-10_deg).draw(Palette::Seagreen);
 	}
 }
@@ -776,21 +775,17 @@ void Main()
 
 		Shape2D::Hexagon(80, Vec2{ 700, 100 }).draw();
 
-		// 30° 回転させる
 		Shape2D::Hexagon(80, Vec2{ 900, 100 }, 30_deg).draw();
 
 		Shape2D::Hexagon(80, Vec2{ 1100, 100 }, 30_deg).drawFrame(4, ColorF{ 0.2 });
 
 
-		// 正十角形
 		Shape2D::Ngon(10, 80, Vec2{ 100, 300 }).draw();
 
 		Shape2D::Star(80, Vec2{ 300, 300 }).draw();
 
-		// rOuter は外周の半径、rInner は内周の半径
 		Shape2D::NStar(10, 80, 60, Vec2{ 500, 300 }).draw();
 
-		// headSize は三角形の幅と高さ
 		Shape2D::Arrow(Line{ 640, 340, 760, 260 }, 20, Vec2{ 40, 30 }).draw();
 
 		Shape2D::DoubleHeadedArrow(Line{ 840, 340, 960, 260 }, 20, Vec2{ 40, 30 }).draw();
@@ -798,15 +793,12 @@ void Main()
 		Shape2D::Rhombus(160, 120, Vec2{ 1100, 300 }).draw();
 
 
-		// 吹き出しの長方形と、三角形の頂点の置を指定。三角形のサイズは pointingRootRatio で決まる
 		Shape2D::RectBalloon(RectF{ 20, 420, 160, 120 }, Vec2{ 20, 580 }, 0.5).draw();
 
-		// base には階段の最も高い段の底の端の座標を指定。steps は段数、upStairs を false にすると下りの階段に
 		Shape2D::Stairs(Vec2{ 360, 560 }, 120, 120, 4).draw();
 
 		Shape2D::Heart(80, Vec2{ 500, 500 }).draw();
 
-		// 第 3 引数は角の丸の分割品質
 		Shape2D::Squircle(60, Vec2{ 700, 500 }, 64).draw();
 
 		Shape2D::Astroid(Vec2{ 900, 500 }, 60, 80).draw();
@@ -871,12 +863,11 @@ void Main()
 	// 穴のある多角形
 	const Polygon polygon2
 	{
-		{
-			Vec2{ 600, 100 }, Vec2{ 780, 300 }, Vec2{ 700, 500 }, Vec2{ 600, 400 }, Vec2{ 500, 500 }, Vec2{ 420, 300 }
-		},
-		{
-			{ Vec2{ 620, 250 }, Vec2{ 580, 250 }, Vec2{ 550, 350 }, Vec2{ 650, 350 } }
-		}
+		// 外周
+		{ Vec2{ 600, 100 }, Vec2{ 780, 300 }, Vec2{ 700, 500 }, Vec2{ 600, 400 }, Vec2{ 500, 500 }, Vec2{ 420, 300 } },
+
+		// 穴
+		{ { Vec2{ 620, 250 }, Vec2{ 580, 250 }, Vec2{ 550, 350 }, Vec2{ 650, 350 } } }
 	};
 
 	while (System::Update())
