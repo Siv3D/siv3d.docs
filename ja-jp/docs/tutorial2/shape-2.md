@@ -197,3 +197,65 @@ void Main()
 	}
 }
 ```
+
+
+## 27.6 長方形の構成要素を取得する
+- `Rect`, `RectF` には、長方形の構成要素を取得する次のようなメンバ関数があります
+
+| コード | 説明 |
+|---|---|
+| `.center()` | 長方形の中心座標を返します |
+| `.tl()` | 長方形の左上の座標を返します |
+| `.tr()` | 長方形の右上の座標を返します |
+| `.br()` | 長方形の左下の座標を返します |
+| `.bl()` | 長方形の右下の座標を返します |
+| `.topCenter()` | 長方形の上辺の中心座標を返します |
+| `.rightCenter()` | 長方形の右辺の中心座標を返します |
+| `.bottomCenter()` | 長方形の下辺の中心座標を返します |
+| `.leftCenter()` | 長方形の左辺の中心座標を返します |
+| `.leftX()` | 長方形の左辺の X 座標を返します |
+| `.rightX()` | 長方形の右辺の X 座標を返します |
+| `.topY()` | 長方形の上辺の Y 座標を返します |
+| `.bottomY()` | 長方形の下辺の Y 座標を返します |
+| `.getRelativePoint(相対座標 X, 相対座標 Y)` | 長方形の相対座標を絶対座標に変換して返します。<br>左上を `(0,0)`, 右下を `(1,1)` とします |
+| `.area()` | 長方形の面積を返します |
+
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape-2/6.png)
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+
+	const Rect rect{ 100, 100, 600, 400 };
+
+	while (System::Update())
+	{
+		rect.draw();
+
+		rect.top().draw(4, HSV{ 0 });
+		rect.right().draw(4, HSV{ 90 });
+		rect.bottom().draw(4, HSV{ 180 });
+		rect.left().draw(4, HSV{ 270 });
+
+		font(U"TL").drawAt(40, rect.tl(), ColorF{ 0.2 });
+		font(U"TC").drawAt(40, rect.topCenter(), ColorF{ 0.2 });
+		font(U"TR").drawAt(40, rect.tr(), ColorF{ 0.2 });
+
+		font(U"LC").drawAt(40, rect.leftCenter(), ColorF{ 0.2 });
+		font(U"C").drawAt(40, rect.center(), ColorF{ 0.2 });
+		font(U"RC").drawAt(40, rect.rightCenter(), ColorF{ 0.2 });
+
+		font(U"BL").drawAt(40, rect.bl(), ColorF{ 0.2 });
+		font(U"BC").drawAt(40, rect.bottomCenter(), ColorF{ 0.2 });
+		font(U"BR").drawAt(40, rect.br(), ColorF{ 0.2 });
+
+		font(U"(0.8, 0.2)").drawAt(40, rect.getRelativePoint(0.8, 0.2), ColorF{ 0.2 });
+	}
+}
+```

@@ -1,9 +1,9 @@
-# XX. XXXXX
+# 29. クッキークリッカー
 
-## XX.X XXXXX
+## 29.1 XXXXX
 - XXX
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/xxxx/1.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/cookie-clicker/1.png)
 
 ```cpp
 
