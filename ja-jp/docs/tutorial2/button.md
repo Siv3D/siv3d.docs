@@ -7,38 +7,39 @@
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/button/1.png)
 
-```cpp
-# include <Siv3D.hpp>
+??? memo "コード"
+	```cpp
+	# include <Siv3D.hpp>
 
-bool Button(const Rect& rect)
-{
-	const RoundRect roundRect = rect.rounded(6);
-
-	// 背景を描く
-	roundRect.draw(ColorF{ 0.9, 0.8, 0.6 });
-
-	// ボタンが押されたら true を返す
-	return rect.leftClicked();
-}
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-
-	while (System::Update())
+	bool Button(const Rect& rect)
 	{
-		if (Button(Rect{ 80, 300, 300, 80 }))
-		{
-			Print << U"A";
-		}
+		const RoundRect roundRect = rect.rounded(6);
 
-		if (Button(Rect{ 420, 300, 300, 80 }))
+		// 背景を描く
+		roundRect.draw(ColorF{ 0.9, 0.8, 0.6 });
+
+		// ボタンが押されたら true を返す
+		return rect.leftClicked();
+	}
+
+	void Main()
+	{
+		Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+		while (System::Update())
 		{
-			Print << U"B";
+			if (Button(Rect{ 80, 300, 300, 80 }))
+			{
+				Print << U"A";
+			}
+
+			if (Button(Rect{ 420, 300, 300, 80 }))
+			{
+				Print << U"B";
+			}
 		}
 	}
-}
-```
+	```
 
 
 ## 28.2 装飾の追加
@@ -46,44 +47,45 @@ void Main()
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/button/2.png)
 
-```cpp
-# include <Siv3D.hpp>
+??? memo "コード"
+	```cpp hl_lines="7-14"
+	# include <Siv3D.hpp>
 
-bool Button(const Rect& rect)
-{
-	const RoundRect roundRect = rect.rounded(6);
-
-	// 影と背景を描く
-	roundRect
-		.drawShadow(Vec2{ 2, 2 }, 12, 0)
-		.draw(ColorF{ 0.9, 0.8, 0.6 });
-
-	// 枠を描く
-	rect.stretched(-3).rounded(3)
-		.drawFrame(2, ColorF{ 0.4, 0.3, 0.2 });
-
-	// ボタンが押されたら true を返す
-	return rect.leftClicked();
-}
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-
-	while (System::Update())
+	bool Button(const Rect& rect)
 	{
-		if (Button(Rect{ 80, 300, 300, 80 }))
-		{
-			Print << U"A";
-		}
+		const RoundRect roundRect = rect.rounded(6);
 
-		if (Button(Rect{ 420, 300, 300, 80 }))
+		// 影と背景を描く
+		roundRect
+			.drawShadow(Vec2{ 2, 2 }, 12, 0)
+			.draw(ColorF{ 0.9, 0.8, 0.6 });
+
+		// 枠を描く
+		rect.stretched(-3).rounded(3)
+			.drawFrame(2, ColorF{ 0.4, 0.3, 0.2 });
+
+		// ボタンが押されたら true を返す
+		return rect.leftClicked();
+	}
+
+	void Main()
+	{
+		Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+		while (System::Update())
 		{
-			Print << U"B";
+			if (Button(Rect{ 80, 300, 300, 80 }))
+			{
+				Print << U"A";
+			}
+
+			if (Button(Rect{ 420, 300, 300, 80 }))
+			{
+				Print << U"B";
+			}
 		}
 	}
-}
-```
+	```
 
 
 ## 28.3 テキストの追加
@@ -91,50 +93,50 @@ void Main()
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/button/3.png)
 
-```cpp
-# include <Siv3D.hpp>
+??? memo "コード"
+	```cpp hl_lines="3 16-17 27 31 33 36 38"
+	# include <Siv3D.hpp>
 
-bool Button(const Rect& rect, const Font& font, const String& text)
-{
-	const RoundRect roundRect = rect.rounded(6);
-
-	// 影と背景を描く
-	roundRect
-		.drawShadow(Vec2{ 2, 2 }, 12, 0)
-		.draw(ColorF{ 0.9, 0.8, 0.6 });
-
-	// 枠を描く
-	rect.stretched(-3).rounded(3)
-		.drawFrame(2, ColorF{ 0.4, 0.3, 0.2 });
-
-	// テキストを描く
-	font(text).drawAt(40, rect.center(), ColorF{ 0.4, 0.3, 0.2 });
-
-	// ボタンが押されたら true を返す
-	return rect.leftClicked();
-}
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-
-	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
-
-	while (System::Update())
+	bool Button(const Rect& rect, const Font& font, const String& text)
 	{
-		if (Button(Rect{ 80, 300, 300, 80 }, font, U"Bread"))
-		{
-			Print << U"Bread";
-		}
+		const RoundRect roundRect = rect.rounded(6);
 
-		if (Button(Rect{ 420, 300, 300, 80 }, font, U"Rice"))
+		// 影と背景を描く
+		roundRect
+			.drawShadow(Vec2{ 2, 2 }, 12, 0)
+			.draw(ColorF{ 0.9, 0.8, 0.6 });
+
+		// 枠を描く
+		rect.stretched(-3).rounded(3)
+			.drawFrame(2, ColorF{ 0.4, 0.3, 0.2 });
+
+		// テキストを描く
+		font(text).drawAt(40, rect.center(), ColorF{ 0.4, 0.3, 0.2 });
+
+		// ボタンが押されたら true を返す
+		return rect.leftClicked();
+	}
+
+	void Main()
+	{
+		Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+		const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+
+		while (System::Update())
 		{
-			Print << U"Rice";
+			if (Button(Rect{ 80, 300, 300, 80 }, font, U"Bread"))
+			{
+				Print << U"Bread";
+			}
+
+			if (Button(Rect{ 420, 300, 300, 80 }, font, U"Rice"))
+			{
+				Print << U"Rice";
+			}
 		}
 	}
-}
-
-```
+	```
 
 
 ## 28.4 マウスカーソルの変更
@@ -142,56 +144,57 @@ void Main()
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/button/4.png)
 
-```cpp
-# include <Siv3D.hpp>
+??? memo "コード"
+	```cpp hl_lines="5-10"
+	# include <Siv3D.hpp>
 
-bool Button(const Rect& rect, const Font& font, const String& text)
-{
-	// マウスカーソルがボタンの上にある場合
-	if (rect.mouseOver())
+	bool Button(const Rect& rect, const Font& font, const String& text)
 	{
-		// マウスカーソルを手の形にする
-		Cursor::RequestStyle(CursorStyle::Hand);
-	}
-
-	const RoundRect roundRect = rect.rounded(6);
-
-	// 影と背景を描く
-	roundRect
-		.drawShadow(Vec2{ 2, 2 }, 12, 0)
-		.draw(ColorF{ 0.9, 0.8, 0.6 });
-
-	// 枠を描く
-	rect.stretched(-3).rounded(3)
-		.drawFrame(2, ColorF{ 0.4, 0.3, 0.2 });
-
-	// テキストを描く
-	font(text).drawAt(40, rect.center(), ColorF{ 0.4, 0.3, 0.2 });
-
-	// ボタンが押されたら true を返す
-	return rect.leftClicked();
-}
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-
-	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
-
-	while (System::Update())
-	{
-		if (Button(Rect{ 80, 300, 300, 80 }, font, U"Bread"))
+		// マウスカーソルがボタンの上にある場合
+		if (rect.mouseOver())
 		{
-			Print << U"Bread";
+			// マウスカーソルを手の形にする
+			Cursor::RequestStyle(CursorStyle::Hand);
 		}
 
-		if (Button(Rect{ 420, 300, 300, 80 }, font, U"Rice"))
+		const RoundRect roundRect = rect.rounded(6);
+
+		// 影と背景を描く
+		roundRect
+			.drawShadow(Vec2{ 2, 2 }, 12, 0)
+			.draw(ColorF{ 0.9, 0.8, 0.6 });
+
+		// 枠を描く
+		rect.stretched(-3).rounded(3)
+			.drawFrame(2, ColorF{ 0.4, 0.3, 0.2 });
+
+		// テキストを描く
+		font(text).drawAt(40, rect.center(), ColorF{ 0.4, 0.3, 0.2 });
+
+		// ボタンが押されたら true を返す
+		return rect.leftClicked();
+	}
+
+	void Main()
+	{
+		Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+		const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+
+		while (System::Update())
 		{
-			Print << U"Rice";
+			if (Button(Rect{ 80, 300, 300, 80 }, font, U"Bread"))
+			{
+				Print << U"Bread";
+			}
+
+			if (Button(Rect{ 420, 300, 300, 80 }, font, U"Rice"))
+			{
+				Print << U"Rice";
+			}
 		}
 	}
-}
-```
+	```
 
 
 ## 28.5 無効状態の追加
@@ -199,63 +202,64 @@ void Main()
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/button/5.png)
 
-```cpp
-# include <Siv3D.hpp>
+??? memo "コード"
+	```cpp hl_lines="3 6 26-31 45 50"
+	# include <Siv3D.hpp>
 
-bool Button(const Rect& rect, const Font& font, const String& text, bool enabled)
-{
-	// マウスカーソルがボタンの上にある場合
-	if (enabled && rect.mouseOver())
+	bool Button(const Rect& rect, const Font& font, const String& text, bool enabled)
 	{
-		// マウスカーソルを手の形にする
-		Cursor::RequestStyle(CursorStyle::Hand);
-	}
-
-	const RoundRect roundRect = rect.rounded(6);
-
-	// 影と背景を描く
-	roundRect
-		.drawShadow(Vec2{ 2, 2 }, 12, 0)
-		.draw(ColorF{ 0.9, 0.8, 0.6 });
-
-	// 枠を描く
-	rect.stretched(-3).rounded(3)
-		.drawFrame(2, ColorF{ 0.4, 0.3, 0.2 });
-
-	// テキストを描く
-	font(text).drawAt(40, rect.center(), ColorF{ 0.4, 0.3, 0.2 });
-
-	// 無効の場合は
-	if (not enabled)
-	{
-		// グレーの半透明を重ねる
-		roundRect.draw(ColorF{ 0.8, 0.8 });
-	}
-
-	// ボタンが押されたら true を返す
-	return (enabled && rect.leftClicked());
-}
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-
-	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
-
-	while (System::Update())
-	{
-		if (Button(Rect{ 80, 300, 300, 80 }, font, U"Bread", true))
+		// マウスカーソルがボタンの上にある場合
+		if (enabled && rect.mouseOver())
 		{
-			Print << U"Bread";
+			// マウスカーソルを手の形にする
+			Cursor::RequestStyle(CursorStyle::Hand);
 		}
 
-		if (Button(Rect{ 420, 300, 300, 80 }, font, U"Rice", true))
+		const RoundRect roundRect = rect.rounded(6);
+
+		// 影と背景を描く
+		roundRect
+			.drawShadow(Vec2{ 2, 2 }, 12, 0)
+			.draw(ColorF{ 0.9, 0.8, 0.6 });
+
+		// 枠を描く
+		rect.stretched(-3).rounded(3)
+			.drawFrame(2, ColorF{ 0.4, 0.3, 0.2 });
+
+		// テキストを描く
+		font(text).drawAt(40, rect.center(), ColorF{ 0.4, 0.3, 0.2 });
+
+		// 無効の場合は
+		if (not enabled)
 		{
-			Print << U"Rice";
+			// グレーの半透明を重ねる
+			roundRect.draw(ColorF{ 0.8, 0.8 });
+		}
+
+		// ボタンが押されたら true を返す
+		return (enabled && rect.leftClicked());
+	}
+
+	void Main()
+	{
+		Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+		const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+
+		while (System::Update())
+		{
+			if (Button(Rect{ 80, 300, 300, 80 }, font, U"Bread", true))
+			{
+				Print << U"Bread";
+			}
+
+			if (Button(Rect{ 420, 300, 300, 80 }, font, U"Rice", true))
+			{
+				Print << U"Rice";
+			}
 		}
 	}
-}
-```
+	```
 
 
 ## 28.6 【完成】絵文字の追加
@@ -264,68 +268,68 @@ void Main()
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/button/6.png)
 
-```cpp
-# include <Siv3D.hpp>
+??? memo "コード"
+	```cpp hl_lines="3 23-24 44-45 51 56"
+	# include <Siv3D.hpp>
 
-bool Button(const Rect& rect, const Texture& emoji, const Font& font, const String& text, bool enabled)
-{
-	// マウスカーソルがボタンの上にある場合
-	if (enabled && rect.mouseOver())
+	bool Button(const Rect& rect, const Texture& emoji, const Font& font, const String& text, bool enabled)
 	{
-		// マウスカーソルを手の形にする
-		Cursor::RequestStyle(CursorStyle::Hand);
-	}
-
-	const RoundRect roundRect = rect.rounded(6);
-
-	// 影と背景を描く
-	roundRect
-		.drawShadow(Vec2{ 2, 2 }, 12, 0)
-		.draw(ColorF{ 0.9, 0.8, 0.6 });
-
-	// 枠を描く
-	rect.stretched(-3).rounded(3)
-		.drawFrame(2, ColorF{ 0.4, 0.3, 0.2 });
-
-	// 絵文字を描く
-	emoji.scaled(0.4).drawAt((rect.x + 60), rect.center().y);
-
-	// テキストを描く
-	font(text).drawAt(40, rect.center().movedBy(30, 0), ColorF{ 0.4, 0.3, 0.2 });
-
-	// 無効の場合は
-	if (not enabled)
-	{
-		// グレーの半透明を重ねる
-		roundRect.draw(ColorF{ 0.8, 0.8 });
-	}
-
-	// ボタンが押されたら true を返す
-	return (enabled && rect.leftClicked());
-}
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-
-	const Texture breadEmoji{ U"🍞"_emoji };
-
-	const Texture riceEmoji{ U"🍚"_emoji };
-
-	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
-
-	while (System::Update())
-	{
-		if (Button(Rect{ 80, 300, 300, 80 }, breadEmoji, font, U"Bread", true))
+		// マウスカーソルがボタンの上にある場合
+		if (enabled && rect.mouseOver())
 		{
-			Print << U"Bread";
+			// マウスカーソルを手の形にする
+			Cursor::RequestStyle(CursorStyle::Hand);
 		}
 
-		if (Button(Rect{ 420, 300, 300, 80 }, riceEmoji, font, U"Rice", true))
+		const RoundRect roundRect = rect.rounded(6);
+
+		// 影と背景を描く
+		roundRect
+			.drawShadow(Vec2{ 2, 2 }, 12, 0)
+			.draw(ColorF{ 0.9, 0.8, 0.6 });
+
+		// 枠を描く
+		rect.stretched(-3).rounded(3)
+			.drawFrame(2, ColorF{ 0.4, 0.3, 0.2 });
+
+		// 絵文字を描く
+		emoji.scaled(0.4).drawAt((rect.x + 60), rect.center().y);
+
+		// テキストを描く
+		font(text).drawAt(40, rect.center().movedBy(30, 0), ColorF{ 0.4, 0.3, 0.2 });
+
+		// 無効の場合は
+		if (not enabled)
 		{
-			Print << U"Rice";
+			// グレーの半透明を重ねる
+			roundRect.draw(ColorF{ 0.8, 0.8 });
+		}
+
+		// ボタンが押されたら true を返す
+		return (enabled && rect.leftClicked());
+	}
+
+	void Main()
+	{
+		Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+		const Texture breadEmoji{ U"🍞"_emoji };
+		const Texture riceEmoji{ U"🍚"_emoji };
+
+		const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+
+		while (System::Update())
+		{
+			if (Button(Rect{ 80, 300, 300, 80 }, breadEmoji, font, U"Bread", true))
+			{
+				Print << U"Bread";
+			}
+
+			if (Button(Rect{ 420, 300, 300, 80 }, riceEmoji, font, U"Rice", true))
+			{
+				Print << U"Rice";
+			}
 		}
 	}
-}
-```
+	```
 

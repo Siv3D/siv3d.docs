@@ -6,28 +6,29 @@
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/collect/1.png)
 
-```cpp
-# include <Siv3D.hpp>
+??? memo "コード"
+	```cpp
+	# include <Siv3D.hpp>
 
-// 背景画面を描く関数
-void DrawBackground()
-{
-	// 空を描く
-	Rect{ 0, 0, 800, 550 }.draw(Arg::top(0.3, 0.6, 1.0), Arg::bottom(0.6, 0.9, 1.0));
-
-	// 地面を描く
-	Rect{ 0, 550, 800, 50 }.draw(ColorF{ 0.3, 0.6, 0.3 });
-}
-
-void Main()
-{
-	while (System::Update())
+	// 背景画面を描く関数
+	void DrawBackground()
 	{
-		// 背景を描く
-		DrawBackground();
+		// 空を描く
+		Rect{ 0, 0, 800, 550 }.draw(Arg::top(0.3, 0.6, 1.0), Arg::bottom(0.6, 0.9, 1.0));
+
+		// 地面を描く
+		Rect{ 0, 550, 800, 50 }.draw(ColorF{ 0.3, 0.6, 0.3 });
 	}
-}
-```
+
+	void Main()
+	{
+		while (System::Update())
+		{
+			// 背景を描く
+			DrawBackground();
+		}
+	}
+	```
 
 
 ## 25.2 プレイヤーの実装
@@ -37,47 +38,48 @@ void Main()
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/collect/2.png)
 
-```cpp
-# include <Siv3D.hpp>
+??? memo "コード"
+	```cpp hl_lines="3-15 29 36-37"
+	# include <Siv3D.hpp>
 
-// プレイヤークラス
-struct Player
-{
-	Circle circle{ 400, 530, 30 };
-
-	Texture texture{ U"😃"_emoji };
-
-	// プレイヤーを描く関数
-	void draw() const
+	// プレイヤークラス
+	struct Player
 	{
-		texture.scaled(0.5).drawAt(circle.center);
-	}
-};
+		Circle circle{ 400, 530, 30 };
 
-// 背景画面を描く関数
-void DrawBackground()
-{
-	// 空を描く
-	Rect{ 0, 0, 800, 550 }.draw(Arg::top(0.3, 0.6, 1.0), Arg::bottom(0.6, 0.9, 1.0));
+		Texture texture{ U"😃"_emoji };
 
-	// 地面を描く
-	Rect{ 0, 550, 800, 50 }.draw(ColorF{ 0.3, 0.6, 0.3 });
-}
+		// プレイヤーを描く関数
+		void draw() const
+		{
+			texture.scaled(0.5).drawAt(circle.center);
+		}
+	};
 
-void Main()
-{
-	Player player;
-
-	while (System::Update())
+	// 背景画面を描く関数
+	void DrawBackground()
 	{
-		// 背景を描く
-		DrawBackground();
+		// 空を描く
+		Rect{ 0, 0, 800, 550 }.draw(Arg::top(0.3, 0.6, 1.0), Arg::bottom(0.6, 0.9, 1.0));
 
-		// プレイヤーを描く
-		player.draw();
+		// 地面を描く
+		Rect{ 0, 550, 800, 50 }.draw(ColorF{ 0.3, 0.6, 0.3 });
 	}
-}
-```
+
+	void Main()
+	{
+		Player player;
+
+		while (System::Update())
+		{
+			// 背景を描く
+			DrawBackground();
+
+			// プレイヤーを描く
+			player.draw();
+		}
+	}
+	```
 
 
 ## 25.3 プレイヤーの移動
@@ -86,85 +88,86 @@ void Main()
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/collect/3.png)
 
-```cpp
-# include <Siv3D.hpp>
+??? memo "コード"
+	```cpp hl_lines="10-29 54-69"
+	# include <Siv3D.hpp>
 
-// プレイヤークラス
-struct Player
-{
-	Circle circle{ 400, 530, 30 };
-
-	Texture texture{ U"😃"_emoji };
-
-	// プレイヤーの状態を更新する関数
-	void update(double deltaTime)
+	// プレイヤークラス
+	struct Player
 	{
-		const double speed = (deltaTime * 400.0);
+		Circle circle{ 400, 530, 30 };
 
-		// [←] キーが押されたら左に移動
-		if (KeyLeft.pressed())
+		Texture texture{ U"😃"_emoji };
+
+		// プレイヤーの状態を更新する関数
+		void update(double deltaTime)
 		{
-			circle.x -= speed;
+			const double speed = (deltaTime * 400.0);
+
+			// [←] キーが押されたら左に移動
+			if (KeyLeft.pressed())
+			{
+				circle.x -= speed;
+			}
+
+			// [→] キーが押されたら右に移動
+			if (KeyRight.pressed())
+			{
+				circle.x += speed;
+			}
+
+			// プレイヤーが画面外に出ないようにする
+			circle.x = Clamp(circle.x, 30.0, 770.0);
 		}
 
-		// [→] キーが押されたら右に移動
-		if (KeyRight.pressed())
+		// プレイヤーを描く関数
+		void draw() const
 		{
-			circle.x += speed;
+			texture.scaled(0.5).drawAt(circle.center);
 		}
+	};
 
-		// プレイヤーが画面外に出ないようにする
-		circle.x = Clamp(circle.x, 30.0, 770.0);
-	}
-
-	// プレイヤーを描く関数
-	void draw() const
+	// 背景画面を描く関数
+	void DrawBackground()
 	{
-		texture.scaled(0.5).drawAt(circle.center);
+		// 空を描く
+		Rect{ 0, 0, 800, 550 }.draw(Arg::top(0.3, 0.6, 1.0), Arg::bottom(0.6, 0.9, 1.0));
+
+		// 地面を描く
+		Rect{ 0, 550, 800, 50 }.draw(ColorF{ 0.3, 0.6, 0.3 });
 	}
-};
 
-// 背景画面を描く関数
-void DrawBackground()
-{
-	// 空を描く
-	Rect{ 0, 0, 800, 550 }.draw(Arg::top(0.3, 0.6, 1.0), Arg::bottom(0.6, 0.9, 1.0));
-
-	// 地面を描く
-	Rect{ 0, 550, 800, 50 }.draw(ColorF{ 0.3, 0.6, 0.3 });
-}
-
-void Main()
-{
-	Player player;
-
-	while (System::Update())
+	void Main()
 	{
-		/////////////////////////////////
-		//
-		//	更新
-		//
-		/////////////////////////////////
+		Player player;
 
-		const double deltaTime = Scene::DeltaTime();
+		while (System::Update())
+		{
+			/////////////////////////////////
+			//
+			//	更新
+			//
+			/////////////////////////////////
 
-		// プレイヤーの状態を更新する
-		player.update(deltaTime);
+			const double deltaTime = Scene::DeltaTime();
 
-		/////////////////////////////////
-		//
-		//	描画
-		//
-		/////////////////////////////////
+			// プレイヤーの状態を更新する
+			player.update(deltaTime);
 
-		// 背景を描く
-		DrawBackground();
+			/////////////////////////////////
+			//
+			//	描画
+			//
+			/////////////////////////////////
 
-		// プレイヤーを描く
-		player.draw();
+			// 背景を描く
+			DrawBackground();
+
+			// プレイヤーを描く
+			player.draw();
+		}
 	}
-}
-```
+	```
 
 
 ## 25.4 アイテムクラスの実装
@@ -175,126 +178,127 @@ void Main()
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/collect/4.png)
 
-```cpp
-# include <Siv3D.hpp>
+??? memo "コード"
+	```cpp hl_lines="38-60 72-79 85-88 115-116"
+	# include <Siv3D.hpp>
 
-// プレイヤークラス
-struct Player
-{
-	Circle circle{ 400, 530, 30 };
-
-	Texture texture{ U"😃"_emoji };
-
-	// プレイヤーの状態を更新する関数
-	void update(double deltaTime)
+	// プレイヤークラス
+	struct Player
 	{
-		const double speed = (deltaTime * 400.0);
+		Circle circle{ 400, 530, 30 };
 
-		// [←] キーが押されたら左に移動
-		if (KeyLeft.pressed())
+		Texture texture{ U"😃"_emoji };
+
+		// プレイヤーの状態を更新する関数
+		void update(double deltaTime)
 		{
-			circle.x -= speed;
+			const double speed = (deltaTime * 400.0);
+
+			// [←] キーが押されたら左に移動
+			if (KeyLeft.pressed())
+			{
+				circle.x -= speed;
+			}
+
+			// [→] キーが押されたら右に移動
+			if (KeyRight.pressed())
+			{
+				circle.x += speed;
+			}
+
+			// プレイヤーが画面外に出ないようにする
+			circle.x = Clamp(circle.x, 30.0, 770.0);
 		}
 
-		// [→] キーが押されたら右に移動
-		if (KeyRight.pressed())
+		// プレイヤーを描く関数
+		void draw() const
 		{
-			circle.x += speed;
+			texture.scaled(0.5).drawAt(circle.center);
 		}
+	};
 
-		// プレイヤーが画面外に出ないようにする
-		circle.x = Clamp(circle.x, 30.0, 770.0);
-	}
-
-	// プレイヤーを描く関数
-	void draw() const
+	// アイテムクラス
+	struct Item
 	{
-		texture.scaled(0.5).drawAt(circle.center);
-	}
-};
+		Circle circle;
 
-// アイテムクラス
-struct Item
-{
-	Circle circle;
+		// アイテムの種類（0: キャンディー, 1: ケーキ）
+		int32 type;
 
-	// アイテムの種類（0: キャンディー, 1: ケーキ）
-	int32 type;
-
-	// アイテムを描く関数（仮実装）
-	void draw() const
-	{
-		if (type == 0)
+		// アイテムを描く関数（仮実装）
+		void draw() const
 		{
-			// キャンディーを描く
-			circle.draw(Palette::Red);
+			if (type == 0)
+			{
+				// キャンディーを描く
+				circle.draw(Palette::Red);
+			}
+			else if (type == 1)
+			{
+				// ケーキを描く
+				circle.draw(Palette::White);
+			}
 		}
-		else if (type == 1)
+	};
+
+	// 背景画面を描く関数
+	void DrawBackground()
+	{
+		// 空を描く
+		Rect{ 0, 0, 800, 550 }.draw(Arg::top(0.3, 0.6, 1.0), Arg::bottom(0.6, 0.9, 1.0));
+
+		// 地面を描く
+		Rect{ 0, 550, 800, 50 }.draw(ColorF{ 0.3, 0.6, 0.3 });
+	}
+
+	// アイテムを描く関数
+	void DrawItems(const Array<Item>& items)
+	{
+		for (const auto& item : items)
 		{
-			// ケーキを描く
-			circle.draw(Palette::White);
+			item.draw();
 		}
 	}
-};
 
-// 背景画面を描く関数
-void DrawBackground()
-{
-	// 空を描く
-	Rect{ 0, 0, 800, 550 }.draw(Arg::top(0.3, 0.6, 1.0), Arg::bottom(0.6, 0.9, 1.0));
-
-	// 地面を描く
-	Rect{ 0, 550, 800, 50 }.draw(ColorF{ 0.3, 0.6, 0.3 });
-}
-
-// アイテムを描く関数
-void DrawItems(const Array<Item>& items)
-{
-	for (const auto& item : items)
+	void Main()
 	{
-		item.draw();
+		Player player;
+
+		// アイテムの配列
+		Array<Item> items;
+		items << Item{ Circle{ 200, 200, 30 }, 0 };
+		items << Item{ Circle{ 600, 100, 30 }, 1 };
+
+		while (System::Update())
+		{
+			/////////////////////////////////
+			//
+			//	更新
+			//
+			/////////////////////////////////
+
+			const double deltaTime = Scene::DeltaTime();
+
+			// プレイヤーの状態を更新する
+			player.update(deltaTime);
+
+			/////////////////////////////////
+			//
+			//	描画
+			//
+			/////////////////////////////////
+
+			// 背景を描く
+			DrawBackground();
+
+			// プレイヤーを描く
+			player.draw();
+
+			// すべてのアイテムを描く
+			DrawItems(items);
+		}
 	}
-}
-
-void Main()
-{
-	Player player;
-
-	// アイテムの配列
-	Array<Item> items;
-	items << Item{ Circle{ 200, 200, 30 }, 0 };
-	items << Item{ Circle{ 600, 100, 30 }, 1 };
-
-	while (System::Update())
-	{
-		/////////////////////////////////
-		//
-		//	更新
-		//
-		/////////////////////////////////
-
-		const double deltaTime = Scene::DeltaTime();
-
-		// プレイヤーの状態を更新する
-		player.update(deltaTime);
-
-		/////////////////////////////////
-		//
-		//	描画
-		//
-		/////////////////////////////////
-
-		// 背景を描く
-		DrawBackground();
-
-		// プレイヤーを描く
-		player.draw();
-
-		// すべてのアイテムを描く
-		DrawItems(items);
-	}
-}
-```
+	```
 
 
 ## 25.5 テクスチャの効率的な管理（配列による共有）
@@ -304,125 +308,126 @@ void Main()
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/collect/5.png)
 
-```cpp
-# include <Siv3D.hpp>
+??? memo "コード"
+	```cpp hl_lines="46-47 49-50 65 69 75-80 115"
+	# include <Siv3D.hpp>
 
-// プレイヤークラス
-struct Player
-{
-	Circle circle{ 400, 530, 30 };
-
-	Texture texture{ U"😃"_emoji };
-
-	// プレイヤーの状態を更新する関数
-	void update(double deltaTime)
+	// プレイヤークラス
+	struct Player
 	{
-		const double speed = (deltaTime * 400.0);
+		Circle circle{ 400, 530, 30 };
 
-		// [←] キーが押されたら左に移動
-		if (KeyLeft.pressed())
+		Texture texture{ U"😃"_emoji };
+
+		// プレイヤーの状態を更新する関数
+		void update(double deltaTime)
 		{
-			circle.x -= speed;
+			const double speed = (deltaTime * 400.0);
+
+			// [←] キーが押されたら左に移動
+			if (KeyLeft.pressed())
+			{
+				circle.x -= speed;
+			}
+
+			// [→] キーが押されたら右に移動
+			if (KeyRight.pressed())
+			{
+				circle.x += speed;
+			}
+
+			// プレイヤーが画面外に出ないようにする
+			circle.x = Clamp(circle.x, 30.0, 770.0);
 		}
 
-		// [→] キーが押されたら右に移動
-		if (KeyRight.pressed())
+		// プレイヤーを描く関数
+		void draw() const
 		{
-			circle.x += speed;
+			texture.scaled(0.5).drawAt(circle.center);
 		}
-
-		// プレイヤーが画面外に出ないようにする
-		circle.x = Clamp(circle.x, 30.0, 770.0);
-	}
-
-	// プレイヤーを描く関数
-	void draw() const
-	{
-		texture.scaled(0.5).drawAt(circle.center);
-	}
-};
-
-// アイテムクラス
-struct Item
-{
-	Circle circle;
-
-	// アイテムの種類（0: キャンディー, 1: ケーキ）
-	int32 type;
-
-	// アイテムを描く関数
-	void draw(const Array<Texture>& itemTextures) const
-	{
-		// アイテムの種類に応じたテクスチャを描く
-		itemTextures[type].scaled(0.5).drawAt(circle.center);
-	}
-};
-
-// 背景画面を描く関数
-void DrawBackground()
-{
-	// 空を描く
-	Rect{ 0, 0, 800, 550 }.draw(Arg::top(0.3, 0.6, 1.0), Arg::bottom(0.6, 0.9, 1.0));
-
-	// 地面を描く
-	Rect{ 0, 550, 800, 50 }.draw(ColorF{ 0.3, 0.6, 0.3 });
-}
-
-// アイテムを描く関数
-void DrawItems(const Array<Item>& items, const Array<Texture>& itemTextures)
-{
-	for (const auto& item : items)
-	{
-		item.draw(itemTextures);
-	}
-}
-
-void Main()
-{
-	// アイテムのテクスチャ配列
-	const Array<Texture> itemTextures =
-	{
-		Texture{ U"🍬"_emoji },
-		Texture{ U"🍰"_emoji },
 	};
 
-	Player player;
-
-	// アイテムの配列
-	Array<Item> items;
-	items << Item{ Circle{ 200, 200, 30 }, 0 };
-	items << Item{ Circle{ 600, 100, 30 }, 1 };
-
-	while (System::Update())
+	// アイテムクラス
+	struct Item
 	{
-		/////////////////////////////////
-		//
-		//	更新
-		//
-		/////////////////////////////////
+		Circle circle;
 
-		const double deltaTime = Scene::DeltaTime();
+		// アイテムの種類（0: キャンディー, 1: ケーキ）
+		int32 type;
 
-		// プレイヤーの状態を更新する
-		player.update(deltaTime);
+		// アイテムを描く関数
+		void draw(const Array<Texture>& itemTextures) const
+		{
+			// アイテムの種類に応じたテクスチャを描く
+			itemTextures[type].scaled(0.5).drawAt(circle.center);
+		}
+	};
 
-		/////////////////////////////////
-		//
-		//	描画
-		//
-		/////////////////////////////////
+	// 背景画面を描く関数
+	void DrawBackground()
+	{
+		// 空を描く
+		Rect{ 0, 0, 800, 550 }.draw(Arg::top(0.3, 0.6, 1.0), Arg::bottom(0.6, 0.9, 1.0));
 
-		// 背景を描く
-		DrawBackground();
-
-		// プレイヤーを描く
-		player.draw();
-
-		// すべてのアイテムを描く
-		DrawItems(items, itemTextures);
+		// 地面を描く
+		Rect{ 0, 550, 800, 50 }.draw(ColorF{ 0.3, 0.6, 0.3 });
 	}
-}
-```
+
+	// アイテムを描く関数
+	void DrawItems(const Array<Item>& items, const Array<Texture>& itemTextures)
+	{
+		for (const auto& item : items)
+		{
+			item.draw(itemTextures);
+		}
+	}
+
+	void Main()
+	{
+		// アイテムのテクスチャ配列
+		const Array<Texture> itemTextures =
+		{
+			Texture{ U"🍬"_emoji },
+			Texture{ U"🍰"_emoji },
+		};
+
+		Player player;
+
+		// アイテムの配列
+		Array<Item> items;
+		items << Item{ Circle{ 200, 200, 30 }, 0 };
+		items << Item{ Circle{ 600, 100, 30 }, 1 };
+
+		while (System::Update())
+		{
+			/////////////////////////////////
+			//
+			//	更新
+			//
+			/////////////////////////////////
+
+			const double deltaTime = Scene::DeltaTime();
+
+			// プレイヤーの状態を更新する
+			player.update(deltaTime);
+
+			/////////////////////////////////
+			//
+			//	描画
+			//
+			/////////////////////////////////
+
+			// 背景を描く
+			DrawBackground();
+
+			// プレイヤーを描く
+			player.draw();
+
+			// すべてのアイテムを描く
+			DrawItems(items, itemTextures);
+		}
+	}
+	```
 
 
 ## 25.6 アイテムの落下と削除
@@ -431,146 +436,147 @@ void Main()
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/collect/6.png)
 
-```cpp
-# include <Siv3D.hpp>
+??? memo "コード"
+	```cpp hl_lines="46-50 60-70 120-121"
+	# include <Siv3D.hpp>
 
-// プレイヤークラス
-struct Player
-{
-	Circle circle{ 400, 530, 30 };
-
-	Texture texture{ U"😃"_emoji };
-
-	// プレイヤーの状態を更新する関数
-	void update(double deltaTime)
+	// プレイヤークラス
+	struct Player
 	{
-		const double speed = (deltaTime * 400.0);
+		Circle circle{ 400, 530, 30 };
 
-		// [←] キーが押されたら左に移動
-		if (KeyLeft.pressed())
+		Texture texture{ U"😃"_emoji };
+
+		// プレイヤーの状態を更新する関数
+		void update(double deltaTime)
 		{
-			circle.x -= speed;
+			const double speed = (deltaTime * 400.0);
+
+			// [←] キーが押されたら左に移動
+			if (KeyLeft.pressed())
+			{
+				circle.x -= speed;
+			}
+
+			// [→] キーが押されたら右に移動
+			if (KeyRight.pressed())
+			{
+				circle.x += speed;
+			}
+
+			// プレイヤーが画面外に出ないようにする
+			circle.x = Clamp(circle.x, 30.0, 770.0);
 		}
 
-		// [→] キーが押されたら右に移動
-		if (KeyRight.pressed())
+		// プレイヤーを描く関数
+		void draw() const
 		{
-			circle.x += speed;
+			texture.scaled(0.5).drawAt(circle.center);
+		}
+	};
+
+	// アイテムクラス
+	struct Item
+	{
+		Circle circle;
+
+		// アイテムの種類（0: キャンディー, 1: ケーキ）
+		int32 type;
+
+		void update(double deltaTime)
+		{
+			// アイテムを下に移動させる
+			circle.y += (deltaTime * 200.0);
 		}
 
-		// プレイヤーが画面外に出ないようにする
-		circle.x = Clamp(circle.x, 30.0, 770.0);
+		// アイテムを描く関数
+		void draw(const Array<Texture>& itemTextures) const
+		{
+			// アイテムの種類に応じたテクスチャを描く
+			itemTextures[type].scaled(0.5).drawAt(circle.center);
+		}
+	};
+
+	void UpdateItems(Array<Item>& items, double deltaTime)
+	{
+		// すべてのアイテムの状態を更新する
+		for (auto& item : items)
+		{
+			item.update(deltaTime);
+		}
+
+		// 地面に落下したアイテムを削除する
+		items.remove_if([](const Item& item) { return (580 < item.circle.y); });
 	}
 
-	// プレイヤーを描く関数
-	void draw() const
+	// 背景画面を描く関数
+	void DrawBackground()
 	{
-		texture.scaled(0.5).drawAt(circle.center);
-	}
-};
+		// 空を描く
+		Rect{ 0, 0, 800, 550 }.draw(Arg::top(0.3, 0.6, 1.0), Arg::bottom(0.6, 0.9, 1.0));
 
-// アイテムクラス
-struct Item
-{
-	Circle circle;
-
-	// アイテムの種類（0: キャンディー, 1: ケーキ）
-	int32 type;
-
-	void update(double deltaTime)
-	{
-		// アイテムを下に移動させる
-		circle.y += (deltaTime * 200.0);
+		// 地面を描く
+		Rect{ 0, 550, 800, 50 }.draw(ColorF{ 0.3, 0.6, 0.3 });
 	}
 
 	// アイテムを描く関数
-	void draw(const Array<Texture>& itemTextures) const
+	void DrawItems(const Array<Item>& items, const Array<Texture>& itemTextures)
 	{
-		// アイテムの種類に応じたテクスチャを描く
-		itemTextures[type].scaled(0.5).drawAt(circle.center);
-	}
-};
-
-void UpdateItems(Array<Item>& items, double deltaTime)
-{
-	// すべてのアイテムの状態を更新する
-	for (auto& item : items)
-	{
-		item.update(deltaTime);
+		for (const auto& item : items)
+		{
+			item.draw(itemTextures);
+		}
 	}
 
-	// 地面に落下したアイテムを削除する
-	items.remove_if([](const Item& item) { return (580 < item.circle.y); });
-}
-
-// 背景画面を描く関数
-void DrawBackground()
-{
-	// 空を描く
-	Rect{ 0, 0, 800, 550 }.draw(Arg::top(0.3, 0.6, 1.0), Arg::bottom(0.6, 0.9, 1.0));
-
-	// 地面を描く
-	Rect{ 0, 550, 800, 50 }.draw(ColorF{ 0.3, 0.6, 0.3 });
-}
-
-// アイテムを描く関数
-void DrawItems(const Array<Item>& items, const Array<Texture>& itemTextures)
-{
-	for (const auto& item : items)
+	void Main()
 	{
-		item.draw(itemTextures);
+		// アイテムのテクスチャ配列
+		const Array<Texture> itemTextures =
+		{
+			Texture{ U"🍬"_emoji },
+			Texture{ U"🍰"_emoji },
+		};
+
+		Player player;
+
+		// アイテムの配列
+		Array<Item> items;
+		items << Item{ Circle{ 200, 200, 30 }, 0 };
+		items << Item{ Circle{ 600, 100, 30 }, 1 };
+
+		while (System::Update())
+		{
+			/////////////////////////////////
+			//
+			//	更新
+			//
+			/////////////////////////////////
+
+			const double deltaTime = Scene::DeltaTime();
+
+			// プレイヤーの状態を更新する
+			player.update(deltaTime);
+
+			// すべてのアイテムの状態を更新する
+			UpdateItems(items, deltaTime);
+
+			/////////////////////////////////
+			//
+			//	描画
+			//
+			/////////////////////////////////
+
+			// 背景を描く
+			DrawBackground();
+
+			// プレイヤーを描く
+			player.draw();
+
+			// すべてのアイテムを描く
+			DrawItems(items, itemTextures);
+		}
 	}
-}
-
-void Main()
-{
-	// アイテムのテクスチャ配列
-	const Array<Texture> itemTextures =
-	{
-		Texture{ U"🍬"_emoji },
-		Texture{ U"🍰"_emoji },
-	};
-
-	Player player;
-
-	// アイテムの配列
-	Array<Item> items;
-	items << Item{ Circle{ 200, 200, 30 }, 0 };
-	items << Item{ Circle{ 600, 100, 30 }, 1 };
-
-	while (System::Update())
-	{
-		/////////////////////////////////
-		//
-		//	更新
-		//
-		/////////////////////////////////
-
-		const double deltaTime = Scene::DeltaTime();
-
-		// プレイヤーの状態を更新する
-		player.update(deltaTime);
-
-		// すべてのアイテムの状態を更新する
-		UpdateItems(items, deltaTime);
-
-		/////////////////////////////////
-		//
-		//	描画
-		//
-		/////////////////////////////////
-
-		// 背景を描く
-		DrawBackground();
-
-		// プレイヤーを描く
-		player.draw();
-
-		// すべてのアイテムを描く
-		DrawItems(items, itemTextures);
-	}
-}
-```
+	```
 
 
 ## 25.7 アイテムの定期的な生成
@@ -578,165 +584,166 @@ void Main()
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/collect/7.png)
 
-```cpp
-# include <Siv3D.hpp>
+??? memo "コード"
+	```cpp hl_lines="107-111 123-134"
+	# include <Siv3D.hpp>
 
-// プレイヤークラス
-struct Player
-{
-	Circle circle{ 400, 530, 30 };
-
-	Texture texture{ U"😃"_emoji };
-
-	// プレイヤーの状態を更新する関数
-	void update(double deltaTime)
+	// プレイヤークラス
+	struct Player
 	{
-		const double speed = (deltaTime * 400.0);
+		Circle circle{ 400, 530, 30 };
 
-		// [←] キーが押されたら左に移動
-		if (KeyLeft.pressed())
+		Texture texture{ U"😃"_emoji };
+
+		// プレイヤーの状態を更新する関数
+		void update(double deltaTime)
 		{
-			circle.x -= speed;
+			const double speed = (deltaTime * 400.0);
+
+			// [←] キーが押されたら左に移動
+			if (KeyLeft.pressed())
+			{
+				circle.x -= speed;
+			}
+
+			// [→] キーが押されたら右に移動
+			if (KeyRight.pressed())
+			{
+				circle.x += speed;
+			}
+
+			// プレイヤーが画面外に出ないようにする
+			circle.x = Clamp(circle.x, 30.0, 770.0);
 		}
 
-		// [→] キーが押されたら右に移動
-		if (KeyRight.pressed())
+		// プレイヤーを描く関数
+		void draw() const
 		{
-			circle.x += speed;
+			texture.scaled(0.5).drawAt(circle.center);
+		}
+	};
+
+	// アイテムクラス
+	struct Item
+	{
+		Circle circle;
+
+		// アイテムの種類（0: キャンディー, 1: ケーキ）
+		int32 type;
+
+		void update(double deltaTime)
+		{
+			// アイテムを下に移動させる
+			circle.y += (deltaTime * 200.0);
 		}
 
-		// プレイヤーが画面外に出ないようにする
-		circle.x = Clamp(circle.x, 30.0, 770.0);
+		// アイテムを描く関数
+		void draw(const Array<Texture>& itemTextures) const
+		{
+			// アイテムの種類に応じたテクスチャを描く
+			itemTextures[type].scaled(0.5).drawAt(circle.center);
+		}
+	};
+
+	void UpdateItems(Array<Item>& items, double deltaTime)
+	{
+		// すべてのアイテムの状態を更新する
+		for (auto& item : items)
+		{
+			item.update(deltaTime);
+		}
+
+		// 地面に落下したアイテムを削除する
+		items.remove_if([](const Item& item) { return (580 < item.circle.y); });
 	}
 
-	// プレイヤーを描く関数
-	void draw() const
+	// 背景画面を描く関数
+	void DrawBackground()
 	{
-		texture.scaled(0.5).drawAt(circle.center);
-	}
-};
+		// 空を描く
+		Rect{ 0, 0, 800, 550 }.draw(Arg::top(0.3, 0.6, 1.0), Arg::bottom(0.6, 0.9, 1.0));
 
-// アイテムクラス
-struct Item
-{
-	Circle circle;
-
-	// アイテムの種類（0: キャンディー, 1: ケーキ）
-	int32 type;
-
-	void update(double deltaTime)
-	{
-		// アイテムを下に移動させる
-		circle.y += (deltaTime * 200.0);
+		// 地面を描く
+		Rect{ 0, 550, 800, 50 }.draw(ColorF{ 0.3, 0.6, 0.3 });
 	}
 
 	// アイテムを描く関数
-	void draw(const Array<Texture>& itemTextures) const
+	void DrawItems(const Array<Item>& items, const Array<Texture>& itemTextures)
 	{
-		// アイテムの種類に応じたテクスチャを描く
-		itemTextures[type].scaled(0.5).drawAt(circle.center);
-	}
-};
-
-void UpdateItems(Array<Item>& items, double deltaTime)
-{
-	// すべてのアイテムの状態を更新する
-	for (auto& item : items)
-	{
-		item.update(deltaTime);
-	}
-
-	// 地面に落下したアイテムを削除する
-	items.remove_if([](const Item& item) { return (580 < item.circle.y); });
-}
-
-// 背景画面を描く関数
-void DrawBackground()
-{
-	// 空を描く
-	Rect{ 0, 0, 800, 550 }.draw(Arg::top(0.3, 0.6, 1.0), Arg::bottom(0.6, 0.9, 1.0));
-
-	// 地面を描く
-	Rect{ 0, 550, 800, 50 }.draw(ColorF{ 0.3, 0.6, 0.3 });
-}
-
-// アイテムを描く関数
-void DrawItems(const Array<Item>& items, const Array<Texture>& itemTextures)
-{
-	for (const auto& item : items)
-	{
-		item.draw(itemTextures);
-	}
-}
-
-void Main()
-{
-	// アイテムのテクスチャ配列
-	const Array<Texture> itemTextures =
-	{
-		Texture{ U"🍬"_emoji },
-		Texture{ U"🍰"_emoji },
-	};
-
-	Player player;
-
-	// アイテムの配列
-	Array<Item> items;
-	items << Item{ Circle{ 200, 200, 30 }, 0 };
-	items << Item{ Circle{ 600, 100, 30 }, 1 };
-
-	// アイテムが出現する周期（秒）
-	const double spawnInterval = 0.8;
-
-	// 蓄積時間（秒）
-	double accumulatedTime = 0.0;
-
-	while (System::Update())
-	{
-		/////////////////////////////////
-		//
-		//	更新
-		//
-		/////////////////////////////////
-
-		const double deltaTime = Scene::DeltaTime();
-
-		// 蓄積時間を増やす
-		accumulatedTime += deltaTime;
-
-		// 蓄積時間が周期を超えたら
-		if (spawnInterval < accumulatedTime)
+		for (const auto& item : items)
 		{
-			// 新しいアイテムを追加する
-			items << Item{ Circle{ Random(30.0, 770.0), -30, 30 }, Random(0, 1) };
-
-			// 蓄積時間を周期分減らす
-			accumulatedTime -= spawnInterval;
+			item.draw(itemTextures);
 		}
-
-		// プレイヤーの状態を更新する
-		player.update(deltaTime);
-
-		// すべてのアイテムの状態を更新する
-		UpdateItems(items, deltaTime);
-
-		/////////////////////////////////
-		//
-		//	描画
-		//
-		/////////////////////////////////
-
-		// 背景を描く
-		DrawBackground();
-
-		// プレイヤーを描く
-		player.draw();
-
-		// すべてのアイテムを描く
-		DrawItems(items, itemTextures);
 	}
-}
-```
+
+	void Main()
+	{
+		// アイテムのテクスチャ配列
+		const Array<Texture> itemTextures =
+		{
+			Texture{ U"🍬"_emoji },
+			Texture{ U"🍰"_emoji },
+		};
+
+		Player player;
+
+		// アイテムの配列
+		Array<Item> items;
+		items << Item{ Circle{ 200, 200, 30 }, 0 };
+		items << Item{ Circle{ 600, 100, 30 }, 1 };
+
+		// アイテムが出現する周期（秒）
+		const double spawnInterval = 0.8;
+
+		// 蓄積時間（秒）
+		double accumulatedTime = 0.0;
+
+		while (System::Update())
+		{
+			/////////////////////////////////
+			//
+			//	更新
+			//
+			/////////////////////////////////
+
+			const double deltaTime = Scene::DeltaTime();
+
+			// 蓄積時間を増やす
+			accumulatedTime += deltaTime;
+
+			// 蓄積時間が周期を超えたら
+			if (spawnInterval < accumulatedTime)
+			{
+				// 新しいアイテムを追加する
+				items << Item{ Circle{ Random(30.0, 770.0), -30, 30 }, Random(0, 1) };
+
+				// 蓄積時間を周期分減らす
+				accumulatedTime -= spawnInterval;
+			}
+
+			// プレイヤーの状態を更新する
+			player.update(deltaTime);
+
+			// すべてのアイテムの状態を更新する
+			UpdateItems(items, deltaTime);
+
+			/////////////////////////////////
+			//
+			//	描画
+			//
+			/////////////////////////////////
+
+			// 背景を描く
+			DrawBackground();
+
+			// プレイヤーを描く
+			player.draw();
+
+			// すべてのアイテムを描く
+			DrawItems(items, itemTextures);
+		}
+	}
+	```
 
 
 ## 25.8 スコアシステムの導入
@@ -744,180 +751,181 @@ void Main()
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/collect/8.png)
 
-```cpp
-# include <Siv3D.hpp>
+??? memo "コード"
+	```cpp hl_lines="91-96 122-123 169-170"
+	# include <Siv3D.hpp>
 
-// プレイヤークラス
-struct Player
-{
-	Circle circle{ 400, 530, 30 };
-
-	Texture texture{ U"😃"_emoji };
-
-	// プレイヤーの状態を更新する関数
-	void update(double deltaTime)
+	// プレイヤークラス
+	struct Player
 	{
-		const double speed = (deltaTime * 400.0);
+		Circle circle{ 400, 530, 30 };
 
-		// [←] キーが押されたら左に移動
-		if (KeyLeft.pressed())
+		Texture texture{ U"😃"_emoji };
+
+		// プレイヤーの状態を更新する関数
+		void update(double deltaTime)
 		{
-			circle.x -= speed;
+			const double speed = (deltaTime * 400.0);
+
+			// [←] キーが押されたら左に移動
+			if (KeyLeft.pressed())
+			{
+				circle.x -= speed;
+			}
+
+			// [→] キーが押されたら右に移動
+			if (KeyRight.pressed())
+			{
+				circle.x += speed;
+			}
+
+			// プレイヤーが画面外に出ないようにする
+			circle.x = Clamp(circle.x, 30.0, 770.0);
 		}
 
-		// [→] キーが押されたら右に移動
-		if (KeyRight.pressed())
+		// プレイヤーを描く関数
+		void draw() const
 		{
-			circle.x += speed;
+			texture.scaled(0.5).drawAt(circle.center);
+		}
+	};
+
+	// アイテムクラス
+	struct Item
+	{
+		Circle circle;
+
+		// アイテムの種類（0: キャンディー, 1: ケーキ）
+		int32 type;
+
+		void update(double deltaTime)
+		{
+			// アイテムを下に移動させる
+			circle.y += (deltaTime * 200.0);
 		}
 
-		// プレイヤーが画面外に出ないようにする
-		circle.x = Clamp(circle.x, 30.0, 770.0);
+		// アイテムを描く関数
+		void draw(const Array<Texture>& itemTextures) const
+		{
+			// アイテムの種類に応じたテクスチャを描く
+			itemTextures[type].scaled(0.5).drawAt(circle.center);
+		}
+	};
+
+	void UpdateItems(Array<Item>& items, double deltaTime)
+	{
+		// すべてのアイテムの状態を更新する
+		for (auto& item : items)
+		{
+			item.update(deltaTime);
+		}
+
+		// 地面に落下したアイテムを削除する
+		items.remove_if([](const Item& item) { return (580 < item.circle.y); });
 	}
 
-	// プレイヤーを描く関数
-	void draw() const
+	// 背景画面を描く関数
+	void DrawBackground()
 	{
-		texture.scaled(0.5).drawAt(circle.center);
-	}
-};
+		// 空を描く
+		Rect{ 0, 0, 800, 550 }.draw(Arg::top(0.3, 0.6, 1.0), Arg::bottom(0.6, 0.9, 1.0));
 
-// アイテムクラス
-struct Item
-{
-	Circle circle;
-
-	// アイテムの種類（0: キャンディー, 1: ケーキ）
-	int32 type;
-
-	void update(double deltaTime)
-	{
-		// アイテムを下に移動させる
-		circle.y += (deltaTime * 200.0);
+		// 地面を描く
+		Rect{ 0, 550, 800, 50 }.draw(ColorF{ 0.3, 0.6, 0.3 });
 	}
 
 	// アイテムを描く関数
-	void draw(const Array<Texture>& itemTextures) const
+	void DrawItems(const Array<Item>& items, const Array<Texture>& itemTextures)
 	{
-		// アイテムの種類に応じたテクスチャを描く
-		itemTextures[type].scaled(0.5).drawAt(circle.center);
-	}
-};
-
-void UpdateItems(Array<Item>& items, double deltaTime)
-{
-	// すべてのアイテムの状態を更新する
-	for (auto& item : items)
-	{
-		item.update(deltaTime);
-	}
-
-	// 地面に落下したアイテムを削除する
-	items.remove_if([](const Item& item) { return (580 < item.circle.y); });
-}
-
-// 背景画面を描く関数
-void DrawBackground()
-{
-	// 空を描く
-	Rect{ 0, 0, 800, 550 }.draw(Arg::top(0.3, 0.6, 1.0), Arg::bottom(0.6, 0.9, 1.0));
-
-	// 地面を描く
-	Rect{ 0, 550, 800, 50 }.draw(ColorF{ 0.3, 0.6, 0.3 });
-}
-
-// アイテムを描く関数
-void DrawItems(const Array<Item>& items, const Array<Texture>& itemTextures)
-{
-	for (const auto& item : items)
-	{
-		item.draw(itemTextures);
-	}
-}
-
-// UI を描く関数
-void DrawUI(int32 score, const Font& font)
-{
-	// スコアを描く
-	font(U"SCORE: {}"_fmt(score)).draw(30, Vec2{ 20, 20 });
-}
-
-void Main()
-{
-	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
-
-	// アイテムのテクスチャ配列
-	const Array<Texture> itemTextures =
-	{
-		Texture{ U"🍬"_emoji },
-		Texture{ U"🍰"_emoji },
-	};
-
-	Player player;
-
-	// アイテムの配列
-	Array<Item> items;
-	items << Item{ Circle{ 200, 200, 30 }, 0 };
-	items << Item{ Circle{ 600, 100, 30 }, 1 };
-
-	// アイテムが出現する周期（秒）
-	const double spawnInterval = 0.8;
-
-	// 蓄積時間（秒）
-	double accumulatedTime = 0.0;
-
-	// スコア
-	int32 score = 0;
-
-	while (System::Update())
-	{
-		/////////////////////////////////
-		//
-		//	更新
-		//
-		/////////////////////////////////
-
-		const double deltaTime = Scene::DeltaTime();
-
-		// 蓄積時間を増やす
-		accumulatedTime += deltaTime;
-
-		// 蓄積時間が周期を超えたら
-		if (spawnInterval < accumulatedTime)
+		for (const auto& item : items)
 		{
-			// 新しいアイテムを追加する
-			items << Item{ Circle{ Random(30.0, 770.0), -30, 30 }, Random(0, 1) };
-
-			// 蓄積時間を周期分減らす
-			accumulatedTime -= spawnInterval;
+			item.draw(itemTextures);
 		}
-
-		// プレイヤーの状態を更新する
-		player.update(deltaTime);
-
-		// すべてのアイテムの状態を更新する
-		UpdateItems(items, deltaTime);
-
-		/////////////////////////////////
-		//
-		//	描画
-		//
-		/////////////////////////////////
-
-		// 背景を描く
-		DrawBackground();
-
-		// プレイヤーを描く
-		player.draw();
-
-		// すべてのアイテムを描く
-		DrawItems(items, itemTextures);
-
-		// UI を描く
-		DrawUI(score, font);
 	}
-}
-```
+
+	// UI を描く関数
+	void DrawUI(int32 score, const Font& font)
+	{
+		// スコアを描く
+		font(U"SCORE: {}"_fmt(score)).draw(30, Vec2{ 20, 20 });
+	}
+
+	void Main()
+	{
+		const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+
+		// アイテムのテクスチャ配列
+		const Array<Texture> itemTextures =
+		{
+			Texture{ U"🍬"_emoji },
+			Texture{ U"🍰"_emoji },
+		};
+
+		Player player;
+
+		// アイテムの配列
+		Array<Item> items;
+		items << Item{ Circle{ 200, 200, 30 }, 0 };
+		items << Item{ Circle{ 600, 100, 30 }, 1 };
+
+		// アイテムが出現する周期（秒）
+		const double spawnInterval = 0.8;
+
+		// 蓄積時間（秒）
+		double accumulatedTime = 0.0;
+
+		// スコア
+		int32 score = 0;
+
+		while (System::Update())
+		{
+			/////////////////////////////////
+			//
+			//	更新
+			//
+			/////////////////////////////////
+
+			const double deltaTime = Scene::DeltaTime();
+
+			// 蓄積時間を増やす
+			accumulatedTime += deltaTime;
+
+			// 蓄積時間が周期を超えたら
+			if (spawnInterval < accumulatedTime)
+			{
+				// 新しいアイテムを追加する
+				items << Item{ Circle{ Random(30.0, 770.0), -30, 30 }, Random(0, 1) };
+
+				// 蓄積時間を周期分減らす
+				accumulatedTime -= spawnInterval;
+			}
+
+			// プレイヤーの状態を更新する
+			player.update(deltaTime);
+
+			// すべてのアイテムの状態を更新する
+			UpdateItems(items, deltaTime);
+
+			/////////////////////////////////
+			//
+			//	描画
+			//
+			/////////////////////////////////
+
+			// 背景を描く
+			DrawBackground();
+
+			// プレイヤーを描く
+			player.draw();
+
+			// すべてのアイテムを描く
+			DrawItems(items, itemTextures);
+
+			// UI を描く
+			DrawUI(score, font);
+		}
+	}
+	```
 
 
 ## 25.9 アイテムとプレイヤーのあたり判定の実装
@@ -926,588 +934,160 @@ void Main()
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/collect/9.png)
 
-```cpp
-# include <Siv3D.hpp>
+??? memo "コード"
+	```cpp hl_lines="60 68-84 170"
+	# include <Siv3D.hpp>
 
-// プレイヤークラス
-struct Player
-{
-	Circle circle{ 400, 530, 30 };
-
-	Texture texture{ U"😃"_emoji };
-
-	// プレイヤーの状態を更新する関数
-	void update(double deltaTime)
+	// プレイヤークラス
+	struct Player
 	{
-		const double speed = (deltaTime * 400.0);
+		Circle circle{ 400, 530, 30 };
 
-		// [←] キーが押されたら左に移動
-		if (KeyLeft.pressed())
+		Texture texture{ U"😃"_emoji };
+
+		// プレイヤーの状態を更新する関数
+		void update(double deltaTime)
 		{
-			circle.x -= speed;
+			const double speed = (deltaTime * 400.0);
+
+			// [←] キーが押されたら左に移動
+			if (KeyLeft.pressed())
+			{
+				circle.x -= speed;
+			}
+
+			// [→] キーが押されたら右に移動
+			if (KeyRight.pressed())
+			{
+				circle.x += speed;
+			}
+
+			// プレイヤーが画面外に出ないようにする
+			circle.x = Clamp(circle.x, 30.0, 770.0);
 		}
 
-		// [→] キーが押されたら右に移動
-		if (KeyRight.pressed())
+		// プレイヤーを描く関数
+		void draw() const
 		{
-			circle.x += speed;
+			texture.scaled(0.5).drawAt(circle.center);
 		}
-
-		// プレイヤーが画面外に出ないようにする
-		circle.x = Clamp(circle.x, 30.0, 770.0);
-	}
-
-	// プレイヤーを描く関数
-	void draw() const
-	{
-		texture.scaled(0.5).drawAt(circle.center);
-	}
-};
-
-// アイテムクラス
-struct Item
-{
-	Circle circle;
-
-	// アイテムの種類（0: キャンディー, 1: ケーキ）
-	int32 type;
-
-	void update(double deltaTime)
-	{
-		// アイテムを下に移動させる
-		circle.y += (deltaTime * 200.0);
-	}
-
-	// アイテムを描く関数
-	void draw(const Array<Texture>& itemTextures) const
-	{
-		// アイテムの種類に応じたテクスチャを描く
-		itemTextures[type].scaled(0.5).drawAt(circle.center);
-	}
-};
-
-void UpdateItems(Array<Item>& items, double deltaTime, const Player& player, int32& score)
-{
-	// すべてのアイテムの状態を更新する
-	for (auto& item : items)
-	{
-		item.update(deltaTime);
-	}
-
-	// 各アイテムについて
-	for (auto it = items.begin(); it != items.end();)
-	{
-		// プレイヤーとアイテムが交差したら
-		if (player.circle.intersects(it->circle))
-		{
-			// スコアを加算する（キャンディー: 10点, ケーキ: 50点）
-			score += ((it->type == 0) ? 10 : 50);
-
-			// アイテムを削除する
-			it = items.erase(it);
-		}
-		else
-		{
-			++it;
-		}
-	}
-
-	// 地面に落下したアイテムを削除する
-	items.remove_if([](const Item& item) { return (580 < item.circle.y); });
-}
-
-// 背景画面を描く関数
-void DrawBackground()
-{
-	// 空を描く
-	Rect{ 0, 0, 800, 550 }.draw(Arg::top(0.3, 0.6, 1.0), Arg::bottom(0.6, 0.9, 1.0));
-
-	// 地面を描く
-	Rect{ 0, 550, 800, 50 }.draw(ColorF{ 0.3, 0.6, 0.3 });
-}
-
-// アイテムを描く関数
-void DrawItems(const Array<Item>& items, const Array<Texture>& itemTextures)
-{
-	for (const auto& item : items)
-	{
-		item.draw(itemTextures);
-	}
-}
-
-// UI を描く関数
-void DrawUI(int32 score, const Font& font)
-{
-	// スコアを描く
-	font(U"SCORE: {}"_fmt(score)).draw(30, Vec2{ 20, 20 });
-}
-
-void Main()
-{
-	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
-
-	// アイテムのテクスチャ配列
-	const Array<Texture> itemTextures =
-	{
-		Texture{ U"🍬"_emoji },
-		Texture{ U"🍰"_emoji },
 	};
 
-	Player player;
-
-	// アイテムの配列
-	Array<Item> items;
-	items << Item{ Circle{ 200, 200, 30 }, 0 };
-	items << Item{ Circle{ 600, 100, 30 }, 1 };
-
-	// アイテムが出現する周期（秒）
-	const double spawnInterval = 0.8;
-
-	// 蓄積時間（秒）
-	double accumulatedTime = 0.0;
-
-	// スコア
-	int32 score = 0;
-
-	while (System::Update())
+	// アイテムクラス
+	struct Item
 	{
-		/////////////////////////////////
-		//
-		//	更新
-		//
-		/////////////////////////////////
+		Circle circle;
 
-		const double deltaTime = Scene::DeltaTime();
+		// アイテムの種類（0: キャンディー, 1: ケーキ）
+		int32 type;
 
-		// 蓄積時間を増やす
-		accumulatedTime += deltaTime;
-
-		// 蓄積時間が周期を超えたら
-		if (spawnInterval < accumulatedTime)
+		void update(double deltaTime)
 		{
-			// 新しいアイテムを追加する
-			items << Item{ Circle{ Random(30.0, 770.0), -30, 30 }, Random(0, 1) };
-
-			// 蓄積時間を周期分減らす
-			accumulatedTime -= spawnInterval;
+			// アイテムを下に移動させる
+			circle.y += (deltaTime * 200.0);
 		}
 
-		// プレイヤーの状態を更新する
-		player.update(deltaTime);
+		// アイテムを描く関数
+		void draw(const Array<Texture>& itemTextures) const
+		{
+			// アイテムの種類に応じたテクスチャを描く
+			itemTextures[type].scaled(0.5).drawAt(circle.center);
+		}
+	};
 
+	void UpdateItems(Array<Item>& items, double deltaTime, const Player& player, int32& score)
+	{
 		// すべてのアイテムの状態を更新する
-		UpdateItems(items, deltaTime, player, score);
-
-		/////////////////////////////////
-		//
-		//	描画
-		//
-		/////////////////////////////////
-
-		// 背景を描く
-		DrawBackground();
-
-		// プレイヤーを描く
-		player.draw();
-
-		// すべてのアイテムを描く
-		DrawItems(items, itemTextures);
-
-		// UI を描く
-		DrawUI(score, font);
-	}
-}
-```
-
-
-## 25.10 残り時間の実装
-- 残り時間を表す変数 `double remainingTime` を導入します
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/collect/10.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-// プレイヤークラス
-struct Player
-{
-	Circle circle{ 400, 530, 30 };
-
-	Texture texture{ U"😃"_emoji };
-
-	// プレイヤーの状態を更新する関数
-	void update(double deltaTime)
-	{
-		const double speed = (deltaTime * 400.0);
-
-		// [←] キーが押されたら左に移動
-		if (KeyLeft.pressed())
+		for (auto& item : items)
 		{
-			circle.x -= speed;
+			item.update(deltaTime);
 		}
 
-		// [→] キーが押されたら右に移動
-		if (KeyRight.pressed())
+		// 各アイテムについて
+		for (auto it = items.begin(); it != items.end();)
 		{
-			circle.x += speed;
+			// プレイヤーとアイテムが交差したら
+			if (player.circle.intersects(it->circle))
+			{
+				// スコアを加算する（キャンディー: 10点, ケーキ: 50点）
+				score += ((it->type == 0) ? 10 : 50);
+
+				// アイテムを削除する
+				it = items.erase(it);
+			}
+			else
+			{
+				++it;
+			}
 		}
 
-		// プレイヤーが画面外に出ないようにする
-		circle.x = Clamp(circle.x, 30.0, 770.0);
+		// 地面に落下したアイテムを削除する
+		items.remove_if([](const Item& item) { return (580 < item.circle.y); });
 	}
 
-	// プレイヤーを描く関数
-	void draw() const
+	// 背景画面を描く関数
+	void DrawBackground()
 	{
-		texture.scaled(0.5).drawAt(circle.center);
-	}
-};
+		// 空を描く
+		Rect{ 0, 0, 800, 550 }.draw(Arg::top(0.3, 0.6, 1.0), Arg::bottom(0.6, 0.9, 1.0));
 
-// アイテムクラス
-struct Item
-{
-	Circle circle;
-
-	// アイテムの種類（0: キャンディー, 1: ケーキ）
-	int32 type;
-
-	void update(double deltaTime)
-	{
-		// アイテムを下に移動させる
-		circle.y += (deltaTime * 200.0);
+		// 地面を描く
+		Rect{ 0, 550, 800, 50 }.draw(ColorF{ 0.3, 0.6, 0.3 });
 	}
 
 	// アイテムを描く関数
-	void draw(const Array<Texture>& itemTextures) const
+	void DrawItems(const Array<Item>& items, const Array<Texture>& itemTextures)
 	{
-		// アイテムの種類に応じたテクスチャを描く
-		itemTextures[type].scaled(0.5).drawAt(circle.center);
-	}
-};
-
-void UpdateItems(Array<Item>& items, double deltaTime, const Player& player, int32& score)
-{
-	// すべてのアイテムの状態を更新する
-	for (auto& item : items)
-	{
-		item.update(deltaTime);
-	}
-
-	// 各アイテムについて
-	for (auto it = items.begin(); it != items.end();)
-	{
-		// プレイヤーとアイテムが交差したら
-		if (player.circle.intersects(it->circle))
+		for (const auto& item : items)
 		{
-			// スコアを加算する（キャンディー: 10点, ケーキ: 50点）
-			score += ((it->type == 0) ? 10 : 50);
-
-			// アイテムを削除する
-			it = items.erase(it);
-		}
-		else
-		{
-			++it;
+			item.draw(itemTextures);
 		}
 	}
 
-	// 地面に落下したアイテムを削除する
-	items.remove_if([](const Item& item) { return (580 < item.circle.y); });
-}
-
-// 背景画面を描く関数
-void DrawBackground()
-{
-	// 空を描く
-	Rect{ 0, 0, 800, 550 }.draw(Arg::top(0.3, 0.6, 1.0), Arg::bottom(0.6, 0.9, 1.0));
-
-	// 地面を描く
-	Rect{ 0, 550, 800, 50 }.draw(ColorF{ 0.3, 0.6, 0.3 });
-}
-
-// アイテムを描く関数
-void DrawItems(const Array<Item>& items, const Array<Texture>& itemTextures)
-{
-	for (const auto& item : items)
+	// UI を描く関数
+	void DrawUI(int32 score, const Font& font)
 	{
-		item.draw(itemTextures);
+		// スコアを描く
+		font(U"SCORE: {}"_fmt(score)).draw(30, Vec2{ 20, 20 });
 	}
-}
 
-// UI を描く関数
-void DrawUI(int32 score, double remainingTime, const Font& font)
-{
-	// スコアを描く
-	font(U"SCORE: {}"_fmt(score)).draw(30, Vec2{ 20, 20 });
-
-	// 残り時間を描く
-	font(U"TIME: {:.0f}"_fmt(remainingTime)).draw(30, Arg::topRight(780, 20));
-
-	if (remainingTime <= 0.0)
+	void Main()
 	{
-		font(U"TIME'S UP!").drawAt(80, Vec2{ 400, 270 }, ColorF{ 0.3 });
-	}
-}
+		const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
 
-void Main()
-{
-	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
-
-	// アイテムのテクスチャ配列
-	const Array<Texture> itemTextures =
-	{
-		Texture{ U"🍬"_emoji },
-		Texture{ U"🍰"_emoji },
-	};
-
-	Player player;
-
-	// アイテムの配列
-	Array<Item> items;
-	items << Item{ Circle{ 200, 200, 30 }, 0 };
-	items << Item{ Circle{ 600, 100, 30 }, 1 };
-
-	// アイテムが出現する周期（秒）
-	const double spawnInterval = 0.8;
-
-	// 蓄積時間（秒）
-	double accumulatedTime = 0.0;
-
-	// スコア
-	int32 score = 0;
-
-	// 残り時間（秒）
-	double remainingTime = 20.0;
-
-	while (System::Update())
-	{
-		/////////////////////////////////
-		//
-		//	更新
-		//
-		/////////////////////////////////
-
-		const double deltaTime = Scene::DeltaTime();
-
-		// 残り時間を減らす
-		remainingTime = Max((remainingTime - deltaTime), 0.0);
-
-		// 蓄積時間を増やす
-		accumulatedTime += deltaTime;
-
-		// 蓄積時間が周期を超えたら
-		if (spawnInterval < accumulatedTime)
+		// アイテムのテクスチャ配列
+		const Array<Texture> itemTextures =
 		{
-			// 新しいアイテムを追加する
-			items << Item{ Circle{ Random(30.0, 770.0), -30, 30 }, Random(0, 1) };
+			Texture{ U"🍬"_emoji },
+			Texture{ U"🍰"_emoji },
+		};
 
-			// 蓄積時間を周期分減らす
-			accumulatedTime -= spawnInterval;
-		}
+		Player player;
 
-		// プレイヤーの状態を更新する
-		player.update(deltaTime);
+		// アイテムの配列
+		Array<Item> items;
+		items << Item{ Circle{ 200, 200, 30 }, 0 };
+		items << Item{ Circle{ 600, 100, 30 }, 1 };
 
-		// すべてのアイテムの状態を更新する
-		UpdateItems(items, deltaTime, player, score);
+		// アイテムが出現する周期（秒）
+		const double spawnInterval = 0.8;
 
-		/////////////////////////////////
-		//
-		//	描画
-		//
-		/////////////////////////////////
+		// 蓄積時間（秒）
+		double accumulatedTime = 0.0;
 
-		// 背景を描く
-		DrawBackground();
+		// スコア
+		int32 score = 0;
 
-		// プレイヤーを描く
-		player.draw();
-
-		// すべてのアイテムを描く
-		DrawItems(items, itemTextures);
-
-		// UI を描く
-		DrawUI(score, remainingTime, font);
-	}
-}
-```
-
-## 25.11 【完成】ゲーム終了処理
-- 残り時間が 0 になったら、アイテムをすべて消去し、プレイヤーの操作を受け付けないようにします
-- これで、ゲームの完成です
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/collect/11.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-// プレイヤークラス
-struct Player
-{
-	Circle circle{ 400, 530, 30 };
-
-	Texture texture{ U"😃"_emoji };
-
-	// プレイヤーの状態を更新する関数
-	void update(double deltaTime)
-	{
-		const double speed = (deltaTime * 400.0);
-
-		// [←] キーが押されたら左に移動
-		if (KeyLeft.pressed())
+		while (System::Update())
 		{
-			circle.x -= speed;
-		}
+			/////////////////////////////////
+			//
+			//	更新
+			//
+			/////////////////////////////////
 
-		// [→] キーが押されたら右に移動
-		if (KeyRight.pressed())
-		{
-			circle.x += speed;
-		}
+			const double deltaTime = Scene::DeltaTime();
 
-		// プレイヤーが画面外に出ないようにする
-		circle.x = Clamp(circle.x, 30.0, 770.0);
-	}
-
-	// プレイヤーを描く関数
-	void draw() const
-	{
-		texture.scaled(0.5).drawAt(circle.center);
-	}
-};
-
-// アイテムクラス
-struct Item
-{
-	Circle circle;
-
-	// アイテムの種類（0: キャンディー, 1: ケーキ）
-	int32 type;
-
-	void update(double deltaTime)
-	{
-		// アイテムを下に移動させる
-		circle.y += (deltaTime * 200.0);
-	}
-
-	// アイテムを描く関数
-	void draw(const Array<Texture>& itemTextures) const
-	{
-		// アイテムの種類に応じたテクスチャを描く
-		itemTextures[type].scaled(0.5).drawAt(circle.center);
-	}
-};
-
-void UpdateItems(Array<Item>& items, double deltaTime, const Player& player, int32& score)
-{
-	// すべてのアイテムの状態を更新する
-	for (auto& item : items)
-	{
-		item.update(deltaTime);
-	}
-
-	// 各アイテムについて
-	for (auto it = items.begin(); it != items.end();)
-	{
-		// プレイヤーとアイテムが交差したら
-		if (player.circle.intersects(it->circle))
-		{
-			// スコアを加算する（キャンディー: 10点, ケーキ: 50点）
-			score += ((it->type == 0) ? 10 : 50);
-
-			// アイテムを削除する
-			it = items.erase(it);
-		}
-		else
-		{
-			++it;
-		}
-	}
-
-	// 地面に落下したアイテムを削除する
-	items.remove_if([](const Item& item) { return (580 < item.circle.y); });
-}
-
-// 背景画面を描く関数
-void DrawBackground()
-{
-	// 空を描く
-	Rect{ 0, 0, 800, 550 }.draw(Arg::top(0.3, 0.6, 1.0), Arg::bottom(0.6, 0.9, 1.0));
-
-	// 地面を描く
-	Rect{ 0, 550, 800, 50 }.draw(ColorF{ 0.3, 0.6, 0.3 });
-}
-
-// アイテムを描く関数
-void DrawItems(const Array<Item>& items, const Array<Texture>& itemTextures)
-{
-	for (const auto& item : items)
-	{
-		item.draw(itemTextures);
-	}
-}
-
-// UI を描く関数
-void DrawUI(int32 score, double remainingTime, const Font& font)
-{
-	// スコアを描く
-	font(U"SCORE: {}"_fmt(score)).draw(30, Vec2{ 20, 20 });
-
-	// 残り時間を描く
-	font(U"TIME: {:.0f}"_fmt(remainingTime)).draw(30, Arg::topRight(780, 20));
-
-	if (remainingTime <= 0.0)
-	{
-		font(U"TIME'S UP!").drawAt(80, Vec2{ 400, 270 }, ColorF{ 0.3 });
-	}
-}
-
-void Main()
-{
-	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
-
-	// アイテムのテクスチャ配列
-	const Array<Texture> itemTextures =
-	{
-		Texture{ U"🍬"_emoji },
-		Texture{ U"🍰"_emoji },
-	};
-
-	Player player;
-
-	// アイテムの配列
-	Array<Item> items;
-	items << Item{ Circle{ 200, 200, 30 }, 0 };
-	items << Item{ Circle{ 600, 100, 30 }, 1 };
-
-	// アイテムが出現する周期（秒）
-	const double spawnInterval = 0.8;
-
-	// 蓄積時間（秒）
-	double accumulatedTime = 0.0;
-
-	// スコア
-	int32 score = 0;
-
-	// 残り時間（秒）
-	double remainingTime = 20.0;
-
-	while (System::Update())
-	{
-		/////////////////////////////////
-		//
-		//	更新
-		//
-		/////////////////////////////////
-
-		const double deltaTime = Scene::DeltaTime();
-
-		// 残り時間を減らす
-		remainingTime = Max((remainingTime - deltaTime), 0.0);
-
-		// ゲームが進行している場合
-		if (0.0 < remainingTime)
-		{
 			// 蓄積時間を増やす
 			accumulatedTime += deltaTime;
 
@@ -1526,29 +1106,461 @@ void Main()
 
 			// すべてのアイテムの状態を更新する
 			UpdateItems(items, deltaTime, player, score);
+
+			/////////////////////////////////
+			//
+			//	描画
+			//
+			/////////////////////////////////
+
+			// 背景を描く
+			DrawBackground();
+
+			// プレイヤーを描く
+			player.draw();
+
+			// すべてのアイテムを描く
+			DrawItems(items, itemTextures);
+
+			// UI を描く
+			DrawUI(score, font);
 		}
-		else
-		{
-			items.clear();
-		}
-
-		/////////////////////////////////
-		//
-		//	描画
-		//
-		/////////////////////////////////
-
-		// 背景を描く
-		DrawBackground();
-
-		// プレイヤーを描く
-		player.draw();
-
-		// すべてのアイテムを描く
-		DrawItems(items, itemTextures);
-
-		// UI を描く
-		DrawUI(score, remainingTime, font);
 	}
-}
-```
+	```
+
+
+## 25.10 残り時間の実装
+- 残り時間を表す変数 `double remainingTime` を導入します
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/collect/10.png)
+
+??? memo "コード"
+	```cpp hl_lines="110 115-121 151-152 164-165 202"
+	# include <Siv3D.hpp>
+
+	// プレイヤークラス
+	struct Player
+	{
+		Circle circle{ 400, 530, 30 };
+
+		Texture texture{ U"😃"_emoji };
+
+		// プレイヤーの状態を更新する関数
+		void update(double deltaTime)
+		{
+			const double speed = (deltaTime * 400.0);
+
+			// [←] キーが押されたら左に移動
+			if (KeyLeft.pressed())
+			{
+				circle.x -= speed;
+			}
+
+			// [→] キーが押されたら右に移動
+			if (KeyRight.pressed())
+			{
+				circle.x += speed;
+			}
+
+			// プレイヤーが画面外に出ないようにする
+			circle.x = Clamp(circle.x, 30.0, 770.0);
+		}
+
+		// プレイヤーを描く関数
+		void draw() const
+		{
+			texture.scaled(0.5).drawAt(circle.center);
+		}
+	};
+
+	// アイテムクラス
+	struct Item
+	{
+		Circle circle;
+
+		// アイテムの種類（0: キャンディー, 1: ケーキ）
+		int32 type;
+
+		void update(double deltaTime)
+		{
+			// アイテムを下に移動させる
+			circle.y += (deltaTime * 200.0);
+		}
+
+		// アイテムを描く関数
+		void draw(const Array<Texture>& itemTextures) const
+		{
+			// アイテムの種類に応じたテクスチャを描く
+			itemTextures[type].scaled(0.5).drawAt(circle.center);
+		}
+	};
+
+	void UpdateItems(Array<Item>& items, double deltaTime, const Player& player, int32& score)
+	{
+		// すべてのアイテムの状態を更新する
+		for (auto& item : items)
+		{
+			item.update(deltaTime);
+		}
+
+		// 各アイテムについて
+		for (auto it = items.begin(); it != items.end();)
+		{
+			// プレイヤーとアイテムが交差したら
+			if (player.circle.intersects(it->circle))
+			{
+				// スコアを加算する（キャンディー: 10点, ケーキ: 50点）
+				score += ((it->type == 0) ? 10 : 50);
+
+				// アイテムを削除する
+				it = items.erase(it);
+			}
+			else
+			{
+				++it;
+			}
+		}
+
+		// 地面に落下したアイテムを削除する
+		items.remove_if([](const Item& item) { return (580 < item.circle.y); });
+	}
+
+	// 背景画面を描く関数
+	void DrawBackground()
+	{
+		// 空を描く
+		Rect{ 0, 0, 800, 550 }.draw(Arg::top(0.3, 0.6, 1.0), Arg::bottom(0.6, 0.9, 1.0));
+
+		// 地面を描く
+		Rect{ 0, 550, 800, 50 }.draw(ColorF{ 0.3, 0.6, 0.3 });
+	}
+
+	// アイテムを描く関数
+	void DrawItems(const Array<Item>& items, const Array<Texture>& itemTextures)
+	{
+		for (const auto& item : items)
+		{
+			item.draw(itemTextures);
+		}
+	}
+
+	// UI を描く関数
+	void DrawUI(int32 score, double remainingTime, const Font& font)
+	{
+		// スコアを描く
+		font(U"SCORE: {}"_fmt(score)).draw(30, Vec2{ 20, 20 });
+
+		// 残り時間を描く
+		font(U"TIME: {:.0f}"_fmt(remainingTime)).draw(30, Arg::topRight(780, 20));
+
+		if (remainingTime <= 0.0)
+		{
+			font(U"TIME'S UP!").drawAt(80, Vec2{ 400, 270 }, ColorF{ 0.3 });
+		}
+	}
+
+	void Main()
+	{
+		const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+
+		// アイテムのテクスチャ配列
+		const Array<Texture> itemTextures =
+		{
+			Texture{ U"🍬"_emoji },
+			Texture{ U"🍰"_emoji },
+		};
+
+		Player player;
+
+		// アイテムの配列
+		Array<Item> items;
+		items << Item{ Circle{ 200, 200, 30 }, 0 };
+		items << Item{ Circle{ 600, 100, 30 }, 1 };
+
+		// アイテムが出現する周期（秒）
+		const double spawnInterval = 0.8;
+
+		// 蓄積時間（秒）
+		double accumulatedTime = 0.0;
+
+		// スコア
+		int32 score = 0;
+
+		// 残り時間（秒）
+		double remainingTime = 20.0;
+
+		while (System::Update())
+		{
+			/////////////////////////////////
+			//
+			//	更新
+			//
+			/////////////////////////////////
+
+			const double deltaTime = Scene::DeltaTime();
+
+			// 残り時間を減らす
+			remainingTime = Max((remainingTime - deltaTime), 0.0);
+
+			// 蓄積時間を増やす
+			accumulatedTime += deltaTime;
+
+			// 蓄積時間が周期を超えたら
+			if (spawnInterval < accumulatedTime)
+			{
+				// 新しいアイテムを追加する
+				items << Item{ Circle{ Random(30.0, 770.0), -30, 30 }, Random(0, 1) };
+
+				// 蓄積時間を周期分減らす
+				accumulatedTime -= spawnInterval;
+			}
+
+			// プレイヤーの状態を更新する
+			player.update(deltaTime);
+
+			// すべてのアイテムの状態を更新する
+			UpdateItems(items, deltaTime, player, score);
+
+			/////////////////////////////////
+			//
+			//	描画
+			//
+			/////////////////////////////////
+
+			// 背景を描く
+			DrawBackground();
+
+			// プレイヤーを描く
+			player.draw();
+
+			// すべてのアイテムを描く
+			DrawItems(items, itemTextures);
+
+			// UI を描く
+			DrawUI(score, remainingTime, font);
+		}
+	}
+	```
+
+## 25.11 【完成】アイテム回転・ゲーム終了処理
+- アイテムの落下中に、Y 座標に応じて回転するようにします
+- 残り時間が 0 になったら、アイテムをすべて消去し、プレイヤーの操作を受け付けないようにします
+- これで、ゲームの完成です
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/collect/11.png)
+
+??? memo "コード"
+	```cpp hl_lines="56 167-169 188-192"
+	# include <Siv3D.hpp>
+
+	// プレイヤークラス
+	struct Player
+	{
+		Circle circle{ 400, 530, 30 };
+
+		Texture texture{ U"😃"_emoji };
+
+		// プレイヤーの状態を更新する関数
+		void update(double deltaTime)
+		{
+			const double speed = (deltaTime * 400.0);
+
+			// [←] キーが押されたら左に移動
+			if (KeyLeft.pressed())
+			{
+				circle.x -= speed;
+			}
+
+			// [→] キーが押されたら右に移動
+			if (KeyRight.pressed())
+			{
+				circle.x += speed;
+			}
+
+			// プレイヤーが画面外に出ないようにする
+			circle.x = Clamp(circle.x, 30.0, 770.0);
+		}
+
+		// プレイヤーを描く関数
+		void draw() const
+		{
+			texture.scaled(0.5).drawAt(circle.center);
+		}
+	};
+
+	// アイテムクラス
+	struct Item
+	{
+		Circle circle;
+
+		// アイテムの種類（0: キャンディー, 1: ケーキ）
+		int32 type;
+
+		void update(double deltaTime)
+		{
+			// アイテムを下に移動させる
+			circle.y += (deltaTime * 200.0);
+		}
+
+		// アイテムを描く関数
+		void draw(const Array<Texture>& itemTextures) const
+		{
+			// アイテムの種類に応じたテクスチャを描く
+			itemTextures[type].scaled(0.5).rotated(circle.y * 0.3_deg).drawAt(circle.center);
+		}
+	};
+
+	void UpdateItems(Array<Item>& items, double deltaTime, const Player& player, int32& score)
+	{
+		// すべてのアイテムの状態を更新する
+		for (auto& item : items)
+		{
+			item.update(deltaTime);
+		}
+
+		// 各アイテムについて
+		for (auto it = items.begin(); it != items.end();)
+		{
+			// プレイヤーとアイテムが交差したら
+			if (player.circle.intersects(it->circle))
+			{
+				// スコアを加算する（キャンディー: 10点, ケーキ: 50点）
+				score += ((it->type == 0) ? 10 : 50);
+
+				// アイテムを削除する
+				it = items.erase(it);
+			}
+			else
+			{
+				++it;
+			}
+		}
+
+		// 地面に落下したアイテムを削除する
+		items.remove_if([](const Item& item) { return (580 < item.circle.y); });
+	}
+
+	// 背景画面を描く関数
+	void DrawBackground()
+	{
+		// 空を描く
+		Rect{ 0, 0, 800, 550 }.draw(Arg::top(0.3, 0.6, 1.0), Arg::bottom(0.6, 0.9, 1.0));
+
+		// 地面を描く
+		Rect{ 0, 550, 800, 50 }.draw(ColorF{ 0.3, 0.6, 0.3 });
+	}
+
+	// アイテムを描く関数
+	void DrawItems(const Array<Item>& items, const Array<Texture>& itemTextures)
+	{
+		for (const auto& item : items)
+		{
+			item.draw(itemTextures);
+		}
+	}
+
+	// UI を描く関数
+	void DrawUI(int32 score, double remainingTime, const Font& font)
+	{
+		// スコアを描く
+		font(U"SCORE: {}"_fmt(score)).draw(30, Vec2{ 20, 20 });
+
+		// 残り時間を描く
+		font(U"TIME: {:.0f}"_fmt(remainingTime)).draw(30, Arg::topRight(780, 20));
+
+		if (remainingTime <= 0.0)
+		{
+			font(U"TIME'S UP!").drawAt(80, Vec2{ 400, 270 }, ColorF{ 0.3 });
+		}
+	}
+
+	void Main()
+	{
+		const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+
+		// アイテムのテクスチャ配列
+		const Array<Texture> itemTextures =
+		{
+			Texture{ U"🍬"_emoji },
+			Texture{ U"🍰"_emoji },
+		};
+
+		Player player;
+
+		// アイテムの配列
+		Array<Item> items;
+		items << Item{ Circle{ 200, 200, 30 }, 0 };
+		items << Item{ Circle{ 600, 100, 30 }, 1 };
+
+		// アイテムが出現する周期（秒）
+		const double spawnInterval = 0.8;
+
+		// 蓄積時間（秒）
+		double accumulatedTime = 0.0;
+
+		// スコア
+		int32 score = 0;
+
+		// 残り時間（秒）
+		double remainingTime = 20.0;
+
+		while (System::Update())
+		{
+			/////////////////////////////////
+			//
+			//	更新
+			//
+			/////////////////////////////////
+
+			const double deltaTime = Scene::DeltaTime();
+
+			// 残り時間を減らす
+			remainingTime = Max((remainingTime - deltaTime), 0.0);
+
+			// ゲームが進行している場合
+			if (0.0 < remainingTime)
+			{
+				// 蓄積時間を増やす
+				accumulatedTime += deltaTime;
+
+				// 蓄積時間が周期を超えたら
+				if (spawnInterval < accumulatedTime)
+				{
+					// 新しいアイテムを追加する
+					items << Item{ Circle{ Random(30.0, 770.0), -30, 30 }, Random(0, 1) };
+
+					// 蓄積時間を周期分減らす
+					accumulatedTime -= spawnInterval;
+				}
+
+				// プレイヤーの状態を更新する
+				player.update(deltaTime);
+
+				// すべてのアイテムの状態を更新する
+				UpdateItems(items, deltaTime, player, score);
+			}
+			else
+			{
+				items.clear();
+			}
+
+			/////////////////////////////////
+			//
+			//	描画
+			//
+			/////////////////////////////////
+
+			// 背景を描く
+			DrawBackground();
+
+			// プレイヤーを描く
+			player.draw();
+
+			// すべてのアイテムを描く
+			DrawItems(items, itemTextures);
+
+			// UI を描く
+			DrawUI(score, remainingTime, font);
+		}
+	}
+	```
