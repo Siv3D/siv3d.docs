@@ -241,12 +241,12 @@ void Main()
 
 | コード | 説明 |
 |---|---|
-| `.drawFrame(太さ, 色)` | 長方形の枠を描きます。 |
-| `.drawFrame(太さ, 内側の色, 外側の色)` | グラデーションする長方形の枠を描きます。 |
-| `.drawFrame(内側の太さ, 外側の太さ, 色)` | 長方形の枠を描きます。 |
-| `.drawFrame(内側の太さ, 外側の太さ, 内側の色, 外側の色)` | グラデーションする長方形の枠を描きます。 |
-| `.drawFrame(太さ, Arg::top = 上側の色, Arg::bottom = 下側の色)` | 上下にグラデーションする長方形の枠を描きます。 |
-| `.drawFrame(内側の太さ, 外側の太さ, Arg::top = 上側の色, Arg::bottom = 下側の色)` | 上下にグラデーションする長方形の枠を描きます。 |
+| `.drawFrame(太さ, 色)` | 長方形の枠を描きます |
+| `.drawFrame(太さ, 内側の色, 外側の色)` | グラデーションする長方形の枠を描きます |
+| `.drawFrame(内側の太さ, 外側の太さ, 色)` | 長方形の枠を描きます |
+| `.drawFrame(内側の太さ, 外側の太さ, 内側の色, 外側の色)` | グラデーションする長方形の枠を描きます |
+| `.drawFrame(太さ, Arg::top = 上側の色, Arg::bottom = 下側の色)` | 上下にグラデーションする長方形の枠を描きます |
+| `.drawFrame(内側の太さ, 外側の太さ, Arg::top = 上側の色, Arg::bottom = 下側の色)` | 上下にグラデーションする長方形の枠を描きます |
 
 - `.draw()` や `.drawFrame()` はその長方形自身の参照を返すため、`rect.draw().drawFrame()` のように連続して記述できます
 
@@ -447,7 +447,40 @@ void Main()
 	- 長方形として描画したほうが、品質や実行性能の面で有利です
 
 
-## 26.11 三角形
+## 26.11 矢印
+- 矢印を表現する専用のクラスはなく、`Line` の `.drawArrow()` または `.drawDoubleHeadedArrow()` を使って描画します
+- 単方向矢印は、`Line` の始点から終点方向に向かって描かれます
+
+| コード | 説明 |
+|---|---|
+| `.drawArrow(線の幅, 三角形の幅と高さ, 色)` | 単方向の矢印を描きます |
+| `.drawDoubleHeadedArrow(線の幅, 三角形の幅と高さ, 色)` | 両方向の矢印を描きます |
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/11.png)
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	while (System::Update())
+	{
+		Line{ 50, 200, 200, 250 }
+			.drawArrow(3, SizeF{ 20, 20 }, ColorF{ 0.2 });
+
+		Line{ 350, 450, 450, 100 }
+			.drawArrow(10, SizeF{ 40, 80 }, ColorF{ 0.2 });
+
+		Line{ 600, 100, 700, 400 }
+			.drawDoubleHeadedArrow(8, SizeF{ 30, 30 }, ColorF{ 0.2 });
+	}
+}
+```
+
+
+## 26.12 三角形
 - 三角形は `Triangle` で表現します
 - `Triangle` は次のように作成できます
 
@@ -480,7 +513,7 @@ void Main()
 | `.drawFrame(太さ, 色)` | 三角形の枠を描きます |
 | `.drawFrame(内側の太さ, 外側の太さ, 色)` | 三角形の枠を描きます |
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/11.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/12.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -510,7 +543,8 @@ void Main()
 ```
 
 
-## 26.12 凸な四角形
+
+## 26.13 凸な四角形
 - 4 つの頂点を持つ凸な四角形は `Quad` で表現します
 	- 台形や平行四辺形は `Quad` で表現します
 - `Rect` や `RectF` の辺は X 軸・Y 軸に平行ですが、`Quad` はその制約がありません
@@ -532,7 +566,7 @@ void Main()
 !!! warning "注意"
 	- 4 つの頂点が反時計回りの場合や、凹角を持つ場合の挙動は未規定です
 
-	![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/12-0.png)
+	![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/13-0.png)
 
 - 四角形を描くには、`Quad` の `.draw()` を使います
 
@@ -548,10 +582,10 @@ void Main()
 | `.drawFrame(太さ, 色)` | 四角形の枠を描きます |
 | `.drawFrame(内側の太さ, 外側の太さ, 色)` | 四角形の枠を描きます |
 
-### 26.12.1 頂点を 4 つ指定
+### 26.13.1 頂点を 4 つ指定
 - 4 つの頂点座標を指定して `Quad` を作成します
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/12-1.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/13-1.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -569,10 +603,10 @@ void Main()
 }
 ```
 
-### 26.12.2 長方形の回転
+### 26.13.2 長方形の回転
 - 長方形を回転させて `Quad` を作成します
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/12-2.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/13-2.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -600,7 +634,7 @@ void Main()
 }
 ```
 
-### 26.12.3 長方形のスライド・傾斜
+### 26.13.3 長方形のスライド・傾斜
 - 長方形の辺をスライド・傾斜させて `Quad` を作成します
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/12-3.png)
@@ -634,7 +668,7 @@ void Main()
 ```
 
 
-## 26.13 楕円
+## 26.14 楕円
 - 楕円は `Ellipse` で表現します
 	- 傾いた楕円は表現できません。
 		- 傾いた楕円を描画したい場合は、**チュートリアル XX** の `Transformer2D` を使って描画するか、`Polygon` で近似することを検討してください
@@ -665,7 +699,7 @@ void Main()
 | `.drawFrame(内側の太さ, 外側の太さ, 色)` | 楕円の枠を描きます |
 
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/13.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/14.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -684,8 +718,8 @@ void Main()
 ```
 
 
-## 26.14 よく使われる形
-- よく使われる形を 1 行で描画できる関数が用意されています
+## 26.15 よく使われる形状
+- よく使われる形状を 1 行で描画できる関数が用意されています
 - これらの関数は頂点配列を格納した `Shape2D` 型のオブジェクトを返します
 
 | コード | 形状 |
@@ -705,7 +739,7 @@ void Main()
 | `Shape2D::RectBalloon(長方形, ターゲット座標, 吹き出しの根元の比率 = 0.5)` | 長方形の吹き出し |
 | `Shape2D::Stairs(基準座標, 幅, 高さ, 階段数, 右上に上がるか = true)` | 階段形 |
 | `Shape2D::Heart(半径, 中心座標 = { 0, 0 }, 回転角度 = 0.0)` | ハート形 |
-| `Shape2D::Squircle(半径, 中心座標, 品質)` | 四角と円の中間形 |
+| `Shape2D::Squircle(半径, 中心座標, 品質)` | 正方形と円の中間 |
 | `Shape2D::Astroid(中心座標 外接楕円の X 軸半径, 外接楕円の Y 軸半径, 回転角度 = 0.0)` | 星芒形 |
 
 - これらの形を描画するには、`Shape2D` の `.draw()` を使います
@@ -720,7 +754,7 @@ void Main()
 |---|---|
 | `.drawFrame(太さ, 色)` | 形の枠を描きます |
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/14.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/15.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -781,31 +815,74 @@ void Main()
 ```
 
 
-## 26.15 自由に多角形を描く
+## 26.16 自由な多角形
 - 任意の多角形は `Polygon` で表現します
 - `Polygon` は次のように作成できます
+	- 頂点は 3 つ以上で、外周は時計回りに、穴は反時計回りに指定します
 
+| コード | 説明 |
+|---|---|
+| `Polygon{ 頂点0, 頂点1, ... }` | 多角形を作成します |
+| `Polygon{ Array<Vec2>{ ... } }` | 多角形を作成します |
+| `Polygon{ Array<Vec2>{ ... }, Array<Array<Vec2>>{ ... } }` | 穴の開いた多角形を作成します |
+| `Polygon{ Shape2D }` | `Shape2D` から多角形を作成します |
+| `circle.asPolygon(品質)` | 円を多角形に変換します |
+| `ellipse.asPolygon(品質)` | 楕円を多角形に変換します |
+| `rect.asPolygon()` | 長方形（`Rect` または `RectF`）を多角形に変換します |
+| `roundRect.asPolygon()` | 角丸長方形（`RoundRect`）を多角形に変換します |
+| `triangle.asPolygon()` | 三角形（`Triangle`）を多角形に変換します |
+| `quad.asPolygon()` | 四角形（`Quad`）を多角形に変換します |
+| `shape2D.asPolygon()` | `Shape2D` を多角形に変換します |
 
 - `Polygon` オブジェクトの作成には、メモリの確保や三角形分割の計算に実行時コストがかかります
-- とくに頂点数が多いものは、ループの内側で作成するのを避けるべきです。
+	- とくに頂点数が多いものは、ループの内側で作成するのを避けるべきです。
+- 多角形を描くには、`Polygon` の `.draw()` を使います
+
+| コード | 説明 |
+|---|---|
+| `.draw(色)` | 多角形を描きます |
+| `.draw(X 軸方向の移動量, Y 軸方向の移動量, 色)` | 多角形を描きます |
+| `.draw(移動量, 色)` | 多角形を描きます |
+
+- 多角形の枠を描くには、`Polygon` の `.drawFrame()` を使います
+
+| コード | 説明 |
+|---|---|
+| `.drawFrame(太さ, 色)` | 多角形の枠を描きます |
+| `.drawFrame(X 軸方向の移動量, Y 軸方向の移動量, 太さ, 色)` | 多角形の枠を描きます |
+| `.drawFrame(移動量, 太さ, 色)` | 多角形の枠を描きます |
 
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/15.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/16.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	const Polygon polygon
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	// 多角形
+	const Polygon polygon1
 	{
-		Vec2{ 400, 100 }, Vec2{ 600, 300 }, Vec2{ 500, 500 },
-		Vec2{ 400, 400 }, Vec2{ 300, 500 }, Vec2{ 200, 300 }
+		Vec2{ 200, 100 }, Vec2{ 380, 300 }, Vec2{ 300, 500 }, Vec2{ 200, 400 }, Vec2{ 100, 500 }, Vec2{ 20, 300 }
+	};
+
+	// 穴のある多角形
+	const Polygon polygon2
+	{
+		{
+			Vec2{ 600, 100 }, Vec2{ 780, 300 }, Vec2{ 700, 500 }, Vec2{ 600, 400 }, Vec2{ 500, 500 }, Vec2{ 420, 300 }
+		},
+		{
+			{ Vec2{ 620, 250 }, Vec2{ 580, 250 }, Vec2{ 550, 350 }, Vec2{ 650, 350 } }
+		}
 	};
 
 	while (System::Update())
 	{
-		polygon.draw(Palette::Skyblue);
+		polygon1.draw();
+		polygon2.draw(ColorF{ 0.2 });
 	}
 }
 ```
@@ -816,42 +893,35 @@ void Main()
 - いずれも本章では扱いません
 
 
-## 26.16 穴の開いた角形を描く
-穴の開いた `Polygon` を作るには、外周の時計回りの頂点座標リスト (`Array<Vec2>` 型) と、穴の形状の「反時計回り」の頂点座標リストの配列 (`Array<Array<Vec2>>` 型) から `Polygon` を作成します。
+## 26.17 連続する線分
+- 連続した線分は `LineString` で表現します
+- `LineString` は次のように作成できます
 
-既存の `Polygon` に対して `.addHole()` で穴を追加することもできます。
+| コード | 説明 |
+|---|---|
+| `LineString{ 頂点0, 頂点1, ... }` | 連続した線分を作成します |
+| `LineString{ Array<Point>{ ... } }` | 連続した線分を作成します |
+| `LineString{ Array<Vec2>{ ... } }` | 連続した線分を作成します |
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/16.png)
+- 連続した線分を描くには、`LineString` の `.draw()` または `.drawClosed()` を使います
+	- `.draw()` は終点と始点を結びません
+	- `.drawClosed()` は終点と始点を結びます
 
-```cpp
-# include <Siv3D.hpp>
+| コード | 説明 |
+|---|---|
+| `.draw(太さ, 色)` | 連続した線分を描きます |
+| `.draw(LineStyle::RoundCap, 太さ, 色)` | 両端が丸い、連続した線分を描きます |
+| `.drawClosed(太さ, 色)` | 連続した線分を描きます（終点と始点を結びます） |
 
-void Main()
-{
-	const Polygon polygon{
-		{ Vec2{ 400, 100 }, Vec2{ 600, 300 }, Vec2{ 500, 500 },
-		  Vec2{ 400, 400 }, Vec2{ 300, 500 }, Vec2{ 200, 300 } },
-		{ { Vec2{ 450, 250 }, Vec2{ 350, 250 }, Vec2{ 350, 350 }, Vec2{ 450, 350 } } }
-	};
-
-	while (System::Update())
-	{
-		polygon.draw(Palette::Skyblue);
-	}
-}
-```
-
-
-## 26.17 連続する線分を描く
-連続した線分を描くには、`Vec2` 型の頂点の配列から `LineString` を作成して `.draw()` します。`.drawClosed()` では終点と始点を結んだ線も描画されます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/17.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/17-1.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
 	const LineString ls1
 	{
 		Vec2{ 100, 60 }, Vec2{ 400, 140 },
@@ -868,66 +938,69 @@ void Main()
 
 	while (System::Update())
 	{
-		// 太さ 8px で描く
-		ls1.draw(8, Palette::Skyblue);
+		ls1.draw(6);
 
-		// 太さ 4px で描く（終点と始点も結ぶ）
-		ls2.drawClosed(4, Palette::Orange);
+		ls2.drawClosed(8, ColorF{ 0.2 });
 	}
 }
 ```
 
-`Array<Vec2>` から `LineString` を作成することもできます。
+- `LineString` は実質的には `Array<Vec2>` です
+- `Array` のような操作が可能です
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/17-2.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	const Array<Vec2> points
-	{
-		Vec2{ 100, 60 }, Vec2{ 400, 140 },
-		Vec2{ 100, 220 }, Vec2{ 400, 300 },
-		Vec2{ 100, 380 }, Vec2{ 400, 460 },
-		Vec2{ 100, 540 }
-	};
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-	const LineString ls{ points };
+	LineString points;
 
 	while (System::Update())
 	{
-		// 太さ 8px で描く
-		ls.draw(8, Palette::Skyblue);
-	}
-}
-```
-
-`LineString` は `Array<Vec2>` のようなメンバ関数を持つため、点の配列として操作することもできます。
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	LineString ls;
-
-	while (System::Update())
-	{
-		if (MouseL.down()) // クリックしたら
+		// 左クリックされたら
+		if (MouseL.down())
 		{
-			ls << Cursor::Pos(); // 点を追加
+			// 点を追加する
+			points << Cursor::Pos();
 		}
 
-		ls.draw(8, Palette::Skyblue);
+		// 連続する線分を描く
+		points.draw(8, ColorF{ 0.2 });
+
+		// 各点について
+		for (const auto& point : points)
+		{
+			// 円を描く
+			point.asCircle(10).draw();
+		}
 	}
 }
 ```
 
 
-## 26.18 Catmull-Rom スプライン曲線を描く
-指定した通過点を必ず通る Catmull-Rom スプライン曲線を描くには、 `Spline2D` を作成して `.draw()` します。`Spline2D` は `Vec2` の配列または `LineString` から作成できます。コンストラクタの第 2 引数に `Close::Ring` を指定することで、終点と始点がつながっているスプライン曲線を作成できます。
+## 26.18 スプライン曲線
+- Catmull-Rom スプライン曲線は `Spline2D` で表現します
+- Catmull-Rom スプライン曲線は、指定した通過点を必ず通ります
+- `Spline2D` は次のように作成できます
+	- `CloseRing::Yes` を指定すると、終点と始点をつなげた輪になります
 
-サンプルプログラムでは示していませんが、`.draw()` には曲線計算時の品質（分割数）を指定する引数も用意されていて、デフォルトでは `24` になっています。
+| コード | 説明 |
+|---|---|
+| `Spline2D{ Array<Vec2>{ ... } }` | Catmull-Rom スプライン曲線を作成します |
+| `Spline2D{ LineString{ ... } }` | Catmull-Rom スプライン曲線を作成します |
+| `Spline2D{ Array<Vec2>{ ... }, CloseRing::Yes }` | Catmull-Rom スプライン曲線（輪）を作成します |
+
+- スプライン曲線を描くには、`Spline2D` の `.draw()` を使います
+
+| コード | 説明 |
+|---|---|
+| `.draw(色, 品質 = 24)` | スプライン曲線を描きます |
+| `.draw(太さ, 色, 品質 = 24)` | スプライン曲線を描きます |
+| `.draw(LineStyle::RoundCap, 太さ, 色, 品質 = 24)` | 両端が丸い、スプライン曲線を描きます |
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/18.png)
 
@@ -936,37 +1009,50 @@ void Main()
 
 void Main()
 {
-	const Spline2D splineA
-	{ {
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const LineString ls
+	{
 		Vec2{ 100, 60 }, Vec2{ 400, 140 },
 		Vec2{ 100, 220 }, Vec2{ 400, 300 },
 		Vec2{ 100, 380 }, Vec2{ 400, 460 },
 		Vec2{ 100, 540 }
-	} };
+	};
 
-	// CloseRing::Yes -> 終点から始点も結ぶ
-	const Spline2D splineB
-	{ {
-		Vec2{ 500, 100 }, Vec2{ 700, 200 },
-		Vec2{ 600, 500 },
-	}, CloseRing::Yes };
+	const Spline2D spline1{ ls };
+
+	const Spline2D spline2
+	{
+		{ Vec2{ 500, 100 }, Vec2{ 700, 200 }, Vec2{ 600, 500 } },
+		CloseRing::Yes
+	};
 
 	while (System::Update())
 	{
-		// 太さ 8px で描く
-		splineA.draw(8, Palette::Skyblue);
+		spline1.draw(6);
 
-		// 太さ 4px で描く
-		splineB.draw(4, Palette::Orange);
+		spline2.draw(8, ColorF{ 0.2 });
 	}
 }
 ```
 
 
-## 26.19 ベジェ曲線を描く
-2 次ベジェ曲線を描きたいときは `Bezier2`, 3 次ベジェ曲線を描きたいときは `Bezier3` を作成して `.draw()` します。
+## 26.19 ベジェ曲線
+- 2 次ベジェ曲線は `Bezier2` で、3 次ベジェ曲線は `Bezier3` で表現します
+- ベジェ曲線は次のように作成できます
 
-サンプルプログラムでは示していませんが、`.draw()` には曲線計算時の品質（分割数）を指定する引数も用意されていて、デフォルトでは `24` になっています。
+| コード | 説明 |
+|---|---|
+| `Bezier2{ 始点, 制御点, 終点 }` | 2 次ベジェ曲線を作成します |
+| `Bezier3{ 始点, 制御点1, 制御点2, 終点 }` | 3 次ベジェ曲線を作成します |
+
+- ベジェ曲線を描くには、`Bezier2` または `Bezier3` の `.draw()` を使います
+
+| コード | 説明 |
+|---|---|
+| `.draw(色, 品質 = 24)` | ベジェ曲線を描きます |
+| `.draw(太さ, 色, 品質 = 24)` | ベジェ曲線を描きます |
+| `.draw(LineStyle::RoundCap, 太さ, 色, 品質 = 24)` | 両端が丸い、ベジェ曲線を描きます |
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/19.png)
 
@@ -975,22 +1061,30 @@ void Main()
 
 void Main()
 {
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
 	while (System::Update())
 	{
 		// 2 次ベジェ曲線
-		Bezier2{ Vec2{ 100, 400 }, Vec2{ 100, 250 }, Vec2{ 300, 100 } }
-			.draw(4, Palette::Skyblue);
+		Bezier2{ Vec2{ 100, 400 }, Vec2{ 100, 250 }, Vec2{ 300, 100 } }.draw(6);
 
 		// 3 次ベジェ曲線
-		Bezier3{ Vec2{ 300, 400 }, Vec2{ 400, 400 }, Vec2{ 400, 100 }, Vec2{ 500, 100 }}
-			.draw(4, Palette::Orange);
+		Bezier3{ Vec2{ 300, 400 }, Vec2{ 400, 400 }, Vec2{ 400, 100 }, Vec2{ 500, 100 }}.draw(8, ColorF{ 0.2 });
 	}
 }
 ```
 
 
-## 26.20 矢印を描く
-`Line` には単方向の矢印を描く `.drawArrow()` と、両方向の矢印を描く `.drawDoubleHeadedArrow()` メンバ関数があります。いずれも第 1 引数には線の幅、第 2 引数には三角形の幅と高さを指定します。単方向矢印は、`Line` の始点から終点方向を向きます。
+## 26.20 図形の影
+- `Circle`, `Rect`, `RectF`, `RoundRect` は、影を描画する `.drawShadow()` メンバ関数を持っています
+	- 第 1 引数で影の位置のオフセット、第 2 引数でぼかしの大きさ、第 3 引数で影の大きさのオフセット、第 4 引数で影の色を指定できます
+	- 影は図形で隠れて見えない部分も塗りつぶすため、影を描いたあとに図形を上から重ね書きする必要があります
+
+| コード | 説明 |
+|---|---|
+| `.drawShadow(影の位置のオフセット, ぼかしの大きさ, 影の大きさのオフセット, 影の色)` | 図形（`Circle`, `Rect`, `RectF`, `RoundRect`）に影を描きます |
+
+- `.drawShadow()` の戻り値が図形自身の参照であるため、つづけて `.draw()` を呼び出すことができます
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/20.png)
 
@@ -999,35 +1093,7 @@ void Main()
 
 void Main()
 {
-	while (System::Update())
-	{
-		// 線の幅 3px, 三角の幅 20px, 高さ 20px の単方向矢印を描く
-		Line{ 50, 200, 200, 250 }
-			.drawArrow(3, SizeF{ 20, 20 }, Palette::Skyblue);
-
-		// 線の幅 10px, 三角の幅 40px, 高さ 80px の単方向矢印を描く
-		Line{ 350, 450, 450, 100 }
-			.drawArrow(10, SizeF{ 40, 80 }, Palette::Orange);
-
-		// 線の幅 8px, 三角の幅 30px, 高さ 30px の両方向矢印を描く
-		Line{ 600, 100, 700, 400 }
-			.drawDoubleHeadedArrow(8, SizeF{ 30, 30 }, Palette::Limegreen);
-	}
-}
-```
-
-
-## 26.21 影を描く
-`Circle`, `Rect`, `RectF`, `RoundRect` は、影を描画する `.drawShadow()` メンバ関数を持っています。第 1 引数で影の位置のオフセット、第 2 引数でぼかしの大きさ、第 3 引数で影の大きさのオフセット、第 4 引数で影の色を指定できます。影は図形で隠れて見えない部分も塗りつぶされるため、影を描いたあとに図形を上から重ね書きする必要があります。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/21.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
 	while (System::Update())
 	{
@@ -1044,12 +1110,12 @@ void Main()
 			.draw();
 
 		Circle{ 100, 400, 50 }
-			.drawShadow(Vec2{ 0, 3 }, 8, 1)
-			.draw();
+			.drawShadow(Vec2{ 0, 4 }, 10, 3)
+			.draw(ColorF{ 0.6, 0.8, 0.7 });
 
 		Circle{ 300, 400, 50 }
-			.drawShadow(Vec2{ 3, 0 }, 8, 1)
-			.draw();
+			.drawShadow(Vec2{ 0, -4 }, 10, 3)
+			.draw(ColorF{ 0.5, 0.7, 0.6 });
 
 		RoundRect{ 450, 350, 100, 100, 20 }
 			.drawShadow(Vec2{ 2, 2 }, 8, 0)
@@ -1058,108 +1124,6 @@ void Main()
 		RoundRect{ 650, 350, 100, 100, 20 }
 			.drawShadow(Vec2{ 2, 2 }, 12, 0)
 			.draw();
-	}
-}
-```
-
-
-## 26.22 図形の操作
-多くの図形クラスが `.movedBy()` メンバ関数を持ち、自身の座標を指定したベクトルで平行移動した図形を作成して返します。また、`Rect` や `Circle`, `Line` など一部の図形クラスは `.stretched()` メンバ関数を持ち、自身の幅や高さを変更した図形を作成して返します。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/22a.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	const Circle circle{ 100, 100, 60 };
-
-	const Rect rect{ 400, 300, 200 };
-
-	while (System::Update())
-	{
-		circle.draw();
-
-		// (200, 0) の方向に平行移動した円を描画する
-		circle.movedBy(200, 0).draw(Palette::Skyblue);
-
-		// (0, 200) の方向に平行移動した円を描画する
-		circle.movedBy(0, 200).draw(Palette::Orange);
-
-
-		rect.drawFrame(2, 2);
-
-		// 上下左右を 10px 縮小した長方形を描画する
-		rect.stretched(-10).drawFrame(2, 2, Palette::Skyblue);
-
-		// 左右を 40px 拡大、上下を 20px 縮小した長方形を描画する
-		rect.stretched(40, -20).drawFrame(2, 2, Palette::Orange);
-	}
-}
-```
-
-`Polygon` は自身を拡大縮小した新しい `Polygon` を返す `.scaled()` や、回転した `Polygon` を返す `.rotated()`, `.rotatedAt()` などのメンバ関数を持ちます。また、`Shape2D` は `Polygon` に変換可能です。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/22b.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	const Polygon star = Shape2D::Star(150, Vec2{ 0, 0 });
-
-	while (System::Update())
-	{
-		star.scaled(1.2).movedBy(200, 200).draw(ColorF{ 0.6 });
-
-		star.movedBy(200, 200).draw(ColorF{ 0.8 });
-
-		star.scaled(0.8).movedBy(200, 200).draw(ColorF{ 1.0 });
-
-
-		star.rotated(-30_deg).movedBy(600, 400).draw(ColorF{ 0.6 });
-
-		star.movedBy(600, 400).draw(ColorF{ 0.8 });
-
-		star.rotated(30_deg).movedBy(600, 400).draw(ColorF{ 1.0 });
-	}
-}
-```
-
-## 26.23 円座標
-座標の指定においては、X 軸 Y 軸を使った座標系ではなく、基準点からの角度と距離に基づいた円座標を使うと便利な場合があります。以下は `Vec2` 型に変換可能な円座標クラスです。
-
-| クラス | 説明 |
-|---|---|
-| `Circular{ r, theta }` | 原点を中心とする半径 `double r` の円を考え、その円周上で 12 時の方向を 0° として時計回りに `double theta` （ラジアン）の位置を表します。`Vec2` に変換できます。 |
-| `OffsetCircular{ offset, r, theta }` | `Vec2 offset` を中心とする半径 `double r` の円を考え、その円周上で 12 時の方向を 0° として時計回りに `double theta` （ラジアン）の位置を表します。`Vec2` に変換できます。 |
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/23a.png)
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/23b.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(Palette::White);
-
-	while (System::Update())
-	{
-		const double t = Scene::Time();
-
-		for (int32 i = 0; i < 12; ++i)
-		{
-			const double theta = (i * 30_deg);
-
-			// (400, 300) を中心とする半径 200 の円周上で、角度 theta の位置にある点の座標を計算する
-			const Vec2 pos = OffsetCircular{ Vec2{ 400, 300 }, 200, theta };
-
-			Circle{ pos, 20 }.draw(HSV{ i * 30 });
-		}
 	}
 }
 ```
