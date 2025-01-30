@@ -13,7 +13,7 @@ Siv3D で時間や動きを扱う方法を学びます。
 - `Scene::Time()` は **プログラムが起動されてからの経過時間（秒）**を `double` 型で返します
 - `System::Update()` を呼び出した際に更新されるため、同一フレーム内での `Scene::Time()` の呼び出しは同じ値を返します
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/motion/2.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/time/2.png)
 
 ```cpp
 
@@ -28,9 +28,9 @@ Siv3D で時間や動きを扱う方法を学びます。
 
 
 ## 30.3 時間に基づくモーション
-- 位置・大きさ・角度などを時間の経過に応じて変化させることで、モーションを表現できます
+- 位置・大きさ・角度などを時間の経過に応じて変化させて、モーションを表現できます
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/motion/3.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/time/3.png)
 
 ```cpp
 
@@ -40,16 +40,16 @@ Siv3D で時間や動きを扱う方法を学びます。
 ## 30.4 一定時間おきに何かをする
 - イベントの周期を決めておき、蓄積時間（秒）がその周期（秒）を超えたらイベントを発生させます
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/motion/4-1.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/time/4-1.png)
 
 ```cpp
 
 ```
 
-- イベント周期が短い（1 フレームの時間よりも短い）場合、1 フレーム内で複数回イベントを発生させる必要が生じます
+- イベント周期が短い（1 フレームの時間よりも短い）場合、1 フレーム内で複数回イベントを発生させる必要があります
 - そのような状況に対処するには、`if` の代わりに `while (eventPeriod <= accumulatedTime)` を使います
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/motion/4-2.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/time/4-2.png)
 
 ```cpp
 
@@ -59,7 +59,7 @@ Siv3D で時間や動きを扱う方法を学びます。
 ## 30.5 ストップウォッチ
 - `Stopwatch` は、経過時間の計測やリセットを便利に行えるクラスです
 - `Stopwatch` のコンストラクタ引数で `StartImmediately::Yes` を指定すると、作成と同時に計測を開始します
-- `Stopwatch` は次のようなメンバ関数を持ちます
+- `Stopwatch` の主要なメンバ関数は次のとおりです
 
 | コード | 説明 |
 |---|---|
@@ -71,16 +71,23 @@ Siv3D で時間や動きを扱う方法を学びます。
 | `.isRunning()` | 計測中かどうかを `bool` 型で返す |
 | `.isPaused()` | 一時停止中かどうかを `bool` 型で返す |
 | `.isStarted()` | 計測が開始されているかどうかを `bool` 型で返す |
-| `.min()` | その時点での経過時間（分）を `int32` 型で返す |
-| `.s()` | その時点での経過時間（秒）を `int32` 型で返す |
-| `.sF()` | その時点での経過時間（秒）を `double` 型で返す |
-| `.ms()` | その時点での経過時間（ミリ秒）を `int32` 型で返す |
-| `.msF()` | その時点での経過時間（ミリ秒）を `double` 型で返す |
+| `.min()` | 経過時間（分）を `int32` 型で返す |
+| `.s()` | 経過時間（秒）を `int32` 型で返す |
+| `.s64()` | 経過時間（秒）を `int64` 型で返す |
+| `.sF()` | 経過時間（秒）を `double` 型で返す |
+| `.ms()` | 経過時間（ミリ秒）を `int32` 型で返す |
+| `.ms64()` | 経過時間（ミリ秒）を `int64` 型で返す |
+| `.msF()` | 経過時間（ミリ秒）を `double` 型で返す |
+| `.us()` | 経過時間（マイクロ秒）を `int32` 型で返す |
+| `.us64()` | 経過時間（マイクロ秒）を `int64` 型で返す |
+| `.usF()` | 経過時間（マイクロ秒）を `double` 型で返す |
 
-- `Stopwatch` の経過時間は `Scene::GetMaxDeltaTime()` の影響を受けず、常に現実の時間で計測されます
-- 同一フレーム内で経過時間取得関数を複数回呼び出すと、時間の経過によって毎回異なる値が返ってきます
+- 経過時間は `Scene::GetMaxDeltaTime()` の影響を受けず、常に現実の時間で計測されます
+- 経過時間を単位ごとに取得する必要はありません
+	- 経過時間が 65.4 秒の時、`s()` は `65` を、`sF()` は `65.4` を、`ms()` は `65400` を返します
+- 同一フレーム内で複数回呼び出すと、タイミングによって経過時間は変わります
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/motion/5.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/time/5.png)
 
 ```cpp
 
@@ -88,68 +95,79 @@ Siv3D で時間や動きを扱う方法を学びます。
 
 
 ## 30.6 時間型
-- XXX
+- 時間を表現する次のような型が用意されています
+	- `F` の付く型は浮動小数点数で値を保持します
+	- `Duration` は `SecondsF` のエイリアスです
+
+| 型 | 表現する時間 |
+|--|--|
+| `Days` または `DaysF` | 日 |
+| `Hours` または `HoursF` | 時 |
+| `Minutes` または `MinutesF` | 分 |
+| `Seconds` または `SecondsF` | 秒 |
+| `Milliseconds` または `MillisecondsF` | ミリ秒 |
+| `Microseconds` または `MicrosecondsF` | マイクロ秒 |
+| `Nanoseconds` または `NanosecondsF` | ナノ秒 |
+| `Duration` | `SecondsF` の別名 |
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/motion/6.png)
+- 整数や浮動小数点数リテラルに、次のような時間リテラルのサフィックスを付けて時間型を簡単に作成できます
+	- 例えば `10s` は `Seconds{ 10 }`, 0.5s は `SecondsF{ 0.5 }` と同じです
+
+| サフィックス | 時間 |
+|--|--|
+|`_d` | 日 |
+| `h` | 時 |
+| `min` | 分 |
+| `s` | 秒 |
+| `ms` | ミリ秒 |
+| `us` | マイクロ秒 |
+| `ns` | ナノ秒 |
+
+- 時間型は、算術演算や比較演算が可能です
+- 時間型は相互に変換可能です
+- 浮動小数点数で表現する時間型 → 整数で表現する時間型の変換には `DurationCast<Type>()` が必要です
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/time/6.png)
 
 ```cpp
 
 ```
+
 
 ## 30.7 タイマー
-- XXX
+- `Timer` は指定した時間からのカウントダウンで残り時間を計測するクラスです
+- `Timer` のコンストラクタ引数で `StartImmediately::Yes` を指定すると、作成と同時に計測を開始します
+- `Timer` の主要なメンバ関数は次のとおりです
+
+| コード | 説明 |
+|---|---|
+| `.start()` | タイマーを開始・再開する |
+| `.pause()` | タイマーを一時停止する |
+| `.resume()` | 一時停止中のタイマーを再開する |
+| `.reset()` | タイマーを停止して残り時間をリセットする |
+| `.restart()` | タイマーをリセットして再び開始する |
+| `.isRunning()` | 計測中かどうかを `bool` 型で返す |
+| `.isPaused()` | 一時停止中かどうかを `bool` 型で返す |
+| `.isStarted()` | 計測が開始されているかどうかを `bool` 型で返す |
+| `.reachedZero()` | 残り時間が 0 に達したかどうかを `bool` 型で返す |
+| `.min()` | 残り時間（分）を `int32` 型で返す |
+| `.s()` | 残り時間（秒）を `int32` 型で返す |
+| `.s64()` | 残り時間（秒）を `int64` 型で返す |
+| `.sF()` | 残り時間（秒）を `double` 型で返す |
+| `.ms()` | 残り時間（ミリ秒）を `int32` 型で返す |
+| `.ms64()` | 残り時間（ミリ秒）を `int64` 型で返す |
+| `.msF()` | 残り時間（ミリ秒）を `double` 型で返す |
+| `.us()` | 残り時間（マイクロ秒）を `int32` 型で返す |
+| `.us64()` | 残り時間（マイクロ秒）を `int64` 型で返す |
+| `.usF()` | 残り時間（マイクロ秒）を `double` 型で返す |
+| `.progress1_0()` | タイマーの進み具合（1.0 で始まり 0.0 で終わる）を `double` 型で返す |
+| `.progress0_1()` | タイマーの進み具合（0.0 で始まり 1.0 で終わる）を `double` 型で返す |
+
+- 残り時間は `Scene::GetMaxDeltaTime()` の影響を受けず、常に現実の時間で計測されます
+- 残り時間を単位ごとに取得する必要はありません
+	- 残り時間が 65.4 秒の時、`s()` は `65` を、`sF()` は `65.4` を、`ms()` は `65400` を返します
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/motion/7.png)
-
-```cpp
-
-```
-
-
-## 30.8 周期的なモーション
-- XXX
-	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/motion/8.png)
-
-```cpp
-
-```
-
-
-## 30.9 トランジション
-- XXX
-	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/motion/9.png)
-
-```cpp
-
-```
-
-
-## 30.10 線形補間
-- XXX
-	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/motion/10.png)
-
-```cpp
-
-```
-
-
-## 30.11 イージング
-- XXX
-	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/motion/11.png)
-
-```cpp
-
-```
-
-
-## 30.12 SmoothDamp 
-- XXX
-	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/motion/12.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/time/8.png)
 
 ```cpp
 
@@ -157,94 +175,33 @@ Siv3D で時間や動きを扱う方法を学びます。
 
 
 
-## 18.4 ストップウォッチ
-`Stopwatch` は、経過時間の計測やリセットを便利に行えるクラスです。`Stopwatch` のコンストラクタ引数で `StartImmediately::Yes` を指定すると、作成と同時に計測を開始します。`Stopwatch::sF()` はその時点での経過時間（秒）を `double` 型で返します。`Stopwatch::restart()` すると、経過時間をリセットして再び 0 から計測を開始（リスタート）します。
+## 30.8 時間の比較
+- `Stopwatch` や `Timer` オブジェクトと時間型の値を比較することができます
+- `if (3 <= stopwatch.s())` の代わりに `if (3s <= stopwatch)` で、ストップウォッチが 3 秒以上経過したかどうかを判定できます
+- `if (timer.sF() < 10.0)` の代わりに `if (timer < 10s)` で、タイマーが残り 10 秒未満であるかどうかを判定できます
 
-`Stopwatch` の経過時間は `Scene::GetMaxDeltaTime()` の影響を受けず、常に実時間で計測されます。同一フレーム内で `Stopwatch::sF()` を複数呼び出すと、時間の経過によって毎回異なる値が返ってきます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/motion/4.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/time/8.png)
 
 ```cpp
-# include <Siv3D.hpp>
 
-void Main()
-{
-	Scene::SetBackground(Palette::White);
-
-	// ストップウォッチ（作成と同時に計測を開始する）
-	Stopwatch stopwatch{ StartImmediately::Yes };
-
-	while (System::Update())
-	{
-		// もし左クリックされたら
-		if (MouseL.down())
-		{
-			// ストップウォッチをリセットして再び 0 から始める
-			stopwatch.restart();
-		}
-
-		// ストップウォッチの経過時間（秒）を double 型で取得する
-		const double t = stopwatch.sF();
-
-		Circle{ Scene::Center(), (t * 50) }.draw(ColorF{ 0.25 });
-	}
-}
 ```
 
 
-## 18.5 ストップウォッチの一時停止と再開
-ストップウォッチが計測中であるかどうかは `if (Stopwatch::isRunning())` で調べられます。ストップウォッチの計測を一時停止するには `Stopwatch::pause()`, 一時停止を解除して計測を再開するには `Stopwatch::resume()` します。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/motion/5.png)
+## 30.9 周期的なモーション
+- 周期的に 0 → 1 または -1 → 1 の間で変化する値が必要な場合、`Periodic::` 名前空間に用意されている周期関数を使うと便利です
+- これらの関数は、時間経過に応じて特定の周期とパターンで 0～1, あるいは -1～1 の範囲の値を返します
+- 周期は `2s` (2 秒) や `0.5s` (0.5 秒) のように時間リテラルを使って指定します
 
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(Palette::White);
-
-	// ストップウォッチ（作成と同時に計測を開始する）
-	Stopwatch stopwatch{ StartImmediately::Yes };
-
-	while (System::Update())
-	{
-		// もし左クリックされたら
-		if (MouseL.down())
-		{
-			// ストップウォッチが計測中なら
-			if (stopwatch.isRunning())
-			{
-				// ストップウォッチを一時停止する
-				stopwatch.pause();
-			}
-			else // ストップウォッチが一時停止中なら
-			{
-				// ストップウォッチを再開する
-				stopwatch.resume();
-			}
-		}
-
-		// ストップウォッチの経過時間（秒）を double 型で取得する
-		const double t = stopwatch.sF();
-
-		Circle{ Scene::Center(), (t * 50) }.draw(ColorF{ 0.25 });
-	}
-}
-```
-
-
-## 18.6 周期的なモーション
-周期的に移動・点滅・拡大縮小するようなモーションを作るときには、`Periodic::` 名前空間に用意されている周期関数を使うと便利です。これらの関数は、指定した周期で 0～1, あるいは -1～1 の範囲の値を返します。周期は `2s` (2 秒) や `0.5s` (0.5 秒) のように時間リテラル `s` を使って指定します。経過時間は第 2 引数で指定でき、デフォルトでは `Scene::Time()` が使われます。
 
 === "0～1 の周期関数"
 	| 周期関数 | 動き |
 	|--|--|
-	|`Periodic::Square0_1`|<div class="noshadow-100"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/motion/sq01.png"></div>|
-	|`Periodic::Triangle0_1`|<div class="noshadow-100"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/motion/tri01.png"></div>|
-	|`Periodic::Sine0_1`|<div class="noshadow-100"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/motion/sin01.png"></div>|
-	|`Periodic::Sawtooth0_1`|<div class="noshadow-100"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/motion/saw01.png"></div>|
-	|`Periodic::Jump0_1`|<div class="noshadow-100"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/motion/jum01.png"></div>|
+	|`Periodic::Square0_1`|<div class="noshadow-100"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/time/sq01.png"></div>|
+	|`Periodic::Triangle0_1`|<div class="noshadow-100"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/time/tri01.png"></div>|
+	|`Periodic::Sine0_1`|<div class="noshadow-100"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/time/sin01.png"></div>|
+	|`Periodic::Sawtooth0_1`|<div class="noshadow-100"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/time/saw01.png"></div>|
+	|`Periodic::Jump0_1`|<div class="noshadow-100"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/time/jum01.png"></div>|
 
 	#### Periodic::Square0_1()
 	指定した周期で 0.0 か 1.0 を交互に返す関数です。周期の前半では 1.0 を、残りの半分では 0.0 を返します。
@@ -263,7 +220,7 @@ void Main()
 
 	#### サンプルコード
 
-	![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/motion/6.png)
+	![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/time/9-1.png)
 
 	```cpp
 	# include <Siv3D.hpp>
@@ -295,11 +252,11 @@ void Main()
 === "-1～1 の周期関数"
 	| 周期関数 | 動き |
 	|--|--|
-	|`Periodic::Square1_1`|<div class="noshadow-100"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/motion/sq11.png"></div>|
-	|`Periodic::Triangle1_1`|<div class="noshadow-100"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/motion/tri11.png"></div>|
-	|`Periodic::Sine1_1`|<div class="noshadow-100"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/motion/sin11.png"></div>|
-	|`Periodic::Sawtooth1_1`|<div class="noshadow-100"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/motion/saw11.png"></div>|
-	|`Periodic::Jump1_1`|<div class="noshadow-100"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/motion/jum11.png"></div>|
+	|`Periodic::Square1_1`|<div class="noshadow-100"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/time/sq11.png"></div>|
+	|`Periodic::Triangle1_1`|<div class="noshadow-100"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/time/tri11.png"></div>|
+	|`Periodic::Sine1_1`|<div class="noshadow-100"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/time/sin11.png"></div>|
+	|`Periodic::Sawtooth1_1`|<div class="noshadow-100"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/time/saw11.png"></div>|
+	|`Periodic::Jump1_1`|<div class="noshadow-100"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/time/jum11.png"></div>|
 
 	#### Periodic::Square1_1()
 	指定した周期で -1.0 か 1.0 を交互に返す関数です。周期の前半では 1.0 を、残りの半分では -1.0 を返します。
@@ -318,7 +275,7 @@ void Main()
 
 	#### サンプルコード
 
-	![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/motion/6.png)
+	![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/time/9-2.png)
 
 	```cpp
 	# include <Siv3D.hpp>
@@ -348,6 +305,63 @@ void Main()
 	```
 
 
+## 30.10 トランジション
+- 「条件を満たしている間、値を少しずつ 1.0 に近づける。条件を満たしていなければ徐々に 0.0 に戻す」という処理を行う場合、`Transition` クラスを使うと便利です
+- `Transition` のコンストラクタには、0.0 から 1.0 に達するまでの最短所要時間と、最大値から最小値に減少するまでの最短所要時間を設定します
+- 毎フレーム `.update(state)` に、増加の場合は `true` を、減少の場合は `false` を渡せば、設定された速度で値が増加・減少します
+- `.value()` で現在値を取得できます
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/time/10.png)
+
+```cpp
+
+```
+
+
+## 30.11 線形補間
+- ある状態 A と B があり、その間を補間係数 `t` で補間したい場合、`A.lerp(B, t)` を使います
+- 補間係数は　`t` は、通常 0.0 ～ 1.0 の範囲です
+- 次のようなクラスがメンバ関数 `.lerp()` を持っています
+
+- 色
+	- `ColorF`, `HSV`
+- ベクトル
+	- `Point`, `Vec2`, `Vec3`, `Vec4`
+- 図形
+	- `Line`, `Circle`, `Rect`, `RectF`, `Triangle`, `Quad`, `Ellipse`, `RoundRect`
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/time/11.png)
+
+```cpp
+
+```
+
+
+## 30.12 イージング
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/time/12.png)
+
+```cpp
+
+```
+
+
+## 30.13 SmoothDamp 
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/time/13.png)
+
+```cpp
+
+```
+
+
+
+
+
+
+
 ## 18.7 トランジション
 値を少しずつ増加させて最大値に到達させる。そこから徐々に減少させて最小値に戻す、という挙動をプログラムするときには `Transition` クラスを使うと便利です。
 
@@ -355,7 +369,7 @@ void Main()
 
 次のサンプルでは、マウスの左ボタンが押されていると円が大きくなり、離されていると小さくなります。最大は 200 ピクセル、最小は 0 ピクセルとしています。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/motion/7.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/time/7.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -415,18 +429,6 @@ void Main()
 
 
 ## 18.8 線形補間
-ある状態 A と B があり、その間を `t` という値で補間したいときには `A.lerp(B, t)` を使います。`t` は 0.0 ～ 1.0 の値です。
-
-次のようなクラスがメンバ関数 `.lerp()` を持っています。
-
-- 色
-	- `ColorF`, `HSV`
-- ベクトル
-	- `Point`, `Vec2`, `Vec3`, `Vec4`
-- 図形
-	- `Line`, `Circle`, `Rect`, `RectF`, `Triangle`, `Quad`, `Ellipse`, `RoundRect`
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/motion/8.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -460,7 +462,7 @@ void Main()
 
 次のサンプルに登場する`Min()` は、渡された引数のうち最小値を返す関数です。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/motion/9.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/time/9.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -536,7 +538,7 @@ Vec2 Math::SmoothDamp(const Vec2& from, const Vec2& to, Vec2& velocity, double s
 - `deltaTime`: 前回からの経過時間（デフォルトは `Scene::DeltaTime()`）
 - 戻り値: 次の位置
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/motion/10.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/time/10.png)
 
 ```cpp
 # include <Siv3D.hpp>
