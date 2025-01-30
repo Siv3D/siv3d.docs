@@ -149,7 +149,7 @@ void Main()
 
 	const Polygon polygon = Shape2D::Star(200, Vec2{ 600, 300 });
 
-	double angle = 0.0_deg;
+	double angle = 0_deg;
 
 	while (System::Update())
 	{
@@ -283,7 +283,7 @@ void Main()
 {
 	Scene::SetBackground(ColorF{ 1.0, 0.98, 0.96 });
 
-	double angle = 0.0_deg;
+	double angle = 0_deg;
 
 	while (System::Update())
 	{

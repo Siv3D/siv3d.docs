@@ -617,7 +617,7 @@ void Main()
 
 	const Rect rect{ 150, 200, 400, 100 };
 
-	double angle = 0.0_deg;
+	double angle = 0_deg;
 
 	while (System::Update())
 	{

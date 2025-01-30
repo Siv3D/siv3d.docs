@@ -410,7 +410,7 @@ Siv3D のデフォルトのウィンドウサイズは 800 x 600 ですが、特
 
 				m_numbers << number;
 
-				angle += (360.0_deg / damages.size());
+				angle += (360_deg / damages.size());
 			}
 		}
 

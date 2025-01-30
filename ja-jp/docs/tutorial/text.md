@@ -200,15 +200,15 @@ void Main()
 - 基準位置は全部で 9 種類あります
 
 | 基準位置 | 説明 |
-| --- | --- |
-| `Arg::topLeft` | 左上。`.draw()` と同じ。 |
-| `Arg::topCenter` | 上中央 |
-| `Arg::topRight` | 右上 |
-| `Arg::leftCenter` | 左中央 |
-| `Arg::center` | 中央。`.drawAt()` と同じ。 |
-| `Arg::rightCenter` | 右中央 |
+|---|---|
+| `Arg::topLeft` | 左上。`.draw()` と同じ |
+| `Arg::topCenter` | 上辺の中央 |
+| `Arg::topRight` | 右上|
+| `Arg::leftCenter` | 左辺の中央 |
+| `Arg::center` | 中心。`.drawAt()` と同じ |
+| `Arg::rightCenter` | 右辺の中央 |
 | `Arg::bottomLeft` | 左下 |
-| `Arg::bottomCenter` | 下中央 |
+| `Arg::bottomCenter` | 下辺の中央 |
 | `Arg::bottomRight` | 右下 |
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/text/7.png)
