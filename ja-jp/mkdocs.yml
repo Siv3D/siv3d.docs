@@ -121,12 +121,12 @@ nav:
     - 36. 数値と文字列の変換: tutorial2/format.md
     - 37. 二次元配列: tutorial2/grid.md
     - 38. GUI: tutorial2/gui.md
-    - 39. インタラクションの実装: tutorial2/interaction.md
-    - 40. オーディオ再生: tutorial2/audio.md
+    - 39. 時間の計測: tutorial2/stopwatch.md
+    - 40. インタラクションの実装: tutorial2/interaction.md
   - 入門チュートリアル 3:
-    - 41. キーボード入力: tutorial3/keyboard.md
-    - 42. マウス入力: tutorial3/mouse.md
-    - 43. ストップウォッチとタイマー: tutorial3/stopwatch.md
+    - 41. オーディオ再生: tutorial3/audio.md
+    - 42. キーボード入力: tutorial3/keyboard.md
+    - 43. マウス入力: tutorial3/mouse.md
     - 44. 図形の交差判定: tutorial3/geometry2d.md
     - 45. ハッシュテーブル: tutorial3/empty.md
     - 46. 2D レンダーステート: tutorial3/empty.md
