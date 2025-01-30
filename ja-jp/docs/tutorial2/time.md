@@ -167,7 +167,7 @@ Siv3D で時間や動きを扱う方法を学びます。
 - 残り時間を単位ごとに取得する必要はありません
 	- 残り時間が 65.4 秒の時、`s()` は `65` を、`sF()` は `65.4` を、`ms()` は `65400` を返します
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/time/8.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/time/7.png)
 
 ```cpp
 
@@ -386,6 +386,62 @@ Vec2 Math::SmoothDamp(const Vec2& from, const Vec2& to, Vec2& velocity, double s
 ```
 
 
+## 30.14 アプリケーションの起動時間の取得
+- アプリケーションの起動からの経過時間を現実の時間で取得するには、次のような関数を使います
+	- 戻り値は `uint64` 型です
+
+| コード | 説明 |
+|:---|:---|
+| `Time::GetSec()` | アプリケーションの起動からの経過時間（秒）を返す |
+| `Time::GetMillisec()` | アプリケーションの起動からの経過時間（ミリ秒）を返す |
+| `Time::GetMicrosec()` | アプリケーションの起動からの経過時間（マイクロ秒）を返す |
+| `Time::GetNanosec()` | アプリケーションの起動からの経過時間（ナノ秒）を返す |
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/time/14.png)
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	while (System::Update())
+	{
+		ClearPrint();
+		Print << Time::GetSec();
+		Print << Time::GetMillisec();
+		Print << Time::GetMicrosec();
+		Print << Time::GetNanosec();
+	}
+}
+```
+
+
+## 30.15 UNIX 時間の取得
+- 1970 年 1 月 1 日午前 0 時 0 分 0 秒（UNIX エポック）からの経過時間（UNIX 時間）を取得するには、次の関数を使います
+	- 戻り値は `uint64` 型です
+
+| コード | 説明 |
+|:---|:---|
+| `Time::GetSecSinceEpoch()` | 現在の UNIX 時間（秒）を返す |
+| `Time::GetMillisecSinceEpoch()` | 現在の UNIX 時間（ミリ秒）を返す |
+| `Time::GetMicrosecSinceEpoch()` | 現在の UNIX 時間（マイクロ秒）を返す |
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/time/15.png)
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	while (System::Update())
+	{
+		ClearPrint();
+		Print << Time::GetSecSinceEpoch();
+		Print << Time::GetMillisecSinceEpoch();
+		Print << Time::GetMicrosecSinceEpoch();
+	}
+}
+```
 
 
 
