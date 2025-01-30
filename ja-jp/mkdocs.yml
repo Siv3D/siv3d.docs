@@ -112,7 +112,7 @@ nav:
     - 27. 図形の操作: tutorial2/shape-2.md
     - 28. ボタンを作る: tutorial2/button.md
     - 29. クッキークリッカー: tutorial2/cookie-clicker.md
-    - 30. 動きをつくる: tutorial2/motion.md
+    - 30. 時間と動き: tutorial2/time.md
     - 31. テクスチャを描く: tutorial2/texture.md
     - 32. 動画を描く: tutorial2/video.md
     - 33. 文字を描く: tutorial2/font.md
@@ -121,7 +121,7 @@ nav:
     - 36. 数値と文字列の変換: tutorial2/format.md
     - 37. 二次元配列: tutorial2/grid.md
     - 38. GUI: tutorial2/gui.md
-    - 39. 時間の計測: tutorial2/stopwatch.md
+    - 39. ランダム: tutorial2/random.md
     - 40. インタラクションの実装: tutorial2/interaction.md
   - 入門チュートリアル 3:
     - 41. オーディオ再生: tutorial3/audio.md

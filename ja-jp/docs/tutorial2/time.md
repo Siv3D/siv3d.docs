@@ -1,5 +1,5 @@
-# 30. 動きを作る
-動きの表現に役立つ Siv3D の機能を学びます。
+# 30. 時間と動き
+Siv3D で時間や動きを扱う方法を学びます。
 
 ## 30.1 経過時間の計測
 - `Scene::DeltaTime()` は、**前フレームからの経過時間（秒）**を `double` 型で返します
@@ -57,7 +57,28 @@
 
 
 ## 30.5 ストップウォッチ
-- XXX
+- `Stopwatch` は、経過時間の計測やリセットを便利に行えるクラスです
+- `Stopwatch` のコンストラクタ引数で `StartImmediately::Yes` を指定すると、作成と同時に計測を開始します
+- `Stopwatch` は次のようなメンバ関数を持ちます
+
+| コード | 説明 |
+|---|---|
+| `.start()` | 計測を開始・再開する |
+| `.pause()` | 計測を一時停止する |
+| `.resume()` | 一時停止中の計測を再開する |
+| `.reset()` | 計測を停止して経過時間を 0 にリセットする |
+| `.restart()` | 計測をリセットして再び 0 から計測を開始する |
+| `.isRunning()` | 計測中かどうかを `bool` 型で返す |
+| `.isPaused()` | 一時停止中かどうかを `bool` 型で返す |
+| `.isStarted()` | 計測が開始されているかどうかを `bool` 型で返す |
+| `.min()` | その時点での経過時間（分）を `int32` 型で返す |
+| `.s()` | その時点での経過時間（秒）を `int32` 型で返す |
+| `.sF()` | その時点での経過時間（秒）を `double` 型で返す |
+| `.ms()` | その時点での経過時間（ミリ秒）を `int32` 型で返す |
+| `.msF()` | その時点での経過時間（ミリ秒）を `double` 型で返す |
+
+- `Stopwatch` の経過時間は `Scene::GetMaxDeltaTime()` の影響を受けず、常に現実の時間で計測されます
+- 同一フレーム内で経過時間取得関数を複数回呼び出すと、時間の経過によって毎回異なる値が返ってきます
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/motion/5.png)
 
@@ -66,7 +87,7 @@
 ```
 
 
-## 30.6 ストップウォッチの操作
+## 30.6 時間型
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/motion/6.png)
@@ -74,7 +95,6 @@
 ```cpp
 
 ```
-
 
 ## 30.7 タイマー
 - XXX
@@ -135,77 +155,6 @@
 
 ```
 
-
-
-
-## 18.3 一定時間ごとにイベントを起こす
-一定の頻度でイベントを発生させる処理を書くときは、次のようにします。1 秒経過するたびに、円が 100px ずつ右に移動します。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/motion/3a.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(Palette::White);
-
-	// 周期（秒）
-	const double eventInterval = 1.0;
-
-	// 蓄積時間（秒）
-	double accumulatedTime = 0.0;
-
-	double x = 0.0;
-
-	while (System::Update())
-	{
-		accumulatedTime += Scene::DeltaTime();
-
-		// 蓄積時間が周期を超えたら
-		if (eventInterval <= accumulatedTime)
-		{
-			x += 100.0;
-
-			accumulatedTime -= eventInterval;
-		}
-
-		Circle{ x, 300, 50 }.draw(ColorF{ 0.25 });
-	}
-}
-```
-
-イベント周期が非常に短い（1 フレームの時間やそれよりも短い）場合、1 フレームで複数回イベントを発生させる必要が生じます。そのような状況に対処するには、`if` の代わりに `while (eventPeriod <= accumulatedTime)` を使います。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/motion/3b.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	// 周期（秒）
-	const double eventInterval = (1.0 / 240.0); // 毎秒 240 回
-
-	// 蓄積時間（秒）
-	double accumulatedTime = 0.0;
-
-	int32 count = 0;
-
-	while (System::Update())
-	{
-		accumulatedTime += Scene::DeltaTime();
-
-		// 蓄積時間が周期を超えたら
-		while (eventInterval <= accumulatedTime)
-		{
-			Print << count++;
-
-			accumulatedTime -= eventInterval;
-		}
-	}
-}
-```
 
 
 ## 18.4 ストップウォッチ
