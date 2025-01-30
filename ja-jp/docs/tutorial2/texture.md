@@ -23,7 +23,7 @@
 	- `TexturedQuad`
 	- `TexturedCircle`
 	- `TexturedRoundRect`
-- これらのクラスは `Texture` のメンバ関数によって作成されますが、通常意識することはなく、`Texture` と同様に描画します
+- これらのクラスは `Texture` のメンバ関数によって作成されますが、ほとんど意識することなく `Texture` と同様に使えます
 
 ```cpp
 // .scaled() は TextureRegion を返す
@@ -34,14 +34,14 @@ texture.scaled(2.0).rotated(30_deg).drawAt(400, 300);
 
 ## 30.2 絵文字から作成
 - Siv3D には Unicode 15.1 に準拠した 3,700 種類以上の絵文字が標準で同梱されています
-- 次のようなコードで、絵文字からテクスチャを作成します
+- `Texture{ U"絵文字"_emoji }` で、絵文字からテクスチャを作成します
 
 ```cpp
 Texture texture{ U"🐈"_emoji };
 ```
 
-- Siv3D で使える絵文字一覧は [Emojipedia: Google Noto Color Emoji :material-open-in-new:](https://emojipedia.org/ja/google){:target="_blank"} で確認できます
-- Siv3D ではどのプラットフォーム（Windows, macOS, Linux, Web）でも同じデザインの絵文字を描画できます
+- 絵文字一覧は [Emojipedia: Google Noto Color Emoji :material-open-in-new:](https://emojipedia.org/ja/google){:target="_blank"} で確認できます
+- どのプラットフォーム（Windows, macOS, Linux, Web）でも同じデザインの絵文字を描画できます
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/2.png)
 
@@ -69,29 +69,79 @@ void Main()
 
 ## 30.3 アイコンから作成
 - Siv3D には 7,000 種類以上のアイコンが標準で同梱されています
-- 次のようなコードで、アイコンからテクスチャを作成します
+- `Texture{ 0xアイコン番号_icon, サイズ }` で、アイコンからテクスチャを作成します
 
 ```cpp
 Texture texture{ 0xF0493_icon, 80 };
 ```
 
-- アイコンは [Material Design Icons :material-open-in-new:](https://pictogrammers.com/library/mdi/){:target="_blank"} または [Font Awesome :material-open-in-new:](https://fontawesome.com/v5/search?o=r&m=free){:target="_blank"} で調べられる 16 進数コードに `_icon` を付けた値を使います
-- Siv3D ではどのプラットフォーム（Windows, macOS, Linux, Web）でも同じデザインのアイコンを描画できます
+- アイコン番号は [Material Design Icons :material-open-in-new:](https://pictogrammers.com/library/mdi/){:target="_blank"} または [Font Awesome :material-open-in-new:](https://fontawesome.com/v5/search?o=r&m=free){:target="_blank"} の 16 進数コードです
+- どのプラットフォーム（Windows, macOS, Linux, Web）でも同じデザインのアイコンを描画できます
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/3.png)
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Texture icon1{ 0xF0493_icon, 80 };
+	const Texture icon2{ 0xF0787_icon, 80 };
+
+	while (System::Update())
+	{
+		icon1.drawAt(200, 200);
+		icon2.drawAt(400, 200, ColorF{ 0.2 });
+	}
+}
 ```
 
 
 ## 30.4 画像ファイルから作成
-- XXX
-	
+- 画像ファイルからテクスチャを作成するには、`Texture{ ファイルパス }` を使います
+- ファイルパスは、実行ファイルがあるフォルダ（開発中は `App` フォルダ）を基準とする相対パスか、絶対パスを使用します
+	- 例えば `U"example/windmill.png"` は、実行ファイルがあるフォルダ（`App` フォルダ）の `example` フォルダにある `windmill.png` というファイルを指します
+- Siv3D は次の 9 種類の画像フォーマットの読み込みをサポートします
+
+| フォーマット   | 拡張子             | 対応状況       |
+|----------|-----------------|:----------:|
+| PNG      | png             | ✅          |
+| JPEG     | jpg / jpeg / jfif   | ✅          |
+| BMP      | bmp             | ✅          |
+| SVG      | svg             | ✅          |
+| GIF      | gif             | ✅          |
+| TGA      | tga             | ✅          |
+| PPM      | ppm / pgm / pbm / pnm | ✅          |
+| WebP     | webp            | ✅          |
+| TIFF     | tif / tiff        | ✅          |
+| DDS      | dds             | (将来のバージョン) |
+| WBMP     | wbmp            | (将来のバージョン) |
+| JPEG XL  | jxl             | (将来のバージョン) |
+
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/4.png)
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	// 風車の画像
+	const Texture texture1{ U"example/windmill.png" };
+
+	// Siv3D くん（Siv3D の公式マスコットキャラクター）の画像
+	const Texture texture2{ U"example/siv3d-kun.png" };
+
+	while (System::Update())
+	{
+		texture1.draw(40, 20);
+
+		texture2.draw(400, 100);
+	}
+}
 ```
 
 
@@ -306,83 +356,6 @@ Texture texture{ 0xF0493_icon, 80 };
 
 
 
-
-## 25.2 アイコンからテクスチャを作成する
-`Texture 変数名{ アイコン番号_icon, サイズ };` で、アイコンをもとにテクスチャを作成できます。アイコンは [Material Design Icons :material-open-in-new:](https://pictogrammers.com/library/mdi/){:target="_blank"} または [Font Awesome :material-open-in-new:](https://fontawesome.com/v5/search?o=r&m=free){:target="_blank"} で調べられる 16 進数コードに `_icon` を付けた値を使います。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/texture/2.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
-
-	const Texture icon1{ 0xF034E_icon, 80 };
-
-	const Texture icon2{ 0xF0493_icon, 120 };
-
-	while (System::Update())
-	{
-		icon1.drawAt(100, 100);
-
-		icon2.drawAt(200, 300);
-
-		icon1.drawAt(400, 300, ColorF{ 0.25 });
-
-		icon2.drawAt(Cursor::Pos(), ColorF{ 0.5, 0.25, 0.0 });
-	}
-}
-```
-
-
-## 25.3 画像ファイルからテクスチャを作成する
-`Texture 変数名{ U"ファイルパス" };` で、画像ファイルからテクスチャを作成できます。ファイルパスは、実行ファイルがあるフォルダ（開発中は `App` フォルダ）を基準とする相対パスか、絶対パスを使用します。
-
-例えば `U"example/windmill.png"` とすると、実行ファイルがあるフォルダ（`App` フォルダ）の `example` フォルダの `windmill.png` というファイルを指します。
-
-Siv3D では、次の 9 種類の画像フォーマットの読み込みをサポートしています。
-
-| フォーマット   | 拡張子             | 対応状況       |
-|----------|-----------------|:----------:|
-| PNG      | png             | ✔          |
-| JPEG     | jpg/jpeg/jfif   | ✔          |
-| BMP      | bmp             | ✔          |
-| SVG      | svg             | ✔          |
-| GIF      | gif             | ✔          |
-| TGA      | tga             | ✔          |
-| PPM      | ppm/pgm/pbm/pnm | ✔          |
-| WebP     | webp            | ✔          |
-| TIFF     | tif/tiff        | ✔          |
-| JPEG2000 | jp2             | (将来のバージョン) |
-| DDS      | dds             | (将来のバージョン) |
-| WBMP     | wbmp            | (将来のバージョン) |
-| JPEG XL  | jxl             | (将来のバージョン) |
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/texture/3.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
-
-	// 風車の画像
-	const Texture texture1{ U"example/windmill.png" };
-
-	// Siv3D くん（Siv3D の公式マスコットキャラクター）の画像
-	const Texture texture2{ U"example/siv3d-kun.png" };
-
-	while (System::Update())
-	{
-		texture1.draw(40, 20);
-
-		texture2.draw(400, 100);
-	}
-}
-```
 
 
 ## 25.4 画像クラス（Image）からテクスチャを作成する
