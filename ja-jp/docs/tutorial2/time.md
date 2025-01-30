@@ -323,13 +323,12 @@ Siv3D で時間や動きを扱う方法を学びます。
 - 補間係数は　`t` は、通常 0.0 ～ 1.0 の範囲です
 - 次のようなクラスがメンバ関数 `.lerp()` を持っています
 
-- 色
-	- `ColorF`, `HSV`
-- ベクトル
-	- `Point`, `Vec2`, `Vec3`, `Vec4`
-- 図形
-	- `Line`, `Circle`, `Rect`, `RectF`, `Triangle`, `Quad`, `Ellipse`, `RoundRect`
-	
+| 要素 | クラス |
+|--|--|
+| 色 | `ColorF`, `HSV` |
+| ベクトル | `Point`, `Vec2`, `Vec3`, `Vec4` |
+| 図形 | `Line`, `Circle`, `Rect`, `RectF`, `Triangle`, `Quad`, `Ellipse`, `RoundRect` |
+
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/time/11.png)
 
 ```cpp
@@ -338,8 +337,11 @@ Siv3D で時間や動きを扱う方法を学びます。
 
 
 ## 30.12 イージング
-- XXX
-	
+- 0.0 から 1.0 へ線形に（一定の速度で）値を増加させるだけでは、単調な動きになってしまいます
+- はじめは少しずつ加速し、ゴールに近づくとゆっくりになるといったように、速度に変化を与えると、洗練された視覚効果を実現できます
+- 0.0 ↔ 1.0 の移動を、特徴を持ったカーブに変換できる **イージング関数** を使い、モーションの印象を改善できます
+- イージング関数は全部で約 30 種類用意されていて、一覧を [Easing Functions Cheat Sheet :material-open-in-new:](https://easings.net/){:target="_blank"} で確認できます
+
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/time/12.png)
 
 ```cpp
@@ -348,7 +350,34 @@ Siv3D で時間や動きを扱う方法を学びます。
 
 
 ## 30.13 SmoothDamp 
-- XXX
+- 線形補間とイージングは、開始値と終了値（目標値）が固定されているケースに適しています
+- 一方で、移動中に目標値が変更された場合、移動の速さや方向が急に変化して不自然な印象を与えてしまいます
+- 目標値が変更されても、現在の速度を考慮してなめらかに移動・変化し続けるには、`Math::SmoothDamp` 関数を使います
+- `Math::SmoothDamp` 関数は、現在位置と目標位置、そして現在の速度から、時間ベースで次の位置を計算する、**非常に便利で強力な補間関数**です
+- 次のような型が `Math::SmoothDamp` 関数に対応しています
+
+| 要素 | 型・クラス |
+|--|--|
+| 数値型 | `float`, `double` |
+| ベクトル | `Vec2`, `Vec3`, `Vec4` |
+| 色 | `ColorF` |
+
+- Siv3D v0.8 ではより多くのクラスがサポートされる予定です
+
+### 関数の概要
+- `Vec2` 用の `Math::SmoothDamp` 関数は次のとおりです。
+
+```cpp
+Vec2 Math::SmoothDamp(const Vec2& from, const Vec2& to, Vec2& velocity, double smoothTime, const Optional<double>& maxSpeed = unspecified, double deltaTime = Scene::DeltaTime());`
+```
+
+- `from`: 現在位置
+- `to`: 目標位置
+- `velocity`: 現在の速度（速度を保存している変数を参照で渡す）
+- `smoothTime`: 平滑化時間（最大速度で目標に向かうときに期待される所要時間）。動く目標を追いかけるときの遅延時間で、小さいと目標に早く到達する
+- `maxSpeed`: 最大速度。無制限の場合は `unspecified` を指定する
+- `deltaTime`: 前回からの経過時間（デフォルトは `Scene::DeltaTime()`）
+- 戻り値: 次の位置
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/time/13.png)
 
@@ -456,11 +485,6 @@ void Main()
 
 
 ## 18.9 イージング
-0.0 から 1.0 に一定の速度で値を増加させるだけでは単調な動きになってしまいます。はじめは少しずつ加速し、ゴールに近づくとゆっくりになるといったように、速度に変化を与えると、洗練された視覚効果を実現できます。0.0 → 1.0 の単調増加を、このような特徴的なカーブに変換できる **イージング関数** を使うと、モーションの印象を改善できます。
-
-イージング関数は全部で約 30 種類用意されています。一覧は [Easing Functions Cheat Sheet :material-open-in-new:](https://easings.net/){:target="_blank"} で確認できます。次のサンプルでは `EaseInOutExpo()` を使っています。ほかにも `EaseOutBounce()` や `EaseInOutBack()` など様々なイージング関数を試してみましょう。
-
-次のサンプルに登場する`Min()` は、渡された引数のうち最小値を返す関数です。
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/time/9.png)
 
