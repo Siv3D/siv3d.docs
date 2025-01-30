@@ -20,7 +20,7 @@
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/cookie-clicker/1.png)
 
 ??? memo "コード"
-	```cpp hl_lines="0"
+	```cpp
 	# include <Siv3D.hpp>
 
 	// ゲームの進行状況
@@ -76,7 +76,7 @@
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/cookie-clicker/2.png)
 
 ??? memo "コード"
-	```cpp hl_lines="0"
+	```cpp hl_lines="24-27 32-33 43-47 58-59"
 	# include <Siv3D.hpp>
 
 	// ゲームの進行状況
@@ -147,7 +147,7 @@
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/cookie-clicker/3.png)
 
 ??? memo "コード"
-	```cpp hl_lines="0"
+	```cpp hl_lines="22-27 33 67-68"
 	# include <Siv3D.hpp>
 
 	// ゲームの進行状況
@@ -232,7 +232,7 @@
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/cookie-clicker/4.png)
 
 ??? memo "コード"
-	```cpp hl_lines="0"
+	```cpp hl_lines="52-58 63 68-69"
 	# include <Siv3D.hpp>
 
 	// ゲームの進行状況
@@ -330,7 +330,7 @@
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/cookie-clicker/5.png)
 
 ??? memo "コード"
-	```cpp hl_lines="0"
+	```cpp hl_lines="3-49 80-81 136-146"
 	# include <Siv3D.hpp>
 
 	// ボタンを描画する関数
@@ -489,7 +489,7 @@
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/cookie-clicker/6.png)
 
 ??? memo "コード"
-	```cpp hl_lines="0"
+	```cpp hl_lines="63-67 76 82-83 139"
 	# include <Siv3D.hpp>
 
 	// ボタンを描画する関数
@@ -659,7 +659,7 @@
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/cookie-clicker/7.png)
 
 ??? memo "コード"
-	```cpp hl_lines="0"
+	```cpp hl_lines="69-79 158 160 165 167"
 	# include <Siv3D.hpp>
 
 	// ボタンを描画する関数
@@ -834,14 +834,14 @@
 	```
 
 
-## 29.8 【完成】クッキー生産量の反映
+## 29.8 【完成】クッキー生産の反映
 - 購入した設備の数に応じて、0.1 秒ごとにクッキーの枚数を増やします
 	- 0.1 秒ごとに、CPS × 0.1 のクッキーを追加します
 		
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/cookie-clicker/8.png)
 
 ??? memo "コード"
-	```cpp hl_lines="0"
+	```cpp hl_lines="115-116 128-138"
 	# include <Siv3D.hpp>
 
 	// ボタンを描画する関数
