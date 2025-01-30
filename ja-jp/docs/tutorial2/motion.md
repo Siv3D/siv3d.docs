@@ -28,7 +28,7 @@
 
 
 ## 30.3 時間に基づくモーション
-- XXX
+- 位置・大きさ・角度などを時間の経過に応じて変化させることで、モーションを表現できます
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/motion/3.png)
 
@@ -38,9 +38,18 @@
 
 
 ## 30.4 一定時間おきに何かをする
-- XXX
+- イベントの周期を決めておき、蓄積時間（秒）がその周期（秒）を超えたらイベントを発生させます
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/motion/4.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/motion/4-1.png)
+
+```cpp
+
+```
+
+- イベント周期が短い（1 フレームの時間よりも短い）場合、1 フレーム内で複数回イベントを発生させる必要が生じます
+- そのような状況に対処するには、`if` の代わりに `while (eventPeriod <= accumulatedTime)` を使います
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/motion/4-2.png)
 
 ```cpp
 
@@ -127,105 +136,6 @@
 ```
 
 
-
-
-#### サンプルプログラム
-プログラムが起動されてからの時間に基づいて円の半径を変化させるプログラムは次のとおりです。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/motion/1.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(Palette::White);
-
-	while (System::Update())
-	{
-		const double t = Scene::Time();
-
-		// 円の半径が、時間の経過に伴って大きくなる
-		Circle{ Scene::Center(), (t * 50) }.draw(ColorF{ 0.25 });
-	}
-}
-```
-
-途中からの経過時間を使いたい場合、`Scene::DeltaTime()` の累積を用いると便利です。
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(Palette::White);
-
-	double t = 0.0;
-
-	while (System::Update())
-	{
-        // 左クリックで経過時間をリセット
-        if (MouseL.down())
-        {
-            t = 0.0;
-        }
-
-		// 経過時間を加算
-		t += Scene::DeltaTime();
-
-		Circle{ Scene::Center(), (t * 50) }.draw(ColorF{ 0.25 });
-	}
-}
-```
-
-
-## 18.2 毎フレーム固定値を加算してはいけない
-`Scene::Time()` や `Scene::DeltaTime()` を使わなくても、フレームごとに固定の値を足していけばモーションを作れそうですが、それは**大きな間違い**です。
-
-なぜなら、プログラムが実行されるパソコンのモニタのリフレッシュレートによって、メインループが毎秒何回実行されるかが異なるためです。一般的なモニタのリフレッシュレートは 60Hz で、毎秒 60 回メインループが実行されますが、近年は 120Hz や 144Hz, 240Hz など、より高頻度のリフレッシュレートを持つモニタが増えています。
-
-次のように「毎フレーム 3px ずつ移動」するプログラムを実行すると、60Hz のモニタ上では毎秒 180px の速さで移動しますが、120Hz のモニタで実行すると、その倍の毎秒 360px の速さで移動します。もしこれがゲームの敵キャラクターだったら、実行するパソコンによって移動スピードが変わり、ゲームバランスが壊れてしまいます。
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(Palette::White);
-
-	double x = 0.0;
-
-	while (System::Update())
-	{
-		// 毎フレーム 3px 移動（時間ベースでないため不適切！）
-		x += 3;
-
-		Circle{ x, 300, 50 }.draw(ColorF{ 0.25 });
-	}
-}
-```
-
-こうした問題を避けるため、モーションはフレームではなく時間をベースに計算する必要があります。上記のコードを時間ベースに直したコードは次のとおりです。
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(Palette::White);
-
-    const double speed = 180.0; // 毎秒 180px 移動
-
-	double x = 0.0;
-
-	while (System::Update())
-	{
-		x += (Scene::DeltaTime() * speed);
-
-		Circle{ x, 300, 50 }.draw(ColorF{ 0.25 });
-	}
-}
-```
 
 
 ## 18.3 一定時間ごとにイベントを起こす
