@@ -122,7 +122,7 @@ nav:
     - 37. GUI: tutorial2/gui.md
     - 38. 動きをつくる: tutorial2/motion.md
     - 39. インタラクションの実装: tutorial2/interaction.md
-    - 40. オーディオ再生: tutorial3/audio.md
+    - 40. オーディオ再生: tutorial2/audio.md
   - 入門チュートリアル 3:
     - 41. キーボード入力: tutorial3/keyboard.md
     - 42. マウス入力: tutorial3/mouse.md

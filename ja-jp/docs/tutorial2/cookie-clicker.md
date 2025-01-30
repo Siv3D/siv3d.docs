@@ -10,8 +10,12 @@
     - [Wikipedia: Cookie Clicker :material-open-in-new:](https://ja.wikipedia.org/wiki/%E3%82%AF%E3%83%83%E3%82%AD%E3%83%BC%E3%82%AF%E3%83%AA%E3%83%83%E3%82%AB%E3%83%BC){:target="_blank"}
 
 
-## 29.1 XXXXX
-- XXX
+## 29.1 基本実装
+- ゲームの進行状況を表すクラス `GameInfo` を用意します
+	- この先、0.1 秒単位でクッキーの枚数を増やす計算ができるよう、`int32` の代わりに `double` 型でクッキーの数を管理します
+	- クッキーの生産設備である「農場」と「工場」の数を、`int32` で表現します
+- ゲーム画面の背景を、画面全体を覆うグラデーションの長方形で描画します
+- `Main` 関数が複雑になりすぎないよう、処理は適宜関数に分割していきます
 		
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/cookie-clicker/1.png)
 
@@ -64,8 +68,10 @@
 	```
 
 
-## 29.2 XXXXX
-- XXX
+## 29.2 クッキーの描画
+- クッキーの絵文字からテクスチャを作成し、画面に大きく描画します
+- クッキーの大きさにモーションをつけられるよう、クッキーの表示サイズを変数 `cookieScale` で管理します
+- クッキーのクリック判定用の円 `cookieCircle` を用意し、クリックされたらクッキーの数を増やします
 		
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/cookie-clicker/2.png)
 
@@ -135,8 +141,8 @@
 	```
 
 
-## 29.3 XXXXX
-- XXX
+## 29.3 クッキーの枚数の表示
+- クッキーの枚数を整数で表示します
 		
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/cookie-clicker/3.png)
 
@@ -218,8 +224,10 @@
 	```
 
 
-## 29.4 XXXXX
-- XXX
+## 29.4 クリック体験の向上
+- `cookieCircle` にマウスカーソルが重なっているとき、マウスカーソルを手の形に変更します
+- クッキーをクリックしたときに、`cookieScale` を一時的に小さくします
+	- `cookieScale` は時間の経過とともに `1.5` に戻ります
 		
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/cookie-clicker/4.png)
 
@@ -314,8 +322,10 @@
 	```
 
 
-## 29.5 XXXXX
-- XXX
+## 29.5 設備購入ボタンの追加
+- **チュートリアル 28** を参考に、クッキーの生産設備を購入するためのボタンを追加します
+- ボタンが押されたら、設備の数を増やします
+- 引数 `enabled` を使って、「ボタンが押せない」という状態も表現できるようにします
 		
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/cookie-clicker/5.png)
 
@@ -472,8 +482,9 @@
 	```
 
 
-## 29.6 XXXXX
-- XXX
+## 29.6 クッキー生産量の計算
+- 購入した設備の種類と数に応じて、毎秒のクッキー生産量（CPS: Cookies Per Second）を計算し、表示します
+	- 実際のクッキーの枚数にはまだ反映しません
 		
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/cookie-clicker/6.png)
 
@@ -639,8 +650,11 @@
 	```
 
 
-## 29.7 XXXXX
-- XXX
+## 29.7 設備購入費用の実装
+- 農場と工場の購入費用を計算し、表示します
+	- 購入数に応じて価格が上昇します
+- 現在のクッキーの枚数が購入費用を下回っている場合は、ボタンを押せないようにします
+- 設備を購入したときに、クッキーの枚数から購入費用を引くようにします
 		
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/cookie-clicker/7.png)
 
@@ -820,7 +834,9 @@
 	```
 
 
-## 29.8 【完成】
+## 29.8 【完成】クッキー生産量の反映
+- 購入した設備の数に応じて、0.1 秒ごとにクッキーの枚数を増やします
+	- 0.1 秒ごとに、CPS × 0.1 のクッキーを追加します
 		
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/cookie-clicker/8.png)
 
