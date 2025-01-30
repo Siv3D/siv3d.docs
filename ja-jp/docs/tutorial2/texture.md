@@ -1,29 +1,83 @@
 # 30. テクスチャを描く
 絵文字やアイコン、画像ファイルからテクスチャを作成し描画する方法を学びます。
 
-## 30.1 絵文字から作成
-- XXX
-	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/1.png)
+## 30.1 テクスチャの作成と描画
+
+### テクスチャの作成
+- 画面に描画する画像はテクスチャクラス `Texture` で管理します
+- テクスチャの作成にはいくつかの方法があります
+	- **30.2** 絵文字から作成
+	- **30.3** アイコンから作成
+	- **30.4** 画像ファイルから作成
+	- **30.5** 画像データから作成
+- テクスチャの作成にはコストがかかるため、通常はメインループの前で行います
+- メインループ内で作成する場合には、毎フレーム作成されないような制御が必要です
+
+### テクスチャの描画
+- テクスチャを描画するには `Texture` のメンバ関数を使います
+	- **30.9** 左上座標を指定した描画 `.draw()`
+	- **30.10** 中心座標を指定した描画 `.drawAt()`
+	- **30.11** それ以外の座標を指定した描画 `.draw(Arg::...)`
+- 拡大縮小・回転・反転・部分切り出しなどの操作を適用したテクスチャを表現する、次のようなクラスが用意されています
+	- `TextureRegion`
+	- `TexturedQuad`
+	- `TexturedCircle`
+	- `TexturedRoundRect`
+- これらのクラスは `Texture` のメンバ関数によって作成されますが、通常意識することはなく、`Texture` と同様に描画します
 
 ```cpp
-
+// .scaled() は TextureRegion を返す
+// .rotated() は TexturedQuad を返す
+texture.scaled(2.0).rotated(30_deg).drawAt(400, 300);
 ```
 
 
-## 30.2 アイコンから作成
-- XXX
-	
+## 30.2 絵文字から作成
+- Siv3D には Unicode 15.1 に準拠した 3,700 種類以上の絵文字が標準で同梱されています
+- 次のようなコードで、絵文字からテクスチャを作成します
+
+```cpp
+Texture texture{ U"🐈"_emoji };
+```
+
+- Siv3D で使える絵文字一覧は [Emojipedia: Google Noto Color Emoji :material-open-in-new:](https://emojipedia.org/ja/google){:target="_blank"} で確認できます
+- Siv3D ではどのプラットフォーム（Windows, macOS, Linux, Web）でも同じデザインの絵文字を描画できます
+
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/2.png)
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Texture emoji1{ U"🐈"_emoji };
+	const Texture emoji2{ U"🍎"_emoji };
+
+	while (System::Update())
+	{
+		emoji1.drawAt(100, 100);
+		emoji1.drawAt(400, 300);
+
+		emoji2.drawAt(200, 300);        
+		emoji2.drawAt(Cursor::Pos());
+	}
+}
 ```
 
 
-## 30.3 画像ファイルから作成
-- XXX
-	
+## 30.3 アイコンから作成
+- Siv3D には 7,000 種類以上のアイコンが標準で同梱されています
+- 次のようなコードで、アイコンからテクスチャを作成します
+
+```cpp
+Texture texture{ 0xF0493_icon, 80 };
+```
+
+- アイコンは [Material Design Icons :material-open-in-new:](https://pictogrammers.com/library/mdi/){:target="_blank"} または [Font Awesome :material-open-in-new:](https://fontawesome.com/v5/search?o=r&m=free){:target="_blank"} で調べられる 16 進数コードに `_icon` を付けた値を使います
+- Siv3D ではどのプラットフォーム（Windows, macOS, Linux, Web）でも同じデザインのアイコンを描画できます
+
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/3.png)
 
 ```cpp
@@ -31,7 +85,7 @@
 ```
 
 
-## 30.4 画像データから作成
+## 30.4 画像ファイルから作成
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/4.png)
@@ -41,7 +95,7 @@
 ```
 
 
-## 30.5 テクスチャのサイズ
+## 30.5 画像データから作成
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/5.png)
@@ -51,230 +105,206 @@
 ```
 
 
-## 30.6 空のテクスチャ
+## 30.6 テクスチャのサイズ
 - XXX
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/5.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/6.png)
 
 ```cpp
 
 ```
 
 
-## 30.7 ミップマップの生成
+## 30.7 空のテクスチャ
 - XXX
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/5.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/7.png)
 
 ```cpp
 
 ```
 
 
-## 30.8 左上座標を指定して描画
+## 30.8 ミップマップの生成
 - XXX
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/5.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/8.png)
 
 ```cpp
 
 ```
 
 
-## 30.9 中心座標を指定して描画
+## 30.9 左上座標を指定した描画
 - XXX
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/5.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/9.png)
 
 ```cpp
 
 ```
 
 
-## 30.10 それ以外の座標を指定して描画
+## 30.10 中心座標を指定した描画
 - XXX
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/5.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/10.png)
 
 ```cpp
 
 ```
 
 
-## 30.11 色を乗算して描画
+## 30.11 それ以外の座標を指定した描画
 - XXX
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/5.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/11.png)
 
 ```cpp
 
 ```
 
 
-## 30.12 拡大縮小して描画
+## 30.12 色を乗算した描画
 - XXX
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/5.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/12.png)
 
 ```cpp
 
 ```
 
 
-## 30.13 回転して描画
+## 30.13 拡大縮小した描画
 - XXX
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/5.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/13.png)
 
 ```cpp
 
 ```
 
 
-## 30.14 上下・左右反転して描画
+## 30.14 回転した描画
 - XXX
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/5.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/14.png)
 
 ```cpp
 
 ```
 
 
-## 30.15 一部を切り出して描画（ピクセル指定）
+## 30.15 上下・左右反転した描画
 - XXX
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/5.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/15.png)
 
 ```cpp
 
 ```
 
 
-## 30.16 一部を切り出して描画（UV 座標指定）
+## 30.16 部分描画（ピクセル指定）
 - XXX
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/5.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/16.png)
 
 ```cpp
 
 ```
 
 
-## 30.17 長方形内に収めて描画
+## 30.17 部分描画（UV 座標指定）
 - XXX
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/5.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/17.png)
 
 ```cpp
 
 ```
 
 
-## 30.18 敷き詰めて描画（範囲指定）
+## 30.18 長方形内に収めた描画
 - XXX
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/5.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/18.png)
 
 ```cpp
 
 ```
 
 
-## 30.19 敷き詰めて描画（回数指定）
+## 30.19 敷き詰めた描画（範囲指定）
 - XXX
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/5.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/19.png)
 
 ```cpp
 
 ```
 
 
-## 30.20 図形の形に合わせて描画
+## 30.20 敷き詰めた描画（回数指定）
 - XXX
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/5.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/20.png)
 
 ```cpp
 
 ```
 
 
-## 30.21 `Polygon` にテクスチャを貼る
+## 30.21 図形の形に合わせた描画
 - XXX
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/5.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/21.png)
 
 ```cpp
 
 ```
 
 
-## 30.22 大きな画像を縮小して読み込む
+## 30.22 `Polygon` にテクスチャを貼る
 - XXX
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/5.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/22.png)
 
 ```cpp
 
 ```
 
 
-## 30.23 ミップマップを自前で生成する
+## 30.23 大きな画像の事前縮小
 - XXX
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/5.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/23.png)
 
 ```cpp
 
 ```
 
 
-
-
-
-
-
-
-
-
-絵文字やアイコン、画像ファイルからテクスチャを作成し描画する方法を学びます。
-
-画面に描画する画像データはテクスチャクラス `Texture` で管理します。テクスチャはいくつかの方法で作成できます。テクスチャの作成にはコストがかかるため、通常はメインループの前で行います。メインループ内で作成する必要がある場合には、毎フレーム作成されないような制御が必要です。
-
-## 25.1 絵文字からテクスチャを作成する
-`Texture 変数名{ U"絵文字"_emoji };` で、絵文字をもとに固定サイズ（136x128）のテクスチャを作成できます。
-
-!!! info "絵文字を探す"
-    - 絵文字の種類は [emojipedia :material-open-in-new:](https://emojipedia.org/){:target="_blank"} で探すと便利です。全部で 3700 種類以上が用意されています。
-    - Windows の場合は、++windows+period++ で出てくる、OS 標準の絵文字入力メニューも使えます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/texture/1.png)
+## 30.24 ミップマップの自前生成
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/24.png)
 
 ```cpp
-# include <Siv3D.hpp>
 
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
-
-	const Texture emoji1{ U"🐈"_emoji };
-
-	const Texture emoji2{ U"🍎"_emoji };
-
-	while (System::Update())
-	{
-		emoji1.drawAt(100, 100);
-
-		emoji2.drawAt(200, 300);
-
-		emoji1.drawAt(400, 300);
-
-		emoji2.drawAt(Cursor::Pos());
-	}
-}
 ```
+
+
+## 30.25 テクスチャ描画に関するトラブル
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/24.png)
+
+```cpp
+
+```
+
+
 
 
 ## 25.2 アイコンからテクスチャを作成する
@@ -449,7 +479,7 @@ void Main()
 
 	Print << texture1.isEmpty();
 
-    // テクスチャを代入する
+	// テクスチャを代入する
 	texture1 = Texture{ U"🐈"_emoji };
 
 	Print << texture1.isEmpty();
