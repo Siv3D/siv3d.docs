@@ -25,7 +25,7 @@ void Main()
 
 
 ## 10.2 マウスに追随する円を描く
-- `Circle` は `Point` 型や `Vec2` 型の値を使って `Circle{ pos, r }` のように 2 つの引数から作成できます
+- `Point` 型や `Vec2` 型の値を使って `Circle{ pos, r }` のように 2 つの引数から `Circle` を作成できます
 - 現在のマウスカーソル座標を `Point` 型で返す `Cursor::Pos()` と組み合わせ、マウスに追随する円を描くことができます
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/circle/2.png)
