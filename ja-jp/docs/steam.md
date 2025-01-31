@@ -1,5 +1,5 @@
 # Steam
-PC ゲーム配信プラットフォーム Steam で公開されているおもな Siv3D 製作品の一覧です。
+PC ゲーム配信プラットフォーム Steam で公開されているおもな Siv3D 製作品と、メディアで取り上げられた記事を紹介します。
 
 ## For the GHOSTs
 <iframe src="https://store.steampowered.com/widget/2487390/" frameborder="0" width="646" height="190"></iframe>
