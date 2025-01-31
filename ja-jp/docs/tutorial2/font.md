@@ -3,19 +3,21 @@
 
 ## 33.1 フォントの基本
 - 画面にテキストを描画するときのフォントは `Font` クラスで管理します
-- フォントはいくつかの方法・方式で作成できます
+- フォントはいくつかの方式・方法で作成できます
 - フォントの作成にはコストがかかるため、通常はメインループの前で行います
 - メインループ内で作成する場合には、毎フレーム作成されないような制御が必要です
 
 ### 描画方式
-- ほとんどのフォントは、**描画方式 `FontMethod`** を次の 3 つから選ぶことができます
-- 描画方式を指定しない場合は、**ビットマップ方式** が使われます
+- 通常のフォントは、**描画方式** を次の 3 つから選ぶことができます
 
-| 方式 | 説明 | 適した用途 |
+| 描画方式 | 説明 | 適した用途 |
 | --- | --- | --- |
 | ビットマップ方式 | 軽量ですが、基本サイズ以上に拡大描画すると品質が低下します | 常に固定サイズでフォントを描画する場合や、複雑な字形の書体を用いる場合 |
 | SDF 方式 | 基本サイズ以上に拡大描画しても品質が維持されます。影や輪郭エフェクトを追加できます。文字の角が少し丸くなる副作用があります | 文字に影や輪郭エフェクトを追加したりする場合 |
 | MSDF 方式 | 基本サイズ以上に拡大描画しても品質が維持されます。影や輪郭エフェクトを追加できます | 文字を様々なサイズに拡大縮小したり、文字に影や輪郭エフェクトを追加したりする場合 |
+
+- 描画方式を指定しない場合は、**ビットマップ方式** が使われます
+- 一部の画像形式のフォントは、ビットマップ方式しか選択できません
 
 ### フォントの基本サイズ
 - 個々の文字画像データはエンジン内部で作成され、メモリ上にキャッシュ（保存）されます
@@ -38,42 +40,44 @@
 - 書体を指定しない場合は、Siv3D に同梱されているデフォルトの書体 `Typeface::Regular` が使われます
 
 ### フォントスタイル
-- 一部のフォントは、**フォントスタイル `FontStyle`** を指定することで、太字や斜体、ビットマップフォントなどのスタイルを変更できます
+- 一部の書体は、**フォントスタイル** を指定することで、太字や斜体、ビットマップフォントなどのスタイルを変更できます
 - フォントスタイルは、フォントを作成するときに指定します
 - フォントスタイルを指定しない場合は、通常のフォントが作成されます
 
 ### テキストスタイル
-- SDF / MSDF 方式のフォントでは、**テキストスタイル `TextStyle`** を指定して、文字の描画時に影や輪郭エフェクトを追加できます
+- SDF / MSDF 方式のフォントでは、**テキストスタイル** を指定して、文字の描画時に影や輪郭を追加できます
 - テキストスタイルは、テキストを描画するときに指定します
 - テキストスタイルを指定しない場合は、通常のスタイルで描画されます
 
 ### フォントのフォールバック
-- 1 つの書体では、すべての文字をカバーできない場合があります
-- そこで、別の書体のフォントを**フォールバック**として登録し、メインの書体でカバーできない文字を別の書体で描画することができます
-- おもにテキスト内に絵文字や複数の言語を含む場合に使用します
+- 1 つの書体では、必要なすべての文字をカバーできない場合があります
+- そこで、別の書体のフォントを**フォールバック**として登録し、メインの書体でカバーできない文字を別のフォントでカバーすることができます
+- おもにテキスト内に複数の言語や絵文字を含む場合に使用します
 
 
 ## 33.2 フォントの作成と描画
 
 ### フォントの作成
 - フォントの作成にはいくつかの方法があります
-    - 標準書体から作成
-    - フォントファイルから作成
-    - PC にインストールされているフォントファイルから作成
+    - **33.3, 33.4** 標準書体から作成
+    - **33.5** フォントファイルから作成
+    - **33.6** PC にインストールされているフォントファイルから作成
 
 ### テキストの描画
 - `Font` オブジェクトの `()` 演算子にテキストを渡すと `DrawableText` オブジェクトが得られます
 - 実際にテキストを描画するには、`DrawableText` のメンバ関数を使います
-    - 左上座標を指定した描画 `.draw()`
-    - 中心座標を指定した描画 `.drawAt()`
-    - それ以外の座標を指定した描画 `.draw(Args::...)`
+    - **33.10** 左上座標を指定した描画 `.draw()`
+    - **33.11** 中心座標を指定した描画 `.drawAt()`
+	- **33.12** ベースラインを指定した描画 `.drawBase()`
+	- **33.13** それ以外の座標を指定した描画 `.draw(Args::...)`
+    - **33.14** 長方形を指定した描画 `.draw(rect)`
 
 ```cpp
 font(U"Hello, Siv3D!").draw(40, Vec2{ 40, 40 });
 ```
 
 
-## 33.3 フォントを作成する
+## 33.3 標準書体（1）
 - Siv3D には、いくつかの標準書体が用意されています
 - フォントの作成時に書体を指定しなかった場合、標準書体（レギュラー）が使われます
 - フォントは 3 種類の描画方式で作成できます
@@ -112,9 +116,13 @@ void Main()
 ```
 
 
-## 33.4 標準書体
-- Siv3D には異なる太さの 7 種類の日本語書体と、5 地域向けの CJK（中国語・韓国語・日本語対応）書体、白黒絵文字書体、カラー絵文字書体が標準書体として同梱されています
-- `Font` のコンストラクタにおいて `Typeface::` で書体を指定することで、それらの書体からフォントを作成できます
+## 33.4 標準書体（2）
+- Siv3D には次の書体が標準書体として同梱されています
+	- 異なる太さの 7 種類の日本語書体
+	- 5 地域向けの CJK（中国語・韓国語・日本語対応）書体
+	- 白黒絵文字書体
+	- カラー絵文字書体
+- `Font` のコンストラクタにおいて `Typeface::` で書体を指定することで、標準書体からフォントを作成できます
 
 | コード |説明|
 |--|--|
@@ -218,7 +226,7 @@ void Main()
 ```
 
 
-## 33.8 左上座標を指定した描画
+## 33.8 文字列のフォーマット
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/8.png)
@@ -228,7 +236,7 @@ void Main()
 ```
 
 
-## 33.9 中心座標を指定した描画
+## 33.9 改行
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/9.png)
@@ -238,7 +246,7 @@ void Main()
 ```
 
 
-## 33.10 ベースラインを指定した描画
+## 33.10 左上座標を指定した描画
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/10.png)
@@ -248,7 +256,7 @@ void Main()
 ```
 
 
-## 33.11 それ以外の座標を指定した描画
+## 33.11 中心座標を指定した描画
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/11.png)
@@ -258,7 +266,7 @@ void Main()
 ```
 
 
-## 33.12 長方形の中に収めた描画
+## 33.12 ベースラインを指定した描画
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/12.png)
@@ -268,7 +276,7 @@ void Main()
 ```
 
 
-## 33.13 描画される領域の取得
+## 33.13 それ以外の座標を指定した描画
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/13.png)
@@ -278,7 +286,7 @@ void Main()
 ```
 
 
-## 33.14 XXXXX
+## 33.14 長方形の中に収めた描画
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/14.png)
@@ -288,7 +296,7 @@ void Main()
 ```
 
 
-## 33.15 XXXXX
+## 33.15 描画される領域の取得
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/15.png)
@@ -298,7 +306,7 @@ void Main()
 ```
 
 
-## 33.16 XXXXX
+## 33.16 フォントスタイル（太字・斜体）
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/16.png)
@@ -308,7 +316,7 @@ void Main()
 ```
 
 
-## 33.17 XXXXX
+## 33.17 フォントスタイル（ビットマップ）
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/17.png)
@@ -318,7 +326,7 @@ void Main()
 ```
 
 
-## 33.18 XXXXX
+## 33.18 文字に影を付ける（2 回描画）
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/18.png)
@@ -328,7 +336,7 @@ void Main()
 ```
 
 
-## 33.19 XXXXX
+## 33.19 文字に影を付ける（テキストスタイル）
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/19.png)
@@ -338,7 +346,7 @@ void Main()
 ```
 
 
-## 33.20 XXXXX
+## 33.20 文字に輪郭を付ける
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/20.png)
@@ -348,7 +356,7 @@ void Main()
 ```
 
 
-## 33.21 XXXXX
+## 33.21 文字に影と輪郭を付ける
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/21.png)
@@ -358,7 +366,7 @@ void Main()
 ```
 
 
-## 33.22 XXXXX
+## 33.22 （参考）テキストスタイルのプレビュー
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/22.png)
@@ -368,7 +376,7 @@ void Main()
 ```
 
 
-## 33.23 XXXXX
+## 33.23 テキストを 1 文字ずつ描画
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/23.png)
@@ -376,6 +384,67 @@ void Main()
 ```cpp
 
 ```
+
+
+## 33.24 文字単位での自由描画
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/24.png)
+
+```cpp
+
+```
+
+
+## 33.25 縦書き
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/25.png)
+
+```cpp
+
+```
+
+
+## 33.26 フォールバックフォント
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/26.png)
+
+```cpp
+
+```
+
+
+## 33.27 フォントのプリロード
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/27.png)
+
+```cpp
+
+```
+
+
+## 33.28 文字を `Polygon` で取得
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/28.png)
+
+```cpp
+
+```
+
+
+## 33.29 文字を `LineString` で取得
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/29.png)
+
+```cpp
+
+```
+
 
 
 
