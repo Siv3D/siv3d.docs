@@ -23,9 +23,9 @@
 - 個々の文字画像データはエンジン内部で作成され、メモリ上にキャッシュ（保存）されます
 - このときキャッシュされる文字画像のサイズを **基本サイズ** と呼びます
 - 基本サイズは、フォントを作成するときに指定します
-- 基本サイズと異なるサイズでテキストを描画すると、拡大縮小が行われます
 
 ### 描画方式と基本サイズ
+- 基本サイズと異なるサイズでテキストを描画すると、拡大縮小が行われます
 - ビットマップ方式で拡大が行われると、解像度の低い画像を拡大したときのように、文字の見た目が荒くなります
     - ビットマップ方式では、基本サイズと同じ大きさで描画することが想定されています
 - SDF / MSDF 方式では、基本サイズ以上に拡大してテキストを描画しても品質が維持されます
@@ -37,7 +37,7 @@
 ### 書体
 - 「メイリオ」「Arial」など、フォントの種類を**書体**と呼びます
 - 書体はフォントを作成するときに指定します
-- 書体を指定しない場合は、Siv3D に同梱されているデフォルトの書体 `Typeface::Regular` が使われます
+- 書体を指定しない場合は、Siv3D に同梱されている標準書体（レギュラー）が使われます
 
 ### フォントスタイル
 - 一部の書体は、**フォントスタイル** を指定することで、太字や斜体、ビットマップフォントなどのスタイルを変更できます
@@ -197,8 +197,10 @@ void Main()
 
 
 ## 33.5 フォントファイルから作成
-- XXX
-	
+- 独自に用意したフォントファイルをからフォントを作成するには、`Font` のコンストラクタにフォントファイルのパスを指定します
+- ファイルパスは、実行ファイルがあるフォルダ（開発中は `App` フォルダ）を基準とする相対パスか、絶対パスを使用します
+	- 例えば `U"example/font/RocknRoll/RocknRollOne-Regular.ttf"` は、実行ファイルがあるフォルダ（`App` フォルダ）の `example/font/RocknRoll/` フォルダにある `RocknRollOne-Regular.ttf` というファイルを指します
+
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/5.png)
 
 ```cpp
@@ -207,8 +209,16 @@ void Main()
 
 
 ## 33.6 PC にインストールされているフォントファイルから作成
-- XXX
-	
+- PC にインストールされたフォントは、OS によって異なる場所に保存されています
+- そのフォルダのパスを `FileSystem::GetFolderPath()` で取得し、フォントファイル名とつなげることで、絶対パスを構築できます
+- `FileSystem::GetFolderPath()` に渡す引数と、それによって取得できるパスの対応表は次のとおりです
+
+| 引数                       | Windows             | macOS                  | Linux       |
+|----------------------------|:---------------------|:------------------------|:-------------|
+| `SpecialFolder::SystemFonts` | (OS):/WINDOWS/Fonts/ | /System/Library/Fonts/ | /usr/share/fonts/ |
+| `SpecialFolder::LocalFonts`  | (OS):/WINDOWS/Fonts/ | /Library/Fonts/        | /usr/local/share/fonts/<br>(存在する場合) |
+| `SpecialFolder::UserFonts`   | (OS):/WINDOWS/Fonts/ | ~/Library/Fonts/       | /usr/local/share/fonts/<br>(存在する場合) |
+
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/6.png)
 
 ```cpp
@@ -519,122 +529,6 @@ void Main()
 }
 ```
 
-## 31.3 フォントの基本サイズ
-`Font` のコンストラクタの第 1 引数にはフォントの基本サイズを指定します。単位はピクセルです。基本サイズはあとから変更できません。
-
-!!! info "1 つの Font からさまざまなサイズの文字を描くには"
-    ビットマップ方式のフォントは、基本サイズと同じ大きさでテキストを描画することが想定されているため、サイズ別にフォントを作成する必要があります。1 つの `Font` からさまざまなサイズの文字を描くには、後述する SDF / MSDF 方式のフォントを使用します。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/3.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-
-	// 基本サイズ 20 のフォント
-	const Font font20{ 20 };
-
-	// 基本サイズ 40 のフォント
-	const Font font40{ 40 };
-
-	// 基本サイズ 60 のフォント
-	const Font font60{ 60 };
-
-	// 基本サイズ 80 のフォント
-	const Font font80{ 80 };
-
-	const String text = U"Hello, Siv3D!";
-
-	while (System::Update())
-	{
-		font20(text).draw(40, 40);
-
-		font40(text).draw(40, 80);
-
-		font60(text).draw(40, 140);
-
-		font80(text).draw(40, 220);
-	}
-}
-```
-
-## 31.4 標準書体
-Siv3D には異なる太さの 7 種類の日本語フォントと、5 地域向けの CJK（中国語・韓国語・日本語対応）フォント、白黒絵文字フォント、カラー絵文字フォントが同梱されています。`Font` のコンストラクタにおいて `Typeface::` で書体を指定することで、それらの書体を利用できます。何も指定しなかった場合 `Typeface::Regular` が選択されます。
-
-|Typeface|説明|
-|--|--|
-|`Typeface::Thin`|細い日本語フォント|
-|`Typeface::Light`|やや細い日本語フォント|
-|`Typeface::Regular`|通常日本語フォント|
-|`Typeface::Medium`|やや太い日本語フォント|
-|`Typeface::Bold`|太い日本語フォント|
-|`Typeface::Heavy`|とても太い日本語フォント|
-|`Typeface::Black`|最も太い日本語フォント|
-|`Typeface::CJK_Regular_JP`|日本語デザインの CJK フォント|
-|`Typeface::CJK_Regular_KR`|韓国語デザインの CJK フォント|
-|`Typeface::CJK_Regular_SC`|簡体字デザインの CJK フォント|
-|`Typeface::CJK_Regular_TC`|台湾繁体字デザインの CJK フォント|
-|`Typeface::CJK_Regular_HK`|香港繁体字デザインの CJK フォント|
-|`Typeface::MonochromeEmoji`|モノクロ絵文字フォント|
-|`Typeface::ColorEmoji`|カラー絵文字フォント|
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/4.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-
-	const Font fontThin{ 36, Typeface::Thin };
-	const Font fontLight{ 36, Typeface::Light };
-	const Font fontRegular{ 36, Typeface::Regular };
-	const Font fontMedium{ 36, Typeface::Medium };
-	const Font fontBold{ 36, Typeface::Bold };
-	const Font fontHeavy{ 36, Typeface::Heavy };
-	const Font fontBlack{ 36, Typeface::Black };
-
-	const Font fontJP{ 36, Typeface::CJK_Regular_JP };
-	const Font fontKR{ 36, Typeface::CJK_Regular_KR };
-	const Font fontSC{ 36, Typeface::CJK_Regular_SC };
-	const Font fontTC{ 36, Typeface::CJK_Regular_TC };
-	const Font fontHK{ 36, Typeface::CJK_Regular_HK };
-
-	const Font fontMono{ 36, Typeface::MonochromeEmoji };
-
-	// カラー絵文字フォントは、サイズの指定が無視されます
-	const Font fontEmoji{ 36, Typeface::ColorEmoji };
-
-	const String s0 = U"Hello, Siv3D!";
-	const String s1 = U"こんにちは 你好 안녕하세요 骨曜喝愛遙扇";
-	const String s2 = U"🐈🐕🚀";
-
-	while (System::Update())
-	{
-		fontThin(s0).draw(40, 20);
-		fontLight(s0).draw(40, 60);
-		fontRegular(s0).draw(40, 100);
-		fontMedium(s0).draw(40, 140);
-		fontBold(s0).draw(40, 180);
-		fontHeavy(s0).draw(40, 220);
-		fontBlack(s0).draw(40, 260);
-
-		fontJP(s1).draw(40, 300);
-		fontKR(s1).draw(40, 340);
-		fontSC(s1).draw(40, 380);
-		fontTC(s1).draw(40, 420);
-		fontHK(s1).draw(40, 460);
-
-		fontMono(s2).draw(340, 20);
-		fontEmoji(s2).draw(340, 60);
-	}
-}
-```
-
 ## 31.5 フォントファイルからフォントを作成する
 コンピュータ上にあるフォントファイルから `Font` を作成するには、`Font` のコンストラクタに、読み込みたいフォントファイルのパスを渡します。ファイルパスは、実行ファイルがあるフォルダ（`App` フォルダ）を基準とする相対パスか、絶対パスを使用します。
 
@@ -660,13 +554,7 @@ void Main()
 ```
 
 ## 31.6 PC にインストールされているフォントを使う
-PC にインストールされているフォントは OS ごとに特殊なフォルダに保存されています。そのフォルダのパスを `FileSystem::GetFolderPath()` で取得し、フォントファイル名とつなげることで、ファイルパスを構築できます。`FileSystem::GetFolderPath()` に渡す `SpecialFolder` の種類と OS によって取得できるパスの対応表は次のとおりです。
 
-|                            | Windows             | macOS                  | Linux       |
-|----------------------------|:---------------------:|:------------------------:|:-------------:|
-| `SpecialFolder::SystemFonts` | (OS):/WINDOWS/Fonts/ | /System/Library/Fonts/ | /usr/share/fonts/ |
-| `SpecialFolder::LocalFonts`  | (OS):/WINDOWS/Fonts/ | /Library/Fonts/        | /usr/local/share/fonts/<br>(存在する場合) |
-| `SpecialFolder::UserFonts`   | (OS):/WINDOWS/Fonts/ | ~/Library/Fonts/       | /usr/local/share/fonts/<br>(存在する場合) |
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/6.png)
 
