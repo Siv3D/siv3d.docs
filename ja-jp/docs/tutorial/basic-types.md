@@ -37,6 +37,10 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+a: 123
+b: 100
+```
 
 
 ## 7.2 浮動小数点数
@@ -65,6 +69,10 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+a: 123.456
+b: 100.5
+```
 
 !!! info "Siv3D で開発者が float 型を使う場面は限られる"
 	- 計算リソースを少しでも節約したいゲーム開発では、通常、浮動小数点数処理に `float` 型を使うことが多いです
@@ -72,11 +80,12 @@ void Main()
 		- シミュレーションや科学技術計算など、精度が要求される用途で使われることも想定しているためです
 	- Siv3D エンジン内部では、精度よりも速度が重要な内部処理（描画など）では `float` 型で処理するなど、バランスを取っています
 	- シェーダの定数バッファ、行列、クォータニオン、FFT の結果など、開発者が使う API にも一部 `float` 型は登場します
+	- 通常は `double` 型を使い、必要なケースにだけ `float` 型を使うと良いでしょう
 
 
 ## 7.3 真偽値
 - プログラム中で Yes / No のような二択の状態を表す場合は、整数型ではなく、C++ 標準の真偽値 `bool` 型を使います
-- `bool` 型の値は `true` または `false` の 2 つのみです
+- `bool` 型の値は `true` または `false` の 2 種類のみです
 - `true` は真、`false` は偽を表します
 
 | 型名 | サイズ | 説明 | 値の範囲 |
@@ -100,15 +109,25 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+a: true
+b: false
+```
 
 
 ## 7.4 文字
 - 文字を扱うときは、UTF-32 形式の文字リテラルや、UTF-32 形式で文字を表現する `char32` 型を使います
-- `char` 型では、ひらがなの「あ」を 1 要素で表現できませんが、`char32` 型では 1 要素で表現できて便利です
 
 | 型名 | サイズ | 説明 | 値の範囲 |
 | --- | --- | --- | --- |
 | `char32` ★ | 4 バイト | UTF-32 エンコードの文字 | 0 ～ 0x10FFFF |
+
+- `char` 型では、ひらがなの「あ」を 1 要素で表現できませんが、`char32` 型では 1 要素で表現できて便利です
+
+```cpp
+char a = 'あ'; // NG
+char32 b = U'あ'; // OK
+```
 
 - `char32` 型の文字リテラルは、シングルクォーテーションの前に `U` を付けます 
 
@@ -120,8 +139,8 @@ void Main()
 	char32 c1 = U'A';
 	char32 c2 = U'あ';
 
-	Print << c1;
-	Print << c2;
+	Print << U"c1: " << c1;
+	Print << U"c2: " << c2;
 
 	while (System::Update())
 	{
@@ -129,12 +148,16 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+c1: A
+c2: あ
+```
 
 
 ## 7.5 文字列
 - 文字列を扱うときは、UTF-32 形式の文字列リテラルや、`String` クラスを使います
 	- `String` クラスは、UTF-32 形式の文字列を扱うためのクラスで、ざっくり言うと `char32` 版の `std::string` です
-	- **チュートリアル ??** で詳しく説明します
+	- **チュートリアル 34** で詳しく説明します
 - `std::string_view` に相当する `StringView` クラスもあります
 - 文字列がファイルパスを表す場合、それぞれの型エイリアス `FilePath`, `FilePathView` を使うとコードの可読性が向上します
 
@@ -156,9 +179,9 @@ void Main()
 	String s2 = U"こんにちは！";
 	FilePath s3 = U"example/windmill.png";
 
-	Print << s1;
-	Print << s2;
-	Print << s3;
+	Print << U"s1: " << s1;
+	Print << U"s2: " << s2;
+	Print << U"s3: " << s3;
 	Print << U"Siv3D!";
 
 	while (System::Update())
@@ -166,6 +189,12 @@ void Main()
 
 	}
 }
+```
+```txt title="出力"
+s1: Hello!
+s2: こんにちは！
+s3: example/windmill.png
+Siv3D!
 ```
 
 
@@ -177,7 +206,7 @@ void Main()
 	- **チュートリアル 22**  で詳しく説明します
 - 動的な二次元配列は `Grid<Type>` クラスで表現できます
 	- Type は要素の型です
-	- **チュートリアル ??** で詳しく説明します
+	- **チュートリアル 37** で詳しく説明します
 
 | 型名 | 説明 |
 | --- | --- |
@@ -194,8 +223,8 @@ void Main()
 	Array<int32> a = { 1, 2, 3, 4, 5 };
 	Grid<int32> b(4, 3, 0);
 
-	Print << a;
-	Print << b;
+	Print << U"a: " << a;
+	Print << U"b:\n" << b;
 
 	while (System::Update())
 	{
@@ -203,44 +232,62 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+a: {1, 2, 3, 4, 5}
+b:
+{{0, 0, 0, 0},
+{0, 0, 0, 0},
+{0, 0, 0, 0}}
+```
 
 
 ## 7.7 その他のデータ型
+- 任意の型に無効値の表現を追加する `Optional<Type>` クラスがあります
+	- Type は要素の型です
+	- **チュートリアル ??**  で詳しく説明します
 - ハッシュテーブルによる Set（要素が重複しない集合を扱えるコンテナ）は `HashSet<Type>` クラスを使います
 	- Type は要素の型です
 	- **チュートリアル ??**  で詳しく説明します
 - ハッシュテーブルによる Map（キーが重複しない、キーと値のペアの集合を扱えるコンテナ）は `HashTable<Key, Value>` クラスを使います
 	- Key はキーの型、Value は値の型です
 	- **チュートリアル ??**  で詳しく説明します
-- 任意の型に無効値の表現を追加する `Optional<Type>` クラスがあります
-	- Type は要素の型です
-	- **チュートリアル ??**  で詳しく説明します
 
 | 型名 | 説明 |
 | --- | --- |
+| `Optional<Type>` | 任意の型に無効値の表現を追加するクラス（C++ 標準の `std::optional` に相当）|
 | `HashSet<Type>` | ハッシュテーブルによる Set（C++ 標準の `std::unordered_set` に相当）|
 | `HashTable<Key, Value>` | ハッシュテーブルによる Map（C++ 標準の `std::unordered_map` に相当）|
-| `Optional<Type>` | 任意の型に無効値の表現を追加するクラス（C++ 標準の `std::optional` に相当）|
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	HashSet<int32> a = { 1, 2, 3, 4, 5 };
-	HashTable<int32, String> b = { { 1, U"one" }, { 2, U"two" }, { 3, U"three" } };
-	Optional<int32> c = 42;
-	Optional<int32> d = none;
+	Optional<int32> a = 42;
+	Optional<int32> b = none;
+	HashSet<int32> c = { 1, 2, 3, 4, 5 };
+	HashTable<int32, String> d = { { 1, U"one" }, { 2, U"two" }, { 3, U"three" } };
 
-	Print << a;
-	Print << b;
-	Print << c;
-	Print << d;
+	Print << U"a: " << a;
+	Print << U"b: " << b;
+	Print << U"c: " << c;
+	Print << U"d:\n" << d;
 
 	while (System::Update())
 	{
 
 	}
+}
+```
+```txt title="出力"
+a: (Optional)42
+b: none
+c: {4, 1, 5, 2, 3}
+d:
+{
+	{2:	two},
+	{1:	one},
+	{3:	three},
 }
 ```
 
