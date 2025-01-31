@@ -76,6 +76,7 @@ extra:
 nav:
   - Siv3D をはじめよう: index.md
   - Siv3D の機能: features.md
+  - リリースノート: releases.md
   - ダウンロード:
     - Windows: download/windows.md
     - macOS: download/macos.md
@@ -221,6 +222,6 @@ nav:
   - 協賛企業の募集:
     - 協賛企業の募集について: sponsorship/corporate-sponsor.md
     - 協賛特典: sponsorship/corporate-sponsor-guideline.md
-  - リリースノート: releases.md
+  - Steam: steam.md
   - Siv3D くん: mascot.md
   - 謝辞: acknowledgments.md
