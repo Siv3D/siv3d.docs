@@ -731,12 +731,10 @@ void Main()
 
 | コード | 説明 |
 |:---|:---|
-| `Time::GetSec()` | アプリケーションの起動からの経過時間（秒）を返す |
-| `Time::GetMillisec()` | アプリケーションの起動からの経過時間（ミリ秒）を返す |
-| `Time::GetMicrosec()` | アプリケーションの起動からの経過時間（マイクロ秒）を返す |
-| `Time::GetNanosec()` | アプリケーションの起動からの経過時間（ナノ秒）を返す |
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/time/14.png)
+| `Time::GetSec()` | アプリケーションの起動からの経過時間を秒単位で返す |
+| `Time::GetMillisec()` | アプリケーションの起動からの経過時間をミリ秒単位で返す |
+| `Time::GetMicrosec()` | アプリケーションの起動からの経過時間をマイクロ秒単位で返す |
+| `Time::GetNanosec()` | アプリケーションの起動からの経過時間をナノ秒単位で返す |
 
 ```cpp
 # include <Siv3D.hpp>
@@ -761,11 +759,9 @@ void Main()
 
 | コード | 説明 |
 |:---|:---|
-| `Time::GetSecSinceEpoch()` | 現在の UNIX 時間（秒）を返す |
-| `Time::GetMillisecSinceEpoch()` | 現在の UNIX 時間（ミリ秒）を返す |
-| `Time::GetMicrosecSinceEpoch()` | 現在の UNIX 時間（マイクロ秒）を返す |
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/time/15.png)
+| `Time::GetSecSinceEpoch()` | 現在の UNIX 時間を秒単位で返す |
+| `Time::GetMillisecSinceEpoch()` | 現在の UNIX 時間をミリ秒単位で返す |
+| `Time::GetMicrosecSinceEpoch()` | 現在の UNIX 時間をマイクロ秒単位で返す |
 
 ```cpp
 # include <Siv3D.hpp>
@@ -782,3 +778,75 @@ void Main()
 }
 ```
 
+
+## 30.16 日付と時刻クラス
+- 日付と時刻を扱うためのクラス `DateTime` が用意されています
+
+```cpp
+struct DateTime
+{
+	int32 year;
+	int32 month;
+	int32 day;
+	int32 hour;
+	int32 minute;
+	int32 second;
+	int32 milliseconds;
+};
+```
+
+- 時間型の値を使って加減算ができます
+- `DateTime::Now()` は現在の日付と時刻を `DateTime` 型で返します
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	// 現在の日付と時刻を取得
+	const DateTime t = DateTime::Now();
+	Print << t;
+	Print << t.year;
+	Print << t.month;
+	Print << t.day;
+	Print << t.hour;
+	Print << t.minute;
+	Print << t.second;
+	Print << t.milliseconds;
+
+	// 30 分前
+	Print << (t - 30min);
+
+	// 来週
+	Print << (t + 7_d);
+
+	// 2030 年まであと
+	const Duration s = (DateTime{ 2030, 1, 1 } - t);
+	Print << s;
+	Print << DaysF{ s };
+	Print << DurationCast<Days>(s);
+
+	while (System::Update())
+	{
+
+	}
+}
+```
+
+
+## 30.17 時差の取得
+- `Time::UTCOffsetMinutes()` は、使用しているコンピュータの、協定世界時 (UTC) との時差を分単位で返します
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Print << Time::UTCOffsetMinutes();
+
+	while (System::Update())
+	{
+
+	}
+}
+```
