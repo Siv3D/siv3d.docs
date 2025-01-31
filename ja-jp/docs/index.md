@@ -8,7 +8,7 @@
 
 [Windows :material-microsoft-windows:](download/windows.md){ .md-button .md-button--primary }[macOS :material-apple:](download/macos.md){ .md-button .md-button--primary }[Ubuntu :material-ubuntu:](download/ubuntu.md){ .md-button .md-button--primary }[Web * :material-web:](download/web.md){ .md-button .md-button--primary }
 
-<small>* Web 版は有志による非公式の拡張機能で、設定がやや複雑なため Siv3D 中級者以上向けです。</small>
+<small>* Web 版は有志による非公式の拡張機能です。設定が複雑なため Siv3D 中級者以上向けです。</small>
 
 <div class="grid cards" markdown>
 
