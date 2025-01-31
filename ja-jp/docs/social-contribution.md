@@ -1,10 +1,10 @@
-# 社会貢献活動
-Siv3D が取り組んできた社会貢献活動について紹介します。
+# 社会貢献
+Siv3D が取り組んできた活動について紹介します。
 
 ## 1. 教育プログラムの無償提供
 - 学校や地域コミュニティへ、無料訪問 Siv3D 勉強会を提供しています。全国 30 か所以上での開催実績があります（→ [**過去のイベント**](./community/history.md)）
 
-## 2. 学術・人材育成事業への貢献
+## 2. 学術・人材育成事業
 - 情報セキュリティ人材の発掘・育成事業 [**セキュリティ・キャンプ 2024 全国大会 :material-open-in-new:**](https://www.ipa.go.jp/jinzai/security-camp/2024/camp/zenkoku/index.html){:target="_blank"}  にて、C++ ライブラリ開発に関する講義を行いました
 - 情報セキュリティ人材の発掘・育成事業 [**セキュリティ・ミニキャンプ in 熊本 2024 :material-open-in-new:**](https://www.security-camp.or.jp/minicamp/kumamoto2024.html){:target="_blank"}  にて、C++ プログラミングに関する講義を行いました
 - 一般社団法人情報オリンピック日本委員会による夏季セミナーにて、Siv3D と C++ 開発に関する招待講演を行いました
