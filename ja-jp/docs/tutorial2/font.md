@@ -53,18 +53,30 @@
 - おもにテキスト内に絵文字や複数の言語を含む場合に使用します
 
 
-## 33.2 XXXXX
-- XXX
-	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/2.png)
+## 33.2 フォントの作成と描画
+
+### フォントの作成
+- フォントの作成にはいくつかの方法があります
+    - 標準書体から作成
+    - フォントファイルから作成
+    - PC にインストールされているフォントファイルから作成
+
+### テキストの描画
+- `Font` オブジェクトの `()` 演算子にテキストを渡すと `DrawableText` オブジェクトが得られます
+- 実際にテキストを描画するには、`DrawableText` のメンバ関数を使います
+    - 左上座標を指定した描画 `.draw()`
+    - 中心座標を指定した描画 `.drawAt()`
+    - それ以外の座標を指定した描画 `.draw(Args::...)`
 
 ```cpp
-
+font(U"Hello, Siv3D!").draw(40, Vec2{ 40, 40 });
 ```
 
 
-## 33.3 XXXXX
-- XXX
+## 33.3 標準書体からフォントを作成する
+- `Font font{ 基本サイズ };` で標準書体のフォントを作成します（ビットマップ方式）
+- `Font font{ FontMethod::SDF, 基本サイズ };` で SDF 方式のフォントを作成します
+- `Font font{ FontMethod::MSDF, 基本サイズ };` で MSDF 方式のフォントを作成します
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/3.png)
 
