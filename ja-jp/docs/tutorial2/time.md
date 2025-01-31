@@ -243,8 +243,6 @@ void Main()
 - 時間型は相互に変換可能です
 - 浮動小数点数で表現する時間型 → 整数で表現する時間型の変換には `DurationCast<Type>()` が必要です
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/time/6.png)
-
 ```cpp
 # include <Siv3D.hpp>
 
@@ -442,7 +440,7 @@ void Main()
 
 	#### サンプルコード
 
-	![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/time/9-1.png)
+	![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/time/9.png)
 
 	```cpp
 	# include <Siv3D.hpp>
@@ -498,7 +496,7 @@ void Main()
 
 	#### サンプルコード
 
-	![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/time/9-2.png)
+	![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/time/9.png)
 
 	```cpp
 	# include <Siv3D.hpp>
