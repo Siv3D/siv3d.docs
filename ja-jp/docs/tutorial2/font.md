@@ -73,29 +73,122 @@ font(U"Hello, Siv3D!").draw(40, Vec2{ 40, 40 });
 ```
 
 
-## 33.3 標準書体からフォントを作成する
-- `Font font{ 基本サイズ };` で標準書体のフォントを作成します（ビットマップ方式）
-- `Font font{ FontMethod::SDF, 基本サイズ };` で SDF 方式のフォントを作成します
-- `Font font{ FontMethod::MSDF, 基本サイズ };` で MSDF 方式のフォントを作成します
+## 33.3 フォントを作成する
+- Siv3D には、いくつかの標準書体が用意されています
+- フォントの作成時に書体を指定しなかった場合、標準書体（レギュラー）が使われます
+- フォントは 3 種類の描画方式で作成できます
+	- ビットマップ方式
+	- SDF 方式
+	- MSDF 方式
+- フォントの作成時に方式を指定しなかった場合、ビットマップ方式が使われます
+
+| コード | 説明 |
+| --- | --- |
+| `Font font{ 基本サイズ };` | ビットマップ方式で標準書体（レギュラー）のフォントを作成 |
+| `Font font{ FontMethod::Bitmap, 基本サイズ };` | ビットマップ方式で標準書体（レギュラー）のフォントを作成 |
+| `Font font{ FontMethod::SDF, 基本サイズ };` | SDF 方式で標準書体（レギュラー）のフォントを作成 |
+| `Font font{ FontMethod::MSDF, 基本サイズ };` | MSDF 方式で標準書体（レギュラー）のフォントを作成 |
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/3.png)
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font fontBitmap{ 48 };
+	const Font fontSDF{ FontMethod::SDF, 48 };
+	const Font fontMSDF{ FontMethod::MSDF, 48 };
+
+	while (System::Update())
+	{
+		fontBitmap(U"Hello, Siv3D!").draw(Vec2{ 40, 100 }, ColorF{ 0.2 });
+		fontSDF(U"Hello, Siv3D!").draw(Vec2{ 40, 200 }, ColorF{ 0.2 });
+		fontMSDF(U"Hello, Siv3D!").draw(Vec2{ 40, 300 }, ColorF{ 0.2 });
+	}
+}
 ```
 
 
-## 33.4 XXXXX
-- XXX
+## 33.4 標準書体
+- Siv3D には異なる太さの 7 種類の日本語書体と、5 地域向けの CJK（中国語・韓国語・日本語対応）書体、白黒絵文字書体、カラー絵文字書体が標準書体として同梱されています
+- `Font` のコンストラクタにおいて `Typeface::` で書体を指定することで、それらの書体からフォントを作成できます
+
+| コード |説明|
+|--|--|
+|`Typeface::Thin`|細い日本語書体|
+|`Typeface::Light`|やや細い日本語書体|
+|`Typeface::Regular`|通常日本語書体|
+|`Typeface::Medium`|やや太い日本語書体|
+|`Typeface::Bold`|太い日本語書体|
+|`Typeface::Heavy`|とても太い日本語書体|
+|`Typeface::Black`|最も太い日本語書体|
+|`Typeface::CJK_Regular_JP`|日本語デザインの CJK 書体|
+|`Typeface::CJK_Regular_KR`|韓国語デザインの CJK 書体|
+|`Typeface::CJK_Regular_SC`|簡体字デザインの CJK 書体|
+|`Typeface::CJK_Regular_TC`|台湾繁体字デザインの CJK 書体|
+|`Typeface::CJK_Regular_HK`|香港繁体字デザインの CJK 書体|
+|`Typeface::MonochromeEmoji`|モノクロ絵文字書体|
+|`Typeface::ColorEmoji`|カラー絵文字書体|
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/4.png)
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font fontThin{ FontMethod::MSDF, 48, Typeface::Thin };
+	const Font fontLight{ FontMethod::MSDF, 48, Typeface::Light };
+	const Font fontRegular{ FontMethod::MSDF, 48, Typeface::Regular };
+	const Font fontMedium{ FontMethod::MSDF, 48, Typeface::Medium };
+	const Font fontBold{ FontMethod::MSDF, 48, Typeface::Bold };
+	const Font fontHeavy{ FontMethod::MSDF, 48, Typeface::Heavy };
+	const Font fontBlack{ FontMethod::MSDF, 48, Typeface::Black };
+
+	const Font fontJP{ FontMethod::MSDF, 48, Typeface::CJK_Regular_JP };
+	const Font fontKR{ FontMethod::MSDF, 48, Typeface::CJK_Regular_KR };
+	const Font fontSC{ FontMethod::MSDF, 48, Typeface::CJK_Regular_SC };
+	const Font fontTC{ FontMethod::MSDF, 48, Typeface::CJK_Regular_TC };
+	const Font fontHK{ FontMethod::MSDF, 48, Typeface::CJK_Regular_HK };
+
+	const Font fontMono{ FontMethod::MSDF, 48, Typeface::MonochromeEmoji };
+
+	// カラー絵文字フォントでは、方式・基本サイズが無視される
+	const Font fontEmoji{ FontMethod::MSDF, 48, Typeface::ColorEmoji };
+
+	const String s0 = U"Hello, Siv3D!";
+	const String s1 = U"こんにちは 你好 안녕하세요 骨曜喝愛遙扇";
+	const String s2 = U"🐈🐕🚀";
+
+	while (System::Update())
+	{
+		fontThin(s0).draw(36, Vec2{ 40, 20 }, ColorF{ 0.2 });
+		fontLight(s0).draw(36, Vec2{ 40, 60 }, ColorF{ 0.2 });
+		fontRegular(s0).draw(36, Vec2{ 40, 100 }, ColorF{ 0.2 });
+		fontMedium(s0).draw(36, Vec2{ 40, 140 }, ColorF{ 0.2 });
+		fontBold(s0).draw(36, Vec2{ 40, 180 }, ColorF{ 0.2 });
+		fontHeavy(s0).draw(36, Vec2{ 40, 220 }, ColorF{ 0.2 });
+		fontBlack(s0).draw(36, Vec2{ 40, 260 }, ColorF{ 0.2 });
+
+		fontJP(s1).draw(36, Vec2{ 40, 300 }, ColorF{ 0.2 });
+		fontKR(s1).draw(36, Vec2{ 40, 340 }, ColorF{ 0.2 });
+		fontSC(s1).draw(36, Vec2{ 40, 380 }, ColorF{ 0.2 });
+		fontTC(s1).draw(36, Vec2{ 40, 420 }, ColorF{ 0.2 });
+		fontHK(s1).draw(36, Vec2{ 40, 460 }, ColorF{ 0.2 });
+
+		fontMono(s2).draw(36, Vec2{ 340, 20 }, ColorF{ 0.2 });
+		fontEmoji(s2).draw(36, Vec2{ 500, 20 });
+	}
+}
 ```
 
 
-## 33.5 XXXXX
+## 33.5 フォントファイルから作成
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/5.png)
@@ -105,7 +198,7 @@ font(U"Hello, Siv3D!").draw(40, Vec2{ 40, 40 });
 ```
 
 
-## 33.6 XXXXX
+## 33.6 PC にインストールされているフォントファイルから作成
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/6.png)
@@ -115,7 +208,7 @@ font(U"Hello, Siv3D!").draw(40, Vec2{ 40, 40 });
 ```
 
 
-## 33.7 XXXXX
+## 33.7 空のフォント
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/7.png)
@@ -125,7 +218,7 @@ font(U"Hello, Siv3D!").draw(40, Vec2{ 40, 40 });
 ```
 
 
-## 33.8 XXXXX
+## 33.8 左上座標を指定した描画
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/8.png)
@@ -135,7 +228,7 @@ font(U"Hello, Siv3D!").draw(40, Vec2{ 40, 40 });
 ```
 
 
-## 33.9 XXXXX
+## 33.9 中心座標を指定した描画
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/9.png)
@@ -145,7 +238,7 @@ font(U"Hello, Siv3D!").draw(40, Vec2{ 40, 40 });
 ```
 
 
-## 33.10 XXXXX
+## 33.10 ベースラインを指定した描画
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/10.png)
@@ -155,7 +248,7 @@ font(U"Hello, Siv3D!").draw(40, Vec2{ 40, 40 });
 ```
 
 
-## 33.11 XXXXX
+## 33.11 それ以外の座標を指定した描画
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/11.png)
@@ -165,7 +258,7 @@ font(U"Hello, Siv3D!").draw(40, Vec2{ 40, 40 });
 ```
 
 
-## 33.12 XXXXX
+## 33.12 長方形の中に収めた描画
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/12.png)
@@ -175,7 +268,7 @@ font(U"Hello, Siv3D!").draw(40, Vec2{ 40, 40 });
 ```
 
 
-## 33.13 XXXXX
+## 33.13 描画される領域の取得
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/13.png)
@@ -189,6 +282,96 @@ font(U"Hello, Siv3D!").draw(40, Vec2{ 40, 40 });
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/14.png)
+
+```cpp
+
+```
+
+
+## 33.15 XXXXX
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/15.png)
+
+```cpp
+
+```
+
+
+## 33.16 XXXXX
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/16.png)
+
+```cpp
+
+```
+
+
+## 33.17 XXXXX
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/17.png)
+
+```cpp
+
+```
+
+
+## 33.18 XXXXX
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/18.png)
+
+```cpp
+
+```
+
+
+## 33.19 XXXXX
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/19.png)
+
+```cpp
+
+```
+
+
+## 33.20 XXXXX
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/20.png)
+
+```cpp
+
+```
+
+
+## 33.21 XXXXX
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/21.png)
+
+```cpp
+
+```
+
+
+## 33.22 XXXXX
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/22.png)
+
+```cpp
+
+```
+
+
+## 33.23 XXXXX
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/23.png)
 
 ```cpp
 
