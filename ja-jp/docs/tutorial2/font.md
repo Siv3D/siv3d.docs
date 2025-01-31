@@ -227,7 +227,10 @@ void Main()
 
 
 ## 33.7 空のフォント
-- XXX
+- `Font` 型のオブジェクトは、デフォルトでは**空のフォント**を持っています
+- 空のフォントを使用してもエラーにはなりませんが、何も描画されません
+- フォントファイルのロードに失敗した場合にも空のテクスチャになります
+- 空のフォントであるかを調べるには、`if (font.isEmpty())`, `if (font)`, `if (not font)` を使います
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/7.png)
 
@@ -237,7 +240,8 @@ void Main()
 
 
 ## 33.8 文字列のフォーマット
-- XXX
+- 作成したフォント `font` を使い、`font(テキスト).draw(サイズ, pos, 色);` のようにして、サイズ・位置・色を指定してテキストを表示します
+- `font(テキスト)` のテキストの部分には、文字列だけでなく、`Print` 可能な値（数値や `Point` など）をいくつでも記述できます
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/8.png)
 
@@ -247,7 +251,7 @@ void Main()
 
 
 ## 33.9 改行
-- XXX
+- テキストの中に改行文字 `'\n'` が含まれていると、そこで改行されます
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/9.png)
 
@@ -257,8 +261,9 @@ void Main()
 
 
 ## 33.10 左上座標を指定した描画
-- XXX
-	
+- 左上の座標を指定してテキストを描画するには、`font(テキスト).draw()` を使います
+
+
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/10.png)
 
 ```cpp
@@ -525,117 +530,6 @@ void Main()
 	while (System::Update())
 	{
 		font(U"Hello,\nSiv3D\n\n!!!").draw(40, 40);
-	}
-}
-```
-
-## 31.5 フォントファイルからフォントを作成する
-コンピュータ上にあるフォントファイルから `Font` を作成するには、`Font` のコンストラクタに、読み込みたいフォントファイルのパスを渡します。ファイルパスは、実行ファイルがあるフォルダ（`App` フォルダ）を基準とする相対パスか、絶対パスを使用します。
-
-例えば `U"example/font/RocknRoll/RocknRollOne-Regular.ttf"` とすると、実行ファイルがあるフォルダ（開発中は `App` フォルダ）の `example/font/RocknRoll` フォルダの `RocknRollOne-Regular.ttf` というファイルを指します。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/5.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-
-	// RocknRollOne-Regular.ttf をロードして使う
-	const Font font{ 50, U"example/font/RocknRoll/RocknRollOne-Regular.ttf" };
-
-	while (System::Update())
-	{
-		font(U"Hello, Siv3D!\nこんにちは！").draw(40, 40);
-	}
-}
-```
-
-## 31.6 PC にインストールされているフォントを使う
-
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/6.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-
-# if SIV3D_PLATFORM(WINDOWS)
-
-	const FilePath path = (FileSystem::GetFolderPath(SpecialFolder::SystemFonts) + U"arial.ttf");
-
-# elif SIV3D_PLATFORM(MACOS)
-
-	const FilePath path = (FileSystem::GetFolderPath(SpecialFolder::SystemFonts) + U"Helvetica.dfont");
-
-# endif
-
-	Print << path;
-
-	const Font font{ 60, path };
-
-	while (System::Update())
-	{
-# if SIV3D_PLATFORM(WINDOWS)
-
-		font(U"Arial").draw(40, 40);
-
-# elif SIV3D_PLATFORM(MACOS)
-
-		font(U"Helvetica").draw(40, 40);
-
-# endif
-	}
-}
-```
-
-`FilePath` は `String` の別名です。`String` と同じように扱えます。
-
-`SIV3D_PLATFORM(WINDOWS)` や `SIV3D_PLATFORM(MACOS)` は Siv3D でプラットフォーム別のコードを書くときに使えるマクロです。
-
-
-## 31.7 空のフォント
-`Font` 型の変数は、デフォルトでは**空のフォント**を持っています。フォントの作成やロードに失敗した場合も空のフォントになります。
-
-空のフォントは、**使用してもエラーにはなりませんが、描画しても何も表示されません。**
-
-空のフォントであるかを調べるには、`if (font.isEmpty())`, `if (font)`, `if (not font)` を使います。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/7.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-
-	Font font1;
-
-	Print << font1.isEmpty();
-
-	// テクスチャを代入する
-	font1 = Font{ 40 };
-
-	Print << font1.isEmpty();
-
-	// 存在しないフォントファイルを指定する
-	const Font font2{ 40, U"example/aaa.ttf" };
-
-	if (not font2)
-	{
-		Print << U"Failed to load a font";
-	}
-
-	while (System::Update())
-	{
-		// 空のフォントを使って描画する
-		font2(U"Hello, Siv3D!").draw(40, 40);
 	}
 }
 ```
