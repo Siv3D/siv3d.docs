@@ -263,6 +263,12 @@ void Main()
 ## 33.10 左上座標を指定した描画
 - 左上の座標を指定してテキストを描画するには、`font(テキスト).draw()` を使います
 
+| コード | 説明 |
+| --- | --- |
+| `.draw(x, y, color);` | 左上座標 `(x, y)` からテキストを描画 |
+| `.draw(pos, color);` | 左上座標 `pos` からテキストを描画 |
+| `.draw(fontSize, x, y, color);` | フォントサイズ `fontSize` で、左上座標 `(x, y)` からテキストを描画 |
+| `.draw(fontSize, pos, color);` | フォントサイズ `fontSize` で、左上座標 `pos` からテキストを描画 |
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/10.png)
 
@@ -272,7 +278,14 @@ void Main()
 
 
 ## 33.11 中心座標を指定した描画
-- XXX
+- 中心の座標を指定してテキストを描画するには、`font(テキスト).drawAt()` を使います
+
+| コード | 説明 |
+| --- | --- |
+| `.drawAt(x, y, color);` | 中心座標 `(x, y)` からテキストを描画 |
+| `.drawAt(pos, color);` | 中心座標 `pos` からテキストを描画 |
+| `.drawAt(fontSize, x, y, color);` | フォントサイズ `fontSize` で、中心座標 `(x, y)` からテキストを描画 |
+| `.drawAt(fontSize, pos, color);` | フォントサイズ `fontSize` で、中心座標 `pos` からテキストを描画 |
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/11.png)
 
@@ -282,8 +295,16 @@ void Main()
 
 
 ## 33.12 ベースラインを指定した描画
-- XXX
-	
+- ベースラインの開始位置を指定してテキストを描画するには、`font(テキスト).drawBase()` を使います
+	- フォントサイズが異なるテキストを描画する際に、ベースラインを揃えることができます
+
+| コード | 説明 |
+| --- | --- |
+| `.drawBase(x, y, color);` | ベースラインの開始位置 `(x, y)` からテキストを描画 |
+| `.drawBase(pos, color);` | ベースラインの開始位置 `pos` からテキストを描画 |
+| `.drawBase(fontSize, x, y, color);` | フォントサイズ `fontSize` で、ベースラインの開始位置 `(x, y)` からテキストを描画 |
+| `.drawBase(fontSize, pos, color);` | フォントサイズ `fontSize` で、ベースラインの開始位置 `pos` からテキストを描画 |
+
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/12.png)
 
 ```cpp
@@ -292,7 +313,22 @@ void Main()
 
 
 ## 33.13 それ以外の座標を指定した描画
-- XXX
+- - **右端の中心位置**を指定し、それに合わせてテキストを描画するには、次の方法を使います
+	- `.draw(Arg::topRight = pos, ...)`
+	- `.draw(Arg::topRight(x, y), ...)
+- このように指定できる基準位置は、全部で 9 種類あります
+
+| 基準位置 | 説明 |
+|---|---|
+| `Arg::topLeft` | 左上。`.draw()` と同じ |
+| `Arg::topCenter` | 上辺の中央 |
+| `Arg::topRight` | 右上|
+| `Arg::leftCenter` | 左辺の中央 |
+| `Arg::center` | 中心。`.drawAt()` と同じ |
+| `Arg::rightCenter` | 右辺の中央 |
+| `Arg::bottomLeft` | 左下 |
+| `Arg::bottomCenter` | 下辺の中央 |
+| `Arg::bottomRight` | 右下 |
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/13.png)
 
@@ -302,7 +338,17 @@ void Main()
 
 
 ## 33.14 長方形の中に収めた描画
-- XXX
+- テキストを指定した長方形の中に収まるように描画するには、`font(テキスト).draw(rect)` を使います
+
+| コード | 説明 |
+| --- | --- |
+| `.draw(rect, color);` | 長方形 `rect` の中に収まるようにテキストを描画 |
+| `.draw(fontSize, rect, color);` | フォントサイズ `fontSize` で、長方形 `rect` の中に収まるようにテキストを描画 |
+
+
+- 
+
+座標の代わりに `Rect` または `RectF` を渡すと、テキストをその長方形の中に収まるように描画します。テキストのすべての文字が長方形内に収まった場合、関数は `true` を返します。一方、テキストがあふれる場合、最後の文字が `…` に置き換えられ、関数は `false` を返します。
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/14.png)
 
@@ -751,19 +797,6 @@ void Main()
 
 
 ## 31.13 描画の基準位置をカスタマイズする
-左上、中心以外を基準座標とする場合は、次の表のパターンを使って、`.draw(Arg::bottomRight(x, y))` あるいは `.draw(Arg::bottomRight = pos)` のようにします。この場合、テキストの右下が `x, y` または `pos` で指定した位置になるように描画されます。
-
-| 座標指定 | 説明 |
-|---|---|
-| `Arg::topLeft` | テキストの左上の位置を指定する（通常の `.draw()` と同じ） |
-| `Arg::topCenter` | テキストの上辺の中央を指定する |
-| `Arg::topRight` | テキストの右上の位置を指定する |
-| `Arg::leftCenter` | テキストの左辺の中央を指定する |
-| `Arg::center` | テキストの中心を指定する（通常の `.drawAt()` と同じ） |
-| `Arg::rightCenter` | テキストの右辺の中央を指定する |
-| `Arg::bottomLeft` | テキストの左下の位置を指定する |
-| `Arg::bottomCenter` | テキストの下辺の中央を指定する |
-| `Arg::bottomRight` | テキストの右下の位置を指定する |
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/13.png)
 
