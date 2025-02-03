@@ -53,6 +53,11 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+ 
+Siv3D
+AAAAA
+```
 
 
 ## 33.3 文字列の長さ
@@ -93,6 +98,12 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+5
+5
+1
+3
+```
 
 
 ## 33.4 文字列が空であるかを調べる（1）
@@ -114,6 +125,10 @@ void Main()
 
 	}
 }
+```
+```txt title="出力"
+false
+true
 ```
 
 
@@ -146,6 +161,10 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+s1 is not empty
+s2 is empty
+```
 
 
 ## 33.6 末尾に要素を追加する
@@ -172,6 +191,10 @@ void Main()
 
 	}
 }
+```
+```txt title="出力"
+Siv
+Siv3D
 ```
 
 
@@ -208,6 +231,12 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+Siv3D
+Siv3
+Siv
+true
+```
 
 
 ## 33.8 すべての要素を削除する
@@ -222,7 +251,7 @@ void Main()
 	String s = U"Siv3D";
 	Print << s;
 
-	v.clear();
+	s.clear();
 	Print << s.isEmpty();
 
 	while (System::Update())
@@ -230,6 +259,10 @@ void Main()
 
 	}
 }
+```
+```txt title="出力"
+Siv3D
+true
 ```
 
 
@@ -259,6 +292,11 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+Siv3D
+Siv
+Siv!?
+```
 
 
 ## 33.10 範囲 for 文で配列を走査する（const 参照）
@@ -284,6 +322,13 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+S
+i
+v
+3
+D
+```
 
 
 ## 33.11 範囲 for 文で配列を走査する（参照）
@@ -298,7 +343,7 @@ void Main()
 {
 	String s = U"Siv3D";
 
-	for (const auto& ch : s)
+	for (auto& ch : s)
 	{
 		++ch;
 	}
@@ -310,6 +355,9 @@ void Main()
 
 	}
 }
+```
+```txt title="出力"
+Tjw4E
 ```
 
 
@@ -338,6 +386,11 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+S
+D
+Siv4D
+```
 
 
 ## 33.13 先頭・末尾の要素にアクセスする
@@ -357,7 +410,7 @@ void Main()
 	Print << s.front();
 	Print << s.back();
 
-	s.front() = U's'
+	s.front() = U's';
 	s.back() = U'd';
 	Print << s;
 
@@ -366,6 +419,11 @@ void Main()
 
 	}
 }
+```
+```txt title="出力"
+S
+D
+siv3d
 ```
 
 
@@ -389,6 +447,10 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+Hello, Siv3D!
+Hello, Siv3D!!!!
+```
 
 
 ## 33.15 末尾に文字列を追加する
@@ -411,6 +473,10 @@ void Main()
 
 	}
 }
+```
+```txt title="出力"
+Hello, Siv3D!
+Hello, Siv3D!!!!
 ```
 
 
@@ -439,6 +505,10 @@ void Main()
 
 	}
 }
+```
+```txt title="出力"
+S
+i
 ```
 
 
@@ -476,7 +546,7 @@ void Main()
 	{
 		String s = U"Siv3D";
 
-		s.erase(v.begin() + 3);
+		s.erase(s.begin() + 3);
 		Print << s;
 
 		s.erase(s.begin(), (s.begin() + 2));
@@ -488,6 +558,13 @@ void Main()
 
 	}
 }
+```
+```txt title="出力"
+#Siv3D
+Siv3D
+Siv#3D
+SivD
+vD
 ```
 
 
@@ -515,6 +592,14 @@ void Main()
 
 	}
 }
+```
+```txt title="出力"
+true
+true
+false
+true
+true
+false
 ```
 
 
@@ -549,6 +634,16 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+true
+false
+true
+false
+true
+false
+true
+false
+```
 
 
 ## 33.20 部分文字列を作成する
@@ -574,6 +669,12 @@ void Main()
 
 	}
 }
+```
+```txt title="出力"
+Hello
+Siv
+Siv3D!
+Hello, Siv3D!
 ```
 
 - 次のように、時間経過に応じて文字列を表示するプログラムに応用することができます
@@ -622,6 +723,10 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+こんにちは、siv3d!
+こんにちは、SIV3D!
+```
 
 
 ## 33.22 文字列を逆順にする
@@ -635,7 +740,7 @@ void Main()
 
 void Main()
 {
-	const String s1 = U"こんにちは、Siv3D!";
+	const String s1 = U"Hello, Siv3D!";
 
 	// 逆順にした新しい文字列を作成する
 	Print << s1.reversed();
@@ -652,6 +757,10 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+!D3viS ,olleH
+!D3viS ,olleH
+```
 
 
 ## 33.23 文字列の要素をシャッフルする
@@ -665,7 +774,7 @@ void Main()
 
 void Main()
 {
-	const String s1 = U"こんにちは、Siv3D!";
+	const String s1 = U"Hello, Siv3D!";
 	
 	// シャッフルした新しい文字列を作成する
 	Print << s1.shuffled();
@@ -681,6 +790,10 @@ void Main()
 
 	}
 }
+```
+```txt title="出力例"
+vel SDH!,loi3
+3 lo!vl,SHDie
 ```
 
 
@@ -713,6 +826,11 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+Hello, C++!
+Hello, Siv3D?
+Hi, Siv3D?
+```
 
 
 ## 33.25 前後の空白文字を削除する
@@ -743,6 +861,11 @@ void Main()
 
 	}
 }
+```
+```txt title="出力"
+Hello, Siv3D!
+13
+Siv3D
 ```
 
 
@@ -785,6 +908,11 @@ void Main()
 
 	}
 }
+```
+```txt title="出力"
+{red, green, blue}
+{, , a, }
+{1, 2, 3, 4, 5}
 ```
 
 
@@ -860,5 +988,28 @@ void Main()
 
 	}
 }
+```
+
+
+## 33.29 FilePath
+- ファイルパスを指す文字列であることを明示するために、`String` のエイリアスとして `FilePath` が用意されています
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	FilePath path = U"example/windmill.png";
+
+	Print << path;
+
+	while (System::Update())
+	{
+
+	}
+}
+```
+```txt title="出力"
+example/windmill.png
 ```
 
