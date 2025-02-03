@@ -1,10 +1,10 @@
-# 33. 文字を描く
+# 34. 文字を描く
 フォントを使って様々なスタイルのテキストを描く方法を学びます。
 
-## 33.1 フォントの基本
+## 34.1 フォントの基本
 - 画面にテキストを描画するときのフォントは `Font` クラスで管理します
 
-### 33.1.1 描画方式
+### 34.1.1 描画方式
 - 通常のフォントは、**描画方式** を次の 3 つから選ぶことができます
 	- **ビットマップ方式：**フォントの文字画像データをビットマップとして保存します。基本サイズ以上に拡大描画すると品質が低下します。常に固定サイズでフォントを描画する場合や、複雑な字形の書体を用いる場合に適しています
 	- **SDF 方式：**フォントの文字画像データを 1 チャンネルの SDF（Signed Distance Field）として保存します。基本サイズ以上に拡大描画しても品質が維持されます。影や輪郭エフェクトを追加できます。文字の角が少し丸くなる副作用があります
@@ -20,7 +20,7 @@
 - 一部の書体は、ビットマップ方式しか選択できません
 - 描画方式はフォントを作成するときに指定し、あとから変更できません
 
-### 33.1.2 基本サイズ
+### 34.1.2 基本サイズ
 - 個々の文字画像データはエンジン内部で作成され、メモリ上にキャッシュ（保存）されます
 - このときキャッシュされる文字画像のサイズを **基本サイズ** と呼びます
 - 基本サイズはフォントを作成するときに指定し、あとから変更できません
@@ -36,65 +36,65 @@
     - 一方で、大きな基本サイズは、メモリの消費量と、実行時の文字画像キャッシュ作成時間を増加させるため、バランスを考えて選ぶ必要があります
 
 #### 実行中のコスト
-- 文字画像データは、実行中に必要に応じて作成され、キャッシュされます（**33.27** 参照）
+- 文字画像データは、実行中に必要に応じて作成され、キャッシュされます（**34.27** 参照）
 - あるフレームで、キャッシュに存在しないたくさんの新しい字種を描画する場合、それらの文字画像データを一度に作成する必要があるため、そのフレームの処理時間が増加します
 - とくに SDF / MSDF 方式では、1 つあたりの文字画像データの作成に時間がかかるため、実行時に目立つ遅延が発生する可能性があります
-- **33.28** のプリロード機能を使って、あらかじめ必要な文字画像データを作成しておくことで、実行時の遅延を軽減できます
+- **34.28** のプリロード機能を使って、あらかじめ必要な文字画像データを作成しておくことで、実行時の遅延を軽減できます
 
-### 33.1.3 書体
+### 34.1.3 書体
 - 「メイリオ」「Arial」など、フォントの種類を**書体**と呼びます
 - 書体はフォントを作成するときに指定し、あとから変更できません
 - 書体を指定しない場合は、Siv3D に同梱されている標準書体（レギュラー）が使われます
 
-### 33.1.4 フォントスタイル
+### 34.1.4 フォントスタイル
 - 一部の書体は、**フォントスタイル** を指定することで、太字や斜体、ビットマップフォントなどのスタイルを変更できます
 - フォントスタイルはフォントを作成するときに指定し、あとから変更できません
 - フォントスタイルを指定しない場合は、通常のフォントが作成されます
 
-### 33.1.5 テキストスタイル
+### 34.1.5 テキストスタイル
 - SDF / MSDF 方式のフォントでは、次のような **テキストスタイル** をテキスト描画時に適用できます
 	- **影：**任意方向に影を追加します
 	- **輪郭：**文字に輪郭を追加します
 - テキストスタイルは、フォントを使った個々のテキスト描画時に指定します
 - テキストスタイルを指定しない場合は、通常のスタイルで描画されます
 
-### 33.1.6 画像バッファ幅
+### 34.1.6 画像バッファ幅
 - 画像バッファ幅は、文字画像データを作成するときの、文字の周囲の余白の幅です
 - デフォルトでは `2` が使われます
 - SDF / MSDF 方式で大きな影や輪郭を作りたい場合、大きめの画像バッファ幅を指定しないと、影や輪郭が切れてしまうことがあります
 - 画像バッファ幅はフォント作成後に `.setBufferThickness()` で指定します
 - 大きな画像バッファ幅は、メモリの消費量と、実行時の文字画像キャッシュ作成時間を増加させるため、バランスを考えて選ぶ必要があります
 
-### 33.1.7 フォントのフォールバック
+### 34.1.7 フォントのフォールバック
 - 1 つの書体では、必要なすべての文字をカバーできない場合があります
 - そこで、別の書体のフォントを**フォールバック**として登録し、メインの書体でカバーできない文字を別のフォントでカバーすることができます
 - おもにテキスト内に複数の言語や絵文字を含む場合に使用します
 
-## 33.2 フォントの作成と描画
+## 34.2 フォントの作成と描画
 
 ### フォントの作成
 - フォントの作成にはいくつかの方法があります
-    - **33.3, 33.4** 標準書体から作成
-    - **33.5** フォントファイルから作成
-    - **33.6** PC にインストールされているフォントファイルから作成
+    - **34.3, 34.4** 標準書体から作成
+    - **34.5** フォントファイルから作成
+    - **34.6** PC にインストールされているフォントファイルから作成
 - フォントの作成にはコストがかかるため、通常はメインループの前で行います
 - メインループ内で作成する場合には、毎フレーム作成されないような制御が必要です
 
 ### テキストの描画
 - `Font` オブジェクトの `()` 演算子にテキストを渡すと `DrawableText` オブジェクトが得られます
 - 実際にテキストを描画するには、`DrawableText` のメンバ関数を使います
-    - **33.10** 左上座標を指定した描画 `.draw()`
-    - **33.11** 中心座標を指定した描画 `.drawAt()`
-	- **33.12** ベースラインを指定した描画 `.drawBase()`
-	- **33.13** それ以外の座標を指定した描画 `.draw(Args::...)`
-    - **33.14** 長方形を指定した描画 `.draw(rect)`
+    - **34.10** 左上座標を指定した描画 `.draw()`
+    - **34.11** 中心座標を指定した描画 `.drawAt()`
+	- **34.12** ベースラインを指定した描画 `.drawBase()`
+	- **34.13** それ以外の座標を指定した描画 `.draw(Args::...)`
+    - **34.14** 長方形を指定した描画 `.draw(rect)`
 
 ```cpp
 font(U"Hello, Siv3D!").draw(40, Vec2{ 40, 40 });
 ```
 
 
-## 33.3 標準書体（1）
+## 34.3 標準書体（1）
 - Siv3D には、いくつかの標準書体が用意されています
 - フォントの作成時に書体を指定しなかった場合、標準書体（レギュラー）が使われます
 - フォントは 3 種類の描画方式で作成できます
@@ -133,7 +133,7 @@ void Main()
 ```
 
 
-## 33.4 標準書体（2）
+## 34.4 標準書体（2）
 - Siv3D には次の書体が標準書体として同梱されています
 	- 異なる太さの 7 種類の日本語書体
 	- 5 地域向けの CJK（中国語・韓国語・日本語対応）書体
@@ -213,7 +213,7 @@ void Main()
 ```
 
 
-## 33.5 フォントファイルから作成
+## 34.5 フォントファイルから作成
 - 独自に用意したフォントファイルをからフォントを作成するには、`Font` のコンストラクタにフォントファイルのパスを指定します
 - ファイルパスは、実行ファイルがあるフォルダ（開発中は `App` フォルダ）を基準とする相対パスか、絶対パスを使用します
 	- 例えば `U"example/font/RocknRoll/RocknRollOne-Regular.ttf"` は、実行ファイルがあるフォルダ（`App` フォルダ）の `example/font/RocknRoll/` フォルダにある `RocknRollOne-Regular.ttf` というファイルを指します
@@ -225,7 +225,7 @@ void Main()
 ```
 
 
-## 33.6 PC にインストールされているフォントファイルから作成
+## 34.6 PC にインストールされているフォントファイルから作成
 - PC にインストールされたフォントは、OS によって異なる場所に保存されています
 - そのフォルダのパスを `FileSystem::GetFolderPath()` で取得し、フォントファイル名とつなげることで、絶対パスを構築できます
 - `FileSystem::GetFolderPath()` に渡す引数と、それによって取得できるパスの対応表は次のとおりです
@@ -243,7 +243,7 @@ void Main()
 ```
 
 
-## 33.7 空のフォント
+## 34.7 空のフォント
 - `Font` 型のオブジェクトは、デフォルトでは**空のフォント**を持っています
 - 空のフォントを使用してもエラーにはなりませんが、何も描画されません
 - フォントファイルのロードに失敗した場合にも空のテクスチャになります
@@ -256,7 +256,7 @@ void Main()
 ```
 
 
-## 33.8 文字列のフォーマット
+## 34.8 文字列のフォーマット
 - 作成したフォント `font` を使い、`font(テキスト).draw(サイズ, pos, 色);` のようにして、サイズ・位置・色を指定してテキストを表示します
 - `font(テキスト)` のテキストの部分には、文字列だけでなく、`Print` 可能な値（数値や `Point` など）をいくつでも記述できます
 	
@@ -267,7 +267,7 @@ void Main()
 ```
 
 
-## 33.9 改行
+## 34.9 改行
 - テキストの中に改行文字 `'\n'` が含まれていると、そこで改行されます
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/9.png)
@@ -277,7 +277,7 @@ void Main()
 ```
 
 
-## 33.10 左上座標を指定した描画
+## 34.10 左上座標を指定した描画
 - 左上の座標を指定してテキストを描画するには、`font(テキスト).draw()` を使います
 - この関数は、テキストが描画された領域を `RectF` で返します
 
@@ -295,7 +295,7 @@ void Main()
 ```
 
 
-## 33.11 中心座標を指定した描画
+## 34.11 中心座標を指定した描画
 - 中心の座標を指定してテキストを描画するには、`font(テキスト).drawAt()` を使います
 - この関数は、テキストが描画された領域を `RectF` で返します
 
@@ -313,7 +313,7 @@ void Main()
 ```
 
 
-## 33.12 ベースラインを指定した描画
+## 34.12 ベースラインを指定した描画
 - ベースラインの開始位置を指定してテキストを描画するには、`font(テキスト).drawBase()` を使います
 	- フォントサイズが異なるテキストを描画する際に、ベースラインを揃えることができます
 - この関数は、テキストが描画された領域を `RectF` で返します
@@ -332,7 +332,7 @@ void Main()
 ```
 
 
-## 33.13 それ以外の座標を指定した描画
+## 34.13 それ以外の座標を指定した描画
 - - **右端の中心位置**を指定し、それに合わせてテキストを描画するには、次の方法を使います
 	- `.draw(Arg::topRight = pos, ...)`
 	- `.draw(Arg::topRight(x, y), ...)
@@ -358,7 +358,7 @@ void Main()
 ```
 
 
-## 33.14 長方形の中に収めた描画
+## 34.14 長方形の中に収めた描画
 - テキストを指定した長方形の中に収まるように描画するには、`font(テキスト).draw(rect)` を使います
 - テキストのすべての文字が長方形内に収まった場合、関数は `true` を返します
 - 一方、テキストがあふれる場合、あふれる部分が「`…`」に置き換えられ、関数は `false` を返します
@@ -375,7 +375,7 @@ void Main()
 ```
 
 
-## 33.15 描画される領域の取得
+## 34.15 描画される領域の取得
 - 実際に描画を行わずに、描画される領域を取得するには、`font(テキスト)` の `.region()` や `.regionAt()` を使います
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/15.png)
@@ -385,7 +385,7 @@ void Main()
 ```
 
 
-## 33.16 フォントスタイル（太字・斜体）
+## 34.16 フォントスタイル（太字・斜体）
 - `Font` のコンストラクタで次のような `FontStyle` を指定することで、太字や斜体などのスタイルをフォントに適用できます
 
 | コード | 説明 |
@@ -402,7 +402,7 @@ void Main()
 ```
 
 
-## 33.17 フォントスタイル（ビットマップ）
+## 34.17 フォントスタイル（ビットマップ）
 - 書体がビットマップフォントに対応している場合、`Font` のコンストラクタで次のような `FontStyle` を指定することで、ドット感を保った文字を描画できます
 
 | コード | 説明 |
@@ -419,8 +419,8 @@ void Main()
 ```
 
 
-## 33.18 文字に影を付ける（2 回描画）
-- XXX
+## 34.18 文字に影を付ける（2 回描画）
+- 座標をずらして 2 回 テキストを描くことで、影の効果を作成できます
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/18.png)
 
@@ -429,9 +429,10 @@ void Main()
 ```
 
 
-## 33.19 文字に影を付ける（テキストスタイル）
-- XXX
-	
+## 34.19 文字に影を付ける（テキストスタイル）
+- SDF / MSDF 方式のフォントは、描画時に `TextStyle::Shadow(影のオフセット, 影の色)` を指定することで、影の効果を付与できます
+- 画像バッファ幅が十分でない場合、影のオフセットが大きいと影が途切れることがあります
+
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/19.png)
 
 ```cpp
@@ -439,8 +440,12 @@ void Main()
 ```
 
 
-## 33.20 文字に輪郭を付ける
-- XXX
+## 34.20 文字に輪郭を付ける
+- SDF / MSDF 方式のフォントは、描画時に次のスタイルを指定することで、輪郭の効果を付与できます
+	- `TextStyle::Outline(輪郭スケール, 輪郭の色)`
+	- `TextStyle::Outline(内側方向の輪郭スケール, 外側方向の輪郭スケール, 輪郭の色)`
+- 輪郭スケールが大きすぎると、描画結果にノイズが生じます
+- 書体によって異なりますが、最大で 0.2～0.25 が目安です
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/20.png)
 
@@ -449,8 +454,12 @@ void Main()
 ```
 
 
-## 33.21 文字に影と輪郭を付ける
-- XXX
+## 34.21 文字に影と輪郭を付ける
+- SDF / MSDF 方式のフォントは、描画時に次のスタイルを指定することで、影と輪郭の効果を付与できます
+	- `TextStyle::OutlineShadow(輪郭スケール, 輪郭の色, 影のオフセット, 影の色)`
+	- `TextStyle::OutlineShadow(内側方向の輪郭スケール, 外側方向の輪郭スケール, 輪郭の色, 影のオフセット, 影の色)`
+- 輪郭スケールが大きすぎると、描画結果にノイズが生じます
+- 書体によって異なりますが、最大で 0.2～0.25 が目安です
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/21.png)
 
@@ -459,8 +468,9 @@ void Main()
 ```
 
 
-## 33.22 （参考）テキストスタイルのプレビュー
-- XXX
+## 34.22 （参考）テキストスタイルのプレビュー
+- 各方式におけるテキストスタイルの効果をプレビューするサンプルです
+- マウスの右クリックやホイールで視点の移動・拡大ができます
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/22.png)
 
@@ -469,9 +479,10 @@ void Main()
 ```
 
 
-## 33.23 テキストを 1 文字ずつ描画
-- XXX
-	
+## 34.23 テキストを 1 文字ずつ描画
+- 文字列クラス `String` のメンバ関数 `.substr(0, count)` で、文字列の先頭から `count` 文字の部分文字列を作成できます
+- ストップウォッチなどを使い `count` を増やしていくことで、文字列を 1 文字ずつ表示することができます
+
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/23.png)
 
 ```cpp
@@ -479,7 +490,7 @@ void Main()
 ```
 
 
-## 33.24 文字単位での自由描画
+## 34.24 文字単位での自由描画
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/24.png)
@@ -489,7 +500,7 @@ void Main()
 ```
 
 
-## 33.25 縦書き
+## 34.25 縦書き
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/25.png)
@@ -499,7 +510,7 @@ void Main()
 ```
 
 
-## 33.26 フォールバックフォント
+## 34.26 フォールバックフォント
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/26.png)
@@ -509,7 +520,7 @@ void Main()
 ```
 
 
-## 33.27 フォントのキャッシュへのアクセス
+## 34.27 フォントのキャッシュへのアクセス
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/27.png)
@@ -519,7 +530,7 @@ void Main()
 ```
 
 
-## 33.28 フォントのプリロード
+## 34.28 フォントのプリロード
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/28.png)
@@ -529,7 +540,7 @@ void Main()
 ```
 
 
-## 33.29 文字を `Polygon` で取得
+## 34.29 文字を `Polygon` で取得
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/29.png)
@@ -539,7 +550,7 @@ void Main()
 ```
 
 
-## 33.30 文字を `LineString` で取得
+## 34.30 文字を `LineString` で取得
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/30.png)
@@ -583,234 +594,6 @@ void Main()
 }
 ```
 
-## 31.17 文字に影の効果を付ける（ビットマップ方式、2 回描画する手法）
-ビットマップ方式のフォントでは、座標をずらして 2回 テキストを描くことで、影の効果を作成できます。
-
-`Vec2` のメンバ関数 `.movedBy(x, y)` は、指定した値だけ要素を加算した `Vec2` を作成する関数です。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/17.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.7, 0.9, 0.8 });
-
-	const Font font{ 100, Typeface::Bold };
-
-	const Vec2 center{ 400, 150 };
-
-	const String text = U"Hello, Siv3D!";
-
-	while (System::Update())
-	{
-		// center から (4, 4) ずらした位置を中心にテキストを描く
-		font(text).drawAt(center.movedBy(4, 4), ColorF{ 0.0, 0.5 });
-
-		// center を中心にテキストを描く
-		font(text).drawAt(center);
-	}
-}
-```
-
-## 31.18 文字に影の効果を付ける（SDF / MSDF 方式）
-SDF / MSDF 方式のフォントは、`TextStyle` を `.draw()` や `.drawAt()`, `.drawBase()` に設定することで、影や輪郭エフェクトを付与できます。SDF / MSDF 方式のフォントを使って文字を描画する際に影の効果を付けるには `TextStyle::Shadow(影のオフセット, 影の色)` を設定します。
-
-影のオフセットが大きく、文字の Distance Field の範囲外に及んだ場合、影が途切れてしまいます。それを防ぐには `Font` のメンバ関数 `.setBufferThickness(Distance Field の余白のサイズ)` で、Distance Field を大きめに作成しておきます。デフォルトは 2 です。この値を大きくするとメモリ消費量や描画負荷が増加しますが、影や輪郭の効果をより大きく適用できるようになります。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/18.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.7, 0.9, 0.8 });
-
-	const int32 baseSize = 40;
-	const int32 bufferThickness = 3;
-
-	const Font fontSDF{ FontMethod::SDF, baseSize, Typeface::Bold };
-	fontSDF.setBufferThickness(bufferThickness);
-
-	const Font fontMSDF{ FontMethod::MSDF, baseSize, Typeface::Bold };
-	fontMSDF.setBufferThickness(bufferThickness);
-
-	const String text = U"Hello, Siv3D!";
-
-	while (System::Update())
-	{
-		const Vec2 shadowOffset{ 2, 2 };
-		const ColorF shadowColor{ 0.0, 0.5 };
-		const double fontSize = 100;
-
-		// SDF 方式
-		fontSDF(text).draw(TextStyle::Shadow(shadowOffset, shadowColor), 20, 20);
-		fontSDF(text).draw(TextStyle::Shadow(shadowOffset, shadowColor), fontSize, 20, 60);
-
-		// MSDF 方式
-		fontMSDF(text).draw(TextStyle::Shadow(shadowOffset, shadowColor), 20, 220);
-		fontMSDF(text).draw(TextStyle::Shadow(shadowOffset, shadowColor), fontSize, 20, 260);
-	}
-}
-```
-
-## 31.19 文字に輪郭を付ける（SDF / MSDF）
-SDF / MSDF 方式のフォントを使って文字を描画する際に輪郭の効果を付けるには
-
-- `TextStyle::Outline(輪郭スケール, 輪郭の色)`
-- `TextStyle::Outline(内側方向の輪郭スケール, 外側方向の輪郭スケール, 輪郭の色)`
-
-のいずれかを設定します。
-
-文字に輪郭と影、両方の効果を付けるには
-
-- `TextStyle::OutlineShadow(輪郭スケール, 輪郭の色, 影のオフセット, 影の色)`
-- `TextStyle::OutlineShadow(内側方向の輪郭スケール, 外側方向の輪郭スケール, 輪郭の色, 影のオフセット, 影の色)`
-
-のいずれかを設定します。輪郭スケールの単位はピクセルではないことに注意してください。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/19.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.7, 0.9, 0.8 });
-
-	const int32 baseSize = 40;
-	const int32 bufferThickness = 3;
-
-	const Font fontSDF{ FontMethod::SDF, baseSize, Typeface::Bold };
-	fontSDF.setBufferThickness(bufferThickness);
-
-	const Font fontMSDF{ FontMethod::MSDF, baseSize, Typeface::Bold };
-	fontMSDF.setBufferThickness(bufferThickness);
-
-	const String text = U"Hello, Siv3D!";
-
-	while (System::Update())
-	{
-		const double outlineScale = 0.2;
-		const ColorF outlineColor{ 0.0, 0.3, 0.6 };
-
-		const Vec2 shadowOffset{ 2, 2 };
-		const ColorF shadowColor{ 0.0, 0.5 };
-		const double fontSize = 100;
-
-		// SDF 方式
-		fontSDF(text).draw(TextStyle::Outline(outlineScale, outlineColor), 20, 20);
-		fontSDF(text).draw(TextStyle::Outline(outlineScale, outlineColor), fontSize, 20, 40);
-		fontSDF(text).draw(TextStyle::OutlineShadow(outlineScale, outlineColor, shadowOffset, shadowColor), fontSize, 20, 150);
-
-		// MSDF 方式
-		fontMSDF(text).draw(TextStyle::Outline(outlineScale, outlineColor), 20, 300);
-		fontMSDF(text).draw(TextStyle::Outline(outlineScale, outlineColor), fontSize, 20, 320);
-		fontMSDF(text).draw(TextStyle::OutlineShadow(outlineScale, outlineColor, shadowOffset, shadowColor), fontSize, 20, 430);
-	}
-}
-```
-
-## 31.20 （サンプル）テキストスタイルのプレビューアプリ
-次のサンプルプログラムで、各方式におけるテキストスタイルの効果をプレビューできます。マウスの右クリックやホイールで移動・拡大を行うことができます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/20.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Window::Resize(1280, 720);
-
-	// 基本サイズ: 大きいと拡大描画時にきれいになるが、フォントの生成時間・メモリ消費が増える
-	const int32 baseSize = 70;
-
-	// このサイズだけ、文字の周囲に輪郭や影のエフェクトを付加できる。フォントの生成時間・メモリ消費が増える
-	const int32 bufferThickness = 5;
-
-	// ビットマップ方式では輪郭や影のエフェクトの利用は不可
-	const Font fontBitmap{ FontMethod::Bitmap, baseSize, U"example/font/RocknRoll/RocknRollOne-Regular.ttf" };
-
-	// SDF 方式
-	const Font fontSDF{ FontMethod::SDF, baseSize, U"example/font/RocknRoll/RocknRollOne-Regular.ttf" };
-	fontSDF.setBufferThickness(bufferThickness);
-
-	// MSDF 方式
-	const Font fontMSDF{ FontMethod::MSDF, baseSize, U"example/font/RocknRoll/RocknRollOne-Regular.ttf" };
-	fontMSDF.setBufferThickness(bufferThickness);
-
-	bool outline = false;
-	bool shadow = false;
-	double inner = 0.1, outer = 0.1;
-	Vec2 shadowOffset{ 2.0, 2.0 };
-	ColorF textColor{ 1.0 };
-	ColorF outlineColor{ 0.0 };
-	ColorF shadowColor{ 0.0, 0.5 };
-	HSV background = ColorF{ 0.8 };
-
-	Camera2D camera{ Scene::Center(), 1.0 };
-
-	while (System::Update())
-	{
-		Scene::SetBackground(background);
-
-		TextStyle textStyle;
-		{
-			if (outline && shadow)
-			{
-				textStyle = TextStyle::OutlineShadow(inner, outer, outlineColor, shadowOffset, shadowColor);
-			}
-			else if (outline)
-			{
-				textStyle = TextStyle::Outline(inner, outer, outlineColor);
-			}
-			else if (shadow)
-			{
-				textStyle = TextStyle::Shadow(shadowOffset, shadowColor);
-			}
-		}
-
-		camera.update();
-		{
-			auto t = camera.createTransformer();
-			fontBitmap(U"Siv3D, 渋三次元 (Bitmap)").draw(Vec2{ 100, 250 }, textColor);
-			fontSDF(U"Siv3D, 渋三次元 (SDF)").draw(textStyle, Vec2{ 100, 330 }, textColor);
-			fontMSDF(U"Siv3D, 渋三次元 (MSDF)").draw(textStyle, Vec2{ 100, 410 }, textColor);
-		}
-
-		SimpleGUI::CheckBox(outline, U"Outline", Vec2{ 20, 20 }, 130);
-		SimpleGUI::Slider(U"Inner: {:.2f}"_fmt(inner), inner, -0.5, 0.5, Vec2{ 160, 20 }, 120, 120, outline);
-		SimpleGUI::Slider(U"Outer: {:.2f}"_fmt(outer), outer, -0.5, 0.5, Vec2{ 160, 60 }, 120, 120, outline);
-
-		SimpleGUI::CheckBox(shadow, U"Shadow", Vec2{ 20, 100 }, 130);
-		SimpleGUI::Slider(U"offsetX: {:.1f}"_fmt(shadowOffset.x), shadowOffset.x, -5.0, 5.0, Vec2{ 160, 100 }, 120, 120, shadow);
-		SimpleGUI::Slider(U"offsetY: {:.1f}"_fmt(shadowOffset.y), shadowOffset.y, -5.0, 5.0, Vec2{ 160, 140 }, 120, 120, shadow);
-
-		SimpleGUI::Headline(U"Text", Vec2{ 420, 20 });
-		SimpleGUI::Slider(U"R", textColor.r, Vec2{ 420, 60 }, 20, 80);
-		SimpleGUI::Slider(U"G", textColor.g, Vec2{ 420, 100 }, 20, 80);
-		SimpleGUI::Slider(U"B", textColor.b, Vec2{ 420, 140 }, 20, 80);
-		SimpleGUI::Slider(U"A", textColor.a, Vec2{ 420, 180 }, 20, 80);
-
-		SimpleGUI::Headline(U"Outline", Vec2{ 540, 20 });
-		SimpleGUI::Slider(U"R", outlineColor.r, Vec2{ 540, 60 }, 20, 80, outline);
-		SimpleGUI::Slider(U"G", outlineColor.g, Vec2{ 540, 100 }, 20, 80, outline);
-		SimpleGUI::Slider(U"B", outlineColor.b, Vec2{ 540, 140 }, 20, 80, outline);
-		SimpleGUI::Slider(U"A", outlineColor.a, Vec2{ 540, 180 }, 20, 80, outline);
-
-		SimpleGUI::Headline(U"Shadow", Vec2{ 660, 20 });
-		SimpleGUI::Slider(U"R", shadowColor.r, Vec2{ 660, 60 }, 20, 80, shadow);
-		SimpleGUI::Slider(U"G", shadowColor.g, Vec2{ 660, 100 }, 20, 80, shadow);
-		SimpleGUI::Slider(U"B", shadowColor.b, Vec2{ 660, 140 }, 20, 80, shadow);
-		SimpleGUI::Slider(U"A", shadowColor.a, Vec2{ 660, 180 }, 20, 80, shadow);
-
-		SimpleGUI::ColorPicker(background, Vec2{ 780, 20 });
-	}
-}
-```
 
 
 ## 31.21 文字単位で自由描画をする

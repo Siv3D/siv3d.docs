@@ -116,8 +116,8 @@ nav:
     - 30. 時間と動き: tutorial2/time.md
     - 31. テクスチャを描く: tutorial2/texture.md
     - 32. 動画を描く: tutorial2/video.md
-    - 33. 文字を描く: tutorial2/font.md
-    - 34. 文字列クラス: tutorial2/string.md
+    - 33. 文字列クラス: tutorial2/string.md
+    - 34. 文字を描く: tutorial2/font.md
     - 35. 無効値を表現できる型: tutorial2/optional.md
     - 36. 数値と文字列の変換: tutorial2/format.md
     - 37. 二次元配列: tutorial2/grid.md
