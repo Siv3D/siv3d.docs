@@ -716,41 +716,10 @@ void Main()
 
 
 ## 33.25 前後の空白文字を削除する
-
-```cpp
-
-```
-
-
-## 33.26 指定した文字で分割する
-
-```cpp
-
-```
-
-
-## 33.27 他の文字列型へ変換する
-
-```cpp
-
-```
-
-
-## 33.28 他の文字列型から変換する
-
-```cpp
-
-```
-
-
-
-
-
-
-## 33.17 前後の空白文字を削除する
-`.trim()` で、文字列の前後にある空白文字（スペース、タブ、改行など）を削除します。
-
-`.trimmed()` で、文字列の前後にある空白文字を削除した新しい文字列を作成します。元の文字列は変更されません。
+- `.trimmed()` は、文字列の前後にある空白文字（スペース、タブ、改行など）を削除した新しい文字列を作成します
+	- 元の文字列は変更されません
+- `.trim()` は、文字列の前後にある空白文字を削除します
+	- 元の文字列が変更されます
 
 ```cpp
 # include <Siv3D.hpp>
@@ -759,14 +728,14 @@ void Main()
 {
 	String s1 = U" Hello, Siv3D!   ";
 
+	// 前後の空白文字を削除する
 	s1.trim();
-
 	Print << s1;
-
 	Print << s1.size();
 
 	const String s2 = U"\n\n Siv3D  \n\n\n";
 
+	// 前後の空白文字を削除した新しい文字列を作成する
 	Print << s2.trimmed();
 
 	while (System::Update())
@@ -777,21 +746,38 @@ void Main()
 ```
 
 
-## 33.18 文字列を指定した文字で分割する
-`.split(delimiter)` を使うと、文字列を `delimiter` で分割した結果を `Array<String>` で返します。
+## 33.26 指定した文字で分割する
+- `.split(delimiter)` は、文字列を `delimiter` で分割した結果を `Array<String>` で返します
+	- `delimiter` は 1 文字の文字列です
+	- `delimiter` が連続している場合、空の文字列が生成されます
+	- `delimiter` が文字列の先頭や末尾にある場合、空の文字列が生成されます
+	- `delimiter` が文字列に含まれていない場合、元の文字列がそのまま返されます
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	const String s = U"red,green,blue";
-
-	const Array<String> values = s.split(U',');
-
-	for (const auto& value : values)
 	{
-		Print << value;
+		const String s = U"red,green,blue";
+		
+		const Array<String> values = s.split(U',');
+		Print << values;
+	}
+
+	{
+		const String s = U",,a,";
+
+		const Array<String> values = s.split(U',');
+		Print << values;
+	}
+
+	{
+		const String s = U"1, 2, 3, 4, 5";
+
+		// U',' で区切られた数字の文字列を Array<int32> に変換する例
+		const Array<int32> values = s.split(U',').map(Parse<int32>);
+		Print << values;
 	}
 
 	while (System::Update())
@@ -801,40 +787,22 @@ void Main()
 }
 ```
 
-`U','` で区切られた数字の文字列を `Array<int32>` に変換するサンプルです。
 
-```cpp
-# include <Siv3D.hpp>
+## 33.27 他の文字列型へ変換する
+- `String` を別の形式の文字列型に変換する次のようなメンバ関数があります
 
-void Main()
-{
-	const String s = U"1, 2, 3, 4, 5";
-
-	const Array<int32> a = s.split(U',').map(Parse<int32>);
-
-	Print << a;
-
-	while (System::Update())
-	{
-
-	}
-}
-```
-
-
-## 33.19 他の文字列型へ変換する
-`String` を別の文字列型に変換するには、次のメンバ関数を使います。
-
-| メンバ関数 | 説明 |
+| コード | 説明 |
 |---|---|
-| `.narrow()` | `std::string` (文字コードは環境依存) に変換します。 |
-| `.toUTF8()` | `std::string` (UTF-8) に変換します。 |
-| `.toWstr()` | `std::wstring` に変換します。 |
-| `.toUTF16()` | `std::u16string` に変換します。 |
-| `.toUTF32()` | `std::u32string` に変換します。 |
+| `.narrow()` | `std::string`（文字コードは環境依存）に変換します |
+| `.toUTF8()` | `std::string`（UTF-8）に変換します |
+| `.toWstr()` | `std::wstring` に変換します |
+| `.toUTF16()` | `std::u16string` に変換します |
+| `.toUTF32()` | `std::u32string` に変換します |
 
 ??? example "環境依存の文字コード"
-	`std::string` の文字コードは環境によって異なります。日本語の Windows では Shift_JIS (CP932), macOS や Linux では UTF-8 です。Siv3D v0.8.0 以降は `std::string` の文字コードは UTF-8 に統一される予定です。
+	- `std::string` の文字コードは環境によって異なります
+	- 日本語の Windows では Shift_JIS (CP932), macOS や Linux では UTF-8 です
+	- Siv3D v0.8 以降では `std::string` の文字コードは UTF-8 に統一されます
 
 ```cpp
 # include <Siv3D.hpp>
@@ -844,13 +812,9 @@ void Main()
 	const String s = U"こんにちは、Siv3D!";
 
 	const std::string s1 = s.narrow();
-
 	const std::string s2 = s.toUTF8();
-
 	const std::wstring s3 = s.toWstr();
-
 	const std::u16string s4 = s.toUTF16();
-
 	const std::u32string s5 = s.toUTF32();
 
 	while (System::Update())
@@ -860,42 +824,24 @@ void Main()
 }
 ```
 
-`const char*` を受け取る関数に `String` の文字列を渡すには、`.narrow()` で得られた `std::string` の先頭ポインタを `c_str()` で取得します。
+- `const char*` を受け取る関数に `String` の文字列を渡すには、`.narrow()` で得られた `std::string` の先頭ポインタを `c_str()` で取得します
 
 ```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	const String s = U"12345";
-
-	// const char* を受け取る関数に String の文字列を渡す
-	const int32 n = atoi(s.narrow().c_str());
-
-	Print << n;
-
-	// String の文字列を int32 に変換する Siv3D の標準的な方法
-	Print << Parse<int32>(s);
-
-	while (System::Update())
-	{
-
-	}
-}
+f(s.narrow().c_str());
 ```
 
 
-## 33.20 他の文字列型から変換する
-別の文字列型から `String` に変換するには、次の関数を使います。
+## 33.28 他の文字列型から変換する
+- 別の形式の文字列型から `String` に変換する次のような関数があります
 
-| 関数 | 説明 |
+| コード | 説明 |
 |---|---|
-| `Unicode::Widen(s)` | `std::string` (文字コードは環境依存) から `String` に変換します。 |
-| `Unicode::WidenAscii(s)` | `std::string` (ASCII) から `String` に変換します。 |
-| `Unicode::FromWstring(s)` | `std::wstring` から `String` に変換します。 |
-| `Unicode::FromUTF8(s)` | `std::string` (UTF-8) から `String` に変換します。 |
-| `Unicode::FromUTF16(s)` | `std::u16string` から `String` に変換します。 |
-| `Unicode::FromUTF32(s)` | `std::u32string` から `String` に変換します。 |
+| `Unicode::Widen(s)` | `std::string`（文字コードは環境依存）から `String` に変換します |
+| `Unicode::WidenAscii(s)` | `std::string`（ASCII）から `String` に変換します |
+| `Unicode::FromWstring(s)` | `std::wstring` から `String` に変換します |
+| `Unicode::FromUTF8(s)` | `std::string`（UTF-8）から `String` に変換します |
+| `Unicode::FromUTF16(s)` | `std::u16string` から `String` に変換します |
+| `Unicode::FromUTF32(s)` | `std::u32string` から `String` に変換します |
 
 ```cpp
 # include <Siv3D.hpp>
@@ -903,15 +849,10 @@ void Main()
 void Main()
 {
 	const String s1 = Unicode::Widen("こんにちは、Siv3D!");
-
 	const String s2 = Unicode::WidenAscii("Hello, Siv3D!");
-
 	const String s3 = Unicode::FromWstring(L"こんにちは、Siv3D!");
-
 	const String s4 = Unicode::FromUTF8("こんにちは、Siv3D!");
-
 	const String s5 = Unicode::FromUTF16(u"こんにちは、Siv3D!");
-
 	const String s6 = Unicode::FromUTF32(U"こんにちは、Siv3D!");
 
 	while (System::Update())
@@ -920,3 +861,4 @@ void Main()
 	}
 }
 ```
+
