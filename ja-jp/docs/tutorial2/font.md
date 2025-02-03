@@ -279,6 +279,7 @@ void Main()
 
 ## 33.10 左上座標を指定した描画
 - 左上の座標を指定してテキストを描画するには、`font(テキスト).draw()` を使います
+- この関数は、テキストが描画された領域を `RectF` で返します
 
 | コード | 説明 |
 | --- | --- |
@@ -296,6 +297,7 @@ void Main()
 
 ## 33.11 中心座標を指定した描画
 - 中心の座標を指定してテキストを描画するには、`font(テキスト).drawAt()` を使います
+- この関数は、テキストが描画された領域を `RectF` で返します
 
 | コード | 説明 |
 | --- | --- |
@@ -314,6 +316,7 @@ void Main()
 ## 33.12 ベースラインを指定した描画
 - ベースラインの開始位置を指定してテキストを描画するには、`font(テキスト).drawBase()` を使います
 	- フォントサイズが異なるテキストを描画する際に、ベースラインを揃えることができます
+- この関数は、テキストが描画された領域を `RectF` で返します
 
 | コード | 説明 |
 | --- | --- |
@@ -334,6 +337,7 @@ void Main()
 	- `.draw(Arg::topRight = pos, ...)`
 	- `.draw(Arg::topRight(x, y), ...)
 - このように指定できる基準位置は、全部で 9 種類あります
+- これらの関数は、テキストが描画された領域を `RectF` で返します
 
 | 基準位置 | 説明 |
 |---|---|
@@ -356,17 +360,14 @@ void Main()
 
 ## 33.14 長方形の中に収めた描画
 - テキストを指定した長方形の中に収まるように描画するには、`font(テキスト).draw(rect)` を使います
+- テキストのすべての文字が長方形内に収まった場合、関数は `true` を返します
+- 一方、テキストがあふれる場合、あふれる部分が「`…`」に置き換えられ、関数は `false` を返します
 
 | コード | 説明 |
 | --- | --- |
 | `.draw(rect, color);` | 長方形 `rect` の中に収まるようにテキストを描画 |
 | `.draw(fontSize, rect, color);` | フォントサイズ `fontSize` で、長方形 `rect` の中に収まるようにテキストを描画 |
 
-
-- 
-
-座標の代わりに `Rect` または `RectF` を渡すと、テキストをその長方形の中に収まるように描画します。テキストのすべての文字が長方形内に収まった場合、関数は `true` を返します。一方、テキストがあふれる場合、最後の文字が `…` に置き換えられ、関数は `false` を返します。
-	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/14.png)
 
 ```cpp
@@ -375,8 +376,8 @@ void Main()
 
 
 ## 33.15 描画される領域の取得
-- XXX
-	
+- 実際に描画を行わずに、描画される領域を取得するには、`font(テキスト)` の `.region()` や `.regionAt()` を使います
+
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/15.png)
 
 ```cpp
@@ -385,7 +386,14 @@ void Main()
 
 
 ## 33.16 フォントスタイル（太字・斜体）
-- XXX
+- `Font` のコンストラクタで次のような `FontStyle` を指定することで、太字や斜体などのスタイルをフォントに適用できます
+
+| コード | 説明 |
+| --- | --- |
+| `FontStyle::Bold` | 太字 |
+| `FontStyle::Italic` | 斜体 |
+| `FontStyle::BoldItalic` | 太字・斜体 |
+
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/16.png)
 
@@ -395,7 +403,14 @@ void Main()
 
 
 ## 33.17 フォントスタイル（ビットマップ）
-- XXX
+- 書体がビットマップフォントに対応している場合、`Font` のコンストラクタで次のような `FontStyle` を指定することで、ドット感を保った文字を描画できます
+
+| コード | 説明 |
+| --- | --- |
+| `FontStyle::Bitmap` | ビットマップフォント |
+| `FontStyle::BoldBitmap` | 太字のビットマップフォント |
+| `FontStyle::ItalicBitmap` | 斜体のビットマップフォント |
+| `FontStyle::BoldItalicBitmap` | 太字・斜体のビットマップフォント |
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/17.png)
 
@@ -540,399 +555,6 @@ void Main()
 
 
 
-
-
-
-
-## 31.1 Font
-フォントは `Font` クラスで管理します。`Font 変数名{ フォントサイズ };` と書くことで**ビットマップ方式**のフォントを作成します。フォントの作成はコストがかかるため、**メインループの前**で行います。
-
-作成したフォント `font` を使って、
-
-- `font(テキスト).draw(x, y, color);`
-- `font(テキスト).draw(pos, color);`
-
-のようにして、テキストを、位置、色を指定して表示します。`color` を省略すると白色になります。
-
-`font(テキスト)` のテキストの部分には、文字列だけでなく、フォーマット可能な値も記述できます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/1.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-
-	// 基本サイズ 50 のフォントを作成する
-	const Font font{ 50 };
-
-	while (System::Update())
-	{
-		// 左上位置 (40, 40) からテキストを描く
-		font(U"Hello, Siv3D!").draw(40, 40);
-
-		// 文字列以外を渡すとフォーマット（文字列化）される
-		font(Cursor::Pos()).draw(50, 300);
-
-		// 複数渡すと、それぞれをフォーマットした文字列をつなげる
-		font(123, U"ABC").draw(50, 400, ColorF{ 0.5, 1.0, 0.5 });
-
-		font(U"{}/{}/{}"_fmt(2023, 12, 31)).draw(50, 500, ColorF{ 1.0, 0.5, 0.0 });
-	}
-}
-```
-
-
-## 31.2 改行する
-テキストの中に改行文字 `'\n'` が含まれていると、そこで改行されます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/2.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-
-	// 基本サイズ 50 のフォントを作成する
-	const Font font{ 50 };
-
-	while (System::Update())
-	{
-		font(U"Hello,\nSiv3D\n\n!!!").draw(40, 40);
-	}
-}
-```
-
-
-## 31.8 フォントスタイルを変える
-`Font` のコンストラクタに `FontStyle` を指定することで、イタリックやボールドなどのスタイルをフォントに適用できます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/8.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-
-	const Font font{ 50, Typeface::Regular };
-
-	// ボールド
-	const Font fontBold{ 50, Typeface::Regular, FontStyle::Bold };
-
-	// イタリック
-	const Font fontItalic{ 50, Typeface::Regular, FontStyle::Italic };
-
-	// ボールド・イタリック
-	const Font fontBoldItalic{ 50, Typeface::Regular, FontStyle::BoldItalic };
-
-	const String text = U"Hello, Siv3D! こんにちは。";
-
-	while (System::Update())
-	{
-		font(text).draw(40, 40);
-
-		fontBold(text).draw(40, 100);
-
-		fontItalic(text).draw(40, 160);
-
-		fontBoldItalic(text).draw(40, 220);
-	}
-}
-```
-
-
-## 31.9 ビットマップフォントを使う
-書体がビットマップフォントに対応している場合、フォントスタイルに `FontStyle::Bitmap` を指定することで、フィルタリングされずドット感を保った文字を描画できます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/9.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-
-	const Font font1{ 32, U"example/font/DotGothic16/DotGothic16-Regular.ttf" };
-	const Font font2{ 32, U"example/font/DotGothic16/DotGothic16-Regular.ttf", FontStyle::Bitmap };
-	const Font font3{ 60, U"example/font/DotGothic16/DotGothic16-Regular.ttf" };
-	const Font font4{ 60, U"example/font/DotGothic16/DotGothic16-Regular.ttf", FontStyle::Bitmap };
-
-# if SIV3D_PLATFORM(WINDOWS)
-
-	const FilePath path = (FileSystem::GetFolderPath(SpecialFolder::SystemFonts) + U"msgothic.ttc");
-	const Font font5{ 16, path };
-	const Font font6{ 16, path, FontStyle::Bitmap };
-
-# endif
-
-	const String text = U"Hello, Siv3D! こんにちは。";
-
-	while (System::Update())
-	{
-		font1(text).draw(40, 40, Palette::Black);
-		font2(text).draw(40, 100, Palette::Black);
-		font3(text).draw(40, 160, Palette::Black);
-		font4(text).draw(40, 240, Palette::Black);
-
-# if SIV3D_PLATFORM(WINDOWS)
-
-		font5(text).draw(40, 360, Palette::Black);
-		font6(text).draw(40, 400, Palette::Black);
-
-# endif
-	}
-}
-```
-
-## 31.10 自由に拡大縮小できる SDF / MSDF 方式のフォントを使う
-**SDF 方式** / **MSDF 方式**を使うと、文字ごとの Distance field 画像を生成し、基本サイズ以上に拡大しても画質が粗くならない手法で文字をレンダリングできます。さらに、SDF / MSDF には影や輪郭などのエフェクトを 1 回の draw 内で行える仕組みも用意されています。
-
-各方式の利点と欠点は次のとおりです。
-
-| 描画方式 | 縮小 | 拡大 | 影 | 輪郭 | 実行時負荷 | 備考 |
-|--|:--:|:--:|:--:|:--:|:--:|:--|
-| ビットマップ方式<br>`FontMethod::Bitmap`| 〇 | △ | 〇<br>(2 回 draw) | × | 低 | デフォルトの手法 |
-| SDF 方式<br>`FontMethod::SDF`| 〇 | 〇 | ◎ | ◎ | 中 | 文字の角が丸くなるなど、細部の情報が失われやすい |
-| MSDF 方式<br>`FontMethod::MSDF`| ◎ | ◎ | 〇 | 〇 | 高 | SDF より高品質 |
-
-SDF / MSDF 方式時に設定する基本サイズは描画する字形の複雑さに応じて決める必要があります。画数の少ない数字やアルファベット、曲線的でシンプルな字形であれば、基本サイズが 40 以下でもきれいな文字をレンダリングできますが、複雑な字形になるほど、小さな Distance Field では描画結果が乱れたり、ノイズが目立つことがあります。一方で、大きすぎると描画に時間がかかってしまいます。SDF / MSDF をアプリケーションで使用する際は、テキストの描画結果を確認し、書体に応じて適切な基本サイズを選択しましょう。
-
-`.draw()` の第 1 引数で文字の描画サイズを指定できます。各方式について、基本サイズより大きい描画サイズでテキストを描いたときの結果を見てみましょう。
-
-- `font(テキスト).draw(描画サイズ, x, y, color);`
-- `font(テキスト).draw(描画サイズ, pos, color);`
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/10.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-
-	// 基本サイズ
-	const int32 baseSize = 40;
-
-	const Font font{ baseSize, Typeface::Bold };
-	const Font fontSDF{ FontMethod::SDF, baseSize, Typeface::Bold };
-	const Font fontMSDF{ FontMethod::MSDF, baseSize, Typeface::Bold };
-	const String text = U"Hello, Siv3D!";
-
-	while (System::Update())
-	{
-		// 文字のサイズ（指定しない場合は基本サイズで描かれる）
-		const double fontSize = 120;
-		const ColorF color{ 0.1 };
-
-		// ビットマップ方式
-		font(text).draw(20, 20, color);
-		font(text).draw(fontSize, 20, 50, color);
-
-		// SDF 方式
-		fontSDF(text).draw(20, 220, color);
-		fontSDF(text).draw(fontSize, 20, 250, color);
-
-		// MSDF 方式
-		fontMSDF(text).draw(20, 420, color);
-		fontMSDF(text).draw(fontSize, 20, 450, color);
-	}
-}
-```
-
-## 31.11 ベースラインを指定してテキストを描く
-文字のベースラインの開始位置を指定して描画したい場合は `.drawBase()` を使います。異なるサイズや種類のフォントを、ベースラインをそろえて描画できます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/11.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-
-	const Font font1{ 30, U"example/font/RocknRoll/RocknRollOne-Regular.ttf" };
-	const Font font2{ FontMethod::MSDF, 40, Typeface::Bold };
-	const String text = U"Hello, Siv3D!";
-
-	while (System::Update())
-	{
-		// ベースラインがそろわない
-		font1(text).draw(40, 100);
-		font2(text).draw(20, 280, 100);
-		font2(text).draw(50, 440, 100);
-
-		Rect{ 0, 400, 800, 10 }.draw(Palette::Skyblue);
-
-		// (40, 400) がベースラインの開始位置になるようテキストを描画
-		font1(text).drawBase(40, 400);
-		Circle{ 40, 400 , 5 }.drawFrame(2, Palette::Red);
-
-		// (280, 400) がベースラインの開始位置になるようテキストを描画
-		font2(text).drawBase(20, 280, 400);
-		Circle{ 280, 400 , 5 }.drawFrame(2, Palette::Red);
-
-		// (440, 400) がベースラインの開始位置になるようテキストを描画
-		font2(text).drawBase(50, 440, 400);
-		Circle{ 440, 400 , 5 }.drawFrame(2, Palette::Red);
-	}
-}
-```
-
-## 31.12 中心座標を指定してテキストを描画する
-テキストの左上位置ではなく、中心座標を指定して描画するには、`.drawAt(x, y)` または `.drawAt(pos)` を使います。
-
-- `font(テキスト).drawAt(x, y, color);`
-- `font(テキスト).drawAt(pos, color);`
-- `font(テキスト).drawAt(描画サイズ, x, y, color);`
-- `font(テキスト).drawAt(描画サイズ, pos, color);`
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/12.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-
-	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
-
-	const Rect rect{ 100, 300, 160, 80 };
-
-	while (System::Update())
-	{
-		font(U"C++").drawAt(60, Vec2{ 400, 100 }, ColorF{ 0.11 });
-
-		font(U"Hello, Siv3D!").drawAt(30, Vec2{ 400, 200 }, ColorF{ 0.11 });
-
-		rect.draw();
-
-		// 長方形の中心にテキストを描く
-		font(U"Siv3D").drawAt(30, rect.center(), ColorF{ 0.11 });
-	}
-}
-```
-
-
-## 31.13 描画の基準位置をカスタマイズする
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/13.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-
-	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
-
-	const Rect rect{ 100, 300, 160, 80 };
-
-	while (System::Update())
-	{
-		font(U"C++").draw(60, Arg::topCenter = Vec2{ 400, 20 }, ColorF{ 0.11 });
-
-		font(U"Hello, Siv3D!").draw(30, Arg::topRight(780, 20), ColorF{ 0.11 });
-
-		rect.draw();
-
-		// 長方形に右揃えでテキストを描く
-		font(U"Siv3D").draw(30, Arg::rightCenter = rect.rightCenter(), ColorF{ 0.11 });
-	}
-}
-```
-
-## 31.14 テキストが描画される領域を調べる
-`Font` の `.draw()` や `.drawAt()` は、描画された領域を `RectF` 型で返します。`.region()` や `.regionAt()` を使うと、描画を伴わずにその領域を取得できます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/14.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-
-	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
-	const String text = U"Hello, Siv3D!";
-	const Vec2 pos{ 40, 40 };
-
-	// font を使って text を pos の位置に描画したときのテキストの領域を取得
-	const RectF rect = font(text).region(pos);
-
-	while (System::Update())
-	{
-		// 描画領域の長方形を事前に塗りつぶす
-		rect.draw(Palette::Skyblue);
-
-		// 長方形の上にテキストを描く
-		font(text).draw(pos, ColorF{ 0.25 });
-
-		// テキストの領域を
-		font(text)
-			.drawAt(80, Scene::Center())
-			.stretched(40, 0)	// 横に広げて
-			.shearedX(20)		// 平行四辺形にして
-			.drawFrame(2);		// 枠を描く
-	}
-}
-```
-
-## 31.15 指定した長方形の中にテキストを描く
-`Font::draw()` に、座標の代わりに `Rect` または `RectF` を渡すと、テキストをその長方形の中に収まるように描画します。テキストのすべての文字が長方形内に収まった場合、関数は `true` を返します。一方、テキストがあふれる場合、最後の文字が `…` に置き換えられ、関数は `false` を返します。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/15.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-
-	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
-	const String text = U"The quick brown fox jumps over the lazy dog.";
-
-	const Rect rect1{ 50, 20, 200, 100 };
-	const Rect rect2{ 50, 160, 300, 100 };
-	const Rect rect3{ 50, 300, 400, 100 };
-
-	while (System::Update())
-	{
-		rect1.draw();
-		if (not font(text).draw(24, rect1.stretched(-10), ColorF{ 0.11 }))
-		{
-			// 文字が省略されたら赤枠を描く
-			rect1.drawFrame(0, 5, Palette::Red);
-		}
-
-		rect2.draw();
-		if (not font(text).draw(24, rect2.stretched(-10), ColorF{ 0.11 }))
-		{
-			// 文字が省略されたら赤枠を描く
-			rect2.drawFrame(0, 5, Palette::Red);
-		}
-
-		rect3.stretched(10).draw();
-		if (not font(text).draw(24, rect3.stretched(-10), ColorF{ 0.11 }))
-		{
-			// 文字が省略されたら赤枠を描く
-			rect3.drawFrame(0, 5, Palette::Red);
-		}
-	}
-}
-```
 
 ## 31.16 テキストを 1 文字ずつ表示する
 `.substr(offset, count)` で、文字列の `offset` 文字目から `count` 文字の部分文字列（`String`）を作成することができます。`offset` は 0 から始まります。`count` が省略された場合は、`offset` 文字目から末尾までの部分文字列を作成します。`offset` が実際の文字列の長さより大きい場合は、末尾までの部分文字列を作成します。
