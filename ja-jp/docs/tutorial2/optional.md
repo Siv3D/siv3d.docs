@@ -8,6 +8,7 @@
 	- 有効な値を持つとき、配列のサイズは 1 で、その値にアクセスできます
 	- 無効値のときはサイズが 0 で、値にはアクセスできません
 - `Optional<Type>` 型の値は、初期値を与えられなかった場合、無効値として初期化されます
+- `Optional` の値を `Print` で出力すると、有効値の場合は `(Optional)` とその値が出力され、無効値の場合は `none` が出力されます
 
 ```cpp
 # include <Siv3D.hpp>
@@ -28,6 +29,10 @@ void Main()
 
 	}
 }
+```
+```txt title="出力"
+(Optional)(100, 200)
+none
 ```
 
 
@@ -66,6 +71,12 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+true
+false
+pos1 has a value
+pos2 does not have a value
+```
 
 
 ## 35.3 有効値にアクセスする
@@ -97,6 +108,10 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+(100, 200)
+(120, 230)
+```
 
 
 ## 35.4 無効値にする
@@ -127,6 +142,12 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+(Optional)(100, 200)
+none
+(Optional)(300, 400)
+none
+```
 
 
 ## 35.5 有効値または代わりの値を返す
@@ -142,16 +163,20 @@ void Main()
 	Optional<Point> pos2;
 
 	// pos1 は有効値を持つため Point{ 100, 200 } を返す
-	Print << pos2.value_or(Point{ 0, 0 });
+	Print << pos1.value_or(Point{ 0, 0 });
 
 	// pos2 は有効値を持たないため Point{ 0, 0 } を返す
-	Print << pos1.value_or(Point{ 0, 0 });
+	Print << pos2.value_or(Point{ 0, 0 });
 
 	while (System::Update())
 	{
 
 	}
 }
+```
+```txt title="出力"
+(100, 200)
+(0, 0)
 ```
 
 
@@ -188,6 +213,9 @@ void Main()
 
 	}
 }
+```
+```txt title="出力"
+123
 ```
 
 
