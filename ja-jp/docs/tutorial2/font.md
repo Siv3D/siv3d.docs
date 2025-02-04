@@ -221,7 +221,20 @@ void Main()
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/5.png)
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	// RocknRollOne-Regular.ttf をロードして使う
+	const Font font{ FontMethod::MSDF, 48, U"example/font/RocknRoll/RocknRollOne-Regular.ttf" };
+
+	while (System::Update())
+	{
+		font(U"Hello, Siv3D!\nこんにちは！").draw(60, Vec2{ 40, 40 }, ColorF{ 0.2 });
+	}
+}
 ```
 
 
@@ -239,7 +252,39 @@ void Main()
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/6.png)
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+# if SIV3D_PLATFORM(WINDOWS)
+
+	const FilePath path = (FileSystem::GetFolderPath(SpecialFolder::SystemFonts) + U"arial.ttf");
+
+# elif SIV3D_PLATFORM(MACOS)
+
+	const FilePath path = (FileSystem::GetFolderPath(SpecialFolder::SystemFonts) + U"Helvetica.dfont");
+
+# endif
+
+	Print << path;
+
+	const Font font{ FontMethod::MSDF, 48, path };
+
+	while (System::Update())
+	{
+	# if SIV3D_PLATFORM(WINDOWS)
+
+		font(U"Arial").draw(80, Vec2{ 40, 40 }, ColorF{ 0.2 });
+
+	# elif SIV3D_PLATFORM(MACOS)
+
+		font(U"Helvetica").draw(80, Vec2{ 40, 40 }, ColorF{ 0.2 });
+
+	# endif
+	}
+}
 ```
 
 
@@ -252,7 +297,35 @@ void Main()
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/7.png)
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	Font font1;
+
+	Print << font1.isEmpty();
+
+	// テクスチャを代入する
+	font1 = Font{ FontMethod::MSDF, 48 };
+
+	Print << font1.isEmpty();
+
+	// 存在しないフォントファイルを指定する
+	const Font font2{ FontMethod::MSDF, 48, U"example/aaa.ttf" };
+
+	if (not font2)
+	{
+		Print << U"Failed to load the font file";
+	}
+
+	while (System::Update())
+	{
+		// 空のフォントを使って描画する
+		font2(U"Arial").draw(80, Vec2{ 40, 40 }, ColorF{ 0.2 });
+	}
+}
 ```
 
 
@@ -263,7 +336,27 @@ void Main()
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/8.png)
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+
+	while (System::Update())
+	{
+		font(U"Hello, Siv3D!").draw(60, Vec2{ 40, 40 }, ColorF{ 1.0 });
+
+		// 文字列以外を渡すとフォーマット（文字列化）される
+		font(Cursor::Pos()).draw(60, Vec2{ 40, 200 }, ColorF{ 0.2 });
+
+		// 複数渡すと、それぞれをフォーマットした文字列をつなげる
+		font(123, U"ABC").draw(40, Vec2{ 40, 360 }, Palette::Seagreen);
+
+		font(U"{}/{}/{}"_fmt(2025, 12, 31)).draw(40, Vec2{ 40, 420 }, Palette::Deepskyblue);
+	}
+}
 ```
 
 
@@ -273,7 +366,19 @@ void Main()
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/9.png)
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+
+	while (System::Update())
+	{
+		font(U"Hello,\nSiv3D!\n\n!!").draw(60, Vec2{ 40, 40 }, ColorF{ 0.2 });
+	}
+}
 ```
 
 
@@ -291,7 +396,23 @@ void Main()
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/10.png)
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+
+	while (System::Update())
+	{
+		font(U"Siv3D").draw(80, Vec2{ 0, 0 }, ColorF{ 0.2 });
+
+		font(U"Siv3D").draw(60, Vec2{ 200, 200 }, ColorF{ 0.2 });
+
+		font(U"Siv3D").draw(40, Cursor::Pos(), ColorF{0.2});
+	}
+}
 ```
 
 
@@ -309,7 +430,29 @@ void Main()
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/11.png)
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+
+	const Rect rect{ 100, 300, 280, 80 };
+
+	const Circle circle{ 600, 400, 80 };
+
+	while (System::Update())
+	{
+		font(U"Siv3D").drawAt(80, Vec2{ 400, 60 }, ColorF{ 0.2 });
+
+		rect.draw();
+		font(U"Siv3D").drawAt(60, rect.center(), ColorF{ 0.2 });
+
+		circle.draw();
+		font(U"Siv3D").drawAt(40, circle.center, ColorF{ 0.2 });
+	}
+}
 ```
 
 
@@ -328,14 +471,46 @@ void Main()
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/12.png)
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font1{ FontMethod::MSDF, 48, U"example/font/RocknRoll/RocknRollOne-Regular.ttf" };
+	const Font font2{ FontMethod::MSDF, 48, Typeface::Bold };
+
+	const String text = U"Hello, Siv3D!";
+
+	while (System::Update())
+	{
+		// ベースラインがそろわない
+		font1(text).draw(30, Vec2{ 40, 100 }, ColorF{ 0.2 });
+		font2(text).draw(20, Vec2{ 280, 100 }, ColorF{ 0.2 });
+		font2(text).draw(50, Vec2{ 440, 100 }, ColorF{ 0.2 });
+
+		Rect{ 0, 400, 800, 10 }.draw(Palette::Skyblue);
+
+		// (40, 400) がベースラインの開始位置になるようテキストを描画
+		font1(text).drawBase(30, Vec2{ 40, 400 }, ColorF{ 0.2 });
+		Circle{ 40, 400 , 5 }.drawFrame(2, Palette::Red);
+
+		// (280, 400) がベースラインの開始位置になるようテキストを描画
+		font2(text).drawBase(20, Vec2{ 280, 400 }, ColorF{ 0.2 });
+		Circle{ 280, 400 , 5 }.drawFrame(2, Palette::Red);
+
+		// (440, 400) がベースラインの開始位置になるようテキストを描画
+		font2(text).drawBase(50, Vec2{ 440, 400 }, ColorF{ 0.2 });
+		Circle{ 440, 400 , 5 }.drawFrame(2, Palette::Red);
+	}
+}
 ```
 
 
 ## 34.13 それ以外の座標を指定した描画
 - - **右端の中心位置**を指定し、それに合わせてテキストを描画するには、次の方法を使います
 	- `.draw(Arg::topRight = pos, ...)`
-	- `.draw(Arg::topRight(x, y), ...)
+	- `.draw(Arg::topRight(x, y), ...)`
 - このように指定できる基準位置は、全部で 9 種類あります
 - これらの関数は、テキストが描画された領域を `RectF` で返します
 
@@ -354,7 +529,28 @@ void Main()
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/13.png)
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+
+	const Rect rect{ 100, 300, 280, 80 };
+
+	while (System::Update())
+	{
+		font(U"C++").draw(60, Arg::topCenter = Vec2{ 400, 20 }, ColorF{ 0.2 });
+
+		font(U"Hello, Siv3D!").draw(30, Arg::topRight(780, 20), ColorF{ 0.2 });
+
+		rect.draw();
+
+		// 長方形に右揃えでテキストを描く
+		font(U"Siv3D").draw(32, Arg::rightCenter = rect.rightCenter().movedBy(-20, 0), ColorF{0.2});
+	}
+}
 ```
 
 
@@ -371,22 +567,115 @@ void Main()
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/14.png)
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+	const String text = U"The quick brown fox jumps over the lazy dog.";
+
+	const Rect rect1{ 60, 40, 200, 100 };
+	const Rect rect2{ 60, 200, 300, 100 };
+	const Rect rect3{ 60, 360, 420, 120 };
+
+	while (System::Update())
+	{
+		{
+			rect1.draw();
+
+			const bool ok = font(text).draw(24, rect1.stretched(-10), ColorF{ 0.2 });
+
+			if (not ok)
+			{
+				rect1.drawFrame(8, ColorF{ 1.0, 0.0, 0.0, 0.5 });
+			}
+		}
+
+		{
+			rect2.draw();
+
+			const bool ok = font(text).draw(24, rect2.stretched(-10), ColorF{ 0.2 });
+
+			if (not ok)
+			{
+				rect2.drawFrame(8, ColorF{ 1.0, 0.0, 0.0, 0.5 });
+			}
+		}
+
+		{
+			rect3.draw();
+
+			const bool ok = font(text).draw(24, rect3.stretched(-20), ColorF{ 0.2 });
+
+			if (not ok)
+			{
+				rect3.drawFrame(8, ColorF{ 1.0, 0.0, 0.0, 0.5 });
+			}
+		}
+	}
+}
 ```
 
 
 ## 34.15 描画される領域の取得
-- 実際に描画を行わずに、描画される領域を取得するには、`font(テキスト)` の `.region()` や `.regionAt()` を使います
+- 実際に描画を行わずに、描画される領域を取得するには、`font(テキスト)` の次のようなメンバ関数を使います
+
+| コード | 説明 |
+| --- | --- |
+| `.region(x, y);` | `(x, y)` からテキストを描画したときの領域を `RectF` で返す |
+| `.region(pos);` | `pos` からテキストを描画したときの領域を `RectF` で返す |
+| `.region(fontSize, x, y);` | フォントサイズ `fontSize` で、`(x, y)` からテキストを描画したときの領域を `RectF` で返す |
+| `.region(fontSize, pos);` | フォントサイズ `fontSize` で、`pos` からテキストを描画したときの領域を `RectF` で返す |
+| `.regionAt(x, y);` | `(x, y)` を中心としてテキストを描画したときの領域を `RectF` で返す |
+| `.regionAt(pos);` | `pos` を中心としてテキストを描画したときの領域を `RectF` で返す |
+| `.regionAt(fontSize, x, y);` | フォントサイズ `fontSize` で、`(x, y)` を中心としてテキストを描画したときの領域を `RectF` で返す |
+| `.regionAt(fontSize, pos);` | フォントサイズ `fontSize` で、`pos` を中心としてテキストを描画したときの領域を `RectF` で返す |
+| `.regionBase(x, y);` | `(x, y)` をベースラインの開始位置としてテキストを描画したときの領域を `RectF` で返す |
+| `.regionBase(pos);` | `pos` をベースラインの開始位置としてテキストを描画したときの領域を `RectF` で返す |
+| `.regionBase(fontSize, x, y);` | フォントサイズ `fontSize` で、`(x, y)` をベースラインの開始位置としてテキストを描画したときの領域を `RectF` で返す |
+| `.regionBase(fontSize, pos);` | フォントサイズ `fontSize` で、`pos` をベースラインの開始位置としてテキストを描画したときの領域を `RectF` で返す |
+
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/15.png)
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+	const String text = U"Hello, Siv3D!";
+	const Vec2 pos{ 40, 40 };
+
+	// font を使って text を pos の位置に描画したときのテキストの領域を取得
+	const RectF rect = font(text).region(60,  pos);
+
+	while (System::Update())
+	{
+		// 描画領域の長方形を事前に塗りつぶす
+		rect.draw(Palette::Skyblue);
+
+		// 長方形の上にテキストを描く
+		font(text).draw(60, pos, ColorF{ 0.2 });
+
+		// テキストの領域を
+		font(text)
+			.drawAt(80, Vec2{ 400, 300 }, ColorF{ 1.0 })
+			.stretched(40, 0)	// 横に広げて
+			.shearedX(20)		// 平行四辺形にして
+			.drawFrame(2);		// 枠を描く
+	}
+}
 ```
 
 
 ## 34.16 フォントスタイル（太字・斜体）
 - `Font` のコンストラクタで次のような `FontStyle` を指定することで、太字や斜体などのスタイルをフォントに適用できます
+- 書体が対応していない場合、太字・斜体を疑似的に再現するため、SDF / MSDF 方式では字形に異常が生じることがあります
 
 | コード | 説明 |
 | --- | --- |
@@ -398,12 +687,33 @@ void Main()
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/16.png)
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ 48, Typeface::CJK_Regular_JP };
+	const Font fontBold{ 48, Typeface::CJK_Regular_JP, FontStyle::Bold };
+	const Font fontItalic{ 48, Typeface::CJK_Regular_JP, FontStyle::Italic };
+	const Font fontBoldItalic{ 48, Typeface::CJK_Regular_JP, FontStyle::BoldItalic };
+
+	const String text = U"Hello, Siv3D! こんにちは。";
+
+	while (System::Update())
+	{
+		font(text).draw(48, Vec2{ 40, 40 }, ColorF{ 0.2 });
+		fontBold(text).draw(48, Vec2{ 40, 100 }, ColorF{ 0.2 });
+		fontItalic(text).draw(48, Vec2{ 40, 160 }, ColorF{ 0.2 });
+		fontBoldItalic(text).draw(48, Vec2{ 40, 220 }, ColorF{ 0.2 });
+	}
+}
 ```
 
 
 ## 34.17 フォントスタイル（ビットマップ）
 - 書体がビットマップフォントに対応している場合、`Font` のコンストラクタで次のような `FontStyle` を指定することで、ドット感を保った文字を描画できます
+- 描画方式としてビットマップ方式を使います
 
 | コード | 説明 |
 | --- | --- |
@@ -415,7 +725,45 @@ void Main()
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/17.png)
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font1{ 32, U"example/font/DotGothic16/DotGothic16-Regular.ttf", FontStyle::Bitmap };
+	const Font font2{ 32, U"example/font/DotGothic16/DotGothic16-Regular.ttf", FontStyle::ItalicBitmap };
+	const Font font3{ 60, U"example/font/DotGothic16/DotGothic16-Regular.ttf", FontStyle::Bitmap };
+	const Font font4{ 60, U"example/font/DotGothic16/DotGothic16-Regular.ttf", FontStyle::ItalicBitmap };
+
+# if SIV3D_PLATFORM(WINDOWS)
+
+	const FilePath path = (FileSystem::GetFolderPath(SpecialFolder::SystemFonts) + U"msgothic.ttc");
+	const Font font5{ 16, path, FontStyle::Bitmap };
+
+# endif
+
+	const String text = U"こんにちは、Siv3D!";
+
+	while (System::Update())
+	{
+		font1(text).draw(32, Vec2{ 40, 40 }, ColorF{ 0.2 });
+		font2(text).draw(32, Vec2{ 40, 100 }, ColorF{ 0.2 });
+		font3(text).draw(60, Vec2{ 40, 160 }, ColorF{ 0.2 });
+		font4(text).draw(60, Vec2{ 40, 240 }, ColorF{ 0.2 });
+
+	# if SIV3D_PLATFORM(WINDOWS)
+
+		{
+			// ドット感を保って拡大表示する
+			const ScopedRenderStates2D states{ SamplerState::ClampNearest };
+
+			font5(text).draw(64, Vec2{ 40, 360 }, ColorF{ 0.2 });
+		}
+
+	# endif
+	}
+}
 ```
 
 
