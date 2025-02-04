@@ -911,33 +911,14 @@ void Main()
 ```
 
 
-## 34.29 文字を `Polygon` で取得
-- XXX
+## 34.29 文字を Polygon で取得
+- 文字を画像形式ではなく、`Polygon` 形式で取得して描画することができます
+- 頂点単位での加工や、文字の形状を利用した演出などに活用できます
+- `Font` のメンバ関数 `.renderPolygons()` を使うと、文字列を描画したときの各文字の `PolygonGlyph` を取得できます
+	- 描画方式はこの関数には影響しません
+- フォントの基本サイズを大きくすると、多角形の頂点数も増加します（より高品質な多角形が得られます）
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/29.png)
-
-```cpp
-
-```
-
-
-## 34.30 文字を `LineString` で取得
-- XXX
-	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/30.png)
-
-```cpp
-
-```
-
-
-
-
-
-## 31.25 文字を Polygon で取得する
-`Font` のメンバ関数 `.renderPolygons()` を使うと、文字列を描画したときの各文字の `PolygonGlyph` を取得できます。これは文字を画像ではなく多角形で表現するものです。次のコードのようにすると、文字列を指定した位置に描画するときの各文字の `Polygon` を取得できます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/25.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -964,25 +945,35 @@ Array<Polygon> ToPolygons(const Vec2& basePos, const Array<PolygonGlyph>& glyphs
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.7, 0.9, 0.8 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
 	const Font font{ 80, Typeface::Bold };
+
 	const String text = U"こんにちは、Siv3D!";
-	const Array<Polygon> polygons = ToPolygons(Vec2{ 40, 40 }, font.renderPolygons(text));
+
+	const Array<Polygon> polygons = ToPolygons(Vec2{ 20, 20 }, font.renderPolygons(text));
 
 	while (System::Update())
 	{
 		for (size_t i = 0; i < polygons.size(); ++i)
 		{
 			polygons[i].draw(HSV{ (i * 50) });
+
+			polygons[i].drawWireframe(1, ColorF{ 0.2, Periodic::Square0_1(2s) });
 		}
 	}
 }
 ```
 
-## 31.26 文字を LineString で取得する
-`Font` のメンバ関数 `.renderOutlines()` を使うと、文字列を描画したときの各文字の `OutlineGlyph` を取得できます。これは文字を画像ではなく輪郭の `LineString` の集合で表現するものです。次のコードのようにすると、文字列を指定した位置に描画するときの各文字の `LineString` を取得できます。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/26.png)
+## 34.30 文字を LineString で取得
+- 文字を `LineString` 形式で取得して描画することができます
+- 輪郭に対する処理や、文字の形状を利用した演出などに活用できます
+- `Font` のメンバ関数 `.renderOutlines()` を使うと、文字列を描画したときの各文字の `OutlineGlyph` を取得できます
+	- 描画方式はこの関数には影響しません
+- フォントの基本サイズを大きくすると、頂点数も増加します（より高品質な線分集合が得られます）
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/30.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -1009,10 +1000,13 @@ Array<LineString> ToLineStrings(const Vec2& basePos, const Array<OutlineGlyph>& 
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.7, 0.9, 0.8 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
 	const Font font{ 80, Typeface::Bold };
+
 	const String text = U"こんにちは、Siv3D!";
-	const Array<LineString> lines = ToLineStrings(Vec2{ 40, 40 }, font.renderOutlines(text));
+
+	const Array<LineString> lines = ToLineStrings(Vec2{ 20, 20 }, font.renderOutlines(text));
 
 	while (System::Update())
 	{
@@ -1023,3 +1017,4 @@ void Main()
 	}
 }
 ```
+
