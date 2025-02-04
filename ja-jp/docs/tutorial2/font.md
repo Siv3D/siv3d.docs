@@ -837,22 +837,77 @@ void Main()
 
 
 ## 34.27 フォントのキャッシュへのアクセス
-- XXX
+- フォントは、初めて描く文字画像データを内部でレンダリングしてキャッシュします
+- `.getTexture()` を使うと、フォントのキャッシュを `Texture` 形式で取得し、内容を確認できます
+- ビットマップ方式では白 + アルファチャンネルの画像、SDF / MSDF 方式では Distance field 形式の画像です
+- 次のサンプルを実行すると、フォントのキャッシュに随時文字が追加されていく様子を確認できます
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/27.png)
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ 24, Typeface::Bold };
+
+	const String text = U"Siv3D（シブスリーディー）は、音や画像、AI を使ったゲームやアプリを、モダンな C++ コードで楽しく簡単に開発できるオープンソースのフレームワークです。豊富なサンプルコードとチュートリアルが用意され、オンラインのユーザコミュニティで気軽に質問や相談ができます。";
+
+	Stopwatch stopwatch{ StartImmediately::Yes };
+
+	while (System::Update())
+	{
+		const int32 count = (stopwatch.ms() / 50);
+
+		font(text.substr(0, count)).draw(Rect{ 20, 20, 760, 240 }, Palette::Seagreen);
+
+		Rect{ 20, 300, font.getTexture().size() }.draw(ColorF{ 0.0 });
+
+		font.getTexture().draw(20, 300);
+	}
+}
 ```
 
 
 ## 34.28 フォントのプリロード
-- XXX
-	
+- リアルタイムで動作するゲームの途中で大量のテキストを初めて表示すると、一度にレンダリング・キャッシュすべき文字が多くなります
+- すると、フレーム時間にスパイク（そのフレームの処理時間だけ極端に長くなること）が生じ、プレイ体験に影響を与えることがあります
+- `.preload(text)` を使うと、`text` に含まれる文字をあらかじめ内部でレンダリングしてキャッシュできます
+- ゲームの起動時やロード画面でプリロードを行うことで、ゲーム実行中のフレーム時間のスパイクを防ぐことができます
+- `String` のメンバ関数 `.sorted_and_uniqued()` は、文字列中の文字をソートして重複を除去した文字列を返します。プリロード文字列に対してこの前処理を行うと、プリロードの負荷が軽減されます
+- 次のサンプルでは、起動時にすべての文字をプリロードします
+
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/28.png)
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ 24, Typeface::Bold };
+
+	const String text = U"Siv3D（シブスリーディー）は、音や画像、AI を使ったゲームやアプリを、モダンな C++ コードで楽しく簡単に開発できるオープンソースのフレームワークです。豊富なサンプルコードとチュートリアルが用意され、オンラインのユーザコミュニティで気軽に質問や相談ができます。";
+
+	// text は .sorted_and_uniqued() で重複をあらかじめ除いておくと、プリロード時の負荷が軽減される
+	font.preload(text.sorted_and_uniqued());
+
+	Stopwatch stopwatch{ StartImmediately::Yes };
+
+	while (System::Update())
+	{
+		const int32 count = (stopwatch.ms() / 50);
+
+		font(text.substr(0, count)).draw(Rect{ 20, 20, 760, 240 }, Palette::Seagreen);
+
+		Rect{ 20, 300, font.getTexture().size() }.draw(ColorF{ 0.0 });
+
+		font.getTexture().draw(20, 300);
+	}
+}
 ```
 
 
@@ -877,75 +932,6 @@ void Main()
 
 
 
-
-
-## 31.23 フォントのプリロード
-Siv3D の `Font` は、初めて描いた文字の画像を内部でレンダリングしてキャッシュするため、リアルタイムで動作するゲームの途中で大量のテキストを初めて表示すると、そのフレームの実行時間が長くなり、フレームレートが一瞬低下することがあります。`.preload(text)` を使って、`text` に含まれる文字を（重複する場合は除去して）あらかじめレンダリングしてキャッシュしておくと、ゲームの実行中の瞬間的な高負荷を防ぐことができます。
-
-`.getTexture()` を使うと、`Font` の内部にキャッシュされている `Texture` を取得できます。
-
-### 31.23.1 プリロードを使わないときの動作の様子
-次のコードはプリロードを使わない場合の動作の様子です。キャッシュテクスチャには、実行中に随時文字が追加されていきます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/23.1.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-
-	const Font font{ 20, Typeface::Bold };
-
-	const String text = U"Siv3D の Font は、初めて描いた文字の画像を内部でレンダリングしてキャッシュするため、リアルタイムで動作するゲームの途中で大量のテキストを初めて表示すると、そのフレームの実行時間が長くなり、フレームレートが一瞬低下することがあります。.preload(text) を使って、text に含まれる文字をあらかじめレンダリングしてキャッシュしておくと、ゲームの実行中の瞬間的な高負荷を防ぐことができます。";
-
-	Stopwatch stopwatch{ StartImmediately::Yes };
-
-	while (System::Update())
-	{
-		const int32 count = (stopwatch.ms() / 30);
-
-		font(text.substr(0, count)).draw(Rect{ 20, 20, 760, 240 }, ColorF{ 0.25 });
-
-		font.getTexture().draw(20, 300).drawFrame(0, 1, Palette::Black);
-	}
-}
-```
-
-### 31.23.2 プリロードを使ったときの様子
-次のコードはプリロードを使うサンプルです。実行前にキャッシュテクスチャには、`text` に含まれる文字がすべてレンダリングされています。
-
-`String` のメンバ関数 `.sorted_and_uniqued()` は、文字列中の文字をソートして重複を除去した文字列を返します。文字列に対してこの前処理を行うと、プリロード時の負荷が軽減されます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/23.2.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-
-	const Font font{ 20, Typeface::Bold };
-
-	const String text = U"Siv3D の Font は、初めて描いた文字の画像を内部でレンダリングしてキャッシュするため、リアルタイムで動作するゲームの途中で大量のテキストを初めて表示すると、そのフレームの実行時間が長くなり、フレームレートが一瞬低下することがあります。.preload(text) を使って、text に含まれる文字をあらかじめレンダリングしてキャッシュしておくと、ゲームの実行中の瞬間的な高負荷を防ぐことができます。";
-
-	// text は .sorted_and_uniqued() で重複をあらかじめ除いておくと、プリロード時の負荷が軽減される
-	font.preload(text.sorted_and_uniqued());
-
-	Stopwatch stopwatch{ StartImmediately::Yes };
-
-	while (System::Update())
-	{
-		const int32 count = (stopwatch.ms() / 30);
-
-		font(text.substr(0, count)).draw(Rect{ 20, 20, 760, 240 }, ColorF{ 0.25 });
-
-		font.getTexture().draw(20, 300).drawFrame(0, 1, Palette::Black);
-	}
-}
-```
 
 
 ## 31.25 文字を Polygon で取得する
