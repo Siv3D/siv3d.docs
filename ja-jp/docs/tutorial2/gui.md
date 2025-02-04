@@ -2,7 +2,7 @@
 ボタンやスライダー、テキストボックスなどの GUI 機能を利用する方法を学びます。
 
 ## 38.1 SimpleGUI の概要
-- SimpleGUI は、よく使われる GUI ウィジェットを最小限のコードで実装できる機能です
+- Siv3D の SimpleGUI は、定番の GUI ウィジェットを簡単なコードで実装できる機能です
 - サポートしている GUI ウィジェットは次のとおりです：
 	- **38.2** ボタン
 	- **38.4** スライダー
@@ -14,7 +14,7 @@
 	- **38.10** リストボックス
 	- **38.12** メニューバー
 	- **38.13** テーブル
-- コードの簡単さを優先するため、色やフォントなど、デザインの柔軟性には制約があります
+- SimpleGUI はコードの簡単さを優先しているため、色やフォントなど、デザインの柔軟性に制約があります
 - 将来の Siv3D バージョンでは、SimpleGUI の上位版となる、より高度で複雑な GUI 機能を提供する予定です
 
 
@@ -687,13 +687,13 @@ void Main()
 ## 38.12 メニューバー
 - `SimpleMenuBar` クラスを使うと、簡易的なメニューバーを作成できます
 - メニューバーの項目は、`Array<std::pair<String, Array<String>>>` で設定します
-	- `String` がメニューのタイトル、`Array<String>` がそのメニューに含まれる項目の名前です
+	- `String` がメニューのタイトル、`Array<String>` がメニューに含まれる項目の名前です
 
 ### 38.12.1 メニューバーの基本
 - `SimpleMenuBar` クラスには、状態の更新を行うメンバ関数 `.update()` と、描画を行うメンバ関数 `.draw()` があり、毎フレーム 2 つの関数を呼ぶ必要があります
-	- `.update()` の戻り値は `Optional<MenuBarItemIndex>` 型です。メニューの項目が選択された場合はその項目のインデックス、選択されなかった場合は無効値です
+	- `.update()` の戻り値は `Optional<MenuBarItemIndex>` 型です。メニューの項目が選択された場合はその項目インデックス、選択されなかった場合は無効値です
 	- `.draw()` はメニューバーを描画します
-- 項目のインデックスは `MenuBarItemIndex{ メニューのインデックス, メニュー項目のインデックス }` で表されます
+- 項目インデックスは `MenuBarItemIndex{ メニューのインデックス, メニュー項目のインデックス }` で表します
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/12-1.png)
 
@@ -802,7 +802,7 @@ void Main()
 ### 38.12.3 メニューバーの色の変更
 - `SimpleMenuBar::ColorPalette` クラスを使い、メニューバーの色をカスタマイズできます
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/12.3.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/12-3.png)
 
 ```cpp
 # include <Siv3D.hpp>
