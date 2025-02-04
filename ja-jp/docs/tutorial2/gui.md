@@ -351,7 +351,7 @@ bool SimpleGUI::TextBox(TextEditState& text, const Vec2& pos, double width = 200
 - テキストボックスがアクティブかどうかは `TextEditState` の `.active` メンバ変数で取得できます
 - テキストボックスの内容を消去するには `TextEditState` の `.clear()` メンバ関数を使います
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/7.1.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/7-1.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -400,7 +400,7 @@ void Main()
 - テキストボックスが Tab キーによって非アクティブ化されたかは、`TextEditState` の `.tabKey` メンバ変数が `true` であるかどうかで検出できます
 - テキストボックスが Tab キーによって非アクティブ化したことを検出し、前後のテキストボックスへフォーカスを移動させる仕組みは、次のように実装できます
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/7.2.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/7-2.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -695,7 +695,7 @@ void Main()
 	- `.draw()` はメニューバーを描画します
 - 項目のインデックスは `MenuBarItemIndex{ メニューのインデックス, メニュー項目のインデックス }` で表されます
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/12.1.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/12-1.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -741,7 +741,7 @@ void Main()
 	- `true` の場合、その項目をチェック状態にし、`false` の場合はチェック状態を解除します
 - ある項目がチェック状態であるかは、メンバ関数 `.getItemChecked(MenuBarItemIndex)` で取得します
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/12.2.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/12-2.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -864,7 +864,7 @@ void Main()
 	- `-1` が左寄せ、`0` が中央寄せ、`1` が右寄せです
 - テーブルはメンバ関数 `.draw(pos)` で描画します
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/13.1.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/13-1.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -893,7 +893,7 @@ void Main()
 ### 38.13.2 テーブルのサンプル（1）
 - 行を増減可能なテーブルのサンプルです
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/13.2.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/13-2.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -951,7 +951,7 @@ void Main()
 ### 38.13.3 テーブルのサンプル（2）
 - マウスオーバー時に行の背景色を変更するテーブルのサンプルです
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/13.2.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/13-3.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -1010,7 +1010,7 @@ void Main()
 ### 38.13.4 テーブルのサンプル（3）
 - 2025 年 12 月のカレンダーのサンプルです
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/13.3.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/13-4.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -1069,7 +1069,7 @@ void Main()
 ### 38.13.5 テーブルのサンプル（4）
 - 時刻表のサンプルです
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/13.4.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/13-5.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -1125,7 +1125,7 @@ void Main()
 ### 38.13.6 テーブルのサンプル（5）
 - 天気予報のサンプルです
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/13.5.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/13-6.png)
 
 ```cpp
 # include <Siv3D.hpp>
