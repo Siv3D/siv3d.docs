@@ -1333,10 +1333,10 @@ void Main()
 	const Font fontCJK{ FontMethod::MSDF, 48, Typeface::CJK_Regular_JP };
 	const Font fontEmoji{ 48, Typeface::ColorEmoji };
 
-	// font1 にフォールバックフォントを 1 つ追加
+	// font1 にフォールバックフォントを 1 つ追加する
 	font1.addFallback(fontCJK);
 
-	// font2 にフォールバックフォントを 2 つ追加
+	// font2 にフォールバックフォントを 2 つ追加する
 	font2.addFallback(fontCJK);
 	font2.addFallback(fontEmoji);
 

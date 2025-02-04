@@ -1119,3 +1119,43 @@ void Main()
 	}
 }
 ```
+
+
+## 26.21 Polygon のワイヤフレーム表示
+- `Polygon` は `.drawWireframe()` でワイヤフレーム表示できます
+	- ワイヤフレーム表示は、多角形を構成する三角形の辺をすべて描画します
+
+| コード | 説明 |
+|---|---|
+| `.drawWireframe(太さ, 色)` | 多角形のワイヤフレームを描きます |
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape/21.png)
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Polygon polygon1
+	{
+		Vec2{ 200, 100 }, Vec2{ 380, 300 }, Vec2{ 300, 500 }, Vec2{ 200, 400 }, Vec2{ 100, 500 }, Vec2{ 20, 300 }
+	};
+
+	const Polygon polygon2
+	{
+		{ Vec2{ 600, 100 }, Vec2{ 780, 300 }, Vec2{ 700, 500 }, Vec2{ 600, 400 }, Vec2{ 500, 500 }, Vec2{ 420, 300 } },
+		{ { Vec2{ 620, 250 }, Vec2{ 580, 250 }, Vec2{ 550, 350 }, Vec2{ 650, 350 } } }
+	};
+
+	while (System::Update())
+	{
+		polygon1.draw();
+		polygon1.drawWireframe(2, ColorF{ 0.2 });
+
+		polygon2.draw(ColorF{ 0.2 });
+		polygon2.drawWireframe(2);
+	}
+}
+```
