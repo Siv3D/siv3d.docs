@@ -27,8 +27,6 @@ Array<String> c = { U"Apple", U"Bird", U"Cat", U"Dog" };
 		- `Array<int32> v(5);` は 5 個の 0 で初期化された配列を作成します
 		- `Array<double> v(5);` は 5 個の 0.0 で初期化された配列を作成します
 		- `Array<String> v(5);` は 5 個の空文字列で初期化された配列を作成します
-	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/xxxx/1.png)
 
 ```cpp
 # include <Siv3D.hpp>
