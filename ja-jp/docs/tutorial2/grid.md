@@ -723,6 +723,7 @@ void Main()
 
 ## 37.17 二次元配列の可視化（数値）
 - 二次元配列の内容をグリッド状に可視化するサンプルです
+- Siv3D の仕様上、図形は図形で、フォントはフォントでまとめて描画すると実行時性能が向上するため、二重ループを 2 回使って描画します
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/grid/17.png)
 
@@ -750,9 +751,7 @@ void VisualizeGrid(const Grid<int32>& grid, const Font& font)
 		for (int32 x = 0; x < grid.width(); ++x)
 		{
 			const auto& value = grid[y][x];
-
 			const Rect rect{ (x * 80), (y * 80), 80 };
-
 			font(value).drawAt(36, rect.center(), ColorF{ 0.2 });
 		}
 	}
