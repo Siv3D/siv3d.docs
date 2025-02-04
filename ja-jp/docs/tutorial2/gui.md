@@ -2,7 +2,7 @@
 ボタンやスライダー、テキストボックスなどの GUI 機能を利用する方法を学びます。
 
 ## 38.1 SimpleGUI の概要
-- よく使う GUI ウィジェットを最小限のコードで実装できる機能です
+- SimpleGUI は、よく使われる GUI ウィジェットを最小限のコードで実装できる機能です
 - サポートしている GUI ウィジェットは次のとおりです：
 	- **38.2** ボタン
 	- **38.4** スライダー
@@ -14,11 +14,11 @@
 	- **38.10** リストボックス
 	- **38.12** メニューバー
 	- **38.13** テーブル
-- コードの簡単さを優先しているため、色やフォントなど、デザインの柔軟性には制約があります
+- コードの簡単さを優先するため、色やフォントなど、デザインの柔軟性には制約があります
 - 将来の Siv3D バージョンでは、SimpleGUI の上位版となる、より高度で複雑な GUI 機能を提供する予定です
 
 ## 38.2 ボタン
-- ボタンは次の関数を使います
+- ボタンは `SimpleGUI::Button()` 関数を使います
 
 ```cpp
 bool SimpleGUI::Button(StringView label, const Vec2& pos, const Optional<double>& width = unspecified, bool enabled = true);
@@ -87,11 +87,8 @@ void Main()
 
 
 ## 38.3 スライダー
-- スライダーは次の関数を使います
-	- `Slider` は水平方向のスライダーです
-	- `VerticalSlider` は縦方向のスライダーです
-	- 最小値・最大値指定がないものは、値の範囲は 0.0 ～ 1.0 です
-
+- スライダーは `SimpleGUI::Slider()` （水平方向）または `SimpleGUI::VerticalSlider()` 縦方向）を使います
+	
 ```cpp
 bool SimpleGUI::Slider(double& value, double min, double max, const Vec2& pos, double sliderWidth = 120.0, bool enabled = true);
 bool SimpleGUI::Slider(StringView label, double& value, const Vec2& pos, double labelWidth = 80.0, double sliderWidth = 120.0, bool enabled = true);
@@ -110,6 +107,7 @@ bool SimpleGUI::VerticalSlider(double& value, double min, double max, const Vec2
 	- `sliderWidth` : スライダーの幅
 	- `sliderHeight` : 縦方向スライダーの高さ
 	- `enabled` : スライダーが有効かどうか
+- 最小値・最大値指定がないものは、値の範囲は 0.0 ～ 1.0 です
 - 戻り値：
 	- スライダーの値が変更されたら `true`, そうでなければ `false`
 
@@ -212,7 +210,7 @@ void Main()
 
 
 ## 38.5 チェックボックス
-- チェックボックスは次の関数を使います
+- チェックボックスは `SimpleGUI::CheckBox()` 関数を使います
 
 ```cpp
 bool SimpleGUI::CheckBox(bool& checked, StringView label, const Vec2& pos, const Optional<double>& width = unspecified, bool enabled = true);
@@ -263,9 +261,7 @@ void Main()
 
 
 ## 38.6 ラジオボタン
-- ラジオボタンは次の関数を使います
-	- `RadioButtons` は垂直方向のラジオボタンです
-	- `HorizontalRadioButtons` は水平方向のラジオボタンです
+- ラジオボタンは `SimpleGUI::RadioButtons()` （垂直方向）または `SimpleGUI::HorizontalRadioButtons()` （水平方向）を使います
 
 ```cpp
 bool SimpleGUI::RadioButtons(size_t& index, const Array<String>& options, const Vec2& pos, const Optional<double>& width = unspecified, bool enabled = true);
@@ -328,6 +324,41 @@ void Main()
 
 
 ## 38.7 テキストボックス
+- 単一行のテキストボックスは `TextEditState` クラスと `SimpleGUI::TextBox()` 関数を使います
+
+```cpp
+struct TextEditState
+{
+	String text;
+
+	size_t cursorPos = 0;
+
+	bool active = false;
+
+	bool textChanged = false;
+
+	bool tabKey = false;
+
+	bool enterKey = false;
+
+	Stopwatch leftPressStopwatch, rightPressStopwatch, cursorStopwatch;
+
+	TextEditState() = default;
+
+	explicit TextEditState(const String& defaultText);
+	
+	explicit TextEditState(String&& defaultText) noexcept;
+	
+	void clear() noexcept;
+
+	void resetStopwatches() noexcept;
+};
+
+bool SimpleGUI::TextBox(TextEditState& text, const Vec2& pos, double width = 200.0, const Optional<size_t>& maxChars = unspecified, bool enabled = true);
+```
+
+
+
 単一行のテキストボックスを作成するには `SimpleGUI::TextBox()` 関数を使うと便利です。関数ではテキストボックスの位置、幅、文字数の上限、状態などを設定できます。テキストボックスの状態（入力されている文字列など）は `TextEditState` 型のオブジェクトによって管理します。この関数はテキストが変更されたときに `true` を返します。
 
 ### 38.7.1 テキストボックスの基本
