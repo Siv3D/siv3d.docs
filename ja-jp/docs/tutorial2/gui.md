@@ -17,8 +17,10 @@
 - コードの簡単さを優先するため、色やフォントなど、デザインの柔軟性には制約があります
 - 将来の Siv3D バージョンでは、SimpleGUI の上位版となる、より高度で複雑な GUI 機能を提供する予定です
 
+
 ## 38.2 ボタン
 - ボタンは `SimpleGUI::Button()` 関数を使います
+- テキストや位置、幅、状態などを設定できます
 
 ```cpp
 bool SimpleGUI::Button(StringView label, const Vec2& pos, const Optional<double>& width = unspecified, bool enabled = true);
@@ -88,6 +90,7 @@ void Main()
 
 ## 38.3 スライダー
 - スライダーは `SimpleGUI::Slider()` （水平方向）または `SimpleGUI::VerticalSlider()` 縦方向）を使います
+- テキストや位置、幅、値の範囲などを設定できます
 	
 ```cpp
 bool SimpleGUI::Slider(double& value, double min, double max, const Vec2& pos, double sliderWidth = 120.0, bool enabled = true);
@@ -211,6 +214,7 @@ void Main()
 
 ## 38.5 チェックボックス
 - チェックボックスは `SimpleGUI::CheckBox()` 関数を使います
+- テキストや位置、幅、状態などを設定できます
 
 ```cpp
 bool SimpleGUI::CheckBox(bool& checked, StringView label, const Vec2& pos, const Optional<double>& width = unspecified, bool enabled = true);
@@ -262,6 +266,7 @@ void Main()
 
 ## 38.6 ラジオボタン
 - ラジオボタンは `SimpleGUI::RadioButtons()` （垂直方向）または `SimpleGUI::HorizontalRadioButtons()` （水平方向）を使います
+- テキストや位置、幅、状態などを設定できます
 
 ```cpp
 bool SimpleGUI::RadioButtons(size_t& index, const Array<String>& options, const Vec2& pos, const Optional<double>& width = unspecified, bool enabled = true);
@@ -324,44 +329,27 @@ void Main()
 
 
 ## 38.7 テキストボックス
-- 単一行のテキストボックスは `TextEditState` クラスと `SimpleGUI::TextBox()` 関数を使います
+- 単一行のテキストボックスは、`TextEditState` クラスと `SimpleGUI::TextBox()` 関数を使います
+- テキストボックスの位置、幅、文字数の上限、状態などを設定できます
 
 ```cpp
-struct TextEditState
-{
-	String text;
-
-	size_t cursorPos = 0;
-
-	bool active = false;
-
-	bool textChanged = false;
-
-	bool tabKey = false;
-
-	bool enterKey = false;
-
-	Stopwatch leftPressStopwatch, rightPressStopwatch, cursorStopwatch;
-
-	TextEditState() = default;
-
-	explicit TextEditState(const String& defaultText);
-	
-	explicit TextEditState(String&& defaultText) noexcept;
-	
-	void clear() noexcept;
-
-	void resetStopwatches() noexcept;
-};
-
 bool SimpleGUI::TextBox(TextEditState& text, const Vec2& pos, double width = 200.0, const Optional<size_t>& maxChars = unspecified, bool enabled = true);
 ```
 
-
-
-単一行のテキストボックスを作成するには `SimpleGUI::TextBox()` 関数を使うと便利です。関数ではテキストボックスの位置、幅、文字数の上限、状態などを設定できます。テキストボックスの状態（入力されている文字列など）は `TextEditState` 型のオブジェクトによって管理します。この関数はテキストが変更されたときに `true` を返します。
+- 引数：
+	- `text` : `TextEditState` オブジェクト
+	- `pos` : テキストボックスの左上の座標
+	- `width` : テキストボックスの幅
+	- `maxChars` : 入力可能な文字数の上限（`unspecified` を指定すると制限なし）
+	- `enabled` : テキストボックスが有効かどうか
+- 戻り値：
+	- テキストが変更されたら `true`, そうでなければ `false`
 
 ### 38.7.1 テキストボックスの基本
+- テキストボックスの初期文字列は `TextEditState`のコンストラクタで指定します
+- テキストボックスの内容は `TextEditState` の `.text` メンバ変数で取得できます
+- テキストボックスがアクティブかどうかは `TextEditState` の `.active` メンバ変数で取得できます
+- テキストボックスの内容を消去するには `TextEditState` の `.clear()` メンバ関数を使います
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/7.1.png)
 
@@ -370,10 +358,10 @@ bool SimpleGUI::TextBox(TextEditState& text, const Vec2& pos, double width = 200
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
 	TextEditState te0;
-	TextEditState te1{ U"Siv3D" };// デフォルトのテキストを設定する
+	TextEditState te1{ U"Siv3D" }; // デフォルトのテキストを設定する
 	TextEditState te2;
 	TextEditState te3;
 
@@ -402,9 +390,15 @@ void Main()
 }
 ```
 
+- 文字列の範囲選択など、高度なテキスト編集機能は現在の SimpleGUI には実装されていません
+- テキストボックスは、文字数がテキストボックスの幅を超える場合、テキストボックスの外側にあふれて表示されます
+	- この挙動を避けたい場合は、文字数の上限を設定するか、**38.8** テキストエリアを使うことを検討してください
+
 
 ### 38.7.2 前後のテキストボックスへフォーカスを移動させる
-`SimpleGUI::TextBox()` では、あるテキストボックスがアクティブな時、エンターキーや Tab キーを押したり、無関係な場所をクリックしたりすると、そのテキストボックスが非アクティブになります。あるテキストボックスが Tab キーによって非アクティブ化したことを検出し、前後のテキストボックスへフォーカスを移動させるには、次のようにします。
+- `SimpleGUI::TextBox()` では、あるテキストボックスがアクティブな時、エンターキーや Tab キーを押したり、無関係な場所をクリックしたりすると、そのテキストボックスが非アクティブになります
+- テキストボックスが Tab キーによって非アクティブ化されたかは、`TextEditState` の `.tabKey` メンバ変数が `true` であるかどうかで検出できます
+- テキストボックスが Tab キーによって非アクティブ化したことを検出し、前後のテキストボックスへフォーカスを移動させる仕組みは、次のように実装できます
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/7.2.png)
 
@@ -413,7 +407,7 @@ void Main()
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
 	std::array<TextEditState, 3> textEditStates;
 
@@ -460,7 +454,21 @@ void Main()
 
 
 ## 38.8 テキストエリア
-複数行のテキストエリアを作成するには、`SimpleGUI::TextArea()` 関数を使うと便利です。関数ではテキストエリアの位置、幅と高さ、文字数の上限、状態などを設定できます。テキストボックスの状態（入力されている文字列など）は `TextAreaEditState` 型のオブジェクトによって管理します。この関数はテキストが変更されたときに `true` を返します。
+- 複数行にわたるテキストを入力するためのテキストエリアは、`TextAreaEditState` クラスと `SimpleGUI::TextArea()` 関数を使います
+- テキストエリアの位置、幅と高さ、文字数の上限、状態などを設定できます
+
+```cpp
+bool SimpleGUI::TextArea(TextAreaEditState& text, const Vec2& pos, const SizeF& size = SizeF{ 200, 100 }, size_t maxChars = PreferredTextAreaMaxChars, bool enabled = true);
+```
+
+- 引数：
+	- `text` : `TextAreaEditState` オブジェクト
+	- `pos` : テキストエリアの左上の座標
+	- `size` : テキストエリアの幅と高さ
+	- `maxChars` : 入力可能な文字数の上限
+	- `enabled` : テキストエリアが有効かどうか
+- 戻り値：
+	- テキストが変更されたら `true`, そうでなければ `false`
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/8.png)
 
@@ -469,7 +477,7 @@ void Main()
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
 	TextAreaEditState textAreaEditState;
 
@@ -491,9 +499,25 @@ void Main()
 }
 ```
 
+- 文字列の範囲選択など、高度なテキスト編集機能は現在の SimpleGUI には実装されていません
+
 
 ## 38.9 カラーピッカー
-カラーピッカーを作成するには、`SimpleGUI::ColorPicker()` 関数を使うと便利です。関数ではカラーピッカーの位置、状態などを設定できます。色は `HSV` 型の変数で管理します。この関数は色が変更されたときに `true` を返します。
+- カラーピッカーは `SimpleGUI::ColorPicker()` 関数を使います
+- カラーピッカーの位置、状態などを設定できます
+- 色は `HSV` 型の変数で管理します
+- アルファ成分は操作できません
+
+```cpp
+bool SimpleGUI::ColorPicker(HSV& hsv, const Vec2& pos, bool enabled = true);
+```
+
+- 引数：
+	- `hsv` : `HSV` 型の変数
+	- `pos` : カラーピッカーの左上の座標
+	- `enabled` : カラーピッカーが有効かどうか
+- 戻り値：
+	- 色が変更されたら `true`, そうでなければ `false`
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/9.png)
 
@@ -502,7 +526,7 @@ void Main()
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
 	HSV color0 = Palette::Orange;
 	HSV color1 = Palette::Skyblue;
@@ -521,9 +545,27 @@ void Main()
 
 
 ## 38.10 リストボックス
-リストボックスを作成するには、`SimpleGUI::ListBox()` 関数を使うと便利です。関数ではリストボックスの位置、幅と高さ、状態などを設定できます。リストボックスの状態は `ListBoxState` 型のオブジェクトによって管理します。この関数はリストボックスの選択が変更されたときに `true` を返します。
+- リストボックスは、`ListBoxState` クラスと `SimpleGUI::ListBox()` 関数を使います
+- リストボックスの位置、幅と高さ、状態などを設定できます
 
-選択されている項目のインデックスは `ListBoxState` の `Optional<size_t>` 型のメンバ変数 `selectedItemIndex` に格納されます。選択肢の配列は `ListBoxState` の `Array<String>` 型のメンバ変数 `items` に格納されます。
+```cpp
+bool SimpleGUI::ListBox(ListBoxState& state, const Vec2& pos, double width = 160.0, double height = 156.0, bool enabled = true);
+```
+
+- 引数：
+	- `state` : `ListBoxState` オブジェクト
+	- `pos` : リストボックスの左上の座標
+	- `width` : リストボックスの幅
+	- `height` : リストボックスの高さ
+	- `enabled` : リストボックスが有効かどうか
+- 戻り値：
+	- リストボックスの選択が変更されたら `true`, そうでなければ `false`
+
+---
+
+- リストボックスの状態は `ListBoxState` 型のオブジェクトによって管理します
+- 選択肢一覧は `ListBoxState` の `Array<String>` 型のメンバ変数 `.items` に格納されます
+- 選択されている項目のインデックスは `ListBoxState` の `Optional<size_t>` 型のメンバ変数 `.selectedItemIndex` に格納されます
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/10.png)
 
@@ -533,7 +575,7 @@ void Main()
 void Main()
 {
 	Window::Resize(1280, 720);
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
 	ListBoxState listBoxState1{
 		{
@@ -600,7 +642,19 @@ void Main()
 
 
 ## 38.11 見出し
-GUI の各ウィジェットに見出しを付けたい場合、`SimpleGUI::Headline` を使うと便利です。関数では見出しの位置、幅、状態などを設定できます。見出しの高さは 40 ピクセルです。
+- 各ウィジェットに見出しを付ける場合は `SimpleGUI::Headline()` 関数を使います
+- 見出しの位置、幅、状態などを設定できます
+- 見出しの高さは 40 ピクセルです
+
+```cpp
+void SimpleGUI::Headline(StringView text, const Vec2& pos, const Optional<double>& width = unspecified, bool enabled = true);
+```
+
+- 引数：
+	- `text` : 見出しのテキスト
+	- `pos` : 見出しの左上の座標
+	- `width` : 見出しの幅（`unspecified` を指定するとテキスト幅に合わせます）
+	- `enabled` : 見出しが有効かどうか
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/11.png)
 
@@ -609,7 +663,7 @@ GUI の各ウィジェットに見出しを付けたい場合、`SimpleGUI::Head
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
 	bool checked0 = false;
 	bool checked1 = true;
@@ -619,9 +673,9 @@ void Main()
 	while (System::Update())
 	{
 		SimpleGUI::Headline(U"Checkbox", Vec2{ 100, 60 });
-		SimpleGUI::CheckBox(checked0, U"Label0", Vec2{ 100, 100 }, 160);
-		SimpleGUI::CheckBox(checked1, U"Label1", Vec2{ 100, 140 }, 160);
-		SimpleGUI::CheckBox(checked2, U"Label2", Vec2{ 100, 180 }, 160);
+		SimpleGUI::CheckBox(checked0, U"Label 0", Vec2{ 100, 100 }, 160);
+		SimpleGUI::CheckBox(checked1, U"Label 1", Vec2{ 100, 140 }, 160);
+		SimpleGUI::CheckBox(checked2, U"Label 2", Vec2{ 100, 180 }, 160);
 
 		SimpleGUI::Headline(U"ColorPicker", Vec2{ 300, 60 }, 160, false);
 		SimpleGUI::ColorPicker(color, Vec2{ 300, 100 }, false);
@@ -631,14 +685,15 @@ void Main()
 
 
 ## 38.12 メニューバー
-`SimpleMenuBar` クラスを使うと、簡易的なメニューバーを作成できます。メニューバーの項目は、`Array<std::pair<String, Array<String>>>` で指定します。`String` がメニューのタイトル、`Array<String>` がそのメニューに含まれる項目の名前です。
+- `SimpleMenuBar` クラスを使うと、簡易的なメニューバーを作成できます
+- メニューバーの項目は、`Array<std::pair<String, Array<String>>>` で設定します
+	- `String` がメニューのタイトル、`Array<String>` がそのメニューに含まれる項目の名前です
 
 ### 38.12.1 メニューバーの基本
-`SimpleMenuBar` は、毎フレーム、状態の更新を行うメンバ関数 `.update()` と、描画を行うメンバ関数 `.draw()` を呼ぶ必要があります。
-
-`.update()` は `Optional<MenuBarItemIndex>` を返します。メニューの項目が選択されると、その項目のインデックスを返します。項目が選択されなかった場合は `none` を返します。
-
-`.draw()` はメニューバーを描画します。
+- `SimpleMenuBar` クラスには、状態の更新を行うメンバ関数 `.update()` と、描画を行うメンバ関数 `.draw()` があり、毎フレーム 2 つの関数を呼ぶ必要があります
+	- `.update()` の戻り値は `Optional<MenuBarItemIndex>` 型です。メニューの項目が選択された場合はその項目のインデックス、選択されなかった場合は無効値です
+	- `.draw()` はメニューバーを描画します
+- 項目のインデックスは `MenuBarItemIndex{ メニューのインデックス, メニュー項目のインデックス }` で表されます
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/12.1.png)
 
@@ -649,25 +704,25 @@ void Main()
 {
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-	const Array<std::pair<String, Array<String>>> menus
+	const Array<std::pair<String, Array<String>>> items
 	{
 		{ U"ゲーム", { U"新規", U"スコア", U"終了" }},
 		{ U"ヘルプ", { U"\U000F0625  遊び方", U"\U000F14F7  リリースノート", U"ライセンス" } },
 	};
 
-	SimpleMenuBar menuBar{ menus };
+	SimpleMenuBar menuBar{ items };
 
 	while (System::Update())
 	{
-		if (const auto& item = menuBar.update())
+		if (const auto item = menuBar.update())
 		{
-			// 「終了」が押されたら
+			// 「ゲーム > 終了」が押されたら
 			if (item == MenuBarItemIndex{ 0, 2 })
 			{
-				return;
+				System::Exit();
 			}
 
-			// 「ライセンス」が押されたら
+			// 「ヘルプ > ライセンス」が押されたら
 			if (item == MenuBarItemIndex{ 1, 2 })
 			{
 				LicenseManager::ShowInBrowser();
@@ -681,9 +736,10 @@ void Main()
 
 
 ### 38.12.2 チェック可能なメニュー項目
-`SimpleMenuBar` のメンバ関数 `.setItemChecked()` を使うと、メニュー項目のチェック状態をオン/オフできます。`.setItemChecked()` には、`MenuBarItemIndex` と `bool` を渡します。`bool` が `true` の場合、その項目をチェック状態にし、`false` の場合はチェック状態を解除します。
-
-ある項目がチェック状態であるかは、メンバ関数 `.getItemChecked()` で取得できます。
+- `SimpleMenuBar` のメンバ関数 `.setItemChecked()` を使うと、メニュー項目のチェック状態をオン/オフできます
+- `.setItemChecked()` には、`MenuBarItemIndex` と `bool` を渡します
+	- `true` の場合、その項目をチェック状態にし、`false` の場合はチェック状態を解除します
+- ある項目がチェック状態であるかは、メンバ関数 `.getItemChecked(MenuBarItemIndex)` で取得します
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/12.2.png)
 
@@ -693,52 +749,58 @@ void Main()
 void Main()
 {
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
 
-	const Array<std::pair<String, Array<String>>> menus
+	const Array<std::pair<String, Array<String>>> items
 	{
 		{ U"ゲーム", { U"新規", U"スコア", U"終了" }},
 		{ U"設定", { U"オプション A", U"オプション B", U"オプション C" } },
 		{ U"ヘルプ", { U"\U000F0625遊び方", U"\U000F14F7リリースノート", U"\U000F05E6ライセンス" } },
 	};
 
-	SimpleMenuBar menuBar{ menus };
+	SimpleMenuBar menuBar{ items };
 
 	while (System::Update())
 	{
-		ClearPrint();
-		Print << menuBar.getItemChecked(MenuBarItemIndex{ 1, 0 });
-		Print << menuBar.getItemChecked(MenuBarItemIndex{ 1, 1 });
-		Print << menuBar.getItemChecked(MenuBarItemIndex{ 1, 2 });
-
 		if (const auto& item = menuBar.update())
 		{
-			// 「終了」が押されたら
+			// 「ゲーム > 終了」が押されたら
 			if (item == MenuBarItemIndex{ 0, 2 })
 			{
-				return;
+				System::Exit();
 			}
 
-			// 「ライセンス」が押されたら
-			if (item == MenuBarItemIndex{ 2, 2 })
-			{
-				LicenseManager::ShowInBrowser();
-			}
-
+			// 「設定 > オプション」が押されたら
 			if (item->menuIndex == 1)
 			{
 				// チェック状態を反転する
 				menuBar.setItemChecked(*item, (not menuBar.getItemChecked(*item)));
 			}
+
+			// 「ヘルプ > ライセンス」が押されたら
+			if (item == MenuBarItemIndex{ 2, 2 })
+			{
+				LicenseManager::ShowInBrowser();
+			}
 		}
 
 		menuBar.draw();
+
+		font(U"A: {}"_fmt(menuBar.getItemChecked(MenuBarItemIndex{ 1, 0 })))
+			.draw(30, Vec2{ 400, 100 }, ColorF{ 0.2 });
+
+		font(U"B: {}"_fmt(menuBar.getItemChecked(MenuBarItemIndex{ 1, 1 })))
+			.draw(30, Vec2{ 400, 140 }, ColorF{ 0.2 });
+
+		font(U"C: {}"_fmt(menuBar.getItemChecked(MenuBarItemIndex{ 1, 2 })))
+			.draw(30, Vec2{ 400, 180 }, ColorF{ 0.2 });
 	}
 }
 ```
 
 
 ### 38.12.3 メニューバーの色の変更
-`SimpleMenuBar::ColorPalette` クラスで設定したカラーパレットを使って、メニューバーの色を変更できます。
+- `SimpleMenuBar::ColorPalette` クラスを使い、メニューバーの色をカスタマイズできます
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/12.3.png)
 
@@ -749,9 +811,7 @@ void Main()
 {
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-	Vec2 pos = Scene::Center(), target = pos, velocity = Vec2::Zero();
-
-	const Array<std::pair<String, Array<String>>> menus
+	const Array<std::pair<String, Array<String>>> items
 	{
 		{ U"ファイル", { U"新規作成", U"開く", U"名前を付けて保存", U"終了" }},
 		{ U"編集", { U"元に戻す", U"切り取り", U"コピー", U"貼り付け", U"削除", U"検索する", U"次を検索", U"前を検索" } },
@@ -759,7 +819,7 @@ void Main()
 		{ U"ヘルプ", { U"\U000F0625  使い方", U"\U000F14F7  リリースノート", U"ライセンス" } },
 	};
 
-	SimpleMenuBar menuBar{ menus };
+	SimpleMenuBar menuBar{ items };
 	menuBar
 		.setItemEnabled(1, 0, false)
 		.setItemEnabled(1, 1, false)
@@ -786,24 +846,7 @@ void Main()
 
 	while (System::Update())
 	{
-		if (const auto& item = menuBar.update())
-		{
-			Print << U"menuIndex: {}, itemIndex: {}"_fmt(item->menuIndex, item->itemIndex);
-		}
-
-		if (Scene::Rect().mouseOver() && (not MouseL.cleared()))
-		{
-			Cursor::RequestStyle(CursorStyle::Hand);
-
-			if (MouseL.down())
-			{
-				target = Cursor::Pos();
-			}
-		}
-
-		pos = Math::SmoothDamp(pos, target, velocity, 0.25);
-
-		pos.asCircle(40).drawShadow(Vec2{ 2, 2 }, 8).draw();
+		menuBar.update();
 
 		menuBar.draw();
 	}
@@ -812,9 +855,14 @@ void Main()
 
 
 ## 38.13 テーブル
+- `SimpleTable` クラスを使うと、縦横に項目が並んだテーブルを簡単に作成できます
 
 ### 38.13.1 テーブルの基本
-`SimpleTable` クラスを使うと、テーブルを簡単に作成できます。コンストラクタで各列の幅を指定したあと、`push_back_row()` で行の内容を `Array<String>` で追加していきます。追加でアライメントを `Array<int32>` で指定することもできます。アライメントは -1 が左寄せ、0 が中央寄せ、1 が右寄せです。テーブルはメンバ関数 `.draw()` で描画できます。
+- コンストラクタで各列の幅を指定します
+- `push_back_row()` で行の内容を `Array<String>` で追加していきます
+- 第 2 引数でアライメントを `Array<int32>` で指定することもできます
+	- `-1` が左寄せ、`0` が中央寄せ、`1` が右寄せです
+- テーブルはメンバ関数 `.draw(pos)` で描画します
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/13.1.png)
 
@@ -823,9 +871,9 @@ void Main()
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-	// 各列の幅が 160, 100, 100 のテーブルを作成
+	// 各列の幅が | 160 | 100 | 100 | のテーブルを作成する
 	SimpleTable table{ { 160, 100, 100 } };
 
 	// 行を追加する
@@ -842,9 +890,8 @@ void Main()
 }
 ```
 
-
-### 38.13.2 テーブルのスタイルの変更
-スタイルの設定をカスタマイズすることで、様々なバリエーションのテーブルを作成できます。サンプルを次に示します。
+### 38.13.2 テーブルのサンプル（1）
+- 行を増減可能なテーブルのサンプルです
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/13.2.png)
 
@@ -854,30 +901,69 @@ void Main()
 void Main()
 {
 	Window::Resize(1280, 720);
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
-	const Font font1{ FontMethod::MSDF, 36 };
-	const Font font2{ FontMethod::MSDF, 36, Typeface::Heavy };
-	const Font font3{ FontMethod::MSDF, 36, Typeface::Bold };
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-	//
-	// table 1
-	//
-	SimpleTable table1{ { 100, 200, 200 }, {
+	const Font font{ FontMethod::MSDF, 36 };
+	const Font fontBold{ FontMethod::MSDF, 36, Typeface::Bold };
+	const Vec2 tablePos{ 40,40 };
+
+	SimpleTable table{ { 100, 200, 200 }, {
 			.variableWidth = true,
-			.font = font1,
-			.columnHeaderFont = font3,
-			.rowHeaderFont = font3,
+			.font = font,
+			.columnHeaderFont = fontBold,
+			.rowHeaderFont = fontBold,
 		} };
-	table1.push_back_row({ U"", U"日本", U"アメリカ" }, { 0, 0, 0 });
-	table1.push_back_row({ U"面積", U"約 37 万 8 千平方キロメートル", U"約 983 万平方キロメートル" }, { 0, -1, -1 });
-	table1.push_back_row({ U"人口", U"約 1 億 2 千万人", U"約 3 億 3 千万人" });
-	table1.push_back_row({ U"言語", U"日本語", U"英語" });
-	table1.push_back_row({ U"通貨", U"円 (JPY)", U"ドル (USD)" });
+	table.push_back_row({ U"", U"日本", U"アメリカ" }, { 0, 0, 0 });
+	table.push_back_row({ U"面積", U"約 37 万 8 千平方キロメートル", U"約 983 万平方キロメートル" }, { 0, -1, -1 });
+	table.push_back_row({ U"人口", U"約 1 億 2 千万人", U"約 3 億 3 千万人" });
+	table.push_back_row({ U"言語", U"日本語", U"英語" });
+	table.push_back_row({ U"通貨", U"円 (JPY)", U"ドル (USD)" });
 
-	//
-	// table 2
-	//
-	SimpleTable table2{ { 160, 100, 100 }, {
+	Optional<Point> activeIndex;
+
+	while (System::Update())
+	{
+		if (SimpleGUI::Button(U"行を追加", Vec2{ 740, 40 }, 130))
+		{
+			table.push_back_row({ 0, -1, -1 });
+		}
+
+		if (SimpleGUI::Button(U"行を削除", Vec2{ 740, 80 }, 130))
+		{
+			table.pop_back_row();
+		}
+
+		if (MouseL.down())
+		{
+			activeIndex = table.cellIndex(tablePos, Cursor::Pos());
+		}
+
+		table.draw(tablePos);
+
+		if (activeIndex)
+		{
+			table.cellRegion(tablePos, *activeIndex).drawFrame(2, 1, ColorF{ 0.1 });
+		}
+	}
+}
+```
+
+### 38.13.2 テーブルのサンプル（2）
+- マウスオーバー時に行の背景色を変更するテーブルのサンプルです
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/13.2.png)
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font fontHeavy{ FontMethod::MSDF, 36, Typeface::Heavy };
+	const Vec2 tablePos{ 40,40 };
+
+	SimpleTable table{ { 160, 100, 100 }, {
 			.cellHeight = 40,
 			.borderThickness = 2,
 			.backgroundColor = none,
@@ -885,7 +971,7 @@ void Main()
 			.borderColor = ColorF{ 0.29, 0.33, 0.41 },
 			.hasVerticalBorder = false,
 			.hasOuterBorder = false,
-			.font = font2,
+			.font = fontHeavy,
 			.fontSize = 24,
 			.hoveredRow = [](const Point& index) -> Optional<ColorF>
 			{
@@ -897,31 +983,51 @@ void Main()
 				return none;
 			},
 		} };
-	table2.push_back_row({ U"Player", U"Rank", U"Rate" }, { -1, 1, 1 });
-	table2.push_back_row({ U"Alice", U"2", U"2832" });
-	table2.push_back_row({ U"Bob", U"6", U"2540" });
-	table2.push_back_row({ U"Carol", U"16", U"2315" });
-	table2.push_back_row({ U"Eve", U"121", U"1874" });
+	table.push_back_row({ U"Player", U"Rank", U"Rate" }, { -1, 1, 1 });
+	table.push_back_row({ U"Alice", U"2", U"2832" });
+	table.push_back_row({ U"Bob", U"6", U"2540" });
+	table.push_back_row({ U"Carol", U"16", U"2315" });
+	table.push_back_row({ U"Eve", U"121", U"1874" });
 
 	for (int32 y = 1; y < 3; ++y)
 	{
-		table2.setRowTextColor(y, ColorF{ 1.00, 0.7, 0.25 });
+		table.setRowTextColor(y, ColorF{ 1.00, 0.7, 0.25 });
 	}
 
 	for (int32 y = 3; y < 5; ++y)
 	{
-		table2.setRowTextColor(y, ColorF{ 0.82, 0.56, 0.84 });
+		table.setRowTextColor(y, ColorF{ 0.82, 0.56, 0.84 });
 	}
 
-	//
-	// table 3
-	//
-	SimpleTable table3{ Array<double>(7, 60.0), {
+	while (System::Update())
+	{
+		table.region(tablePos).stretched(24, 12).rounded(10.0).draw(ColorF{ 0.18, 0.20, 0.35 });
+		table.draw(tablePos);
+	}
+}
+```
+
+### 38.13.3 テーブルのサンプル（3）
+- 2025 年 12 月のカレンダーのサンプルです
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/13.3.png)
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font fontBold{ FontMethod::MSDF, 36, Typeface::Bold };
+	const Vec2 tablePos{ 40,40 };
+
+	SimpleTable table{ Array<double>(7, 60.0), {
 			.borderThickness = 2,
 			.backgroundColor = none,
 			.borderColor = ColorF{ 1.0 },
 			.hasOuterBorder = false,
-			.font = font3,
+			.font = fontBold,
 			.hoveredCell = [](const Point& index) -> Optional<ColorF>
 			{
 				if (index.y != 0)
@@ -932,36 +1038,56 @@ void Main()
 				return none;
 			},
 		} };
-	table3.push_back_row({ U"Sun", U"Mon", U"Tue", U"Wed", U"Thu", U"Fri", U"Sat" }, Array<int32>(7, 0));
-	table3.setRowBackgroundColor(0, ColorF{ 1.00, 0.8, 0.7 });
-	table3.push_back_row(Array<int32>(7, 1));
-	table3.push_back_row();
-	table3.push_back_row();
-	table3.push_back_row();
-	table3.push_back_row();
-	table3.push_back_row();
+	table.push_back_row({ U"Sun", U"Mon", U"Tue", U"Wed", U"Thu", U"Fri", U"Sat" }, Array<int32>(7, 0));
+	table.setRowBackgroundColor(0, ColorF{ 1.00, 0.8, 0.7 });
+	table.push_back_row(Array<int32>(7, 1));
+	table.push_back_row();
+	table.push_back_row();
+	table.push_back_row();
+	table.push_back_row();
 
-	for (int32 i = 0; i < (7 * 6); ++i)
+	for (int32 i = 0; i < (7 * 5); ++i)
 	{
-		const auto date = Date{ 2023, 3, 26 } + Days{ i };
+		const auto date = Date{ 2025, 11, 30 } + Days{ i };
 		const Point index{ (i % 7), (1 + (i / 7)) };
-		table3.setText(index, Format(date.day));
+		table.setText(index, Format(date.day));
 
-		if (date.month != 4)
+		if (date.month != 12)
 		{
-			table3.setTextColor(index, ColorF{ 0.7 });
+			table.setTextColor(index, ColorF{ 0.7 });
 		}
 	}
 
-	//
-	// table 4
-	//
-	SimpleTable table4{ { 100, 80, 80 }, {
+	while (System::Update())
+	{
+		table.region(tablePos).stretched(10, 20).rounded(5).draw();
+		table.draw(tablePos);
+	}
+}
+```
+
+### 38.13.4 テーブルのサンプル（4）
+- 時刻表のサンプルです
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/13.4.png)
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ FontMethod::MSDF, 36 };
+	const Font fontBold{ FontMethod::MSDF, 36, Typeface::Bold };
+	const Vec2 tablePos{ 40,40 };
+
+	SimpleTable table{ { 100, 80, 80 }, {
 			.cellHeight = 28.0,
 			.hasHorizontalBorder = false,
-			.font = font1,
+			.font = font,
 			.fontSize = 16,
-			.columnHeaderFont = font3,
+			.columnHeaderFont = fontBold,
 			.columnHeaderFontSize = 14,
 			.hoveredRow = [](const Point& index) -> Optional<ColorF>
 			{
@@ -973,120 +1099,88 @@ void Main()
 				return none;
 			},
 		} };
-	table4.push_back_row({ U"", U"こだま701", U"のぞみ5" }, { -1, 0, 0 });
-	table4.push_back_row({ U"東　京　発", U"6:30", U"6:33" });
-	table4.push_back_row({ U"品　川　〃", U"6:37", U"6:40" });
-	table4.push_back_row({ U"新横浜　〃", U"6:48", U"6:51" });
-	table4.push_back_row({ U"小田原　〃", U"7:05", U"ﾚ" });
-	table4.push_back_row({ U"熱　海　〃", U"7:14", U"ﾚ" });
-	table4.push_back_row({ U"三　島　〃", U"7:26", U"ﾚ" });
-	table4.push_back_row({ U"新富士　〃", U"7:37", U"ﾚ" });
-	table4.push_back_row({ U"静　岡　〃", U"7:51", U"ﾚ" });
-	table4.push_back_row({ U"掛　川　〃", U"8:08", U"ﾚ" });
-	table4.push_back_row({ U"浜　松　〃", U"8:23", U"ﾚ" });
-	table4.push_back_row({ U"豊　橋　〃", U"8:39", U"ﾚ" });
-	table4.push_back_row({ U"三河安城〃", U"8:56", U"ﾚ" });
-	table4.push_back_row({ U"名古屋　着", U"9:06", U"8:10" });
-	table4.push_back_row({ U"名古屋　発", U"", U"8:12" });
-
-	//
-	// table 5
-	//
-	SimpleTable table5{ { 80, 80, 80, 80 }, {
-		.cellHeight = 26.0,
-		.borderThickness = 2.0,
-		.borderColor = ColorF{ 0.6 },
-		.columnHeaderFont = font3,
-		.columnHeaderFontSize = 15.0,
-		.rowHeaderFont = font3,
-		.rowHeaderFontSize = 15.0,
-	} };
-	table5.push_back_row({ U"", U"今日", U"明日", U"明後日" }, { 0, 0, 0, 0 });
-	table5.push_back_row({ U"札幌", U"\U000F0597\U000F19B0\U000F0590", U"\U000F0590/\U000F0597", U"\U000F0590" });
-	table5.push_back_row({ U"東京", U"\U000F0599\U000F19B0\U000F0590", U"\U000F0597/\U000F0590", U"\U000F0590\U000F19B0\U000F0597" });
-	table5.push_back_row({ U"大阪", U"\U000F0590\U000F19B0\U000F0597", U"\U000F0597", U"\U000F0599/\U000F0590" });
-	table5.push_back_row({ U"福岡", U"\U000F0597\U000F19B0\U000F0590", U"\U000F0590\U000F19B0\U000F0599", U"\U000F0599/\U000F0590" });
-	table5.push_back_row({ U"沖縄", U"\U000F0590", U"\U000F0590/\U000F0597", U"\U000F0590\U000F19B0\U000F0599" });
-	for (size_t y = 1; y < table5.rows(); ++y)
-	{
-		for (size_t x = 1; x < table5.columns(); ++x)
-		{
-			const bool isRainy = table5.getItem(y, x).text.includes(U'\U000F0597');
-			const bool isSunny = table5.getItem(y, x).text.includes(U'\U000F0599');
-			const bool isCloudy = table5.getItem(y, x).text.includes(U'\U000F0590');
-
-			if (isRainy)
-			{
-				table5.setBackgroundColor(y, x, ColorF{ 0.7, 0.9, 1.0 });
-			}
-			else if (isSunny)
-			{
-				table5.setBackgroundColor(y, x, ColorF{ 1.0, 0.9, 0.7 });
-			}
-			else if (isCloudy)
-			{
-				table5.setBackgroundColor(y, x, ColorF{ 0.9 });
-			}
-		}
-	}
-
-
-	Optional<Point> table1ActiveIndex;
+	table.push_back_row({ U"", U"こだま701", U"のぞみ5" }, { -1, 0, 0 });
+	table.push_back_row({ U"東　京　発", U"6:30", U"6:33" });
+	table.push_back_row({ U"品　川　〃", U"6:37", U"6:40" });
+	table.push_back_row({ U"新横浜　〃", U"6:48", U"6:51" });
+	table.push_back_row({ U"小田原　〃", U"7:05", U"ﾚ" });
+	table.push_back_row({ U"熱　海　〃", U"7:14", U"ﾚ" });
+	table.push_back_row({ U"三　島　〃", U"7:26", U"ﾚ" });
+	table.push_back_row({ U"新富士　〃", U"7:37", U"ﾚ" });
+	table.push_back_row({ U"静　岡　〃", U"7:51", U"ﾚ" });
+	table.push_back_row({ U"掛　川　〃", U"8:08", U"ﾚ" });
+	table.push_back_row({ U"浜　松　〃", U"8:23", U"ﾚ" });
+	table.push_back_row({ U"豊　橋　〃", U"8:39", U"ﾚ" });
+	table.push_back_row({ U"三河安城〃", U"8:56", U"ﾚ" });
+	table.push_back_row({ U"名古屋　着", U"9:06", U"8:10" });
+	table.push_back_row({ U"名古屋　発", U"", U"8:12" });
 
 	while (System::Update())
 	{
-		// table1
-		{
-			if (SimpleGUI::Button(U"行を追加", Vec2{ 740, 40 }, 130))
-			{
-				table1.push_back_row({ 0, -1, -1 });
-			}
-
-			if (SimpleGUI::Button(U"行を削除", Vec2{ 740, 80 }, 130))
-			{
-				table1.pop_back_row();
-			}
-
-			constexpr Vec2 TablePos{ 40,40 };
-
-			if (MouseL.down())
-			{
-				table1ActiveIndex = table1.cellIndex(TablePos, Cursor::Pos());
-			}
-
-			table1.draw(TablePos);
-
-			if (table1ActiveIndex)
-			{
-				table1.cellRegion(TablePos, *table1ActiveIndex).drawFrame(2, 1, ColorF{ 0.11 });
-			}
-		}
-
-		// table2
-		{
-			constexpr Vec2 TablePos{ 64, 372 };
-			table2.region(TablePos).stretched(24, 12).rounded(10.0).draw(ColorF{ 0.18, 0.20, 0.35 });
-			table2.draw(TablePos);
-		}
-
-		// table 3
-		{
-			constexpr Vec2 TablePos{ 500, 380 };
-			table3.region(TablePos).stretched(10, 20).rounded(5).draw();
-			table3.draw(TablePos);
-		}
-
-		// table 4
-		{
-			constexpr Vec2 TablePos{ 980, 220 };
-			table4.draw(TablePos);
-		}
-
-		// table 5
-		{
-			constexpr Vec2 TablePos{ 914, 40 };
-			table5.draw(TablePos);
-		}
+		table.draw(tablePos);
 	}
 }
 ```
+
+### 38.13.5 テーブルのサンプル（5）
+- 天気予報のサンプルです
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/13.5.png)
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font fontBold{ FontMethod::MSDF, 36, Typeface::Bold };
+	const Vec2 tablePos{ 40,40 };
+
+	SimpleTable table{ { 80, 80, 80, 80 }, {
+		.cellHeight = 26.0,
+		.borderThickness = 2.0,
+		.borderColor = ColorF{ 0.6 },
+		.columnHeaderFont = fontBold,
+		.columnHeaderFontSize = 15.0,
+		.rowHeaderFont = fontBold,
+		.rowHeaderFontSize = 15.0,
+	} };
+
+	table.push_back_row({ U"", U"今日", U"明日", U"明後日" }, { 0, 0, 0, 0 });
+	table.push_back_row({ U"札幌", U"\U000F0597\U000F19B0\U000F0590", U"\U000F0590/\U000F0597", U"\U000F0590" });
+	table.push_back_row({ U"東京", U"\U000F0599\U000F19B0\U000F0590", U"\U000F0597/\U000F0590", U"\U000F0590\U000F19B0\U000F0597" });
+	table.push_back_row({ U"大阪", U"\U000F0590\U000F19B0\U000F0597", U"\U000F0597", U"\U000F0599/\U000F0590" });
+	table.push_back_row({ U"福岡", U"\U000F0597\U000F19B0\U000F0590", U"\U000F0590\U000F19B0\U000F0599", U"\U000F0599/\U000F0590" });
+	table.push_back_row({ U"沖縄", U"\U000F0590", U"\U000F0590/\U000F0597", U"\U000F0590\U000F19B0\U000F0599" });
+
+	for (size_t y = 1; y < table.rows(); ++y)
+	{
+		for (size_t x = 1; x < table.columns(); ++x)
+		{
+			const bool isRainy = table.getItem(y, x).text.includes(U'\U000F0597');
+			const bool isSunny = table.getItem(y, x).text.includes(U'\U000F0599');
+			const bool isCloudy = table.getItem(y, x).text.includes(U'\U000F0590');
+
+			if (isRainy)
+			{
+				table.setBackgroundColor(y, x, ColorF{ 0.7, 0.9, 1.0 });
+			}
+			else if (isSunny)
+			{
+				table.setBackgroundColor(y, x, ColorF{ 1.0, 0.9, 0.7 });
+			}
+			else if (isCloudy)
+			{
+				table.setBackgroundColor(y, x, ColorF{ 0.9 });
+			}
+		}
+	}
+
+	while (System::Update())
+	{
+		table.draw(tablePos);
+	}
+}
+```
+
