@@ -2,10 +2,35 @@
 ボタンやスライダー、テキストボックスなどの GUI 機能を利用する方法を学びます。
 
 ## 38.1 SimpleGUI の概要
-
+- よく使う GUI ウィジェットを最小限のコードで実装できる機能です
+- サポートしている GUI ウィジェットは次のとおりです：
+	- **38.2** ボタン
+	- **38.4** スライダー
+	- **38.5** チェックボックス
+	- **38.6** ラジオボタン
+	- **38.7** テキストボックス
+	- **38.8** テキストエリア
+	- **38.9** カラーピッカー
+	- **38.10** リストボックス
+	- **38.12** メニューバー
+	- **38.13** テーブル
+- コードの簡単さを優先しているため、色やフォントなど、デザインの柔軟性には制約があります
+- 将来の Siv3D バージョンでは、SimpleGUI の上位版となる、より高度で複雑な GUI 機能を提供する予定です
 
 ## 38.2 ボタン
-ボタンを作成するには `SimpleGUI::Button()` 関数を使うと便利です。関数ではボタンのテキストや位置、幅、状態を設定できます。ボタンの幅を省略するか、`unspecified` を指定すると、ボタンの幅はテキストの幅になります。この関数は自身が押されたときに `true` を返します。
+- ボタンは次の関数を使います
+
+```cpp
+bool SimpleGUI::Button(StringView label, const Vec2& pos, const Optional<double>& width = unspecified, bool enabled = true);
+```
+
+- 引数：
+	- `label` : ボタンに表示するテキスト
+	- `pos` : ボタンの左上の座標
+	- `width` : ボタンの幅（`unspecified` を指定するとテキスト幅に合わせます）
+	- `enabled` : ボタンが有効かどうか
+- 戻り値：
+	- ボタンが押されたら `true`, そうでなければ `false`
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/2.png)
 
@@ -14,43 +39,45 @@
 
 void Main()
 {
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+	
 	while (System::Update())
 	{
-		if (SimpleGUI::Button(U"Red", Vec2{ 100, 100 }))
+		if (SimpleGUI::Button(U"Red", Vec2{ 100, 50 }))
 		{
 			Scene::SetBackground(ColorF{ 0.8, 0.2, 0.2 });
 		}
 
-		if (SimpleGUI::Button(U"Green", Vec2{ 100, 150 }))
+		if (SimpleGUI::Button(U"Green", Vec2{ 100, 100 }))
 		{
 			Scene::SetBackground(ColorF{ 0.2, 0.8, 0.2 });
 		}
 
-		if (SimpleGUI::Button(U"Blue", Vec2{ 100, 200 }))
+		if (SimpleGUI::Button(U"Blue", Vec2{ 100, 150 }))
 		{
 			Scene::SetBackground(ColorF{ 0.2, 0.2, 0.8 });
 		}
 
 		// ボタンの幅を 200px に指定する
-		if (SimpleGUI::Button(U"White", Vec2{ 100, 250 }, 200))
+		if (SimpleGUI::Button(U"White", Vec2{ 100, 300 }, 200))
 		{
 			Scene::SetBackground(ColorF{ 0.9 });
 		}
 
 		// ボタンの幅を 200px に指定する
-		if (SimpleGUI::Button(U"Black", Vec2{ 100, 300 }, 200))
+		if (SimpleGUI::Button(U"Black", Vec2{ 100, 350 }, 200))
 		{
 			Scene::SetBackground(ColorF{ 0.1 });
 		}
 
 		// ボタンを無効化する
-		if (SimpleGUI::Button(U"Gray", Vec2{ 100, 350 }, 200, false))
+		if (SimpleGUI::Button(U"Gray", Vec2{ 100, 400 }, 200, false))
 		{
 			Scene::SetBackground(ColorF{ 0.5 });
 		}
 
 		// ボタンを無効化し、ボタンの幅はテキストに合わせる
-		if (SimpleGUI::Button(U"Yellow", Vec2{ 100, 400 }, unspecified, false))
+		if (SimpleGUI::Button(U"Yellow", Vec2{ 100, 450 }, unspecified, false))
 		{
 			Scene::SetBackground(ColorF{ 0.8, 0.8, 0.1 });
 		}
@@ -59,8 +86,32 @@ void Main()
 ```
 
 
-## 38.3 アイコンの使用
-GUI 機能のうち、`SimpleGUI::Button()` や `SimpleGUI::Slider()` のように、フォントを明示的に指定せず使える GUI 関数では、文字列に `\U000F0493` のようにアイコン ID を記述することで、アイコンを表示できます。使えるアイコンは [Material Design Icons :material-open-in-new:](https://pictogrammers.com/library/mdi/){:target="_blank"} に含まれているものです。
+## 38.3 スライダー
+- スライダーは次の関数を使います
+	- `Slider` は水平方向のスライダーです
+	- `VerticalSlider` は縦方向のスライダーです
+	- 最小値・最大値指定がないものは、値の範囲は 0.0 ～ 1.0 です
+
+```cpp
+bool SimpleGUI::Slider(double& value, double min, double max, const Vec2& pos, double sliderWidth = 120.0, bool enabled = true);
+bool SimpleGUI::Slider(StringView label, double& value, const Vec2& pos, double labelWidth = 80.0, double sliderWidth = 120.0, bool enabled = true);
+bool SimpleGUI::Slider(StringView label, double& value, double min, double max, const Vec2& pos, double labelWidth = 80.0, double sliderWidth = 120.0, bool enabled = true);
+bool SimpleGUI::VerticalSlider(double& value, const Vec2& pos, double sliderHeight = 120.0, bool enabled = true);
+bool SimpleGUI::VerticalSlider(double& value, double min, double max, const Vec2& pos, double sliderHeight = 120.0, bool enabled = true);
+```
+
+- 引数：
+	- `value` : スライダーの値
+	- `min` : スライダーの最小値
+	- `max` : スライダーの最大値
+	- `label` : スライダーのラベル
+	- `pos` : スライダーの左上の座標
+	- `labelWidth` : ラベルの幅
+	- `sliderWidth` : スライダーの幅
+	- `sliderHeight` : 縦方向スライダーの高さ
+	- `enabled` : スライダーが有効かどうか
+- 戻り値：
+	- スライダーの値が変更されたら `true`, そうでなければ `false`
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/3.png)
 
@@ -69,52 +120,7 @@ GUI 機能のうち、`SimpleGUI::Button()` や `SimpleGUI::Slider()` のよう�
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
-	int32 up = 0, down = 0;
-	double volume = 1.0;
-
-	while (System::Update())
-	{
-		SimpleGUI::Button(U"\U000F0493 設定", Vec2{ 20, 40 }, 160);
-		SimpleGUI::Button(U"\U000F1398 中断する", Vec2{ 20, 80 }, 160);
-		SimpleGUI::Button(U"\U000F0E1E OK", Vec2{ 20, 120 }, 160);
-		SimpleGUI::Button(U"\U000F0193 保存", Vec2{ 20, 160 }, 160);
-
-		// Undo / Redo
-		SimpleGUI::Button(U"\U000F054C", Vec2{ 200, 40 }, 40);
-		SimpleGUI::Button(U"\U000F044E", Vec2{ 250, 40 }, 40);
-
-		// 音量調整
-		SimpleGUI::Slider((0.5 < volume) ? U"\U000F057E"
-			: (0.0 < volume) ? U"\U000F0580" : U"\U000F0581", volume, Vec2{ 200, 100 }, 30, 170);
-
-		// upvote
-		if (SimpleGUI::Button(U"\U000F0513  {}"_fmt(up), Vec2{ 200, 160 }, 90))
-		{
-			++up;
-		}
-
-		// downvote
-		if (SimpleGUI::Button(U"\U000F0511  {}"_fmt(down), Vec2{ 310, 160 }, 90))
-		{
-			++down;
-		}
-	}
-}
-```
-
-
-## 38.4 スライダー
-スライダーを作成するには `SimpleGUI::Slider()` 関数を使うと便利です。関数ではスライダーのテキストや位置、幅、値の範囲などを設定できます。テキストを持たない縦方向のスライダーは `SimpleGUI::VerticalSlider()` を使います。スライダーの値は `double` 型の変数で管理します。どちらの関数も、スライダーの指す値が変更されたときに `true` を返します。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/4.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
 	ColorF color1{ 1.0 };
 	ColorF color2{ 1.0, 0.5, 0.0 };
@@ -157,8 +163,69 @@ void Main()
 ```
 
 
+## 38.4 アイコンの使用
+- SimpleGUI で使われるフォントは、`Typeface::CJK_Regular_JP` に `Typeface::Icon_MaterialDesign` をフォールバックとして追加したものです
+- 文字列に `\U000F0493` のようにアイコンのコードポイントを含めることで、SimpleGUI 上のテキストにアイコンを表示できます
+- アイコンのコードポイントは、[Material Design Icons :material-open-in-new:](https://pictogrammers.com/library/mdi/){:target="_blank"} から確認できます
+- SimpleGUI のフォントは `SimpleGUI::GetFont()` で取得でき、SimpleGUI 以外の用途で使うこともできます
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/4.png)
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+	int32 up = 0, down = 0;
+	double volume = 1.0;
+
+	while (System::Update())
+	{
+		SimpleGUI::Button(U"\U000F0493 設定", Vec2{ 20, 40 }, 160);
+		SimpleGUI::Button(U"\U000F1398 中断する", Vec2{ 20, 80 }, 160);
+		SimpleGUI::Button(U"\U000F0E1E OK", Vec2{ 20, 120 }, 160);
+		SimpleGUI::Button(U"\U000F0193 保存", Vec2{ 20, 160 }, 160);
+
+		// Undo / Redo
+		SimpleGUI::Button(U"\U000F054C", Vec2{ 200, 40 }, 40);
+		SimpleGUI::Button(U"\U000F044E", Vec2{ 250, 40 }, 40);
+
+		// 音量調整
+		SimpleGUI::Slider((0.5 < volume) ? U"\U000F057E"
+			: (0.0 < volume) ? U"\U000F0580" : U"\U000F0581", volume, Vec2{ 200, 100 }, 30, 170);
+
+		// upvote
+		if (SimpleGUI::Button(U"\U000F0513  {}"_fmt(up), Vec2{ 200, 160 }, 90))
+		{
+			++up;
+		}
+
+		// downvote
+		if (SimpleGUI::Button(U"\U000F0511  {}"_fmt(down), Vec2{ 310, 160 }, 90))
+		{
+			++down;
+		}
+	}
+}
+```
+
+
 ## 38.5 チェックボックス
-チェックボックスを作成するには `SimpleGUI::CheckBox()` 関数を使うと便利です。関数ではチェックボックスのテキストや位置、幅、状態などを設定できます。幅を省略するか、`unspecified` を指定すると、チェックボックスの幅はテキストに合わせた幅になります。チェックの状態は `bool` 型の変数で管理します。この関数は値が変更されたときに `true` を返します。
+- チェックボックスは次の関数を使います
+
+```cpp
+bool SimpleGUI::CheckBox(bool& checked, StringView label, const Vec2& pos, const Optional<double>& width = unspecified, bool enabled = true);
+```
+
+- 引数：
+	- `checked` : チェックの状態
+	- `label` : チェックボックスのラベル
+	- `pos` : チェックボックスの左上の座標
+	- `width` : チェックボックスの幅（`unspecified` を指定するとテキスト幅に合わせます）
+	- `enabled` : チェックボックスが有効かどうか
+- 戻り値：
+	- チェックボックスの状態が変更されたら `true`, そうでなければ `false`
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/5.png)
 
@@ -167,7 +234,7 @@ void Main()
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
 	bool checked0 = false;
 	bool checked1 = true;
@@ -178,25 +245,42 @@ void Main()
 
 	while (System::Update())
 	{
-		SimpleGUI::CheckBox(checked0, U"Label0", Vec2{ 100, 40 });
-		SimpleGUI::CheckBox(checked1, U"Label1", Vec2{ 100, 80 });
-		SimpleGUI::CheckBox(checked2, U"Label2", Vec2{ 100, 120 });
+		SimpleGUI::CheckBox(checked0, U"Label 0", Vec2{ 100, 40 });
+		SimpleGUI::CheckBox(checked1, U"Label 1", Vec2{ 100, 80 });
+		SimpleGUI::CheckBox(checked2, U"Label 2", Vec2{ 100, 120 });
 
 		// 幅 200px
-		SimpleGUI::CheckBox(checked3, U"Label3", Vec2{ 100, 180 }, 200);
+		SimpleGUI::CheckBox(checked3, U"Label 3", Vec2{ 100, 180 }, 200);
 
 		// 無効化
-		SimpleGUI::CheckBox(checked4, U"Label4", Vec2{ 100, 220 }, 200, false);
+		SimpleGUI::CheckBox(checked4, U"Label 4", Vec2{ 100, 220 }, 200, false);
 
 		// 幅はテキストに合わせる
-		SimpleGUI::CheckBox(checked5, U"Label5", Vec2{ 100, 260 }, unspecified, false);
+		SimpleGUI::CheckBox(checked5, U"Label 5", Vec2{ 100, 260 }, unspecified, false);
 	}
 }
 ```
 
 
 ## 38.6 ラジオボタン
-ラジオボタン作成するには `SimpleGUI::RadioButtons()` 関数を使うと便利です。関数ではラジオボタンのテキストや位置、幅、状態などを設定できます。水平にアイテムが並ぶラジオボタンは `SimpleGUI::HorizontalRadioButtons()` を使います。ラジオボタンの選択項目は `size_t` 型の変数で管理します。どちらの関数も、ラジオボタンの選択項目が変更されたときに `true` を返します。
+- ラジオボタンは次の関数を使います
+	- `RadioButtons` は垂直方向のラジオボタンです
+	- `HorizontalRadioButtons` は水平方向のラジオボタンです
+
+```cpp
+bool SimpleGUI::RadioButtons(size_t& index, const Array<String>& options, const Vec2& pos, const Optional<double>& width = unspecified, bool enabled = true);
+bool SimpleGUI::HorizontalRadioButtons(size_t& index, const Array<String>& options, const Vec2& pos, const Optional<double>& itemWidth = unspecified, bool enabled = true);
+```
+
+- 引数：
+	- `index` : 選択されている項目のインデックス
+	- `options` : 選択肢の配列
+	- `pos` : ラジオボタンの左上の座標
+	- `width` : ラジオボタンの幅（`unspecified` を指定するとテキスト幅に合わせます）
+	- `itemWidth` : 水平ラジオボタンのアイテムの幅（`unspecified` を指定するとテキスト幅に合わせます）
+	- `enabled` : ラジオボタンが有効かどうか
+- 戻り値：
+	- ラジオボタンの選択が変更されたら `true`, そうでなければ `false`
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/6.png)
 
