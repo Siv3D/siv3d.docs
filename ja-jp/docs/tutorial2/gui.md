@@ -948,7 +948,7 @@ void Main()
 }
 ```
 
-### 38.13.2 テーブルのサンプル（2）
+### 38.13.3 テーブルのサンプル（2）
 - マウスオーバー時に行の背景色を変更するテーブルのサンプルです
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/13.2.png)
@@ -1007,7 +1007,7 @@ void Main()
 }
 ```
 
-### 38.13.3 テーブルのサンプル（3）
+### 38.13.4 テーブルのサンプル（3）
 - 2025 年 12 月のカレンダーのサンプルです
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/13.3.png)
@@ -1066,7 +1066,7 @@ void Main()
 }
 ```
 
-### 38.13.4 テーブルのサンプル（4）
+### 38.13.5 テーブルのサンプル（4）
 - 時刻表のサンプルです
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/13.4.png)
@@ -1122,7 +1122,7 @@ void Main()
 }
 ```
 
-### 38.13.5 テーブルのサンプル（5）
+### 38.13.6 テーブルのサンプル（5）
 - 天気予報のサンプルです
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/13.5.png)
