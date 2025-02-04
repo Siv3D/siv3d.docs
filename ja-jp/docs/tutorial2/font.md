@@ -481,6 +481,7 @@ void Main()
 
 ## 34.23 テキストを 1 文字ずつ描画
 - 文字列クラス `String` のメンバ関数 `.substr(0, count)` で、文字列の先頭から `count` 文字の部分文字列を作成できます
+	- **チュートリアル 33.20** 参照
 - ストップウォッチなどを使い `count` を増やしていくことで、文字列を 1 文字ずつ表示することができます
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/23.png)
@@ -491,32 +492,347 @@ void Main()
 
 
 ## 34.24 文字単位での自由描画
-- XXX
-	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/24.png)
+- 通常のテキスト描画では、文字単位で色や位置、大きさや回転を制御することができません
+- 文字単位で自由な描画を行いたい場合、`Font` の `.getGlyphs(text)` を使用して得られる `Array<Glyph>` を使います
+- `Glyph` には、個々の文字を自由に制御して描画するために必要な情報が用意されています
+
+### 34.24.1 自由描画の基本（ビットマップ方式）
+- `Glyph` は次のようなメンバを持っています
+
+| コード | 説明 |
+| --- | --- |
+| `.codePoint` | その文字の UTF-32 コードポイント |
+| `.texture` | 文字画像の `TextureRegion` |
+| `.getOffset(scale)` | ペンの位置からさらに必要なオフセット（拡大倍率指定） |
+| `.xAdvance` | 現在の文字で進む X 座標の距離 |
+
+- 次のようなコードで、`Glyph` の情報を使って文字単位で自由描画しつつも、通常のテキスト描画を再現できます
 
 ```cpp
+# include <Siv3D.hpp>
 
+void DrawGlyphs(const Font& font, const String& text, const double fontSize, const Vec2& basePos, const ColorF& color)
+{
+	const Array<Glyph> glyphs = font.getGlyphs(text);
+	const double scale = (fontSize / font.fontSize());
+	const double fontHeight = (font.height() * scale);
+
+	Vec2 penPos{ basePos };
+
+	// 文字単位で描画を制御するためのループ
+	for (const auto& glyph : glyphs)
+	{
+		// 改行文字なら
+		if (glyph.codePoint == U'\n')
+		{
+			// ペンの X 座標をリセットする
+			penPos.x = basePos.x;
+
+			// ペンの Y 座標をフォントの高さ分進める
+			penPos.y += fontHeight;
+
+			continue;
+		}
+
+		// penPos を可視化したい場合はコメントを外す
+		//penPos.asCircle(3).drawFrame(1, Palette::Red);
+		//(penPos + glyph.getOffset(scale)).asCircle(3).drawFrame(1, Palette::Green);
+
+		// 文字のテクスチャをペンの位置に文字ごとのオフセットを加算して描画する
+		if (scale == 1.0)
+		{
+			// 等倍で描画するビットマップ方式に限り、Math::Round() で整数座標に調整すると品質が向上する
+			glyph.texture.draw(Math::Round(penPos + glyph.getOffset()), color);
+		}
+		else
+		{
+			glyph.texture.scaled(scale).draw((penPos + glyph.getOffset(scale)), color);
+		}
+
+		// ペンの X 座標を文字の幅の分進める
+		penPos.x += (glyph.xAdvance * scale);
+	}
+}
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+	const Font font{ 48, Typeface::Bold };
+	const String text = U"The quick brown fox\njumps over the lazy dog.";
+
+	while (System::Update())
+	{
+		DrawGlyphs(font, text, 48, Vec2{ 40, 40 }, ColorF{ 0.2 });
+
+		DrawGlyphs(font, text, 36, Vec2{ 40, 240 }, ColorF{ 1.0 });
+
+		DrawGlyphs(font, text, 24, Vec2{ 40, 440 }, Palette::Seagreen);
+	}
+}
+```
+
+### 34.24.2 自由描画の基本（SDF / MSDF 方式）
+- SDF / MSDF 方式では特殊なシェーダの適用が必要になるため、次のようなコードを使います
+	- シェーダの適用中は図形描画などが使えないことに注意してください
+
+```cpp
+# include <Siv3D.hpp>
+
+void DrawGlyphs(const Font& font, const String& text, const double fontSize, const Vec2& basePos, const ColorF& color)
+{
+	const Array<Glyph> glyphs = font.getGlyphs(text);
+	const double scale = (fontSize / font.fontSize());
+	const double fontHeight = (font.height() * scale);
+
+	// このオブジェクトが存在する間、すべての 2D 描画に SDF / MSDF シェーダが適用される
+	const ScopedCustomShader2D shader{ Font::GetPixelShader(font.method()) };
+
+	Vec2 penPos{ basePos };
+
+	// 文字単位で描画を制御するためのループ
+	for (const auto& glyph : glyphs)
+	{
+		// 改行文字なら
+		if (glyph.codePoint == U'\n')
+		{
+			// ペンの X 座標をリセットする
+			penPos.x = basePos.x;
+
+			// ペンの Y 座標をフォントの高さ分進める
+			penPos.y += fontHeight;
+
+			continue;
+		}
+
+		// 文字のテクスチャをペンの位置に文字ごとのオフセットを加算して描画する
+		glyph.texture.scaled(scale).draw((penPos + glyph.getOffset(scale)), color);
+
+		// ペンの X 座標を文字の幅の分進める
+		penPos.x += (glyph.xAdvance * scale);
+	}
+}
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+	const String text = U"The quick brown fox\njumps over the lazy dog.";
+
+	while (System::Update())
+	{
+		DrawGlyphs(font, text, 48, Vec2{ 40, 40 }, ColorF{ 0.2 });
+
+		DrawGlyphs(font, text, 36, Vec2{ 40, 240 }, ColorF{ 1.0 });
+
+		DrawGlyphs(font, text, 24, Vec2{ 40, 440 }, Palette::Seagreen);
+	}
+}
+```
+
+### 34.24.3 自由描画の応用
+- 文字単位で座標や色を制御するサンプルです
+
+```cpp
+# include <Siv3D.hpp>
+
+void DrawGlyphs(const Font& font, const String& text, const double fontSize, const Vec2& basePos)
+{
+	const Array<Glyph> glyphs = font.getGlyphs(text);
+	const double scale = (fontSize / font.fontSize());
+	const double fontHeight = (font.height() * scale);
+
+	const ScopedCustomShader2D shader{ Font::GetPixelShader(font.method()) };
+
+	Vec2 penPos{ basePos };
+	int32 index = 0;
+
+	for (const auto& glyph : glyphs)
+	{
+		if (glyph.codePoint == U'\n')
+		{
+			penPos.x = basePos.x;
+			penPos.y += fontHeight;
+
+			++index;
+			continue;
+		}
+
+		const Vec2 offset{ 0, (Periodic::Sine1_1(2s, (Scene::Time() + index * 0.3)) * 8.0) };
+
+		glyph.texture.scaled(scale).draw((penPos + glyph.getOffset(scale) + offset), HSV{ (index * 10) });
+		penPos.x += (glyph.xAdvance * scale);
+
+		++index;
+	}
+}
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+	const String text = U"The quick brown fox\njumps over the lazy dog.";
+
+	while (System::Update())
+	{
+		DrawGlyphs(font, text, 55, Vec2{ 40, 40 });
+	}
+}
+```
+
+### 34.24.4 テキストスタイル対応
+- SDF / MSDF 方式のフォントの自由描画でテキストスタイルに対応するには、次のようにします
+
+```cpp
+# include <Siv3D.hpp>
+
+void DrawGlyphs(const Font& font, const TextStyle& textStyle, const String& text, const double fontSize, const Vec2& basePos)
+{
+	const Array<Glyph> glyphs = font.getGlyphs(text);
+	const double scale = (fontSize / font.fontSize());
+	const double fontHeight = (font.height() * scale);
+
+	const ScopedCustomShader2D shader{ Font::GetPixelShader(font.method(), textStyle.type) };
+	Graphics2D::SetSDFParameters(textStyle);
+
+	Vec2 penPos{ basePos };
+	int32 index = 0;
+
+	for (const auto& glyph : glyphs)
+	{
+		if (glyph.codePoint == U'\n')
+		{
+			penPos.x = basePos.x;
+			penPos.y += fontHeight;
+
+			++index;
+			continue;
+		}
+
+		const Vec2 offset{ 0, (Periodic::Sine1_1(2s, (Scene::Time() + index * 0.3)) * 8.0) };
+
+		glyph.texture.scaled(scale).draw((penPos + glyph.getOffset(scale) + offset), HSV{ (index * 10) });
+		penPos.x += (glyph.xAdvance * scale);
+
+		++index;
+	}
+}
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+	const String text = U"The quick brown fox\njumps over the lazy dog.";
+
+	while (System::Update())
+	{
+		DrawGlyphs(font, TextStyle::Default(), text, 55, Vec2{ 40, 40 });
+
+		DrawGlyphs(font, TextStyle::OutlineShadow(0.2, ColorF{ 0.0 }, Vec2{ 2, 2 }, ColorF{ 0.0 }), text, 55, Vec2{ 40, 240 });
+	}
+}
 ```
 
 
 ## 34.25 縦書き
-- XXX
+- テキストの縦書きに関する機能は未実装です。将来のバージョンで実装予定です
+- 自由描画で次のように再現できますが、「」や句読点などが縦書きスタイルにならない制約があります
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/25.png)
 
 ```cpp
+# include <Siv3D.hpp>
 
+void DrawGlyphs(const Font& font, const String& text, const double fontSize, const Vec2& basePos, const ColorF& color)
+{
+	const Array<Glyph> glyphs = font.getGlyphs(text);
+	const double scale = (fontSize / font.fontSize());
+	const double fontHeight = (font.height() * scale);
+
+	// このオブジェクトが存在する間、すべての 2D 描画に SDF / MSDF シェーダが適用される
+	const ScopedCustomShader2D shader{ Font::GetPixelShader(font.method()) };
+
+	Vec2 penPos{ basePos };
+
+	// 文字単位で描画を制御するためのループ
+	for (const auto& glyph : glyphs)
+	{
+		// 改行文字なら
+		if (glyph.codePoint == U'\n')
+		{
+			// ペンの Y 座標をリセットする
+			penPos.y = basePos.y;
+
+			// ペンの X 座標を進める
+			penPos.x -= fontHeight;
+
+			continue;
+		}
+
+		// 文字のテクスチャをペンの位置に文字ごとのオフセットを加算して描画する
+		glyph.texture.scaled(scale).draw((penPos + glyph.getOffset(scale)), color);
+
+		// ペンの Y 座標を文字の高さの分進める
+		penPos.y += (glyph.yAdvance * scale);
+	}
+}
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+	const String text = U"古池や\n蛙飛び込む\n水の音";
+
+	while (System::Update())
+	{
+		DrawGlyphs(font, text, 48, Vec2{ 600, 40 }, ColorF{ 0.2 });
+
+		DrawGlyphs(font, text, 36, Vec2{ 400, 40 }, ColorF{ 1.0 });
+
+		DrawGlyphs(font, text, 24, Vec2{ 200, 40 }, Palette::Seagreen);
+	}
+}
 ```
 
 
 ## 34.26 フォールバックフォント
-- XXX
-	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/26.png)
+- 1 つの書体では、テキストに登場するすべての文字をカバーできない場合があります
+- そこで、別の書体のフォントを**フォールバック**として登録しておくことで、メインの書体でカバーできない文字を別の書体で描画できます
+- フォールバックフォントを設定すると、基本のフォントで描けない文字があり、フォールバックフォントを使うと描ける場合に、そのフォントを使います
+- フォールバックフォントを設定するには、`.addFallback()` で作成済みの `Font` を渡します
+- フォールバックフォントは何個でも設定でき、先に設定したものが優先して使われます
+- カラー絵文字フォントをフォールバックフォントとして設定した場合、描画サイズは登録先のフォントのサイズに合わせられます
+- フォールバックフォントは、主にテキスト内に絵文字や複数の言語を含みたい場合に使用します
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font0{ FontMethod::MSDF, 48, Typeface::Regular };
+	const Font font1{ FontMethod::MSDF, 48, Typeface::Regular };
+	const Font font2{ FontMethod::MSDF, 48, Typeface::Regular };
+
+	const Font fontCJK{ FontMethod::MSDF, 48, Typeface::CJK_Regular_JP };
+	const Font fontEmoji{ 48, Typeface::ColorEmoji };
+
+	// font1 にフォールバックフォントを 1 つ追加
+	font1.addFallback(fontCJK);
+
+	// font2 にフォールバックフォントを 2 つ追加
+	font2.addFallback(fontCJK);
+	font2.addFallback(fontEmoji);
+
+	const String text = U"Hello! こんにちは 你好 안녕하세요 🐈🐕🚀";
+
+	while (System::Update())
+	{
+		font0(U"font0:\n" + text).draw(36, Vec2{40, 40}, ColorF{ 0.2 });
+		font1(U"font1:\n" + text).draw(36, Vec2{ 40, 200 }, ColorF{ 0.2 });
+		font2(U"font2:\n" + text).draw(36, Vec2{ 40, 360 }, ColorF{ 0.2 });
+	}
+}
 ```
 
 
@@ -561,253 +877,6 @@ void Main()
 
 
 
-
-
-
-
-
-
-## 31.16 テキストを 1 文字ずつ表示する
-`.substr(offset, count)` で、文字列の `offset` 文字目から `count` 文字の部分文字列（`String`）を作成することができます。`offset` は 0 から始まります。`count` が省略された場合は、`offset` 文字目から末尾までの部分文字列を作成します。`offset` が実際の文字列の長さより大きい場合は、末尾までの部分文字列を作成します。
-
-これと `Stopwatch` を組み合わせると、文字列を 1 文字ずつ表示することができます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/16.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-
-	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
-	const String text = U"The quick brown fox\njumps over the lazy dog.";
-	Stopwatch stopwatch{ StartImmediately::Yes };
-
-	while (System::Update())
-	{
-		const int32 count = (stopwatch.ms() / 30);
-
-		font(text.substr(0, count)).draw(40, Vec2{ 40, 40 }, ColorF{ 0.11 });
-	}
-}
-```
-
-
-
-## 31.21 文字単位で自由描画をする
-通常のテキスト描画では、文字ごとに色や位置、大きさや回転を自由にカスタマイズすることができません。
-
-文字単位で自由な描画を行いたい場合、`Font` の `.getGlyphs(text)` を使用して得られる `Array<Glyph>` を使います。`Glyph` には、個々の文字を自由に制御して描画するために必要な情報が用意されています。
-
-### 31.21.1 基本
-`Glyph` の `.codePoint` はその文字の UTF-32 コードポイントを、`.texture` は文字画像の `TextureRegion` を、`.getOffset()` はペンの位置からさらに必要なオフセットを、`.xAdvance` は現在の文字で進む X 座標の距離を表します。
-
-次のようなコードを書くことで、自由描画で通常の描画を再現できます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/21.1.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void DrawGlyphs(const Vec2& basePos, const Font& font, const String& text, const ColorF& color)
-{
-	const Array<Glyph> glyphs = font.getGlyphs(text);
-
-	const double fontHeight = font.height();
-
-	Vec2 penPos{ basePos };
-
-	// 文字単位で描画を制御するためのループ
-	for (const auto& glyph : glyphs)
-	{
-		// 改行文字なら
-		if (glyph.codePoint == U'\n')
-		{
-			// ペンの X 座標をリセット
-			penPos.x = basePos.x;
-
-			// ペンの Y 座標をフォントの高さ分進める
-			penPos.y += fontHeight;
-
-			continue;
-		}
-
-		// penPos を可視化したい場合はコメントを外す
-		//penPos.asCircle(3).drawFrame(1, Palette::Red);
-		//Math::Round(penPos + glyph.getOffset()).asCircle(3).drawFrame(1, Palette::Green);
-
-		// 文字のテクスチャをペンの位置に文字ごとのオフセットを加算して描画
-		//（ビットマップ方式に限り、Math::Round() で整数座標に調整すると品質が向上する）
-		glyph.texture.draw(Math::Round(penPos + glyph.getOffset()), color);
-
-		// ペンの X 座標を文字の幅の分進める
-		penPos.x += glyph.xAdvance;
-	}
-}
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.7, 0.9, 0.8 });
-	const Font font{ 50, Typeface::Bold };
-	const String text = U"The quick brown fox\njumps over the lazy dog.";
-
-	while (System::Update())
-	{
-		DrawGlyphs(Vec2{ 40, 40 }, font, text, ColorF{ 0.11 });
-	}
-}
-```
-
-### 31.21.2 応用
-前述のコードをカスタマイズすることで、文字単位で自由な描画を行うことができます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/21.2.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void DrawGlyphs(const Vec2& basePos, const Font& font, const String& text)
-{
-	const Array<Glyph> glyphs = font.getGlyphs(text);
-	const double fontHeight = font.height();
-	Vec2 penPos{ basePos };
-	int32 index = 0;
-
-	for (const auto& glyph : glyphs)
-	{
-		if (glyph.codePoint == U'\n')
-		{
-			penPos.x = basePos.x;
-			penPos.y += fontHeight;
-			++index;
-			continue;
-		}
-
-		const Vec2 offset{ 0, (Periodic::Sine1_1(2s, Scene::Time() + index * 0.3) * 8.0) };
-		glyph.texture.draw((penPos + glyph.getOffset() + offset), HSV{ (index * 10) });
-		penPos.x += glyph.xAdvance;
-		++index;
-	}
-}
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.7, 0.9, 0.8 });
-	const Font font{ 50, Typeface::Bold };
-	const String text = U"The quick brown fox\njumps over the lazy dog.";
-
-	while (System::Update())
-	{
-		DrawGlyphs(Vec2{ 40, 40 }, font, text);
-	}
-}
-```
-
-### 31.21.3 SDF / MSDF 対応
-SDF / MSDF 方式のフォントを自由描画する場合、次のように `ScopedCustomShader2D` を作成し、そのオブジェクトが有効なスコープ内でグリフテクスチャを描画します。Distance field 画像を描画するために、`Font::GetPixelShader()` で取得できるカスタムシェーダの適用が必要であるためです。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/21.3.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void DrawGlyphs(const Vec2& basePos, const Font& font, const String& text, double fontSize, const ColorF& color)
-{
-	const Array<Glyph> glyphs = font.getGlyphs(text);
-	const double scale = (fontSize / font.fontSize());
-	const double fontHeight = (font.height() * scale);
-	{
-		const ScopedCustomShader2D shader{ Font::GetPixelShader(font.method()) };
-		Vec2 penPos{ basePos };
-
-		for (const auto& glyph : glyphs)
-		{
-			if (glyph.codePoint == U'\n')
-			{
-				penPos.x = basePos.x;
-				penPos.y += fontHeight;
-				continue;
-			}
-
-			glyph.texture.scaled(scale).draw((penPos + glyph.getOffset(scale)), color);
-			penPos.x += (glyph.xAdvance * scale);
-		}
-	}
-}
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.7, 0.9, 0.8 });
-	const Font font{ FontMethod::MSDF, 50, Typeface::Bold };
-	const String text = U"The quick brown fox\njumps over the lazy dog.";
-
-	while (System::Update())
-	{
-		DrawGlyphs(Vec2{ 40, 40 }, font, text, 30, ColorF{ 0.11 });
-
-		DrawGlyphs(Vec2{ 40, 240 }, font, text, 50, ColorF{ 0.11 });
-	}
-}
-```
-
-### 31.21.4 SDF / MSDF + テキストスタイル対応
-SDF / MSDF 方式のフォントの自由描画でテキストスタイルに対応するには、次のようにします。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/21.4.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void DrawGlyphs(const Vec2& basePos, const Font& font, const String& text, double fontSize, const TextStyle& textStyle, const ColorF& color)
-{
-	const Array<Glyph> glyphs = font.getGlyphs(text);
-	const double scale = (fontSize / font.fontSize());
-	const double fontHeight = (font.height() * scale);
-	{
-		const ScopedCustomShader2D shader{ Font::GetPixelShader(font.method(), textStyle.type) };
-		Graphics2D::SetSDFParameters(textStyle);
-		Vec2 penPos{ basePos };
-
-		for (const auto& glyph : glyphs)
-		{
-			if (glyph.codePoint == U'\n')
-			{
-				penPos.x = basePos.x;
-				penPos.y += fontHeight;
-				continue;
-			}
-
-			glyph.texture.scaled(scale).draw((penPos + glyph.getOffset(scale)), color);
-			penPos.x += (glyph.xAdvance * scale);
-		}
-	}
-}
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.7, 0.9, 0.8 });
-	const Font font{ FontMethod::MSDF, 50, Typeface::Bold };
-	const String text = U"The quick brown fox\njumps over the lazy dog.";
-
-	while (System::Update())
-	{
-		DrawGlyphs(Vec2{ 40, 40 }, font, text, 30, TextStyle::Default(), ColorF{ 0.11 });
-
-		const double outlineScale = 0.2;
-		const ColorF outlineColor{ 0.0, 0.3, 0.6 };
-		const Vec2 shadowOffset{ 2, 2 };
-		const ColorF shadowColor{ 0.0, 0.5 };
-
-		DrawGlyphs(Vec2{ 40, 240 }, font, text, 50, TextStyle::OutlineShadow(outlineScale, outlineColor, shadowOffset, shadowColor), ColorF{ 1.0 });
-	}
-}
-```
-
-
-## 31.22 縦書きでテキストを描画する
-テキストの縦書きに関する機能は未実装です。将来のバージョンで実装予定です。
 
 
 ## 31.23 フォントのプリロード
@@ -878,47 +947,6 @@ void Main()
 }
 ```
 
-
-## 31.24 フォールバックフォントの設定
-1 つの書体では、すべての文字をカバーできない場合があります。そこで、別の書体のフォントを**フォールバック**として登録しておくことで、メインの書体でカバーできない文字を別の書体で描画することができます。
-
-フォールバックフォントを設定すると、基本のフォントで描けない文字が見つかったとき、もしフォールバックフォントで描けたら、そのフォントを使います。フォールバックフォントを設定するには、`.addFallback()` で作成済みの `Font` を渡します。フォールバックフォントは何個でも設定でき、先に設定したものが優先して使われます。また、カラー絵文字フォントをフォールバックフォントとして設定した場合、描画サイズは基本のフォントのサイズに合わせられます。
-
-フォールバックフォントは、主にテキスト内に絵文字や複数の言語を含みたい場合に使用します。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/24.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.7, 0.9, 0.8 });
-
-	const Font font0{ 36, Typeface::Regular };
-	const Font font1{ 36, Typeface::Regular };
-	const Font font2{ 36, Typeface::Regular };
-
-	const Font fontJP{ 36, Typeface::CJK_Regular_JP };
-	const Font fontEmoji{ 36, Typeface::ColorEmoji };
-
-	// font1 にフォールバックフォントを 1 つ追加
-	font1.addFallback(fontJP);
-
-	// font2 にフォールバックフォントを 2 つ追加
-	font2.addFallback(fontJP);
-	font2.addFallback(fontEmoji);
-
-	const String text = U"Hello! こんにちは 你好 안녕하세요 🐈🐕🚀";
-
-	while (System::Update())
-	{
-		font0(text).draw(40, 40, ColorF{ 0.11 });
-		font1(text).draw(40, 100, ColorF{ 0.11 });
-		font2(text).draw(40, 160, ColorF{ 0.11 });
-	}
-}
-```
 
 ## 31.25 文字を Polygon で取得する
 `Font` のメンバ関数 `.renderPolygons()` を使うと、文字列を描画したときの各文字の `PolygonGlyph` を取得できます。これは文字を画像ではなく多角形で表現するものです。次のコードのようにすると、文字列を指定した位置に描画するときの各文字の `Polygon` を取得できます。
