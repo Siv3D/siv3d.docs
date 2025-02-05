@@ -342,11 +342,11 @@ using ItemID = uint32;
 
 struct Item
 {
-	// 更新時刻
+	// 更新時刻（最後にクリックした時刻）
 	uint64 updateTime = 0;
 
 	// 中心座標
-	Vec2 pos = Vec2{ 0, 0 };
+	Vec2 pos{ 0, 0 };
 
 	// ID
 	ItemID id = 0;
@@ -354,6 +354,76 @@ struct Item
 	// 絵文字の種類
 	int32 type = 0;
 };
+
+Array<Item> GenerateItems()
+{
+	Array<Item> items;
+
+	for (int32 i = 0; i < 12; ++i)
+	{
+		const uint64 updateTime = Time::GetMillisec();
+		const Vec2 pos = RandomVec2(Scene::Rect().stretched(-50));
+		const ItemID id = (i + 1);
+		const int32 type = Random(0, 5);
+		items << Item{ updateTime, pos, id, type };
+	}
+
+	return items;
+}
+
+void MoveItem(Array<Item>& items, ItemID selectedItemID)
+{
+	for (auto& item : items)
+	{
+		if (item.id == selectedItemID)
+		{
+			const Vec2 move = Cursor::DeltaF(); // 前フレームからのマウスの移動量
+			item.pos.moveBy(move);
+			return;
+		}
+	}
+}
+
+void SelectItem(Array<Item>& items,
+	Optional<ItemID>& mouseOverItemID, Optional<ItemID>& selectedItemID)
+{
+	for (auto& item : items)
+	{
+		if (Circle{ item.pos, 50 }.mouseOver())
+		{
+			Cursor::RequestStyle(CursorStyle::Hand);
+			mouseOverItemID = item.id;
+
+			if (MouseL.down())
+			{
+				item.updateTime = Time::GetMillisec();
+				selectedItemID = item.id;
+			}
+
+			return;
+		}
+	}
+}
+
+void SortByUpdateTime(Array<Item>& items)
+{
+	items.sort_by([](const Item& a, const Item& b) { return a.updateTime > b.updateTime; });
+}
+
+void DrawItems(const Array<Item>& items, const Array<Texture>& emojis,
+	const Optional<ItemID>& mouseOverItemID, const Optional<ItemID>& selectedItemID)
+{
+	// 更新時刻が古い順に描画する
+	for (int32 i = (static_cast<int32>(items.size()) - 1); 0 <= i; --i)
+	{
+		const auto& item = items[i];
+
+		// マウスオーバーしているか、選択されているアイテムは少し大きく描画する
+		const bool mouseOver = ((item.id == mouseOverItemID) || (item.id == selectedItemID));
+
+		emojis[item.type].scaled(mouseOver ? 1.1 : 1.0).drawAt(item.pos);
+	}
+}
 
 void Main()
 {
@@ -369,72 +439,50 @@ void Main()
 		Texture{ U"🍙"_emoji },
 	};
 
-	// ID 発行用のカウンター
-	ItemID idCounter = 0;
-
-	Array<Item> items;
-
-	for (int32 i = 0; i < 12; ++i)
-	{
-		items << Item{ Time::GetMillisec(), RandomVec2(Scene::Rect().stretched(-50)), ++idCounter, Random(0, static_cast<int32>(emojis.size() - 1))};
-	}
+	Array<Item> items = GenerateItems();
 
 	// 選択されているアイテムの ID
 	Optional<ItemID> selectedItemID;
 
 	while (System::Update())
 	{
-		// マウスオーバーしているアイテムの ID
-		Optional<ItemID> mouseOverItemID;
+		/////////////////////////////////
+		//
+		//	更新
+		//
+		/////////////////////////////////
 
 		if (MouseL.up())
 		{
+			// アイテムの選択を解除する
 			selectedItemID.reset();
 		}
 
+		// マウスオーバーしているアイテムの ID
+		Optional<ItemID> mouseOverItemID;
+
 		if (selectedItemID)
 		{
-			for (auto& item : items)
-			{
-				if (item.id == *selectedItemID)
-				{
-					item.pos.moveBy(Cursor::DeltaF());
-					break;
-				}
-			}
+			// 選択中のアイテムをマウスで移動させる
+			MoveItem(items, *selectedItemID);
 		}
 		else
 		{
-			for (auto& item : items)
-			{
-				if (Circle{ item.pos, 50 }.mouseOver())
-				{
-					Cursor::RequestStyle(CursorStyle::Hand);
-					mouseOverItemID = item.id;
-
-					if (MouseL.down())
-					{
-						item.updateTime = Time::GetMillisec();
-						selectedItemID = item.id;
-					}
-
-					break;
-				}
-			}
+			// アイテムを選択する
+			SelectItem(items, mouseOverItemID, selectedItemID);
 		}
 
 		// 更新時刻が新しい順に並び替える
-		items.sort_by([](const Item& a, const Item& b) { return a.updateTime > b.updateTime; });
+		SortByUpdateTime(items);
 
-		// 更新時刻が古い順に描画する
-		for (int32 i = (static_cast<int32>(items.size()) - 1); 0 <= i; --i)
-		{
-			const auto& item = items[i];
+		/////////////////////////////////
+		//
+		//	描画
+		//
+		/////////////////////////////////
 
-			// マウスオーバーしているか、選択されているアイテムは少し大きく描画する
-			const bool mouseOver = ((item.id == mouseOverItemID) || (item.id == selectedItemID));
-			emojis[item.type].scaled(mouseOver ? 1.1 : 1.0).drawAt(item.pos);
-		}
+		// アイテムを描画する
+		DrawItems(items, emojis, mouseOverItemID, selectedItemID);
 	}
 }
 ```
@@ -447,17 +495,27 @@ void Main()
 ```cpp
 # include <Siv3D.hpp>
 
+struct SmoothedVec2
+{
+	Vec2 current{ 400, 300 };
+
+	Vec2 target = current;
+
+	Vec2 velocity{ 0, 0 };
+
+	void update()
+	{
+		current = Math::SmoothDamp(current, target, velocity, 0.3);
+	}
+};
+
 void Main()
 {
 	Scene::SetBackground(Palette::White);
 
 	const double speed = 300.0;
 
-	Vec2 targetPos{ 400, 300 };
-
-	Vec2 pos{ 400, 300 };
-
-	Vec2 velocity{ 0, 0 };
+	SmoothedVec2 pos;
 
 	while (System::Update())
 	{
@@ -465,27 +523,27 @@ void Main()
 
 		if (KeyLeft.pressed())
 		{
-			targetPos.x -= (speed * deltaTime);
+			pos.target.x -= (speed * deltaTime);
 		}
 
 		if (KeyRight.pressed())
 		{
-			targetPos.x += (speed * deltaTime);
+			pos.target.x += (speed * deltaTime);
 		}
 
 		if (KeyUp.pressed())
 		{
-			targetPos.y -= (speed * deltaTime);
+			pos.target.y -= (speed * deltaTime);
 		}
 
 		if (KeyDown.pressed())
 		{
-			targetPos.y += (speed * deltaTime);
+			pos.target.y += (speed * deltaTime);
 		}
 
-		pos = Math::SmoothDamp(pos, targetPos, velocity, 0.3);
+		pos.update();
 
-		RectF{ Arg::center = pos, 120, 80 }.draw(ColorF{ 0.2, 0.6, 0.9 });
+		RectF{ Arg::center = pos.current, 120, 80 }.draw(ColorF{ 0.2, 0.6, 0.9 });
 	}
 }
 ```
@@ -498,62 +556,83 @@ void Main()
 ```cpp
 # include <Siv3D.hpp>
 
+struct DialogBox
+{
+	Rect rect{ 40, 440, 720, 120 };
+
+	// メッセージの配列
+	Array<String> messages;
+
+	// 現在のメッセージのインデックス
+	size_t messageIndex = 0;
+
+	// メッセージの表示時間を計測するストップウォッチ
+	Stopwatch stopwatch;
+
+	bool isFinished() const
+	{
+		// 表示する文字数
+		const int32 count = Max(((stopwatch.ms() - 200) / 24), 0);
+
+		// 現在のメッセージがすべて表示されているか
+		return (static_cast<int32>(messages[messageIndex].length()) <= count);
+	}
+
+	void update()
+	{
+		if (isFinished() && (rect.leftClicked() || KeySpace.down()))
+		{
+			// 次のメッセージに切り替える
+			++messageIndex %= messages.size();
+
+			// ストップウォッチをリセットする
+			stopwatch.restart();
+		}
+	}
+
+	void draw(const Font& font) const
+	{
+		// 表示する文字数
+		const int32 count = Max(((stopwatch.ms() - 200) / 24), 0);
+
+		// 会話ボックスを描画する
+		rect.rounded(10).drawShadow(Vec2{ 1, 1 }, 8).draw().drawFrame(2, ColorF{ 0.4 });
+
+		// 会話を描画する
+		font(messages[messageIndex].substr(0, count)).draw(28, rect.stretched(-36, -20), ColorF{ 0.2 });
+
+		if (rect.mouseOver())
+		{
+			Cursor::RequestStyle(CursorStyle::Hand);
+		}
+
+		if (isFinished())
+		{
+			// メッセージの表示が終わっていたら、▼ を描画する
+			Triangle{ rect.br().movedBy(-30, -30), 20, 180_deg }.draw(ColorF{ 0.2, Periodic::Sine0_1(2.0s) });
+		}
+	}
+};
+
 void Main()
 {
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-
 	const Font font{ FontMethod::MSDF, 48, Typeface::Medium };
 
-	// メッセージの配列
-	const Array<String> messages =
+	DialogBox dialogBox;
+	dialogBox.messages =
 	{
 		U"Twinkle, twinkle, little star,\nHow I wonder what you are!",
 		U"Up above the world so high,\nLike a diamond in the sky.",
 		U"When the blazing sun is gone,\nWhen he nothing shines upon,",
 		U"Then you show your little light,\nTwinkle, twinkle, all the night.",
 	};
-
-	// メッセージボックスの位置とサイズ
-	const Rect messageBox{ 40, 440, 720, 120 };
-
-	// メッセージのインデックス
-	size_t messageIndex = 0;
-
-	// メッセージの表示を開始してからの経過時間を測定するストップウォッチ
-	Stopwatch stopwatch{ StartImmediately::Yes };
+	dialogBox.stopwatch.start();
 
 	while (System::Update())
 	{
-		// 表示する文字数
-		int32 count = Max(((stopwatch.ms() - 200) / 24), 0);
-
-		// 現在のメッセージがすべて表示されているか
-		const bool finished = (static_cast<int32>(messages[messageIndex].length()) <= count);
-
-		if (finished && (messageBox.leftClicked() || KeySpace.down()))
-		{
-			// 次のメッセージに切り替える
-			++messageIndex %= messages.size();
-			stopwatch.restart();
-			count = 0;
-		}
-
-		// メッセージボックスを描画する
-		messageBox.rounded(10).drawShadow(Vec2{ 1, 1 }, 8).draw().drawFrame(2, ColorF{ 0.4 });
-
-		// メッセージを描画する
-		font(messages[messageIndex].substr(0, count)).draw(28, messageBox.stretched(-36, -20), ColorF{ 0.11 });
-
-		if (messageBox.mouseOver())
-		{
-			Cursor::RequestStyle(CursorStyle::Hand);
-		}
-
-		if (finished)
-		{
-			// メッセージの表示が終わっていたら、▼ を描画する
-			Triangle{ messageBox.br().movedBy(-30, -30), 20, 180_deg }.draw(ColorF{ 0.11, Periodic::Sine0_1(2.0s) });
-		}
+		dialogBox.update();
+		dialogBox.draw(font);
 	}
 }
 ```
@@ -618,58 +697,67 @@ void Main()
 ```cpp
 # include <Siv3D.hpp>
 
-void Main()
+struct SmoothedInt
 {
-	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+	double current = 0.0;
 
-	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
-
-	int32 targetValue = 0;
-
-	double currentValue = 0.0;
+	int32 target = 0;
 
 	double velocity = 0.0;
 
+	void update()
+	{
+		current = Math::SmoothDamp(current, target, velocity, 0.3);
+	}
+
+	int32 rounded() const
+	{
+		return static_cast<int32>(Math::Round(current));
+	}
+};
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+
+	SmoothedInt value;
+
 	while (System::Update())
 	{
-		ClearPrint();
-		Print << U"targetValue: " << targetValue;
-
-		currentValue = Math::SmoothDamp(currentValue, targetValue, velocity, 0.3);
-
-		const int32 value = static_cast<int32>(Math::Round(currentValue));
-
-		font(value).draw(40, Arg::topRight(160, 90), ColorF{ 0.11 });
+		value.update();
 
 		if (SimpleGUI::Button(U"+1", Vec2{ 200, 100 }, 80))
 		{
-			++targetValue;
+			++value.target;
 		}
 
 		if (SimpleGUI::Button(U"-1", Vec2{ 300, 100 }, 80))
 		{
-			--targetValue;
+			--value.target;
 		}
 
 		if (SimpleGUI::Button(U"+10", Vec2{ 400, 100 }, 80))
 		{
-			targetValue += 10;
+			value.target += 10;
 		}
 
 		if (SimpleGUI::Button(U"-10", Vec2{ 500, 100 }, 80))
 		{
-			targetValue -= 10;
+			value.target -= 10;
 		}
 
 		if (SimpleGUI::Button(U"+100", Vec2{ 600, 100 }, 80))
 		{
-			targetValue += 100;
+			value.target += 100;
 		}
 
 		if (SimpleGUI::Button(U"-100", Vec2{ 700, 100 }, 80))
 		{
-			targetValue -= 100;
+			value.target -= 100;
 		}
+
+		font(value.rounded()).draw(40, Arg::topRight(160, 90), ColorF{ 0.2 });
 	}
 }
 ```
