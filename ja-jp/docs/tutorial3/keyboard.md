@@ -1,7 +1,7 @@
 # 42. キーボード入力
 キーボード入力を処理する方法を学びます。
 
-## 42.1 キーの入力状態を調べる
+## 42.1 キーの入力状態
 - キーボードの各キーに対応する　`Input` 型の定数が用意されています
 - おもな定数名は次の表のとおりです
 	- 下表以外のキーは [`<Siv3D/Keyboard.hpp>` :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D/blob/main/Siv3D/include/Siv3D/Keyboard.hpp){:target="_blank"} を参照してください
@@ -584,7 +584,7 @@ void Main()
 ```
 
 
-## 42.13 IME を無効化する（Windows 版）
+## 42.13 IME の無効化（Windows）
 - Windows で日本語入力の IME を無効化する場合、`Platform::Windows::TextInput::DisableIME()` を呼びます
 
 ```cpp
