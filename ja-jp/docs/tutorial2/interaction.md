@@ -821,6 +821,85 @@ struct GrabbedItem
 	Vec2 offset{ 0, 0 };
 };
 
+Optional<GrabbedItem> GrabItem(const Array<Item>& items, const Point& basePos)
+{
+	for (int32 order = 0; auto & item : items)
+	{
+		// アイテムの長方形
+		const RectF rect = item.getRect(basePos, order);
+
+		if (rect.mouseOver())
+		{
+			Cursor::RequestStyle(CursorStyle::Hand);
+
+			if (rect.leftClicked())
+			{
+				// アイテムを掴む
+				return GrabbedItem{ item.id, order, Cursor::PosF() };
+			}
+
+			break;
+		}
+
+		++order;
+	}
+
+	return none;
+}
+
+void RearrangeItems(Array<Item>& items, int32 targetOrder, const GrabbedItem& grabbedItem)
+{
+	// 以前と異なるリスト内順序の場合
+	if (targetOrder != grabbedItem.oldOrder)
+	{
+		// アイテムを一旦コピー
+		auto tmp = std::move(items[grabbedItem.oldOrder]);
+
+		// 以前の場所にあったアイテムを削除する
+		items.erase(items.begin() + grabbedItem.oldOrder);
+
+		// 新しい場所にアイテムを挿入する
+		items.insert((items.begin() + targetOrder), std::move(tmp));
+	}
+}
+
+void DrawItems(const Array<Item>& items, const Point& basePos, const Font& font,
+	const Optional<int32>& targetOrder, const Optional<GrabbedItem>& grabbedItem)
+{
+	for (int32 order = 0; const auto & item : items)
+	{
+		// そこに挿入しようとしていたら、その位置をスキップする
+		if (targetOrder == order)
+		{
+			++order;
+		}
+
+		// 現在掴んでいるアイテムは、元あった場所には描画しない
+		if (grabbedItem && (grabbedItem->id == item.id))
+		{
+			continue;
+		}
+
+		item.draw(basePos, font, order);
+
+		++order;
+	}
+}
+
+void DrawGrabbedItem(const Array<Item>& items, const Point& basePos, const Font& font, const GrabbedItem& grabbedItem)
+{
+	// 掴んでいるアイテムだけを描画する
+	for (const auto& item : items)
+	{
+		if (grabbedItem.id == item.id)
+		{
+			item.drawGrabbed(basePos, font, grabbedItem.offset, grabbedItem.oldOrder);
+
+			return;
+		}
+	}
+}
+
 void Main()
 {
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
@@ -848,94 +927,37 @@ void Main()
 		// アイテムを掴む処理
 		if (not grabbedItem)
 		{
-			// アイテムのリスト内順序
-			int32 order = 0;
-
-			for (auto& item : items)
-			{
-				// アイテムの長方形
-				const RectF rect = item.getRect(basePos, order);
-
-				if (rect.mouseOver())
-				{
-					Cursor::RequestStyle(CursorStyle::Hand);
-
-					if (rect.leftClicked())
-					{
-						// アイテムを掴む
-						grabbedItem = { item.id, order, Cursor::PosF() };
-					}
-
-					break;
-				}
-
-				++order;
-			}
+			grabbedItem = GrabItem(items, basePos);
 		}
 
-		// 掴んでいるアイテムの真下のリスト内順序。アイテムを掴んでいない場合は -1
-		int32 targetOrder = (grabbedItem ? Clamp(((Cursor::Pos().y - basePos.y) / 80), 0, (static_cast<int32>(items.size()) - 1)) : -1);
-
-		// 掴んでいるアイテムを置く処理
-		if (grabbedItem && MouseL.up())
-		{
-			// 以前と異なるリスト内順序の場合
-			if (targetOrder != grabbedItem->oldOrder)
-			{
-				// アイテムを一旦コピー
-				auto tmp = std::move(items[grabbedItem->oldOrder]);
-
-				// 以前の場所にあったアイテムを削除する
-				items.erase(items.begin() + grabbedItem->oldOrder);
-
-				// 新しい場所にアイテムを挿入する
-				items.insert((items.begin() + targetOrder), std::move(tmp));
-			}
-
-			// アイテムを掴んでいない状態にする
-			grabbedItem.reset();
-			targetOrder = -1;
-		}
+		// 掴んでいるアイテムの真下のリスト内順序。アイテムを掴んでいない場合は none
+		Optional<int32> targetOrder;
 
 		if (grabbedItem)
 		{
+			targetOrder = Clamp(((Cursor::Pos().y - basePos.y) / 80), 0, (static_cast<int32>(items.size()) - 1));
+
+			// 掴んでいるアイテムを置く処理
+			if (MouseL.up())
+			{
+				// アイテムの並び順を変更する
+				RearrangeItems(items, *targetOrder, *grabbedItem);
+
+				// アイテムを掴んでいない状態にする
+				grabbedItem.reset();
+				targetOrder.reset();
+			}
+
 			Cursor::RequestStyle(CursorStyle::Hand);
 		}
 
 		// リスト上のアイテムを描画する
-		{
-			int32 order = 0;
-
-			for (const auto& item : items)
-			{
-				if (targetOrder == order)
-				{
-					++order;
-				}
-
-				// その位置に掴んでいるアイテムがある場合は描画しない
-				if (grabbedItem && (grabbedItem->id == item.id))
-				{
-					continue;
-				}
-
-				item.draw(basePos, font, order);
-
-				++order;
-			}
-		}
+		DrawItems(items, basePos, font, targetOrder, grabbedItem);
 
 		// 掴んでいるアイテムを描画する
 		if (grabbedItem)
 		{
-			for (const auto& item : items)
-			{
-				if (grabbedItem->id == item.id)
-				{
-					item.drawGrabbed(basePos, font, grabbedItem->offset, grabbedItem->oldOrder);
-					break;
-				}
-			}
+			DrawGrabbedItem(items, basePos, font, *grabbedItem);
 		}
 	}
 }
