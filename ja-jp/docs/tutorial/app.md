@@ -41,7 +41,7 @@ void Main()
 
 	while (System::Update())
 	{
-		Circle{ Scene::Center(), 100 }.draw();
+		Circle{ 400, 300, 100 }.draw();
 	}
 }
 ```
@@ -58,7 +58,7 @@ void Main()
 
 	while (System::Update())
 	{
-		Circle{ Scene::Center(), 100 }.draw();
+		Circle{ 400, 300, 100 }.draw();
 	}
 }
 ```
@@ -118,7 +118,7 @@ void Main()
 
 void Main()
 {
-	// ウィンドウを閉じるユーザアクションのみを終了操作に設定する。
+	// ウィンドウを閉じるユーザアクションのみを終了操作に設定する
 	System::SetTerminationTriggers(UserAction::CloseButtonClicked);
 
 	while (System::Update())
@@ -137,7 +137,7 @@ void Main()
 
 void Main()
 {
-	// 終了操作を設定しない。
+	// 終了操作を設定しない
 	System::SetTerminationTriggers(UserAction::NoAction);
 
 	while (System::Update())
@@ -161,10 +161,10 @@ void Main()
 
 void Main()
 {
-	// 終了操作を設定しない。
+	// 終了操作を設定しない
 	System::SetTerminationTriggers(UserAction::NoAction);
 
-	// デフォルトの終了操作に戻す。
+	// デフォルトの終了操作に戻す
 	System::SetTerminationTriggers(UserAction::Default);
 
 	while (System::Update())
