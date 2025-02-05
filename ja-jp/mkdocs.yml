@@ -128,11 +128,11 @@ nav:
     - 41. オーディオ再生: tutorial3/audio.md
     - 42. キーボード入力: tutorial3/keyboard.md
     - 43. マウス入力: tutorial3/mouse.md
-    - 44. 図形の交差判定: tutorial3/geometry2d.md
-    - 45. ハッシュテーブル: tutorial3/hashtable.md
-    - 46. 2D レンダーステート: tutorial3/2d-render-state.md
-    - 47. 2D カメラ: tutorial3/camera2d.md
-    - 48. シーンとウィンドウ: tutorial3/scene.md
+    - 44. シーンとウィンドウ: tutorial3/scene.md
+    - 45. 図形の交差判定: tutorial3/geometry2d.md
+    - 46. ハッシュテーブル: tutorial3/hashtable.md
+    - 47. 2D レンダーステート: tutorial3/2d-render-state.md
+    - 48. 2D カメラ: tutorial3/camera2d.md
     - 49. アセット管理: tutorial3/asset.md
     - 50. エフェクト: tutorial3/effect.md
     - 51. レンダーテクスチャ: tutorial3/render-texture.md
