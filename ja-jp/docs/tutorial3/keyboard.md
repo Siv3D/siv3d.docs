@@ -281,8 +281,6 @@ F11
 ## 42.6 すべてのキー入力の取得
 - `Keyboard::GetAllInputs()` は、現在のフレームで`.down()`, `.pressed()`, `.up()` のいずれかが `true` になっている、アクティブなキーの一覧を `Array<Input>` で返します
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/keyboard/6.png)
-
 ```cpp
 # include <Siv3D.hpp>
 
