@@ -561,7 +561,7 @@ void Main()
 		if (SimpleGUI::Button(U"Sample", Vec2{ 200, 40 }))
 		{
 			// ランダムに 3 個選択する
-			Print << Sample(3, { 1, 2, 5, 10, 20, 50, 100 });
+			Print << Sample(3, { 1, 2, 5, 10, 20, 50, 100, 500 });
 		}
 	}
 }
