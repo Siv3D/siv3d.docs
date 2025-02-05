@@ -8,6 +8,14 @@
 ```cpp
 # include <Siv3D.hpp>
 
+void DrawCircles(const Array<Circle>& circles)
+{
+	for (const auto& circle : circles)
+	{
+		circle.draw(HSV{ circle.center.x, 0.8, 0.9 });
+	}
+}
+
 void Main()
 {
 	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
@@ -22,11 +30,7 @@ void Main()
 			circles << Circle{ Cursor::Pos(), Random(10.0, 30.0) };
 		}
 
-		for (const auto& circle : circles)
-		{
-			// x 座標に応じて色を変える
-			circle.draw(HSV{ circle.center.x, 0.8, 0.9 });
-		}
+		DrawCircles(circles);
 	}
 }
 ```
@@ -39,6 +43,42 @@ void Main()
 ```cpp
 # include <Siv3D.hpp>
 
+void UpdateGrid(Grid<int32>& grid)
+{
+	// クリックされていない場合は何もしない
+	if (not MouseL.down())
+	{
+		return;
+	}
+
+	for (int32 y = 0; y < grid.height(); ++y)
+	{
+		for (int32 x = 0; x < grid.width(); ++x)
+		{
+			const RectF rect{ (x * 100), (y * 100), 100 };
+
+			if (rect.mouseOver())
+			{
+				// クリックのたびに要素を 0 → 1 → 2 → 3 → 0 → 1 → ... と変化させる
+				++grid[y][x] %= 4;
+			}
+		}
+	}
+}
+
+void DrawGrid(const Grid<int32>& grid)
+{
+	for (int32 y = 0; y < grid.height(); ++y)
+	{
+		for (int32 x = 0; x < grid.width(); ++x)
+		{
+			const RectF rect{ (x * 100), (y * 100), 100 };
+			const ColorF color{ (3 - grid[y][x]) / 3.0 };
+			rect.stretched(-1).draw(color);
+		}
+	}
+}
+
 void Main()
 {
 	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
@@ -48,23 +88,9 @@ void Main()
 
 	while (System::Update())
 	{
-		for (int32 y = 0; y < grid.height(); ++y)
-		{
-			for (int32 x = 0; x < grid.width(); ++x)
-			{
-				const RectF rect{ (x * 100), (y * 100), 100 };
+		UpdateGrid(grid);
 
-				if (rect.leftClicked())
-				{
-                    // クリックのたびに要素を 0 → 1 → 2 → 3 → 0 → 1 → ... と変化させる
-					++grid[y][x] %= 4;
-				}
-
-				const ColorF color{ (3 - grid[y][x]) / 3.0 };
-
-				rect.stretched(-1).draw(color);
-			}
-		}
+		DrawGrid(grid);
 	}
 }
 ```
@@ -84,6 +110,34 @@ struct Ball
 	Vec2 velocity;
 };
 
+void UpdateBalls(Array<Ball>& balls, double ballRadius)
+{
+	const Size sceneSize{ 800, 600 };
+
+	for (auto& ball : balls)
+	{
+		ball.pos += (ball.velocity * Scene::DeltaTime());
+
+		if ((ball.pos.x <= ballRadius) || (sceneSize.x <= (ball.pos.x + ballRadius)))
+		{
+			ball.velocity.x *= -1.0;
+		}
+
+		if ((ball.pos.y <= ballRadius) || (sceneSize.y <= (ball.pos.y + ballRadius)))
+		{
+			ball.velocity.y *= -1.0;
+		}
+	}
+}
+
+void DrawBalls(const Array<Ball>& balls, double ballRadius)
+{
+	for (const auto& ball : balls)
+	{
+		Circle{ ball.pos, ballRadius }.draw().drawFrame(2, 0, ColorF{ 0.2 });
+	}
+}
+
 void Main()
 {
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
@@ -99,25 +153,9 @@ void Main()
 
 	while (System::Update())
 	{
-		for (auto& ball : balls)
-		{
-			ball.pos += (ball.velocity * Scene::DeltaTime());
+		UpdateBalls(balls, ballRadius);
 
-			if ((ball.pos.x <= ballRadius) || (Scene::Width() <= (ball.pos.x + ballRadius)))
-			{
-				ball.velocity.x *= -1.0;
-			}
-
-			if ((ball.pos.y <= ballRadius) || (Scene::Height() <= (ball.pos.y + ballRadius)))
-			{
-				ball.velocity.y *= -1.0;
-			}
-		}
-
-		for (const auto& ball : balls)
-		{
-			Circle{ ball.pos, ballRadius }.draw();
-		}
+		DrawBalls(balls, ballRadius);
 	}
 }
 ```
@@ -130,6 +168,15 @@ void Main()
 ```cpp
 # include <Siv3D.hpp>
 
+void DrawBox(const Rect& rect, const Font& font, const String& text)
+{
+	rect.rounded(6).draw();
+
+	rect.stretched(-3).rounded(3).drawFrame(2, ColorF{ 0.75 });
+
+	font(text).drawAt(60, rect.center(), ColorF{ 0.2 });
+}
+
 void Main()
 {
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
@@ -138,28 +185,27 @@ void Main()
 
 	const Array<String> options = { U"New York", U"London", U"Paris", U"Tokyo", U"Sydney", U"Berlin" };
 
-	const Rect optionRect{ Arg::center = Scene::Center().movedBy(0, -60), 400, 100 };
+	const Rect rect{ Arg::center(400, 240), 400, 100 };
 
+	// 抽選中は空の文字列
 	String result;
 
 	while (System::Update())
 	{
-		optionRect.draw();
-
 		if (result)
 		{
-			font(result).drawAt(60, optionRect.center(), ColorF{ 0.11 });
+			DrawBox(rect, font, result);
 
-			if (SimpleGUI::Button(U"Start", Scene::Center().movedBy(-60, 40), 120))
+			if (SimpleGUI::Button(U"Start", Vec2{ 340, 340 }, 120))
 			{
 				result.clear();
 			}
 		}
 		else
 		{
-			font(options.choice()).drawAt(60, optionRect.center(), ColorF{ 0.11 });
+			DrawBox(rect, font, options.choice());
 
-			if (SimpleGUI::Button(U"Stop", Scene::Center().movedBy(-60, 40), 120))
+			if (SimpleGUI::Button(U"Stop", Vec2{ 340, 340 }, 120))
 			{
 				result = options.choice();
 			}
@@ -185,60 +231,101 @@ struct Bullet
 	Vec2 velocity;
 };
 
+// 敵の状態
+struct EnemyState
+{
+	// 弾の発射周期（秒）
+	double fireInterval = 0.08;
+
+	// 蓄積時間（秒）
+	double accumulatedTime = 0.0;
+
+	// 弾の発射方向
+	double bulletLaunchAngle = 0_deg;
+
+	// 位置
+	Vec2 pos;
+
+	// 弾の配列
+	Array<Bullet> bullets;
+
+	void update(double deltaTime)
+	{
+		pos = Vec2{ (400 + Periodic::Sine1_1(4s) * 200.0), 200 };
+
+		accumulatedTime += deltaTime;
+
+		// 蓄積時間が周期を超えたら新しい弾を発射する
+		if (fireInterval <= accumulatedTime)
+		{
+			const Vec2 velocity = Circular{ 120, bulletLaunchAngle };
+
+			bullets << Bullet{ pos, velocity };
+
+			bulletLaunchAngle += 15_deg;
+
+			accumulatedTime -= fireInterval;
+		}
+	}
+};
+
+void UpdateBullets(Array<Bullet>& bullets, double deltaTime)
+{
+	// 弾を移動させる
+	for (auto& bullet : bullets)
+	{
+		bullet.pos += (bullet.velocity * deltaTime);
+	}
+
+	// 画面外に出た弾を削除する
+	const Rect sceneRect{ 800, 600 };
+	bullets.remove_if([&](const Bullet& bullet) { return (not bullet.pos.intersects(sceneRect)); });
+}
+
+void DrawBullets(const Array<Bullet>& bullets)
+{
+	for (const auto& bullet : bullets)
+	{
+		Circle{ bullet.pos, 8 }.draw().drawFrame(2, 0, ColorF{ 0.2 });
+	}
+}
+
 void Main()
 {
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
 	const Texture textureEnemy{ U"🛸"_emoji };
 
-	// 発射周期（秒）
-	const double fireInterval = 0.08;
-
-	// 蓄積時間（秒）
-	double accumulatedTime = 0.0;
-
-	// 発射方向
-	double angle = 0.0;
-
-	Array<Bullet> bullets;
+	// 敵の状態
+	EnemyState enemyState;
 
 	while (System::Update())
 	{
-		ClearPrint();
-		Print << bullets.size();
+		/////////////////////////////////
+		//
+		//	更新
+		//
+		/////////////////////////////////
 
-		accumulatedTime += Scene::DeltaTime();
+		const double deltaTime = Scene::DeltaTime();
+		
+		// 敵の状態を更新する
+		enemyState.update(deltaTime);
+		
+		// 弾の状態を更新する
+		UpdateBullets(enemyState.bullets, deltaTime);
 
-		// 敵の位置
-		const Vec2 enemyPos{ (400 + Periodic::Sine1_1(4s) * 200.0), 200 };
-
-		// 蓄積時間が周期を超えたら
-		if (fireInterval <= accumulatedTime)
-		{
-			const Vec2 velocity = Circular{ 120, angle };
-
-			bullets << Bullet{ enemyPos, velocity };
-
-			angle += 15_deg;
-
-			accumulatedTime -= fireInterval;
-		}
-
-		// 弾の移動
-		for (auto& bullet : bullets)
-		{
-			bullet.pos += (bullet.velocity * Scene::DeltaTime());
-		}
-
-		// 画面外に出た弾を削除
-		bullets.remove_if([](const Bullet& bullet) { return (not bullet.pos.intersects(Scene::Rect())); });
-
-		textureEnemy.drawAt(enemyPos);
-
-		for (const auto& bullet : bullets)
-		{
-			Circle{ bullet.pos, 8 }.draw();
-		}
+		/////////////////////////////////
+		//
+		//	描画
+		//
+		/////////////////////////////////
+	
+		// 敵を描く
+		textureEnemy.drawAt(enemyState.pos);
+		
+		// 弾を描く
+		DrawBullets(enemyState.bullets);
 	}
 }
 ```
