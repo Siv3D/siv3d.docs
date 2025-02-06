@@ -896,7 +896,7 @@ void Main()
 - 最終的に出力される音量は次のように計算されます：
 	- **`Audio` で設定された音量 × ミキシングバスの音量 × グローバルオーディオの音量**
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/audio/17.png)
+<div class="noshadow-90"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/audio/19-1.png"></div>
 
 ### 41.19.2 ミキシングバスでの操作
 - 個々のミキシングバスでは次のような操作ができます。
@@ -1140,7 +1140,7 @@ void Main()
 	- 「Open audio file」をクリックすると、パソコンに保存されているオーディオファイルをファイルダイアログからオープンできます
 	- ファイルダイアログについては、**チュートリアル ??** を参照してください
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/audio/21.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/audio/21.png)
 
 ```cpp
 # include <Siv3D.hpp>

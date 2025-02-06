@@ -1,41 +1,35 @@
 # 44.  シーンとウィンドウ
 Siv3D のシーンとウィンドウのカスタマイズ方法を学びます。
 
-## XX.X XXXXX
-- XXX
-	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/xxxx/1.png)
+## 44.1 シーンとウィンドウの概要
+- Siv3D では、図形やテクスチャ、テキストなどを `.draw()` すると、「シーン」と呼ばれる仮想の画面に描画されます
+- その後、`System::Update()` でシーンの画像がウィンドウに転送されることで、ユーザは描画結果をウィンドウ上で目にすることができます
 
-```cpp
+<div class="noshadow-90"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/scene/1.png"></div>
 
-```
+- これらの処理は自動的に行われるため、ここまでは特に意識することなく `.draw()` した内容をウィンドウで確認することができました
+- この章ではシーンやウィンドウの仕組みを掘り下げます
 
+## 44.2 「3 つのサイズ」
+- Siv3D プログラムにおける画面表示を正しく把握するには、次の「3 つのサイズ」を理解することが重要です：
+	- ① シーンのサイズ
+	- ② 仮想ウィンドウサイズ
+	- ③ 実ウィンドウサイズ（フレームバッファサイズ）
 
-
-Siv3D のシーンとウィンドウのカスタマイズ方法を学びます。
-
-Siv3D では、図形やテクスチャ、テキストなどを `.draw()` すると、「シーン」と呼ばれる仮想の画面に描画されます。Siv3D は `System::Update()` 内でシーンの画像をウィンドウに転送されることで、ユーザは描画結果をウィンドウ上で目にすることができます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/scene/0.png)
-
-これらの処理は自動的に行われるため、前章までは特に意識することなく `.draw()` した内容をウィンドウに表示していました。この章ではシーンやウィンドウの仕組みを掘り下げます。
-
-この章では Siv3D の内部の仕組みを説明するため、やや難しい内容になっています。開発におけるほとんどのニーズは 32.3 の `Window::Resize()` だけで満たせると思われます。すべてを理解する必要はありません。
-
-## 32.1 三つのサイズ
-Siv3D プログラムにおける画面表示を理解するには、「3 つのサイズ」を知る必要があります。
-
-#### ① シーンのサイズ
-`.draw()` による描画や `Cursor::Pos()` のマウスカーソル座標などの基準になる、独立した 1 つのシーンのサイズです。下記の関数で取得できます。デフォルトでは後述する仮想ウィンドウサイズと一致します。Siv3D の機能を使ってスクリーンショットを撮影したときは、この解像度で保存されます。
+### ① シーンのサイズ
+- `.draw()` による描画や `Cursor::Pos()` のマウスカーソル座標などの基準になる、独立した 1 つのシーンのサイズです
+- デフォルトでは 800 × 600 で、「② 仮想ウィンドウサイズ」と一致します
+- Siv3D の機能を使ってスクリーンショットを撮影したときは、この解像度で保存されます
+- シーンサイズの取得に関連する関数は次のとおりです：
 
 | 関数 | 戻り値 | 説明 |
 |--|--|--|
-| `Scene::Size()` | `Size` | シーンのサイズを返します。 |
-| `Scene::Width()` | `int32` | シーンの幅を返します。 |
-| `Scene::Height()` | `int32` | シーンの高さを返します。 |
-| `Scene::Center()` | `Point` | シーンの中心座標を返します。<br>`Scene::Size() / 2` と同じです。 |
-| `Scene::CenterF()` | `Vec2` | シーンの中心座標を返します。<br>`Scene::Size() / 2.0` と同じです。 |
-| `Scene::Rect()` | `Rect` | シーンの矩形を返します。<br>`Rect{ 0, 0, Scene::Size() }` と同じです。 |
+| `Scene::Size()` | `Size` | シーンのサイズを返す |
+| `Scene::Width()` | `int32` | シーンの幅を返す |
+| `Scene::Height()` | `int32` | シーンの高さを返す |
+| `Scene::Center()` | `Point` | シーンの中心座標を返す<br>`Scene::Size() / 2` と同じ |
+| `Scene::CenterF()` | `Vec2` | シーンの中心座標を返す<br>`Scene::Size() / 2.0` と同じ |
+| `Scene::Rect()` | `Rect` | シーンの矩形を返す<br>`Rect{ 0, 0, Scene::Size() }` と同じ |
 
 ```cpp
 # include <Siv3D.hpp>
@@ -55,14 +49,11 @@ void Main()
 }
 ```
 
-#### ② 仮想ウィンドウサイズ
-ユーザのデスクトップ上における、ウィンドウの**クライアント領域**（タイトルバーやフレームを除く、描画が行われる領域）の見かけのサイズです。`Window::GetState().virtualSize` で取得できます。この仮想ウィンドウサイズに OS 設定の拡大縮小倍率 (150%, 200% など) を乗算したものが、後述する実ウィンドウサイズになります。
-
-!!! warning "Linux 版での注意"
-	現在の Siv3D Linux 版は OS 設定の拡大縮小倍率に未対応です。仮想ウィンドウサイズと実ウィンドウサイズは同じになります。
-
-#### ③ 実ウィンドウサイズ（フレームバッファサイズ）
-モニタ上の実ピクセル数で計測した、ウィンドウのクライアント領域のサイズです。`Window::GetState().frameBufferSize` で取得できます。
+### ② 仮想ウィンドウサイズ
+- ユーザのデスクトップ上における、ウィンドウの**クライアント領域**（タイトルバーやフレームを除く、描画が行われる領域）の見かけのサイズです
+- デフォルトでは 800 × 600 です
+- `Window::GetState().virtualSize` で取得できます
+- この仮想ウィンドウサイズに、OS で設定されている拡大縮小倍率（150 %, 200 % など）を乗算したものが「③ 実ウィンドウサイズ」になります
 
 ```cpp
 # include <Siv3D.hpp>
@@ -72,19 +63,59 @@ void Main()
 	while (System::Update())
 	{
 		ClearPrint();
-		Print << U"scene size: " << Scene::Size();
-		Print << U"virtualSize: " << Window::GetState().virtualSize;
-		Print << U"frameBufferSize: " << Window::GetState().frameBufferSize;
+		Print << U"Virtual Size: " << Window::GetState().virtualSize;
 	}
 }
 ```
 
-#### 三つのサイズの関係
-デフォルトの設定では、シーンのサイズは仮想ウィンドウサイズと連動します。
+!!! warning "Linux 版での注意"
+	- 現在の Siv3D Linux 版は OS 設定の拡大縮小倍率に未対応で、② 仮想ウィンドウサイズと ③ 実ウィンドウサイズが等しくなります
 
-シーンのサイズと実ウィンドウサイズが異なる場合でも、Siv3D はシーン画像をクライアント領域に転送する際に自動的に拡大縮小を行い、アスペクト比を保ったまま、クライアント領域にフィットするよう表示するため、ユーザは実ウィンドウサイズを意識する必要はありません。
+### ③ 実ウィンドウサイズ（フレームバッファサイズ）
+- モニタ上の実ピクセル数で計測した、ウィンドウのクライアント領域のサイズです
+- デフォルトでは 800 × 600 に、OS の拡大縮小倍率を乗算した値になります
+- `Window::GetState().frameBufferSize` で取得できます
 
-例えば OS 設定の拡大縮小倍率が 200% で、実ウィンドウサイズが 1600x1200 であっても、シーンのサイズは 800x600 を前提として描画することができます。
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	while (System::Update())
+	{
+		ClearPrint();
+		Print << U"Scene Size: " << Scene::Size();
+		Print << U"Virtual Size: " << Window::GetState().virtualSize;
+		Print << U"Frame Buffer Size: " << Window::GetState().frameBufferSize;
+	}
+}
+```
+
+### OS 設定の拡大縮小倍率
+- 現在のウィンドウが表示されているモニタの、OS 設定の拡大縮小倍率は `Window::GetState().scaling` で取得できます
+- `1.0` が 100 %、`1.25` が 125 %、`1.5` が 150 %、`2.0` が 200 % です
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	while (System::Update())
+	{
+		ClearPrint();
+		Print << U"Scene Size: " << Scene::Size();
+		Print << U"Virtual Size: " << Window::GetState().virtualSize;
+		Print << U"Frame Buffer Size: " << Window::GetState().frameBufferSize;
+		Print << U"Scaling: " << Window::GetState().scaling;
+	}
+}
+```
+
+#### 3 つのサイズの関係
+- シーンへの描画結果は、アスペクト比を保ったまま、実ウィンドウサイズにフィットするよう拡大縮小されてウィンドウに転送されます
+- これにより、自動的にユーザのモニタ環境に最適なサイズでコンテンツを表示できます
+	- 例えば OS 設定の拡大縮小倍率が 200 % の高 DPI 環境では、800 × 600 で描画したシーンが 1600 × 1200 に拡大されて表示されるため、「文字が小さすぎてゲームがプレイできない」といった問題は起こりません
+- さまざまな OS 設定の拡大縮小倍率における 3 つのサイズの関係を次の表にまとめました：
 
 | OS 設定の拡大縮小倍率 | ① シーンのサイズ | ② 仮想ウィンドウサイズ | ③ 実ウィンドウサイズ |
 |--|--|--|--|
@@ -93,25 +124,66 @@ void Main()
 | 150% | 800x600 | 800x600 | 1200x900 |
 | 200% | 800x600 | 800x600 | 1600x1200 |
 
-実ウィンドウサイズに沿ったシーンのサイズで高精細な描画を行いたい場合は、32.2 で説明するリサイズモード `ResizeMode::Actual` を使用します。
+- 一方で、高 DPI 環境では、それに応じた高解像度で、高精細にシーンの描画を行いたい場合があります
+- 例えば OS 設定の拡大縮小倍率が 200 % の場合、800 × 600 のシーンを 1600 × 1200 で描画して、実ウィンドウサイズと一致させることが考えられます
+- シーンのサイズを実ウィンドウサイズに合わせたい場合、**44.3** で説明するリサイズモード `ResizeMode::Actual` を使用します
 
 
-## 32.2 シーンのリサイズモード
-ユーザがウィンドウをマウスでリサイズしたり、ウィンドウをリサイズする関数を呼んだりすると、仮想ウィンドウサイズと実ウィンドウサイズの 2 つが変化します。そして、これらのウィンドウサイズに応じてシーンのサイズも更新されます。どのようにシーンのサイズを更新するかを決めるのが、シーンの**リサイズモード**です。リサイズモードは次の 3 種類があります。デフォルトでは、仮想ウィンドウサイズと一致するようにシーンのサイズを更新するモード `ResizeMode::Virtual` になっています。
+## 44.3 シーンのリサイズモード
+- 次のような操作を行うと、実ウィンドウサイズや仮想ウィンドウサイズが変化します
+	- ウィンドウを異なるモニタに移動させる
+	- ウィンドウをリサイズする関数（**44.4**）を呼ぶ
+	- リサイズ可能なウィンドウ（**44.5**）をユーザがマウスでリサイズする
+- これらのサイズの変更に伴い、シーンのサイズも更新が必要になります
+- このとき新しいシーンのサイズを決定するのが、シーンの**リサイズモード**です
+- リサイズモードは次の 3 種類です：
 
 | リサイズモード | 説明 |
 |--|--|
-|`ResizeMode::Virtual` | 仮想ウィンドウサイズと一致するようにシーンのサイズを更新します（デフォルト）。 |
-|`ResizeMode::Actual` | 実ウィンドウサイズと一致するようにシーンのサイズを更新します。 |
-|`ResizeMode::Keep` | シーンのサイズを更新しません。 |
+|`ResizeMode::Virtual` | 仮想ウィンドウサイズを新しいシーンのサイズにする（デフォルト） |
+|`ResizeMode::Actual` | 実ウィンドウサイズを新しいシーンのサイズにする |
+|`ResizeMode::Keep` | シーンのサイズを変更しない |
 
-リサイズモードは `Scene::SetResizeMode(ResizeMode)` で設定します。現在のリサイズモードは `Scene::GetResizeMode()` で取得できます。
+- 現在のリサイズモードは `Scene::GetResizeMode()` で取得できます
+- リサイズモードは `Scene::SetResizeMode(ResizeMode)` で設定します
+	- 設定すると、直ちにシーンのサイズも新しいリサイズモードに合わせて更新されます
+- 次のサンプルでは、プログラムの起動直後にリサイズモードを `ResizeMode::Actual` に変更しています
+- OS 設定の拡大縮小倍率が 100 % より大きい場合、シーンのサイズが 800 × 600 よりも大きくなり、そのサイズのシーンにより高精細な描画ができるようになります
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetResizeMode(ResizeMode::Actual);
+
+	while (System::Update())
+	{
+		ClearPrint();
+		Print << U"Scene::Size(): " << Scene::Size();
+		Print << U"Virtual Size: " << Window::GetState().virtualSize;
+		Print << U"Frame Buffer Size: " << Window::GetState().frameBufferSize;
+
+		// シーンのサイズを確認するための 100 px サイズの市松模様
+		for (int32 y = 0; y < 50; ++y)
+		{
+			for (int32 x = 0; x < 50; ++x)
+			{
+				if (IsEven(x + y))
+				{
+					Rect{ (x * 100), (y * 100), 100 }.draw(ColorF{ 0.4 });
+				}
+			}
+		}
+	}
+}
+```
 
 
-## 32.3 ウィンドウのリサイズ
-`Window::Resize(幅, 高さ)` または `Window::Resize(サイズ)` で、仮想ウィンドウサイズを変更できます。これにともない実ウィンドウサイズも変更され、リサイズモードに応じてシーンのサイズも更新されます。
-
-デフォルトのリサイズモード `ResizeMode::Virtual` が適用されている場合、`Window::Resize()` で指定した仮想ウィンドウサイズが新しいシーンのサイズになります。
+## 44.4 ウィンドウのリサイズ
+- `Window::Resize(幅, 高さ)` または `Window::Resize(サイズ)` で、仮想ウィンドウサイズを変更できます
+- 仮想ウィンドウサイズの変更に伴い、実ウィンドウサイズが変更され、リサイズモードに応じてシーンのサイズも更新されます
+- デフォルトのリサイズモード `ResizeMode::Virtual` を設定している場合、`Window::Resize()` で指定した新しい仮想ウィンドウサイズが新しいシーンのサイズになるため、そこまで難しいことはありません
 
 ```cpp
 # include <Siv3D.hpp>
@@ -123,18 +195,18 @@ void Main()
 	while (System::Update())
 	{
 		ClearPrint();
-		Print << U"scene size: " << Scene::Size();
-		Print << U"virtualSize: " << Window::GetState().virtualSize;
-		Print << U"frameBufferSize: " << Window::GetState().frameBufferSize;
-
-		// 100px サイズの市松模様
+		Print << U"Scene Size: " << Scene::Size();
+		Print << U"Virtual Size: " << Window::GetState().virtualSize;
+		Print << U"Frame Buffer Size: " << Window::GetState().frameBufferSize;
+		
+		// シーンのサイズを確認するための 100 px サイズの市松模様
 		for (int32 y = 0; y < 50; ++y)
 		{
 			for (int32 x = 0; x < 50; ++x)
 			{
-				if ((x + y) % 2)
+				if (IsEven(x + y))
 				{
-					Rect{ (x * 100), (y * 100), 100 }.draw(ColorF{ 0.2, 0.3, 0.4 });
+					Rect{ (x * 100), (y * 100), 100 }.draw(ColorF{ 0.4 });
 				}
 			}
 		}
@@ -142,7 +214,8 @@ void Main()
 }
 ```
 
-リサイズモード `ResizeMode::Keep` が適用されている場合、`Window::Resize()` を行ってもシーンのサイズは変化しません。シーンのサイズと実ウィンドウサイズのアスペクト比が異なる場合、クライアント領域の左右もしくは上下に**レターボックス**と呼ばれる余白領域が生じます。
+- リサイズモード `ResizeMode::Keep` を設定している場合、`Window::Resize()` を行ってもシーンのサイズは変化しません
+- シーンのサイズと実ウィンドウサイズのアスペクト比が異なる場合、クライアント領域の左右もしくは上下に**レターボックス**と呼ばれる余白領域が生じます
 
 ```cpp
 # include <Siv3D.hpp>
@@ -155,18 +228,18 @@ void Main()
 	while (System::Update())
 	{
 		ClearPrint();
-		Print << U"scene size: " << Scene::Size();
-		Print << U"virtualSize: " << Window::GetState().virtualSize;
-		Print << U"frameBufferSize: " << Window::GetState().frameBufferSize;
+		Print << U"Scene Size: " << Scene::Size();
+		Print << U"Virtual Size: " << Window::GetState().virtualSize;
+		Print << U"Frame Buffer Size: " << Window::GetState().frameBufferSize;
 
-		// 100px サイズの市松模様
+		// シーンのサイズを確認するための 100 px サイズの市松模様
 		for (int32 y = 0; y < 50; ++y)
 		{
 			for (int32 x = 0; x < 50; ++x)
 			{
-				if ((x + y) % 2)
+				if (IsEven(x + y))
 				{
-					Rect{ (x * 100), (y * 100), 100 }.draw(ColorF{ 0.2, 0.3, 0.4 });
+					Rect{ (x * 100), (y * 100), 100 }.draw(ColorF{ 0.4 });
 				}
 			}
 		}
@@ -175,10 +248,10 @@ void Main()
 ```
 
 
-## 32.4 ウィンドウを手動でリサイズできるようにする
-`Window::SetStyle(WindowStyle::Sizable)` を設定すると、ウィンドウをつかんでリサイズできるようになります。ユーザの操作によって仮想ウィンドウサイズ / 実ウィンドウサイズが変更されたとき、リサイズモードに応じてシーンのサイズも更新されます。
-
-デフォルトのリサイズモード `ResizeMode::Virtual` が適用されている場合、仮想ウィンドウサイズが新しいシーンのサイズになります。
+## 44.5 手動リサイズ
+- ウィンドウを手動でリサイズできるようにするには、`Window::SetStyle(WindowStyle::Sizable)` を設定します
+- ユーザの操作によって実ウィンドウサイズ・仮想ウィンドウサイズが変更されると、リサイズモードに応じてシーンのサイズも更新されます
+- デフォルトのリサイズモード `ResizeMode::Virtual` を設定している場合、新しい仮想ウィンドウサイズが新しいシーンのサイズになります
 
 ```cpp
 # include <Siv3D.hpp>
@@ -190,18 +263,18 @@ void Main()
 	while (System::Update())
 	{
 		ClearPrint();
-		Print << U"scene size: " << Scene::Size();
-		Print << U"virtualSize: " << Window::GetState().virtualSize;
-		Print << U"frameBufferSize: " << Window::GetState().frameBufferSize;
+		Print << U"Scene Size: " << Scene::Size();
+		Print << U"Virtual Size: " << Window::GetState().virtualSize;
+		Print << U"Frame Buffer Size: " << Window::GetState().frameBufferSize;
 
-		// 100px サイズの市松模様
+		// シーンのサイズを確認するための 100 px サイズの市松模様
 		for (int32 y = 0; y < 50; ++y)
 		{
 			for (int32 x = 0; x < 50; ++x)
 			{
-				if ((x + y) % 2)
+				if (IsEven(x + y))
 				{
-					Rect{ (x * 100), (y * 100), 100 }.draw(ColorF{ 0.2, 0.3, 0.4 });
+					Rect{ (x * 100), (y * 100), 100 }.draw(ColorF{ 0.4 });
 				}
 			}
 		}
@@ -209,7 +282,8 @@ void Main()
 }
 ```
 
-リサイズモード `ResizeMode::Keep` が適用されている場合、ウィンドウを手動でリサイズしてもシーンのサイズは変化しません。シーンのサイズと実ウィンドウサイズのアスペクト比が異なる場合、クライアント領域の左右もしくは上下にレターボックスが生じます。
+- リサイズモード `ResizeMode::Keep` を設定している場合、ウィンドウを手動でリサイズしてもシーンのサイズは変化しません
+- シーンのサイズと実ウィンドウサイズのアスペクト比が異なる場合、クライアント領域の左右もしくは上下にレターボックスが生じます
 
 ```cpp
 # include <Siv3D.hpp>
@@ -222,18 +296,18 @@ void Main()
 	while (System::Update())
 	{
 		ClearPrint();
-		Print << U"scene size: " << Scene::Size();
-		Print << U"virtualSize: " << Window::GetState().virtualSize;
-		Print << U"frameBufferSize: " << Window::GetState().frameBufferSize;
+		Print << U"Scene Size: " << Scene::Size();
+		Print << U"Virtual Size: " << Window::GetState().virtualSize;
+		Print << U"Frame Buffer Size: " << Window::GetState().frameBufferSize;
 
-		// 100px サイズの市松模様
+		// シーンのサイズを確認するための 100 px サイズの市松模様
 		for (int32 y = 0; y < 50; ++y)
 		{
 			for (int32 x = 0; x < 50; ++x)
 			{
-				if ((x + y) % 2)
+				if (IsEven(x + y))
 				{
-					Rect{ (x * 100), (y * 100), 100 }.draw(ColorF{ 0.2, 0.3, 0.4 });
+					Rect{ (x * 100), (y * 100), 100 }.draw(ColorF{ 0.4 });
 				}
 			}
 		}
@@ -242,8 +316,9 @@ void Main()
 ```
 
 
-## 32.5 レターボックスの色を変更する
-シーンのサイズと実ウィンドウサイズのアスペクト比が異なる際に、クライアント領域の左右もしくは上下に生じる余白領域をレターボックスと言います。レターボックスの色を変更するには `Scene::SetLetterbox()` で色を指定します。
+## 44.6 レターボックスの色の変更
+- レターボックスの色を変更するには `Scene::SetLetterbox(color)` で色を指定します
+- `Scene::SetBackground(color)` と同様に、一度変更したレターボックスの色は、再度変更するまでそのままです
 
 ```cpp
 # include <Siv3D.hpp>
@@ -259,18 +334,18 @@ void Main()
 	while (System::Update())
 	{
 		ClearPrint();
-		Print << U"scene size: " << Scene::Size();
-		Print << U"virtualSize: " << Window::GetState().virtualSize;
-		Print << U"frameBufferSize: " << Window::GetState().frameBufferSize;
+		Print << U"Scene Size: " << Scene::Size();
+		Print << U"Virtual Size: " << Window::GetState().virtualSize;
+		Print << U"Frame Buffer Size: " << Window::GetState().frameBufferSize;
 
-		// 100px サイズの市松模様
+		// シーンのサイズを確認するための 100 px サイズの市松模様
 		for (int32 y = 0; y < 50; ++y)
 		{
 			for (int32 x = 0; x < 50; ++x)
 			{
-				if ((x + y) % 2)
+				if (IsEven(x + y))
 				{
-					Rect{ (x * 100), (y * 100), 100 }.draw(ColorF{ 0.2, 0.3, 0.4 });
+					Rect{ (x * 100), (y * 100), 100 }.draw(ColorF{ 0.4 });
 				}
 			}
 		}
@@ -279,10 +354,10 @@ void Main()
 ```
 
 
-## 32.6 シーンのサイズだけを変更する
-リサイズモードを `ResizeMode::Keep` にした状態で、`Scene::Resize()` を使うと、ウィンドウサイズはそのままでシーンのサイズだけを変更できます。
-
-シーンと実ウィンドウサイズが異なるときは、`Cursor::Pos()` の代わりに `Cursor::PosF()` を使うと、シーンの拡大縮小に合わせた `Vec2` 型のマウスカーソル座標を取得できます。
+## 44.7 シーンのサイズのみ変更
+- リサイズモードを `ResizeMode::Keep` に設定している場合、シーンのサイズはウィンドウの操作によって変更されません
+- 代わりに `Scene::Resize(幅, 高さ)` または `Scene::Resize(サイズ)` を使って、シーンのサイズを変更します
+- シーンと実ウィンドウサイズが異なるときは、`Cursor::Pos()` の代わりに `Cursor::PosF()` を使うと、より情報量の多い `Vec2` 型でマウスカーソル座標を取得できます
 
 ```cpp
 # include <Siv3D.hpp>
@@ -297,21 +372,21 @@ void Main()
 	while (System::Update())
 	{
 		ClearPrint();
-		Print << U"scene size: " << Scene::Size();
-		Print << U"virtualSize: " << Window::GetState().virtualSize;
-		Print << U"frameBufferSize: " << Window::GetState().frameBufferSize;
+		Print << U"Scene Size: " << Scene::Size();
+		Print << U"Virtual Size: " << Window::GetState().virtualSize;
+		Print << U"Frame Buffer Size: " << Window::GetState().frameBufferSize;
 
 		// マウスカーソルの座標を Vec2 型で取得する
 		Print << Cursor::PosF();
 
-		// 100px サイズの市松模様
+		// シーンのサイズを確認するための 100 px サイズの市松模様
 		for (int32 y = 0; y < 50; ++y)
 		{
 			for (int32 x = 0; x < 50; ++x)
 			{
-				if ((x + y) % 2)
+				if (IsEven(x + y))
 				{
-					Rect{ (x * 100), (y * 100), 100 }.draw(ColorF{ 0.2, 0.3, 0.4 });
+					Rect{ (x * 100), (y * 100), 100 }.draw(ColorF{ 0.4 });
 				}
 			}
 		}
@@ -320,7 +395,7 @@ void Main()
 ```
 
 
-## 32.7 シーンが実ウィンドウに転送される際のフィルタを変更する
+## 44.8 シーン拡大縮小フィルタ
 シーンのサイズと実ウィンドウサイズが異なる場合、シーン画像はアスペクト比を保ったまま、クライアント領域にフィットするよう拡大または縮小されて表示されますが、拡大縮小時に用いるテクスチャフィルタは 2 種類の選択肢があり、`Scene::SetTextureFilter()` で変更できます。
 
 デフォルトでは、バイリニア法による補間 `TextureFilter::Linear` が使用されます。これは、画像を滑らかに拡大縮小するための補間方法です。一方、低解像度のシーンを、最近傍法による補間 `TextureFilter::Nearest` フィルタで拡大すると、フィルタリングされずにドット感を保ったまま拡大できます。
@@ -362,7 +437,7 @@ void Main()
 ```
 
 
-## 32.8 ウィンドウの枠を消す
+## 44.9 ウィンドウ枠の非表示
 ウィンドウの枠を非表示にするには、`Window::SetStyle()` で `WindowStyle::Frameless` を設定します。
 
 ```cpp
@@ -383,7 +458,7 @@ void Main()
 ウィンドウの枠を非表示にすると、ユーザは手動でのウィンドウの移動、サイズ変更、閉じる操作などができなくなります。
 
 
-## 32.9 ウィンドウのタイトルを変更する
+## 44.10 タイトルの変更
 ウィンドウのタイトルを変更するには、`Window::SetTitle()` に文字列や値を渡します。デバッグビルド時は、タイトルのほかに、`(Debug Build)` という文字列や、フレームレート、ウィンドウのサイズ、シーンのサイズなどの情報が合わせて表示されます。
 
 ```cpp
@@ -405,7 +480,7 @@ void Main()
 	ウィンドウタイトルの変更は時間のかかる処理であるため、毎フレーム `Window::SetTitle()` で異なるタイトルを設定することは避けてください。既に設定されているタイトルと同じタイトルを `Window::SetTitle()` に渡した場合には何もしないため、コストは発生しません。
 
 
-## 32.10 ウィンドウをスクリーンの中心に移動する
+## 44.11 ウィンドウの移動（1）
 `Window::Centering()` を使うと、ウィンドウを、現在ウィンドウがあるモニタのワークエリアの中心に移動できます。
 
 ```cpp
@@ -425,7 +500,7 @@ void Main()
 ```
 
 
-## 32.11 ウィンドウを移動させる
+## 44.12 ウィンドウの移動（2）
 `Window::SetPos()` を使うと、ウィンドウを指定した位置に移動できます。現在のウィンドウの位置は `Window::GetPos()` で取得できます。
 
 ```cpp
@@ -456,7 +531,7 @@ void Main()
 ```
 
 
-## 32.12 ウィンドウを最小化 / 最大化する
+## 44.13 最小化・最大化
 プログラムによってウィンドウを最小化するには `Window::Minimize()` を、最大化するには `Window::Maximize()` を呼びます。ウィンドウを最大化する場合、ウィンドウスタイルが `WindowStyle::Sizable` である必要があります。最小化 / 最大化したウィンドウを以前のサイズに戻すときは `Window::Restore()` を呼びます。
 
 ウィンドウが最小化されているかは `Window::GetState().minimized` で、最大化されているかは `Window::GetState().maximized` で取得できます。
@@ -520,7 +595,7 @@ void Main()
 ```
 
 
-## 32.13 モニタの情報を得る
+## 44.14 モニタの情報
 接続されているモニタの情報の一覧を取得するには `System::EnumerateMonitors()` を使います。結果は `Array<MonitorInfo>` 型で得られます。
 
 `MonitorInfo` 型のメンバ変数は次のとおりです。
@@ -579,7 +654,7 @@ void Main()
 ```
 
 
-## 32.14 フルスクリーンモードにする
+## 44.15 フルスクリーンモード
 アプリケーションを**フルスクリーンモード**にするには `Window::SetFullscreen(true)` を呼びます。ウィンドウモードに戻すには `Window::SetFullscreen(false)` を呼びます。サンプルコードでは扱っていませんが、`Window::SetFullscreen(true)` の第 2 引数には、フルスクリーンで表示する先のモニタのインデックスを指定できます。
 
 アプリケーションがフルスクリーンモードであるかは `Window::GetState().fullscreen` で取得できます。
@@ -630,6 +705,6 @@ void Main()
 ```
 
 
-## 32.15 全画面モードにする（Windows 版）
+## 44.16 全画面モード（Windows）
 Windows 版では、アプリケーションの実行中に ++alt+enter++ を押すことで**全画面モード**にできます。挙動としてはフルスクリーンモードに近いですが、シーンのリサイズモードは `Resize::Keep` に設定され、シーンのサイズが変化しません。フルスクリーンモードや解像度の変更に対応していないアプリケーションを、全画面で大きく表示して実行したいときに役立ちます。このキー操作を無効にするには `Window::SetToggleFullscreenEnabled(false)` を呼びます。
 
