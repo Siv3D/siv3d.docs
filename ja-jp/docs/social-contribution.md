@@ -23,7 +23,7 @@ Siv3D が取り組んできた活動について紹介します。
 ## 4. オープンソース活動への支援
 - Siv3D が使用する 2D 物理エンジン Box2D を開発されている Erin Catto 様に GitHub Sponsors で寄付を行っています
 - 国内の C++ コミュニティ活動を支援するために、cpprefjp 管理者の高橋様に GitHub Sponsors で寄付を行っています
-- Siv3D の標準同梱フォントを開発されている、M+ FONTS 森下様に寄付を行いました
+- Siv3D が使用するフォントを開発されている、M+ FONTS 森下様に寄付を行いました
 - Siv3D が使用する SVG ライブラリ lunasvg を開発されている Samuel Ugochukwu 様に寄付を行いました
 - Visual Studio 拡張 VSColorOutput64 を開発されている Mike Ward 様に寄付を行いました
 - Visual Studio 拡張 Image Preview を開発されている Mads Kristensen 様に寄付を行いました

@@ -18,10 +18,10 @@
 - FlexiSpot Japan 株式会社から、公式配信者プログラムの対象として、電動昇降デスクをご提供いただきました（[ツイート :material-open-in-new:](https://x.com/Reputeless/status/1856283532336791803){:target="_blank"}）
 - 匿名の方から書籍『Game Programming Gems 8』をご寄付いただきました
 - 匿名の方から Nintendo Switch Pro コントローラーをご寄付いただきました
-- 匿名の方から 2,000 円のご寄付をいただきました
+- 匿名の方から Amazon ギフト券をご寄付いただきました
 
 ## コミュニティ
 - Siv3D 本体とドキュメントに対する多くの貢献をいただいています
-    - 該当ユーザに GitHub 上で Siv3D バッジ（Siv3D Oraganization Member）を付与しています。バッジの表示は個々人の任意です
+    - 該当ユーザに GitHub 上で Siv3D バッジ（Siv3D Oraganization Member）を付与しています（バッジの表示は個々人の任意です）
 - Siv3D Discord サーバーの運営にご協力いただいています
-    - 該当ユーザの方に Pro ロールを付与しています
+    - 該当ユーザに Discord サーバー上で Pro ロールを付与しています
