@@ -253,6 +253,8 @@ void Main()
 - ユーザの操作によって実ウィンドウサイズ・仮想ウィンドウサイズが変更されると、リサイズモードに応じてシーンのサイズも更新されます
 - デフォルトのリサイズモード `ResizeMode::Virtual` を設定している場合、新しい仮想ウィンドウサイズが新しいシーンのサイズになります
 
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/scene/5-1.png)
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -284,6 +286,8 @@ void Main()
 
 - リサイズモード `ResizeMode::Keep` を設定している場合、ウィンドウを手動でリサイズしてもシーンのサイズは変化しません
 - シーンのサイズと実ウィンドウサイズのアスペクト比が異なる場合、クライアント領域の左右もしくは上下にレターボックスが生じます
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/scene/5-2.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -319,6 +323,8 @@ void Main()
 ## 44.6 レターボックスの色の変更
 - レターボックスの色を変更するには `Scene::SetLetterbox(color)` で色を指定します
 - `Scene::SetBackground(color)` と同様に、一度変更したレターボックスの色は、再度変更するまでそのままです
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/scene/6.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -408,7 +414,7 @@ void Main()
 |`TextureFilter::Nearest`| 画像を最近傍法で補間 |
 
 === "バイリニア法（デフォルト）"
-	![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/scene/7a.png)
+	![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/scene/8-1.png)
 
 
 	```cpp
@@ -434,7 +440,7 @@ void Main()
 
 
 === "最近傍法"
-	![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/scene/7b.png)
+	![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/scene/8-2.png)
 
 
 	```cpp
