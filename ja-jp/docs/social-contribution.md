@@ -1,8 +1,9 @@
 # 社会貢献
 Siv3D が取り組んできた活動について紹介します。
 
-## 1. 教育プログラムの無償提供
-- 学校や地域コミュニティへ、無料訪問 Siv3D 勉強会を提供しています。全国 30 か所以上での開催実績があります（→ [**過去のイベント**](./community/history.md)）
+## 1. 教育プログラムの提供
+- 学校や地域コミュニティへ、無償の訪問 Siv3D 勉強会を提供しています。全国 30 か所以上での開催実績があります（→ [**過去のイベント**](./community/history.md)）
+- Siv3D 開発インターンシッププログラムを 2024 年夏に実施し、学生 4 名が参加しました
 
 ## 2. 学術・人材育成事業
 - 情報セキュリティ人材の発掘・育成事業 [**セキュリティ・キャンプ 2024 全国大会 :material-open-in-new:**](https://www.ipa.go.jp/jinzai/security-camp/2024/camp/zenkoku/index.html){:target="_blank"}  にて、C++ ライブラリ開発に関する講義を行いました
@@ -18,3 +19,13 @@ Siv3D が取り組んできた活動について紹介します。
 - CEDEC AWARDS 2021 ノミネーション委員を務めました
 - CEDEC 2020 にて、C++ プログラミングに関する共同講演を行いました
 - CEDEC 2014 にて、Siv3D に関する出展を行いました
+
+## 4. オープンソース活動への支援
+- Siv3D が使用する 2D 物理エンジン Box2D を開発されている Erin Catto 様に GitHub Sponsors で寄付を行っています
+- 国内の C++ コミュニティ活動を支援するために、cpprefjp 管理者の高橋様に GitHub Sponsors で寄付を行っています
+- Siv3D の標準同梱フォントを開発されている、M+ FONTS 森下様に寄付を行いました
+- Siv3D が使用する SVG ライブラリ lunasvg を開発されている Samuel Ugochukwu 様に寄付を行いました
+- Visual Studio 拡張 VSColorOutput64 を開発されている Mike Ward 様に寄付を行いました
+- Visual Studio 拡張 Image Preview を開発されている Mads Kristensen 様に寄付を行いました
+- オンライン C++ コンパイラ Wandbox を開発されている melpon 様に寄付を行いました
+- アルゴリズム実装テスト環境 Library Checker を開発されている Kohei Morita（yosupot）様に寄付を行いました

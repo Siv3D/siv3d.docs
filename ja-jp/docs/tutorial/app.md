@@ -23,13 +23,13 @@ Siv3D アプリケーションの基本的な操作を学びます。
 
 - パソコンの設定によっては、++print-screen++ キーが別のアプリケーション（OneDrive や Dropbox）に関連付けられていて、上記の場所にスクリーンショットが保存されないことがあります
 
-??? example "Windows での画面の録画"
+??? example "Windows で画面を録画する"
 	- Windows 10, 11 には、OS 自体に画面の録画機能が搭載されています
-	- 詳しくは [**Xbox Game Bar**](../tools/gamebar.md){target="_blank"} を参照してください
+	- 詳しくは [**Xbox Game Bar**](../tools/gamebar.md){:target="_blank"} を参照してください
 
 
 ## 5.3 スクリーンショット用のショートカットキーを変更する
-- 現在の Siv3D アプリでスクリーンショットを保存するショートカットキーを変更するには、`ScreenCapture::SetShortcutKeys({ キーのリスト })` を使います
+- 現在の Siv3D アプリで、スクリーンショットを保存するショートカットキーを変更するには、`ScreenCapture::SetShortcutKeys({ キーのリスト })` を使います
 
 ```cpp title="スクリーンショットのショートカットキーを変更する" hl_lines="5-6"
 # include <Siv3D.hpp>
