@@ -167,7 +167,7 @@ void Main()
 ```
 
 ### 42.2.4 Alt + Enter キー（Windows）
-- Windows では、アプリケーションの実行中に ++alt+enter++ を押すことで**全画面モード**にできます（**チュートリアル 5.5*）
+- Windows では、アプリケーションの実行中に ++alt+enter++ を押すことで**全画面モード**にできます（**チュートリアル 5.5**）
 - このキー操作を無効にするには `Window::SetToggleFullscreenEnabled(false)` を呼びます
 
 ```cpp

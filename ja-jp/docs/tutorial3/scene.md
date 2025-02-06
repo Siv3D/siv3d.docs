@@ -396,49 +396,75 @@ void Main()
 
 
 ## 44.8 シーン拡大縮小フィルタ
-シーンのサイズと実ウィンドウサイズが異なる場合、シーン画像はアスペクト比を保ったまま、クライアント領域にフィットするよう拡大または縮小されて表示されますが、拡大縮小時に用いるテクスチャフィルタは 2 種類の選択肢があり、`Scene::SetTextureFilter()` で変更できます。
-
-デフォルトでは、バイリニア法による補間 `TextureFilter::Linear` が使用されます。これは、画像を滑らかに拡大縮小するための補間方法です。一方、低解像度のシーンを、最近傍法による補間 `TextureFilter::Nearest` フィルタで拡大すると、フィルタリングされずにドット感を保ったまま拡大できます。
+- シーンをウィンドウに転送する際、シーンのサイズと実ウィンドウサイズが異なる場合、シーン画像はアスペクト比を保ったまま、クライアント領域にフィットするよう拡大または縮小されます
+- 拡大縮小時に用いるテクスチャフィルタは 2 種類の選択肢があり、`Scene::SetTextureFilter(テクスチャフィルタ)` で変更できます
+- デフォルトでは、バイリニア法による補間 `TextureFilter::Linear` が使用されます
+	- これは、画像を滑らかにフィルタリングして拡大縮小する補間方法です
+- 一方、低解像度のシーンを、最近傍法による補間 `TextureFilter::Nearest` フィルタで拡大すると、フィルタリングされずにドット感を維持できます
 
 | テクスチャフィルタ | 説明 |
 |--|--|
-|`TextureFilter::Linear`| 画像をバイリニア補間します（デフォルト） |
-|`TextureFilter::Nearest`| 画像を最近傍法で補間します |
+|`TextureFilter::Linear`| 画像をバイリニア補間（デフォルト） |
+|`TextureFilter::Nearest`| 画像を最近傍法で補間 |
 
 === "バイリニア法（デフォルト）"
 	![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/scene/7a.png)
+
+
+	```cpp
+	# include <Siv3D.hpp>
+
+	void Main()
+	{
+		Scene::SetResizeMode(ResizeMode::Keep);
+
+		// シーンのサイズを 200x150 にする
+		Scene::Resize(200, 150);
+
+		const Texture texture{ U"🐈"_emoji };
+
+		while (System::Update())
+		{
+			Circle{ 120, 75, 50 }.draw();
+
+			texture.draw();
+		}
+	}
+	```
+
 
 === "最近傍法"
 	![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/scene/7b.png)
 
 
-```cpp
-# include <Siv3D.hpp>
+	```cpp
+	# include <Siv3D.hpp>
 
-void Main()
-{
-	Scene::SetResizeMode(ResizeMode::Keep);
-
-	// シーンのサイズを 200x150 にする
-	Scene::Resize(200, 150);
-
-	// シーン転送時の拡大縮小方法を最近傍法にする
-	Scene::SetTextureFilter(TextureFilter::Nearest);
-
-	const Texture texture{ U"🐈"_emoji };
-
-	while (System::Update())
+	void Main()
 	{
-		Circle{ 120, 75, 50 }.draw();
+		Scene::SetResizeMode(ResizeMode::Keep);
 
-		texture.draw();
+		// シーンのサイズを 200x150 にする
+		Scene::Resize(200, 150);
+
+		// シーン転送時の拡大縮小方法を最近傍法にする
+		Scene::SetTextureFilter(TextureFilter::Nearest);
+
+		const Texture texture{ U"🐈"_emoji };
+
+		while (System::Update())
+		{
+			Circle{ 120, 75, 50 }.draw();
+
+			texture.draw();
+		}
 	}
-}
-```
+	```
 
 
 ## 44.9 ウィンドウ枠の非表示
-ウィンドウの枠を非表示にするには、`Window::SetStyle()` で `WindowStyle::Frameless` を設定します。
+- ウィンドウの枠を非表示にするには、`Window::SetStyle()` で `WindowStyle::Frameless` を設定します
+- 手動でのウィンドウの移動、サイズ変更、閉じる操作などはできなくなります
 
 ```cpp
 # include <Siv3D.hpp>
@@ -455,11 +481,10 @@ void Main()
 }
 ```
 
-ウィンドウの枠を非表示にすると、ユーザは手動でのウィンドウの移動、サイズ変更、閉じる操作などができなくなります。
-
 
 ## 44.10 タイトルの変更
-ウィンドウのタイトルを変更するには、`Window::SetTitle()` に文字列や値を渡します。デバッグビルド時は、タイトルのほかに、`(Debug Build)` という文字列や、フレームレート、ウィンドウのサイズ、シーンのサイズなどの情報が合わせて表示されます。
+- ウィンドウのタイトルを変更するには、`Window::SetTitle()` に文字列や値を渡します
+- デバッグビルド時は、タイトルのほかに、`(Debug Build)` という文字列と、フレームレート、ウィンドウのサイズ、シーンのサイズなどの情報が合わせて表示されます
 
 ```cpp
 # include <Siv3D.hpp>
@@ -477,11 +502,13 @@ void Main()
 ```
 
 !!! warning "実行中にタイトル変更を頻繁に行わない"
-	ウィンドウタイトルの変更は時間のかかる処理であるため、毎フレーム `Window::SetTitle()` で異なるタイトルを設定することは避けてください。既に設定されているタイトルと同じタイトルを `Window::SetTitle()` に渡した場合には何もしないため、コストは発生しません。
+	- ウィンドウタイトルの変更は時間のかかる処理です
+	- 毎フレーム `Window::SetTitle()` で異なるタイトルを設定することは避けてください
+	- 既に設定されているタイトルと同じタイトルを `Window::SetTitle()` に渡した場合は、何もしないためコストは発生しません
 
 
 ## 44.11 ウィンドウの移動（1）
-`Window::Centering()` を使うと、ウィンドウを、現在ウィンドウがあるモニタのワークエリアの中心に移動できます。
+- `Window::Centering()` は、ウィンドウを、現在のモニタのワークエリアの中心に移動させます
 
 ```cpp
 # include <Siv3D.hpp>
@@ -501,7 +528,8 @@ void Main()
 
 
 ## 44.12 ウィンドウの移動（2）
-`Window::SetPos()` を使うと、ウィンドウを指定した位置に移動できます。現在のウィンドウの位置は `Window::GetPos()` で取得できます。
+- `Window::SetPos(x, y)` または `Window::SetPos(pos)` は、ウィンドウを指定した位置に移動させます
+- 現在のウィンドウの位置は `Window::GetPos()` で取得できます
 
 ```cpp
 # include <Siv3D.hpp>
@@ -532,9 +560,12 @@ void Main()
 
 
 ## 44.13 最小化・最大化
-プログラムによってウィンドウを最小化するには `Window::Minimize()` を、最大化するには `Window::Maximize()` を呼びます。ウィンドウを最大化する場合、ウィンドウスタイルが `WindowStyle::Sizable` である必要があります。最小化 / 最大化したウィンドウを以前のサイズに戻すときは `Window::Restore()` を呼びます。
-
-ウィンドウが最小化されているかは `Window::GetState().minimized` で、最大化されているかは `Window::GetState().maximized` で取得できます。
+- プログラムによってウィンドウを最小化するには `Window::Minimize()` を呼びます
+- 最大化するには `Window::Maximize()` を呼びます
+- ウィンドウを最大化するには、ウィンドウスタイルが `WindowStyle::Sizable` である必要があります
+- 最小化 / 最大化したウィンドウを以前のサイズに戻すときは `Window::Restore()` を呼びます
+- ウィンドウが最小化されているかは `Window::GetState().minimized` で取得できます
+- 最大化されているかは `Window::GetState().maximized` で取得できます
 
 ```cpp
 # include <Siv3D.hpp>
@@ -550,25 +581,25 @@ void Main()
 	while (System::Update())
 	{
 		ClearPrint();
-		Print << U"scene size: " << Scene::Size();
-		Print << U"virtualSize: " << Window::GetState().virtualSize;
-		Print << U"frameBufferSize: " << Window::GetState().frameBufferSize;
-		Print << U"minimized: " << count;
-		Print << U"maximized: " << Window::GetState().maximized;
+		Print << U"Scene Size: " << Scene::Size();
+		Print << U"Virtual Size: " << Window::GetState().virtualSize;
+		Print << U"Frame Buffer Size: " << Window::GetState().frameBufferSize;
+		Print << U"Minimized Frame Count: " << count;
+		Print << U"Maximized: " << Window::GetState().maximized;
 
 		if (Window::GetState().minimized)
 		{
 			++count;
 		}
 
-		// 100px サイズの市松模様
+		// シーンのサイズを確認するための 100 px サイズの市松模様
 		for (int32 y = 0; y < 50; ++y)
 		{
 			for (int32 x = 0; x < 50; ++x)
 			{
-				if ((x + y) % 2)
+				if (IsEven(x + y))
 				{
-					Rect{ x * 100, y * 100, 100 }.draw(ColorF{ 0.2, 0.3, 0.4 });
+					Rect{ (x * 100), (y * 100), 100 }.draw(ColorF{ 0.4 });
 				}
 			}
 		}
@@ -596,11 +627,11 @@ void Main()
 
 
 ## 44.14 モニタの情報
-接続されているモニタの情報の一覧を取得するには `System::EnumerateMonitors()` を使います。結果は `Array<MonitorInfo>` 型で得られます。
+- 接続されているモニタの情報の一覧を取得するには `System::EnumerateMonitors()` を使います
+- 結果は `Array<MonitorInfo>` 型で得られます
+- `MonitorInfo` 型のメンバ変数は次のとおりです
 
-`MonitorInfo` 型のメンバ変数は次のとおりです。
-
-| 変数 | 説明 |
+| メンバ変数 | 説明 |
 |--|--|
 | `String name` | ディスプレイの名前 |
 | `String id` | ディスプレイ ID |
@@ -638,7 +669,8 @@ void Main()
 }
 ```
 
-現在のプログラムのウィンドウが存在する**モニタのインデックス**を取得するには `System::GetCurrentMonitorIndex()` を使います。このインデックスは `System::EnumerateMonitors()` の戻り値の配列に対応します。
+- 現在のプログラムのウィンドウが存在する**モニタのインデックス**を取得するには `System::GetCurrentMonitorIndex()` を使います
+- このインデックスは `System::EnumerateMonitors()` が返す配列に対応します
 
 ```cpp
 # include <Siv3D.hpp>
@@ -655,9 +687,10 @@ void Main()
 
 
 ## 44.15 フルスクリーンモード
-アプリケーションを**フルスクリーンモード**にするには `Window::SetFullscreen(true)` を呼びます。ウィンドウモードに戻すには `Window::SetFullscreen(false)` を呼びます。サンプルコードでは扱っていませんが、`Window::SetFullscreen(true)` の第 2 引数には、フルスクリーンで表示する先のモニタのインデックスを指定できます。
-
-アプリケーションがフルスクリーンモードであるかは `Window::GetState().fullscreen` で取得できます。
+- アプリケーションを**フルスクリーンモード**にするには `Window::SetFullscreen(true)` を呼びます
+- ウィンドウモードに戻すには `Window::SetFullscreen(false)` を呼びます
+- `Window::SetFullscreen(true)` の第 2 引数には、フルスクリーンで表示する先のモニタのインデックスを指定できます
+- アプリケーションがフルスクリーンモードであるかは `Window::GetState().fullscreen` で取得できます
 
 ```cpp
 # include <Siv3D.hpp>
@@ -706,5 +739,7 @@ void Main()
 
 
 ## 44.16 全画面モード（Windows）
-Windows 版では、アプリケーションの実行中に ++alt+enter++ を押すことで**全画面モード**にできます。挙動としてはフルスクリーンモードに近いですが、シーンのリサイズモードは `Resize::Keep` に設定され、シーンのサイズが変化しません。フルスクリーンモードや解像度の変更に対応していないアプリケーションを、全画面で大きく表示して実行したいときに役立ちます。このキー操作を無効にするには `Window::SetToggleFullscreenEnabled(false)` を呼びます。
-
+- Windows では、アプリケーションの実行中に ++alt+enter++ を押すことで**全画面モード**にできます（**チュートリアル 5.5**）
+- 挙動としてはフルスクリーンモードに近いですが、シーンのリサイズモードは `Resize::Keep` に設定され、シーンのサイズは変化しません
+- フルスクリーンモードや解像度の変更に対応していないアプリケーションを、全画面で大きく表示して実行したいときに役立ちます
+- このキー操作を無効にするには `Window::SetToggleFullscreenEnabled(false)` を呼びます
