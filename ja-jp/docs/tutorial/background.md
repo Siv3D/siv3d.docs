@@ -122,20 +122,22 @@ void Main()
 - 色の系統（赤・黄・緑・青・紫など）を直感的に扱うことができ、角度を回転（加減算）させることで、色相環（下図）に沿ったなめらかな色変化が可能です
 - 角度と同じで 370.0° は 10.0° と同じ色を表します。-10.0° は 350.0° と同じ色を表します。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/background/hue.png)
+<div class="noshadow-90"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/background/hue.png"></div>
 
 ### 彩度
 - `s` は彩度（saturation）で、最も淡い 0.0 から最も鮮やかな 1.0 の範囲で色の鮮やかさを表現します
 - 0.0 に近づくほど白っぽい色（淡い色）になります
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/background/saturation.png)
+<div class="noshadow-90"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/background/saturation.png"></div>
+
 
 ### 明度
 
 - `v` は明度（value）で、最も暗い 0.0 から最も明るい 1.0 の範囲で色の明るさを制御します
 - 0.0 に近づくほど黒っぽい色（暗い色）になります
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/background/value.png)
+<div class="noshadow-90"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/background/value.png"></div>
+
 
 | 成分 | 値の範囲 | 説明 |
 | --- | --- | --- |
