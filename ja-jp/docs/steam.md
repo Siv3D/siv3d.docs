@@ -1,5 +1,5 @@
 # Steam
-メディアで紹介された、Siv3D 製の Steam 配信作品を紹介します。
+Siv3D 製の Steam 配信作品の、メディアでの紹介事例です。
 
 ## For the GHOSTs
 <iframe src="https://store.steampowered.com/widget/2487390/" frameborder="0" width="646" height="190"></iframe>
