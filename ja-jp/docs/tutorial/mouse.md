@@ -173,7 +173,7 @@ void Main()
 - 次のコードに登場する `rect` は、画面左半分に相当する長方形です
 - `.draw()` を使って描画はしていませんが、その長方形の領域が左クリックされたかを `.leftClicked()` で調べることができます
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/mouse/5.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/mouse/6.png)
 
 ```cpp title="画面の左半分をクリックしたらメッセージを出力する"
 # include <Siv3D.hpp>
@@ -203,7 +203,7 @@ void Main()
 - これもクリック判定と同様に、図形が実際に描画されているかは結果に影響しません
 - 次のコードでは、条件演算子 `A ? B : C` を使って、マウスカーソルが図形の上にあるかに応じて、図形の色を変えています
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/mouse/6.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/mouse/7.png)
 
 ```cpp title="マウスカーソルが図形の上にある場合、図形の色を変える"
 # include <Siv3D.hpp>
@@ -258,7 +258,7 @@ void Main()
 	- 絵文字であれば、半径 `60` の円でざっくり近似できます
 - 次のコードは画面にあるリンゴをクリックさせるサンプルです
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/mouse/8.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/mouse/9.png)
 
 ```cpp title="絵文字をクリックしたらメッセージを出力する" hl_lines="9 14 21"
 # include <Siv3D.hpp>
