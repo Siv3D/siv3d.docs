@@ -94,10 +94,29 @@ void Main()
 - `.size()` はハッシュセットの要素数を `size_t` 型で返します
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	{
+		HashSet<int32> hs;
+		Print << hs.size();
+	}
+
+	{
+		HashSet<String> hs = { U"C", U"C++", U"Java" };
+		Print << hs.size();
+	}
+
+	while (System::Update())
+	{
+
+	}
+}
 ```
 ```txt title="出力"
-
+0
+3
 ```
 
 
@@ -105,10 +124,29 @@ void Main()
 - `.empty()` はハッシュセットが空であるか（要素数が 0 であるか）を `bool` 型で返します
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	{
+		HashSet<int32> hs;
+		Print << hs.empty();
+	}
+
+	{
+		HashSet<String> hs = { U"C", U"C++", U"Java" };
+		Print << hs.empty();
+	}
+
+	while (System::Update())
+	{
+
+	}
+}
 ```
 ```txt title="出力"
-
+true
+false
 ```
 
 
@@ -118,10 +156,39 @@ void Main()
 - 戻り値は `std::pair<iterator, bool>` で、要素の追加に成功した（同じ要素が存在しなかった）場合、`.second` が `true` になります
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	HashSet<int32> hs = { 3, 1, 4 };
+
+	if (hs.insert(1).second)
+	{
+		Print << U"1 added";
+	}
+	else
+	{
+		Print << U"1 already exists";
+	}
+
+	if (hs.insert(5).second)
+	{
+		Print << U"5 added";
+	}
+	else
+	{
+		Print << U"5 already exists";
+	}
+
+	while (System::Update())
+	{
+
+	}
+}
 ```
 ```txt title="出力"
-
+1 already exists
+5 added
 ```
 
 
@@ -130,23 +197,67 @@ void Main()
 - 存在する場合は `true` を、存在しない場合は `false` を返します
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	{
+		HashSet<int32> hs = { 3, 1, 4, 1, 5 };
+		Print << hs.contains(3);
+		Print << hs.contains(2);
+	}
+
+	{
+		HashSet<String> hs = { U"C", U"C++", U"Java" };
+		Print << hs.contains(U"C");
+		Print << hs.contains(U"Python");
+	}
+
+	while (System::Update())
+	{
+
+	}
+}
 ```
 ```txt title="出力"
-
+true
+false
+true
+false
 ```
 
 
 ## 46.7 範囲 for 文による要素の列挙
 - 範囲 for 文を使って、ハッシュセットのすべての要素にアクセスできます
-- 各要素へのアクセスは、通常は const 参照で行います
+- 要素はコンピュータにとって都合のよい並び方で格納されるため、順序は保証されません
+- 各要素へのアクセスは const 参照で行います
 - 範囲 for 文の中で、対象のハッシュセットのサイズを変更する操作は行わないでください
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	HashSet<String> hs = { U"C", U"C++", U"Java" };
+
+	hs.insert(U"Python");
+
+	for (const auto& elem : hs)
+	{
+		Print << elem;
+	}
+
+	while (System::Update())
+	{
+
+	}
+}
 ```
-```txt title="出力"
-
+```txt title="出力例"
+C++
+Python
+C
+Java
 ```
 
 
@@ -155,9 +266,23 @@ void Main()
 - 指定した要素が存在しない場合は、何もしません
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	HashSet<int32> hs = { 3, 1, 4, 1, 5 };
+
+	hs.erase(1);
+	hs.erase(2);
+
+	Print << hs;
+
+	while (System::Update())
+	{
+
+	}
+}
 ```
 ```txt title="出力"
-
+{4, 5, 3}
 ```
-
