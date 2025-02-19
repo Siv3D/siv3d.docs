@@ -1,19 +1,18 @@
 # 46. ハッシュセット
-高速な要素の追加、削除、検索が可能なハッシュセットを使って、要素の重複を許さない集合を扱う方法を学びます。
+重複のない集合を扱うハッシュセットについて学びます。
 
 ## 46.1 HashSet の概要
 - `HashSet<Key>` は、C++ 標準の `std::unordered_set<Key>` に相当するクラスです
 - 要素が重複しない集合を扱うためのコンテナです
+- 要素の追加、削除、検索を高速に行えます
 
 ### 46.1.1 基本的な特徴
 - 要素は一意です（同じ要素の重複を許しません）
 - ハッシュを使って実装されています
 - 要素の順序は保証されません（指定した順序やソートができません）
-
-### 46.1.2 実行時性能
 - 要素の追加、削除、検索の平均的な計算量は O(1) （要素数によらずほぼ一定）で、非常に高速です
 
-### 46.1.3 主な操作
+### 46.1.2 主な操作
 
 | コード | 説明 | 計算量 |
 | --- | --- | --- |
@@ -21,195 +20,56 @@
 | `.erase(key)` | 指定した要素を削除する（存在しない場合は何もしない） | O(1) |
 | `.contains(key)` | 指定した要素が存在するかを返す | O(1) |
 | `.size()` | 要素数を返す | O(1) |
-| `.isEmpty()` | 要素数が 0 であるかを返す | O(1) |
+| `.empty()` | 要素数が 0 であるかを返す | O(1) |
 | `.clear()` | すべての要素を削除する | O(N) |
 | `.begin()`, `.end()` | 先頭・終端位置のイテレータを返す | O(1) |
 
 
 ## 46.2 ハッシュセットの作成
-- XXX
+- `HashSet` は次のような方法で作成します
+	- 空のハッシュセットを作成
+	- 初期化リストから作成
+	- 別のコンテナから作成
+	- 空のハッシュセットを作成し、要素を追加
 	
 ```cpp
-
-```
-
-
-## 46.3 要素の追加
-- XXX
-
-```cpp
-
-```
-
-
-## 46.4 要素の数を調べる
-- XXX
-
-```cpp
-
-```
-
-
-## 46.5 指定した要素が存在するかを調べる
-- XXX
-
-```cpp
-
-```
-
-## 46.6 範囲 for で要素にアクセスする
-- XXX
-
-```cpp
-
-```
-
-## 46.7 要素の削除
-- XXX
-
-```cpp
-
-```
-
-
-
-
-
-## 22.1 ハッシュセットクラス
-`HashSet<Key>` は、`std::unordered_set<Key>` に相当するクラスです。ハッシュに対応したキーの集合を表現し、キーの追加、削除、検索を効率的に行うことができます。集合内の順序は保証されません。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/hashtable/1.png)
-
-```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	HashSet<String> table = { U"C++", U"C", U"Java" };
-
-	// 追加された順序と一覧表示の順序は一致しない
-	Print << table;
-
-	while (System::Update())
+	// 空のハッシュセットを作成
 	{
-
+		HashSet<int32> hs;
+		Print << hs.size();
+		Print << hs;
 	}
-}
-```
 
-
-## 22.2 キーを追加する
-`.insert(key)` でキーを追加することができます。すでに同じキーが存在する場合は、何もしません。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/hashtable/2.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	HashSet<String> table = { U"C++", U"C", U"Java" };
-
-	table.insert(U"Python");
-
-	table.insert(U"C#");
-
-	// すでに存在するため追加されない
-	table.insert(U"Java");
-	table.insert(U"C#");
-
-	Print << table;
-
-	while (System::Update())
+	// 初期化リストから作成
 	{
-
+		HashSet<int32> hs = { 3, 1, 4, 1, 5 };
+		Print << hs.size();
+		Print << hs;
 	}
-}
-```
 
-
-## 22.3 キーの数を調べる
-`.size()` でキーの数を調べることができます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/hashtable/3.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	HashSet<String> table = { U"C++", U"C", U"Java" };
-
-	table.insert(U"Python");
-
-	table.insert(U"C#");
-
-	table.insert(U"Java");
-
-	table.insert(U"C#");
-
-	Print << table.size();
-
-	Print << table;
-
-	while (System::Update())
+	// 別のコンテナから作成
 	{
-
+		const Array<int32> a = { 3, 1, 4, 1, 5 };
+		HashSet<int32> hs(a.begin(), a.end());
+		Print << hs.size();
+		Print << hs;
 	}
-}
-```
 
-
-## 22.4 指定したキーが存在するかを調べる
-`.contains(key)` で指定したキーが存在するかを調べることができます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/hashtable/4.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	HashSet<String> table = { U"C++", U"C", U"Java" };
-
-	table.insert(U"Python");
-
-	table.insert(U"C#");
-
-	// "C++" というキーが存在するかを調べる
-	Print << table.contains(U"C++");
-
-	// "Ruby" というキーがが存在するかを調べる
-	Print << table.contains(U"Ruby");
-
-	while (System::Update())
+	// 空のハッシュセットを作成し、要素を追加
 	{
+		HashSet<int32> hs;
+		hs.insert(3);
+		hs.insert(1);
+		hs.insert(4);
+		hs.insert(1); // 重複しているので無視される
+		hs.insert(5);
 
-	}
-}
-```
-
-
-## 22.5 範囲 for 文で要素にアクセスする
-範囲 for 文を使うと、ハッシュセットのすべてのキーにアクセスできます。順序は保証されません。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/hashtable/5.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	HashSet<String> table = { U"C++", U"C", U"Java" };
-
-	table.insert(U"Python");
-
-	table.insert(U"C#");
-
-	// 追加された順序とアクセスの順序は一致しない
-	for (const auto& key : table)
-	{
-		Print << key;
+		Print << hs.size();
+		Print << hs;
 	}
 
 	while (System::Update())
@@ -218,34 +78,86 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+0
+{}
+4
+{4, 1, 5, 3}
+4
+{4, 1, 5, 3}
+4
+{4, 1, 5, 3}
+```
 
 
-## 22.6 キーを削除する
-`.erase(key)` で指定したキーを削除することができます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/hashtable/6.png)
+## 46.3 要素数の取得
+- `.size()` はハッシュセットの要素数を `size_t` 型で返します
 
 ```cpp
-# include <Siv3D.hpp>
 
-void Main()
-{
-	HashSet<String> table = { U"C++", U"C", U"Java" };
-
-	table.insert(U"Python");
-
-	table.insert(U"C#");
-
-	Print << table;
-
-	// "Python" を削除する
-	table.erase(U"Python");
-
-	Print << table;
-
-	while (System::Update())
-	{
-
-	}
-}
 ```
+```txt title="出力"
+
+```
+
+
+## 46.4 空であるかを調べる
+- `.empty()` はハッシュセットが空であるか（要素数が 0 であるか）を `bool` 型で返します
+
+```cpp
+
+```
+```txt title="出力"
+
+```
+
+
+## 46.5 要素の追加
+- `.insert(key)` で要素を追加できます
+- すでに同じ要素が存在する場合は、何もしません
+- 戻り値は `std::pair<iterator, bool>` で、要素の追加に成功した（同じ要素が存在しなかった）場合、`.second` が `true` になります
+
+```cpp
+
+```
+```txt title="出力"
+
+```
+
+
+## 46.6 指定した要素の存在チェック
+- `.contains(key)` で指定した要素が存在するかを調べることができます
+- 存在する場合は `true` を、存在しない場合は `false` を返します
+
+```cpp
+
+```
+```txt title="出力"
+
+```
+
+
+## 46.7 範囲 for 文による要素の列挙
+- 範囲 for 文を使って、ハッシュセットのすべての要素にアクセスできます
+- 各要素へのアクセスは、通常は const 参照で行います
+- 範囲 for 文の中で、対象のハッシュセットのサイズを変更する操作は行わないでください
+
+```cpp
+
+```
+```txt title="出力"
+
+```
+
+
+## 46.8 要素の削除
+- `.erase(key)` で指定した要素を削除できます
+- 指定した要素が存在しない場合は、何もしません
+
+```cpp
+
+```
+```txt title="出力"
+
+```
+
