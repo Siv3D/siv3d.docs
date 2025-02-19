@@ -1,4 +1,4 @@
-# XX. XXXXX
+# 55. 設定ファイル
 
 ## XX.X XXXXX
 - XXX

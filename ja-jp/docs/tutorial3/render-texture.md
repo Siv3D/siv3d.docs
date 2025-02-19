@@ -1,4 +1,4 @@
-# XX. XXXXX
+# 52. レンダーテクスチャ
 
 ## XX.X XXXXX
 - XXX

@@ -1,4 +1,4 @@
-# XX. XXXXX
+# 60. アプリの公開
 
 ## XX.X XXXXX
 - XXX

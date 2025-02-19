@@ -1,4 +1,4 @@
-# XX. XXXXX
+# 51. エフェクト
 
 ## XX.X XXXXX
 - XXX

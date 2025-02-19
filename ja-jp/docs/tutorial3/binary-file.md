@@ -1,4 +1,4 @@
-# XX. XXXXX
+# 56. バイナリファイル
 
 ## XX.X XXXXX
 - XXX

@@ -1,4 +1,4 @@
-# XX. XXXXX
+# 57. リソースファイル
 
 ## XX.X XXXXX
 - XXX

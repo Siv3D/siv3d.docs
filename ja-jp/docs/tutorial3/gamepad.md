@@ -1,4 +1,4 @@
-# XX. XXXXX
+# 59. ゲームパッド
 
 ## XX.X XXXXX
 - XXX
