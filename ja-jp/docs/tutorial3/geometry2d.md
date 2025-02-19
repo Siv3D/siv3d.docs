@@ -104,7 +104,7 @@ void Main()
 - 2 つの図形 `a` と `b` が交差しているかは、`a.intersects(b)` で調べられます
 - 異なる図形クラス間で判定可能です
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/geometry2d/3.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/geometry2d/3.gif)
 
 - 次のサンプルでは、マウスカーソルに追従する円が長方形や星などの図形と重なっているときに、その図形の色を変化させます
 
@@ -136,7 +136,7 @@ void Main()
 - ある図形 `a` が別の図形 `b` を完全に内側に含んでいるかは、`a.contains(b)` で調べられます
 - 異なる図形クラス間で判定可能です
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/geometry2d/4.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/geometry2d/4.gif)
 
 - 次のサンプルでは、マウスカーソルに追従する円が長方形や星などの図形の内部に完全に含まれているときに、その図形の色を変化させます
 
@@ -174,7 +174,7 @@ void Main()
 | 交差している | `Vec2{ 交点の座標 }` |
 | 平行に重なっている | `Vec2{ QNaN, QNaN }` |
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/geometry2d/5.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/geometry2d/5.gif)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -226,6 +226,10 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+(nan, nan)
+Two lines are overlapped.
+```
 
 
 ## 45.6 図形と図形の交差位置取得
@@ -239,7 +243,7 @@ void Main()
 | 交差している | `Array<Vec2>{ 交点の座標, ... }` |
 | 交差しているが交点を求められなかった（内部に含まれるといったケース） | `Array<Vec2>{}`（空の配列） |
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/geometry2d/6.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/geometry2d/6.gif)
 
 ```cpp
 # include <Siv3D.hpp>
