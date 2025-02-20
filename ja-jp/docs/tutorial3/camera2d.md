@@ -203,47 +203,12 @@ void Main()
 
 
 ## 49.9 2D カメラ
-- XXX
-	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2D/9.png)
-
-```cpp
-
-```
-
-
-## 49.10 2D カメラのプログラム制御
-- XXX
-	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2D/10.png)
-
-```cpp
-
-```
-
-
-## 49.11 シーンの高解像度・高精細化
-- XXX
-	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2D/11.png)
-
-```cpp
-
-```
-
-
-
-
-
-
-## 39.12 2D カメラ
-`Camera2D` を使うと、マウスやキーボードを使った直感的な操作で `Transformer2D` を作成、更新できるようになります。
-
-`Camera2D::update()` では ++w++ / ++a++ / ++s++ / ++d++ キーで上下左右移動、++up++ / ++down++ キーで拡大縮小、マウス右クリックで自由移動、マウスホイールで拡大縮小の操作を行います。キー操作を無効にしたい場合は `Camera2D` コンストラクタに `CameraControl::Mouse` を渡します。キー操作もマウス操作も無効にしたい場合は `CameraControl::None_` を渡します。
-
-カメラの詳細な挙動は `Camera2DParameters` によってカスタマイズできます。
-
-`Camera2D` の主なメンバ関数は次のとおりです。
+- `Camera2D` を使うと、マウスやキーボードを使った直感的な操作で `Transformer2D` を作成・制御できます
+- `Camera2D::update()` では ++w++ / ++a++ / ++s++ / ++d++ キーで上下左右移動、++up++ / ++down++ キーで拡大縮小、マウス右クリックで自由移動、マウスホイールで拡大縮小の操作を行います
+- キー操作を無効にしたい場合は `Camera2D` コンストラクタに `CameraControl::Mouse` を渡します
+- キー操作もマウス操作も無効にしたい場合は `CameraControl::None_` を渡します
+- カメラの詳細な挙動は `Camera2DParameters` によってカスタマイズできます。
+- `Camera2D` の主なメンバ関数は次のとおりです：
 
 | 関数 | 説明 |
 |--|--|
@@ -253,8 +218,8 @@ void Main()
 |`.jumpTo(Vec2, double)`| カメラの中心座標およびズームアップ倍率を即座に変更する |
 |`.update()` | カメラの操作や、目標値への移動を行う |
 |`.draw(const ColorF&)`| マウスでのカメラ操作を補助する矢印 UI を表示する |
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/2d-render-state/12.png)
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2D/9.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -308,10 +273,10 @@ void Main()
 ```
 
 
-## 39.13 プログラムで制御する 2D カメラ
-`CameraControl::None_` を設定した 2D カメラはプログラムで制御します。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/2d-render-state/13.png)
+## 49.10 2D カメラのプログラム制御
+- `CameraControl::None_` を設定した 2D カメラはプログラムで制御します
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2D/10.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -379,16 +344,19 @@ void Main()
 ```
 
 
-## 39.14 ゲームやアプリの高解像度・高精細化
-800x600 などの低いシーン解像度で開発したゲームやアプリケーションを、簡単に高解像度・高精細化する方法を説明します。
+## 49.11 シーンの高解像度・高精細化
+- `Transformer2D` を使うことで、低解像度で開発したゲームやアプリを簡単に高解像度・高精細化できます
 
-まず、大きな解像度のウィンドウにシーンを描画するために、`Transformer2D` を用いて描画やマウス座標をスケールアップ・移動できます。さらに、OS 設定の拡大縮小（150% など）を無視してシーンをドットバイドットで表示するために、`ResizeMode::Actual` を設定してシーンを高精細化できます（チュートリアル 32.1 参照）。
+!!! warning "この方法を適用する場合の注意"
+	- この方法を適用する場合は、既存のコードから `Scene::Width()`, `Scene::Height()`, `Scene::Size()`, `Scene::Rect()`, `Scene::Center()` 等の関数を除去してください
+	- 上記の関数は、シーンのリサイズによって、自動的に大きい解像度の値を返してしまうため、この方法との相性が悪いです
 
-デフォルトの `ResizeMode::Virtual` では、例えば 4K 解像度、150% 拡大のノート PC では、フルスクリーン時のシーン解像度が 2560x1440 ですが、`ResizeMode::Actual` では 3840x2160 になります。シーンの解像度が大きいと描画負荷が大きくなることに注意してください。
+- 大きな解像度のウィンドウにシーンを描画するために、`Transformer2D` を用いて描画やマウス座標をスケールアップ・移動できます
+- OS の設定による拡大縮小を無視して、シーンをドットバイドットで表示するために、シーンのリサイズモードに `ResizeMode::Actual` を設定します（**チュートリアル 44**）
+	- デフォルトの `ResizeMode::Virtual` では、例えば 4K 解像度、150 % 拡大のノート PC では、フルスクリーン時のシーン解像度が 2560x1440 である一方、`ResizeMode::Actual` では 3840x2160 になります。シーンの解像度が大きいと描画負荷が大きくなることに注意してください
+- 次のサンプルでは、800 x 600 を想定して開発されたゲームの描画・入力処理について、個別のコードに変更を加えず、数行の追加だけで対応解像度を引き上げます
 
-下記のサンプルでは、800x600 のシーン解像度を想定して開発されたゲームの入力や描画の処理について、個々の描画や入力のコードに変更を加えずに、対応解像度を 800x600 よりも大きくしています。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/2d-render-state/14.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2D/11.png)
 
 ```cpp
 # include <Siv3D.hpp>
