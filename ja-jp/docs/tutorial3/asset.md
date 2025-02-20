@@ -95,6 +95,8 @@ void Main()
 - 空の `TextureAssetData` を作成し、`onLoad` メンバ変数に、ロード時の処理を記述した `bool(TextureAssetData& asset, const String&)` のシグネチャを持つ関数オブジェクトを設定します
 - この関数オブジェクトは、アセットのロード時に自動的に呼び出されます
 - `asset.texture` にテクスチャを代入してアセットデータを構築することが求められます
+- 次のサンプルでは、`TextureAssetData` を使うことで、プログラムで生成する画像や、ファイルから読み込んだ画像の縮小版をテクスチャとして登録しています
+	- `Image` クラスについては、**チュートリアル ??** で詳しく説明します
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/asset/3.png)
 
@@ -107,17 +109,17 @@ std::unique_ptr<TextureAssetData> MakeTextureAssetData1()
 	std::unique_ptr<TextureAssetData> assetData = std::make_unique<TextureAssetData>();
 
 	// ロード時の仕事を設定する
-	assetData->onLoad = [](TextureAssetData& asset, [[maybe_unused]] const String& hint)
-	{
-		// アセットデータにテクスチャを代入する
-		asset.texture = Texture{ Image{ 256, 256, Palette::Skyblue },  TextureDesc::Mipped };
-		return (not asset.texture.isEmpty());
-	};
+	assetData->onLoad = [](TextureAssetData& asset, const String&)
+		{
+			// アセットデータにテクスチャを代入する
+			asset.texture = Texture{ Image{ 256, 256, Palette::Seagreen },  TextureDesc::Mipped };
+			return static_cast<bool>(asset.texture);
+		};
 
 	return assetData;
 }
 
-std::unique_ptr<TextureAssetData> MakeTextureAssetData2(const FilePath& path, TextureDesc textureDesc)
+std::unique_ptr<TextureAssetData> MakeTextureAssetData2(const FilePath& path, const TextureDesc textureDesc)
 {
 	// 空のテクスチャアセットデータを作成する
 	std::unique_ptr<TextureAssetData> assetData = std::make_unique<TextureAssetData>();
@@ -129,12 +131,12 @@ std::unique_ptr<TextureAssetData> MakeTextureAssetData2(const FilePath& path, Te
 	assetData->desc = textureDesc;
 
 	// ロード時の仕事を設定する
-	assetData->onLoad = [](TextureAssetData& asset, [[maybe_unused]] const String& hint)
-	{
-		// 指定されたファイルパスの画像を 0.5 倍に縮小してテクスチャにする
-		asset.texture = Texture{ Image{ asset.path }.scaled(0.5), asset.desc };
-		return (not asset.texture.isEmpty());
-	};
+	assetData->onLoad = [](TextureAssetData& asset, const String&)
+		{
+			// 指定されたファイルパスの画像を 0.5 倍に縮小してテクスチャにする
+			asset.texture = Texture{ Image{ asset.path }.scaled(0.5), asset.desc };
+			return static_cast<bool>(asset.texture);
+		};
 
 	return assetData;
 }
@@ -170,9 +172,9 @@ void Main()
 void Draw()
 {
 	// アセットを使用する
-	FontAsset(U"Title")(U"My Game").drawAt(Vec2{ 400, 100 });
-	FontAsset(U"Menu")(U"Play").drawAt(40, Vec2{ 400, 400 });
-	FontAsset(U"Menu")(U"Exit").drawAt(40, Vec2{ 400, 500 });
+	FontAsset(U"Title")(U"My Game").drawAt(80, Vec2{ 400, 100 }, Palette::Seagreen);
+	FontAsset(U"Menu")(U"Play").drawAt(40, Vec2{ 400, 400 }, ColorF{ 0.1 });
+	FontAsset(U"Menu")(U"Exit").drawAt(40, Vec2{ 400, 500 }, ColorF{ 0.1 });
 }
 
 void Main()
@@ -180,8 +182,8 @@ void Main()
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
 	// アセットを登録する
-	FontAsset::Register(U"Title", 60, U"example/font/RocknRoll/RocknRollOne-Regular.ttf");
-	FontAsset::Register(U"Menu", FontMethod::MSDF, 48, Typeface::Medium);
+	FontAsset::Register(U"Title", FontMethod::MSDF, 48, U"example/font/RocknRoll/RocknRollOne-Regular.ttf");
+	FontAsset::Register(U"Menu", FontMethod::MSDF, 48, Typeface::Bold);
 
 	while (System::Update())
 	{
