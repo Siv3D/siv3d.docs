@@ -1,7 +1,7 @@
 # 40. インタラクションの実装
 チュートリアル 3 ～ 39 の内容を使って、インタラクティブなプログラムを作成します。
 
-## 40.1 クリックした場所に円を配置する
+## 40.1 クリックした場所への円の配置
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/interaction/1.gif)
 
@@ -36,7 +36,7 @@ void Main()
 ```
 
 
-## 40.2 グリッドのマスに色を塗る
+## 40.2 グリッドのマスの色塗り
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/interaction/2.gif)
 
@@ -215,7 +215,7 @@ void Main()
 ```
 
 
-## 40.5 弾幕を発射する
+## 40.5 弾幕の発射
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/interaction/5.png)
 
@@ -331,7 +331,7 @@ void Main()
 ```
 
 
-## 40.6 複数の絵文字をマウスで配置する
+## 40.6 複数の絵文字のマウスでの配置
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/interaction/6.png)
 

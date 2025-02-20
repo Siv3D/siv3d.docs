@@ -1,7 +1,7 @@
 # 23. 図形の配列
 `Circle` や `Rect` などの図形クラスを配列で扱う方法を学びます。
 
-## 23.1 Circle の配列を作る
+## 23.1 Circle の配列の作成
 - `Array<Circle>` は `Circle` の配列です
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape-array/1.png)
@@ -29,7 +29,7 @@ void Main()
 ```
 
 
-## 23.2 すべての Circle を描画する
+## 23.2 すべての Circle の描画
 - 範囲 for 文（const 参照）を使って、すべての `Circle` を描画します
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape-array/2.png)
@@ -61,7 +61,7 @@ void Main()
 ```
 
 
-## 23.3 すべての Circle を動かす
+## 23.3 すべての Circle の移動
 - 範囲 for 文（参照）を使って、すべての `Circle` を動かします
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape-array/3.png)
@@ -101,7 +101,7 @@ void Main()
 ```
 
 
-## 23.4 クリックで Circle を追加する
+## 23.4 クリックによる Circle 追加
 - クリックした位置に、ランダムな半径の `Circle` を追加します
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape-array/4.png)
@@ -134,7 +134,7 @@ void Main()
 ```
 
 
-## 23.5 クリックで Circle を削除する（`.remove_if()` 方式）
+## 23.5 クリックによる Circle 削除（`.remove_if()` 方式）
 - `.remove_if()` を使って、左クリックされた `Circle` を削除します
     - `.remove_if()` での要素削除については [**チュートリアル 22.17**](./array.md) 参照
 - 「その円が左クリックされたか」を判定するラムダ式を `.remove_if()` に渡します
@@ -171,7 +171,7 @@ void Main()
 ```
 
 
-## 23.6 クリックで Circle を削除する（イテレータ方式）
+## 23.6 クリックによる Circle 削除（イテレータ方式）
 - イテレータ方式で、左クリックされた `Circle` を削除します
     - イテレータ方式での要素削除については [**チュートリアル 22.16**](./array.md) 参照
 - `.remove_if()` 方式に比べ、削除に合わせた追加の処理（得点の加算、これ以上の削除の打ち切りなど）を書きやすい特徴があります
@@ -231,7 +231,7 @@ void Main()
 ```
 
 
-## 23.7 所定の位置に移動した Circle を削除する
+## 23.7 所定の位置に移動した Circle の削除
 - `Circle` が自動的に移動し、一定の位置に到達したら削除するようにします
 - 「Y 座標が 500.0 を超えたか」を判定するラムダ式を `.remove_if()` に渡します
 
@@ -273,7 +273,7 @@ void Main()
 ```
 
 
-## 23.8 一定時間ごとに Circle を追加する
+## 23.8 一定時間ごとの Circle 追加
 - [**チュートリアル 19.3**](../tutorial/time.md) の「一定時間おきに何かをする」を応用して、0.5 秒ごとに `Circle` を追加します
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape-array/8.png)
@@ -327,7 +327,7 @@ void Main()
 ```
 
 
-## 23.9 自作クラスの配列を作る（1）
+## 23.9 自作クラスの配列（1）
 - `Circle` と色相を持つ `ColorCircle` クラスを作成し、配列で扱います
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape-array/9.png)
@@ -373,7 +373,7 @@ void Main()
 ```
 
 
-## 23.10 自作クラスの配列を作る（2）
+## 23.10 自作クラスの配列（2）
 - 自身が何回押されたかのカウントを持つ `RectCounter` クラスを作成し、配列で扱います
 - `Rect` の `.center()` は、長方形の中心座標を `Point` 型で返します
 

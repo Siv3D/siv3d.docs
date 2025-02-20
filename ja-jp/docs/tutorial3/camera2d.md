@@ -1,6 +1,6 @@
 # 49. 2D 座標変換とカメラ
 
-## 49.1 XXXXX
+## 49.1 描画座標へのオフセット適用（Vec2 の加算）
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2D/1.png)
@@ -10,7 +10,7 @@
 ```
 
 
-## 49.2 XXXXX
+## 49.2 描画座標へのオフセット適用（Transformer2D）
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2D/2.png)
@@ -20,7 +20,7 @@
 ```
 
 
-## 49.3 XXXXX
+## 49.3 描画座標のスケーリング
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2D/3.png)
@@ -30,7 +30,7 @@
 ```
 
 
-## 49.4 XXXXX
+## 49.4 描画座標の回転
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2D/4.png)
@@ -40,7 +40,7 @@
 ```
 
 
-## 49.5 XXXXX
+## 49.5 座標変換行列の適用
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2D/5.png)
@@ -50,7 +50,7 @@
 ```
 
 
-## 49.6 XXXXX
+## 49.6 座標変換行列の重ねがけ
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2D/6.png)
@@ -60,7 +60,7 @@
 ```
 
 
-## 49.7 XXXXX
+## 49.7 マウスカーソルへの座標変換行列の適用
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2D/7.png)
@@ -70,10 +70,30 @@
 ```
 
 
-## 49.8 XXXXX
+## 49.8 2D カメラ
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2D/8.png)
+
+```cpp
+
+```
+
+
+## 49.9 2D カメラのプログラム制御
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2D/9.png)
+
+```cpp
+
+```
+
+
+## 49.10 シーンの高解像度・高精細化
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2D/10.png)
 
 ```cpp
 
