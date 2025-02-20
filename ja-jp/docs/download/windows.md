@@ -44,7 +44,7 @@
 	- 管理者権限がなく、インストーラを実行できない場合、このページ下部の「(補足) SDK を手動インストールする」の方法で SDK をインストールできます
 
 ??? summary "インストーラが自動的に行うこと"
-	- Siv3D のインストーラは、以下を自動で行います。
+	- Siv3D のインストーラは、以下を自動で行います：
 		- SDK の配置（デフォルトではドキュメントフォルダ）
 		- SDK を配置したパスへのユーザ環境変数の設定
 		- Siv3D プロジェクト用の Visual Studio プロジェクトテンプレートのコピー (通常は `ドキュメント/Visual Studio 2022/Templates/ProjectTemplates/`)
@@ -82,21 +82,21 @@
 1. プロジェクト名と保存場所を入力し（任意）、**作成** を押します
 
 ??? warning "プロジェクト テンプレートの項目に「OpenSiv3D」が見つからない場合"
-	OneDrive が有効化されている最近の Windows PC では「ドキュメント」フォルダが 2 つ存在することがあります。その場合、Visual Studio が参照するドキュメントフォルダと、「Siv3D プロジェクト用の Visual Studio プロジェクトテンプレート」の配置されたドキュメントフォルダが一致せず、Visual Studio がプロジェクトテンプレートを見つけられない問題が発生します。
-	
-	まずは、`OpenSiv3D_●.●.●.zip` という**プロジェクトテンプレートファイル**が、`C:\Users\●●●\Documents\Visual Studio 2022\Templates\ProjectTemplates` に存在することを確認します。その後、以下の 2 つの解決法のいずれかを選びます。
+	- OneDrive を有効化した Windows PC では「ドキュメント」フォルダが 2 つ存在することがあります
+	- その場合、Visual Studio が参照するドキュメントフォルダと、「Siv3D プロジェクト用の Visual Studio プロジェクトテンプレート」の配置されたドキュメントフォルダが一致せず、Visual Studio がプロジェクトテンプレートを見つけられない問題が発生します
+	- まずは、`OpenSiv3D_●.●.●.zip` という**プロジェクトテンプレートファイル**が、`C:\Users\●●●\Documents\Visual Studio 2022\Templates\ProjectTemplates` に存在することを確認します
+	- その後、以下の 2 つの解決法のいずれかを選びます
 
 	#### 解決法 A | Visual Studio が参照するドキュメントフォルダを変更する
 
-	Visual Studio を起動し、**ツール** メニューから **オプション** を選択します。**プロジェクトおよびソリューション** > **場所** を選び、**ユーザー プロジェクト テンプレートの場所** を、OneDrive のドキュメントフォルダから、通常のドキュメントフォルダに変更します。
-
+	- Visual Studio を起動し、**ツール** メニューから **オプション** を選択します
+	- **プロジェクトおよびソリューション** > **場所** を選び、**ユーザー プロジェクト テンプレートの場所** を、OneDrive のドキュメントフォルダから、通常のドキュメントフォルダに変更します
 	- 変更前：<br>`C:\Users\●●●\OneDrive\Documents\Visual Studio 2022\Templates\ProjectTemplates`
 	- 変更後：<br>`C:\Users\●●●\Documents\Visual Studio 2022\Templates\ProjectTemplates`
 
 	#### 解決法 B | プロジェクトテンプレートを、Visual Studio が参照するドキュメントフォルダに移動させる
 
-	「解決法 A」で指している OneDrive のフォルダへ、プロジェクトテンプレートファイルを移動させます。
-
+	- 「解決法 A」で指している OneDrive のフォルダへ、プロジェクトテンプレートファイルを移動させます。
 	- 移動前：<br>`C:\Users\●●●\Documents\Visual Studio 2022\Templates\ProjectTemplates\OpenSiv3D_●.●.●.zip`
 	- 移動後：<br>`C:\Users\●●●\OneDrive\Documents\Visual Studio 2022\Templates\ProjectTemplates\OpenSiv3D_●.●.●.zip`
 
@@ -145,4 +145,5 @@
 
 	![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/download/windows/projecttemplate.png)  
 
-	以上で手動インストールの手順は完了です。環境変数の適用を確実にするために PC を再起動したのち、本ページの 3. の手順に進んでください。
+	- 以上で手動インストールの手順は完了です
+	- 環境変数の適用を確実にするために PC を再起動したのち、本ページの 3. の手順に進んでください

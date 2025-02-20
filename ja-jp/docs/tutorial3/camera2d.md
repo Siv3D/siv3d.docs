@@ -2,7 +2,8 @@
 描画座標やマウスカーソル座標に対して、移動・拡大縮小・回転などの座標変換を適用する機能を学びます。
 
 ## 49.1 描画座標へのオフセット適用（Vec2 の加算）
-- XXX
+- 複数の図形やテクスチャを組み合わせて何かを描画するとき、まとめて移動させたい場合があります
+- 原始的な方法として、それぞれ描画する座標を `Vec2` で指定する際、移動量を加算する方法があります
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2D/1.png)
 
@@ -12,7 +13,10 @@
 
 
 ## 49.2 描画座標へのオフセット適用（Transformer2D）
-- XXX
+- **49.1** よりも便利な方法として、`Transformer2D` を使う方法があります
+- `Transformer2D` を使うと、描画やマウスカーソル座標に対して、一括で移動・拡大縮小・回転などの座標変換（アフィン変換）を適用できます
+- 描画座標の移動を `Mat3x2::Translate(x, y)` または `Mat3x2::Translate(Vec2{ x, y })` で表現し、`Transformer2D` のコンストラクタに渡します
+- `Transformer2D` オブジェクトが有効な間、その座標変換が 2D 描画に適用されます
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2D/2.png)
 
@@ -22,7 +26,8 @@
 
 
 ## 49.3 描画座標のスケーリング
-- XXX
+- `Mat3x2::Scale(x, y, center)` または `Mat3x2::Scale(Vec2{ x, y }, center)` で、描画座標のスケーリングを行います
+- `center` はスケーリングの中心座標です
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2D/3.png)
 
@@ -32,7 +37,8 @@
 
 
 ## 49.4 描画座標の回転
-- XXX
+- `Mat3x2::Rotate(angle, center)` で、描画座標の回転を行います
+- `angle` は時計回りの回転角度（ラジアン）で、`center` は回転の中心座標です
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2D/4.png)
 
@@ -41,8 +47,9 @@
 ```
 
 
-## 49.5 座標変換行列の適用
-- XXX
+## 49.5 マウスカーソル座標への座標変換
+- `Transformer2D` のコンストラクタの第 2 引数に `TransformCursor::Yes` を渡すと、マウスカーソル座標にも座標変換が適用されます
+- UI 要素に対して座標変換を適用する際に便利です
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2D/5.png)
 
@@ -51,66 +58,18 @@
 ```
 
 
-## 49.6 座標変換行列の重ねがけ
-- XXX
-	
+## 49.6 座標変換行列の乗算
+- `Mat3x2` は、次のようなメンバ関数を使って、座標変換を乗算できます
+
+| コード | 説明 |
+|--|--|
+|`.translated(x, y)`| 移動 |
+|`.translated(Vec2{ x, y })`| 移動 |
+|`.scaled(x, y, center)`| 拡大縮小 |
+|`.scaled(Vec2{ x, y }, center)`| 拡大縮小 |
+|`.rotated(angle, center)`| 回転 |
+
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2D/6.png)
-
-```cpp
-
-```
-
-
-## 49.7 マウスカーソルへの座標変換行列の適用
-- XXX
-	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2D/7.png)
-
-```cpp
-
-```
-
-
-## 49.8 2D カメラ
-- XXX
-	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2D/8.png)
-
-```cpp
-
-```
-
-
-## 49.9 2D カメラのプログラム制御
-- XXX
-	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2D/9.png)
-
-```cpp
-
-```
-
-
-## 49.10 シーンの高解像度・高精細化
-- XXX
-	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2D/10.png)
-
-```cpp
-
-```
-
-
-
-
-
-
-## 39.9 座標変換行列を適用する
-`Transformer2D` は、描画やマウスカーソル座標に対して、回転・拡大縮小、座標移動などの座標変換（アフィン変換）を適用できる、非常に強力で便利な機能です。
-
-座標変換行列を `Mat3x2` によって定義し、`Transformer2D` オブジェクトのコンストラクタに値を設定します。オブジェクトのスコープが有効な間、その行列による座標変換が描画やマウスカーソルに適用されます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/2d-render-state/9.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -173,43 +132,11 @@ void Main()
 ```
 
 
-## 39.10 マウスカーソルだけに座標変換行列を適用する
-ビューポートを使ってミニウィンドウを作成した際など、描画の座標変換は不要でマウスカーソルの座標変換だけ行いたい場合があります。そのようなときは、`Transformer2D` の第 1 引数に `Mat3x2:Identity()` を、第 2 引数にマウスカーソル用の座標変換行列を設定します。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/2d-render-state/10.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-
-	while (System::Update())
-	{
-		{
-			const ScopedViewport2D viewport{ 400, 300, 400, 300 };
-
-			// マウスカーソル座標だけ (400, 300) 並行移動させる
-			const Transformer2D transformer{ Mat3x2::Identity(), Mat3x2::Translate(400, 300) };
-
-			Circle{ 200, 150, 200 }.draw();
-			Circle{ Cursor::PosF(), 40 }.draw(Palette::Orange);
-
-			if (SimpleGUI::Button(U"Button", Vec2{ 20,20 }))
-			{
-				Print << U"Pushed";
-			}
-		}
-	}
-}
-```
-
-
-## 39.11 座標変換行列を重ねて適用する
-`Transformer2D` の効果が適用されているときに新しい `Transformer2D` を作成すると、座標変換の効果が乗算されます。次のプログラムでは、行列の乗算によって複雑な動きを実現しています。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/2d-render-state/11.png)
+## 49.7 Transformer2D の重ねがけ
+- `Transformer2D` の効果が適用されているときに新しい `Transformer2D` を有効化すると、座標変換の効果が乗算されます
+- 次のコードでは、行列の乗算によって複雑な動きを実現しています
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2D/7.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -239,6 +166,74 @@ void Main()
 	}
 }
 ```
+
+
+## 49.8 マウスカーソルのみ座標変換
+- ビューポートを使ってミニウィンドウを作成した際など、描画の座標変換は不要でマウスカーソルの座標変換だけを行いたい場合があります
+- そのようなときは、`Transformer2D` の第 1 引数に単位行列 `Mat3x2::Identity()` を、第 2 引数にマウスカーソル用の座標変換行列を設定します
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2D/8.png)
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	while (System::Update())
+	{
+		{
+			const ScopedViewport2D viewport{ 400, 300, 400, 300 };
+
+			// マウスカーソル座標だけ (400, 300) 並行移動させる
+			const Transformer2D transformer{ Mat3x2::Identity(), Mat3x2::Translate(400, 300) };
+
+			Circle{ 200, 150, 200 }.draw();
+			Circle{ Cursor::PosF(), 40 }.draw(Palette::Orange);
+
+			if (SimpleGUI::Button(U"Button", Vec2{ 20,20 }))
+			{
+				Print << U"Pushed";
+			}
+		}
+	}
+}
+```
+
+
+## 49.9 2D カメラ
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2D/9.png)
+
+```cpp
+
+```
+
+
+## 49.10 2D カメラのプログラム制御
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2D/10.png)
+
+```cpp
+
+```
+
+
+## 49.11 シーンの高解像度・高精細化
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2D/11.png)
+
+```cpp
+
+```
+
+
+
+
 
 
 ## 39.12 2D カメラ
