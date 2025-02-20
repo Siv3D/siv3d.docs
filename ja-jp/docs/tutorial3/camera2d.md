@@ -5,7 +5,7 @@
 - 複数の図形やテクスチャを組み合わせて何かを描画するとき、まとめて移動させたい場合があります
 - 原始的な方法として、それぞれ描画する座標を `Point` や `Vec2` で指定する際、移動量を加算する方法があります
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2D/1.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2d/1.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -45,7 +45,7 @@ void Main()
 - 描画座標の移動を `Mat3x2::Translate(x, y)` または `Mat3x2::Translate(Vec2{ x, y })` で表現し、`Transformer2D` のコンストラクタに渡します
 - `Transformer2D` オブジェクトが有効な間、その座標変換が 2D 描画に適用されます
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2D/2.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2d/2.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -89,7 +89,7 @@ void Main()
 - `Mat3x2::Scale(x, y, center)` または `Mat3x2::Scale(Vec2{ x, y }, center)` で、描画座標のスケーリングを行います
 - `center` はスケーリングの中心座標です。省略した場合は `Vec2{ 0, 0 }` が使われます
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2D/3.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2d/3.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -134,7 +134,7 @@ void Main()
 - `angle` は時計回りの回転角度（ラジアン）です
 - `center` は回転の軸となる座標です。省略した場合は `Vec2{ 0, 0 }` が使われます
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2D/4.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2d/4.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -188,7 +188,7 @@ void Main()
 
 - `center` を省略した場合 `Vec2{ 0, 0 }` が使われます
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2D/5.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2d/5.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -249,7 +249,7 @@ void Main()
 - `Transformer2D` の効果が適用されているときに新しい `Transformer2D` を有効化すると、座標変換の効果が乗算されます
 - 次のコードでは、行列の乗算によって複雑な動きを実現しています
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2D/6.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2d/6.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -288,7 +288,7 @@ void Main()
 - UI 要素に対して座標変換を適用する際に便利です
 - 次のサンプルコードでは、各アイテム上にマウスカーソルがあるかどうかを、回転・拡大縮小・移動された座標系で判定しています
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2D/7.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2d/7.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -349,7 +349,7 @@ void Main()
 - ビューポートを使ってミニウィンドウを作成した際など、描画の座標変換は不要でマウスカーソルの座標変換だけを行いたい場合があります
 - そのようなときは、`Transformer2D` の第 1 引数に単位行列（何も変更しない行列） `Mat3x2::Identity()` を、第 2 引数にマウスカーソル用の座標変換行列を設定します
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2D/8.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2d/8.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -401,7 +401,7 @@ void Main()
 |`.update()` | カメラの操作や、目標値への移動を行う |
 |`.draw(const ColorF&)`| マウスでのカメラ操作を補助する矢印 UI を表示する |
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2D/9.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2d/9.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -458,7 +458,7 @@ void Main()
 ## 49.10 2D カメラのプログラム制御
 - `CameraControl::None_` を設定した 2D カメラはプログラムで制御します
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2D/10.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2d/10.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -608,7 +608,7 @@ void Main()
 	- デフォルトの `ResizeMode::Virtual` では、例えば 4K 解像度、150 % 拡大のノート PC では、フルスクリーン時のシーン解像度が 2560x1440 である一方、`ResizeMode::Actual` では 3840x2160 になります。シーンの解像度が大きいと描画負荷が大きくなることに注意してください
 - 次のサンプルでは、800 x 600 を想定して開発されたゲームの描画・入力処理について、ゲームのコード（`Game()` 関数）に変更を加えず、解像度の変更に対応しています
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2D/11.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2d/11.png)
 
 ```cpp
 # include <Siv3D.hpp>
