@@ -258,7 +258,7 @@ void Main()
 
 	while (System::Update())
 	{
-		const Line line{ Scene::Center(), Cursor::Pos() };
+		const Line line{ 400, 300, Cursor::Pos() };
 
 		// rect と line の交差情報
 		if (const auto points = rect.intersectsAt(line))

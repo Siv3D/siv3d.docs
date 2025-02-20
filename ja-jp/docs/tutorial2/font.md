@@ -917,7 +917,7 @@ void Main()
 	ColorF shadowColor{ 0.0, 0.5 };
 	HSV background = ColorF{ 0.6, 0.8, 0.7 };
 
-	Camera2D camera{ Scene::Center(), 1.0 };
+	Camera2D camera{ Vec2{ 640, 360 }, 1.0 };
 
 	while (System::Update())
 	{

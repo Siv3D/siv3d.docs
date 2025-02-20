@@ -288,13 +288,13 @@ void Main()
 		if (bilinear)
 		{
 			// バイリニア補間（デフォルト）
-			texture.scaled(scale).drawAt(Scene::Center());
+			texture.scaled(scale).drawAt(400, 300);
 		}
 		else
 		{
 			// 最近傍補間
 			const ScopedRenderStates2D sampler{ SamplerState::ClampNearest };
-			texture.scaled(scale).drawAt(Scene::Center());
+			texture.scaled(scale).drawAt(400, 300);
 		}
 
 		SimpleGUI::Slider(scale, 0.5, 12.0, Vec2{ 40, 40 }, 200);
