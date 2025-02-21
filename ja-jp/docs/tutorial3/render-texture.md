@@ -312,10 +312,10 @@ void Main()
 
 ## 52.5 レンダーテクスチャに対する特別な操作
 - `RenderTexture` を利用した次のような画像処理機能が提供されています
-- いずれも GPU 上で高速に実行されます
+- いずれも GPU を活用して高速に処理されます
 
 ### 52.5.1 ダウンサンプル
-- テクスチャの内容を拡大縮小して別のレンダーテクスチャにコピーする機能です
+- テクスチャの内容を拡大縮小して別のレンダーテクスチャにコピーします
 
 ```cpp
 void Shader::Downsample(const TextureRegion& from, const RenderTexture& to);
@@ -329,7 +329,7 @@ void Shader::Downsample(const TextureRegion& from, const RenderTexture& to);
 - **52.6** で詳しい使い方を説明します
 
 ### 52.5.2 ガウスぼかし
-- テクスチャにガウスぼかしをかける機能です
+- テクスチャにガウスぼかしをかけます
 
 ```cpp
 void Shader::GaussianBlur(const TextureRegion& from, const RenderTexture& internalBuffer, const RenderTexture& to);
@@ -345,7 +345,7 @@ void Shader::GaussianBlur(const TextureRegion& from, const RenderTexture& intern
 - **52.7** で詳しい使い方を説明します
 
 ### 52.5.3 コピー
-- テクスチャの内容を別のレンダーテクスチャにコピーする機能です
+- テクスチャの内容を別のレンダーテクスチャにコピーします
 
 ```cpp
 void Shader::Copy(const TextureRegion& from, const RenderTexture& to);
@@ -356,13 +356,13 @@ void Shader::Copy(const TextureRegion& from, const RenderTexture& to);
 	- `to`: 出力テクスチャ
 - `from` のテクスチャの内容を `to` に描画します
 - `from` と `to` はともに有効なテクスチャで、互いに異なり、領域のサイズが同じでなければなりません
-- この関数の用途は限られます。例えば大きいレンダーテクスチャから一部の領域だけを切り出して使う場合、`Shader::Copy()` の実行後に大きいレンダーテクスチャを破棄することで、消費メモリを節約できます
+- この関数の用途は限られます。例えば大きいテクスチャから一部の領域だけを `Shader::Copy()` で切り出し、大きいレンダーテクスチャのほうを破棄することで、消費メモリを節約できます
 
 
 ## 52.6 ダウンサンプル
 - テクスチャの内容を拡大縮小して別のレンダーテクスチャにコピーします
 - 通常は、低解像度版のテクスチャを動的に作成するために使用されます
-	- 使用例: **52.9**
+	- 動的なダウンサンプルの例は **52.9** に登場します
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/render-texture/6.png)
 
@@ -789,7 +789,7 @@ void Main()
 ```
 
 
-## 52.12 2D ライトブルーム
+## 52.12 ライトブルーム
 - ガウスぼかしの結果を加算ブレンドで描画することで、ライトブルームの表現を実現できます
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/render-texture/12.png)
