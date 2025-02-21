@@ -178,7 +178,7 @@ void Main()
 ```
 
 - この問題を解決するには、ブレンドステートを「描画された最大のアルファ成分を保持する」設定に変更します
-- これによって、レンダーテクスチャへの描画時に、アルファ成分も更新されるようになります
+- レンダーテクスチャへの描画時に、アルファ成分も更新されるようになります
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/render-texture/3b.png)
 
@@ -305,38 +305,60 @@ void Main()
 ```
 
 
-## 52.5 RenderTexture に対する便利な操作
-`RenderTexture` を使った、次のような高速な画像処理機能が提供されています。
-
-#### void Shader::Downsample(const TextureRegion& from, const RenderTexture& to);
-- `from`: 入力テクスチャ
-- `to`: 出力テクスチャ
-
-`from` のテクスチャの内容を拡大縮小して `to` に描画します。`from` と `to` はともに有効なテクスチャで、互いに異なるテクスチャでなければなりません。
-
-
-#### void Shader::GaussianBlur(const TextureRegion& from, const RenderTexture& internalBuffer, const RenderTexture& to);
-- `from`: 入力テクスチャ
-- `internalBuffer`: 中間テクスチャ
-- `to`: 出力テクスチャ
-
-`from` のテクスチャに縦方向と横方向のガウスブラーをかけて `to` に描画します。`from`, `internalBuffer`, `to` はいずれも有効なテクスチャで、領域のサイズが同じでなければなりません。`from` と `to` は同じテクスチャにできます。
-
-1 回のガウスブラー処理で得られる効果はそれほど大きくありません。大きなぼかし効果を得るには、ダウンサンプルしたテクスチャにガウスブラーをかけたあと、それを元のサイズで拡大描画する方法が有効です。
-
-
-#### void Shader::Copy(const TextureRegion& from, const RenderTexture& to);
-- `from`: 入力テクスチャ
-- `to`: 出力テクスチャ
-
-`from` のテクスチャの内容を `to` に描画します。`from` と `to` はともに有効なテクスチャで、互いに異なり、領域のサイズが同じでなければなりません。
-
-通常は `Texture` 型や `TextureRegion` 型の変数への代入で間に合うため `Shader::Copy()` が必要になるのは特殊なケースです。例えば大きいレンダーテクスチャから一部の領域だけを切り出して使う場合、`Shader::Copy()` の実行後に大きいレンダーテクスチャを破棄することで、消費メモリを節約できます。
-
+## 52.5 レンダーテクスチャに対する特別な操作
+- `RenderTexture` を利用した次のような画像処理機能が提供されています
+- いずれも GPU 上で高速に実行されます
 
 ### 52.5.1 ダウンサンプル
+- テクスチャの内容を拡大縮小して別のテクスチャに描画する機能です
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/render-texture/5a.png)
+```cpp
+void Shader::Downsample(const TextureRegion& from, const RenderTexture& to);
+```
+
+- 引数:
+	- `from`: 入力テクスチャ
+	- `to`: 出力テクスチャ
+- `from` のテクスチャの内容を拡大縮小して `to` に描画します
+- `from` と `to` はともに有効なテクスチャで、互いに異なるテクスチャでなければなりません
+- **52.6** で詳しい使い方を説明します
+
+### 52.5.2 ガウスぼかし
+- テクスチャにガウスぼかしをかける機能です
+
+```cpp
+void Shader::GaussianBlur(const TextureRegion& from, const RenderTexture& internalBuffer, const RenderTexture& to);
+```
+
+- 引数:
+	- `from`: 入力テクスチャ
+	- `internalBuffer`: 中間テクスチャ
+	- `to`: 出力テクスチャ
+- `from` のテクスチャに縦方向と横方向のガウスブラーをかけて `to` に描画します
+- `from`, `internalBuffer`, `to` はいずれも有効なテクスチャで、領域のサイズが同じでなければなりません
+- `from` と `to` は同じテクスチャにできます
+- **52.7** で詳しい使い方を説明します
+
+### 52.5.3 コピー
+- テクスチャの内容を別のテクスチャにコピーする機能です
+
+```cpp
+void Shader::Copy(const TextureRegion& from, const RenderTexture& to);
+```
+
+- 引数:
+	- `from`: 入力テクスチャ
+	- `to`: 出力テクスチャ
+- `from` のテクスチャの内容を `to` に描画します
+- `from` と `to` はともに有効なテクスチャで、互いに異なり、領域のサイズが同じでなければなりません
+- この関数の用途は限られます。例えば大きいレンダーテクスチャから一部の領域だけを切り出して使う場合、`Shader::Copy()` の実行後に大きいレンダーテクスチャを破棄することで、消費メモリを節約できます
+
+
+## 52.6 ダウンサンプル
+- ダウンサンプルは、テクスチャの内容を拡大縮小して別のテクスチャにコピーします
+- 通常は、低解像度版のテクスチャを作成するために使用されます
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/render-texture/6.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -360,7 +382,7 @@ void Main()
 }
 ```
 
-??? info "画像のダウンサンプルの別の方法"
+??? info "（別の方法）CPU 処理"
 	`Image` を使ったダウンサンプルも可能です。高品質な結果を得られますが、CPU で処理するため `RenderTexture` を使ったダウンサンプルよりも時間がかかり、毎フレームの実行などリアルタイム処理には向きません。
 
 	```cpp
@@ -381,9 +403,11 @@ void Main()
 	```
 
 
-### 52.5.2 ガウスぼかし
+## 52.7 ガウスぼかし
+- ガウスぼかしは、テクスチャに縦方向と横方向のガウスブラーをかけて別のテクスチャにコピーします
+- 1 回のガウスブラー処理で得られる効果はそれほど大きくありません。大きなぼかし効果を得るには、**52.8** で説明するようにダウンサンプルと組み合わせます
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/render-texture/5b.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/render-texture/7.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -406,10 +430,11 @@ void Main()
 ```
 
 
-## 52.6 強いガウスぼかし
-ガウスぼかしを重ねて適用するよりも、ダウンサンプルしたテクスチャにガウスぼかしをかけたあと元のサイズで拡大描画するほうが、より低いコストで大きなぼかし効果を実現できます (3), (4)。また、ダウンサンプル前にガウスぼかしをかけると、コストは増えますが、ぼかしの品質が向上します (5)。
+## 52.8 強いガウスぼかし
+- ガウスぼかしを重ねて適用するよりも、ダウンサンプルしたテクスチャにガウスぼかしをかけたあと、それを元のサイズで拡大描画するほうが、より低いコストで大きなぼかし効果を実現できます
+- また、ダウンサンプル前にガウスぼかしをかけると、コストは増えますが、ぼかしの品質が向上します
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/render-texture/6.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/render-texture/8.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -485,12 +510,11 @@ void Main()
 ```
 
 
-## 52.7 指定領域へのガウスぼかし
-ぼかした背景が透過するような効果を実現するために、シーン全体をぼかしたレンダーテクスチャを用意して、その一部を切り出して描画するという方法があります。
+## 52.9 指定領域のガウスぼかし
+- シーン全体をぼかしたレンダーテクスチャを用意し、その一部を切り出して描画することで、ぼかされた背景が透過する効果を実現できます
+- 次のサンプルコードではシーン全体をぼかしていますが、ぼかす領域とサイズが固定である場合、最小限の領域だけにぼかしをかけることで、より低コストで処理できます
 
-なお、下記のサンプルコードではシーン全体をぼかしていますが、ぼかす領域が固定である場合、最小限の領域だけにぼかしをかけることで、より高速に処理することができるでしょう。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/render-texture/7.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/render-texture/9.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -565,14 +589,13 @@ void Main()
 ```
 
 
-## 52.8 任意形状のシャドウ
-シャドウ用のテクスチャを用意して、それをぼかしたものを描画することで、任意形状のシャドウを実現できます。
+## 52.10 任意形状のシャドウ
+- シャドウ用のテクスチャを用意し、それをぼかしたものを影として描画することで、任意形状のシャドウを実現できます
+- レンダーテクスチャを `ColorF{ 1.0, 0.0 }` でクリアしてから、ブレンドステート `BlendState::MaxAlpha` を適用して描き込みをすると、RGB 値は無視され、描画された最大のアルファ値を記録できます
+- テクスチャの RGB 成分を無視しできるため、影のための形状だけを描きたい場合に便利です
+- 次のサンプルコードでは、マウスを左クリックしている間は、ぼかし済みの影テクスチャ `blur4` のみを可視化します
 
-レンダーテクスチャを `ColorF{ 1.0, 0.0 }` でクリアしてから、ブレンドステート `BlendState::MaxAlpha` を適用して描き込みをすると、RGB 値は無視され、描画された最大のアルファ値を保持するようにできます。色の付いた絵文字の RGB 成分を無視しできるため、影用の形状だけを描きたいときに最適です。
-
-下記サンプルコードでは、マウスを左クリックしている間は、ぼかし済みの影テクスチャ `blur4` のみを可視化します。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/render-texture/8.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/render-texture/10.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -630,10 +653,10 @@ void Main()
 ```
 
 
-## 52.9 アイコンのシャドウ
-52.8 を応用して、シャドウ付きのアイコンテクスチャクラスを作成します。
+## 52.11 アイコンのシャドウ
+- **52.10** を応用して、シャドウ付きのアイコンテクスチャクラスを作成します
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/render-texture/9.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/render-texture/11.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -756,10 +779,10 @@ void Main()
 ```
 
 
-## 52.10 2D ライトブルーム
-ガウスぼかしの結果を加算ブレンドで描画することで、ライトブルームの表現を実現できます。
+## 52.12 2D ライトブルーム
+- ガウスぼかしの結果を加算ブレンドで描画することで、ライトブルームの表現を実現できます
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/render-texture/10.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/render-texture/12.png)
 
 ```cpp
 # include <Siv3D.hpp>
