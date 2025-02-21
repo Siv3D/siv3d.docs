@@ -69,7 +69,7 @@ void Main()
 
 	const Texture emoji{ U"🐈"_emoji };
 
-	// 200x200 のサイズのレンダーテクスチャを作成する。初期状態は白色
+	// 200 x 200 のサイズのレンダーテクスチャを作成する。初期状態は白色
 	const RenderTexture renderTexture{ 200, 200, Palette::White };
 
 	while (System::Update())
@@ -262,35 +262,40 @@ void Main()
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/render-texture/4.png)
 
-```cpp title="レンダーテクスチャとマルチサンプル・レンダーテクスチャの比較" hl_lines="31-35"
+```cpp title="レンダーテクスチャとマルチサンプル・レンダーテクスチャの比較" hl_lines="36-40"
 # include <Siv3D.hpp>
+
+void Draw()
+{
+	Rect{ Arg::center(100, 100), 100 }.rotated(Scene::Time() * 30_deg).draw();
+	Circle{ 240, 240, 50 }.draw();
+	Line{ 50, 250, 250, (130 + Periodic::Sine0_1(3s) * 20) }.draw(4);
+}
 
 void Main()
 {
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
 	// レンダーテクスチャ
-	const RenderTexture renderTexture{ 200, 200, Palette::White };
+	const RenderTexture renderTexture{ 300, 300, Palette::White };
 
 	// マルチサンプル・レンダーテクスチャ
-	const MSRenderTexture msRenderTexture{ 200, 200, Palette::White };
+	const MSRenderTexture msRenderTexture{ 300, 300, Palette::White };
 
 	while (System::Update())
 	{
 		// レンダーテクスチャ
 		{
 			const ScopedRenderTarget2D target{ renderTexture.clear(Palette::Black) };
-			Rect{ Arg::center(100, 100), 80 }
-				.rotated(Scene::Time() * 30_deg).draw();
+			Draw();
 		}
 
-		renderTexture.draw(100, 0);
+		renderTexture.draw(40, 150);
 
 		// マルチサンプル・レンダーテクスチャ
 		{
 			const ScopedRenderTarget2D target{ msRenderTexture.clear(Palette::Black) };
-			Rect{ Arg::center(100, 100), 80 }
-				.rotated(Scene::Time() * 30_deg).draw();
+			Draw();
 		}
 
 		// 2D 描画をフラッシュする
@@ -299,7 +304,7 @@ void Main()
 		// マルチサンプル・テクスチャをリゾルブする
 		msRenderTexture.resolve();
 
-		msRenderTexture.draw(400, 0);
+		msRenderTexture.draw(440, 150);
 	}
 }
 ```
@@ -310,7 +315,7 @@ void Main()
 - いずれも GPU 上で高速に実行されます
 
 ### 52.5.1 ダウンサンプル
-- テクスチャの内容を拡大縮小して別のテクスチャに描画する機能です
+- テクスチャの内容を拡大縮小して別のレンダーテクスチャにコピーする機能です
 
 ```cpp
 void Shader::Downsample(const TextureRegion& from, const RenderTexture& to);
@@ -340,7 +345,7 @@ void Shader::GaussianBlur(const TextureRegion& from, const RenderTexture& intern
 - **52.7** で詳しい使い方を説明します
 
 ### 52.5.3 コピー
-- テクスチャの内容を別のテクスチャにコピーする機能です
+- テクスチャの内容を別のレンダーテクスチャにコピーする機能です
 
 ```cpp
 void Shader::Copy(const TextureRegion& from, const RenderTexture& to);
@@ -355,8 +360,9 @@ void Shader::Copy(const TextureRegion& from, const RenderTexture& to);
 
 
 ## 52.6 ダウンサンプル
-- ダウンサンプルは、テクスチャの内容を拡大縮小して別のテクスチャにコピーします
-- 通常は、低解像度版のテクスチャを作成するために使用されます
+- テクスチャの内容を拡大縮小して別のレンダーテクスチャにコピーします
+- 通常は、低解像度版のテクスチャを動的に作成するために使用されます
+	- 使用例: **52.9**
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/render-texture/6.png)
 
@@ -383,7 +389,8 @@ void Main()
 ```
 
 ??? info "（別の方法）CPU 処理"
-	`Image` を使ったダウンサンプルも可能です。高品質な結果を得られますが、CPU で処理するため `RenderTexture` を使ったダウンサンプルよりも時間がかかり、毎フレームの実行などリアルタイム処理には向きません。
+	- `Image` を使ったダウンサンプルも可能です
+	- 高品質な結果を得られますが、CPU で処理するため `RenderTexture` を使ったダウンサンプルよりも時間がかかり、毎フレームの実行などリアルタイム処理には向きません
 
 	```cpp
 	# include <Siv3D.hpp>
@@ -404,8 +411,9 @@ void Main()
 
 
 ## 52.7 ガウスぼかし
-- ガウスぼかしは、テクスチャに縦方向と横方向のガウスブラーをかけて別のテクスチャにコピーします
-- 1 回のガウスブラー処理で得られる効果はそれほど大きくありません。大きなぼかし効果を得るには、**52.8** で説明するようにダウンサンプルと組み合わせます
+- テクスチャに縦方向と横方向のガウスブラーをかけた結果を得ます
+- 1 回のガウスブラー処理で得られる効果はそれほど大きくありません
+- 大きなぼかし効果を得るには、ダウンサンプルと組み合わせます（**52.8**）
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/render-texture/7.png)
 
@@ -481,30 +489,30 @@ void Main()
 	{
 		if (index == 0)
 		{
-			original.draw(40, 40);
+			original.draw();
 		}
 		else if (index == 1)
 		{
-			blur1.draw(40, 40);
+			blur1.draw();
 		}
 		else if (index == 2)
 		{
-			blur2.draw(40, 40);
+			blur2.draw();
 		}
 		else if (index == 3)
 		{
-			downsample2.scaled(2.0).draw(40, 40);
+			downsample2.scaled(2.0).draw();
 		}
 		else if (index == 4)
 		{
-			downsample4.scaled(4.0).draw(40, 40);
+			downsample4.scaled(4.0).draw();
 		}
 		else if (index == 5)
 		{
-			downsampleB4.scaled(4.0).draw(40, 40);
+			downsampleB4.scaled(4.0).draw();
 		}
 
-		SimpleGUI::RadioButtons(index, { U"original", U"1x blur", U"2x blur", U"1/2 scale + 1x blur", U"1/4 scale + 1x blur", U"1x + 1/2 + 1x + 1/2 + 1x" }, Vec2{ 530, 40 });
+		SimpleGUI::RadioButtons(index, { U"original", U"blur", U"2x blur", U"1/2 scale + blur", U"1/4 scale + blur", U"blur + 1/2 + blur + 1/2 + blur" }, Vec2{ 490, 40 });
 	}
 }
 ```
@@ -514,7 +522,7 @@ void Main()
 - シーン全体をぼかしたレンダーテクスチャを用意し、その一部を切り出して描画することで、ぼかされた背景が透過する効果を実現できます
 - 次のサンプルコードではシーン全体をぼかしていますが、ぼかす領域とサイズが固定である場合、最小限の領域だけにぼかしをかけることで、より低コストで処理できます
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/render-texture/9.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/render-texture/9.jpg)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -533,7 +541,7 @@ void Main()
 	// ウィンドウをリサイズする
 	Window::Resize(sceneSize);
 
-	// bay.jpg は 2560x1440 なのでサイズを小さくしてロードする
+	// bay.jpg は 2560 x 1440 なのでサイズを小さくしてロードする
 	const Texture texture{ Image{ U"example/bay.jpg" }.scale(1280, 720) };
 	const Texture emoji1{ U"🚢"_emoji };
 	const Texture emoji2{ U"🐟"_emoji };
@@ -600,6 +608,15 @@ void Main()
 ```cpp
 # include <Siv3D.hpp>
 
+void Draw(double angle, const Texture& emoji)
+{
+	Shape2D::Hexagon(100, Vec2{ 200, 200 }).draw();
+	Shape2D::Star(120, Vec2{ 400, 400 }, angle).draw(Palette::Yellow);
+	Shape2D::RectBalloon(Rect{ 500, 100, 200, 100 }, Vec2{ 480, 240 })
+		.drawFrame(10, Palette::Seagreen);
+	emoji.rotated(angle).drawAt(600, 500);
+}
+
 void Main()
 {
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
@@ -622,12 +639,9 @@ void Main()
 			const ScopedRenderStates2D blend{ BlendState::MaxAlpha };
 
 			// 影を右下方向に落とすため、描画位置をずらす
-			const Transformer2D transform{ Mat3x2::Translate(2, 2) };
+			const Transformer2D transform{ Mat3x2::Translate(3, 3) };
 
-			Shape2D::Hexagon(100, Vec2{ 200, 200 }).draw();
-			Shape2D::Star(120, Vec2{ 400, 400 }, angle).draw();
-			Shape2D::RectBalloon(Rect{ 500, 103, 200, 100 }, Vec2{ 480, 240 }).drawFrame(10);
-			emoji.rotated(angle).drawAt(600, 500);
+			Draw(angle, emoji);
 		}
 
 		// shadowTexture をダウンサンプリング + ガウスぼかし
@@ -642,11 +656,7 @@ void Main()
 		// 通常の形状を描く
 		if (not MouseL.pressed())
 		{
-			Shape2D::Hexagon(100, Vec2{ 200, 200 }).draw();
-			Shape2D::Star(120, Vec2{ 400, 400 }, angle).draw(Palette::Yellow);
-			Shape2D::RectBalloon(Rect{ 500, 100, 200, 100 }, Vec2{ 480, 240 })
-				.drawFrame(10, Palette::Seagreen);
-			emoji.rotated(angle).drawAt(600, 500);
+			Draw(angle, emoji);
 		}
 	}
 }
