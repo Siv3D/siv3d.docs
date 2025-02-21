@@ -1,9 +1,9 @@
 # 51. エフェクト
-小さなアニメーションやエフェクトの演出に便利な `Effect` および `IEffect` クラスの使い方を学びます。
+小さなモーションやエフェクトの演出に便利な `Effect` および `IEffect` クラスの使い方を学びます。
 
 ## 51.1 エフェクトの基本
-- エフェクトの振る舞いを、`IEffect` を継承したクラスに実装します
-- メンバ関数 `bool update(double t)` をオーバーライドします
+- エフェクトを利用すると、時間ベースの短いモーション表現を効率的に作れます
+- エフェクトを実装するには、まず `IEffect` クラスを継承したクラスを作成し、メンバ関数 `bool update(double t)` をオーバーライドします
 	- `t` は、エフェクトが発生してからの経過時間（秒）です
 	- 経過時間に応じた描画を行い、エフェクトが引き続き生存するかを `bool` 値で返します
 	- 例えば `return (t < 3.0);` とすれば、エフェクトは 3 秒間継続してから終了します
@@ -11,9 +11,9 @@
 - `Effect` クラスは、複数の `IEffect` 派生クラスを管理し、一括して更新します
 	- `.add<派生クラス名>(コンストラクタ引数)` でエフェクトを追加します
 	- `.update()` でアクティブなエフェクトの `IEffect::update()` を実行します
-- エフェクトを利用すると、時間ベースのアニメーションを簡単に作れます
+	- `.num_effects()` はアクティブなエフェクトの数を返します
 - 次のサンプルコードは、クリックした場所に、時間とともに大きくなる輪を発生させます
-	- このエフェクトは 1 秒間継続します
+	- このエフェクトは `return (t < 1.0);` より、1 秒間継続します
 
 <video src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/effect/1.mp4?raw=true" autoplay loop muted playsinline></video>
 
@@ -66,11 +66,11 @@ void Main()
 
 
 ## 51.2 ラムダ式によるエフェクト実装
-- `IEffect` の派生クラスを実装する代わりに、ラムダ式でエフェクトを記述することもできます
+- `IEffect` の派生クラスの代わりに、ラムダ式でエフェクトを記述することもできます
+- とくに、数行程度で書ける単純なエフェクトに便利です
 - 引数は `double` 型で、経過時間（秒）を表します
 - 戻り値は `bool` 型で、エフェクトが継続するかを表します
 	- `return (t < 1.0);` とすれば、エフェクトは 1 秒間継続します
-- 数行程度で書ける単純なエフェクトに便利です
 - **51.1** と同じエフェクトをラムダ式で書くと、次のようになります
 
 ```cpp
@@ -108,7 +108,7 @@ void Main()
 
 
 ## 51.3 イージングの活用
-- **チュートリアル 30** で学んだイージング関数を使うと、より洗練された動きを表現できます
+- イージング（**チュートリアル 30**）を使うことで、動きの印象を変えることができます
 
 <video src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/effect/3.mp4?raw=true" autoplay loop muted playsinline></video>
 
@@ -159,6 +159,7 @@ void Main()
 
 ## 51.4 エフェクトの一時停止と速度変更、消去
 - `Effect` は次のようなメンバ関数を使って、管理しているエフェクトを制御できます：
+- 速度の変更は、個々の `.update()` に渡される `t` の増加ペースを増減させることによって実現されます
 
 | コード | 説明 |
 |---|---|
@@ -290,9 +291,10 @@ struct ScoreEffect : IEffect
 
 	bool update(double t) override
 	{
-		const HSV color{ (180 - m_score * 1.8), 1.0 - (t * 2.0) };
+		const HSV color{ (180 - m_score * 1.8), (1.0 - (t * 2.0)) };
 
-		m_font(m_score).drawAt(m_start.movedBy(0, t * -120), color);
+		m_font(m_score).drawAt(TextStyle::Outline(0.2, ColorF{ 0.0, color.a }),
+			60, m_start.movedBy(0, t * -120), color);
 
 		return (t < 0.5);
 	}
@@ -300,7 +302,9 @@ struct ScoreEffect : IEffect
 
 void Main()
 {
-	const Font font{ FontMethod::MSDF, 48, Typeface::Heavy };
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ FontMethod::MSDF, 48, Typeface::Heavy, FontStyle::Italic };
 
 	Effect effect;
 
@@ -342,9 +346,8 @@ struct Spark : IEffect
 	{
 		for (auto& particle : m_particles)
 		{
-			particle.start = start + RandomVec2(10.0);
-
-			particle.velocity = RandomVec2(1.0) * Random(80.0);
+			particle.start = (start + RandomVec2(12.0));
+			particle.velocity = (RandomVec2(1.0) * Random(100.0));
 		}
 	}
 
@@ -352,10 +355,10 @@ struct Spark : IEffect
 	{
 		for (const auto& particle : m_particles)
 		{
-			const Vec2 pos = particle.start
-				+ particle.velocity * t + 0.5 * t * t * Vec2{ 0, 240 };
+			const Vec2 pos = (particle.start
+				+ particle.velocity * t + 0.5 * t * t * Vec2{ 0, 240 });
 
-			Triangle{ pos, 16.0, (pos.x * 5_deg) }.draw(HSV{ pos.y - 40, (1.0 - t) });
+			Triangle{ pos, (20.0 * (1.0 - t)), (pos.x * 10_deg) }.draw(HSV{ pos.y - 40 });
 		}
 
 		return (t < 1.0);
@@ -364,6 +367,8 @@ struct Spark : IEffect
 
 void Main()
 {
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
 	Effect effect;
 
 	while (System::Update())
@@ -406,7 +411,7 @@ struct StarEffect : IEffect
 		{
 			const Vec2 velocity = RandomVec2(Circle{ 60 });
 			Star star{
-				.start = (pos + velocity),
+				.start = (pos + velocity * 0.5),
 				.velocity = velocity,
 				.color = HSV{ baseHue + Random(-20.0, 20.0) },
 			};
@@ -420,13 +425,11 @@ struct StarEffect : IEffect
 
 		for (auto& star : m_stars)
 		{
-			const Vec2 pos = star.start
-				+ star.velocity * t + 0.5 * t * t * Gravity;
-
+			const Vec2 pos = (star.start
+				+ star.velocity * t + 0.5 * t * t * Gravity);
 			const double angle = (pos.x * 3_deg);
 
-			Shape2D::Star((30 * (1.0 - t)), pos, angle)
-				.draw(star.color);
+			Shape2D::Star((36 * (1.0 - t)), pos, angle).draw(star.color);
 		}
 
 		return (t < 1.0);
@@ -435,8 +438,10 @@ struct StarEffect : IEffect
 
 void Main()
 {
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
 	Effect effect;
-	Circle circle{ Scene::Center(), 30 };
+	Circle circle{ 400, 300, 30 };
 	double baseHue = 180.0;
 
 	while (System::Update())
@@ -448,7 +453,7 @@ void Main()
 
 		if (circle.leftClicked())
 		{
-			effect.add<StarEffect>(Cursor::PosF(), baseHue);
+			effect.add<StarEffect>(Cursor::Pos(), baseHue);
 			circle.center = RandomVec2(Scene::Rect().stretched(-80));
 			baseHue = Random(0.0, 360.0);
 		}
@@ -462,6 +467,7 @@ void Main()
 
 ## 51.8 （サンプル）泡のようなエフェクト
 - 時間差で図形を登場させる制御を行うエフェクトの例です
+- レンダーステートの設定は、個別のエフェクトの `.update()` 内ではなく、`Effect::update()` に対して適用するほうが効率的です
 
 <video src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/effect/8.mp4?raw=true" autoplay loop muted playsinline></video>
 
@@ -521,13 +527,15 @@ struct BubbleEffect : IEffect
 
 void Main()
 {
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
 	Effect effect;
 
 	while (System::Update())
 	{
 		if (MouseL.down())
 		{
-			effect.add<BubbleEffect>(Cursor::PosF(), Random(0.0, 360.0));
+			effect.add<BubbleEffect>(Cursor::Pos(), Random(0.0, 360.0));
 		}
 
 		{
@@ -649,13 +657,15 @@ struct TouchEffect : IEffect
 
 void Main()
 {
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
 	Effect effect;
 
 	while (System::Update())
 	{
 		if (MouseL.down())
 		{
-			effect.add<TouchEffect>(Cursor::PosF());
+			effect.add<TouchEffect>(Cursor::Pos());
 		}
 
 		{
@@ -676,9 +686,6 @@ void Main()
 ```cpp
 # include <Siv3D.hpp>
 
-// 重力加速度
-constexpr Vec2 Gravity{ 0, 240 };
-
 // 火花の状態
 struct Fire
 {
@@ -696,6 +703,9 @@ struct Fire
 
 	// 破裂して子エフェクトを作成したか
 	bool hasChild = false;
+
+	// 重力加速度
+	static constexpr Vec2 Gravity{ 0, 240 };
 };
 
 // 火花エフェクト
@@ -704,7 +714,7 @@ struct Firework : IEffect
 	// 火花の個数
 	static constexpr int32 FireCount = 12;
 
-	// 循環参照を避けるため、IEffect の中で Effect を持つ場合、参照またはポインタにすること
+	// 循環参照を避けるため、IEffect の中で Effect を持つ場合、参照またはポインタにする
 	const Effect& m_parent;
 
 	// 花火の中心座標
@@ -736,7 +746,7 @@ struct Firework : IEffect
 	{
 		for (const auto& fire : m_fires)
 		{
-			const Vec2 pos = m_center + fire.v0 * t + 0.5 * t * t * Gravity;
+			const Vec2 pos = (m_center + fire.v0 * t + 0.5 * t * t * Fire::Gravity);
 			pos.asCircle((10 - (m_n * 3)) * ((1.5 - t) / 1.5) * fire.scale)
 				.draw(HSV{ 10 + m_n * 120.0 + fire.hueOffset, 0.6, 1.0 - m_n * 0.2 });
 		}
@@ -748,8 +758,8 @@ struct Firework : IEffect
 				if (!fire.hasChild && (fire.nextFireSec <= t))
 				{
 					// 子エフェクトを作成
-					const Vec2 pos = m_center + fire.v0 * t + 0.5 * t * t * Gravity;
-					m_parent.add<Firework>(m_parent, pos, (m_n + 1), fire.v0 + (t * Gravity));
+					const Vec2 pos = (m_center + fire.v0 * t + 0.5 * t * t * Fire::Gravity);
+					m_parent.add<Firework>(m_parent, pos, (m_n + 1), fire.v0 + (t * Fire::Gravity));
 					fire.hasChild = true;
 				}
 			}
@@ -762,7 +772,7 @@ struct Firework : IEffect
 // 打ち上げエフェクト
 struct FirstFirework : IEffect
 {
-	// 循環参照を避けるため、IEffect の中で Effect を持つ場合、参照またはポインタにすること
+	// 循環参照を避けるため、IEffect の中で Effect を持つ場合、参照またはポインタにする
 	const Effect& m_parent;
 
 	// 打ち上げ位置
@@ -774,11 +784,12 @@ struct FirstFirework : IEffect
 	FirstFirework(const Effect& parent, const Vec2& start, const Vec2& v0)
 		: m_parent{ parent }
 		, m_start{ start }
-		, m_v0{ v0 } {}
+		, m_v0{ v0 } {
+	}
 
 	bool update(double t) override
 	{
-		const Vec2 pos = m_start + m_v0 * t + 0.5 * t * t * Gravity;
+		const Vec2 pos = (m_start + m_v0 * t + 0.5 * t * t * Fire::Gravity);
 		Circle{ pos, 6 }.draw();
 		Line{ m_start, pos }.draw(LineStyle::RoundCap, 8, ColorF{ 0.0 }, ColorF{ 1.0 - (t / 0.6) });
 
@@ -788,8 +799,8 @@ struct FirstFirework : IEffect
 		}
 		else
 		{
-			// 終了間際に子エフェクトを作成
-			const Vec2 velocity = m_v0 + t * Gravity;
+			// 終了時に子エフェクトを作成
+			const Vec2 velocity = (m_v0 + t * Fire::Gravity);
 			m_parent.add<Firework>(m_parent, pos, 0, velocity);
 			return false;
 		}
