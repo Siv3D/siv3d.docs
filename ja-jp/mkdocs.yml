@@ -154,15 +154,15 @@ nav:
     - 66. ユーザ環境の取得: tutorial4/user.md
     - 67. OpenAI API: tutorial4/openai.md
     - 68. 2D 物理演算: tutorial4/physics2d.md
-    - 69. マイク入力: tutorial4/microphone.md
+    - 69. マイクと音声波形: tutorial4/microphone.md
     - 70. Web カメラ: tutorial4/webcam.md
     - 71. シリアル通信: tutorial4/serial.md
     - 72. TCP 通信: tutorial4/tcp.md
-#    - 73. 2D カスタムシェーダ: tutorial4/empty.md
-#    - 74. 3D 形状を描く ①: tutorial4/empty.md
-#    - 75. 3D 形状を描く ②: tutorial4/empty.md
-#    - 76. 3D の交差判定: tutorial4/empty.md
-    - 77. マルチプレイヤー: tutorial4/multiplayer.md
+    - 73. マルチプレイヤー: tutorial4/multiplayer.md
+#    - 74. 2D カスタムシェーダ: tutorial4/empty.md
+#    - 75. 3D 形状を描く ①: tutorial4/empty.md
+#    - 76. 3D 形状を描く ②: tutorial4/empty.md
+#    - 77. 3D の交差判定: tutorial4/empty.md
 #    - 78. 数式パーサ: tutorial4/empty.md
 #    - 79. 非同期処理: tutorial4/empty.md
 #    - 80. QR コード: tutorial4/empty.md

@@ -1,4 +1,4 @@
-# XX. XXXXX
+# 69. マイクと音声波形
 
 ## XX.X XXXXX
 - XXX

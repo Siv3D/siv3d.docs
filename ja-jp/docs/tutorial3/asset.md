@@ -96,7 +96,7 @@ void Main()
 - この関数オブジェクトは、アセットのロード時に自動的に呼び出されます
 - `asset.texture` にテクスチャを代入してアセットデータを構築することが求められます
 - 次のサンプルでは、`TextureAssetData` を使うことで、プログラムで生成する画像や、ファイルから読み込んだ画像の縮小版をテクスチャとして登録しています
-	- `Image` クラスについては、**チュートリアル ??** で詳しく説明します
+	- `Image` クラスについては、**チュートリアル 63** で詳しく説明します
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/asset/3.png)
 

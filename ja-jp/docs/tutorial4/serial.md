@@ -1,4 +1,4 @@
-# XX. XXXXX
+# 71. シリアル通信
 
 ## XX.X XXXXX
 - XXX

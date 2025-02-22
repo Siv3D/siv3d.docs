@@ -1,4 +1,4 @@
-# XX. XXXXX
+# 67. OpenAI API
 
 ## XX.X XXXXX
 - XXX
