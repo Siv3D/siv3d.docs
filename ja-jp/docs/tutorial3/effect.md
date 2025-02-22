@@ -178,11 +178,12 @@ struct RingEffect : IEffect
 	Vec2 m_pos;
 
 	explicit RingEffect(const Vec2& pos)
-		: m_pos{ pos } {}
+		: m_pos{ pos } {
+	}
 
 	bool update(double t) override
 	{
-		Circle{ m_pos, (t * 100) }.drawFrame(4);
+		Circle{ m_pos, (t * 120) }.drawFrame(4 * (1.0 - t));
 
 		return (t < 1.0);
 	}
@@ -198,6 +199,12 @@ void Main()
 	// 蓄積された時間（秒）
 	double accumulatedTime = 0.0;
 
+	// ボールの位置
+	Vec2 pos{ 200, 300 };
+
+	// ボールの速度
+	Vec2 velocity{ 320, 360 };
+
 	while (System::Update())
 	{
 		ClearPrint();
@@ -206,16 +213,31 @@ void Main()
 
 		if (not effect.isPaused())
 		{
-			accumulatedTime += (Scene::DeltaTime() * effect.getSpeed());
+			const double deltaTime = (Scene::DeltaTime() * effect.getSpeed());
+			accumulatedTime += deltaTime;
+			pos += (deltaTime * velocity);
+
+			// ボールが壁にぶつかったら反射する
+			if (((0 < velocity.x) && (800 < pos.x))
+				|| ((velocity.x < 0) && (pos.x < 0)))
+			{
+				velocity.x = -velocity.x;
+			}
+			else if (((0 < velocity.y) && (600 < pos.y))
+				|| ((velocity.y < 0) && (pos.y < 0)))
+			{
+				velocity.y = -velocity.y;
+			}
 		}
 
 		// 蓄積時間が出現間隔を超えたら
 		if (SpawnInterval <= accumulatedTime)
 		{
 			accumulatedTime -= SpawnInterval;
-
-			effect.add<RingEffect>(Cursor::Pos());
+			effect.add<RingEffect>(pos);
 		}
+
+		pos.asCircle(10).draw();
 
 		effect.update();
 
