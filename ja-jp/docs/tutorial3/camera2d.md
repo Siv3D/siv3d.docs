@@ -283,7 +283,7 @@ void Main()
 ```
 
 
-## 49.7 マウスカーソル座標への座標変換
+## 49.7 マウスカーソル座標の座標変換
 - `Transformer2D` のコンストラクタの第 2 引数に `TransformCursor::Yes` を渡すと、マウスカーソル座標にも座標変換が適用されます
 - UI 要素に対して座標変換を適用する際に便利です
 - 次のサンプルコードでは、各アイテム上にマウスカーソルがあるかどうかを、回転・拡大縮小・移動された座標系で判定しています
@@ -455,7 +455,7 @@ void Main()
 ```
 
 
-## 49.10 2D カメラのプログラム制御
+## 49.10 2D カメラの制御
 - `CameraControl::None_` を設定した 2D カメラはプログラムで制御します
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/camera2d/10.png)

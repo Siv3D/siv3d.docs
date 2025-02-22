@@ -458,6 +458,8 @@ void Main()
 - 戻り値は `Array<FilePath>` です
 
 ### 53.16.1 ディレクトリの中身一覧（再帰的な検索あり）
+- デフォルトでは、ディレクトリ内のディレクトリを再帰的に検索するため、ディレクトリの中にあるディレクトリの中身も取得されます
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -480,7 +482,8 @@ void Main()
 ```
 
 ### 53.16.2 ディレクトリの中身一覧（再帰的な検索なし）
-第 2 引数は、ディレクトリ内のディレクトリを再帰的に検索するかどうかを指定します。デフォルトは `Recursive::Yes` ですが、再帰的に検索しない場合は `Recursive::No` を指定します。再帰的に検索しない場合、ディレクトリの中にあるディレクトリの中身は取得されません。
+- 第 2 引数に `Recursive::No` を指定すると、ディレクトリ内のディレクトリを再帰的に検索しません
+- 最初に指定したディレクトリよりも深い階層のファイルやディレクトリは取得されません
 
 ```cpp
 # include <Siv3D.hpp>
@@ -505,9 +508,8 @@ void Main()
 
 
 ### 53.16.3 特定の拡張子のファイル一覧
-ディレクトリの中身一覧を取得した後、`Array::filter()` を使って、条件に合うパスのみを抽出することができます。
-
-下記のサンプルコードでは、`example` ディレクトリに含まれる `.png` ファイルの一覧を取得しています。
+- ディレクトリの中身一覧を取得したあと、`Array::filter()` を使って、条件に合うパスのみを抽出することができます
+- 次のサンプルコードでは、`example` ディレクトリに含まれる `.png` ファイルの一覧を取得しています
 
 ```cpp
 # include <Siv3D.hpp>
@@ -520,7 +522,7 @@ bool IsPngFile(const FilePath& path)
 
 void Main()
 {
-	// ディレクトリの中身一覧を取得する（再帰的には取得しない）
+	// ディレクトリの中身一覧を取得する
 	const Array<FilePath> paths = FileSystem::DirectoryContents(U"example/");
 
 	// png ファイルのみを抽出する
@@ -541,7 +543,7 @@ void Main()
 
 
 ## 53.17 空のディレクトリ判定
-あるディレクトリが空であるかどうかを調べるには、`FileSystem::IsEmptyDirectory(path)` を使います。
+- あるディレクトリが空であるかどうかを調べるには、`FileSystem::IsEmptyDirectory(path)` を使います
 
 ```cpp
 # include <Siv3D.hpp>
@@ -562,7 +564,9 @@ void Main()
 ## 53.18 ディレクトリの作成
 
 ### 53.18.1 ディレクトリ名を指定してディレクトリを作成
-ディレクトリを作成するには、`FileSystem::CreateDirectories(path)` を使います。この関数は、指定したパスのディレクトリが存在しない場合、そのディレクトリを作成します。作成に成功したか、すでに同名のディレクトリが存在する場合 `true`, それ以外の場合は `false` を返します。
+- ディレクトリを新しく作成するには、`FileSystem::CreateDirectories(path)` を使います
+- この関数は、指定したパスのディレクトリが存在しない場合、そのディレクトリを作成します
+- 作成に成功したか、すでに同名のディレクトリが存在する場合 `true`, それ以外の場合は `false` を返します
 
 ```cpp
 # include <Siv3D.hpp>
@@ -583,9 +587,10 @@ void Main()
 ```
 
 ### 53.18.2 パスを指定して、その親ディレクトリまでのディレクトリを作成
-パスを指定して、その親ディレクトリまでのディレクトリを作成するには、`FileSystem::CreateParentDirectories(path)` を使います。この関数は、指定したパスの親ディレクトリが存在しない場合、そのディレクトリを作成します。作成に成功したか、すでに同名のディレクトリが存在する場合 `true`, それ以外の場合は `false` を返します。パスのうち親ディレクトリ以降の部分（ファイルまたはディレクトリ名）は無視されます。
-
-`FileSystem::CreateParentDirectories(U"aaa/bbb/ccc.txt")` は、`FileSystem::CreateDirectories(U"aaa/bbb/")` と同じです。
+- あるパスについて、その親ディレクトリまでのディレクトリを作成するには、`FileSystem::CreateParentDirectories(path)` を使います
+- この関数は、指定したパスの親ディレクトリが存在しない場合、そのディレクトリを作成します
+- 作成に成功したか、すでに同名のディレクトリが存在する場合 `true`, それ以外の場合は `false` を返します
+- `FileSystem::CreateParentDirectories(U"aaa/bbb/ccc.txt")` は、`FileSystem::CreateDirectories(U"aaa/bbb/")` と同じです
 
 ```cpp
 # include <Siv3D.hpp>
@@ -607,7 +612,9 @@ void Main()
 
 
 ## 53.19 コピー
-ファイルまたはディレクトリをコピーする場合は `FileSystem::Copy(src, dst)` を使います。`src` にはコピー元のファイルまたはディレクトリのパスを、`dst` にはコピー先のパスを指定します。コピーに成功した場合は `true`、失敗した場合は `false` を返します。
+- ファイルまたはディレクトリをコピーする場合は `FileSystem::Copy(src, dst)` を使います
+- `src` にはコピー元のファイルまたはディレクトリのパスを、`dst` にはコピー先のパスを指定します
+- コピーに成功した場合は `true`、失敗した場合は `false` を返します
 
 ```cpp
 # include <Siv3D.hpp>
@@ -629,9 +636,10 @@ void Main()
 
 
 ## 53.20 削除
-ファイルやディレクトリを削除する場合は `FileSystem::Remove(path)` を使います。`path` には削除するファイルまたはディレクトリのパスを指定します。削除に成功した場合は `true`、失敗した場合は `false` を返します。
-
-第 2 引数で `AllowUndo::Yes` を指定すると、可能な場合、ファイルはゴミ箱に送られ、あとで手動で復元できます。
+- ファイルやディレクトリを削除する場合は `FileSystem::Remove(path)` を使います
+- `path` には削除するファイルまたはディレクトリのパスを指定します
+- 削除に成功した場合は `true`、失敗した場合は `false` を返します
+- 第 2 引数で `AllowUndo::Yes` を指定すると、可能な場合にファイルはゴミ箱に送られ、あとで手動で復元できます
 
 ```cpp
 # include <Siv3D.hpp>
@@ -657,9 +665,8 @@ void Main()
 
 
 ## 53.21 ディレクトリの中身の削除
-ディレクトリの中身だけを削除し、空のディレクトリを残す場合は `FileSystem::RemoveContents(path)` を使います。
-
-第 2 引数で `AllowUndo::Yes` を指定すると、可能な場合、ファイルはゴミ箱に送られ、あとで手動で復元できます。
+- ディレクトリの中身だけを削除し、空のディレクトリを残す場合は `FileSystem::RemoveContents(path)` を使います
+- 第 2 引数で `AllowUndo::Yes` を指定すると、可能な場合にファイルはゴミ箱に送られ、あとで手動で復元できます
 
 ```cpp
 # include <Siv3D.hpp>
@@ -681,21 +688,21 @@ void Main()
 
 
 ## 53.22 リネーム
-ファイルやディレクトリをリネームする場合は `FileSystem::Rename(src, dst)` を使います。`src` にはリネーム元のファイルまたはディレクトリのパスを、`dst` にはリネーム先のパスを指定します。リネームに成功した場合は `true`、失敗した場合は `false` を返します。
+- ファイルやディレクトリをリネームするには `FileSystem::Rename(src, dst)` を使います
+- `src` にはリネーム元のファイルまたはディレクトリのパスを、`dst` にはリネーム先のパスを指定します
+- リネームに成功した場合は `true`、失敗した場合は `false` を返します
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// ファイルやディレクトリをコピーする
+	// ファイルをコピーしてリネームする
 	FileSystem::Copy(U"example/windmill.png", U"image.png");
-	FileSystem::Copy(U"example/video/", U"test5/");
-
-	// ファイルをリネームする
 	Print << FileSystem::Rename(U"image.png", U"image2.png");
 
-	// ディレクトリをリネームする
+	// ディレクトリをコピーしてリネームする
+	FileSystem::Copy(U"example/video/", U"test5/");
 	Print << FileSystem::Rename(U"test5/", U"test5-2/");
 
 	while (System::Update())
@@ -707,15 +714,13 @@ void Main()
 
 
 ## 53.23 ファイルの変更検知
-`DirectoryWatcher` を使うと、指定したディレクトリ内でのファイルの変更イベントを検知できます。ユーザがファイルを変更したときに自動でリロードする仕組みの実装などに使えます。
-
-`DirectoryWatcher watcher{ directory };` で、ディレクトリ `directory` 内でのファイルの変更を検知する `DirectoryWatcher` オブジェクトを作成します。
-
-`DirectoryWatcher` のメンバ関数 `.retrieveChanges()` で、変更履歴の一覧を古い順に取得できます。一度取得した変更履歴は削除されます。
-
-変更履歴は `Array<FileChange>` として取得できます。`FileChange` は、変更されたファイルのパス `.path` と、ファイルの操作を表す `.action` をメンバ変数として持ちます。
-
-ファイルの操作には次の種類があります。
+- `DirectoryWatcher` を使うと、指定したディレクトリ内でのファイルの変更イベントを検知できます
+	- ユーザがファイルを変更したときに自動でリロードする仕組みの実装などに使えます
+- `DirectoryWatcher watcher{ directory };` で、ディレクトリ `directory` 内でのファイルの変更を検知する `DirectoryWatcher` オブジェクトを作成します
+- `DirectoryWatcher` のメンバ関数 `.retrieveChanges()` で、発生したイベントの一覧を古い順に `Array<FileChange>` として取得できます
+	- 一度取得した変更履歴は削除されます
+- `FileChange` は、変更されたファイルのパス `.path` と、ファイルの操作の種類を表す `.action` をメンバ変数として持ちます
+- ファイルの操作は次の種類があります：
 
 | ファイルの操作 | 説明 |
 |--|--|
@@ -725,7 +730,8 @@ void Main()
 |`FileAction::Unknown`| 不明なアクション |
 
 ### 53.23.1 ディレクトリ内でのイベント検知
-検知が不要になった場合は、空の `DirectoryWatcher` オブジェクトを代入します。
+- 次のサンプルコードは、`test6/` フォルダを作成し、その中でのファイルの変更を検知して内容を出力します
+- 検知を中断させる場合、空の `DirectoryWatcher` オブジェクトを代入します
 
 ```cpp
 # include <Siv3D.hpp>
@@ -733,10 +739,10 @@ void Main()
 void Main()
 {
 	// テスト用のディレクトリを作成する
-	FileSystem::CreateDirectories(U"test7/");
+	FileSystem::CreateDirectories(U"test6/");
 
 	// test7/ ディレクトリ内でのイベントを監視するオブジェクトを作成する
-	DirectoryWatcher watcher{ U"test7/" };
+	DirectoryWatcher watcher{ U"test6/" };
 
 	while (System::Update())
 	{
@@ -773,14 +779,12 @@ void Main()
 
 
 ### 53.23.2 特定のファイルの更新検知
-一般に、ファイルの中身が更新されたときは、次のいずれかのイベントが発生します。
-
-- Removed → Added
-- Modified
-
-したがって、特定のファイルの更新を取りこぼしなく検出するには、`Added` と `Modified` を監視します。ファイルの編集に使うアプリケーションの仕様によっては、1 回の保存で複数回の `Modified` イベントが発生することがあります。
-
-次のサンプルでは `test8/` ディレクトリ内の `test.txt` ファイルの更新を検出します。
+- 一般に、ファイルの中身が更新されたときは、次のいずれかのイベントが発生します。
+	- Removed → Added
+	- Modified
+- 特定のファイルの更新を取りこぼしなく検出するには、`Added` と `Modified` を監視します
+- ファイル編集に使うアプリケーションの仕様によっては、1 回の保存操作で複数回の `Modified` イベントが発生することもあります
+- 次のサンプルでは `test6/` ディレクトリ内の `test.txt` ファイルの更新を追跡します
 
 ```cpp
 # include <Siv3D.hpp>
@@ -788,10 +792,10 @@ void Main()
 void Main()
 {
 	// テスト用のディレクトリを作成する
-	FileSystem::CreateDirectories(U"test8/");
+	FileSystem::CreateDirectories(U"test6/");
 	
 	// 更新を検出したいファイルのパス
-	const FilePath filePath = U"test8/test.txt";
+	const FilePath filePath = U"test6/test.txt";
 
 	// 更新を検出したいファイルの絶対パス
 	const FilePath fullPath = FileSystem::FullPath(filePath);
