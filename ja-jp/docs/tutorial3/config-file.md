@@ -495,15 +495,16 @@ void Main()
 		Scene::SetBackground(background);
 	}
 
-	// 数値の配列を JSON データから作成
-	Array<int32> values;
 	{
+		Array<int32> values;
+		
 		for (auto&& [index, object] : json[U"Array"][U"values"])
 		{
 			values << object.get<int32>();
 		}
+
+		Console << values;
 	}
-	Console << values;
 
 	// アイテムの配列を JSON データから作成
 	Array<Item> items;
@@ -698,7 +699,7 @@ void Main()
 - 添え字演算子 `[U"NAME1.NAME2.NAME3..."]` によってパスを指定して目的の値を直接得ることもできます
 
 !!! warning "日本語は未サポート"
-	- Siv3D v0.6 では、`TOMLReader` を使って非 ASCII 文字を含む TOML ファイルを読み込むことができません
+	- Siv3D v0.6 の `TOMLReader` は、非 ASCII 文字を含む TOML ファイルを読み込むことができません
 	- 将来のバージョンで対応予定です
 
 ```cpp
@@ -721,14 +722,14 @@ void ShowTable(const TOMLValue& value)
 		switch (table.value.getType())
 		{
 		case TOMLValueType::Empty:
-			Console << U"[Empty]" << table.name;
+			Console << U"[Empty] " << table.name;
 			break;
 		case TOMLValueType::Table:
-			Console << U"[Table]" << table.name;
+			Console << U"[Table] " << table.name;
 			ShowTable(table.value);
 			break;
 		case TOMLValueType::Array:
-			Console << U"[Array]" << table.name;
+			Console << U"[Array] " << table.name;
 			for (const auto& element : table.value.arrayView())
 			{
 				switch (element.getType())
@@ -754,34 +755,34 @@ void ShowTable(const TOMLValue& value)
 			}
 			break;
 		case TOMLValueType::TableArray:
-			Console << U"[TableArray]" << table.name;
+			Console << U"[TableArray] " << table.name;
 			for (const auto& table2 : table.value.tableArrayView())
 			{
 				ShowTable(table2);
 			}
 			break;
 		case TOMLValueType::String:
-			Console << U"[String]" << table.name;
+			Console << U"[String] " << table.name;
 			Console << table.value.getString();
 			break;
 		case TOMLValueType::Number:
-			Console << U"[Number]" << table.name;
+			Console << U"[Number] " << table.name;
 			Console << table.value.get<double>();
 			break;
 		case TOMLValueType::Bool:
-			Console << U"[Bool]" << table.name;
+			Console << U"[Bool] " << table.name;
 			Console << table.value.get<bool>();
 			break;
 		case TOMLValueType::Date:
-			Console << U"[Date]" << table.name;
+			Console << U"[Date] " << table.name;
 			Console << table.value.getDate();
 			break;
 		case TOMLValueType::DateTime:
-			Console << U"[DateTime]" << table.name;
+			Console << U"[DateTime] " << table.name;
 			Console << table.value.getDateTime();
 			break;
 		case TOMLValueType::Unknown:
-			Console << U"[Unknown]" << table.name;
+			Console << U"[Unknown] " << table.name;
 			break;
 		}
 	}
@@ -797,42 +798,46 @@ void Main()
 		throw Error{ U"Failed to load `config.toml`" };
 	}
 
-	// TOML データをすべて表示
+	// TOML データをすべて表示する
 	ShowTable(toml);
 
 	Console << U"-----";
 
-	// 要素のパスで値を取得
-	const String windowTitle = toml[U"Window.title"].getString();
-	const int32 windowWidth = toml[U"Window.width"].get<int32>();
-	const int32 windowHeight = toml[U"Window.height"].get<int32>();
-	const bool windowSizable = toml[U"Window.sizable"].get<bool>();
-	const ColorF sceneBackground = toml[U"Scene.background"].get<ColorF>();
-
-	Window::SetTitle(windowTitle);
-	Window::Resize(windowWidth, windowHeight);
-	Window::SetStyle(windowSizable ? WindowStyle::Sizable : WindowStyle::Fixed);
-	Scene::SetBackground(sceneBackground);
-
-	// 数値の配列を TOML データから作成
-	Array<int32> values;
+	// 各要素を取得し、ウィンドウやシーンの設定に反映させる
 	{
+		const String title	= toml[U"Window.title"].getString();
+		const int32 width	= toml[U"Window.width"].get<int32>();
+		const int32 height	= toml[U"Window.height"].get<int32>();
+		const bool sizable	= toml[U"Window.sizable"].get<bool>();
+		const ColorF background = toml[U"Scene.background"].get<ColorF>();
+
+		Window::SetTitle(title);
+		Window::Resize(width, height);
+		Window::SetStyle(sizable ? WindowStyle::Sizable : WindowStyle::Fixed);
+		Scene::SetBackground(background);
+	}
+
+	{
+		Array<int32> values;
+
 		for (const auto& object : toml[U"Array.values"].arrayView())
 		{
 			values << object.get<int32>();
 		}
+
+		Console << values;
 	}
-	Console << values;
 
 	// アイテムの配列を TOML データから作成
 	Array<Item> items;
 	{
 		for (const auto& object : toml[U"Items"].tableArrayView())
 		{
-			Item item;
-			item.label = object[U"label"].getString();
-			item.pos = Point{ object[U"pos.x"].get<int32>(), object[U"pos.y"].get<int32>() };
-			items << item;
+			items << Item
+			{
+				.label = object[U"label"].getString(),
+				.pos = Point{ object[U"pos.x"].get<int32>(), object[U"pos.y"].get<int32>() },
+			};
 		}
 	}
 
@@ -907,125 +912,124 @@ void Main()
 		throw Error{ U"Failed to load `config.xml`" };
 	}
 
-	// XML データをすべて表示
+	// XML データをすべて表示する
 	ShowElements(xml);
 
 	Console << U"-----";
 
-	String windowTitle;
-	int32 windowWidth = Window::DefaultClientSize.x;
-	int32 windowHeight = Window::DefaultClientSize.y;
-	bool windowSizable = false;
-	ColorF sceneBackground{ 0.0 };
-	Array<int32> values;
 	Array<Item> items;
-
-	// 要素を走査して目的の値を取得
-	for (auto elem = xml.firstChild(); elem; elem = elem.nextSibling())
 	{
-		const String name = elem.name();
+		String title;
+		int32 width = Window::DefaultClientSize.x;
+		int32 height = Window::DefaultClientSize.y;
+		bool sizable = false;
+		ColorF background{ 0.0 };
+		Array<int32> values;
 
-		if (name == U"Window")
+		// 要素を走査して目的の値を取得
+		for (auto elem = xml.firstChild(); elem; elem = elem.nextSibling())
 		{
-			for (auto elem2 = elem.firstChild(); elem2; elem2 = elem2.nextSibling())
+			const String name = elem.name();
+
+			if (name == U"Window")
 			{
-				const String name2 = elem2.name();
+				for (auto elem2 = elem.firstChild(); elem2; elem2 = elem2.nextSibling())
+				{
+					const String name2 = elem2.name();
 
-				if (name2 == U"title")
-				{
-					windowTitle = elem2.text();
-				}
-				else if (name2 == U"width")
-				{
-					windowWidth = Parse<int32>(elem2.text());
-				}
-				else if (name2 == U"height")
-				{
-					windowHeight = Parse<int32>(elem2.text());
-				}
-				else if (name2 == U"sizable")
-				{
-					windowSizable = Parse<bool>(elem2.text());
-				}
-			}
-		}
-		else if (name == U"Scene")
-		{
-			for (auto elem2 = elem.firstChild(); elem2; elem2 = elem2.nextSibling())
-			{
-				const String name2 = elem2.name();
-
-				if (name2 == U"background")
-				{
-					sceneBackground = Parse<ColorF>(elem2.text());
-				}
-			}
-		}
-		if (name == U"Array")
-		{
-			for (auto elem2 = elem.firstChild(); elem2; elem2 = elem2.nextSibling())
-			{
-				values << Parse<int32>(elem2.text());
-			}
-		}
-		if (name == U"Items")
-		{
-			Item item;
-
-			for (auto elem2 = elem.firstChild(); elem2; elem2 = elem2.nextSibling())
-			{
-				const String name2 = elem2.name();
-
-				if (name2 == U"label")
-				{
-					item.label = elem2.text();
-				}
-				else if (name2 == U"pos")
-				{
-					Point pos{ 0, 0 };
-
-					for (auto elem3 = elem2.firstChild(); elem3; elem3 = elem3.nextSibling())
+					if (name2 == U"title")
 					{
-						const String name3 = elem3.name();
-
-						if (name3 == U"x")
-						{
-							pos.x = Parse<int32>(elem3.text());
-						}
-						else if (name3 == U"y")
-						{
-							pos.y = Parse<int32>(elem3.text());
-						}
+						title = elem2.text();
 					}
-
-					item.pos = pos;
+					else if (name2 == U"width")
+					{
+						width = Parse<int32>(elem2.text());
+					}
+					else if (name2 == U"height")
+					{
+						height = Parse<int32>(elem2.text());
+					}
+					else if (name2 == U"sizable")
+					{
+						sizable = Parse<bool>(elem2.text());
+					}
 				}
 			}
+			else if (name == U"Scene")
+			{
+				for (auto elem2 = elem.firstChild(); elem2; elem2 = elem2.nextSibling())
+				{
+					const String name2 = elem2.name();
 
-			items << item;
+					if (name2 == U"background")
+					{
+						background = Parse<ColorF>(elem2.text());
+					}
+				}
+			}
+			if (name == U"Array")
+			{
+				for (auto elem2 = elem.firstChild(); elem2; elem2 = elem2.nextSibling())
+				{
+					values << Parse<int32>(elem2.text());
+				}
+			}
+			if (name == U"Items")
+			{
+				Item item;
+
+				for (auto elem2 = elem.firstChild(); elem2; elem2 = elem2.nextSibling())
+				{
+					const String name2 = elem2.name();
+
+					if (name2 == U"label")
+					{
+						item.label = elem2.text();
+					}
+					else if (name2 == U"pos")
+					{
+						Point pos{ 0, 0 };
+
+						for (auto elem3 = elem2.firstChild(); elem3; elem3 = elem3.nextSibling())
+						{
+							const String name3 = elem3.name();
+
+							if (name3 == U"x")
+							{
+								pos.x = Parse<int32>(elem3.text());
+							}
+							else if (name3 == U"y")
+							{
+								pos.y = Parse<int32>(elem3.text());
+							}
+						}
+
+						item.pos = pos;
+					}
+				}
+
+				items << item;
+			}
 		}
+
+		Window::SetTitle(title);
+		Window::Resize(width, height);
+		Window::SetStyle(sizable ? WindowStyle::Sizable : WindowStyle::Fixed);
+		Scene::SetBackground(background);
+
+		Console << values;
 	}
 
-	Window::SetTitle(windowTitle);
-	Window::Resize(windowWidth, windowHeight);
-	Window::SetStyle(windowSizable ? WindowStyle::Sizable : WindowStyle::Fixed);
-	Scene::SetBackground(sceneBackground);
-
-	Console << values;
-
-	// アイテム描画用のフォント
-	const Font font{ 30, Typeface::Bold };
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
 
 	while (System::Update())
 	{
-		// アイテムを描画
+		// アイテムを描画する
 		for (const auto& item : items)
 		{
 			const Rect rect{ item.pos, 180, 80 };
-
 			rect.draw();
-
-			font(item.label).drawAt(rect.center(), ColorF{ 0.25 });
+			font(item.label).drawAt(30, rect.center(), ColorF{ 0.1 });
 		}
 	}
 }
