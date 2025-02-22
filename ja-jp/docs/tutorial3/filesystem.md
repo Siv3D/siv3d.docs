@@ -1,7 +1,7 @@
 # 53. ファイルシステム
 
 ## 53.1 パスを表す型
-ファイルやディレクトリのパスを Siv3D のコードで表現するときは、`String` 型のエイリアス（別名）である `FilePath` を使うと意図が明確になります。
+- ファイルやディレクトリのパスを Siv3D のコードで表現するときは、`String` 型のエイリアス（別名）である `FilePath` を使うと意図が明確になります
 
 ```cpp
 # include <Siv3D.hpp>
@@ -20,13 +20,14 @@ void Main()
 }
 ```
 
-ディレクトリパスは、末尾に `/` を付けて表現します。
+- ディレクトリパスは、末尾に `/` を付けて表現します
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
+	// ディレクトリパスは末尾に / を付ける
 	const FilePath videoDirectory = U"example/video/";
 
 	const VideoTexture videoTexture{ videoDirectory + U"river.mp4" };
@@ -42,13 +43,15 @@ void Main()
 
 
 ## 53.2 ファイルやディレクトリの存在確認
-ファイルやディレクトリが存在するか調べるには `FileSystem::Exists(path)` を使います。ファイルが存在するかを調べるには `FileSystem::IsFile(path)`, ディレクトリが存在するかを調べるには `FileSystem::IsDirectory(path)` を使います。
+- ファイルやディレクトリが存在するか調べるには `FileSystem::Exists(path)` を使います
+- ファイルが存在するかを調べるには `FileSystem::IsFile(path)`
+- ディレクトリが存在するかを調べるには `FileSystem::IsDirectory(path)` を使います
 
-| 関数 | 説明 |
+| コード | 説明 |
 |---|---|
-| `FileSystem::Exists(path)` | `path` で示したファイルやディレクトリが存在するかを返します。 |
-| `FileSystem::IsFile(path)` | `path` で示したファイルが存在するかを返します。 |
-| `FileSystem::IsDirectory(path)` | `path` で示したディレクトリが存在するかを返します。 |
+| `FileSystem::Exists(path)` | `path` で示したファイルやディレクトリが存在するかを返す |
+| `FileSystem::IsFile(path)` | `path` で示したファイルが存在するかを返す |
+| `FileSystem::IsDirectory(path)` | `path` で示したディレクトリが存在するかを返す |
 
 ```cpp
 # include <Siv3D.hpp>
@@ -86,7 +89,7 @@ void Main()
 
 
 ## 53.3 絶対パスの取得
-パスを絶対パスに変換するには `FileSystem::Fullpath(path)` を使います。
+- パスを絶対パスに変換するには `FileSystem::Fullpath(path)` を使います
 
 ```cpp
 # include <Siv3D.hpp>
@@ -106,7 +109,7 @@ void Main()
 
 
 ## 53.4 相対パスへの変換
-パスを、現在のカレントディレクトリからの相対パスに変換するには `FileSystem::RelativePath(path)` を使います。
+- パスを、現在のカレントディレクトリから見た相対パスに変換するには `FileSystem::RelativePath(path)` を使います
 
 ```cpp
 # include <Siv3D.hpp>
@@ -130,13 +133,16 @@ void Main()
 
 
 ## 53.5 ファイルの名前部分や拡張子の取得
-ファイルパスから、親ディレクトリ部分を含まずに、ファイル名部分だけを取得するには `FileSystem::FileName(path)` を使います。拡張子を除いたファイル名を取得するには `FileSystem::BaseName(path)` を使います。ファイルの拡張子 (.を含まない) を小文字で取得するには `FileSystem::Extension(path)` を使います。パスがディレクトリである場合、いずれの関数でもディレクトリ名がファイル名であると見なされます。
+- ファイルパスから、親ディレクトリ部分を含まずに、ファイル名部分だけを取得するには `FileSystem::FileName(path)` を使います
+- 拡張子を除いたファイル名を取得するには `FileSystem::BaseName(path)` を使います
+- ファイルの拡張子 (.を含まない) を小文字で取得するには `FileSystem::Extension(path)` を使います
+- パスがディレクトリである場合、いずれの関数でもディレクトリ名がファイル名であると見なされます
 
-| 関数 | 説明 |
+| コード | 説明 |
 |---|---|
-| `FileSystem::FileName(path)` | `path` で示したファイルパスから、親ディレクトリ部分を除いたファイル名部分を返します。 |
-| `FileSystem::BaseName(path)` | `path` で示したファイルパスから、親ディレクトリ部分と拡張子を除いたファイル名部分を返します。 |
-| `FileSystem::Extension(path)` | `path` で示したファイルパスから、拡張子を小文字で返します。 |
+| `FileSystem::FileName(path)` | `path` で示したファイルパスから、親ディレクトリ部分を除いたファイル名部分を返す |
+| `FileSystem::BaseName(path)` | `path` で示したファイルパスから、親ディレクトリ部分と拡張子を除いたファイル名部分を返す |
+| `FileSystem::Extension(path)` | `path` で示したファイルパスから、拡張子を小文字で返す |
 
 ```cpp
 # include <Siv3D.hpp>
@@ -173,7 +179,7 @@ void Main()
 
 
 ## 53.6 親ディレクトリの取得
-あるパスの親ディレクトリを取得するには、`FileSystem::ParentPath(path)` を使います。
+- あるパスの親ディレクトリを取得するには、`FileSystem::ParentPath(path)` を使います
 
 ```cpp
 # include <Siv3D.hpp>
@@ -195,7 +201,7 @@ void Main()
 
 
 ## 53.7 カレントディレクトリの取得
-現在のカレントディレクトリを取得するには、`FileSystem::CurrentDirectory()` を使います。
+- 現在のカレントディレクトリを取得するには、`FileSystem::CurrentDirectory()` を使います
 
 ```cpp
 # include <Siv3D.hpp>
@@ -214,7 +220,7 @@ void Main()
 
 
 ## 53.8 実行ファイルのパスの取得
-現在のプログラムの実行ファイルのパスを取得するには、`FileSystem::ModulePath()` を使います。
+- 現在のプログラムの実行ファイルのパスを取得するには、`FileSystem::ModulePath()` を使います
 
 ```cpp
 # include <Siv3D.hpp>
@@ -233,7 +239,9 @@ void Main()
 
 
 ## 53.9 起動ディレクトリの取得
-起動ディレクトリは、プログラムが起動されたときのカレントディレクトリです。通常は、実行ファイルがあるディレクトリですが、コマンドラインから起動された場合や、拡張子の関連付けでファイルから起動された場合などに、異なるディレクトリになることがあります。起動ディレクトリを取得するには、`FileSystem::InitialDirectory()` を使います。
+- 起動ディレクトリとは、プログラムが起動されたときのカレントディレクトリです
+- 通常は、実行ファイルがあるディレクトリですが、コマンドラインから起動された場合や、拡張子の関連付けによってファイルから起動された場合などに、異なるディレクトリになることがあります
+- 起動ディレクトリを取得するには、`FileSystem::InitialDirectory()` を使います
 
 ```cpp
 # include <Siv3D.hpp>
@@ -252,11 +260,11 @@ void Main()
 
 
 ## 53.10 特殊フォルダのパスの取得
-デスクトップやドキュメントなど、特殊な用途のフォルダのパスを取得するには、`FileSystem::GetFolderPath(SpecialFolder)` を使います。存在しない場合は空の文字列を返します。
+- デスクトップやドキュメントなど、特殊フォルダのパスを取得するには、`FileSystem::GetFolderPath(SpecialFolder)` を使います
+- 存在しない場合は空の文字列を返します
+- 特殊フォルダの種類を指す `SpecialFolder` は次の値があります：
 
-特殊フォルダの種類を指す `SpecialFolder` は次の値があります。
-
-| 値 | 説明 |
+| コード | 説明 |
 |--|--|
 |`SpecialFolder::Desktop`| デスクトップ |
 |`SpecialFolder::Documents`| ドキュメント |
@@ -299,7 +307,7 @@ void Main()
 
 
 ## 53.11 一時ファイルの保存に使えるディレクトリの取得
-一時ファイルの保存用に使えるディレクトリを取得するには、`FileSystem::TempDirectory()` を使います。
+- 一時ファイルを保存するために使えるディレクトリを取得するには、`FileSystem::TempDirectory()` を使います
 
 ```cpp
 # include <Siv3D.hpp>
@@ -318,9 +326,9 @@ void Main()
 
 
 ## 53.12 一時ファイル用に使えるファイルパスの取得
-あるディレクトリで、一時ファイル用に使えるファイルパスを取得するには、`FileSystem::UniqueFilePath(directory)` を使います。拡張子は `.tmp` で、これで返されたファイルパスと同名のファイルが存在しないことが保証されています。
-
-引数を省略した場合は、**53.11** で説明した、一時ファイルの保存用に使えるディレクトリが使われます。
+- あるディレクトリで、一時ファイルの保存用に使えるファイルパスを取得するには、`FileSystem::UniqueFilePath(directory)` を使います
+- ファイルパスの拡張子は `.tmp` で、そのディレクトリに同名のファイルが存在しないことが保証されています
+- 引数を省略した場合は、**53.11** で説明した、一時ファイル保存用に使えるディレクトリが使われます
 
 ```cpp
 # include <Siv3D.hpp>
@@ -344,7 +352,8 @@ void Main()
 
 
 ## 53.13 パスの結合
-ユーザによる入力や、外部からの入力では、ディレクトリパスの末尾に `/` が付いていない場合があります。このようなパスを結合するには、`FileSystem::PathAppend(a, b)` を使います。
+- ユーザによる入力や、外部からの入力では、ディレクトリパスの末尾に `/` が付いていない場合があります
+- このようなパスを結合するには、`FileSystem::PathAppend(a, b)` を使います
 
 ```cpp
 # include <Siv3D.hpp>
@@ -369,14 +378,15 @@ void Main()
 
 
 ## 53.14 ファイルやディレクトリのサイズの取得
-ファイルのサイズを取得するには `FileSystem::FileSize(path)` を使います。ファイルおよびディレクトリのサイズを取得するには `FileSystem::Size(path)` を使います。
+- ファイルのサイズを取得するには `FileSystem::FileSize(path)` を使います
+- ファイルまたはディレクトリ全体のサイズを取得するには `FileSystem::Size(path)` を使います
 
-| 関数 | 説明 |
+| コード | 説明 |
 |--|--|
-| `FileSystem::FileSize(path)` | ファイルのサイズをバイト単位で返します。ファイルが存在しないか、空である場合は 0 を返します。 |
-| `FileSystem::Size(path)` | ファイルまたはディレクトリのサイズをバイト単位で返します。ファイルまたはディレクトリが存在しないか、空である場合は 0 を返します。 |
+| `FileSystem::FileSize(path)` | ファイルのサイズをバイト単位で返す。ファイルが存在しないか、空である場合は 0 を返す |
+| `FileSystem::Size(path)` | ファイルまたはディレクトリのサイズをバイト単位で返す。ファイルまたはディレクトリが存在しないか、空である場合は 0 を返す |
 
-`FormatDataSize(int64)` を使うと、ファイルサイズを、2 進接頭辞を用いた見やすい形式の文字列に変換できます（例: `120KiB`）。
+- `FormatDataSize(int64)` を使うと、ファイルサイズを、2 進接頭辞を用いた読みやすい形式の文字列に変換できます（例: `120KiB`）
 
 ```cpp
 # include <Siv3D.hpp>
@@ -399,13 +409,16 @@ void Main()
 ```
 
 ## 53.15 ファイルのタイムスタンプの取得
-ファイルの作成日時を取得するには `FileSystem::CreationTime(path)` を使います。ファイルの最終更新日時を取得するには `FileSystem::WriteTime(path)` を使います。ファイルの最終アクセス日時を取得するには `FileSystem::AccessTime(path)` を使います。戻り値は `Optional<DateTime>` で、ファイルが存在しない場合や取得に失敗した場合は `none` が返されます。
+- ファイルの作成日時を取得するには `FileSystem::CreationTime(path)` を使います
+- ファイルの最終更新日時を取得するには `FileSystem::WriteTime(path)` を使います
+- ファイルの最終アクセス日時を取得するには `FileSystem::AccessTime(path)` を使います
+- 戻り値は `Optional<DateTime>` で、ファイルが存在しない場合や取得に失敗した場合は `none` が返されます
 
-| 関数 | 説明 |
+| コード | 説明 |
 |--|--|
-| `FileSystem::CreationTime(path)` | ファイルの作成日時を返します。ファイルが存在しない場合は、`none` を返します。 |
-| `FileSystem::WriteTime(path)` | ファイルの最終更新日時を返します。ファイルが存在しない場合は、`none` を返します。 |
-| `FileSystem::AccessTime(path)` | ファイルの最終アクセス日時を返します。ファイルが存在しない場合は、`none` を返します。 |
+| `FileSystem::CreationTime(path)` | ファイルの作成日時を返す。ファイルが存在しない場合は、`none` を返す |
+| `FileSystem::WriteTime(path)` | ファイルの最終更新日時を返す。ファイルが存在しない場合は、`none` を返す |
+| `FileSystem::AccessTime(path)` | ファイルの最終アクセス日時を返す。ファイルが存在しない場合は、`none` を返す |
 
 ```cpp
 # include <Siv3D.hpp>
@@ -441,7 +454,8 @@ void Main()
 
 
 ## 53.16 ディレクトリの中身一覧の取得
-ディレクトリの中身（ファイルやディレクトリ）一覧を取得するには `FileSystem::DirectoryContents(path, recursive)` を使います。戻り値は `Array<FilePath>` です。
+- ディレクトリの中身（ファイルやディレクトリ）一覧を取得するには `FileSystem::DirectoryContents(path, recursive)` を使います
+- 戻り値は `Array<FilePath>` です
 
 ### 53.16.1 ディレクトリの中身一覧の取得（再帰的な検索あり）
 ```cpp

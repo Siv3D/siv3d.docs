@@ -392,7 +392,7 @@ void Main()
 - カメラの詳細な挙動は `Camera2DParameters` によってカスタマイズできます。
 - `Camera2D` の主なメンバ関数は次のとおりです：
 
-| 関数 | 説明 |
+| コード | 説明 |
 |--|--|
 |`.createTransformer()`| 現在のカメラの設定から `Transformer2D` を作成する |
 |`.setTargetCenter(Vec2)`| カメラの中心座標の目標を設定する |
