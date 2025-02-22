@@ -219,17 +219,17 @@ void Main()
 		throw Error{ U"Failed to open `tutorial2.bin`" };
 	}
 
-	// 書き込みたいテキスト
+	// 書き込む文字列
 	const String text = U"Hello, Siv3D";
 
-	// 書き込みたいテキストの長さ
+	// 書き込む文字列の長さ
 	const uint64 length = text.length();
 
-	// テキストの長さを書き込む (8 バイト)
+	// 文字列の長さを書き込む (8 バイト)
 	writer.write(length);
 
 	// 格納されてるデータの先頭ポインタから
-	// (4 バイト × 長さ）分のテキストデータを書き込む 
+	// (4 バイト × 長さ）分の文字列データを書き込む 
 	writer.write(text.data(), (sizeof(char32) * length));
 
 	while (System::Update())
@@ -292,33 +292,30 @@ void Main()
 
 
 ## 56.6 複雑なデータの書き込み（シリアライズ）
-
-
-
-
-
-
-シリアライズ機能を使うと、シリアライズに対応したデータ型 (`trivially copyable` でない型も含む) を、バイナリファイルで扱いやすくなります。ファイルにシリアライズ機能を使ってバイナリデータを書き込むには `Serializer<BinaryWriter>` クラスの機能を使います。`Serializer<BinaryWriter>` のコンストラクタ引数に、書き込み先のファイルのパスを渡します。実行ファイルがあるフォルダ（開発中は App フォルダ）を基準とする相対パスか、絶対パスを使用します。ファイルが使用中だったり、ファイル名が不正なものだったりしてオープンに失敗したかどうかは `if (not writer)` で調べられます。
-
-`Serializer<BinaryWriter>` に `()` で値を渡すと、そのデータをシリアライズしてファイルの末尾に追加で書き込みます。シリアライズに対応していない型を渡した場合はビルドエラーになります。
+- シリアライズ機能を使うと、シリアライズに対応した型 (`trivially copyable` でない型も含む) について、バイナリ形式への変換やバイナリ形式からの復元を手軽に行うことができます
+- `BinaryWeiter` とシリアライズ機能を連係させるには `Serializer<BinaryWriter>` クラスを使います
+- `Serializer<BinaryWriter>` のコンストラクタ引数に、書き込み先のファイルのパスを渡します
+- ファイルのオープンに成功したかどうかは、`if (writer)`, `if (not writer)` で調べられます
+- `Serializer<BinaryWriter>` にシリアライズに対応した型の値を渡すと、そのデータをバイナリデータに変換してファイルの末尾に追加で書き込みます
+- シリアライズに対応していない型を渡した場合はコンパイルエラーになります
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// 書き込み用のバイナリファイルをオープン
 	Serializer<BinaryWriter> writer{ U"tutorial3.bin" };
 
-	if (not writer) // もしオープンに失敗したら
+	// もしオープンに失敗したら
+	if (not writer) 
 	{
 		throw Error{ U"Failed to open `tutorial3.bin`" };
 	}
 
-	// 書き込みたいテキスト
+	// 書き込む文字列
 	const String text = U"Hello, Siv3D";
 
-	// 書き込みたいデータ
+	// 書き込むデータ
 	int a = 123, b = 456;
 
 	// バイナリファイルにシリアライズ対応型のデータを書き込む
@@ -338,24 +335,27 @@ void Main()
 
 
 ## 56.7 複雑なデータの読み込み（シリアライズ）
-シリアライズ機能を使って書き込んだデータを読み込むには `Deserializer<BinaryReader>` クラスの機能を使います。`Deserializer<BinaryReader>` のコンストラクタ引数に、読み込みたいテキストファイルのパスを渡します。このファイルパスは、実行ファイルがあるフォルダ（開発中は App フォルダ）を基準とする相対パスか、絶対パスを使用します。リリース用のアプリを作るときには埋め込みリソースパスの使用を推奨します。ファイルが存在しない場合など、オープンに失敗したかどうかは `if (not reader)` で調べられます。
-
-`Deserializer<BinaryReader>` に `()` で変数の参照を渡すと、ファイルからデータをデシリアライズし、その値に代入します。
+- シリアライズ機能を使って書き込んだデータを読み込むには `Deserializer<BinaryReader>` クラスの機能を使います
+- `Deserializer<BinaryReader>` のコンストラクタ引数に、読み込みたいテキストファイルのパスを渡します
+- ファイルのオープンに成功したかどうかは、`if (reader)`, `if (not reader)` で調べられます
+- `Deserializer<BinaryReader>` に `()` で変数の参照を渡すと、ファイルからデータをデシリアライズし、その変数に結果を格納します
+- シリアライズに対応していない型を渡した場合はコンパイルエラーになります
+- 次のサンプルコードでは、**56.6** で作成したバイナリファイルに保存されている `String` と `int32` を読み込みます
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// バイナリファイルをオープン
 	Deserializer<BinaryReader> reader{ U"tutorial3.bin" };
 
-	if (not reader) // もしオープンに失敗したら
+	// もしオープンに失敗したら
+	if (not reader)
 	{
 		throw Error{ U"Failed to open `tutorial3.bin`" };
 	}
 
-	// 読み込み先のテキスト
+	// 読み込み先の String
 	String text;
 
 	// 読み込み先の変数
@@ -366,10 +366,8 @@ void Main()
 	reader(text);
 	reader(a, b);
 
-	Print << text.length();
-
-	Print << text;
-
+	Print << U"length: " << text.length();
+	Print << U"text: " << text;
 	Print << a << U", " << b;
 
 	while (System::Update())
@@ -380,10 +378,16 @@ void Main()
 	// reader のデストラクタで自動的にファイルがクローズされる
 }
 ```
+```txt title="出力"
+length: 12
+text: Hello, Siv3D
+123, 456
+```
 
 
 ## 56.8 自作クラスのシリアライズ対応
-ユーザが定義したクラスをシリアライズに対応させるには、`template <class Archive> void SIV3D_SERIALIZE(Archive& archive)` という public メンバ関数をクラスに実装します。`archive()` に、シリアライズに対応したオブジェクトを渡すコードを書くと、そのクラスはシリアライズ可能になり、`Serializer` や `Deserializer` で使用できるようになります。
+- 自作クラスをシリアライズに対応させるには、`template <class Archive> void SIV3D_SERIALIZE(Archive& archive)` という public メンバ関数をクラスに実装します
+- その関数の中で、`archive(a, b, c, ...)` のように、シリアライズに対応したメンバ変数を順次渡すコードを書くことで、そのクラス自体もシリアライズ可能になり、`Serializer` や `Deserializer` で使用できるようになります
 
 ```cpp
 # include <Siv3D.hpp>
@@ -397,7 +401,7 @@ struct GameScore
 
 	int32 score;
 
-	// シリアライズに対応させるためのメンバ関数を定義する
+	// シリアライズに対応させるためのメンバ関数
 	template <class Archive>
 	void SIV3D_SERIALIZE(Archive& archive)
 	{
@@ -416,39 +420,37 @@ void Main()
 			{ U"Player3", 333, 3000 },
 		};
 
-		// バイナリファイルをオープン
 		Serializer<BinaryWriter> writer{ U"tutorial4.bin" };
 
-		if (not writer) // もしオープンに失敗したら
+		if (not writer)
 		{
 			throw Error{ U"Failed to open `tutorial4.bin`" };
 		}
 
-		// シリアライズに対応したデータを記録
+		// バイナリファイルにシリアライズ対応データ（の配列）を書き込む
 		writer(scores);
 
 		// writer のデストラクタで自動的にファイルがクローズされる
 	}
 
-	// 読み込み先のデータ
+	// 読み込み先
 	Array<GameScore> scores;
 	{
-		// バイナリファイルをオープン
 		Deserializer<BinaryReader> reader{ U"tutorial4.bin" };
 
-		if (not reader) // もしオープンに失敗したら
+		if (not reader)
 		{
 			throw Error{ U"Failed to open `tutorial4.bin`" };
 		}
 
-		// バイナリファイルからシリアライズ対応型のデータを読み込む
-		// （Array は自動でリサイズが行われる）
+		// バイナリファイルからシリアライズ対応データを読み込む
+		// （Array は自動でリサイズされる）
 		reader(scores);
 
 		// reader のデストラクタで自動的にファイルがクローズされる
 	}
 
-	// 読み込んだスコアを確認
+	// 正しく読み込めていることを確認
 	for (const auto& score : scores)
 	{
 		Print << U"{}(id: {}): {}"_fmt(score.name, score.id, score.score);
@@ -460,4 +462,8 @@ void Main()
 	}
 }
 ```
-
+```txt title="出力"
+Player1(id: 111): 1000
+Player2(id: 222): 2000
+Player3(id: 333): 3000
+```
