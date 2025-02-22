@@ -149,24 +149,23 @@ nav:
     - 61. ファイルダイアログ: tutorial4/file-dialog.md
     - 62. HTTP クライアント: tutorial4/http.md
     - 63. 画像編集: tutorial4/image.md
-#    - 64. ドラッグ & ドロップ: tutorial4/empty.md
-#    - 65. クリップボード: tutorial4/empty.md
-#    - 66. メッセージボックス: tutorial4/empty.md
-#    - 67. 音声波形: tutorial4/empty.md
-#    - 68. マイク入力: tutorial4/empty.md
-#    - 69. Web カメラ: tutorial4/empty.md
-#    - 70. 2D 物理演算: tutorial4/physics2d.md
-#    - 71. OpenAI API: tutorial4/openai.md
-#    - 72. 2D カスタムシェーダ: tutorial4/empty.md
-#    - 73. 3D 形状を描く ①: tutorial4/empty.md
-#    - 74. 3D 形状を描く ②: tutorial4/empty.md
-#    - 75. 3D の交差判定: tutorial4/empty.md
-#    - 76. TCP 通信: tutorial4/empty.md
+    - 64. ドラッグ & ドロップ: tutorial4/dragdrop.md
+    - 65. クリップボード: tutorial4/clipboard.md
+    - 66. ユーザ環境の取得: tutorial4/user.md
+    - 67. OpenAI API: tutorial4/openai.md
+    - 68. 2D 物理演算: tutorial4/physics2d.md
+    - 69. マイク入力: tutorial4/microphone.md
+    - 70. Web カメラ: tutorial4/webcam.md
+    - 71. シリアル通信: tutorial4/serial.md
+    - 72. TCP 通信: tutorial4/tcp.md
+#    - 73. 2D カスタムシェーダ: tutorial4/empty.md
+#    - 74. 3D 形状を描く ①: tutorial4/empty.md
+#    - 75. 3D 形状を描く ②: tutorial4/empty.md
+#    - 76. 3D の交差判定: tutorial4/empty.md
 #    - 77. マルチプレイヤー: tutorial4/multiplayer.md
-#    - 78. シリアル通信: tutorial4/empty.md
-#    - 79. 数式パーサ: tutorial4/empty.md
-#    - 80. ユーザ環境の取得: tutorial4/empty.md
-#    - 81. アドオンを作る: tutorial4/empty.md
+#    - 78. 数式パーサ: tutorial4/empty.md
+#    - 79. 非同期処理: tutorial4/empty.md
+#    - 80. QR コード: tutorial4/empty.md
   - サンプル集:
     - ゲームのサンプル: samples/games.md
     - アプリケーションのサンプル: samples/apps.md
