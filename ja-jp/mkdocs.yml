@@ -141,7 +141,7 @@ nav:
     - 54. テキストファイル: tutorial3/text-file.md
     - 55. 設定ファイル: tutorial3/config-file.md
     - 56. バイナリファイル: tutorial3/binary-file.md
-    - 57. リソースファイル: tutorial3/resource.md
+    - 57. 埋め込みリソース: tutorial3/resource.md
     - 58. シーン管理: tutorial3/scene-manager.md
     - 59. ゲームパッド: tutorial3/gamepad.md
     - 60. アプリの公開: tutorial3/release.md
@@ -162,7 +162,7 @@ nav:
 #    - 74. 3D 形状を描く ①: tutorial4/empty.md
 #    - 75. 3D 形状を描く ②: tutorial4/empty.md
 #    - 76. 3D の交差判定: tutorial4/empty.md
-#    - 77. マルチプレイヤー: tutorial4/multiplayer.md
+    - 77. マルチプレイヤー: tutorial4/multiplayer.md
 #    - 78. 数式パーサ: tutorial4/empty.md
 #    - 79. 非同期処理: tutorial4/empty.md
 #    - 80. QR コード: tutorial4/empty.md
