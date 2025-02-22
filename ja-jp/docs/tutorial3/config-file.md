@@ -1,7 +1,8 @@
 # 55. 設定ファイル
 CSV, INI, JSON, TOML, XML などの設定ファイルを読み書きする方法を学びます。
 
-Siv3D は次の設定ファイルの読み書きに対応しています：
+## 55.1 設定ファイルの概要
+- Siv3D は次の設定ファイルの読み書きに対応しています：
 
 | ファイル形式 | 読み込み | 書き出し |
 |--|:--:|:--:|
@@ -11,13 +12,15 @@ Siv3D は次の設定ファイルの読み書きに対応しています：
 | TOML | ✅ |  |
 | XML | ✅ |  |
 
-## 55.1 CSV の読み込み
+
+## 55.2 CSV の読み込み
 - CSV ファイルをパースしてデータを読み込むには `CSV` クラスを使います
 - `CSV` のコンストラクタ引数に、読み込みたいテキストファイルのパスを渡します
 - ファイルパスは、実行ファイルがあるフォルダ（開発中は App フォルダ）を基準とする相対パスか、絶対パスを使用します
 - 読み込みに成功したかどうかは、`if (csv)`, `if (not csv)` で調べられます
 - CSV データは `Array<Array<String>>` の形式で読み込まれ、添え字演算子 `[row][col]` によって row 行 col 列目のテキストを取得できます
 - `row`, `col` は `0` からカウントします
+- `.rows()` は CSV データの行数、`.columns(row)` は row 行目の列数を返します
 
 ```cpp
 # include <Siv3D.hpp>
@@ -41,76 +44,78 @@ void Main()
 		throw Error{ U"Failed to load `config.csv`" };
 	}
 
-	// 全ての行を列挙
+	// 各行について
 	for (size_t row = 0; row < csv.rows(); ++row)
 	{
-		// 行 (Array<String>) の要素を表示
-		Print << csv[row];
+		// 各列の内容をタブ区切りで表示する
+		String line;
+
+		for (size_t col = 0; col < csv.columns(row); ++col)
+		{
+			line += (csv[row][col] + U'\t');
+		}
+
+		Print << line;
 	}
-	Print << U"-----";
 
-	// 1 行 1 列目のテキストを取得 (0 行, 0 列からカウント）
-	const String windowTitle = csv[1][1];
+	Print << U"----";
 
-	// 2 行 1 列目のテキストを int32 型の値に変換
-	const int32 windowWidth = Parse<int32>(csv[2][1]);
+	// 各要素を取得し、ウィンドウやシーンの設定に反映させる
+	{
+		const String title	= csv[1][1];
+		const int32 width	= Parse<int32>(csv[2][1]);
+		const int32 height	= Parse<int32>(csv[3][1]);
+		const bool sizable	= Parse<bool>(csv[4][1]);
+		const ColorF background = Parse<ColorF>(csv[5][1]);
 
-	// 3 行 1 列目のテキストを int32 型の値に変換
-	const int32 windowHeight = Parse<int32>(csv[3][1]);
+		Window::SetTitle(title);
+		Window::Resize(width, height);
+		Window::SetStyle(sizable ? WindowStyle::Sizable : WindowStyle::Fixed);
+		Scene::SetBackground(background);
+	}
 
-	// 4 行 1 列目のテキストを bool 型の値に変換
-	const bool windowSizable = Parse<bool>(csv[4][1]);
+	{
+		const Array<int32> values = csv[6][1].split(U',').map(Parse<int32>);
+		Print << values;
+	}
 
-	// 5 行 1 列目のテキストを ColorF 型の値に変換
-	const ColorF sceneBackground = Parse<ColorF>(csv[5][1]);
-
-	Window::SetTitle(windowTitle);
-	Window::Resize(windowWidth, windowHeight);
-	Window::SetStyle(windowSizable ? WindowStyle::Sizable : WindowStyle::Fixed);
-	Scene::SetBackground(sceneBackground);
-
-	// 6 行 1 列目のテキストを ',' で区切って配列にし、それぞれの要素を int32 型の値に変換
-	Array<int32> values = csv[6][1].split(U',').map(Parse<int32>);
-	Print << values;
-
-	// アイテムの配列を CSV データから作成
+	// アイテムの配列を CSV データから作成する
 	Array<Item> items;
 	{
-		const size_t itemsCount = Parse<size_t>(csv[7][1]);
-		const size_t baseLine = 8;
+		const size_t itemCount = Parse<size_t>(csv[7][1]);
+		const size_t baseRow = 8;
 
-		for (auto i : step(itemsCount))
+		for (size_t i = 0; i < itemCount; ++i)
 		{
-			Item item;
-			item.label = csv[baseLine + i * 2][1];
-			item.pos = Parse<Point>(csv[baseLine + i * 2 + 1][1]);
-			items << item;
+			items << Item
+			{
+				.label = csv[baseRow + i * 2][1],
+				.pos = Parse<Point>(csv[baseRow + i * 2 + 1][1]),
+			};
 		}
 	}
 
-	// アイテム描画用のフォント
-	const Font font{ 30, Typeface::Bold };
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
 
 	while (System::Update())
 	{
-		// アイテムを描画
+		// アイテムを描画する
 		for (const auto& item : items)
 		{
 			const Rect rect{ item.pos, 180, 80 };
-
 			rect.draw();
-
-			font(item.label).drawAt(rect.center(), ColorF{ 0.25 });
+			font(item.label).drawAt(30, rect.center(), ColorF{ 0.1 });
 		}
 	}
 }
 ```
 
 
-## 55.2 CSV の書き出し
+## 55.3 CSV の書き出し
 - CSV ファイルを書き出すには、空の CSV オブジェクトを作成し、`.writeRow()`, `.write()`, `.newLine()` などを使って先頭の行からデータを追加していきます
+- フォーマット可能な値は自動的に文字列に変換されます
 - 最後に `.save(path)` で保存します
-- 要素が文字「,」を含む場合、その要素は自動的に「"」で囲んで保存されます
+- 要素が文字「,」を含む場合、その要素は「"」で囲んで保存されます
 
 ```cpp
 # include <Siv3D.hpp>
@@ -132,7 +137,7 @@ void Main()
 	csv.writeRow(U"Shield", 300, 3);
 	csv.writeRow(U"Carrot Seed", 20, 4);
 	csv.writeRow(U"aa, bb, cc", 10, 5);
-	csv.writeRow(Point{ 20,30 }, Palette::Red, 100);
+	csv.writeRow(Point{ 20, 30 }, Palette::Red, 100);
 
 	// 保存
 	csv.save(U"tutorial.csv");
@@ -155,7 +160,7 @@ Carrot Seed,20,4
 ```
 
 
-## 55.3 CSV の更新
+## 55.4 CSV の更新
 - 読み込んだ CSV データの一部を変更したうえで、ファイルに再保存することができます
 
 ```cpp
@@ -185,9 +190,26 @@ void Main()
 	}
 }
 ```
+```csv title="tutorial.csv" hl_lines="3-4 15"
+Name,Value
+Window.title,My application
+Window.width,1280
+Window.height,720
+Window.sizable,false
+Scene.background,"(0.8, 0.9, 1.0)"
+Array.values,"11, 22, 33, 44, 55"
+Items.count,3
+Item.label,Forest
+Item.pos,"(100, 100)"
+Item.label,Ocean
+Item.pos,"(300, 200)"
+Item.label,Mountain
+Item.pos,"(500, 100)"
+Hello.Siv3D,12345
+```
 
 
-## 55.4 INI の読み込み
+## 55.5 INI の読み込み
 - INI ファイルをパースしてデータを読み込むには `INI` クラスを使います
 - `INI` のコンストラクタ引数に、読み込みたいテキストファイルのパスを渡します
 - ファイルパスは、実行ファイルがあるフォルダ（開発中は App フォルダ）を基準とする相対パスか、絶対パスを使用します
@@ -222,73 +244,66 @@ void Main()
 		// セクション名
 		Print << U"[{}]"_fmt(section.section);
 
-		// セクション内のすべてのキーを列挙
-		for (const auto& key : section.keys)
+		// セクション内のすべてのレコードを列挙する
+		for (auto&& [key, value] : section.keys)
 		{
-			// キーの名前と値
-			Print << U"{} = {}"_fmt(key.name, key.value);
+			// キーと値
+			Print << U"{} = {}"_fmt(key, value);
 		}
 	}
-	Print << U"-----";
+	Print << U"----";
 
-	// Windows セクションの title キーの値（テキスト）を取得
-	const String windowTitle = ini[U"Window.title"];
+	// 各要素を取得し、ウィンドウやシーンの設定に反映させる
+	{
+		const String title	= ini[U"Window.title"];
+		const int32 width	= Parse<int32>(ini[U"Window.width"]);
+		const int32 height	= Parse<int32>(ini[U"Window.height"]);
+		const bool sizable	= Parse<bool>(ini[U"Window.sizable"]);
+		const ColorF background = Parse<ColorF>(ini[U"Scene.background"]);
 
-	// Windows セクションの width キーの値（テキスト）を int32 型の値に変換
-	const int32 windowWidth = Parse<int32>(ini[U"Window.width"]);
+		Window::SetTitle(title);
+		Window::Resize(width, height);
+		Window::SetStyle(sizable ? WindowStyle::Sizable : WindowStyle::Fixed);
+		Scene::SetBackground(background);
+	}
 
-	// Windows セクションの height キーの値（テキスト）を int32 型の値に変換
-	const int32 windowHeight = Parse<int32>(ini[U"Window.height"]);
-
-	// Windows セクションの sizable キーの値（テキスト）を bool 型の値に変換
-	const bool windowSizable = Parse<bool>(ini[U"Window.sizable"]);
-
-	// Scene セクションの background キーの値（テキスト）を ColorF 型の値に変換
-	const ColorF sceneBackground = Parse<ColorF>(ini[U"Scene.background"]);
-
-	Window::SetTitle(windowTitle);
-	Window::Resize(windowWidth, windowHeight);
-	Window::SetStyle(windowSizable ? WindowStyle::Sizable : WindowStyle::Fixed);
-	Scene::SetBackground(sceneBackground);
-
-	// Array セクションの values キーの値（テキスト）を ',' で区切って配列にし、それぞれの要素を int32 型の値に変換
-	Array<int32> values = ini[U"Array.values"].split(U',').map(Parse<int32>);
-	Print << values;
+	{
+		const Array<int32> values = ini[U"Array.values"].split(U',').map(Parse<int32>);
+		Print << values;
+	}
 
 	// アイテムの配列を INI データから作成
 	Array<Item> items;
 	{
-		const size_t itemsCount = Parse<size_t>(ini[U"Items.count"]);
+		const size_t itemCount = Parse<size_t>(ini[U"Items.count"]);
 
-		for (auto i : step(itemsCount))
+		for (size_t i = 0; i < itemCount; ++i)
 		{
-			Item item;
-			item.label = ini[U"Item{}.label"_fmt(i)];
-			item.pos = Parse<Point>(ini[U"Item{}.pos"_fmt(i)]);
-			items << item;
+			items << Item
+			{
+				.label = ini[U"Item{}.label"_fmt(i)],
+				.pos = Parse<Point>(ini[U"Item{}.pos"_fmt(i)]),
+			};
 		}
 	}
 
-	// アイテム描画用のフォント
-	const Font font{ 30, Typeface::Bold };
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
 
 	while (System::Update())
 	{
-		// アイテムを描画
+		// アイテムを描画する
 		for (const auto& item : items)
 		{
 			const Rect rect{ item.pos, 180, 80 };
-
 			rect.draw();
-
-			font(item.label).drawAt(rect.center(), ColorF{ 0.25 });
+			font(item.label).drawAt(30, rect.center(), ColorF{ 0.1 });
 		}
 	}
 }
 ```
 
 
-## 55.5 INI の書き出し
+## 55.6 INI の書き出し
 - INI ファイルを書き出すには、空の INI オブジェクトを作成し、`.addSection(セクション名)`, `.write(セクション, キー, 値)` などを使ってセクションやレコードを追加していきます
 - 最後に `.save(path)` で保存します
 
@@ -319,9 +334,20 @@ void Main()
 	}
 }
 ```
+```ini title="tutorial.ini"
+[Item]
+Sword = 500
+Arrow = 400
+Shield = 300
+Carrot Seed = 20
+
+[Setting]
+pos = (20, 30)
+color = (255, 0, 0, 255)
+```
 
 
-## 55.6 INI の更新
+## 55.7 INI の更新
 - 読み込んだ INI データの一部を変更したうえで、ファイルに再保存することができます
 
 ```cpp
@@ -355,9 +381,36 @@ void Main()
 	}
 }
 ```
+```ini title="tutorial.ini" hl_lines="3-4 24-25"
+[Window]
+title = My application
+width = 1280
+height = 720
+sizable = false
+
+[Scene]
+background = (0.8, 0.9, 1.0)
+
+[Array]
+values = 11, 22, 33, 44, 55
+
+[Items]
+count = 3
+
+[Item0]
+label = Forest
+pos = (100, 100)
+
+[Item1]
+label = Ocean
+pos = (300, 200)
+
+[Siv3D]
+message = Hello!
+```
 
 
-## 55.7 JSON の読み込み
+## 55.8 JSON の読み込み
 - JSON ファイルをパースしてデータを読み込むには `JSON` クラスを使います
 - 読み込みたいテキストファイルのパスを `JSON::Load()` に渡します
 - ファイルパスは、実行ファイルがあるフォルダ（開発中は App フォルダ）を基準とする相対パスか、絶対パスを使用します
@@ -391,14 +444,14 @@ void ShowObject(const JSON& value)
 	case JSONValueType::Object:
 		for (const auto& object : value)
 		{
-			Console << U"[" << object.key << U"]";
+			Console << U"[{}]"_fmt(object.key);
 			ShowObject(object.value);
 		}
 		break;
 	case JSONValueType::Array:
-		for (const auto& element : value.arrayView())
+		for (auto&& [index, object] : value)
 		{
-			ShowObject(element);
+			ShowObject(object);
 		}
 		break;
 	case JSONValueType::String:
@@ -423,27 +476,29 @@ void Main()
 		throw Error{ U"Failed to load `config.json`" };
 	}
 
-	// JSON データをすべて表示
+	// JSON データをすべて表示する
 	ShowObject(json);
 
 	Console << U"-----";
 
-	// 要素のパスで値を取得
-	const String windowTitle = json[U"Window"][U"title"].getString();
-	const int32 windowWidth = json[U"Window"][U"width"].get<int32>();
-	const int32 windowHeight = json[U"Window"][U"height"].get<int32>();
-	const bool windowSizable = json[U"Window"][U"sizable"].get<bool>();
-	const ColorF sceneBackground = json[U"Scene"][U"background"].get<ColorF>();
+	// 各要素を取得し、ウィンドウやシーンの設定に反映させる
+	{
+		const String title	= json[U"Window"][U"title"].getString();
+		const int32 width	= json[U"Window"][U"width"].get<int32>();
+		const int32 height	= json[U"Window"][U"height"].get<int32>();
+		const bool sizable	= json[U"Window"][U"sizable"].get<bool>();
+		const ColorF background = json[U"Scene"][U"background"].get<ColorF>();
 
-	Window::SetTitle(windowTitle);
-	Window::Resize(windowWidth, windowHeight);
-	Window::SetStyle(windowSizable ? WindowStyle::Sizable : WindowStyle::Fixed);
-	Scene::SetBackground(sceneBackground);
+		Window::SetTitle(title);
+		Window::Resize(width, height);
+		Window::SetStyle(sizable ? WindowStyle::Sizable : WindowStyle::Fixed);
+		Scene::SetBackground(background);
+	}
 
 	// 数値の配列を JSON データから作成
 	Array<int32> values;
 	{
-		for (const auto& object : json[U"Array"][U"values"].arrayView())
+		for (auto&& [index, object] : json[U"Array"][U"values"])
 		{
 			values << object.get<int32>();
 		}
@@ -453,36 +508,35 @@ void Main()
 	// アイテムの配列を JSON データから作成
 	Array<Item> items;
 	{
-		for (const auto& object : json[U"Items"].arrayView())
+		for (auto&& [index, object] : json[U"Items"])
 		{
-			Item item;
-			item.label = object[U"label"].getString();
-			item.pos = Point{ object[U"pos"][U"x"].get<int32>(), object[U"pos"][U"y"].get<int32>() };
-			items << item;
+			items << Item
+			{
+				.label = object[U"label"].getString(),
+				.pos = Point{ object[U"pos"][U"x"].get<int32>(), object[U"pos"][U"y"].get<int32>() },
+			};
 		}
 	}
 
-	// アイテム描画用のフォント
-	const Font font{ 30, Typeface::Bold };
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
 
 	while (System::Update())
 	{
-		// アイテムを描画
+		// アイテムを描画する
 		for (const auto& item : items)
 		{
 			const Rect rect{ item.pos, 180, 80 };
-
 			rect.draw();
-
-			font(item.label).drawAt(rect.center(), ColorF{ 0.25 });
+			font(item.label).drawAt(30, rect.center(), ColorF{ 0.1 });
 		}
 	}
 }
 ```
 
 
-## 55.8 JSON の書き出し
+## 55.9 JSON の書き出し
 - JSON ファイルを書き出すには、`JSON` の `operator[]` でデータを追加し、最後に `.save(path)` で保存します
+- オブジェクトは辞書順に記録されます
 - 配列の場合 `json[U"Array"].push_back(100);` のようにして要素を追加できます
 
 ```cpp
@@ -500,17 +554,48 @@ void Main()
 	json[U"Setting"][U"pos"] = Point{ 20, 30 };
 	json[U"Setting"][U"color"] = Palette::Red;
 
+	json[U"Array"].push_back(10);
+	json[U"Array"].push_back(20);
+	json[U"Array"].push_back(30);
+
 	json.save(U"tutorial.json");
-	
+
 	while (System::Update())
 	{
 
 	}
 }
 ```
+```json title="tutorial.json"
+{
+  "Array": [
+    10,
+    20,
+    30
+  ],
+  "Item": {
+    "Arrow": {
+      "price": 400
+    },
+    "Carrot Seed": {
+      "price": 20
+    },
+    "Shield": {
+      "price": 300
+    },
+    "Sword": {
+      "price": 500
+    }
+  },
+  "Setting": {
+    "color": "(255, 0, 0, 255)",
+    "pos": "(20, 30)"
+  }
+}
+```
 
 
-## 55.9 JSON の更新
+## 55.10 JSON の更新
 - 読み込んだ JSON データの一部を変更したうえで、ファイルに再保存することができます
 
 ```cpp
@@ -544,15 +629,77 @@ void Main()
 	}
 }
 ```
+```json title="tutorial.json"
+{
+  "Items": [
+    {
+      "label": "Forest",
+      "pos": {
+        "x": 100,
+        "y": 100
+      }
+    },
+    {
+      "label": "Ocean",
+      "pos": {
+        "x": 300,
+        "y": 200
+      }
+    }
+  ],
+  "Scene": {
+    "background": "(0.8, 0.9, 1.0)"
+  },
+  "Siv3D": {
+    "message": "Hello!"
+  },
+  "Window": {
+    "height": 720,
+    "sizable": false,
+    "title": "My application",
+    "width": 1280
+  }
+}
+```
 
 
-## 55.10 TOML の読み込み
+## 55.11 JSON の文字列化
+- `JSON` の `.format()` は JSON データを整形された `String` に変換します
+- `.formatMinimum()` は、整形のための空白や改行を省略した、最小限の `String` を返します
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	JSON json = JSON::Load(U"example/json/config.json");
+
+	const String s = json.formatMinimum();
+
+	Print << s;
+
+	while (System::Update())
+	{
+
+	}
+}
+```
+```txt title="出力"
+{"Array":{"values":[11,22,33,44,55]},"Items":[{"label":"Forest","pos":{"x":100,"y":100}},{"label":"Ocean","pos":{"x":300,"y":200}},{"label":"Mountain","pos":{"x":500,"y":100}}],"Scene":{"background":"(0.8, 0.9, 1.0)"},"Window":{"height":600,"sizable":false,"title":"My application","width":800}}
+```
+
+
+## 55.12 TOML の読み込み
 - TOML ファイルをパースしてデータを読み込むには `TOMLReader` クラスを使います
 - `TOMLReader` のコンストラクタ引数に、読み込みたいテキストファイルのパスを渡します
 - ファイルパスは、実行ファイルがあるフォルダ（開発中は App フォルダ）を基準とする相対パスか、絶対パスを使用します
 - 読み込みに成功したかどうかは、`if (toml)`, `if (not toml)` で調べられます
 - TOML データは次のサンプルの `ShowTable()` 関数のようにして再帰的に全要素を走査できます
 - 添え字演算子 `[U"NAME1.NAME2.NAME3..."]` によってパスを指定して目的の値を直接得ることもできます
+
+!!! warning "日本語は未サポート"
+	- Siv3D v0.6 では、`TOMLReader` を使って非 ASCII 文字を含む TOML ファイルを読み込むことができません
+	- 将来のバージョンで対応予定です
 
 ```cpp
 # include <Siv3D.hpp>
@@ -708,7 +855,7 @@ void Main()
 ```
 
 
-## 55.11 XML の読み込み
+## 55.13 XML の読み込み
 - XML ファイルをパースしてデータを読み込むには `XMLReader` クラスを使います
 - `XMLReader` のコンストラクタ引数に、読み込みたいテキストファイルのパスを渡します
 - ファイルパスは、実行ファイルがあるフォルダ（開発中は App フォルダ）を基準とする相対パスか、絶対パスを使用します
