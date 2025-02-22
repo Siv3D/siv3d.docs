@@ -86,6 +86,22 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+true
+true
+false
+false
+----
+true
+false
+false
+false
+----
+false
+true
+false
+false
+```
 
 
 ## 53.3 絶対パス
@@ -106,6 +122,11 @@ void Main()
 	}
 }
 ```
+```txt title="出力例"
+C:/Users/siv3d/Desktop/projects/hello/hello/App/example/windmill.png
+C:/Users/siv3d/Desktop/projects/hello/hello/App/example/video/
+```
+
 
 
 ## 53.4 相対パスへの変換
@@ -130,6 +151,10 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+example/windmill.png
+example/video/
+```
 
 
 ## 53.5 ファイルの名前・拡張子
@@ -149,32 +174,27 @@ void Main()
 
 void Main()
 {
-	const FilePath path1 = U"example/windmill.png";
-	const FilePath path2 = U"example/video/";
+	const FilePath path = U"example/windmill.png";
 
 	// ファイル名を取得する
-	Print << FileSystem::FileName(path1);
-	Print << FileSystem::FileName(path2);
-
-	Print << U"----";
+	Print << FileSystem::FileName(path);
 
 	// 拡張子を除いたファイル名を取得する
-	Print << FileSystem::BaseName(path1);
-	Print << FileSystem::BaseName(path2);
-
-	Print << U"----";
+	Print << FileSystem::BaseName(path);
 
 	// 拡張子を小文字で取得する
-	Print << FileSystem::Extension(path1);
-	Print << FileSystem::Extension(path2);
-
-	Print << U"----";
+	Print << FileSystem::Extension(path);
 
 	while (System::Update())
 	{
 
 	}
 }
+```
+```txt title="出力"
+windmill.png
+windmill
+png
 ```
 
 
@@ -198,10 +218,18 @@ void Main()
 	}
 }
 ```
+```txt title="出力例"
+C:/Users/siv3d/Desktop/projects/hello/hello/App/example/
+C:/Users/siv3d/Desktop/projects/hello/hello/App/example/video/
+C:/Users/siv3d/Desktop/projects/hello/hello/App/example/
+C:/Users/siv3d/Desktop/projects/hello/hello/
+```
+
 
 
 ## 53.7 カレントディレクトリ
 - 現在のカレントディレクトリを取得するには、`FileSystem::CurrentDirectory()` を使います
+- カレントディレクトリを変更するには、`FileSystem::ChangeCurrentDirectory(path)` を使います
 
 ```cpp
 # include <Siv3D.hpp>
@@ -216,6 +244,9 @@ void Main()
 
 	}
 }
+```
+```txt title="出力例"
+C:/Users/siv3d/Desktop/projects/hello/hello/App/
 ```
 
 
@@ -235,6 +266,9 @@ void Main()
 
 	}
 }
+```
+```txt title="出力例"
+C:/Users/siv3d/Desktop/projects/hello/Intermediate/hello/Debug/hello(debug).exe
 ```
 
 
@@ -257,6 +291,10 @@ void Main()
 	}
 }
 ```
+```txt title="出力例"
+C:/Users/siv3d/Desktop/projects/hello/hello/App/
+```
+
 
 
 ## 53.10 特殊フォルダのパス
@@ -304,6 +342,19 @@ void Main()
 	}
 }
 ```
+```txt title="出力例"
+Desktop: C:/Users/siv3d/Desktop/
+Documents: C:/Users/siv3d/Documents/
+LocalAppData: C:/Users/siv3d/AppData/Local/
+Pictures: C:/Users/siv3d/Pictures/
+Music: C:/Users/siv3d/Music/
+Videos: C:/Users/siv3d/Videos/
+SystemFonts: C:/Windows/Fonts/
+LocalFonts: C:/Windows/Fonts/
+UserFonts: C:/Windows/Fonts/
+UserProfile: C:/Users/siv3d/
+ProgramFiles: C:/Program Files/
+```
 
 
 ## 53.11 一時ディレクトリ
@@ -323,6 +374,10 @@ void Main()
 	}
 }
 ```
+```txt title="出力例"
+C:/Users/siv3d/AppData/Local/Temp/
+```
+
 
 
 ## 53.12 一時ファイル
@@ -349,6 +404,10 @@ void Main()
 	}
 }
 ```
+```txt title="出力例"
+example/8763c77e-8a6c-4b63-9432-b6bf9f6ca95a.tmp
+C:/Users/siv3d/AppData/Local/Temp/5533afc3-c401-4731-81b1-62c938871332.tmp
+```
 
 
 ## 53.13 パスの結合
@@ -374,6 +433,13 @@ void Main()
 
 	}
 }
+```
+```txt title="出力"
+example/windmill.png
+example/windmill.png
+----
+example/
+example/
 ```
 
 
@@ -407,6 +473,13 @@ void Main()
 	}
 }
 ```
+```txt title="出力例"
+253286
+247KiB
+41456337
+39.5MiB
+```
+
 
 ## 53.15 タイムスタンプ
 - ファイルの作成日時を取得するには `FileSystem::CreationTime(path)` を使います
@@ -450,6 +523,11 @@ void Main()
 
 	}
 }
+```
+```txt title="出力例"
+CreationTime: 2025-01-18 11:18:34
+LastWriteTime: 2022-01-18 18:27:24
+LastAccessTime: 2025-01-18 11:18:34
 ```
 
 
@@ -559,6 +637,9 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+false
+```
 
 
 ## 53.18 ディレクトリの作成
@@ -585,6 +666,11 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+true
+true
+```
+
 
 ### 53.18.2 パスを指定して、その親ディレクトリまでのディレクトリを作成
 - あるパスについて、その親ディレクトリまでのディレクトリを作成するには、`FileSystem::CreateParentDirectories(path)` を使います
@@ -608,6 +694,10 @@ void Main()
 
 	}
 }
+```
+```txt title="出力"
+true
+true
 ```
 
 
@@ -633,6 +723,10 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+true
+true
+```
 
 
 ## 53.20 削除
@@ -646,14 +740,12 @@ void Main()
 
 void Main()
 {
-	// ファイルやディレクトリをコピーする
+	// ファイルをコピーして削除する
 	FileSystem::Copy(U"example/windmill.png", U"image.png");
-	FileSystem::Copy(U"example/video/", U"test5/");
-
-	// ファイルを削除する
 	Print << FileSystem::Remove(U"image.png");
 
-	// ディレクトリを削除する
+	// ディレクトリをコピーして削除する
+	FileSystem::Copy(U"example/video/", U"test5/");
 	Print << FileSystem::Remove(U"test5/");
 
 	while (System::Update())
@@ -661,6 +753,10 @@ void Main()
 
 	}
 }
+```
+```txt title="出力"
+true
+true
 ```
 
 
@@ -684,6 +780,9 @@ void Main()
 
 	}
 }
+```
+```txt title="出力"
+true
 ```
 
 
@@ -710,6 +809,10 @@ void Main()
 
 	}
 }
+```
+```txt title="出力"
+true
+true
 ```
 
 
