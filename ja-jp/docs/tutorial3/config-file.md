@@ -1,5 +1,7 @@
 # 55. 設定ファイル
-CSV, INI, JSON, TOML, XML などの設定ファイルを読み書きする方法を学びます。Siv3D では次の設定ファイル読み書きに対応しています：
+CSV, INI, JSON, TOML, XML などの設定ファイルを読み書きする方法を学びます。
+
+Siv3D は次の設定ファイルの読み書きに対応しています：
 
 | ファイル形式 | 読み込み | 書き出し |
 |--|:--:|:--:|
@@ -10,9 +12,12 @@ CSV, INI, JSON, TOML, XML などの設定ファイルを読み書きする方法
 | XML | ✅ |  |
 
 ## 55.1 CSV の読み込み
-CSV ファイルをパースしてデータを読み込むには `CSV` クラスを使います。`CSV` のコンストラクタ引数に、読み込みたいテキストファイルのパスを渡します。このファイルパスは、実行ファイルがあるフォルダ（開発中は App フォルダ）を基準とする相対パスか、絶対パスを使用します。ファイルが存在しない場合やパースに失敗した場合など、ロードに失敗したかどうかは `if (not csv)` で調べられます。
-
-CSV データは `Array<Array<String>>` の形式で読み込まれ、添え字演算子 `[row][col]` によって row 行 col 列目のテキストを取得できます。row, col は 0 からカウントすることに注意しましょう。
+- CSV ファイルをパースしてデータを読み込むには `CSV` クラスを使います
+- `CSV` のコンストラクタ引数に、読み込みたいテキストファイルのパスを渡します
+- ファイルパスは、実行ファイルがあるフォルダ（開発中は App フォルダ）を基準とする相対パスか、絶対パスを使用します
+- 読み込みに成功したかどうかは、`if (csv)`, `if (not csv)` で調べられます
+- CSV データは `Array<Array<String>>` の形式で読み込まれ、添え字演算子 `[row][col]` によって row 行 col 列目のテキストを取得できます
+- `row`, `col` は `0` からカウントします
 
 ```cpp
 # include <Siv3D.hpp>
@@ -103,7 +108,9 @@ void Main()
 
 
 ## 55.2 CSV の書き出し
-CSV ファイルを書き出すには、`CSV` の `.writeRow()`, `.write()`, `.newLine()` などで先頭の行からデータを追加し、最後に `.save(path)` で保存します。要素が「,」を含む場合、自動的に「"」で囲んで保存します。
+- CSV ファイルを書き出すには、空の CSV オブジェクトを作成し、`.writeRow()`, `.write()`, `.newLine()` などを使って先頭の行からデータを追加していきます
+- 最後に `.save(path)` で保存します
+- 要素が文字「,」を含む場合、その要素は自動的に「"」で囲んで保存されます
 
 ```cpp
 # include <Siv3D.hpp>
@@ -113,17 +120,19 @@ void Main()
 	CSV csv;
 
 	// 1 行書き込む場合
-	csv.writeRow(U"item", U"price");
-	csv.writeRow(U"Sword", 500);
+	csv.writeRow(U"item", U"price", U"count");
+	csv.writeRow(U"Sword", 500, 1);
 
 	// 1 項目ずつ書き込む場合
 	csv.write(U"Arrow");
 	csv.write(400);
+	csv.write(2);
 	csv.newLine();
 
-	csv.writeRow(U"Shield", 300);
-	csv.writeRow(U"Carrot Seed", 20);
-	csv.writeRow(Point{ 20,30 }, Palette::Red);
+	csv.writeRow(U"Shield", 300, 3);
+	csv.writeRow(U"Carrot Seed", 20, 4);
+	csv.writeRow(U"aa, bb, cc", 10, 5);
+	csv.writeRow(Point{ 20,30 }, Palette::Red, 100);
 
 	// 保存
 	csv.save(U"tutorial.csv");
@@ -135,18 +144,19 @@ void Main()
 }
 ```
 出力されるファイル
-```csv:tutorial.csv
-item,price
-Sword,500
-Arrow,400
-Shield,300
-Carrot Seed,20
-"(20, 30)","(255, 0, 0, 255)"
+```csv title="tutorial.csv"
+item,price,count
+Sword,500,1
+Arrow,400,2
+Shield,300,3
+Carrot Seed,20,4
+"aa, bb, cc",10,5
+"(20, 30)","(255, 0, 0, 255)",100
 ```
 
 
 ## 55.3 CSV の更新
-読み込んだ CSV のデータの一部を変更して保存し直すことができます。
+- 読み込んだ CSV データの一部を変更したうえで、ファイルに再保存することができます
 
 ```cpp
 # include <Siv3D.hpp>
@@ -164,8 +174,8 @@ void Main()
 	csv[2][1] = Format(1280);
 	csv[3][1] = Format(720);
 
-    // データを追加する
-    csv.writeRow(U"Hello.Siv3D", 12345);
+	// データを追加する
+	csv.writeRow(U"Hello.Siv3D", 12345);
 
 	csv.save(U"tutorial.csv");
 
@@ -178,9 +188,11 @@ void Main()
 
 
 ## 55.4 INI の読み込み
-INI ファイルをパースしてデータを読み込むには `INI` クラスを使います。`INI` のコンストラクタ引数に、読み込みたいテキストファイルのパスを渡します。このファイルパスは、実行ファイルがあるフォルダ（開発中は App フォルダ）を基準とする相対パスか、絶対パスを使用します。ファイルが存在しない場合やパースに失敗した場合など、ロードに失敗したかどうかは `if (not ini)` で調べられます。
-
-INI データはセクションごとに `HashTable<String, String>` の形式で読み込まれ、添え字演算子 `[U"SECTION.NAME"]` によってセクション SECTION にある名前 NAME のテキストを取得できます。
+- INI ファイルをパースしてデータを読み込むには `INI` クラスを使います
+- `INI` のコンストラクタ引数に、読み込みたいテキストファイルのパスを渡します
+- ファイルパスは、実行ファイルがあるフォルダ（開発中は App フォルダ）を基準とする相対パスか、絶対パスを使用します
+- 読み込みに成功したかどうかは、`if (ini)`, `if (not ini)` で調べられます
+- INI データは、セクションごとに `HashTable<String, String>` の形式で読み込まれ、添え字演算子 `[U"SECTION.NAME"]` によってセクション SECTION にある名前 NAME のテキストを取得できます
 
 ```cpp
 # include <Siv3D.hpp>
@@ -277,7 +289,8 @@ void Main()
 
 
 ## 55.5 INI の書き出し
-INI ファイルを書き出すには、`INI` の `.addSection()`, `.write()` でデータを追加し、最後に `.save(path)` で保存します。
+- INI ファイルを書き出すには、空の INI オブジェクトを作成し、`.addSection(セクション名)`, `.write(セクション, キー, 値)` などを使ってセクションやレコードを追加していきます
+- 最後に `.save(path)` で保存します
 
 ```cpp
 # include <Siv3D.hpp>
@@ -309,7 +322,7 @@ void Main()
 
 
 ## 55.6 INI の更新
-読み込んだ INI のデータの一部を変更して保存し直すことができます。
+- 読み込んだ INI データの一部を変更したうえで、ファイルに再保存することができます
 
 ```cpp
 # include <Siv3D.hpp>
@@ -345,9 +358,12 @@ void Main()
 
 
 ## 55.7 JSON の読み込み
-JSON ファイルをパースしてデータを読み込むには `JSON` クラスを使います。読み込みたいテキストファイルのパスを `JSON::Load()` に渡します。このファイルパスは、実行ファイルがあるフォルダ（開発中は App フォルダ）を基準とする相対パスか、絶対パスを使用します。ファイルが存在しない場合やパースに失敗した場合など、ロードに失敗したかどうかは `if (not json)` で調べられます。
-
-JSON データは次のサンプルの `ShowObject()` 関数のようにして再帰的に全要素を走査できます。また、添え字演算子 `[U"NAME1"][U"NAME2]...` によってパスを指定して目的の値を直接得ることもできます。
+- JSON ファイルをパースしてデータを読み込むには `JSON` クラスを使います
+- 読み込みたいテキストファイルのパスを `JSON::Load()` に渡します
+- ファイルパスは、実行ファイルがあるフォルダ（開発中は App フォルダ）を基準とする相対パスか、絶対パスを使用します
+- 読み込みに成功したかどうかは、`if (json)`, `if (not json)` で調べられます
+- JSON データは次のサンプルの `ShowObject()` 関数のようにして再帰的に全要素を走査できます
+- 添え字演算子 `[U"NAME1"][U"NAME2]...` によってパスを指定して目的の値を直接得ることもできます
 
 ```cpp
 # include <Siv3D.hpp>
@@ -466,7 +482,8 @@ void Main()
 
 
 ## 55.8 JSON の書き出し
-JSON ファイルを書き出すには、`JSON` の `operator[]` でデータを追加し、最後に `.save(path)` で保存します。
+- JSON ファイルを書き出すには、`JSON` の `operator[]` でデータを追加し、最後に `.save(path)` で保存します
+- 配列の場合 `json[U"Array"].push_back(100);` のようにして要素を追加できます
 
 ```cpp
 # include <Siv3D.hpp>
@@ -494,7 +511,7 @@ void Main()
 
 
 ## 55.9 JSON の更新
-読み込んだ JSON のデータの一部を変更して保存し直すことができます。
+- 読み込んだ JSON データの一部を変更したうえで、ファイルに再保存することができます
 
 ```cpp
 # include <Siv3D.hpp>
@@ -530,9 +547,12 @@ void Main()
 
 
 ## 55.10 TOML の読み込み
-TOML ファイルをパースしてデータを読み込むには `TOMLReader` クラスを使います。`TOMLReader` のコンストラクタ引数に、読み込みたいテキストファイルのパスを渡します。このファイルパスは、実行ファイルがあるフォルダ（開発中は App フォルダ）を基準とする相対パスか、絶対パスを使用します。ファイルが存在しない場合やパースに失敗した場合など、ロードに失敗したかどうかは `if (not toml)` で調べられます。
-
-TOML データは次のサンプルの `ShowObject()` 関数のようにして再帰的に全要素を走査できます。また、添え字演算子 `[U"NAME1.NAME2.NAME3..."]` によってパスを指定して目的の値を直接得ることもできます。
+- TOML ファイルをパースしてデータを読み込むには `TOMLReader` クラスを使います
+- `TOMLReader` のコンストラクタ引数に、読み込みたいテキストファイルのパスを渡します
+- ファイルパスは、実行ファイルがあるフォルダ（開発中は App フォルダ）を基準とする相対パスか、絶対パスを使用します
+- 読み込みに成功したかどうかは、`if (toml)`, `if (not toml)` で調べられます
+- TOML データは次のサンプルの `ShowTable()` 関数のようにして再帰的に全要素を走査できます
+- 添え字演算子 `[U"NAME1.NAME2.NAME3..."]` によってパスを指定して目的の値を直接得ることもできます
 
 ```cpp
 # include <Siv3D.hpp>
@@ -689,9 +709,11 @@ void Main()
 
 
 ## 55.11 XML の読み込み
-XML ファイルをパースしてデータを読み込むには `XMLReader` クラスを使います。`XMLReader` のコンストラクタ引数に、読み込みたいテキストファイルのパスを渡します。このファイルパスは、実行ファイルがあるフォルダ（開発中は App フォルダ）を基準とする相対パスか、絶対パスを使用します。ファイルが存在しない場合やパースに失敗した場合など、ロードに失敗したかどうかは `if (not xml)` で調べられます。
-
-XML データは次のサンプルの `ShowElements()` 関数のようにして再帰的に全要素を走査できます。
+- XML ファイルをパースしてデータを読み込むには `XMLReader` クラスを使います
+- `XMLReader` のコンストラクタ引数に、読み込みたいテキストファイルのパスを渡します
+- ファイルパスは、実行ファイルがあるフォルダ（開発中は App フォルダ）を基準とする相対パスか、絶対パスを使用します
+- 読み込みに成功したかどうかは、`if (xml)`, `if (not xml)` で調べられます
+- XML データは次のサンプルの `ShowElements()` 関数のようにして再帰的に全要素を走査できます
 
 ```cpp
 # include <Siv3D.hpp>
@@ -861,48 +883,3 @@ void Main()
 	}
 }
 ```
-
-
-## 55.12 （サンプル）JSON の配列へのアクセス
-JSON で配列にアクセスする方法は 2 通りあります。
-
-```cpp
-# include <Siv3D.hpp>
-
-JSON MakeJSON()
-{
-	JSON json;
-	json[U"Game"][U"score"] = { 10, 20, 50, 100 };
-	return json;
-}
-
-void Main()
-{
-	const JSON json = MakeJSON();
-
-	// by index
-	{
-		const size_t size = json[U"Game"][U"score"].size();
-		for (size_t i = 0; i < size; ++i)
-		{
-			Print << json[U"Game"][U"score"][i].get<int32>();
-		}
-	}
-
-	Print << U"----";
-
-	// range based
-	{
-		for (const auto& elem : json[U"Game"][U"score"].arrayView())
-		{
-			Print << elem.get<int32>();
-		}
-	}
-
-	while (System::Update())
-	{
-
-	}
-}
-```
-
