@@ -1,18 +1,11 @@
 # 59. ゲームパッド
+ゲームパッドによる入力を扱う方法を学びます。
 
-## XX.X XXXXX
-- XXX
+## 59.1 XInput 対応コントローラ
+- Windows PC に接続されている XInput 対応コントローラは `XInput` を通してアクセスできます
+- 最大 4 台までの接続を同時に扱えます
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/xxxx/1.png)
-
-```cpp
-
-```
-
-ゲームパッドの入力を扱う方法を学びます。
-
-## 32.1 XInput 対応コントローラの入力を扱う
-PC に接続されている XInput 対応コントローラには `XInput` を通してアクセスできます。最大 4 台までを同時に扱えます。
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/gamepad/1.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -105,13 +98,13 @@ void Main()
 
 		// 左トリガー
 		{
-			leftTrigger.draw(AlphaF(0.25));
+			leftTrigger.draw(ColorF{ 1.0, 0.25 });
 			leftTrigger.stretched((controller.leftTrigger - 1.0) * leftTrigger.h, 0, 0, 0).draw();
 		}
 
 		// 右トリガー
 		{
-			rightTrigger.draw(AlphaF(0.25));
+			rightTrigger.draw(ColorF{ 1.0, 0.25 });
 			rightTrigger.stretched((controller.rightTrigger - 1.0) * rightTrigger.h, 0, 0, 0).draw();
 		}
 
@@ -165,8 +158,11 @@ void Main()
 ```
 
 
-## 32.2 Joy-Con の入力を扱う
-PC に接続されている Nintendo Switch の Joy-Con の情報を、`JoyConL` または `JoyConR` を通して取得できます。
+## 59.2 Joy-Con
+- PC に Bluetooth 接続されている Nintendo Switch Joy-Con の情報を、`JoyConL` または `JoyConR` を通して取得できます
+- macOS では正常に動作しない場合があります
+
+<video src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/gamepad/2.mp4?raw=true" autoplay loop muted playsinline></video>
 
 ```cpp
 # include <Siv3D.hpp>
@@ -200,7 +196,7 @@ void Main()
 			if (joy.button2.down())
 			{
 				effect.add([center = left](double t) {
-					Circle{ center, 20 + t * 200 }.drawFrame(10, 0, AlphaF(1.0 - t));
+					Circle{ center, 20 + t * 200 }.drawFrame(10, 0, ColorF{ 1.0, (1.0 - t) });
 					return t < 1.0;
 					});
 			}
@@ -219,7 +215,7 @@ void Main()
 			if (joy.button2.down())
 			{
 				effect.add([center = right](double t) {
-					Circle{ center, 20 + t * 200 }.drawFrame(10, 0, AlphaF(1.0 - t));
+					Circle{ center, 20 + t * 200 }.drawFrame(10, 0, ColorF{ 1.0, (1.0 - t) });
 					return t < 1.0;
 					});
 			}
@@ -237,8 +233,11 @@ void Main()
 ```
 
 
-## 32.3 Pro コントローラーの入力を扱う
-PC に接続されている Nintendo Switch の Pro コントローラーの情報を、`ProController` を通して取得できます。
+## 59.3 Pro コントローラーの入力を扱う
+- PC に Bluetooth 接続されている Nintendo Switch Pro コントローラーの情報を、`ProController` を通して取得できます
+- macOS では正常に動作しない場合があります
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/gamepad/3.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -280,8 +279,11 @@ void Main()
 ```
 
 
-## 32.4 ゲームパッドの入力を扱う
-あらゆる種類のゲームパッドの情報を取得できる汎用的なクラスが `Gamepad` です。ユーザインデックスは `Gamepad.MaxUserCount - 1` で定義される 15 が最大値です。
+## 59.4 ゲームパッドの入力を扱う
+- あらゆる種類のゲームパッドの情報を取得できる汎用的なクラスが `Gamepad` です
+- 最大 16 台までの接続を同時に扱えます
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/gamepad/4.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -324,17 +326,17 @@ void Main()
 ```
 
 
-## 32.5 接続されているゲームパッドを列挙する
-PC に接続されているゲームパッドの一覧を `System::EnumerateGamepads()` で取得できます。結果は `Array<GamepadInfo>` 型で返されます。
+## 59.5 接続されているゲームパッドを列挙する
+- PC に接続されているゲームパッドの一覧を `System::EnumerateGamepads()` で取得できます
+- 結果は `Array<GamepadInfo>` 型で返されます
+- `GamepadInfo` 型のメンバ変数は次の通りです：
 
-`GamepadInfo` 型のメンバ変数は次の通りです。
-
-| メンバ変数 | 説明 |
+| コード | 説明 |
 |--|--|
-| `playerIndex` | `Gamepad` で使うプレイヤーインデックス |
-| `vendorID` | ベンダー ID |
-| `productID` | プロダクト ID |
-| `name` | ゲームパッドの名称 |
+| `.playerIndex` | `Gamepad` で使うプレイヤーインデックス |
+| `.vendorID` | ベンダー ID |
+| `.productID` | プロダクト ID |
+| `.name` | ゲームパッドの名称 |
 
 ```cpp
 # include <Siv3D.hpp>
@@ -352,8 +354,21 @@ void Main()
 	}
 }
 ```
+```txt title="出力例"
+[0] Controller (XBOX 360 For Windows) (0x45e 0x28e)
+[1] Wireless Gamepad (0x57e 0x2006)
+[2] Wireless Gamepad (0x57e 0x2007)
+[3] Wireless Controller (0x54c 0x9cc)
+[4] Wireless Gamepad (0x57e 0x2009)
+```
 
 
-## 32.6 キーボード入力との連係
-`Gamepad` の `buttons` 要素や、XInput の各ボタン、JoyCon の各ボタンは `Input` 型なので、チュートリアル 16.6 のキーコンフィグで用いることができます。
+## 59.6 キーボード入力との連係
+- `Gamepad` の `buttons` 要素や、XInput の各ボタン、JoyCon の各ボタンは `Input` 型です
+- **チュートリアル 42** のキーコンフィグにも組み込むことができます
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/gamepad/6.png)
 
+```cpp
+
+```

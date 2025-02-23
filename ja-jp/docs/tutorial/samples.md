@@ -355,7 +355,7 @@ Siv3D では短いコードでゲームやアプリを開発できます。い�
 				ground.draw(Palette::Green);
 
 				// 現在操作できる絵文字を描画する
-				textures[index].drawAt(Cursor::PosF(), AlphaF(0.5 + Periodic::Sine0_1(1s) * 0.5));
+				textures[index].drawAt(Cursor::PosF(), ColorF{ 1.0 (0.5 + Periodic::Sine0_1(1s) * 0.5) });
 			}
 
 			// 2D カメラの操作を描画する

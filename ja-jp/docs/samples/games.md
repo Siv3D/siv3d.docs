@@ -803,7 +803,7 @@
 				ground.draw(Palette::Green);
 
 				// 現在操作できる絵文字を描画する
-				textures[index].drawAt(Cursor::PosF(), AlphaF(0.5 + Periodic::Sine0_1(1s) * 0.5));
+				textures[index].drawAt(Cursor::PosF(), ColorF{ 1.0, (0.5 + Periodic::Sine0_1(1s) * 0.5) });
 			}
 
 			// 2D カメラの操作を描画する
@@ -978,7 +978,7 @@
 						effect.add([pos = *itEnemy](double t)
 						{
 							const double t2 = ((0.5 - t) * 2.0);
-							Circle{ pos, (10 + t * 280) }.drawFrame((20 * t2), AlphaF(t2 * 0.5));
+							Circle{ pos, (10 + t * 280) }.drawFrame((20 * t2), ColorF{ 1.0, (t2 * 0.5) });
 							return (t < 0.5);
 						});
 
