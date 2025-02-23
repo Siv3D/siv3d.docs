@@ -1,5 +1,5 @@
 # 62. HTTP クライアント
-Web ページへのアクセスや、ファイルのダウンロードなどの HTTP リクエストを行う方法を学びます。
+Web ページへのアクセスや、ファイルダウンロードなどの HTTP リクエストを行う方法を学びます。
 
 ## 62.1 URL
 - URL を Siv3D のコードで表現するときは、`String` 型のエイリアス（別名）である `URL` 型を使うと意図が明確になります
@@ -217,6 +217,7 @@ void Main()
 
 ## 62.7 ファイルダウンロード（非同期、進捗確認、キャンセル）
 - `AsyncHTTPTask` オブジェクトに、ダウンロードの進捗を問い合わせたい場合、`.getProgress()` を使うと `HTTPProgress` 型で進捗を取得できます
+- ダウンロードのタスクを取り消したい場合は、`AsyncHTTPTask` の `.cancel()` を呼びます
 - `HTTPProgress` は次のようなメンバ変数を持ちます
 
 | コード | 説明 |
@@ -227,8 +228,6 @@ void Main()
 | `Optional<int64> download_total_bytes` | ダウンロードするファイルの合計サイズ（バイト）。不明な場合 none |
 | `Optional<int64> upload_total_bytes` | アップロードするファイルの合計サイズ（バイト）。不明な場合 none |
 
-- ダウンロードのタスクを取り消したい場合は、`AsyncHTTPTask` の `.cancel()` を呼びます
-	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/http/7.png)
 
 ```cpp

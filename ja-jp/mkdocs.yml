@@ -148,7 +148,7 @@ nav:
   - 入門チュートリアル 4:
     - 61. ファイルダイアログ: tutorial4/file-dialog.md
     - 62. HTTP クライアント: tutorial4/http.md
-    - 63. 画像編集: tutorial4/image.md
+    - 63. 画像処理: tutorial4/image.md
     - 64. ドラッグ & ドロップ: tutorial4/dragdrop.md
     - 65. クリップボード: tutorial4/clipboard.md
     - 66. ユーザ環境の取得: tutorial4/user.md
