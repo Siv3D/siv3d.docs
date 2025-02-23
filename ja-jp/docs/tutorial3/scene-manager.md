@@ -1,39 +1,35 @@
 # 58. シーン管理
-
-## XX.X XXXXX
-- XXX
-	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/xxxx/1.png)
-
-```cpp
-
-```
+ゲームのタイトル、ゲームプレイ、リザルトなど、個々の場面（シーン）を個別のクラスに実装し、それらを行き来することで全体の流れを構成する「シーン管理」のための機能を学びます。
 
 
+## 58.1 シーン管理の概要
+- シーン管理を使うと、複雑なアプリケーション（とくにゲーム）を効率よく開発できます
+- シーン管理では、ゲームのタイトル、ゲームプレイ、リザルトなど、個々の場面（シーン）を個別のクラスに実装し、通常はそのうちの 1 つのシーンを実行します
+- シーン管理機能 `SceneManager` を使うと、シーン間でデータを共有したり、遷移先のシーンを指定して滑らかに画面を切り替えたりする処理を簡単に記述できます
 
-# 31. シーン管理
-シーン管理（または **シーン遷移**）を使うと、複雑なアプリケーション（とくにゲーム）を効率よく開発できます。シーン管理では、ゲームのタイトル、ゲームプレイ、リザルトなど、個々の場面（シーン）を個別のクラスに実装し、それらを行き来することで全体の流れを設計します。
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/scene-manager/1.png)
 
-![](/images/doc_v6/tutorial/31/0.png)
+!!! warning "「シーン」という言葉について"
+	- シーン管理における「シーン」とは、個々のゲームの場面や、その実装クラスのことを指します
+	- **チュートリアル 9** で説明した、画面のことを表すシーンや、`Scene::` 名前空間の機能とは異なる概念です
 
-Siv3D のシーン管理機能 `SceneManager` を使うと、各シーンがデータを共有したり、遷移先のシーンを指定したり、フェードイン・フェードアウトで滑らかに画面を切り替えたりする処理を簡単に記述できます。
 
-:::message
-シーン管理における「シーン」とは、個々のゲームの場面や、その実装クラスのことを指します。チュートリアル 15 で説明した画面のことを表すシーンや `Scene::` 名前空間の機能とは異なるので注意しましょう。
-:::
-
-## 31.1 シーンの基本
-まずは、個々のシーンを区別する値（ステート）の型を決めます。例えば `String` 型を選択したとすると、タイトルシーンは `U"Title"`, ゲームシーンは `U"Game"` のように `String` 型の値で区別することになります。以降のサンプルではクラス名とシーンの名前を一致させていますが、必ずしも従う必要はありません。
-
-ステートとして選択した型を使い `using App = SceneManager<String>;` のようにシーンマネージャークラスの型を決定し `App` と名付けます。次に、各シーンのクラスを `App::Scene` を継承して実装します。通常はコンストラクタと、`.update()`, `.draw()` の 3 つのメンバ関数を実装します。
-
-`Main()` 関数に `App` 型のオブジェクトを作り、各シーンクラスを `.add()` で登録します。あとはメインループの中で `App::update()` を毎フレーム呼び出すと、最初に登録したシーンが自動的に実行されます。シーンでは毎フレーム `.update()` 関数が先に呼ばれ、その次に `.draw()` 関数が呼ばれます。
-
-シーンが 1 つだけのサンプルを見てみましょう。
+## 58.2 シーン管理の基本
+- まずは、個々のシーンを区別する値（ステート）の型を決めます
+	- `String` 型を選択した場合、タイトルシーンは `U"Title"`, ゲームシーンは `U"Game"` のように、`String` 型の値で個々のシーンを区別することになります
+	- 方針に応じて、`enum class` や `int32` など、他の型を選択することもできます
+- 次に、`using App = SceneManager<ステートの型>;` で、シーンマネージャークラスの型を決定し、`App` と名付けます
+- 各シーンのクラスを `App::Scene` を継承して実装します
+	- 通常は、コンストラクタ、`.update()`, `.draw()` の 3 つのメンバ関数を実装します
+- `Main()` 関数に `App` 型のオブジェクトを作成し、各シーンを `.add()` で登録します
+- メインループの中で `App::update()` を毎フレーム呼び出すと、最初に登録したシーンが自動的に実行されます
+	- シーンに実装した `.update()` と `.draw()` 関数がここで呼ばれます
+- 最も簡単な例として、シーンが 1 つだけ（タイトルシーンだけ）のサンプルを次に示します
 
 ```cpp
 # include <Siv3D.hpp>
 
+// ステートの型は String
 using App = SceneManager<String>;
 
 // タイトルシーン
@@ -41,43 +37,43 @@ class Title : public App::Scene
 {
 public:
 
-	// コンストラクタ（必ず実装）
+	// コンストラクタ（必ず実装する）
 	Title(const InitData& init)
 		: IScene{ init }
 	{
 
 	}
 
-	// 更新関数（オプション）
+	// 更新関数
 	void update() override
 	{
 
 	}
 
-	// 描画関数（オプション）
+	// 描画関数
 	void draw() const override
 	{
-		Scene::SetBackground(ColorF{ 0.3, 0.4, 0.5 });
+		Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-		FontAsset(U"TitleFont")(U"My Game").drawAt(400, 100);
+		FontAsset(U"TitleFont")(U"My Game").drawAt(60, Vec2{ 400, 100 });
 
-		Circle{ Cursor::Pos(), 50 }.draw(Palette::Orange);
+		Circle{ Cursor::Pos(), 50 }.draw(Palette::Seagreen);
 	}
 };
 
 void Main()
 {
-	FontAsset::Register(U"TitleFont", 60, Typeface::Heavy);
+	FontAsset::Register(U"TitleFont", FontMethod::MSDF, 48, Typeface::Bold);
 
 	// シーンマネージャーを作成
 	App manager;
 
-	// タイトルシーン（名前は "Title"）を登録
+	// タイトルシーン（名前は "Title"）を登録する
 	manager.add<Title>(U"Title");
 
 	while (System::Update())
 	{
-		// 現在のシーンを実行
+		// 現在のシーンを実行する
 		// シーンに実装した .update() と .draw() が実行される
 		if (not manager.update())
 		{
