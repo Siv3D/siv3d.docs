@@ -7,7 +7,7 @@
 - シーン管理では、ゲームのタイトル、ゲームプレイ、リザルトなど、個々の場面（シーン）を個別のクラスに実装し、通常はそのうちの 1 つのシーンを実行します
 - シーン管理機能 `SceneManager` を使うと、シーン間でデータを共有したり、遷移先のシーンを指定して滑らかに画面を切り替えたりする処理を簡単に記述できます
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/scene-manager/1.png)
+<div class="noshadow-90"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/scene-manager/1.png"></div>
 
 !!! warning "「シーン」という言葉について"
 	- シーン管理における「シーン」とは、個々のゲームの場面や、その実装クラスのことを指します
@@ -95,7 +95,7 @@
 - シーンを遷移するたび、古いシーンのインスタンスは破棄され、新しいシーンのクラスがインスタンス化されます
 - フェードイン・フェードアウト中は、シーンの `.update()` は呼ばれず、`.draw()` だけが呼ばれます
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/scene-manager/3.png)
+<video src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/scene-manager/3.mp4?raw=true" autoplay loop muted playsinline></video>
 
 ??? memo "コード"
 	```cpp
@@ -224,7 +224,7 @@
 - シーンの切り替え時間をカスタマイズするには、`.changeScene(次のシーンのステート, 遷移時間)` を使います（デフォルトでは 2 秒）
 - 最初のシーンのフェードインについては `.changeScene()` が使えないため、代わりに `ScneManager` の `.init(state, 遷移時間)` を使います
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/scene-manager/4.png)
+<video src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/scene-manager/4.mp4?raw=true" autoplay loop muted playsinline></video>
 
 ??? memo "コード"
 	```cpp
@@ -367,7 +367,7 @@
 - 引数 `t` は、フェード開始時に `0.0`, 終了時に `1.0` になるよう増えていく値です（単位は秒ではありません）
 - 次のサンプルコードは、`.drawFadeIn()`, `.drawFadeOut()` をオーバーライドして、独自のシーン切り替えエフェクトを描画しています
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/scene-manager/5.png)
+<video src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/scene-manager/5.mp4?raw=true" autoplay loop muted playsinline></video>
 
 ??? memo "コード"
 	```cpp
@@ -1006,6 +1006,8 @@
 !!! info "トラブルなくプロジェクトのファイルを増やす方法（Windows）"
 	1. エクスプローラー上で `Main.cpp` のコピーを 7 つ作成し、それぞれのファイル名にリネームします。これにより、作成したソースファイルの文字コードのトラブルを回避できます
 	2. Visual Studio のソリューションエクスプローラーのプロジェクト名の部分に、エクスプローラー から 7 つのファイルをドラッグ＆ドロップします。これにより、新しいソースファイルがプロジェクトに参加し、ビルド対象となります
+
+	![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/scene-manager/8.png)
 
 ??? memo "Main.cpp"
 	```cpp
