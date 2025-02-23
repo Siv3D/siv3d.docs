@@ -370,5 +370,29 @@ void Main()
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/gamepad/6.png)
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	// 円を表示する操作
+	const InputGroup input1 = (KeyLeft | MouseL | XInput(0).buttonA);
+
+	// 正方形を表示する操作
+	const InputGroup input2 = (KeyRight | MouseR | XInput(0).buttonB);
+
+	while (System::Update())
+	{
+		if (input1.pressed())
+		{
+			Circle{ 200, 300, 100 }.draw(ColorF{ 0.1 });
+		}
+
+		if (input2.pressed())
+		{
+			RectF{ Arg::center(600, 300), 200 }.draw(ColorF{ 0.1 });
+		}
+	}
+}
 ```
