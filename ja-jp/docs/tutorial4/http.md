@@ -2,51 +2,93 @@
 Web ページへのアクセスや、ファイルのダウンロードなどの HTTP リクエストを行う方法を学びます。
 
 ## 62.1 URL
-- XXX
-ファイルのダウンロードなどの HTTP リクエストを行う方法を学びます。
-
-URL を Siv3D のプログラムで表現するときは、`String` 型のエイリアス（別名）である `URL` 型を使うとコードが読みやすくなります。
-
-
-	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/xxxx/1.png)
-
-```cpp
-
-```
-
-
-## 62.2 Web ブラウザで URL を開く
-- XXX
-	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/xxxx/1.png)
-
-```cpp
-
-```
-
-
-## 62.3 Twitter の投稿画面を開く
-- XXX
-	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/xxxx/1.png)
-
-```cpp
-
-```
-
-
-## 62.4 ファイルダウンロード（同期）
-指定した URL からファイルをダウンロードしたい場合は `SimpleHTTP::Save(url, saveFilePath)` を使うのが簡単です。戻り値の `HTTPResponse` を調べると、リクエストの結果を得られます。`.isOK()` が `true` であれば成功です。
+- URL を Siv3D のコードで表現するときは、`String` 型のエイリアス（別名）である `URL` 型を使うと意図が明確になります
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
+	const URL url = U"https://example.com";
+
+	while (System::Update())
+	{
+
+	}
+}
+```
+
+
+## 62.2 Web ブラウザで URL を開く
+- `System::LaunchBrowser(url)` は、指定した URL を Web ブラウザで開きます
+- メインループの中で関数を繰り返し呼ぶと、大量にページが開かれるため、注意する必要があります
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	while (System::Update())
+	{
+		if (SimpleGUI::Button(U"Visit Website", Vec2{ 40, 40 }))
+		{
+			// Web ページをブラウザで開く
+			System::LaunchBrowser(U"https://siv3d.github.io/ja-jp/");
+		}
+	}
+}
+```
+
+
+## 62.3 Twitter の投稿画面を開く
+- `Twitter::OpenTweetWindow(text)` は、指定したテキストを含むツイートを投稿するための Twitter（X）の投稿画面を開きます
+- メインループの中で関数を繰り返し呼ぶと、大量にページが開かれるため、注意する必要があります
+- Twitter API の性質上、自動で画像を添付することはできませんが、クリップボードに画像をコピー（**チュートリアル 65**）して、ユーザが画像の投稿をしやすくすることはできます
+
+```cpp
+# include <Siv3D.hpp>
+
+void PostRsultTweet(int32 score)
+{
+	const String text = U"I got {} points in the game!\n#Siv3D\nhttps://siv3d.github.io/ja-jp/"_fmt(score);
+
+	Twitter::OpenTweetWindow(text);
+}
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	while (System::Update())
+	{
+		if (SimpleGUI::Button(U"Share Score", Vec2{ 40, 40 }))
+		{
+			PostRsultTweet(123);
+		}
+	}
+}
+```
+
+
+## 62.4 ファイルダウンロード（同期）
+- 指定した URL からファイルをダウンロードしたい場合は `SimpleHTTP::Save(url, saveFilePath)` を使うのが簡単です
+- 戻り値の `HTTPResponse` を調べると、リクエストの結果を得られます。`.isOK()` が `true` であれば成功です
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
 	// Siv3D のロゴ
 	const URL url = U"https://raw.githubusercontent.com/Siv3D/siv3d.docs.images/master/logo/logo.png";
+
+	// 保存先のファイルパス
 	const FilePath saveFilePath = U"logo.png";
+
 	Texture texture;
 
 	// ファイルを同期ダウンロード
@@ -57,7 +99,7 @@ void Main()
 	}
 	else
 	{
-		Print << U"Failed.";
+		Print << U"Failed";
 	}
 
 	while (System::Update())
@@ -72,15 +114,20 @@ void Main()
 
 
 ## 62.5 レスポンスの可視化
-次のようにレスポンスのステータス行とヘッダーを取得できます。
+- 次のようなコードで、レスポンスのステータス行とヘッダーを可視化できます：
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	// Siv3D のロゴ
 	const URL url = U"https://raw.githubusercontent.com/Siv3D/siv3d.docs.images/master/logo/logo.png";
-	const FilePath saveFilePath = DateTime::Now().format(U"mmss\'.png\'");
+
+	// 保存先のファイルパス
+	const FilePath saveFilePath = U"logo.png";
 
 	if (const auto response = SimpleHTTP::Save(url, saveFilePath))
 	{
@@ -101,24 +148,36 @@ void Main()
 
 	while (System::Update())
 	{
-		texture.draw();
+		if (texture)
+		{
+			texture.draw();
+		}
 	}
 }
 ```
 
 
 ## 62.6 ファイルダウンロード（非同期）
-ファイルのダウンロード中にメインスレッドの処理が止まるのを避けたい場合は、ファイルの非同期ダウンロードタスクを開始する `SimpleHTTP::SaveAsync(url, saveFilePath)` を使います。戻り値の `AsyncHTTPTask` 型のオブジェクトを通して、タスクの完了を調べ、タスクが完了したらレスポンスを調べます。
-
-`AsyncHTTPTask` の `.isReady()` が `true` になったあとに `.getResponse()` でレスポンスを取得すると、それ以降 `.isReady()` は `false` を返します。
+- ファイルのダウンロード中にメインスレッドの処理が止まるのを避けたい場合は、`SimpleHTTP::SaveAsync(url, saveFilePath)` を使います
+- この関数は、ファイルの非同期ダウンロードタスクを開始し、`AsyncHTTPTask` 型のオブジェクトを返します
+- このオブジェクトにタスクの完了を問い合わせ、タスクが完了していたらレスポンスを調べます
+- 具体的には、`AsyncHTTPTask` の `.isReady()` が `true` になったら、`.getResponse()` でレスポンスを取得します
+- レスポンスの取得以降は、`.isReady()` は `false` を返します
+- タスクの進行中（ダウンロード中）は `.isDownloading()` が `true` を返します
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	// Siv3D のロゴ
 	const URL url = U"https://raw.githubusercontent.com/Siv3D/siv3d.docs.images/master/logo/logo.png";
+
+	// 保存先のファイルパス
 	const FilePath saveFilePath = U"logo2.png";
+
 	Texture texture;
 
 	// ファイルの非同期ダウンロードを開始
@@ -136,8 +195,15 @@ void Main()
 			}
 			else
 			{
-				Print << U"Failed.";
+				Print << U"Failed";
 			}
+		}
+
+		// ダウンロード中の場合
+		if (task.isDownloading())
+		{
+			// くるくる回る円を描く
+			Circle{ 400, 300, 50 }.drawArc((Scene::Time() * 120_deg), 300_deg, 4, 4);
 		}
 
 		if (texture)
@@ -149,19 +215,55 @@ void Main()
 ```
 
 
-## 62.7 ファイルダウンロード（非同期、キャンセル、進捗確認）
-`AsyncHTTPTask` は `.cancel()` でタスクをキャンセルできます。進捗を取得したい場合は `.getProgress()` を使うと `HTTPProgress` 型で返します。
+## 62.7 ファイルダウンロード（非同期、進捗確認、キャンセル）
+- `AsyncHTTPTask` オブジェクトに、ダウンロードの進捗を問い合わせたい場合、`.getProgress()` を使うと `HTTPProgress` 型で進捗を取得できます
+- `HTTPProgress` は次のようなメンバ変数を持ちます
+
+| コード | 説明 |
+|---|---|
+| `HTTPAsyncStatus status` | 進行状況 |
+| `int64 downloaded_bytes` | ダウンロードしたサイズ（バイト） |
+| `int64 uploaded_bytes` | アップロードしたサイズ（バイト） |
+| `Optional<int64> download_total_bytes` | ダウンロードするファイルの合計サイズ（バイト）。不明な場合 none |
+| `Optional<int64> upload_total_bytes` | アップロードするファイルの合計サイズ（バイト）。不明な場合 none |
+
+- ダウンロードのタスクを取り消したい場合は、`AsyncHTTPTask` の `.cancel()` を呼びます
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/http/7.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
+String ToString(HTTPAsyncStatus status)
+{
+	switch (status)
+	{
+	case HTTPAsyncStatus::None_:
+		return U"None_";
+	case HTTPAsyncStatus::Downloading:
+		return U"Downloading";
+	case HTTPAsyncStatus::Failed:
+		return U"Failed";
+	case HTTPAsyncStatus::Canceled:
+		return U"Canceled";
+	case HTTPAsyncStatus::Succeeded:
+		return U"Succeeded";
+	default:
+		return U"Unknown";
+	}
+}
+
 void Main()
 {
-	const Font font{ 24, Typeface::Medium };
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-	// HTTP 通信の検証用サービス (http://httpbin.org) を利用
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+
+	// HTTP 通信のテスト用サービス (https://httpbin.org) を利用
 	// 1024 バイトのデータを 4 秒かけてダウンロードする URL
-	const URL url = U"http://httpbin.org/drip?duration=4&numbytes=1024&code=200&delay=0";
+	const URL url = U"https://httpbin.org/drip?duration=4&numbytes=1024&code=200&delay=0";
+
+	// 保存先のファイルパス
 	const FilePath saveFilePath = U"drip.txt";
 
 	AsyncHTTPTask task;
@@ -175,33 +277,14 @@ void Main()
 
 		if (SimpleGUI::Button(U"Cancel", Vec2{ 180, 20 }, 140, (task.getStatus() == HTTPAsyncStatus::Downloading)))
 		{
-			// タスクをキャンセル
+			// タスクをキャンセルする
 			task.cancel();
 		}
 
 		// タスクの進捗
 		const HTTPProgress progress = task.getProgress();
 
-		if (progress.status == HTTPAsyncStatus::None_)
-		{
-			font(U"status: None_").draw(20, 60);
-		}
-		else if (progress.status == HTTPAsyncStatus::Downloading)
-		{
-			font(U"status: Downloading").draw(20, 60);
-		}
-		else if (progress.status == HTTPAsyncStatus::Failed)
-		{
-			font(U"status: Failed").draw(20, 60);
-		}
-		else if (progress.status == HTTPAsyncStatus::Canceled)
-		{
-			font(U"status: Canceled").draw(20, 60);
-		}
-		else if (progress.status == HTTPAsyncStatus::Succeeded)
-		{
-			font(U"status: Succeeded").draw(20, 60);
-		}
+		font(U"status: {}"_fmt(ToString(progress.status))).draw(24, Vec2{ 20, 60 }, ColorF{ 0.1 });
 
 		if (progress.status == HTTPAsyncStatus::Downloading)
 		{
@@ -209,20 +292,18 @@ void Main()
 			const int64 downloaded = progress.downloaded_bytes;
 
 			// ダウンロードするファイルのサイズ（バイト）。取得できない場合は none
-			const Optional<int64> total = progress.download_total_bytes;
-
-			if (total)
+			if (const Optional<int64> total = progress.download_total_bytes)
 			{
-				font(U"downloaded: {} bytes / {} bytes"_fmt(downloaded, *total)).draw(20, 100);
+				font(U"downloaded: {} bytes / {} bytes"_fmt(downloaded, *total)).draw(24, Vec2{ 20, 100 }, ColorF{ 0.1 });
 
 				const double progress0_1 = (static_cast<double>(downloaded) / *total);
 				const RectF rect{ 20, 140, 500, 30 };
-				rect.drawFrame(2, 0);
-				RectF{ rect.pos, (rect.w * progress0_1), rect.h }.draw();
+				rect.drawFrame(2, 0, ColorF{ 0.1 });
+				RectF{ rect.pos, (rect.w * progress0_1), rect.h }.draw(ColorF{ 0.1 });
 			}
 			else
 			{
-				font(U"downloaded: {} bytes"_fmt(downloaded)).draw(20, 100);
+				font(U"downloaded: {} bytes"_fmt(downloaded)).draw(24, Vec2{ 20, 100 }, ColorF{ 0.1 });
 			}
 		}
 
@@ -248,12 +329,20 @@ void Main()
 				Print << U"Failed.";
 			}
 		}
+		
+		// ダウンロード中の場合
+		if (task.isDownloading())
+		{
+			// くるくる回る円を描く
+			Circle{ 400, 300, 50 }.drawArc((Scene::Time() * 120_deg), 300_deg, 4, 4);
+		}
 	}
 }
 ```
 
 
-## 62.8 GET リクエスト
+## 62.8 GET（同期）
+- GET リクエストのサンプルです
 
 ```cpp
 # include <Siv3D.hpp>
@@ -262,25 +351,19 @@ void Main()
 {
 	const URL url = U"https://httpbin.org/bearer";
 	const HashTable<String, String> headers = { { U"Authorization", U"Bearer TOKEN123456abcdef" } };
+
+	// 保存先のファイルパス
 	const FilePath saveFilePath = U"auth_result.json";
 
-	if (const auto response = SimpleHTTP::Get(url, headers, saveFilePath))
+	if (SimpleHTTP::Get(url, headers, saveFilePath).isOK())
 	{
-		Console << U"------";
-		Console << response.getStatusLine().rtrimmed();
-		Console << U"status code: " << FromEnum(response.getStatusCode());
-		Console << U"------";
-		Console << response.getHeader().rtrimmed();
-		Console << U"------";
-
-		if (response.isOK())
-		{
-			Print << TextReader{ saveFilePath }.readAll();
-		}
+		const JSON json = JSON::Load(saveFilePath);
+		Print << U"authenticated: " << json[U"authenticated"].get<bool>();
+		Print << U"token: " << json[U"token"].getString();
 	}
 	else
 	{
-		Print << U"Failed.";
+		Print << U"Failed";
 	}
 
 	while (System::Update())
@@ -291,7 +374,53 @@ void Main()
 ```
 
 
-## 62.9 POST リクエスト
+## 62.9 GET（非同期）
+- GET リクエストの非同期版です
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const URL url = U"https://httpbin.org/bearer";
+	const HashTable<String, String> headers = { { U"Authorization", U"Bearer TOKEN123456abcdef" } };
+
+	// 保存先のファイルパス
+	const FilePath saveFilePath = U"auth_result.json";
+
+	AsyncHTTPTask task = SimpleHTTP::GetAsync(url, headers, saveFilePath);
+
+	while (System::Update())
+	{
+		if (task.isReady())
+		{
+			if (task.getResponse().isOK())
+			{
+				const JSON json = JSON::Load(saveFilePath);
+				Print << U"authenticated: " << json[U"authenticated"].get<bool>();
+				Print << U"token: " << json[U"token"].getString();
+			}
+			else
+			{
+				Print << U"Failed.";
+			}
+		}
+		
+		// ダウンロード中の場合
+		if (task.isDownloading())
+		{
+			// くるくる回る円を描く
+			Circle{ 400, 300, 50 }.drawArc((Scene::Time() * 120_deg), 300_deg, 4, 4);
+		}
+	}
+}
+```
+
+
+## 62.10 POST（同期）
+- POST リクエストのサンプルです
 
 ```cpp
 # include <Siv3D.hpp>
@@ -305,25 +434,18 @@ void Main()
 		{ U"body", U"Hello, Siv3D!" },
 		{ U"date", DateTime::Now().format() },
 	}.formatUTF8();
+
+	// 保存先のファイルパス
 	const FilePath saveFilePath = U"post_result.json";
 
-	if (auto response = SimpleHTTP::Post(url, headers, data.data(), data.size(), saveFilePath))
+	if (SimpleHTTP::Post(url, headers, data.data(), data.size(), saveFilePath).isOK())
 	{
-		Console << U"------";
-		Console << response.getStatusLine().rtrimmed();
-		Console << U"status code: " << FromEnum(response.getStatusCode());
-		Console << U"------";
-		Console << response.getHeader().rtrimmed();
-		Console << U"------";
-
-		if (response.isOK())
-		{
-			Print << TextReader{ saveFilePath }.readAll();
-		}
+		const JSON json = JSON::Load(saveFilePath);
+		Print << json.format();
 	}
 	else
 	{
-		Print << U"Failed.";
+		Print << U"Failed";
 	}
 
 	while (System::Update())
@@ -333,3 +455,51 @@ void Main()
 }
 ```
 
+
+## 62.11 POST（非同期）
+- POST リクエストの非同期版です
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const URL url = U"https://httpbin.org/post";
+	const HashTable<String, String> headers = { { U"Content-Type", U"application/json" } };
+	const std::string data = JSON
+	{
+		{ U"body", U"Hello, Siv3D!" },
+		{ U"date", DateTime::Now().format() },
+	}.formatUTF8();
+
+	// 保存先のファイルパス
+	const FilePath saveFilePath = U"post_result.json";
+
+	AsyncHTTPTask task = SimpleHTTP::PostAsync(url, headers, data.data(), data.size(), saveFilePath);
+
+	while (System::Update())
+	{
+		if (task.isReady())
+		{
+			if (task.getResponse().isOK())
+			{
+				const JSON json = JSON::Load(saveFilePath);
+				Print << json.format();
+			}
+			else
+			{
+				Print << U"Failed";
+			}
+		}
+		
+		// ダウンロード中の場合
+		if (task.isDownloading())
+		{
+			// くるくる回る円を描く
+			Circle{ 400, 300, 50 }.drawArc((Scene::Time() * 120_deg), 300_deg, 4, 4);
+		}
+	}
+}
+```
