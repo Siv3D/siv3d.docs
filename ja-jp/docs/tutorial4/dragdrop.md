@@ -162,3 +162,35 @@ void Main()
 	}
 }
 ```
+
+
+## 64.6 ドラッグの開始（Windows）
+- Windows 版では、アプリケーションのウィンドウ上でファイルのドラッグを開始できます
+- `Platform::Windows::DragDrop::MakeDragDrop(ファイルパス)` を呼ぶことで、指定したファイルパスをドラッグ開始します
+- 配列で複数のファイルパスを指定することもできます
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	const Texture texture{ U"example/windmill.png" };
+
+	const Rect rect{ 80, 80, texture.size() };
+
+	while (System::Update())
+	{
+		if (rect.mouseOver())
+		{
+			Cursor::RequestStyle(CursorStyle::Hand);
+
+			if (MouseL.down())
+			{
+				Platform::Windows::DragDrop::MakeDragDrop(U"example/windmill.png");
+			}
+		}
+
+		rect(texture).draw();
+	}
+}
+```
