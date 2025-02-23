@@ -1,5 +1,5 @@
 # Steam
-Siv3D 製の Steam 配信作品の、メディアでの紹介事例です。
+Steam で配信されている Siv3D 作品のメディア掲載事例です。
 
 ## For the GHOSTs
 - [4Gamer.net: フィクションの少女たちと会話をして，友だちになる。PC用ソフト「For the GHOSTs」，Steamで配信開始 :material-open-in-new:](https://www.4gamer.net/games/765/G076537/20240109010/){:target="_blank"}
