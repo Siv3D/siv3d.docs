@@ -3,7 +3,7 @@
 
 ## 20.1 アイテムの描画とクリック判定
 - クリック対象の絵文字と、クリック判定用の円を用意します
-- クリックすされた場合、ランダムな位置に移動します
+- クリックされた場合、ランダムな位置に移動します
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/click/1.png)
 
