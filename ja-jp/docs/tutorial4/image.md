@@ -16,9 +16,147 @@
 
 
 ## 63.2 Image クラスの基本
-- XXX
+- 画像データを扱うときは `Image` クラスを使います
+- `Image` クラスは、画像データを `Gird<Color>` のようなインタフェースで扱います
+- `Color` 型は、`ColorF` 型と異なり、r, g, b, a の各色を `uint8` 型で保持する 4 バイトの構造体です
+- `Color` ⇔ `ColorF` は相互に変換できます
+
+```cpp
+struct Color
+{
+	uint8 r;
+	uint8 g;
+	uint8 b;
+	uint8 a;
+};
+```
+
+- 次のサンプルコードでは、サイズ 400 x 300 の白い画像を作成し、その左上 120 x 60 の領域を青色で塗りつぶします
+- その画像をもとにテクスチャを作成し、シーンに描画します
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/2.png)
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	Image image{ Size{ 400 ,300 }, Palette::White };
+
+	for (int32 y = 0; y < 60; ++y)
+	{
+		for (int32 x = 0; x < 120; ++x)
+		{
+			image[y][x] = Color{ 0, 127, 255 };
+		}
+	}
+
+	const Texture texture{ image };
+
+	while (System::Update())
+	{
+		texture.draw();
+	}
+}
+```
+
+
+## 63.3 XXXX
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/3.png)
+
+```cpp
+
+```
+
+
+## 63.4 XXXX
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/4.png)
+
+```cpp
+
+```
+
+
+## 63.5 XXXX
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/5.png)
+
+```cpp
+
+```
+
+
+## 63.6 XXXX
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/6.png)
+
+```cpp
+
+```
+
+
+## 63.7 XXXX
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/7.png)
+
+```cpp
+
+```
+
+
+## 63.8 XXXX
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/8.png)
+
+```cpp
+
+```
+
+
+## 63.9 XXXX
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/9.png)
+
+```cpp
+
+```
+
+
+## 63.10 XXXX
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/10.png)
+
+```cpp
+
+```
+
+
+## 63.11 XXXX
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/11.png)
+
+```cpp
+
+```
+
+
+## 63.12 XXXX
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/12.png)
 
 ```cpp
 
