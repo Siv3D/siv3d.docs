@@ -90,15 +90,114 @@ void Main()
 }
 ```
 
+- 本章の以降のサンプルコードは、環境変数 `MY_OPENAI_API_KEY` に API キーが設定されていることを前提としています
 
 
-
-## 67.2 XXXXX
+## 67.3 Chat の基本
 - XXX
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/openai/2.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/openai/3.png)
 
 ```cpp
 
 ```
 
+
+## 67.4 Chat の基本（非同期）
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/openai/3.png)
+
+```cpp
+
+```
+
+
+## 67.5 UI の工夫
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/openai/3.png)
+
+```cpp
+
+```
+
+
+## 67.6 ロールと履歴
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/openai/3.png)
+
+```cpp
+
+```
+
+
+## 67.7 ロールプレイングゲーム
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/openai/3.png)
+
+```cpp
+
+```
+
+
+## 67.8 画像生成
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/openai/3.png)
+
+```cpp
+
+```
+
+
+## 67.9 画像生成（非同期）
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/openai/3.png)
+
+```cpp
+
+```
+
+
+## 67.10 画像に関する質問
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/openai/3.png)
+
+```cpp
+
+```
+
+
+## 67.11 複数の画像に関する質問
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/openai/3.png)
+
+```cpp
+
+```
+
+
+## 67.12 テキストの読み上げ
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/openai/3.png)
+
+```cpp
+
+```
+
+
+## 67.13 Embedding
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/openai/3.png)
+
+```cpp
+
+```

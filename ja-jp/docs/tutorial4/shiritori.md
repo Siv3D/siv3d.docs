@@ -1,4 +1,4 @@
-# 71. Web カメラ
+# 68. AI 絵しりとり
 
 ## XX.X XXXXX
 - XXX
