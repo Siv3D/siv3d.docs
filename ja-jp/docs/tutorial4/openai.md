@@ -26,6 +26,7 @@
 - AI が結果を返すとき、入力や出力の長さ（トークン数）に応じて、API の利用料金が発生します
 - 詳しくは [OpenAI | Pricing :material-open-in-new:](https://openai.com/ja-JP/api/pricing/){:target="_blank"} を参照してください。
 - OpenAI API の利用料金は事前チャージ方式のため、使いすぎて請求額が高額になる心配はありません
+	- 本章のサンプルを全部試しても、1 ドルに満たない程度です
 - 料金の使用状況は、OpenAI アカウントのダッシュボードで確認できます
 
 ## 67.2 OpenAI API キー

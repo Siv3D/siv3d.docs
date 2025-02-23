@@ -22,15 +22,15 @@
 
 | フォーマット    | 拡張子                | Windows | macOS | Linux | Web |
 |-----------|--------------------|:-------:|:-----:|:-----:|:---:|
-| WAVE      | .wav               | ✔       | ✔     | ✔     | ✔   |
-| MP3       | .mp3               | ✔       | ✔     | ✔     | ✔*  |
-| AAC       | .m4a               | ✔       | ✔     | ✔     | ✔*  |
-| OggVorbis | .ogg               | ✔       | ✔     | ✔     | ✔   |
-| Opus      | .opus              | ✔       | ✔     | ✔     | ✔   |
-| MIDI      | .mid               | ✔       | ✔     | ✔     | ✔   |
-| WMA       | .wma               | ✔       |       |       |     |
-| FLAC      | .flac              | ✔       | ✔     |       |     |
-| AIFF      | .aif, .aiff, .aifc |         | ✔     |       |     |
+| WAVE      | .wav               | ✅       | ✅     | ✅     | ✅   |
+| MP3       | .mp3               | ✅       | ✅     | ✅     | ✅*  |
+| AAC       | .m4a               | ✅       | ✅     | ✅     | ✅*  |
+| OggVorbis | .ogg               | ✅       | ✅     | ✅     | ✅   |
+| Opus      | .opus              | ✅       | ✅     | ✅     | ✅   |
+| MIDI      | .mid               | ✅       | ✅     | ✅     | ✅   |
+| WMA       | .wma               | ✅       |       |       |     |
+| FLAC      | .flac              | ✅       | ✅     |       |     |
+| AIFF      | .aif, .aiff, .aifc |         | ✅     |       |     |
 
 <small>(*) ビルドオプションの設定と、特別な関数の使用が必要です。</small>
 
