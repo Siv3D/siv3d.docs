@@ -1,6 +1,22 @@
 # 62. HTTP クライアント
+Web ページへのアクセスや、ファイルのダウンロードなどの HTTP リクエストを行う方法を学びます。
 
-## XX.X XXXXX
+## 62.1 URL
+- XXX
+ファイルのダウンロードなどの HTTP リクエストを行う方法を学びます。
+
+URL を Siv3D のプログラムで表現するときは、`String` 型のエイリアス（別名）である `URL` 型を使うとコードが読みやすくなります。
+
+
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/xxxx/1.png)
+
+```cpp
+
+```
+
+
+## 62.2 Web ブラウザで URL を開く
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/xxxx/1.png)
@@ -9,12 +25,18 @@
 
 ```
 
-ファイルのダウンロードなどの HTTP リクエストを行う方法を学びます。
 
-URL を Siv3D のプログラムで表現するときは、`String` 型のエイリアス（別名）である `URL` 型を使うとコードが読みやすくなります。
+## 62.3 Twitter の投稿画面を開く
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/xxxx/1.png)
+
+```cpp
+
+```
 
 
-## 29.1 ファイルを同期ダウンロードする
+## 62.4 ファイルダウンロード（同期）
 指定した URL からファイルをダウンロードしたい場合は `SimpleHTTP::Save(url, saveFilePath)` を使うのが簡単です。戻り値の `HTTPResponse` を調べると、リクエストの結果を得られます。`.isOK()` が `true` であれば成功です。
 
 ```cpp
@@ -49,7 +71,7 @@ void Main()
 ```
 
 
-## 29.2 （サンプル）レスポンスを可視化する
+## 62.5 レスポンスの可視化
 次のようにレスポンスのステータス行とヘッダーを取得できます。
 
 ```cpp
@@ -85,7 +107,7 @@ void Main()
 ```
 
 
-## 29.3 ファイルを非同期ダウンロードする
+## 62.6 ファイルダウンロード（非同期）
 ファイルのダウンロード中にメインスレッドの処理が止まるのを避けたい場合は、ファイルの非同期ダウンロードタスクを開始する `SimpleHTTP::SaveAsync(url, saveFilePath)` を使います。戻り値の `AsyncHTTPTask` 型のオブジェクトを通して、タスクの完了を調べ、タスクが完了したらレスポンスを調べます。
 
 `AsyncHTTPTask` の `.isReady()` が `true` になったあとに `.getResponse()` でレスポンスを取得すると、それ以降 `.isReady()` は `false` を返します。
@@ -127,7 +149,7 @@ void Main()
 ```
 
 
-## 29.4 ファイル非同期ダウンロードする（キャンセル・進捗表示）
+## 62.7 ファイルダウンロード（非同期、キャンセル、進捗確認）
 `AsyncHTTPTask` は `.cancel()` でタスクをキャンセルできます。進捗を取得したい場合は `.getProgress()` を使うと `HTTPProgress` 型で返します。
 
 ```cpp
@@ -231,7 +253,7 @@ void Main()
 ```
 
 
-## 29.5 （サンプル）GET リクエスト
+## 62.8 GET リクエスト
 
 ```cpp
 # include <Siv3D.hpp>
@@ -269,7 +291,7 @@ void Main()
 ```
 
 
-## 29.6 （サンプル）POST リクエスト
+## 62.9 POST リクエスト
 
 ```cpp
 # include <Siv3D.hpp>
