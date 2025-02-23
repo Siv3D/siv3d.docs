@@ -1,26 +1,16 @@
 # 64. ドラッグ & ドロップ
+ドラッグ & ドロップされたファイルの情報を取得する方法を学びます。
 
-## XX.X XXXXX
-- XXX
-	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/xxxx/1.png)
+## 64.1 ドロップされたファイルの取得
+- アプリケーションのウィンドウに対してドラッグ & ドロップされたファイルがあるかを `DragDrop::HasNewFilePaths()` で取得できます
+- この関数が `true` を返したとき、`DragDrop::GetDroppedFilePaths()` を呼ぶことで、ドロップされたファイル一覧を `Array<DroppedFilePath>` 型で取得できます
+- `DroppedFilePath` のメンバ変数は次の通りです：
 
-```cpp
-
-```
-
-ドラッグ&ドロップされたファイルの情報を取得する方法を学びます。
-
-## 64.1 ドロップされたファイルの情報を取得する
-ドラッグ&ドロップされたファイルがあるかを `DragDrop::HasNewFilePaths()` で取得できます。この関数が `true` を返したら、`DragDrop::GetDroppedFilePaths()` を呼ぶと、そのファイルの一覧を `Array<DroppedFilePath>` 型で取得できます。
-
-`DroppedFilePath` のメンバ変数は次の通りです。
-
-| メンバ変数 | 説明 |
+| コード | 説明 |
 |--|--|
 | `FilePath path` | ファイルまたはディレクトリの絶対パス |
 | `Point pos` | ドロップされた位置（シーン座標） |
-| `uint64 timeMillisec` | ドロップされたタイミング (`Time::GetMillisec()` で計測されるアプリ起動時間) |
+| `uint64 timeMillisec` | ドロップされたタイムポイント<br>（`Time::GetMillisec()` で計測されるアプリ起動時間） |
 
 ```cpp
 # include <Siv3D.hpp>
@@ -28,14 +18,12 @@
 void Main()
 {
 	while (System::Update())
-	{		
+	{
 		if (DragDrop::HasNewFilePaths())
 		{
-			for (const auto& dropped : DragDrop::GetDroppedFilePaths())
+			for (auto&& [path, pos, timeMillisec] : DragDrop::GetDroppedFilePaths())
 			{
-				Print << dropped.path // ファイルやディレクトリの絶対パス
-					<< U" @" << dropped.pos // ドロップされた座標
-					<< U" :" << dropped.timeMillisec; // ドロップされたタイミング（Time::GetMillisec())
+				Print << U"{} @{} :{}"_fmt(path, pos, timeMillisec);
 			}
 		}
 	}
@@ -43,8 +31,8 @@ void Main()
 ```
 
 
-## 64.2 ファイルのドロップを禁止する
-ウィンドウにファイルをドロップできないようにするには `DragDrop::AcceptFilePaths(false)` を呼びます。
+## 64.2 ファイルドロップの禁止
+- 現在のアプリケーションのウィンドウに、ファイルをドロップできないようにするには、`DragDrop::AcceptFilePaths(false)` を呼びます
 
 ```cpp
 # include <Siv3D.hpp>
@@ -59,11 +47,9 @@ void Main()
 		// 受け付けないので何もドロップされない
 		if (DragDrop::HasNewFilePaths())
 		{
-			for (const auto& dropped : DragDrop::GetDroppedFilePaths())
+			for (auto&& [path, pos, timeMillisec] : DragDrop::GetDroppedFilePaths())
 			{
-				Print << dropped.path
-					<< U" @" << dropped.pos
-					<< U" :" << dropped.timeMillisec;
+				Print << U"{} @{} :{}"_fmt(path, pos, timeMillisec);
 			}
 		}
 	}
@@ -71,8 +57,24 @@ void Main()
 ```
 
 
-## 64.3 ドロップされたファイルの情報を消去する
-ドロップされたファイルの情報は `DragDrop::GetDroppedFilePaths()` を呼ぶと消去されますが、`DragDrop::Clear()` を使って消去することもできます。
+## 64.3 ドロップされたテキストの取得
+- XXX
+
+```cpp
+
+```
+
+
+## 64.4 テキストドロップの禁止
+- 現在のアプリケーションのウィンドウに、テキストをドロップできないようにするには、`DragDrop::AcceptText(false)` を呼びます
+
+```cpp
+
+```
+
+
+## 64.5 ドロップされたアイテムの情報を消去する
+- ドロップされたアイテムの情報は `DragDrop::GetDroppedFilePaths()` および `DragDrop::GetDroppedText()` を呼ぶことで消去されますが、`DragDrop::Clear()` を使って消去することもできます
 
 ```cpp
 # include <Siv3D.hpp>
@@ -83,15 +85,13 @@ void Main()
 	{		
 		if (DragDrop::HasNewFilePaths())
 		{
-			// ドロップされたアイテムの情報を消去
+			// ドロップされたアイテムの情報を消去する
 			DragDrop::Clear();
 
 			// 消去されているので、何も取得されない
-			for (const auto& dropped : DragDrop::GetDroppedFilePaths())
+			for (auto&& [path, pos, timeMillisec] : DragDrop::GetDroppedFilePaths())
 			{
-				Print << dropped.path
-					<< U" @" << dropped.pos
-					<< U" :" << dropped.timeMillisec;
+				Print << U"{} @{} :{}"_fmt(path, pos, timeMillisec);
 			}
 		}
 	}
@@ -99,23 +99,23 @@ void Main()
 ```
 
 
-## 64.4 ドラッグ中のアイテムの情報を得る
-ウィンドウ上でドラッグ中のアイテムの情報を取得するには `DragDrop::DragOver()` を使います。この関数は `Optional<DragStatus>` を返します。ドラッグ中のアイテムが無い場合は `none` を返します。
+## 64.6 ドラッグ中のアイテムの情報を得る
+- ウィンドウ上でドラッグ中のアイテムの情報を取得するには `DragDrop::DragOver()` を使います
+- この関数は `Optional<DragStatus>` を、ドラッグ中のアイテムが無い場合は `none` を返します
+- `DragStatus` のメンバ変数は次の通りです：
 
-`DragStatus` のメンバ変数は次の通りです。
-
-| メンバ変数 | 説明 |
+| コード | 説明 |
 |--|--|
-| `DragItemType itemType` | ドラッグしているアイテムの種類。`DragItemType::FilePaths` または `DragItemType::Text` |
+| `DragItemType itemType` | ドラッグしているアイテムの種類<br>`DragItemType::FilePaths` または `DragItemType::Text` |
 | `Point cursorPos` | ドラッグ中のカーソルの位置（シーン座標） |
-
-Siv3D はテキスト (`DragItemType::Text`) のドラッグ&ドロップもサポートしていますが、この章のサンプルでは扱いません。
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
 	const Texture icon{ 0xf15b_icon, 40 };
 
 	while (System::Update())
@@ -125,21 +125,18 @@ void Main()
 		{
 			if (status->itemType == DragItemType::FilePaths)
 			{
-				// アイコンを表示
-				icon.drawAt(status->cursorPos, ColorF{ 0.5 });
+				// アイコンを表示する
+				icon.drawAt(status->cursorPos, ColorF{ 0.1 });
 			}
 		}
 
 		if (DragDrop::HasNewFilePaths())
 		{
-			for (const auto& dropped : DragDrop::GetDroppedFilePaths())
+			for (auto&& [path, pos, timeMillisec] : DragDrop::GetDroppedFilePaths())
 			{
-				Print << dropped.path
-					<< U" @" << dropped.pos
-					<< U" :" << dropped.timeMillisec;
+				Print << U"{} @{} :{}"_fmt(path, pos, timeMillisec);
 			}
 		}
 	}
 }
 ```
-

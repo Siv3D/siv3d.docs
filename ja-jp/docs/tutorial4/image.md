@@ -15,7 +15,7 @@
 | GPU（シェーダ）からのアクセス | | ✅ | ✅ |
 
 
-## 63.2 Image クラスの基本
+## 63.2 Image クラスの基本（1）
 - 画像データを扱うときは `Image` クラスを使います
 - `Image` クラスは、画像データを `Gird<Color>` のようなインタフェースで扱います
 - `Color` 型は、`ColorF` 型と異なり、r, g, b, a の各色を `uint8` 型で保持する 4 バイトの構造体です
@@ -63,7 +63,7 @@ void Main()
 ```
 
 
-## 63.3 XXXX
+## 63.3 Image クラスの基本（2）
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/3.png)
@@ -175,37 +175,6 @@ void Main()
 
 
 ## 33.1 Image クラスの基本
-Siv3D で画像データを扱うときは `Image` クラスを使うのが便利です。`Image` クラスでは、画像データを二次元配列クラス `Gird` のようなインタフェースで扱えます。
-
-`Image` クラスは実質的には次のような構造です。
-```cpp
-// 説明のため簡略化
-class Image
-{
-	Array<Color> m_data;
-	uint32 m_width;
-	uint32 m_height;
-};
-```
-
-`Image` 型の変数 `image` に対する、インデックスによる要素へのアクセス `image[y][x] = value;` は、内部では `m_data[y * m_width + x] = value;` になります。また、`Point` 型の値 `pos` による `image[pos] = value;` は、`m_data[pos.y * m_width + pos.x] = value;` になります。
-
-なお、`Color` 型は r, g, b, a の各色を `uint8` 型で保持する、4 バイトの構造体です。
-
-```cpp
-// 説明のため簡略化
-struct Color
-{
-	uint8 r;
-	uint8 g;
-	uint8 b;
-	uint8 a;
-};
-```
-
-画像ファイルから `Image` を作成するには、`Image` のコンストラクタ引数に、読み込みたい画像ファイルのパスを渡します。このファイルパスは、実行ファイルがあるフォルダ（開発中は `App` フォルダ）を基準とする相対パスか、絶対パスを使用します。
-
-また、`Texture` のコンストラクタに `Image` を渡すことで、`Image` が保持する画像データからテクスチャを作成することができます。
 
 次のサンプルでは、マウスカーソルで選択した、画像の任意の位置のピクセル色を取得し表示します。
 
