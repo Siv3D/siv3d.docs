@@ -363,9 +363,12 @@ void Main()
 ```
 
 
-## 59.6 キーボード入力との連係
+## 59.6 Input 型との連係
 - `Gamepad` の `buttons` 要素や、XInput の各ボタン、JoyCon の各ボタンは `Input` 型です
 - **チュートリアル 42** のキーコンフィグにも組み込むことができます
+- 次のサンプルコードの操作は次の通りです：
+	- ← キー、マウスの左ボタン、XInput の A ボタンのいずれかが押されていれば円を描画
+	- → キー、マウスの右ボタン、XInput の B ボタンのいずれかが押されていれば正方形を描画
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/gamepad/6.png)
 
