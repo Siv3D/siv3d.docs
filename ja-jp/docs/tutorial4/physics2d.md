@@ -7,7 +7,7 @@
 | クラス | 説明 |
 | --- | --- |
 | `P2World` | 2D 物理演算のワールド。通常は 1 つだけ作成する |
-| `P2Body` | ワールドに存在する物体。0 個以上（通常は 1 個以上）の部品 `P2Shape` から構成される |
+| `P2Body` | ワールドに存在する物体。<br>0 個以上（通常は 1 個以上）の部品 `P2Shape` から構成される |
 | `P2BodyID` | 物体 `P2Body` に発行される一意な ID |
 | `P2BodyType` | 物体が動的か静的かを表す列挙型 |
 | `P2Shape` | 物体 `P2Body` を構成する部品のインタフェース |
@@ -20,7 +20,7 @@
 | `P2Line` | 部品 `P2Shape` の 1 つで、線分を表す |
 | `P2LineString` | 部品 `P2Shape` の 1 つで、連続する線分の集合を表す |
 | `P2Material` | 部品 `P2Shape` の材質（物理的特性）を表す |
-| `P2Filter` | 部品 `P2Shape` にカテゴリビットフラグを指定し、特定のビットフラグを持つ部品と干渉しないようにする |
+| `P2Filter` | 部品 `P2Shape` にカテゴリビットフラグを指定。<br>特定のビットフラグを持つ部品と干渉しないようにする |
 | `P2Collision` | 2 つの物体にはたらく全ての接触に関する情報。最大 2 つの `P2Contact` を持つ |
 | `P2Contact` | 2 つの物体にはたらく接触に関する情報 |
 | `P2ContactPair` | 2 つの物体が接触しているときのそれらの `P2BodyID` のペア |
@@ -32,9 +32,11 @@
 
 
 ## 69.2 ワールドと更新
-物理演算を行う仮想のワールド `P2World` を作成します。ワールドの状態は `.update()` で更新できます。更新頻度が高いほど、物理演算の精度が上がりますが、より計算コストが高くなります。通常は 200 回/秒で更新するのが良いでしょう。
-
-シーンが 60FPS で更新される場合、1 フレームで 2 回以上のワールドの更新をするということになります。
+- 物理演算を行う仮想のワールド `P2World` を作成します
+- ワールドの状態は `.update()` で更新します
+- 更新頻度が高いほど、物理演算の精度が上がりますが、計算回数が多くなります
+- 通常は 200 回/秒で更新するのが理想的です
+	- シーンが 60 FPS で更新される場合、1 フレームで 2 回以上ワールドを更新します
 
 ??? memo "コード"
 	```cpp hl_lines="7-14 18-22"
@@ -66,15 +68,12 @@
 
 
 ## 69.3 動的な物体
-`world.createCircle(type, center, r)` で、ワールドの `center` cm の位置に半径 `r` cm の円を部品とする物体を作成します。戻り値は `P2Body` で、これを通して物体の状態を取得したり、変更したりします。
-
-`type` では物体の種類を表します。力の影響を受ける動的な物体を作成する場合は `P2Dynamic` を指定します。今回は重力の影響を受けるように `P2Dynamic` を指定します。
-
-重力加速度は、デフォルトでは地球と同じ `Vec2(0, 980)` cm/s^2 です。
-
-ワールドの座標の単位は cm です。また、描画と同じで下に行くほど y 座標が大きくなるため、高さ 300 cm の位置に物体を作成するには、`Vec2(0, -300)` を指定します。
-
-次のコードを実行すると、時間の経過とともに物体が落下していく様子が確認できます。
+- `world.createCircle(type, center, r)` で、ワールドの `center` cm の位置に半径 `r` cm の円を部品とする物体を作成します
+- 戻り値は `P2Body` で、これを通して物体の状態を取得したり、変更したりします
+- `type` は物体の種類を表します。力の影響を受ける動的な物体を作成する場合は `P2Dynamic` を指定します。今回は重力の影響を受けるように `P2Dynamic` を指定します
+- 重力加速度は、デフォルトでは地球と同じ `Vec2{ 0, 980 }` cm/s^2 です
+- 物理演算のワールドの座標の単位は cm です。描画と同じで下に行くほど y 座標が大きくなるため、高さ 300 cm の位置に物体を作成するには、`Vec2{ 0, -300 }` を指定します
+- 次のコードを実行すると、時間の経過とともに物体が落下していく様子を確認できます
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/physics2d/3.png)
 
@@ -116,13 +115,12 @@
 
 
 ## 69.4 物体の削除 (1)
-ワールドに存在する物体が多くなると、CPU の計算コストやメモリの使用量が増えていきます。ゲームのエリア外に出た物体は、ワールドから削除するようにしましょう。
-
-`P2Body` の `.release()` で物体をワールドから削除できます。削除された物体は、以降の更新で無視されます。
-
-`P2Body` は `bool` に暗黙的に変換できます。物体が存在する場合は `true` に、存在しない場合は `false` になります。
-
-物体の状態のチェックは、次のコードのように、1 回の `world.update()` ごとに行うことが望ましいです。
+- ワールドに存在する物体が増えると、CPU の計算コストやメモリの使用量が増えていきます
+- ゲームのエリア外に出た物体は、ワールドから削除するようにしましょう
+- 物体の状態のチェックは、次のコードのように、1 回の `world.update()` ごとに行うことが望ましいです
+- `P2Body` の `.release()` で物体をワールドから削除できます
+- 削除された物体は、以降のワールドの更新には参加しません
+- `P2Body` は `bool` に暗黙的に変換できます。物体が存在する場合は `true` に、存在しない場合は `false` になります
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/physics2d/4.png)
 
@@ -175,11 +173,10 @@
 
 
 ## 69.5 物体の削除 (2)
-複数の物体を扱う場合は `Array<P2Body>` を使うと便利です。配列から削除された `P2Body` は自動的にワールドから削除されます。
-
-物体には一意の ID が割り振られています。`.id()` で ID を取得できます。
-
-次のコードを実行すると、時間の経過とともにゲームのエリア外に出た物体が削除されていく様子が確認できます。
+- 複数の物体を扱う場合は `Array<P2Body>` を使うと便利です
+- 配列から削除された `P2Body` は自動的にワールドから削除されます
+- 物体には一意の ID が割り振られています。`.id()` で ID を取得できます
+- 次のコードを実行すると、時間の経過とともにゲームのエリア外に出た物体が削除されていく様子を確認できます
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/physics2d/5.png)
 
@@ -229,9 +226,8 @@
 
 
 ## 69.6 物体の描画と 2D カメラ
-`P2Body` を `.draw()` すると、形状と状態（位置など）に基づき、物体を画面に描画できます。
-
-2D カメラ（**チュートリアル 49**）と組み合わせると、ワールドを柔軟な視点（中心座標、拡大率）で描画でき便利です。
+- `P2Body` を `.draw()` すると、形状と状態（位置など）に基づき、物体を画面に描画できます。
+- 2D カメラ（**チュートリアル 49**）と組み合わせると、ワールドをさまざまな視点（中心座標、拡大率）で描画でき便利です
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/physics2d/6.png)
 
@@ -300,11 +296,11 @@
 
 
 ## 69.7 静的な物体
-ワールドに固定の床を作成します。`world.createRect(type, center, size);` で、ワールドの `center` cm を中心としサイズが `size` cm である長方形を部品とする物体を作成します。
-
-`type` では物体の種類を表します。常に固定され、力の影響を受けない床や壁のような物体を作成する場合は `P2Static` を指定します。今回は固定の床を作るため `P2Static` を指定します。
-
-次のコードを実行すると、落下した円は、原点からの高さが -15.1 cm 前後のところで止まります。床は原点から上方向に厚みが 5 cm あり、円の半径は 10 cm なので -15 cm の位置になります。さらに、物体間にはシミュレーションを安定化させるための小さな隙間が自動的に挿入されるため、実際には -15.1 cm 前後になります。
+- ワールドに固定の床を作成します
+- `world.createRect(type, center, size);` で、ワールドの `center` cm を中心としサイズが `size` cm である長方形を部品とする物体を作成します
+- `type` は物体の種類を表します。常に固定され、力の影響を受けない床や壁のような物体を作成する場合は `P2Static` を指定します。今回は固定の床を作るため `P2Static` を指定します
+- 次のコードを実行すると、落下した円は、原点からの高さが -15.1 cm 前後のところで止まります
+- 床は原点から上方向に厚みが 5 cm あり、円の半径は 10 cm であるため、理論的には -15 cm の位置になりますが、物体間にはシミュレーションを安定化させるための小さな隙間が自動的に挿入されるため -15.1 cm 前後になります
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/physics2d/7.png)
 
@@ -379,15 +375,16 @@
 
 
 ## 69.8 様々な形の部品
-`Circle`, `RectF`, `Triangle`, `Quad`, `Polygon` を部品とする物体を作成できます。また、`P2Static` 専用で、`Line`, `LineString` 形状を部品とする物体も作成できます。
+- `Circle`, `RectF`, `Triangle`, `Quad`, `Polygon` を部品とする物体を作成できます
+- また、`P2Static` 限定で、`Line`, `LineString` 形状を部品とする物体を作成できます
 
 | 部品の形状 | 物体作成関数 | P2Dynamic にできるか |
 | --- | --- |:---:|
-| 円 | `world.createCircle(type, center, r)` | :material-check: |
-| 長方形 | `world.createRect(type, center, size)` | :material-check: |
-| 三角形 | `world.createTriangle(type, center, triangle)` | :material-check: |
-| 凸な四角形 | `world.createQuad(type, center, quad)` | :material-check: |
-| 多角形 | `world.createPolygon(type, center, polygon)` | :material-check: |
+| 円 | `world.createCircle(type, center, r)` | ✅ |
+| 長方形 | `world.createRect(type, center, size)` | ✅ |
+| 三角形 | `world.createTriangle(type, center, triangle)` | ✅ |
+| 凸な四角形 | `world.createQuad(type, center, quad)` | ✅ |
+| 多角形 | `world.createPolygon(type, center, polygon)` | ✅ |
 | 線分 | `world.createLine(type, center, line)` |  |
 | 線分の集合 | `world.createLineString(type, center, lineString)` |  |
 
@@ -488,7 +485,8 @@
 
 
 ## 69.9 物体から 2D 図形を取得する
-物体は通常 1 個以上の部品からなります。物体の部品の参照を `body.shape(index)` で取得し、それを適切な部品の形状クラスにキャストすることで、ワールドに存在する物体の部品の状態を `Circle` や `Quad` などの 2D 図形として取得できます。
+- 物体は通常 1 個以上の部品から構成されます
+- 物体の部品の参照を `body.shape(index)` で取得し、それを適切な部品の形状クラスにキャストすることで、ワールドに存在する物体の部品の状態を `Circle` や `Quad` などの 2D 図形として取得できます
 
 | 作成関数 | P2ShapeType | 部品の形状クラス | 得られる 2D 図形 |
 | --- | --- | --- | --- |
@@ -500,7 +498,7 @@
 | `world.createLine(type, center, line)` | `P2ShapeType::Line` | `P2Line` | `Line` |
 | `world.createLineString(type, center, lineString)` | `P2ShapeType::LineString` | `P2LineString` | `LineString` |
 
-次のコードでは、最後に追加された物体の部品に輪郭を描画し、その部品にマウスオーバーしている場合はカーソルを手の形に変更します。
+- 次のコードでは、最後に追加された物体の部品に輪郭を描画し、その部品にマウスオーバーしている場合はカーソルを手の形に変更します
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/physics2d/9.png)
 
@@ -665,14 +663,14 @@
 
 
 ## 69.10 部品の材質
-物体の部品を作成する際に、`P2Material` で材質を指定することができます。
+- 物体の部品を作成する際に、`P2Material` で材質を指定できます
 
 | パラメータ | 説明 | デフォルトの値 |
 | --- | --- | --- |
-| `density` | 部品の密度 (kg / m^2) です。大きいほど面積当たりの重さが大きくなります。 | `1.0` |
-| `restitution` | 部品の反発係数です。大きいほど反発しやすくなります。通常は [0.0, 1.0] の範囲です。 | `0.1` |
-| `friction` | 部品の摩擦係数です。大きいほど摩擦が働きます。通常は [0.0, 1.0] の範囲です。 | `0.2` |
-| `restitutionThreshold` | 反発が発生する速度の下限 (m/s) です。部品がこれ以上の速さでぶつかると反発します。 | `1.0` |
+| `density` | 部品の密度 (kg / m^2) 。大きいほど面積当たりの重さが大きくなる | `1.0` |
+| `restitution` | 部品の反発係数。大きいほど反発しやすくなる。通常は [0.0, 1.0] の範囲 | `0.1` |
+| `friction` | 部品の摩擦係数。大きいほど摩擦が働く。通常は [0.0, 1.0] の範囲 | `0.2` |
+| `restitutionThreshold` | 反発が発生する速度の下限 (m/s) 。部品がこれ以上の速さでぶつかると反発する | `1.0` |
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/physics2d/10.png)
 
@@ -751,13 +749,13 @@
 
 
 ## 69.11 物体の初期状態（初速、回転角度、角速度）
-`P2Body` には次のようなメンバ関数で初期状態を設定できます。
+- `P2Body` は、次のようなメンバ関数で初期状態を設定できます
 
 | メンバ関数 | 説明 |
 | --- | --- |
-| `.setVelocity(velocity)` | 物体の初速 (cm/s) を設定します。 |
-| `.setAngle(angle)` | 物体の回転角度 (rad) を設定します。 |
-| `.setAngularVelocity(angularVelocity)` | 物体の角速度 (rad/s) を設定します。 |
+| `.setVelocity(velocity)` | 物体の速度 (cm/s) を設定する |
+| `.setAngle(angle)` | 物体の回転角度 (rad) を設定する |
+| `.setAngularVelocity(angularVelocity)` | 物体の角速度 (rad/s) を設定する |
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/physics2d/11.png)
 
@@ -850,7 +848,8 @@
 
 
 ## 69.12 物体に力を与える
-`P2Body` に対して、`.applyForce(v)` でベクトル `v` の力を与えることができます。力は時間の経過とともに徐々に作用して物体の速度を変化させます。
+- `P2Body` に対して、`.applyForce(v)` でベクトル `v` の力を与えることができます
+- 力を与え続けることで、物体の速度を変化させることができます
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/physics2d/12.png)
 
@@ -922,7 +921,8 @@
 
 
 ## 69.13 物体に衝撃を加える
-`P2Body` に対して、`.applyLinearImpulse(v)` でベクトル `v` の衝撃を与えることができます。衝撃は物体の速度を即座に変化させます。
+- `P2Body` に対して、`.applyLinearImpulse(v)` でベクトル `v` の衝撃を与えることができます
+- 衝撃は物体の速度を即座に変化させます
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/physics2d/13.png)
 
@@ -985,11 +985,10 @@
 
 
 ## 69.14 物体のスリープ
-ワールド内で物体が安定状態に入ると、物体はスリープ状態になり、計算を省略してシミュレーションを高速化します。スリープ状態の物体は、他の物体と衝突したり、力を与えられたりすると自動的に起こされます。
-
-物体を明示的にスリープさせることで、物体間の干渉を抑制し、物体を積み重ねたタワーの初期状態を安定させることもできます。
-
-次のコードは、スリープ状態の物体を淡色で表示します。また、スリープした物体を積み重ねたタワーが安定していることを確認できます。
+- ワールド内で物体が安定状態に入ると、物体はスリープ状態になり、計算を省略してシミュレーションを高速化します
+- スリープ状態の物体は、他の物体と衝突したり、力を与えられたりすると自動的に起こされます
+- 物体を `.setAwake(false)` で明示的にスリープさせることで、物体間の干渉を抑制し、例えば物体を積み重ねたタワーの初期状態を安定させることができます
+- 次のコードは、スリープ状態の物体を淡色で表示します。また、スリープさせた物体を積み重ねたタワーが安定することを確認できます
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/physics2d/14.png)
 
@@ -1062,7 +1061,8 @@
 
 
 ## 69.15 重力の設定
-`P2World` の `.setGravity(v)` で重力を設定できます。スリープ中の物体は重力の変更に気付かないため、重力を変更した場合はすべての物体を起こす必要があります。
+- `P2World` の `.setGravity(v)` で重力を設定できます
+- スリープ中の物体は重力の変更に気付かないため、重力を変更した場合はすべての物体を起こす必要があります
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/physics2d/15.png)
 
@@ -1153,11 +1153,11 @@
 
 
 ## 69.16 衝突の検出
-ワールドを更新するたび、物体間の衝突が検出されます。`P2World` の `.getCollisions()` で最新の衝突のリストを取得できます。戻り値は `HashTable<P2ContactPair, P2Collision>` です。
-
-`P2ContactPair` は衝突した物体のペアで、`.a` と `.b` に衝突した物体の ID が格納されています。
-
-次のコードでは、地面と接触している物体を白く描画しています。
+- ワールドを更新するたび、物体間の衝突が検出されます
+- `P2World` の `.getCollisions()` で最新の衝突のリストを取得できます
+- 戻り値は `HashTable<P2ContactPair, P2Collision>` です
+- `P2ContactPair` は衝突した物体のペアで、`.a` と `.b` に衝突した物体の ID が格納されています
+- 次のコードでは、地面と接触している物体を白く描画しています
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/physics2d/16.png)
 
@@ -1244,7 +1244,7 @@
 
 
 ## 69.17 ピボットジョイント
-ピボットジョイント `P2PivotJoint` は、2 つの物体を 1 箇所の回転軸（アンカー）で接続するジョイントです。
+- ピボットジョイント `P2PivotJoint` は、2 つの物体を 1 箇所の回転軸（アンカー）で接続するジョイントです
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/physics2d/17.png)
 
@@ -1333,9 +1333,8 @@
 
 
 ## 69.18 距離ジョイント
-距離ジョイント `P2DistanceJoint` は、2 つの物体のアンカーを一定の距離、あるいは一定の距離の範囲に保つジョイントです。
-
-次のコードでは、左の振り子は空中の天井からの距離を 200 cm に保ち、右の振り子は空中の天井からの距離を 180～220 cm の範囲に保ちます。
+- 距離ジョイント `P2DistanceJoint` は、2 つの物体のアンカーを一定の距離、あるいは一定の距離の範囲に保つジョイントです
+- 次のコードでは、左の振り子は空中の天井からの距離を 200 cm に保ち、右の振り子は空中の天井からの距離を 180～220 cm の範囲に保ちます
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/physics2d/18.png)
 
@@ -1425,7 +1424,7 @@
 
 
 ## 69.19 スライダージョイント
-スライダージョイント `P2SliderJoint` は、2 つの物体のうち一方が直線上を移動できるよう接続するジョイントです。
+- スライダージョイント `P2SliderJoint` は、2 つの物体のうち一方が直線上を移動できるよう接続するジョイントです
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/physics2d/19.png)
 
@@ -1540,7 +1539,7 @@
 
 
 ## 69.20 ホイールジョイント
-ホイールジョイント `P2WheelJoint` は、車の車輪のように、2 つの物体を 1 箇所の回転軸で接続するジョイントです。
+- ホイールジョイント `P2WheelJoint` は、車の車輪のように、2 つの物体を 1 箇所の回転軸で接続するジョイントです
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/physics2d/20.png)
 
@@ -1690,7 +1689,7 @@
 
 
 ## 69.21 マウスジョイント
-マウスジョイント `P2MouseJoint` は、マウスの位置をターゲット位置として、物体を移動させるためのジョイントです。
+- マウスジョイント `P2MouseJoint` は、マウスの位置をターゲット位置として、物体を移動させるためのジョイントです
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/physics2d/21.png)
 
@@ -1786,11 +1785,10 @@
 
 
 ## 69.22 物体とテクスチャの連動
-物理演算の結果をテクスチャを使って表現するには、いくつかの方法があります。
-
-- `P2Body` をそのままテクスチャに置き換える
-- テクスチャから `Polygon` あるいは `MultiPolygon` を作成し、`P2Body` として追加する
-- `Buffer2D` を作成し、`P2Body` の状態を `Transformer2D` に反映させて描画する
+- 物理演算の結果をテクスチャを使って表現するには、いくつかの方法があります：
+	- `P2Body` から得られる情報をテクスチャ描画に反映する
+	- テクスチャの形状に沿った `Polygon` あるいは `MultiPolygon` を作成し、`P2Body` として追加する
+	- `Buffer2D` を作成し、`P2Body` から得られる情報をもとに `Transformer2D` を作成して描画する
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/physics2d/22.png)
 
@@ -1934,17 +1932,17 @@
 
 
 ## 69.23 干渉フィルタ
-部品は干渉フィルタ `P2Filter` を持ちます。自身が所属するカテゴリービットフラグを指定し、特定のビットフラグを持つ他の部品と干渉しないようにできます。
-
-部品 A, B があるとき、`((A.maskBits & B.categoryBits) != 0) && ((B.maskBits & A.categoryBits) != 0)` のときのみ干渉が発生します。デフォルトでは、部品は `categoryBits = 0x0001`、`maskBits = 0xFFFF` となっており、すべての部品が互いに干渉します。
-
-`groupIndex` による追加の干渉制御もありますが、サンプルコード内では扱っていません。
+- 部品は干渉フィルタ `P2Filter` を持ちます
+- 自身が所属するカテゴリービットフラグを指定し、特定のビットフラグを持つ他の部品と干渉しないように設定できます
+- 部品 A, B があるとき、`((A.maskBits & B.categoryBits) != 0) && ((B.maskBits & A.categoryBits) != 0)` のときのみ干渉が発生します
+- デフォルトでは、部品は `categoryBits = 0x0001`、`maskBits = 0xFFFF` となっており、すべての部品が互いに干渉します
+- サンプルコードでは扱っていませんが、`groupIndex` による追加の条件設定も可能です
 
 | メンバ変数 | 説明 |
 |---|---|
 | `uint16 categoryBits` | 自身が所属するカテゴリーを表すビットフラグ |
 | `uint16 maskBits` | 物理的に干渉する相手のカテゴリーを表すビットフラグ |
-| `int16 groupIndex` | 2 つの部品のうちいずれかの `groupIndex` が `0` の場合、`categoryBits` と `maskBits` によって干渉の有無が決まる。<br>2 つの部品の両方の `groupIndex` が 非 `0` で、互いに異なる場合、`categoryBits` と `maskBits` によって干渉の有無が決まる。<br>2 つの部品の `groupIndex` が `1` 以上で、互いに等しい場合、必ず干渉する。<br>2 つの部品の `groupIndex` が `-1` 以下で、互いに等しい場合、必ず干渉しない。 |
+| `int16 groupIndex` | 2 つの部品のうちいずれかの `groupIndex` が `0` の場合、`categoryBits` と `maskBits` によって干渉の有無が決まる。<br>2 つの部品の両方の `groupIndex` が 非 `0` で、互いに異なる場合、`categoryBits` と `maskBits` によって干渉の有無が決まる。<br>2 つの部品の `groupIndex` が `1` 以上で、互いに等しい場合、必ず干渉する。<br>2 つの部品の `groupIndex` が `-1` 以下で、互いに等しい場合、必ず干渉しない |
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/physics2d/23.png)
 
