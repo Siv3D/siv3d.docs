@@ -507,7 +507,7 @@ void Main()
 
 - 画像生成には時間がかかるため、非同期版の関数（**67.9**）を使うことを推奨します
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/openai/8.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/openai/8.jpg)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -538,7 +538,7 @@ void Main()
 - 非同期タスクの `.isReady()` が `true` になるとタスクが完了で、`.get()` で `Image` を取得できます
 - 次のサンプルコードでは、非同期タスクが完了するまでの待ち時間に、回転する円を描きます
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/openai/9.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/openai/9.jpg)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -567,7 +567,7 @@ void Main()
 
 		if (task.isValid())
 		{
-			Circle{ 448, 256, 50 }.drawArc(Scene::Time() * 120_deg, 300_deg, 4, 4);
+			Circle{ 448, 256, 50 }.drawArc((Scene::Time() * 120_deg), 300_deg, 4, 4);
 		}
 
 		if (texture)
@@ -898,7 +898,7 @@ void Main()
 	{
 		if (initTask.isValid())
 		{
-			Circle{ 640, 360, 40 }.drawArc(Scene::Time() * 90_deg, 270_deg, 5);
+			Circle{ 640, 360, 40 }.drawArc((Scene::Time() * 120_deg), 300_deg, 4, 4);
 
 			font(U"テキストの埋め込みベクトルを計算しています。事前に計算しておくことで実行時の処理を省略できます。").drawAt(22, Scene::Center().movedBy(0, 100), ColorF{ 0.1 });
 
