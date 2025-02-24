@@ -1,17 +1,18 @@
 # 72. シリアル通信
 シリアル通信を使って、外部デバイスとデータの送受信を行う方法を学びます。
 
-## XX.X XXXXX
-- XXX
-	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/xxxx/1.png)
-
-```cpp
-
-```
+## 72.1 Serial クラスの基本
 
 
-### 1.1 シリアル通信の基本
+
+
+## 72.2 接続する COM ポートの選択
+
+
+
+
+
+### 72.3 シリアル通信（1 バイト）
 
 次のサンプルでは、Arduino UNO の LED の点灯/消灯を PC から制御し、1 バイトの数値データをやり取りするサンプルを示します。
 
@@ -133,7 +134,7 @@ void Main()
 }
 ```
 
-### 1.2 複数バイトのデータを送る
+### 72.4 シリアル通信（複数バイト）
 
 #### Arduino UNO 側のコード
 Arduino UNO では `int` 型は 2 バイトです。
