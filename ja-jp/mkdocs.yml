@@ -82,7 +82,7 @@ nav:
     - macOS: download/macos.md
     - Ubuntu: download/ubuntu.md
     - Web: download/web.md
-  - 入門チュートリアル 1:
+  - チュートリアル 1～20 章:
     - 1. はじめての Siv3D: tutorial/hello.md
     - 2. サンプルを試す: tutorial/samples.md
     - 3. Siv3D の基本: tutorial/basics.md
@@ -103,7 +103,7 @@ nav:
     - 18. 乱数を生成する: tutorial/random.md
     - 19. 時間を扱う: tutorial/time.md
     - 20. クリックゲーム: tutorial/click.md
-  - 入門チュートリアル 2:
+  - チュートリアル 21～40 章:
     - 21. 便利な関数: tutorial2/utility.md
     - 22. 配列: tutorial2/array.md
     - 23. 図形の配列: tutorial2/shape-array.md
@@ -124,7 +124,7 @@ nav:
     - 38. GUI: tutorial2/gui.md
     - 39. ランダム: tutorial2/random.md
     - 40. インタラクションの実装: tutorial2/interaction.md
-  - 入門チュートリアル 3:
+  - チュートリアル 41～60 章:
     - 41. オーディオ再生: tutorial3/audio.md
     - 42. キーボード入力: tutorial3/keyboard.md
     - 43. マウス入力: tutorial3/mouse.md
@@ -145,7 +145,7 @@ nav:
     - 58. シーン管理: tutorial3/scene-manager.md
     - 59. ゲームパッド: tutorial3/gamepad.md
     - 60. アプリの公開: tutorial3/release.md
-  - 入門チュートリアル 4:
+  - チュートリアル 61～80 章:
     - 61. ファイルダイアログ: tutorial4/file-dialog.md
     - 62. HTTP クライアント: tutorial4/http.md
     - 63. 画像処理: tutorial4/image.md
@@ -158,15 +158,19 @@ nav:
     - 70. マイクと音声波形: tutorial4/microphone.md
     - 71. Web カメラ: tutorial4/webcam.md
     - 72. シリアル通信: tutorial4/serial.md
-    - 73. TCP 通信: tutorial4/tcp.md
-    - 74. マルチプレイヤー: tutorial4/multiplayer.md
-#    - 75. 2D カスタムシェーダ: tutorial4/empty.md
-#    - 76. 3D 形状を描く ①: tutorial4/empty.md
-#    - 77. 3D 形状を描く ②: tutorial4/empty.md
-#    - 78. 3D の交差判定: tutorial4/empty.md
-#    - 79. 数式パーサ: tutorial4/empty.md
-#    - 80. 非同期処理: tutorial4/empty.md
-#    - 81. QR コード: tutorial4/empty.md
+    - 73. OSC 通信: tutorial4/osc.md
+    - 74. TCP 通信: tutorial4/tcp.md
+    - 75. マルチプレイヤー: tutorial4/multiplayer.md
+    - 76. 非同期処理: tutorial4/async.md
+    - 77. 数式パーサ: tutorial4/mathparser.md
+    - 78. QR コード: tutorial4/qr.md
+    - 79. テキスト読み上げ: tutorial4/tts.md
+    - 80. 効率的な描画: tutorial4/performance.md
+  - チュートリアル 81～ 章:
+    - 81. 2D カスタムシェーダ: tutorial5/empty.md
+#    - 82. 3D 形状を描く ①: tutorial5/empty.md
+#    - 83. 3D 形状を描く ②: tutorial5/empty.md
+#    - 84. 3D の交差判定: tutorial5/empty.md
   - サンプル集:
     - ゲームのサンプル: samples/games.md
     - アプリケーションのサンプル: samples/apps.md

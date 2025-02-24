@@ -1,4 +1,5 @@
 # 67. OpenAI API
+OpenAI が提供する生成 AI モデルを活用する方法を学びます。
 
 ## 67.1 OpenAI API の概要
 
