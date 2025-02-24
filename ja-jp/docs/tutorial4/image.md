@@ -4,7 +4,7 @@
 ## 63.1 画像処理の概要
 - `Texture` クラスに読み込んだ画像データは GPU のメモリ上に配置されるため、C++ プログラムを通して画像の内容にアクセスすることはできません
 - 一方、`Image` クラスで読み込んだ（または作成した）画像データはメインメモリ上に配置されるため、`Array` や `Grid` のように、C++ プログラムで簡単に内容にアクセスできます
-- `Image` には自身をシーンに描画する機能はなく、`Image` をもとに `Texture` や `DynamicTexture`（**63.11**）を作成し、テクスチャとして描画する必要があります
+- `Image` には自身をシーンに描画する機能はなく、`Image` をもとに `Texture` や `DynamicTexture`（**63.18**）を作成し、テクスチャとして描画する必要があります
 
 |  | Image | DynamicTexture | Texture |
 |--|:--:|:--:|:--:|
@@ -15,7 +15,7 @@
 | GPU（シェーダ）からのアクセス | | ✅ | ✅ |
 
 
-## 63.2 Image クラスの基本（1）
+## 63.2 Image クラスの基本
 - 画像データを扱うときは `Image` クラスを使います
 - `Image` クラスは、画像データを `Gird<Color>` のようなインタフェースで扱います
 - `Color` 型は、`ColorF` 型と異なり、r, g, b, a の各色を `uint8` 型で保持する 4 バイトの構造体です
@@ -63,8 +63,11 @@ void Main()
 ```
 
 
-## 63.3 Image クラスの基本（2）
-- XXX
+## 63.3 画像ファイルの読み込み
+- 画像ファイルから `Image` を作成するには、`Image{ ファイルパス }` を使います
+- ファイルパスは、実行ファイルがあるフォルダ（開発中は `App` フォルダ）を基準とする相対パスか、絶対パスを使用します
+- 対応する画像フォーマットは **チュートリアル 31.4** を参照してください
+- 次のサンプルでは、画像の任意の位置をマウスカーソルで選択し、そのピクセル色を表示します
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/3.png)
 
@@ -73,8 +76,8 @@ void Main()
 ```
 
 
-## 63.4 XXXX
-- XXX
+## 63.4 絵文字とアイコン
+- 
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/4.png)
 
@@ -83,8 +86,27 @@ void Main()
 ```
 
 
-## 63.5 XXXX
-- XXX
+## 63.5 メモリの節約
+- `Image` から `Texture` を作成したあと、`Image` は不要になります
+- 次のコードでは、不要になった `image` が、メインループ中もメモリを消費し続けています
+
+```cpp
+
+```
+
+- `Image` の `.release()` で、画像データと消費していたメモリを明示的に解放し、`Image` を空の状態にすることができます
+- あるいは、`Image` を返す関数の戻り値を `Texture` のコンストラクタに直接渡すことで、`Image` がすぐに解放されるよう設計することもできます
+
+```cpp
+
+```
+
+
+## 63.6 画像のサイズ
+- 画像データの幅（ピクセル）は `.width()` で取得できます。戻り値は `int32` 型です
+- 画像データの高さ（ピクセル）は `.height()` で取得できます。戻り値は `int32` 型です
+- 幅と高さを同時に取得するには `.size()` を使います。戻り値は `Size`（`Point`） 型です
+- 次のようなループで、`Image` 内のすべてのピクセルにアクセスできます
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/5.png)
 
@@ -93,8 +115,9 @@ void Main()
 ```
 
 
-## 63.6 XXXX
-- XXX
+## 63.7 範囲 for 文による全ピクセル走査
+- 範囲 for 文を使って画像データの要素を走査します
+- 範囲 for 文の中で、対象の画像のサイズを変更する操作は行わないでください
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/6.png)
 
@@ -103,8 +126,7 @@ void Main()
 ```
 
 
-## 63.7 XXXX
-- XXX
+## 63.8 塗りつぶし
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/7.png)
 
@@ -113,8 +135,10 @@ void Main()
 ```
 
 
-## 63.8 XXXX
-- XXX
+## 63.9 画像の保存
+- 画像データを画像ファイルとして保存するには `.save(path)` を使います
+- 画像の保存形式は、`path` の拡張子から自動的に適切なものが選択されます
+	- 通常は PNG 形式、JPEG 形式を使うとよいでしょう
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/8.png)
 
@@ -123,18 +147,9 @@ void Main()
 ```
 
 
-## 63.9 XXXX
-- XXX
-	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/9.png)
-
-```cpp
-
-```
-
-
-## 63.10 XXXX
-- XXX
+## 63.10 画像の保存（ダイアログ）
+- 画像データをダイアログでファイル名を指定して画像ファイルとして保存するには `.saveWithDialog()` を使います
+- 画像の保存形式は、ダイアログで選択した拡張子をもとに選択されます
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/10.png)
 
@@ -143,7 +158,7 @@ void Main()
 ```
 
 
-## 63.11 XXXX
+## 63.11 画像の拡大縮小
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/11.png)
@@ -153,7 +168,7 @@ void Main()
 ```
 
 
-## 63.12 XXXX
+## 63.12 画像の部分コピー
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/12.png)
@@ -163,240 +178,87 @@ void Main()
 ```
 
 
+## 63.13 画像処理
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/13.png)
 
-
-
-
-
-
-
-
-
-
-
-## 33.1 Image クラスの基本
-
-次のサンプルでは、マウスカーソルで選択した、画像の任意の位置のピクセル色を取得し表示します。
-
-![](/images/doc_v6/tutorial/33/1.png)
 ```cpp
-# include <Siv3D.hpp>
 
-void Main()
-{
-	// 画像ファイルから Image を作成
-	const Image image{ U"example/windmill.png" };
-
-	// Image から　Texture を作成
-	const Texture texture{ image };
-
-	while (System::Update())
-	{
-		const Point pos = Cursor::Pos();
-
-		if (InRange(pos.x, 0, image.width() - 1)
-			&& InRange(pos.y, 0, image.height() - 1))
-		{
-			// マウスカーソルの位置にあるピクセルの色を取得
-			const Color pixelColor = image[pos];
-
-			Rect{ 500, 20, 40 }.draw(pixelColor);
-
-			PutText(U"{}"_fmt(pixelColor), Arg::topLeft(560, 20));
-		}
-
-		texture.draw();
-	}
-}
 ```
 
 
-## 33.2 プログラムで画像を作成する
-`Image` のコンストラクタに幅、高さ、色を渡して、画像を作成することができます。
-
-![](/images/doc_v6/tutorial/33/2.png)
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	const Image image{ 400, 300, Color{ 63, 127, 255 } };
-
-	const Texture texture{ image };
-
-	while (System::Update())
-	{
-		texture.draw();
-	}
-}
-```
-
-なお、`Texture` のコンストラクタに `Image` を渡したときには、画像データが `Texture` にコピーされるので、`Texture` を作成したあとで `Image` を破棄しても問題ありません。上記のプログラムでは、メインループ中に使われない `image` がメモリを消費したままなので、次のようにするとメモリ消費量を減らせます。
+## 63.14 部分画像処理
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/14.png)
 
 ```cpp
-# include <Siv3D.hpp>
 
-Image MakeImage()
-{
-	return Image{ 400, 300, Color{ 63, 127, 255 } };
-}
-
-void Main()
-{
-	const Texture texture{ MakeImage() };
-
-	while (System::Update())
-	{
-		texture.draw();
-	}
-}
 ```
 
 
-## 33.3 ピクセルを編集する
-`Image` が持つ画像データの幅は `.width()`, 高さは `.height()`, 幅と高さは `.size()` で取得できます。次のようなループで、`Image` 内のすべてのピクセルにアクセスできます。
-
-![](/images/doc_v6/tutorial/33/3.png)
-```cpp
-# include <Siv3D.hpp>
-
-Image MakeImage()
-{
-	Image image{ 400, 300 };
-
-	for (int32 y = 0; y < image.height(); ++y)
-	{
-		for (int32 x = 0; x < image.width(); ++x)
-		{
-			image[y][x] = ColorF{ (x / 399.0), (y / 299.0), 1.0 };
-		}
-	}
-
-	return image;
-}
-
-void Main()
-{
-	const Texture texture{ MakeImage() };
-
-	while (System::Update())
-	{
-		texture.draw();
-	}
-}
-```
-
-次のように `step(Size)` を使って、ループを 1 つにまとめることもできます。
+## 63.15 図形の書き込み
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/15.png)
 
 ```cpp
-# include <Siv3D.hpp>
 
-Image MakeImage()
-{
-	Image image{ 400, 300 };
-
-	for (auto p : step(image.size()))
-	{
-		image[p] = ColorF{ (p.x / 399.0), (p.y / 299.0), 1.0 };
-	}
-
-	return image;
-}
-
-void Main()
-{
-	const Texture texture{ MakeImage() };
-
-	while (System::Update())
-	{
-		texture.draw();
-	}
-}
 ```
 
 
-## 33.4 range-based for
-range-based for を使って、すべてのピクセルにアクセスすることもできます。
+## 63.16 画像の書き込み
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/16.png)
 
-![](/images/doc_v6/tutorial/33/4.png)
 ```cpp
-# include <Siv3D.hpp>
 
-Image MakeImage()
-{
-	Image image{ U"example/windmill.png" };
-
-	for (auto& pixel : image)
-	{
-		// R 成分と B 成分を入れ替える
-		std::swap(pixel.r, pixel.b);
-	}
-
-	return image;
-}
-
-void Main()
-{
-	const Texture texture{ MakeImage() };
-
-	while (System::Update())
-	{
-		texture.draw();
-	}
-}
 ```
 
 
-## 33.5 画像を保存する
-`Image` の画像データを画像ファイルとして保存するには `.save(path)` を使います。画像の保存形式は、`path` の拡張子から自動的に適切なものが選択されます。
+## 63.17 テキストの書き込み
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/17.png)
 
 ```cpp
-# include <Siv3D.hpp>
 
-void Main()
-{
-	Image image{ U"example/windmill.png" };
-
-	for (auto& pixel : image)
-	{
-		std::swap(pixel.r, pixel.b);
-	}
-
-	// 画像を保存
-	image.save(U"tutorial1.png");
-
-	while (System::Update())
-	{
-
-	}
-}
 ```
 
 
-## 33.6 ダイアログでファイル名を指定して画像を保存する
-`Image` の画像データを、ダイアログでファイル名を指定して画像ファイルとして保存するには `.saveWithDialog()` を使います。`.save()`　同様、画像の保存形式は、`path` の拡張子から自動的に適切なものが選択されます。
+## 63.18 DynamicTexture
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/18.png)
 
 ```cpp
-# include <Siv3D.hpp>
 
-void Main()
-{
-	Image image{ U"example/windmill.png" };
-
-	for (auto& pixel : image)
-	{
-		std::swap(pixel.r, pixel.b);
-	}
-
-	// ダイアログでファイル名を指定して画像を保存
-	image.saveWithDialog();
-
-	while (System::Update())
-	{
-
-	}
-}
 ```
+
+
+## 63.19 ペイントアプリ（1）
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/19.png)
+
+```cpp
+
+```
+
+
+## 63.20 ペイントアプリ（2）
+- XXX
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/20.png)
+
+```cpp
+
+```
+
+
+
 
 
 ## 33.7 画像処理
