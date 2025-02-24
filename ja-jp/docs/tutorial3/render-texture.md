@@ -913,3 +913,47 @@ void Main()
 	}
 }
 ```
+
+
+## 52.13 内容の取得
+- `.readAsImage()` を使うと、レンダーテクスチャの画像データを `Image`（**チュートリアル 63**）として取得できます
+	- `Image` は C++ コードで加工したり、各ピクセルにアクセスしたり、ファイルに保存したりすることができます
+- レンダーテクスチャから `Image` を取得する操作はコストが非常に大きいため、毎フレーム実行することは避けるべきです
+- レンダーテクスチャの内容を `Image` として取得するのは最終手段です。レンダーテクスチャのまま目的の処理が実現できないか検討してください
+- 次のサンプルコードでは、レンダーテクスチャに描画された内容を画像ファイルに保存します：
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	const Texture emoji{ U"🔥"_emoji };
+
+	const RenderTexture renderTexture{ Size{ 400, 400 }, Palette::White };
+	{
+		const ScopedRenderTarget2D target{ renderTexture };
+
+		for (int32 i = 0; i < 30; ++i)
+		{
+			emoji.drawAt(RandomVec2(Rect{ 0, 0, 400, 400 }));
+		}
+	}
+
+	{
+		// 2D 描画処理をすべて実行（フラッシュ）し、レンダーテクスチャへの描画を完了する
+		Graphics2D::Flush();
+
+		// レンダーテクスチャの内容を画像として取得する
+		Image image;
+		renderTexture.readAsImage(image);
+
+		// 画像を保存する
+		image.save(U"fire.png");
+	}
+
+	while (System::Update())
+	{
+
+	}
+}
+```
