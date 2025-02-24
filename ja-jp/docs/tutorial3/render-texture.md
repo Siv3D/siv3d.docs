@@ -813,7 +813,7 @@ void DrawScene(const Texture& emoji)
 	for (auto i : step(12))
 	{
 		const double angle = (i * 30_deg + Scene::Time() * 5_deg);
-		const Vec2 pos = OffsetCircular{ Scene::Center(), 200, angle };
+		const Vec2 pos = OffsetCircular{ Vec2{ 400, 300 }, 200, angle };
 		Circle{ pos, 8 }.draw(HSV{ i * 30 });
 	}
 

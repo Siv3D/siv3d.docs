@@ -127,8 +127,7 @@ void Main()
 		// Webcam 作成待機中は円を表示
 		if (not webcam)
 		{
-			Circle{ Scene::Center(), 40 }
-				.drawArc(Scene::Time() * 180_deg, 300_deg, 5, 5);
+			Circle{ 400, 300, 50 }.drawArc((Scene::Time() * 120_deg), 300_deg, 4, 4);
 		}
 
 		if (texture)
@@ -194,8 +193,7 @@ void Main()
 		// Webcam 作成待機中は円を表示
 		if (not webcam)
 		{
-			Circle{ Scene::Center(), 40 }
-				.drawArc(Scene::Time() * 180_deg, 300_deg, 5, 5);
+			Circle{ 400, 300, 50 }.drawArc((Scene::Time() * 120_deg), 300_deg, 4, 4);
 		}
 
 		if (texture)
@@ -275,8 +273,7 @@ void Main()
 		// Webcam 作成待機中は円を表示
 		if (not webcam)
 		{
-			Circle{ Scene::Center(), 40 }
-				.drawArc(Scene::Time() * 180_deg, 300_deg, 5, 5);
+			Circle{ 400, 300, 50 }.drawArc((Scene::Time() * 120_deg), 300_deg, 4, 4);
 		}
 
 		if (texture)
@@ -356,8 +353,7 @@ void Main()
 		// Webcam 作成待機中は円を表示
 		if (not webcam)
 		{
-			Circle{ Scene::Center(), 40 }
-				.drawArc(Scene::Time() * 180_deg, 300_deg, 5, 5);
+			Circle{ 400, 300, 50 }.drawArc((Scene::Time() * 120_deg), 300_deg, 4, 4);
 		}
 
 		if (texture)

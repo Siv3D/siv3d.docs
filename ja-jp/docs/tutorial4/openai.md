@@ -423,17 +423,17 @@ public:
 
 		if (m_state == GameState::Lose)
 		{
-			m_font(U"敗北").drawAt(TextStyle::Outline(0.25, ColorF{ 1.0 }), 120, Scene::Center(), ColorF{ 0.0, 0.5, 1.0, 0.75 });
+			m_font(U"敗北").drawAt(TextStyle::Outline(0.25, ColorF{ 1.0 }), 120, Vec2{ 400, 300 }, ColorF{ 0.0, 0.5, 1.0, 0.75 });
 		}
 		else if (m_state == GameState::Win)
 		{
-			m_font(U"勝利").drawAt(TextStyle::Outline(0.25, ColorF{ 1.0 }), 120, Scene::Center(), ColorF{ 1.0, 0.5, 0.0, 0.75 });
+			m_font(U"勝利").drawAt(TextStyle::Outline(0.25, ColorF{ 1.0 }), 120, Vec2{ 400, 300 }, ColorF{ 1.0, 0.5, 0.0, 0.75 });
 		}
 
 		// ChatGPT の応答を待つ間はローディング画面を表示する
 		if (m_task.isDownloading())
 		{
-			Circle{ Scene::Center(), 50 }.drawArc((Scene::Time() * 120_deg), 300_deg, 4, 4, ColorF{ 0.8, 0.6, 0.0 });
+			Circle{ 400, 300, 50 }.drawArc((Scene::Time() * 120_deg), 300_deg, 4, 4, ColorF{ 0.8, 0.6, 0.0 });
 		}
 	}
 
@@ -492,7 +492,26 @@ void Main()
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/openai/3.png)
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Window::Resize(Size{ 1792, 1024 } / 2);
+
+	const String API_KEY = EnvironmentVariable::Get(U"MY_OPENAI_API_KEY");
+
+	// リクエスト内容
+	OpenAI::Image::RequestDALLE3 request;
+	request.prompt = U"A peaceful fantasy landscape with rolling meadows leading to a range of majestic mountains in the distance. The scene is serene, with lush green grass, colorful wildflowers, and a clear blue sky. In the foreground, there are gentle hills, and a sparkling river winding through the meadow. The mountains are snow-capped and majestic, with forests at their base. The overall atmosphere is calm and enchanting, evoking a sense of wonder and tranquility.";
+	request.imageSize = OpenAI::Image::RequestDALLE3::ImageSize1792x1024;
+
+	const Texture texture{ OpenAI::Image::Create(API_KEY, request) };
+
+	while (System::Update())
+	{
+		texture.scaled(0.5).draw();
+	}
+}
 ```
 
 
@@ -502,7 +521,41 @@ void Main()
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/openai/3.png)
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Window::Resize(Size{ 1792, 1024 } / 2);
+
+	const String API_KEY = EnvironmentVariable::Get(U"MY_OPENAI_API_KEY");
+
+	// リクエスト内容
+	OpenAI::Image::RequestDALLE3 request;
+	request.prompt = U"A dramatic scene of Mount Fuji erupting with lava and ash clouds, with volcanic ash falling over Tokyo. The sky is dark and filled with ash, creating an apocalyptic atmosphere. Tokyo's skyline is visible in the distance, covered in a layer of ash. The overall mood is intense and somber.";
+	request.imageSize = OpenAI::Image::RequestDALLE3::ImageSize1792x1024;
+
+	AsyncTask<Image> task = OpenAI::Image::CreateAsync(API_KEY, request);
+
+	Texture texture;
+
+	while (System::Update())
+	{
+		if (task.isReady())
+		{
+			texture = Texture{ task.get() };
+		}
+
+		if (task.isValid())
+		{
+			Circle{ 400, 300, 50 }.drawArc(Scene::Time() * 120_deg, 300_deg, 4, 4);
+		}
+
+		if (texture)
+		{
+			texture.scaled(0.5).draw();
+		}
+	}
+}
 ```
 
 
@@ -512,7 +565,49 @@ void Main()
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/openai/3.png)
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Window::Resize(1280, 720);
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+	const Texture texture{ U"example/windmill.png" };
+
+	const String API_KEY = EnvironmentVariable::Get(U"MY_OPENAI_API_KEY");
+
+	OpenAI::Vision::Request request;
+
+	// 画像ファイルを Base64 に変換してリクエストに追加する
+	request.images << OpenAI::Vision::ImageData::Base64FromFile(U"example/windmill.png");
+	request.questions = U"何が写っていますか？";
+
+	// 非同期タスク
+	AsyncHTTPTask task = OpenAI::Vision::CompleteAsync(API_KEY, request);
+
+	// 回答を格納する変数
+	String answer;
+
+	while (System::Update())
+	{
+		if (task.isReady() && task.getResponse().isOK())
+		{
+			answer = OpenAI::Vision::GetContent(task.getAsJSON());
+		}
+
+		texture.fitted(Size{ 400, 300 }).draw(40, 40);
+
+		if (task.isDownloading())
+		{
+			Circle{ 400, 300, 50 }.drawArc((Scene::Time() * 120_deg), 300_deg, 4, 4);
+		}
+
+		if (answer)
+		{
+			font(answer).draw(20, Rect{ 40, 340, 1200, 240 }, ColorF{ 0.25 });
+		}
+	}
+}
 ```
 
 
@@ -522,7 +617,47 @@ void Main()
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/openai/3.png)
 
 ```cpp
+# include <Siv3D.hpp>
 
+void Main()
+{
+	Window::Resize(1280, 720);
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+
+	const String API_KEY = EnvironmentVariable::Get(U"MY_OPENAI_API_KEY");
+
+	OpenAI::Vision::Request request;
+
+	// 画像データを Base64 に変換してリクエストに追加する
+	request.images << OpenAI::Vision::ImageData::Base64FromImage(Image{ U"🍎"_emoji });
+	request.images << OpenAI::Vision::ImageData::Base64FromImage(Image{ U"🍌"_emoji });
+	request.questions = U"これらの共通点は？";
+
+	// 非同期タスク
+	AsyncHTTPTask task = OpenAI::Vision::CompleteAsync(API_KEY, request);
+
+	// 回答を格納する変数
+	String answer;
+
+	while (System::Update())
+	{
+		if (task.isReady() && task.getResponse().isOK())
+		{
+			answer = OpenAI::Vision::GetContent(task.getAsJSON());
+		}
+
+		if (task.isDownloading())
+		{
+			Circle{ Scene::Center(), 50 }.drawArc((Scene::Time() * 120_deg), 300_deg, 4, 4);
+		}
+
+		if (answer)
+		{
+			font(answer).draw(20, Rect{ 40, 340, 1200, 240 }, ColorF{ 0.25 });
+		}
+	}
+}
 ```
 
 
@@ -532,7 +667,237 @@ void Main()
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/openai/3.png)
 
 ```cpp
+# include <Siv3D.hpp>
 
+class Task
+{
+public:
+
+	enum class State
+	{
+		Running,
+		Failed,
+		Completed,
+	};
+
+	Task() = default;
+
+	void update()
+	{
+		if (m_isReady)
+		{
+			return;
+		}
+
+		if (m_task.isReady())
+		{
+			m_isReady = true;
+			m_isFailed = (not m_task.get());
+			m_completeTime = Time::GetMillisec();
+		}
+	}
+
+	void play()
+	{
+		if (not m_isReady)
+		{
+			return;
+		}
+
+		if (not m_audio)
+		{
+			m_audio = Audio{ Audio::Stream, m_path };
+		}
+
+		m_audio.play();
+	}
+
+	const String& getText() const
+	{
+		return m_request.input;
+	}
+
+	const Audio& getAudio() const
+	{
+		return m_audio;
+	}
+
+	State getState() const
+	{
+		if (not m_isReady)
+		{
+			return State::Running;
+		}
+		else if (m_isFailed)
+		{
+			return State::Failed;
+		}
+		else
+		{
+			return State::Completed;
+		}
+	}
+
+	static Task Create(const StringView apiKey, const OpenAI::Speech::Request& request, const FilePathView saveDirectory)
+	{
+		Task task;
+		task.m_request = request;
+		task.m_path = FileSystem::PathAppend(saveDirectory, U"{}.{}"_fmt(UUIDValue::Generate().str(), request.responseFormat));
+		task.m_task = OpenAI::Speech::CreateAsync(apiKey, request, task.m_path);
+		task.m_startTime = Time::GetMillisec();
+		return task;
+	}
+
+	double getTime() const
+	{
+		if (not m_isReady)
+		{
+			return 0.0;
+		}
+		else
+		{
+			return (m_completeTime - m_startTime) / 1000.0;
+		}
+	}
+
+private:
+
+	OpenAI::Speech::Request m_request;
+
+	FilePath m_path;
+
+	AsyncTask<bool> m_task;
+
+	uint64 m_startTime = 0;
+
+	uint64 m_completeTime = 0;
+
+	Audio m_audio;
+
+	bool m_isReady = false;
+
+	bool m_isFailed = false;
+};
+
+void DrawTaskShadow(int32 taskIndex)
+{
+	const Rect rect{ 40, (40 + taskIndex * 60), 1200, 56 };
+	rect.drawShadow({ 0, 2 }, 6, 0.0, ColorF{ 0.0, 0.5 }, false);
+}
+
+void DrawTask(int32 taskIndex, Task& task, const Font& font)
+{
+	const double fontSize = 20.0;
+	const Rect rect{ 40, (40 + taskIndex * 60), 1200, 56 };
+
+	rect.draw();
+	{
+		const auto text = font(task.getText());
+		const double textWidth = text.region(fontSize).w;
+		const double overWidth = (textWidth - 846.0 + 100);
+		const Audio& audio = task.getAudio();
+		const Rect textRect = Rect{ rect.pos.movedBy(54, 14), 846, 30 };
+		const ScopedViewport2D viewport{ textRect };
+
+		if (0 < overWidth)
+		{
+			const double audioProgress = (audio.posSec() / audio.lengthSec());
+			const double xOffset = (overWidth * audioProgress);
+			text.draw(fontSize, Vec2{ 10 - xOffset, 0 }, ColorF{ 0.11 });
+		}
+		else
+		{
+			text.draw(fontSize, Vec2{ 10, 0 }, ColorF{ 0.11 });
+		}
+	}
+
+	Rect{ rect.pos.movedBy(900, 00), 300, 56 }.draw(Arg::left(0.8, 0.9, 1.0), Arg::right(0.9, 0.95, 1.0));
+
+	if (task.getState() == Task::State::Completed)
+	{
+		Rect{ rect.pos, 50, rect.h }.draw(ColorF{ 0.2, 0.7, 0.5 });
+		font(U"#{}"_fmt(taskIndex)).draw(fontSize, Arg::leftCenter(rect.pos.movedBy(12, 28)), ColorF{ 1.0 });
+
+		if (SimpleGUI::Button(U"\U000F040A", rect.pos.movedBy(920, 10)))
+		{
+			task.play();
+		}
+
+		font(U"生成時間 {:.2f} 秒"_fmt(task.getTime())).draw(fontSize, Arg::rightCenter(rect.pos.movedBy(1180, 28)), ColorF{ 0.1, 0.2, 0.5 });
+	}
+	else
+	{
+		font(U"#{}"_fmt(taskIndex)).draw(fontSize, Arg::leftCenter(rect.pos.movedBy(12, 28)), ColorF{ 0.11 });
+	}
+}
+
+void Main()
+{
+	Window::Resize(1280, 720);
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+	const Font font{ FontMethod::MSDF, 48, Typeface::Medium };
+
+	const String API_KEY = EnvironmentVariable::Get(U"MY_OPENAI_API_KEY");
+
+	Array<Task> tasks;
+
+	TextAreaEditState textAreaEditState;
+	const Array<String> voices = {
+		U"Alloy", U"Echo", U"Fable", U"Onyx", U"Nova", U"Shimmer",
+	};
+	size_t voiceIndex = 0;
+	size_t qualityIndex = 0;
+
+	size_t randomTextIndex = 0;
+
+	const Array<String> randomTexts = {
+		U"The transcriptions API takes as input the audio file you want to transcribe and the desired output file format for the transcription of the audio. We currently support multiple input and output file formats.",
+		U"Please note that our Usage Policies require you to provide a clear disclosure to end users that the TTS voice they are hearing is AI-generated and not a human voice.",
+		U"Siv3D には 2D, 3D ゲーム、メディアアート、ビジュアライザ、シミュレータを効率的に開発するための、便利なクラスや関数が用意されています。",
+		U"Siv3D の API とサンプルは、最新の C++ 規格「C++20」で書かれています。Siv3D を使っているだけで、現代的な C++ の書き方が身に付きます。",
+	};
+
+	while (System::Update())
+	{
+		for (auto& task : tasks)
+		{
+			task.update();
+		}
+
+		for (int32 i = 0; auto & task : tasks)
+		{
+			DrawTaskShadow(i++);
+		}
+
+		for (int32 i = 0; auto & task : tasks)
+		{
+			DrawTask(i++, task, font);
+		}
+
+		SimpleGUI::TextArea(textAreaEditState, Vec2{ 40, 560 }, SizeF{ 1000, 100 });
+
+		if (SimpleGUI::Button(U"Random", Vec2{ 1060, 600 }, 140))
+		{
+			textAreaEditState = TextAreaEditState{ randomTexts[randomTextIndex] };
+			++randomTextIndex %= randomTexts.size();
+		}
+
+		SimpleGUI::HorizontalRadioButtons(voiceIndex, voices, Vec2{ 40, 520 });
+
+		SimpleGUI::HorizontalRadioButtons(qualityIndex, { U"速度", U"品質" }, Vec2{ 840, 520 });
+
+		if (SimpleGUI::Button(U"Generate", Vec2{ 1060, 520 }, 140, (not textAreaEditState.text.isEmpty())))
+		{
+			OpenAI::Speech::Request request;
+			request.model = (qualityIndex == 0) ? OpenAI::Speech::Model::TTS1 : OpenAI::Speech::Model::TTS1HD;
+			request.input = textAreaEditState.text;
+			request.voice = voices[voiceIndex].lowercased();
+			tasks << Task::Create(API_KEY, request, U"speech/");
+
+			textAreaEditState.clear();
+		}
+	}
+}
 ```
 
 
@@ -542,5 +907,138 @@ void Main()
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/openai/3.png)
 
 ```cpp
+# include <Siv3D.hpp>
 
+struct Text
+{
+	String text;
+
+	Array<float> embedding;
+
+	float cosineSimilarity = 0.0f;
+};
+
+bool Init(const String API_KEY, Array<Text>& texts)
+{
+	for (auto& text : texts)
+	{
+		String error;
+
+		// OpenAI Embeddings API で文章の埋め込みベクトルを取得
+		text.embedding = OpenAI::Embedding::Create(API_KEY, text.text, error);
+
+		if (not text.embedding)
+		{
+			Print << error;
+
+			return false;
+		}
+	}
+
+	return true;
+}
+
+void Main()
+{
+	Window::Resize(1280, 720);
+	Scene::SetBackground(ColorF{ 0.92 });
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+
+	const String API_KEY = EnvironmentVariable::Get(U"MY_OPENAI_API_KEY");
+
+	const Array<Text> texts =
+	{
+		{ U"バレーボール女子 パリオリンピックの出場権獲得は持ち越し" },
+		{ U"【プロ野球結果】交流戦首位の楽天 完封勝ち 勝率5割上回る" },
+		{ U"G7サミット【1日目】開幕 ウクライナ支援ロシア凍結資産活用へ" },
+		{ U"「能動的サイバー防御」導入に向けた有識者会議の議事録公開" },
+		{ U"ロッテ 佐々木朗希 再び1軍登録抹消 右腕のコンディション不良" },
+		{ U"自民 石破元幹事長“領収書の公開時期 10年後の根拠分からず”" },
+		{ U"鹿児島県警文書漏えい 捜索受けた代表が苦情申し入れ文書送付" },
+		{ U"中国 米の制裁非難 “正常な貿易 必要な対抗措置とる”" },
+		{ U"能登半島地震からまもなく半年 ふるさとに残るか 迫る選択" },
+		{ U"「劇症型溶血性レンサ球菌感染症」 都内の感染者数 過去最多に" },
+		{ U"米軍実動演習 米軍戦闘機が青森や宮城の自衛隊基地で初の訓練" },
+		{ U"在日シンガポール大使館元参事官 盗撮疑いで書類送検 警視庁" },
+		{ U"東北電力 再稼働目指す女川原発2号機 安全対策の一部を公開" },
+		{ U"ニホンライチョウの生息調査 北アルプス南部では9年ぶり 長野" },
+		{ U"富士山5合目に登山者数管理のゲート設置へ 山梨県側で工事開始" },
+	};
+
+	AsyncTask initTask = Async(Init, String{ API_KEY }, std::ref(texts));
+
+	TextEditState textEditState;
+
+	float maxCosineSimilarity = 0.0f, minCosineSimilarity = 1.0f;
+
+	AsyncHTTPTask task;
+
+	while (System::Update())
+	{
+		if (initTask.isValid())
+		{
+			Circle{ Scene::Center(), 40 }.drawArc(Scene::Time() * 90_deg, 270_deg, 5);
+
+			font(U"テキストの埋め込みベクトルを計算しています。事前に計算しておくことで実行時の処理を省略できます。").drawAt(22, Scene::Center().movedBy(0, 100), ColorF{ 0.11 });
+
+			if (initTask.isReady())
+			{
+				if (not initTask.get())
+				{
+					Print << U"埋め込みベクトルの計算に失敗。";
+				}
+			}
+
+			continue;
+		}
+
+		SimpleGUI::TextBox(textEditState, Vec2{ 40, 40 }, 1000);
+
+		if (SimpleGUI::Button(U"検索", Vec2{ 1060, 40 }, 80, (not textEditState.text.isEmpty()) && (not task.isDownloading())))
+		{
+			task = OpenAI::Embedding::CreateAsync(API_KEY, textEditState.text);
+		}
+
+		if (task.isReady() && task.getResponse().isOK())
+		{
+			const Array<float> inputEmbedding = OpenAI::Embedding::GetVector(task.getAsJSON());
+
+			maxCosineSimilarity = 0.0f; minCosineSimilarity = 1.0f;
+
+			for (auto& text : texts)
+			{
+				text.cosineSimilarity = OpenAI::Embedding::CosineSimilarity(inputEmbedding, text.embedding);
+				maxCosineSimilarity = Max(maxCosineSimilarity, text.cosineSimilarity);
+				minCosineSimilarity = Min(minCosineSimilarity, text.cosineSimilarity);
+			}
+		}
+
+		if (not task.isDownloading())
+		{
+			for (int32 i = 0; i < texts.size(); ++i)
+			{
+				const float cosineSimilarity = texts[i].cosineSimilarity;
+
+				const Rect rect{ 40, (100 + i * 38), 1180, 36 };
+
+				// 最も類似度が高いものを強調表示
+				rect.draw((cosineSimilarity == maxCosineSimilarity) ? ColorF{ 1.0, 1.0, 0.75 } : ColorF{ 1.0 });
+
+				// コサイン類似度を 0.0 ～ 1.0 に変換
+				const double t = Math::Map(cosineSimilarity, minCosineSimilarity, maxCosineSimilarity, 0.0, 1.0);
+
+				RectF{ rect.pos, (50 * t), rect.h }.stretched(0, -2).draw(Colormap01F(t, ColormapType::Turbo));
+
+				// 文章とコサイン類似度を表示
+				font(texts[i].text).draw(22, Arg::leftCenter = rect.leftCenter().movedBy(80, 0), ColorF{ 0.11 });
+				font(cosineSimilarity).draw(18, Arg::leftCenter = rect.leftCenter().movedBy(1080, 0), ColorF{ 0.11 });
+			}
+		}
+	}
+
+	if (initTask.isValid())
+	{
+		initTask.wait();
+	}
+}
 ```
