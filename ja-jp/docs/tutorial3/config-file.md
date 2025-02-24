@@ -690,7 +690,190 @@ void Main()
 ```
 
 
-## 55.12 TOML の読み込み
+## 55.12 JSON リテラル
+- 文字列リテラルに `_json` を付けることで JSON データを直接記述できます
+- ダブルクォーテーションを直接記述できるよう、生文字列リテラル `UR` を使うことを推奨します
+- 通常の `String` から `JSON` に変換するには `JSON::Parse(s)` を使います
+- 次のコードの `MakeJSON1()`, `MakeJSON2()`, `MakeJSON3()` は同じ JSON データを作成します
+
+```cpp
+# include <Siv3D.hpp>
+
+JSON MakeJSON1()
+{
+	JSON json;
+	json[U"name"] = U"Albert";
+	json[U"age"] = 42;
+	json[U"object"] = JSON::Parse(U"{}");
+	return json;
+}
+
+JSON MakeJSON2()
+{
+	return UR"({
+    "name": "Albert",
+    "age": 42,
+    "object": {}
+})"_json;
+}
+
+JSON MakeJSON3()
+{
+	const String s = UR"({
+	"name": "Albert",
+	"age": 42,
+	"object": {}
+})";
+
+	return JSON::Parse(s);
+}
+
+void Main()
+{
+	const JSON json1 = MakeJSON1();
+	const JSON json2 = MakeJSON2();
+	const JSON json3 = MakeJSON3();
+
+	Print << (json1 == json2);
+	Print << (json2 == json3);
+
+	while (System::Update())
+	{
+
+	}
+}
+```
+```txt title="出力"
+true
+true
+```
+
+
+## 55.13 JSON のバリデーション
+- `JSONValidator` は、ある JSON データが適切な構造と値を持っているかを、JSON Schema に基づいて検証します
+- JSON Schema は、JSON データの構造やデータ型、値の範囲などを定義するための JSON データです
+- 文字列リテラルに `jsonValidator` を付けることで JSON Schema を直接記述できます
+- 次のサンプルコードでは、`json1` と `json3` が、指定された Schema に不適合であることと、その理由が表示されます
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	const JSON json1 = UR"({
+    "name": "Albert",
+    "age": 42,
+    "object": {}
+})"_json;
+
+	const JSON json2 = UR"({
+    "name": "Albert",
+    "age": 42,
+    "object": {
+        "string": "aaaa"
+    }
+})"_json;
+
+	const JSON json3 = UR"({
+    "name": "Albert",
+    "age": 999,
+    "object": {
+        "string": "bbbb"
+    }
+})"_json;
+
+	const JSONValidator validator = UR"({
+    "title": "A person",
+    "properties": {
+        "name": {
+            "description": "Name",
+            "type": "string"
+        },
+        "age": {
+            "description": "Age of the person",
+            "type": "number",
+            "minimum": 2,
+            "maximum": 200
+        },
+        "object": {
+            "type": "object",
+            "properties": {
+                "string": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "string"
+            ]
+        }
+    },
+    "required": [
+        "name",
+        "age",
+        "object"
+    ],
+    "type": "object"
+})"_jsonValidator;
+
+	Print << U"json1:";
+	{
+		JSONValidator::ValidationError error;
+
+		if (validator.validate(json1, error))
+		{
+			Print << U"OK";
+		}
+		else
+		{
+			Print << error;
+		}
+	}
+
+	Print << U"json2:";
+	{
+		JSONValidator::ValidationError error;
+
+		if (validator.validate(json2, error))
+		{
+			Print << U"OK";
+		}
+		else
+		{
+			Print << error;
+		}
+	}
+
+	Print << U"json3:";
+	{
+		JSONValidator::ValidationError error;
+
+		if (validator.validate(json3, error))
+		{
+			Print << U"OK";
+		}
+		else
+		{
+			Print << error;
+		}
+	}
+
+	while (System::Update())
+	{
+
+	}
+}
+```
+```txt title="出力"
+json1:
+[JSONValidator::ValidationError] required property 'string' not found in object
+json2:
+OK
+json3:
+[JSONValidator::ValidationError] instance exceeds maximum of 200.000000
+```
+
+
+## 55.14 TOML の読み込み
 - TOML ファイルをパースしてデータを読み込むには `TOMLReader` クラスを使います
 - `TOMLReader` のコンストラクタ引数に、読み込みたいテキストファイルのパスを渡します
 - ファイルパスは、実行ファイルがあるフォルダ（開発中は App フォルダ）を基準とする相対パスか、絶対パスを使用します
@@ -860,7 +1043,7 @@ void Main()
 ```
 
 
-## 55.13 XML の読み込み
+## 55.15 XML の読み込み
 - XML ファイルをパースしてデータを読み込むには `XMLReader` クラスを使います
 - `XMLReader` のコンストラクタ引数に、読み込みたいテキストファイルのパスを渡します
 - ファイルパスは、実行ファイルがあるフォルダ（開発中は App フォルダ）を基準とする相対パスか、絶対パスを使用します
