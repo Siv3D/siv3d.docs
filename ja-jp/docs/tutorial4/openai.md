@@ -661,7 +661,89 @@ void Main()
 ```
 
 
-## 67.12 テキストの読み上げ
+## 67.14 ドロップした画像の説明
+- XXX
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Window::Resize(1280, 720);
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+
+	const String API_KEY = EnvironmentVariable::Get(U"MY_OPENAI_API_KEY");
+
+	// ロードした画像から作成するテクスチャ
+	Texture texture;
+
+	// 非同期タスク
+	AsyncHTTPTask task;
+
+	// 回答を格納する変数
+	String answer;
+
+	while (System::Update())
+	{
+		// ドロップされたファイルがある場合
+		if (DragDrop::HasNewFilePaths())
+		{
+			// ドロップされたファイルのパスを取得する
+			const auto item = DragDrop::GetDroppedFilePaths().front();
+
+			// 現在タスクが進行中でない場合
+			if (not task.isDownloading())
+			{
+				// ドロップされたファイルが画像ファイルであれば
+				if (Image image{ item.path })
+				{
+					// 前回の回答を消去する
+					answer.clear();
+
+					// 描画用のテクスチャを作成する
+					texture = Texture{ image, TextureDesc::Mipped };
+
+					// 画像に関するリクエストを作成する
+					OpenAI::Vision::Request request;
+
+					// 画像データをリクエストに追加する
+					request.images << OpenAI::Vision::ImageData::Base64FromImage(image);
+
+					// 質問文
+					request.questions = U"画像を説明してください。";
+
+					// タスクを作成する
+					task = OpenAI::Vision::CompleteAsync(API_KEY, request);
+				}
+			}
+		}
+
+		if (task.isReady() && task.getResponse().isOK())
+		{
+			answer = OpenAI::Vision::GetContent(task.getAsJSON());
+		}
+
+		if (texture)
+		{
+			texture.fitted(520, 520).drawAt(Vec2{ 270, 320 });
+		}
+
+		if (task.isDownloading())
+		{
+			Circle{ 400, 300, 50 }.drawArc((Scene::Time() * 120_deg), 300_deg, 4, 4);
+		}
+
+		if (answer)
+		{
+			font(answer).draw(26, Rect{ 580, 40, 660, 680 }, ColorF{ 0.1 });
+		}
+	}
+}
+```
+
+
+## 67.13 テキストの読み上げ
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/openai/3.png)
@@ -803,11 +885,11 @@ void DrawTask(int32 taskIndex, Task& task, const Font& font)
 		{
 			const double audioProgress = (audio.posSec() / audio.lengthSec());
 			const double xOffset = (overWidth * audioProgress);
-			text.draw(fontSize, Vec2{ 10 - xOffset, 0 }, ColorF{ 0.11 });
+			text.draw(fontSize, Vec2{ 10 - xOffset, 0 }, ColorF{ 0.1 });
 		}
 		else
 		{
-			text.draw(fontSize, Vec2{ 10, 0 }, ColorF{ 0.11 });
+			text.draw(fontSize, Vec2{ 10, 0 }, ColorF{ 0.1 });
 		}
 	}
 
@@ -827,7 +909,7 @@ void DrawTask(int32 taskIndex, Task& task, const Font& font)
 	}
 	else
 	{
-		font(U"#{}"_fmt(taskIndex)).draw(fontSize, Arg::leftCenter(rect.pos.movedBy(12, 28)), ColorF{ 0.11 });
+		font(U"#{}"_fmt(taskIndex)).draw(fontSize, Arg::leftCenter(rect.pos.movedBy(12, 28)), ColorF{ 0.1 });
 	}
 }
 
@@ -901,7 +983,7 @@ void Main()
 ```
 
 
-## 67.13 Embedding
+## 67.14 Embedding
 - XXX
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/openai/3.png)
@@ -979,7 +1061,7 @@ void Main()
 		{
 			Circle{ Scene::Center(), 40 }.drawArc(Scene::Time() * 90_deg, 270_deg, 5);
 
-			font(U"テキストの埋め込みベクトルを計算しています。事前に計算しておくことで実行時の処理を省略できます。").drawAt(22, Scene::Center().movedBy(0, 100), ColorF{ 0.11 });
+			font(U"テキストの埋め込みベクトルを計算しています。事前に計算しておくことで実行時の処理を省略できます。").drawAt(22, Scene::Center().movedBy(0, 100), ColorF{ 0.1 });
 
 			if (initTask.isReady())
 			{
@@ -1030,8 +1112,8 @@ void Main()
 				RectF{ rect.pos, (50 * t), rect.h }.stretched(0, -2).draw(Colormap01F(t, ColormapType::Turbo));
 
 				// 文章とコサイン類似度を表示
-				font(texts[i].text).draw(22, Arg::leftCenter = rect.leftCenter().movedBy(80, 0), ColorF{ 0.11 });
-				font(cosineSimilarity).draw(18, Arg::leftCenter = rect.leftCenter().movedBy(1080, 0), ColorF{ 0.11 });
+				font(texts[i].text).draw(22, Arg::leftCenter = rect.leftCenter().movedBy(80, 0), ColorF{ 0.1 });
+				font(cosineSimilarity).draw(18, Arg::leftCenter = rect.leftCenter().movedBy(1080, 0), ColorF{ 0.1 });
 			}
 		}
 	}

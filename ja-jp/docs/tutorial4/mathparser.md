@@ -1,4 +1,4 @@
-# XX. XXXXX
+# 77. 数式パーサー
 
 ## XX.X XXXXX
 - XXX

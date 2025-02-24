@@ -162,7 +162,7 @@ nav:
     - 74. TCP 通信: tutorial4/tcp.md
     - 75. マルチプレイヤー: tutorial4/multiplayer.md
     - 76. 非同期処理: tutorial4/async.md
-    - 77. 数式パーサ: tutorial4/mathparser.md
+    - 77. 数式パーサー: tutorial4/mathparser.md
     - 78. QR コード: tutorial4/qr.md
     - 79. テキスト読み上げ: tutorial4/tts.md
     - 80. 効率的な描画: tutorial4/performance.md

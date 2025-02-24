@@ -807,7 +807,7 @@ private:
 			rect.rounded(8).draw();
 		}
 
-		font(text).draw(30, Arg::leftCenter = rect.leftCenter().movedBy(30, 0), ColorF{ 0.11 });
+		font(text).draw(30, Arg::leftCenter = rect.leftCenter().movedBy(30, 0), ColorF{ 0.1 });
 	}
 };
 

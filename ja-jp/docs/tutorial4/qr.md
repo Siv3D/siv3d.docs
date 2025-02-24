@@ -1,4 +1,4 @@
-# XX. XXXXX
+# 78. QR コード
 
 ## XX.X XXXXX
 - XXX
