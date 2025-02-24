@@ -4,7 +4,7 @@
 ## 64.1 ドロップされたファイルの取得
 - アプリケーションのウィンドウに対してドラッグ & ドロップされたファイルがあるかを `DragDrop::HasNewFilePaths()` で取得できます
 - この関数が `true` を返したとき、`DragDrop::GetDroppedFilePaths()` を呼ぶことで、ドロップされたファイル一覧を `Array<DroppedFilePath>` 型で取得できます
-- `DroppedFilePath` のメンバ変数は次の通りです：
+- `DroppedFilePath` のメンバ変数は次のとおりです：
 
 | コード | 説明 |
 |--|--|
@@ -62,7 +62,7 @@ void Main()
 - `DragDrop::AcceptText(true)` を呼ぶことで、テキストのドロップを有効にできます
 - アプリケーションのウィンドウに対してドラッグ & ドロップされたテキストがあるかを `DragDrop::HasNewText()` で取得できます
 - この関数が `true` を返したとき、`DragDrop::GetDroppedText()` を呼ぶことで、ドロップされたテキスト一覧を `Array<DroppedText>` 型で取得できます
-- `DroppedText` のメンバ変数は次の通りです：
+- `DroppedText` のメンバ変数は次のとおりです：
 
 | コード | 説明 |
 |--|--|
@@ -122,7 +122,7 @@ void Main()
 ## 64.5 ドラッグ中の情報取得
 - ウィンドウ上でドラッグ中のアイテムの情報を取得するには `DragDrop::DragOver()` を使います
 - この関数は `Optional<DragStatus>` を、ドラッグ中のアイテムが無い場合は `none` を返します
-- `DragStatus` のメンバ変数は次の通りです：
+- `DragStatus` のメンバ変数は次のとおりです：
 
 | コード | 説明 |
 |--|--|

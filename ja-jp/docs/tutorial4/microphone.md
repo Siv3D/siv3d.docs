@@ -56,7 +56,7 @@ void Main()
 ## 70.3 接続されているマイクの列挙
 - PC に接続されているマイクの一覧を `System::EnumerateMicrophones()` で取得できます
 - 結果は `Array<MicrophoneInfo>` 型で返されます
-- `MicrophoneInfo` 型のメンバ変数は次の通りです：
+- `MicrophoneInfo` 型のメンバ変数は次のとおりです：
 
 | コード | 説明 |
 |--|--|

@@ -2,11 +2,11 @@
 パソコンに内蔵・接続された Web カメラから映像を取得し、プログラムで活用する方法を学びます。
 
 ## 71.1 接続されている Web カメラを列挙する
-PC に接続されている Web カメラの一覧を `System::EnumerateWebcams()` で取得できます。結果は `Array<WebcamInfo>` 型で返されます。
+- PC に接続されている Web カメラの一覧を `System::EnumerateWebcams()` で取得できます
+- 結果は `Array<WebcamInfo>` 型で返されます
+- `WebcamInfo` 型のメンバ変数は次のとおりです：
 
-`WebcamInfo` 型のメンバ変数は次の通りです。
-
-| メンバ変数 | 説明 |
+| コード | 説明 |
 |--|--|
 | `uint32 cameraIndex` | `Webcam` で使うデバイスインデックス |
 | `String name` | 名前 |
@@ -19,9 +19,7 @@ void Main()
 {
 	for (const auto& info : System::EnumerateWebcams())
 	{
-		Print << info.cameraIndex;
-		Print << info.name;
-		Print << info.uniqueName;
+		Print << U"[{}] {} {}"_fmt(info.cameraIndex, info.name, info.uniqueName);
 	}
 
 	while (System::Update())
@@ -32,12 +30,17 @@ void Main()
 ```
 
 
-## 71.2 Web カメラの映像を取得する（メインスレッドで Web カメラを初期化）
-`Webcam` クラスを通して Web カメラをメインスレッドで初期化し、撮影したフレームを `DyanmicTexture` に反映させて表示します。カメラの初期化には数秒以上かかることがあります。
+## 71.2 Web カメラの映像取得
+- `Webcam{ デバイスインデックス, 解像度, 即座に撮影開始するか }` で Web カメラを初期化します
+	- `デバイスインデックス` は `System::EnumerateWebcams()` で取得した `cameraIndex` です
+	- `解像度` は `Size{ 幅, 高さ }` で指定します。カメラが指定の解像度をサポートしていない場合、近い解像度が選択されます
+	- `即座に撮影開始するか` は `StartImmediately::Yes` または `StartImmediately::No` で指定します
+		- No の場合、`Webcam` オブジェクトを作成したあと `.start()` メンバ関数を呼び出して撮影を開始します
+- 環境によっては、カメラの初期化に数秒以上かかることがあります。非同期での初期化（**71.3**）も検討してください
+- 撮影中は `.hasNewFrame()` で新しい画像が撮影されたかを確認し、`.getFrame()` に `DynamicTexture` を渡して画像を取得します
 
-:::message
-macOS では初回の `Webcam` 作成時に、ユーザにカメラの使用権限を求めるダイアログを表示しつつ、`Webcam` の作成に失敗するため、再作成できる手段を用意する必要があります。
-:::
+!!! warning "macOS での注意"
+	- macOS では、初回の `Webcam` 作成時に、ユーザにカメラの使用権限を求めるダイアログを表示しつつ、`Webcam` の作成自体には必ず失敗するため、再作成の手段を用意する必要があります
 
 ```cpp
 # include <Siv3D.hpp>
@@ -79,8 +82,9 @@ void Main()
 }
 ```
 
-## 71.3 Web カメラの映像を取得する（非同期で Web カメラを初期化）
-カメラの初期化が完了するまでメインスレッドが停止することを避けるため、非同期で Web カメラを起動するサンプルです。
+## 71.3 Web カメラの映像取得（非同期で Web カメラを初期化）
+- カメラの初期化完了までメインスレッドが停止することを避けたい場合、次のように非同期タスクを使ってカメラの初期化を行います
+- 非同期タスクについては **チュートリアル 76** で詳しく説明します
 
 ```cpp
 # include <Siv3D.hpp>
@@ -89,7 +93,7 @@ void Main()
 {
 	Window::Resize(1280, 720);
 
-	// 非同期タスクを開始
+	// 非同期タスクを作成
 	AsyncTask<Webcam> task{ []() { return Webcam{ 0, Size{ 1280, 720 }, StartImmediately::Yes }; } };
 
 	Webcam webcam;
@@ -124,10 +128,9 @@ void Main()
 			webcam.getFrame(texture);
 		}
 
-		// Webcam 作成待機中は円を表示
 		if (not webcam)
 		{
-			Circle{ 400, 300, 50 }.drawArc((Scene::Time() * 120_deg), 300_deg, 4, 4);
+			Circle{ 640, 360, 50 }.drawArc((Scene::Time() * 120_deg), 300_deg, 4, 4);
 		}
 
 		if (texture)
@@ -139,8 +142,9 @@ void Main()
 ```
 
 
-## 71.4 Web カメラの映像を画像処理して表示する
-撮影した画像は `Image` として取得することもできます。
+## 71.4 カメラの映像に対する画像処理
+- 撮影した画像は `Image` で取得することもできます
+- 次のサンプルコードでは、撮影した画像をグレースケール化してから `DynamicTexture` に転送しています
 
 ```cpp
 # include <Siv3D.hpp>
@@ -149,16 +153,13 @@ void Main()
 {
 	Window::Resize(1280, 720);
 
-	// 非同期タスクを開始
 	AsyncTask<Webcam> task{ []() { return Webcam{ 0, Size{ 1280, 720 }, StartImmediately::Yes }; } };
-
 	Webcam webcam;
 	Image image;
 	DynamicTexture texture;
 
 	while (System::Update())
 	{
-		// macOS では、ユーザがカメラ使用の権限を許可しないと Webcam の作成に失敗する。再試行の手段を用意する
 	# if SIV3D_PLATFORM(MACOS)
 		if ((not webcam) && (not task.valid()))
 		{
@@ -171,7 +172,6 @@ void Main()
 		
 		if (task.isReady())
 		{
-			// 起動が完了した Webcam をタスクから取得
 			webcam = task.get();
 
 			if (webcam)
@@ -184,16 +184,15 @@ void Main()
 		{
 			webcam.getFrame(image);
 
-			// グレイスケール化
+			// グレースケール化
 			image.grayscale();
 
 			texture.fill(image);
 		}
 
-		// Webcam 作成待機中は円を表示
 		if (not webcam)
 		{
-			Circle{ 400, 300, 50 }.drawArc((Scene::Time() * 120_deg), 300_deg, 4, 4);
+			Circle{ 640, 360, 50 }.drawArc((Scene::Time() * 120_deg), 300_deg, 4, 4);
 		}
 
 		if (texture)
@@ -217,14 +216,12 @@ void Main()
 {
 	Window::Resize(1280, 720);
 
-	// 非同期タスクを開始
 	AsyncTask<Webcam> task{ []() { return Webcam{ 0, Size{ 1280, 720 }, StartImmediately::Yes }; } };
-
 	Webcam webcam;
 	Image image;
 	DynamicTexture texture;
 
-	// 検出器。正面を向いた顔のモデルデータを使用して分類
+	// 検出器。正面を向いた顔のモデルデータ
 	const CascadeClassifier faceDetector{ U"example/objdetect/haarcascade/frontal_face_alt2.xml" };
 
 	// 検出された領域
@@ -232,7 +229,6 @@ void Main()
 
 	while (System::Update())
 	{
-		// macOS では、ユーザがカメラ使用の権限を許可しないと Webcam の作成に失敗する。再試行の手段を用意する
 	# if SIV3D_PLATFORM(MACOS)
 		if ((not webcam) && (not task.valid()))
 		{
@@ -245,7 +241,6 @@ void Main()
 		
 		if (task.isReady())
 		{
-			// 起動が完了した Webcam をタスクから取得
 			webcam = task.get();
 
 			if (webcam)
@@ -261,7 +256,7 @@ void Main()
 			// 画像から顔を検出。厳密さ: 3, 最小領域サイズ:　100x100
 			rects = faceDetector.detectObjects(image, 3, Size{ 100, 100 });
 
-			// 領域にモザイクエフェクトをかける
+			// 顔の領域にモザイクエフェクトをかける
 			for (const auto& rect : rects)
 			{
 				image(rect).mosaic(20);
@@ -270,10 +265,9 @@ void Main()
 			texture.fill(image);
 		}
 
-		// Webcam 作成待機中は円を表示
 		if (not webcam)
 		{
-			Circle{ 400, 300, 50 }.drawArc((Scene::Time() * 120_deg), 300_deg, 4, 4);
+			Circle{ 640, 360, 50 }.drawArc((Scene::Time() * 120_deg), 300_deg, 4, 4);
 		}
 
 		if (texture)
@@ -291,21 +285,19 @@ void Main()
 
 
 ## 71.6 Web カメラの映像から QR コードを検出する
-`Image` から QR コードを読み取るには `QRScanner` クラスを使います。
+- `Image` から QR コードを検出するには `QRScanner` クラスを使います
+- 最大サイズ (Version 40) の QR コードを検出したい場合、1280 x 720 よりも大きな解像度の映像が必要です
+- `QRScanner` の `.scan()` メンバ関数は、検出された QR コードの内容を `Array<QRContent>` で返します
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// 最大サイズ (Version 40) の QR コードの場合 1920x1080 が必要かもしれない。
-	constexpr Size cameraResolution{ 1280, 720 };
+	Window::Resize(1280, 720);
+	const Font font{ FontMethod::MSDF, 48 };
 
-	Window::Resize(cameraResolution);
-
-	// 非同期タスクを開始
-	AsyncTask<Webcam> task{ [=]() { return Webcam{ 0, cameraResolution, StartImmediately::Yes }; } };
-
+	AsyncTask<Webcam> task{ [=]() { return Webcam{ 0, Size{ 1280, 720 }, StartImmediately::Yes }; } };
 	Webcam webcam;
 	Image image;
 	DynamicTexture texture;
@@ -318,7 +310,6 @@ void Main()
 
 	while (System::Update())
 	{
-		// macOS では、ユーザがカメラ使用の権限を許可しないと Webcam の作成に失敗する。再試行の手段を用意する
 	# if SIV3D_PLATFORM(MACOS)
 		if ((not webcam) && (not task.valid()))
 		{
@@ -328,10 +319,9 @@ void Main()
 			}
 		}
 	# endif
-		
+
 		if (task.isReady())
 		{
-			// 起動が完了した Webcam をタスクから取得
 			webcam = task.get();
 
 			if (webcam)
@@ -350,10 +340,9 @@ void Main()
 			contents = qrScanner.scan(image);
 		}
 
-		// Webcam 作成待機中は円を表示
 		if (not webcam)
 		{
-			Circle{ 400, 300, 50 }.drawArc((Scene::Time() * 120_deg), 300_deg, 4, 4);
+			Circle{ 640, 360, 50 }.drawArc((Scene::Time() * 120_deg), 300_deg, 4, 4);
 		}
 
 		if (texture)
@@ -361,12 +350,17 @@ void Main()
 			texture.draw();
 		}
 
-		// 検出された QR コードを可視化
+		// 検出された QR コードの位置を可視化する
 		for (const auto& content : contents)
 		{
 			content.quad.drawFrame(4, Palette::Red);
 
-			PutText(content.text, Arg::topLeft = content.quad.p0);
+			if (content.text)
+			{
+				const String& text = content.text;
+				font(text).region(20, content.quad.p0).stretched(10).draw(ColorF{ 1.0, 0.8 });
+				font(text).draw(20, content.quad.p0, ColorF{ 0.1 });
+			}
 		}
 	}
 }

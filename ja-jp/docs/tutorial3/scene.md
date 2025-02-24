@@ -637,7 +637,7 @@ void Main()
 - 結果は `Array<MonitorInfo>` 型で得られます
 - `MonitorInfo` 型のメンバ変数は次のとおりです
 
-| メンバ変数 | 説明 |
+| コード | 説明 |
 |--|--|
 | `String name` | ディスプレイの名前 |
 | `String id` | ディスプレイ ID |
