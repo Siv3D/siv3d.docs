@@ -77,8 +77,12 @@ void Main()
 
 
 ## 63.4 絵文字とアイコン
-- 
-	
+- `Texture` と同様に、絵文字やアイコンから `Image` を作成できます
+- `Image{ U"絵文字"_emoji }` で、絵文字の画像データを作成します
+	- 絵文字一覧は [Emojipedia: Google Noto Color Emoji :material-open-in-new:](https://emojipedia.org/ja/google){:target="_blank"} で確認できます
+- `Image{ 0xアイコン番号_icon, サイズ }` で、アイコンからテクスチャを作成します
+	- アイコン番号は [Material Design Icons :material-open-in-new:](https://pictogrammers.com/library/mdi/){:target="_blank"} または [Font Awesome :material-open-in-new:](https://fontawesome.com/v5/search?o=r&m=free){:target="_blank"} の 16 進数コードです
+
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/4.png)
 
 ```cpp
@@ -127,6 +131,7 @@ void Main()
 
 
 ## 63.8 塗りつぶし
+- 画像の内容をすべて単色で塗りつぶすには `.fill(color)` を使います
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/7.png)
 
@@ -159,8 +164,10 @@ void Main()
 
 
 ## 63.11 画像の拡大縮小
-- XXX
-	
+- `.scaled(double scale)` は、画像を指定した倍率で拡大縮小した結果を、新しい `Image` で返します
+- `.scaled(Size size)` は、画像を指定したサイズに拡大縮小した結果を、新しい `Image` で返します
+- 第 2 引数に `InterpolationAlgorithm::Nearest` を指定すると、最近傍補間で拡大縮小します
+
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/11.png)
 
 ```cpp
@@ -169,7 +176,7 @@ void Main()
 
 
 ## 63.12 画像の部分コピー
-- XXX
+- `.clipped(x, y, w, h)` は、画像の指定した範囲をコピーした新しい `Image` を返します
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/12.png)
 
@@ -179,9 +186,37 @@ void Main()
 
 
 ## 63.13 画像処理
-- XXX
-	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/13.png)
+- さまざまな画像処理関数が用意されています
+- どの画像処理も、自身を変更するメンバ関数と、画像処理後の結果を返すメンバ関数の 2 種類があります
+
+| 処理 | 結果の画像の例 | 自身を変更するメンバ関数 / 結果を返すメンバ関数 |
+|--|:--:|--|
+|色の反転|![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/13a.png)|`negate` / `negated`|
+|グレイスケール化|![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/13a.png)|`grayscale` / `grayscaled`|
+|セピアカラー|![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/13a.png)|`sepia` / `sepiaed`|
+|ポスタライズ|![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/13a.png)|`posterize` / `posterized`|
+|明度レベル変更|![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/13a.png)|`brighten` / `brightened`|
+|左右反転|![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/13a.png)|`mirror` / `mirrored`|
+|上下反転|![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/13a.png)|`flip` / `flipped`|
+|90° 回転|![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/13a.png)|`rotate90` / `rotated90`|
+|180° 回転|![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/13a.png)|`rotate180` / `rotated180`|
+|270° 回転|![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/13a.png)|`rotate270` / `rotated270`|
+|ガンマ補正|![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/13a.png)|`gammaCorrect` / `gammaCorrected`|
+|二値化|![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/13a.png)|`threshold` / `thresholded`|
+|大津の手法による二値化|![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/13a.png)|`threshold_Otsu` / `thresholded_Otsu`|
+|適応的二値化|![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/13a.png)|`adaptiveThreshold` / `adaptiveThresholded`|
+|モザイク|![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/13a.png)|`mosaic` / `mosaiced`|
+|拡散|![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/13a.png)|`spread` / `spreaded`|
+|ブラー|![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/13a.png)|`blur` / `blurred`|
+|メディアンブラー|![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/13a.png)|`medianBlur` / `medianBlurred`|
+|ガウスぼかし|![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/13a.png)|`gaussianBlur` / `gaussianBlurred`|
+|バイラテラルフィルタ|![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/13a.png)|`bilateralFilter` / `bilateralFiltered`|
+|膨張|![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/13a.png)|`dilate` / `dilated`|
+|収縮|![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/13a.png)|`erode` / `eroded`|
+|拡大縮小|![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/13a.png)|`scale` / `scaled`|
+|周囲に枠を加える|![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/13a.png)|`border` / `bordered`|
+|任意角度の回転|![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/13a.png)| なし / `rotated`|
+|正方形での切り抜き|![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/13a.png)| なし / `squareClipped`|
 
 ```cpp
 
@@ -189,7 +224,8 @@ void Main()
 
 
 ## 63.14 部分画像処理
-- XXX
+- 一部の画像処理関数は、画像の一部の矩形範囲のみに適用できます
+- `image(x, y, w, h).gaussianBlur()` で、画像の `(x, y)` から `(x + w, y + h)` の範囲にのみガウスぼかしを適用します
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/14.png)
 
@@ -199,7 +235,11 @@ void Main()
 
 
 ## 63.15 図形の書き込み
-- XXX
+- `Circle` や `Line`, `Rect` などの図形は、メンバ関数 `.paint()` および `.overwrite()` を使って `Image` に書き込むことができます
+- `.paint()` はアルファ値に応じて色をブレンドします
+- `.overwrite()` は引数で指定した色をそのまま書き込みます
+- 画像の範囲外の部分には何も書き込まれません
+- `Image` への書き込みは CPU で処理されるため、通常の `.draw()` よりも大きなコストがかかります
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/15.png)
 
@@ -209,7 +249,17 @@ void Main()
 
 
 ## 63.16 画像の書き込み
-- XXX
+- `Image` や `Image` の一部を別の `Image` に書き込むことができます
+- 書き込みの対象を自分自身にすることはできません
+- 書き込みに使うメンバ関数は次の通りです：
+
+| メンバ関数 | アルファブレンド | 書き込み先のアルファ値の更新 |
+|--|:--:|:--:|
+|`.paint()`<br>`.paintAt()`| ✅ | |
+|`.stamp()`<br>`.stampAt()`| ✅ | ✅<br>大きいほう |
+|`.overwrite()`<br>`.overwriteAt()`| | ✅ |
+
+- `Image` への書き込みは CPU で処理されるため、通常の `.draw()` よりも大きなコストがかかります
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/16.png)
 
@@ -219,8 +269,9 @@ void Main()
 
 
 ## 63.17 テキストの書き込み
-- XXX
-	
+- `Font` から各文字の画像を `BitmapGlyph` として取得し、その画像を自由描画（**チュートリアル 34.24**）の要領で書き込みます
+- `Image` への書き込みは CPU で処理されるため、通常の `.draw()` よりも大きなコストがかかります
+
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/17.png)
 
 ```cpp
@@ -229,7 +280,15 @@ void Main()
 
 
 ## 63.18 DynamicTexture
-- XXX
+- ペイントアプリのように、`Image` の内容をプログラムの実行中に頻繁に変更し、その結果をシーンに描きたい場合があります
+- `Image` の内容を更新するたびに古い `Texture` を破棄して新しい `Texture` を作成するのは非効率です
+- そのような用途では、`DynamicTexture` を使うのが適切です
+- `DynamicTexture` は、中身を動的に変更できる `Texture` です。通常の `Texture` のメンバ関数に加え、`.fill(image)` メンバ関数を持ちます
+- `.fill()` は、`DynamicTexture` が空の場合は `image` で新しいテクスチャを作成し、既にデータを持っている場合はその内容を `image` で置き換えます
+- このとき新旧の画像データの縦横サイズは一致している必要があります
+- `DynamicTexture` の `.fill()` は、既に保持しているデータ領域を上書きするだけであるため、新しく `Texture` を作成するよりも効率的です
+- しかし、`.fill()` のコストも依然と大きいため、不必要な場合には呼び出さないようにする必要があります
+- 用途によっては `RenderTexture`（**チュートリアル 52**）を使うほうが適切な場合もあります
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/18.png)
 
@@ -239,7 +298,7 @@ void Main()
 
 
 ## 63.19 ペイントアプリ（1）
-- XXX
+- 次のようなプログラムでペイントアプリを作れます
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/19.png)
 
@@ -249,7 +308,7 @@ void Main()
 
 
 ## 63.20 ペイントアプリ（2）
-- XXX
+- `.floodFill()` は、指定した座標から同じ色の領域を再帰的に塗りつぶします
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/20.png)
 
@@ -258,278 +317,12 @@ void Main()
 ```
 
 
-
-
-
-## 33.7 画像処理
-`Image` には様々な画像処理関数が用意されています。どの画像処理も、自身を変更するメンバ関数と、画像処理後の結果を返すメンバ関数の 2 種類があります。
-
-| 処理 | 結果の画像の例 | 自身を変更するメンバ関数 / 結果を返すメンバ関数 |
-|--|:--:|--|
-|色の反転|![](/images/doc_v6/tutorial/33/7.1.png)|`negate` / `negated`|
-|グレイスケール化|![](/images/doc_v6/tutorial/33/7.2.png)|`grayscale` / `grayscaled`|
-|セピアカラー|![](/images/doc_v6/tutorial/33/7.3.png)|`sepia` / `sepiaed`|
-|ポスタライズ|![](/images/doc_v6/tutorial/33/7.4.png)|`posterize` / `posterized`|
-|明度レベル変更|![](/images/doc_v6/tutorial/33/7.5.png)|`brighten` / `brightened`|
-|左右反転|![](/images/doc_v6/tutorial/33/7.6.png)|`mirror` / `mirrored`|
-|上下反転|![](/images/doc_v6/tutorial/33/7.7.png)|`flip` / `flipped`|
-|90° 回転|![](/images/doc_v6/tutorial/33/7.8.png)|`rotate90` / `rotated90`|
-|180° 回転|![](/images/doc_v6/tutorial/33/7.9.png)|`rotate180` / `rotated180`|
-|270° 回転|![](/images/doc_v6/tutorial/33/7.10.png)|`rotate270` / `rotated270`|
-|ガンマ補正|![](/images/doc_v6/tutorial/33/7.11.png)|`gammaCorrect` / `gammaCorrected`|
-|二値化|![](/images/doc_v6/tutorial/33/7.12.png)|`threshold` / `thresholded`|
-|大津の手法による二値化|![](/images/doc_v6/tutorial/33/7.13.png)|`threshold_Otsu` / `thresholded_Otsu`|
-|適応的二値化|![](/images/doc_v6/tutorial/33/7.14.png)|`adaptiveThreshold` / `adaptiveThresholded`|
-|モザイク|![](/images/doc_v6/tutorial/33/7.15.png)|`mosaic` / `mosaiced`|
-|拡散|![](/images/doc_v6/tutorial/33/7.25.png)|`spread` / `spreaded`|
-|ブラー|![](/images/doc_v6/tutorial/33/7.16.png)|`blur` / `blurred`|
-|メディアンブラー|![](/images/doc_v6/tutorial/33/7.17.png)|`medianBlur` / `medianBlurred`|
-|ガウスぼかし|![](/images/doc_v6/tutorial/33/7.18.png)|`gaussianBlur` / `gaussianBlurred`|
-|バイラテラルフィルタ|![](/images/doc_v6/tutorial/33/7.19.png)|`bilateralFilter` / `bilateralFiltered`|
-|膨張|![](/images/doc_v6/tutorial/33/7.20.png)|`dilate` / `dilated`|
-|収縮|![](/images/doc_v6/tutorial/33/7.21.png)|`erode` / `eroded`|
-|拡大縮小|![](/images/doc_v6/tutorial/33/7.22.png)|`scale` / `scaled`|
-|周囲に枠を加える|![](/images/doc_v6/tutorial/33/7.23.png)|`border` / `bordered`|
-|任意角度の回転|![](/images/doc_v6/tutorial/33/7.24.png)| なし / `rotated`|
-|正方形での切り抜き|![](/images/doc_v6/tutorial/33/7.26.png)| なし / `squareClipped`|
-
+## 63.21 大量のグリッドの可視化
+- 大量の要素がある `Grid` を可視化する場合、幅 × 高さのマスをそれぞれ `Rect` で描くよりも、縦横が同じ要素数の `Image` を作成して 1 枚のテクスチャとして描画したほうが効率的です
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/image/21.png)
 
 ```cpp
-# include <Siv3D.hpp>
 
-void Main()
-{
-	const Image image{ U"example/windmill.png" };
-
-	// ガウスぼかしした画像からテクスチャを作成
-	const Texture texture{ image.grayscaled() };
-
-	while (System::Update())
-	{
-		texture.draw();
-	}
-}
-```
-
-
-## 33.8 画像に図形を書き込む
-`Circle` や `Line`, `Rect` などの図形型を、メンバ関数 `.paint()` および `.overwrite()` を使って `Image` に書き込むことができます。`.paint()` はアルファ値に応じて色をブレンドします。`.overwrite()` は引数で指定した色をそのまま書き込むため、処理が高速です。また、次のサンプル星形のように、画像外にはみ出した部分は書き込まれません。
-
-![](/images/doc_v6/tutorial/33/8.png)
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Image image{ 600, 600, Palette::White };
-
-	Circle{ 100, 100, 100 }.overwrite(image, Palette::Orange);
-
-	Rect{ 150, 150, 300, 200 }.paint(image, ColorF{ 0.0, 1.0, 0.5, 0.5 });
-
-	Line{ 100, 400, 400, 200 }.overwrite(image, 10, Palette::Seagreen);
-
-	// Shape2D には .paint() / .overwrite() が無いので、.asPolygon() で Polygon 型にする
-	Shape2D::Star(200, Vec2{ 500, 200 }).asPolygon().overwrite(image, Palette::Yellow);
-
-	// 透明の穴をあける
-	Rect{ 400, 400, 50 }.overwrite(image, ColorF{ 1.0, 0.0 });
-
-	image.save(U"tutorial2.png");
-
-	const Texture texture{ image };
-
-	while (System::Update())
-	{
-		texture.draw();
-	}
-}
-```
-
-
-## 33.9 画像に別の画像を書き込む
-`Image` を別の `Image` に書き込むことができます。書き込みの対象を自分自身にすることはできません。書き込みに使うメンバ関数は次の通りです。
-
-| メンバ関数 | アルファブレンド | 書き込み先のアルファ値の更新 |
-|--|--|--|
-|`.paint()`<br>`.paintAt()`| ✔ | |
-|`.stamp()`<br>`.stampAt()`| ✔ | 大きいほう |
-|`.overwrite()`<br>`.overwriteAt()`| | ✔ |
-
-`Image` は `Texture` のように絵文字やアイコンもロードできます。
-
-![](/images/doc_v6/tutorial/33/9.png)
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Image image{ 600, 600, Palette::White };
-
-	const Image windmillImage{ U"example/windmill.png" };
-	const Image catImage{ U"🐈"_emoji };
-
-	windmillImage.overwrite(image, 40, 40);
-
-	// 透過ピクセルに対する paint / stamp / overwrite の違い
-	Rect{ 100, 400, 400, 40 }.overwrite(image, Color{ 255, 0 });
-	catImage.paintAt(image, 150, 400);
-	catImage.stampAt(image, 300, 400);
-	catImage.overwriteAt(image, 450, 400);
-
-	const Texture texture{ image };
-
-	while (System::Update())
-	{
-		texture.draw();
-	}
-}
-```
-
-## 33.10 内容を更新できるテクスチャ DynamicTexture
-ペイントアプリのように、`Image` をプログラムの実行中に頻繁に変更し、その結果をシーンに描きたい場合、`Image` の内容を変更するたびに古い `Texture` を破棄して新しい `Texture` を作成するのは非効率です。そのような用途では、`DynamicTexture` を 1 度だけ作成し、そのを更新するのが効率的です。
-
-`DynamicTexture` は `Texture` のメンバ関数に加え、`.fill(image)` メンバ関数を持ちます。`.fill()` は、`DynamicTexture` が空の場合は `image` で新しいテクスチャを作成し、既にデータを持っている場合はその内容を `image` で置き換えます。このとき新旧の画像データの縦横サイズは一致している必要があります。`DynamicTexture` の `.fill()` は、既に保持しているデータを上書きするだけなので、新しく `Texture` を作成するよりも効率的です。
-
-なお、`Image` への書き込みは `.draw()` と異なり、CPU 上で行われるため、大量の書き込みは実行時性能を低下させます。テクスチャに対して頻繁に複雑な書き込みを行いたい場合は、次の章で扱う `RenderTexture` を使うのが基本です。
-
-### 33.10.1 絵文字を書き込む
-
-![](/images/doc_v6/tutorial/33/10.1.png)
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Image image{ 600, 600, Palette::White };
-	const Image emoji{ U"😃"_emoji };
-
-	DynamicTexture dtexture{ image };
-
-	while (System::Update())
-	{
-		if (MouseL.down())
-		{
-			emoji.paintAt(image, Cursor::Pos());
-
-			// DynamicTexture の中身を Image で更新
-			dtexture.fill(image);
-		}
-
-		dtexture.draw();
-	}
-}
-```
-
-### 33.10.2 線を書き込む
-次のようなプログラムでペイントアプリが作れます。
-
-`Image` の `.fill(color)` は、その色で画像を塗りつぶすメンバ関数です。
-
-![](/images/doc_v6/sample/application/sketch.png)
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	// キャンバスのサイズ
-	constexpr Size canvasSize{ 600, 600 };
-
-	// ペンの太さ
-	constexpr int32 thickness = 8;
-
-	// ペンの色
-	constexpr Color penColor = Palette::Orange;
-
-	// 書き込み用の画像データを用意
-	Image image{ canvasSize, Palette::White };
-
-	// 表示用のテクスチャ（内容を更新するので DynamicTexture）
-	DynamicTexture texture{ image };
-
-	while (System::Update())
-	{
-		if (MouseL.pressed())
-		{
-			// 書き込む線の始点は直前のフレームのマウスカーソル座標
-			// （初回はタッチ操作時の座標のジャンプを防ぐため、現在のマウスカーソル座標にする）
-			const Point from = (MouseL.down() ? Cursor::Pos() : Cursor::PreviousPos());
-
-			// 書き込む線の終点は現在のマウスカーソル座標
-			const Point to = Cursor::Pos();
-
-			// image に線を書き込む
-			Line{ from, to }.overwrite(image, thickness, penColor);
-
-			// 書き込み終わった image でテクスチャを更新
-			texture.fill(image);
-		}
-
-		// 描いたものを消去するボタンが押されたら
-		if (SimpleGUI::Button(U"Clear", Vec2{ 640, 40 }, 120))
-		{
-			// 画像を白で塗りつぶす
-			image.fill(Palette::White);
-
-			// 塗りつぶし終わった image でテクスチャを更新
-			texture.fill(image);
-		}
-
-		// テクスチャを表示
-		texture.draw();
-	}
-}
-```
-
-
-## 33.11 画像にテキストを書き込む
-画像にテキストを書き込むには、`Font` から各文字の画像を `BitmapGlyph` 型で取得し、その画像をチュートリアル 14.19 の自由描画の要領で書き込みます、
-
-![](/images/doc_v6/tutorial/33/11.png)
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Image image{ 600, 600, Palette::White };
-
-	const Font font{ 60, Typeface::Bold };
-	{
-		const String text = U"Hello, Siv3D!\nこんにちは。";
-		constexpr Vec2 basePos{ 20, 20 };
-		Vec2 penPos{ basePos };
-
-		for (const auto& ch : text)
-		{
-			// 改行文字なら
-			if (ch == U'\n')
-			{
-				// ペンの X 座標をリセット
-				penPos.x = basePos.x;
-
-				// ペンの Y 座標をフォントの高さ分進める
-				penPos.y += font.height();
-
-				continue;
-			}
-
-			const BitmapGlyph bitmapGlyph = font.renderBitmap(ch);
-
-			// 文字のテクスチャをペンの位置に文字ごとのオフセットを加算して描画
-			// .asPoint() は Vec2 を Point に変換する関数
-			bitmapGlyph.image.paint(image, (penPos + bitmapGlyph.getOffset()).asPoint(), Palette::Seagreen);
-
-			// ペンの X 座標を文字の幅の分進める
-			penPos.x += bitmapGlyph.xAdvance;
-		}
-	}
-
-	const Texture texture{ image };
-
-	while (System::Update())
-	{
-		texture.draw();
-	}
-}
 ```
 
