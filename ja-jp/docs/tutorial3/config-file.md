@@ -1024,19 +1024,16 @@ void Main()
 		}
 	}
 
-	// アイテム描画用のフォント
-	const Font font{ 30, Typeface::Bold };
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
 
 	while (System::Update())
 	{
-		// アイテムを描画
+		// アイテムを描画する
 		for (const auto& item : items)
 		{
 			const Rect rect{ item.pos, 180, 80 };
-
 			rect.draw();
-
-			font(item.label).drawAt(rect.center(), ColorF{ 0.25 });
+			font(item.label).drawAt(30, rect.center(), ColorF{ 0.1 });
 		}
 	}
 }

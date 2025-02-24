@@ -810,7 +810,7 @@ void DrawScene(const Texture& emoji)
 	Circle{ 50, 200, 300 }.drawFrame(4);
 	Circle{ 550, 450, 200 }.drawFrame(4);
 
-	for (auto i : step(12))
+	for (int32 i = 0; i < 12; ++i)
 	{
 		const double angle = (i * 30_deg + Scene::Time() * 5_deg);
 		const Vec2 pos = OffsetCircular{ Vec2{ 400, 300 }, 200, angle };

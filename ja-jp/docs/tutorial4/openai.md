@@ -74,7 +74,7 @@ const String API_KEY = EnvironmentVariable::Get(U"MY_OPENAI_API_KEY");
 ### 67.2.4 環境変数が設定されたかの確認
 - 次のコードで、環境変数が設定されているかを確認できます
 
-```cpp
+```cpp hl_lines="6"
 # include <Siv3D.hpp>
 
 void Main()
@@ -125,13 +125,22 @@ void Main()
 }
 ```
 ```txt title="出力例"
+ファンタジーゲームで定番の敵キャラクターには、以下のようなものがあります：
 
+1. **ゴブリン**: 小柄で狡猾なクリーチャー。集団で行動し、プレイヤーを騙したり襲撃したりすることが多いです。
+
+2. **オーク**: 大柄で力強い戦士。しばしば悪の軍団に属し、物語の中で重要な役割を果たすことがあります。
+
+3. **ドラゴン**: 強力で神秘的な生き物。しばしばゲームのボスキャラクターとして登場し、火を吹く能力や飛行能力でプレイヤー に迫力ある戦いを挑んできます。
+
+これらの敵キャラクターは、ファンタジーの世界観において多くの冒険で遭遇することができます。
 ```
 
 
 ## 67.4 Chat の基本（非同期）
-- `OpenAI::Chat::CompleteAsync(apiKey, prompt)` は、OpenAI の Chat API を利用して、一連の会話に続く回答を取得する `AsyncHTTPTask`（**チュートリアル 62.6**）を返します
+- `OpenAI::Chat::CompleteAsync(apiKey, prompt)` は、OpenAI の Chat API を利用して、一連の会話に続く回答を取得する非同期タスク `AsyncHTTPTask`（**チュートリアル 62.6**）を作成します
 - 非同期タスクが正常に完了した場合、`OpenAI::Chat::GetContent(task.getAsJSON())` で回答を `String` で取得できます
+- 次のサンプルコードでは、非同期タスクが完了するまでの待ち時間に、回転する円を描きます
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/openai/4.png)
 
@@ -140,7 +149,6 @@ void Main()
 
 void Main()
 {
-	Window::Resize(1280, 720);
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
 	const String API_KEY = EnvironmentVariable::Get(U"MY_OPENAI_API_KEY");
@@ -213,7 +221,7 @@ void Main()
 
 		if (task.isDownloading())
 		{
-			Circle{ 400, 300, 50 }.drawArc((Scene::Time() * 120_deg), 300_deg, 4, 4);
+			Circle{ 640, 360, 50 }.drawArc((Scene::Time() * 120_deg), 300_deg, 4, 4);
 		}
 
 		if (task.isReady() && task.getResponse().isOK())
@@ -224,7 +232,7 @@ void Main()
 		// 回答がある場合
 		if (answer)
 		{
-			font(answer).draw(20, Rect{ 40, 100, 1200, 620 }, ColorF{ 0.25 });
+			font(answer).draw(20, Rect{ 40, 100, 1200, 620 }, ColorF{ 0.1 });
 		}
 	}
 }
@@ -244,9 +252,6 @@ void Main()
 
 - `OpenAI::Chat::Request` の `.messages` に、ロールと発言のペアを古い順に追加して、会話の履歴を構築します
 - 最後にユーザの発言を追加した状態でリクエストを送信することで、一連の会話に続く回答を得ることができます
-
-	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/openai/3.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -268,7 +273,7 @@ void Main()
 		U"私は CatGPT だニャン");
 
 	request.messages.emplace_back(OpenAI::Chat::Role::User,
-		U"CatGPT は、毎日どのように過ごしていますか？"); // 最後は必ず user で終わる
+		U"CatGPT は、毎日どのように過ごしていますか？"); // 最後は user
 
 	// 回答を String で得る
 	const String answer = OpenAI::Chat::Complete(API_KEY, request);
@@ -282,12 +287,15 @@ void Main()
 	}
 }
 ```
+```txt title="出力例"
+CatGPT は、みんなの質問に答えたり、情報を提供したりして過ごしているニャン。猫のようにお気に入りの場所でごろごろするわけではないけど、猫の気まぐれさを少し持ってるニャン。何か知りたいことがあれば遠慮なく聞いてニャン。
+```
 
 
 ## 67.7 ロールプレイングゲーム
 - 設定したルールに従って、プレイヤーと AI が対話するロールプレイングゲームを作成できます
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/openai/3.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/openai/7.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -423,17 +431,17 @@ public:
 
 		if (m_state == GameState::Lose)
 		{
-			m_font(U"敗北").drawAt(TextStyle::Outline(0.25, ColorF{ 1.0 }), 120, Vec2{ 400, 300 }, ColorF{ 0.0, 0.5, 1.0, 0.75 });
+			m_font(U"敗北").drawAt(TextStyle::Outline(0.25, ColorF{ 1.0 }), 120, Vec2{ 640, 360 }, ColorF{ 0.0, 0.5, 1.0, 0.75 });
 		}
 		else if (m_state == GameState::Win)
 		{
-			m_font(U"勝利").drawAt(TextStyle::Outline(0.25, ColorF{ 1.0 }), 120, Vec2{ 400, 300 }, ColorF{ 1.0, 0.5, 0.0, 0.75 });
+			m_font(U"勝利").drawAt(TextStyle::Outline(0.25, ColorF{ 1.0 }), 120, Vec2{ 640, 360 }, ColorF{ 1.0, 0.5, 0.0, 0.75 });
 		}
 
 		// ChatGPT の応答を待つ間はローディング画面を表示する
 		if (m_task.isDownloading())
 		{
-			Circle{ 400, 300, 50 }.drawArc((Scene::Time() * 120_deg), 300_deg, 4, 4, ColorF{ 0.8, 0.6, 0.0 });
+			Circle{ 640, 360 , 50 }.drawArc((Scene::Time() * 120_deg), 300_deg, 4, 4, ColorF{ 0.8, 0.6, 0.0 });
 		}
 	}
 
@@ -487,9 +495,19 @@ void Main()
 
 
 ## 67.8 画像生成
-- XXX
-	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/openai/3.png)
+- `OpenAI::Image::Create(apiKey, request)` は、OpenAI の Image API を利用して、プロンプトに基づいた画像を `Image` で返します
+- `OpenAI::Image::RequestDALLE3` クラスを使って、リクエスト内容を指定します。メンバ変数は次のとおりです
+
+| コード | 説明 |
+| --- | --- |
+| `prompt` | 画像を説明するテキスト。英語で 4000 文字以下 |
+| `imageSize` | 生成する画像のサイズ（`ImageSize1024`, `ImageSize1792x1024`, `ImageSize1024x1792` のいずれか）。デフォルトは `ImageSize1024` |
+| `quality` | 画像の品質（`Quality::Standard`, `Quality::HD` のいずれか）。デフォルトは `Quality::Standard` |
+| `style` | 画像のスタイル（`Style::Vivid`, `Style::Natural` のいずれか）。デフォルトは `Style::Vivid` |
+
+- 画像生成には時間がかかるため、非同期版の関数（**67.9**）を使うことを推奨します
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/openai/8.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -514,11 +532,13 @@ void Main()
 }
 ```
 
-
 ## 67.9 画像生成（非同期）
-- XXX
+- `OpenAI::Image::CreateAsync(apiKey, request)` は、OpenAI の Image API を利用して、プロンプトに基づいた画像を `Image` で取得する非同期タスク `AsyncTask<Image>` を作成します
+- 非同期タスク `Async` については **チュートリアル 76** で詳しく説明します
+- 非同期タスクの `.isReady()` が `true` になるとタスクが完了で、`.get()` で `Image` を取得できます
+- 次のサンプルコードでは、非同期タスクが完了するまでの待ち時間に、回転する円を描きます
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/openai/3.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/openai/9.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -547,7 +567,7 @@ void Main()
 
 		if (task.isValid())
 		{
-			Circle{ 400, 300, 50 }.drawArc(Scene::Time() * 120_deg, 300_deg, 4, 4);
+			Circle{ 448, 256, 50 }.drawArc(Scene::Time() * 120_deg, 300_deg, 4, 4);
 		}
 
 		if (texture)
@@ -560,9 +580,19 @@ void Main()
 
 
 ## 67.10 画像に関する質問
-- XXX
+- `OpenAI::Vision::CompleteAsync(apiKey, request)` は、OpenAI の Vision API を利用して、画像に関する質問に回答を得る非同期タスク `AsyncHTTPTask` を作成します
+- `OpenAI::Vision::Request` の `.images` に画像データを、`.questions` に質問を設定してリクエストを送信します
+- 画像データは次のいずれかの方法で設定します：
+
+| コード | 説明 |
+| --- | --- |
+| `OpenAI::Vision::ImageData::Base64FromFile(filePath)` | ファイルから Base64 に変換 |
+| `OpenAI::Vision::ImageData::Base64FromImage(image)` | `Image` から Base64 に変換 |
+| `OpenAI::Vision::ImageData::FromURL(url)` | Web 上の画像の URL |
+
+- サイズの大きい画像であるほど、回答にかかる時間が長くなり、API トークンの使用量も増加します
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/openai/3.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/openai/10.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -580,7 +610,7 @@ void Main()
 
 	// 画像ファイルを Base64 に変換してリクエストに追加する
 	request.images << OpenAI::Vision::ImageData::Base64FromFile(U"example/windmill.png");
-	request.questions = U"何が写っていますか？";
+	request.questions = U"画像を説明してください。";
 
 	// 非同期タスク
 	AsyncHTTPTask task = OpenAI::Vision::CompleteAsync(API_KEY, request);
@@ -599,12 +629,12 @@ void Main()
 
 		if (task.isDownloading())
 		{
-			Circle{ 400, 300, 50 }.drawArc((Scene::Time() * 120_deg), 300_deg, 4, 4);
+			Circle{ 640, 360, 50 }.drawArc((Scene::Time() * 120_deg), 300_deg, 4, 4);
 		}
 
 		if (answer)
 		{
-			font(answer).draw(20, Rect{ 40, 340, 1200, 240 }, ColorF{ 0.25 });
+			font(answer).draw(20, Rect{ 40, 340, 1200, 240 }, ColorF{ 0.1 });
 		}
 	}
 }
@@ -612,19 +642,13 @@ void Main()
 
 
 ## 67.11 複数の画像に関する質問
-- XXX
-	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/openai/3.png)
+- Vision API では、複数の画像に関する質問を送信することもできます
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Window::Resize(1280, 720);
-	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
-
 	const String API_KEY = EnvironmentVariable::Get(U"MY_OPENAI_API_KEY");
 
 	OpenAI::Vision::Request request;
@@ -637,32 +661,31 @@ void Main()
 	// 非同期タスク
 	AsyncHTTPTask task = OpenAI::Vision::CompleteAsync(API_KEY, request);
 
-	// 回答を格納する変数
-	String answer;
-
 	while (System::Update())
 	{
 		if (task.isReady() && task.getResponse().isOK())
 		{
-			answer = OpenAI::Vision::GetContent(task.getAsJSON());
+			const String answer = OpenAI::Vision::GetContent(task.getAsJSON());
+
+			Console << answer;
 		}
 
 		if (task.isDownloading())
 		{
-			Circle{ Scene::Center(), 50 }.drawArc((Scene::Time() * 120_deg), 300_deg, 4, 4);
-		}
-
-		if (answer)
-		{
-			font(answer).draw(20, Rect{ 40, 340, 1200, 240 }, ColorF{ 0.25 });
+			Circle{ 400, 300, 50 }.drawArc((Scene::Time() * 120_deg), 300_deg, 4, 4);
 		}
 	}
 }
 ```
+```txt title="出力例"
+どちらも果物の絵文字です。リンゴとバナナを示しています。
+```
 
 
-## 67.14 ドロップした画像の説明
-- XXX
+## 67.12 ドロップした画像の説明
+- アプリケーションのウィンドウにドロップした画像の説明を取得するサンプルコードです
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/openai/12.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -744,239 +767,52 @@ void Main()
 
 
 ## 67.13 テキストの読み上げ
-- XXX
+- `OpenAI::Speech::CreateAsync(apiKey, request, savePath)` は、OpenAI の Speech API を利用して、テキストを音声に変換し、指定したファイルに保存する非同期タスク `AsyncTask<bool>` を作成します
+- タスクが完了すると、指定したファイルに音声が保存されます
+- 英語以外の発音は精度が低いため、OS 標準のテキスト読み上げ機能（**チュートリアル 79**）の利用も検討してください
 	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/openai/3.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/openai/13.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
-class Task
-{
-public:
-
-	enum class State
-	{
-		Running,
-		Failed,
-		Completed,
-	};
-
-	Task() = default;
-
-	void update()
-	{
-		if (m_isReady)
-		{
-			return;
-		}
-
-		if (m_task.isReady())
-		{
-			m_isReady = true;
-			m_isFailed = (not m_task.get());
-			m_completeTime = Time::GetMillisec();
-		}
-	}
-
-	void play()
-	{
-		if (not m_isReady)
-		{
-			return;
-		}
-
-		if (not m_audio)
-		{
-			m_audio = Audio{ Audio::Stream, m_path };
-		}
-
-		m_audio.play();
-	}
-
-	const String& getText() const
-	{
-		return m_request.input;
-	}
-
-	const Audio& getAudio() const
-	{
-		return m_audio;
-	}
-
-	State getState() const
-	{
-		if (not m_isReady)
-		{
-			return State::Running;
-		}
-		else if (m_isFailed)
-		{
-			return State::Failed;
-		}
-		else
-		{
-			return State::Completed;
-		}
-	}
-
-	static Task Create(const StringView apiKey, const OpenAI::Speech::Request& request, const FilePathView saveDirectory)
-	{
-		Task task;
-		task.m_request = request;
-		task.m_path = FileSystem::PathAppend(saveDirectory, U"{}.{}"_fmt(UUIDValue::Generate().str(), request.responseFormat));
-		task.m_task = OpenAI::Speech::CreateAsync(apiKey, request, task.m_path);
-		task.m_startTime = Time::GetMillisec();
-		return task;
-	}
-
-	double getTime() const
-	{
-		if (not m_isReady)
-		{
-			return 0.0;
-		}
-		else
-		{
-			return (m_completeTime - m_startTime) / 1000.0;
-		}
-	}
-
-private:
-
-	OpenAI::Speech::Request m_request;
-
-	FilePath m_path;
-
-	AsyncTask<bool> m_task;
-
-	uint64 m_startTime = 0;
-
-	uint64 m_completeTime = 0;
-
-	Audio m_audio;
-
-	bool m_isReady = false;
-
-	bool m_isFailed = false;
-};
-
-void DrawTaskShadow(int32 taskIndex)
-{
-	const Rect rect{ 40, (40 + taskIndex * 60), 1200, 56 };
-	rect.drawShadow({ 0, 2 }, 6, 0.0, ColorF{ 0.0, 0.5 }, false);
-}
-
-void DrawTask(int32 taskIndex, Task& task, const Font& font)
-{
-	const double fontSize = 20.0;
-	const Rect rect{ 40, (40 + taskIndex * 60), 1200, 56 };
-
-	rect.draw();
-	{
-		const auto text = font(task.getText());
-		const double textWidth = text.region(fontSize).w;
-		const double overWidth = (textWidth - 846.0 + 100);
-		const Audio& audio = task.getAudio();
-		const Rect textRect = Rect{ rect.pos.movedBy(54, 14), 846, 30 };
-		const ScopedViewport2D viewport{ textRect };
-
-		if (0 < overWidth)
-		{
-			const double audioProgress = (audio.posSec() / audio.lengthSec());
-			const double xOffset = (overWidth * audioProgress);
-			text.draw(fontSize, Vec2{ 10 - xOffset, 0 }, ColorF{ 0.1 });
-		}
-		else
-		{
-			text.draw(fontSize, Vec2{ 10, 0 }, ColorF{ 0.1 });
-		}
-	}
-
-	Rect{ rect.pos.movedBy(900, 00), 300, 56 }.draw(Arg::left(0.8, 0.9, 1.0), Arg::right(0.9, 0.95, 1.0));
-
-	if (task.getState() == Task::State::Completed)
-	{
-		Rect{ rect.pos, 50, rect.h }.draw(ColorF{ 0.2, 0.7, 0.5 });
-		font(U"#{}"_fmt(taskIndex)).draw(fontSize, Arg::leftCenter(rect.pos.movedBy(12, 28)), ColorF{ 1.0 });
-
-		if (SimpleGUI::Button(U"\U000F040A", rect.pos.movedBy(920, 10)))
-		{
-			task.play();
-		}
-
-		font(U"生成時間 {:.2f} 秒"_fmt(task.getTime())).draw(fontSize, Arg::rightCenter(rect.pos.movedBy(1180, 28)), ColorF{ 0.1, 0.2, 0.5 });
-	}
-	else
-	{
-		font(U"#{}"_fmt(taskIndex)).draw(fontSize, Arg::leftCenter(rect.pos.movedBy(12, 28)), ColorF{ 0.1 });
-	}
-}
-
 void Main()
 {
-	Window::Resize(1280, 720);
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-	const Font font{ FontMethod::MSDF, 48, Typeface::Medium };
 
 	const String API_KEY = EnvironmentVariable::Get(U"MY_OPENAI_API_KEY");
 
-	Array<Task> tasks;
+	const String text = U"The transcriptions API takes as input the audio file you want to transcribe and the desired output file format for the transcription of the audio. We currently support multiple input and output file formats.";
 
-	TextAreaEditState textAreaEditState;
-	const Array<String> voices = {
-		U"Alloy", U"Echo", U"Fable", U"Onyx", U"Nova", U"Shimmer",
-	};
-	size_t voiceIndex = 0;
-	size_t qualityIndex = 0;
+	OpenAI::Speech::Request request;
+	request.model = OpenAI::Speech::Model::TTS1; // 品質
+	request.input = text; // 入力テキスト
+	request.voice = OpenAI::Speech::Voice::Alloy; // 声質
+	request.responseFormat = OpenAI::Speech::ResponseFormat::MP3; // 出力フォーマット
+	request.speed = OpenAI::Speech::Request::DefaultSpeed; // 速度
 
-	size_t randomTextIndex = 0;
-
-	const Array<String> randomTexts = {
-		U"The transcriptions API takes as input the audio file you want to transcribe and the desired output file format for the transcription of the audio. We currently support multiple input and output file formats.",
-		U"Please note that our Usage Policies require you to provide a clear disclosure to end users that the TTS voice they are hearing is AI-generated and not a human voice.",
-		U"Siv3D には 2D, 3D ゲーム、メディアアート、ビジュアライザ、シミュレータを効率的に開発するための、便利なクラスや関数が用意されています。",
-		U"Siv3D の API とサンプルは、最新の C++ 規格「C++20」で書かれています。Siv3D を使っているだけで、現代的な C++ の書き方が身に付きます。",
-	};
+	const FilePath savePath = U"speech.mp3";
+	AsyncTask<bool> task = OpenAI::Speech::CreateAsync(API_KEY, request, savePath);
+	Audio audio;
 
 	while (System::Update())
 	{
-		for (auto& task : tasks)
+		if (task.isReady() && task.get())
 		{
-			task.update();
+			audio = Audio{ Audio::Stream, savePath };
 		}
 
-		for (int32 i = 0; auto & task : tasks)
+		if (audio)
 		{
-			DrawTaskShadow(i++);
+			if (SimpleGUI::Button(U"Play", Vec2{ 40, 40 }, 100, (not audio.isPlaying())))
+			{
+				audio.play();
+			}
 		}
 
-		for (int32 i = 0; auto & task : tasks)
+		if (task.isValid())
 		{
-			DrawTask(i++, task, font);
-		}
-
-		SimpleGUI::TextArea(textAreaEditState, Vec2{ 40, 560 }, SizeF{ 1000, 100 });
-
-		if (SimpleGUI::Button(U"Random", Vec2{ 1060, 600 }, 140))
-		{
-			textAreaEditState = TextAreaEditState{ randomTexts[randomTextIndex] };
-			++randomTextIndex %= randomTexts.size();
-		}
-
-		SimpleGUI::HorizontalRadioButtons(voiceIndex, voices, Vec2{ 40, 520 });
-
-		SimpleGUI::HorizontalRadioButtons(qualityIndex, { U"速度", U"品質" }, Vec2{ 840, 520 });
-
-		if (SimpleGUI::Button(U"Generate", Vec2{ 1060, 520 }, 140, (not textAreaEditState.text.isEmpty())))
-		{
-			OpenAI::Speech::Request request;
-			request.model = (qualityIndex == 0) ? OpenAI::Speech::Model::TTS1 : OpenAI::Speech::Model::TTS1HD;
-			request.input = textAreaEditState.text;
-			request.voice = voices[voiceIndex].lowercased();
-			tasks << Task::Create(API_KEY, request, U"speech/");
-
-			textAreaEditState.clear();
+			Circle{ 400, 300, 50 }.drawArc((Scene::Time() * 120_deg), 300_deg, 4, 4);
 		}
 	}
 }
@@ -984,9 +820,12 @@ void Main()
 
 
 ## 67.14 Embedding
-- XXX
-	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/openai/3.png)
+- Embedding（埋め込みベクトル）は、テキストをその意味に基づいて数値ベクトルに変換する技術です
+- `OpenAI::Embedding::Create(apiKey, text, error)` は、OpenAI の Embedding API を利用して、テキストの埋め込みベクトルを作成します
+- 埋め込みベクトルは `Array<float>` で表現されます。事前に計算した埋め込みベクトルをファイルに保存しておくことで、毎回計算するコストを削減できます
+- 埋め込みベクトルを使って、2 つの文章の意味的な類似度を計算することができるため、文章の分類や検索などに利用できます
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/openai/14.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -1028,7 +867,7 @@ void Main()
 
 	const String API_KEY = EnvironmentVariable::Get(U"MY_OPENAI_API_KEY");
 
-	const Array<Text> texts =
+	Array<Text> texts =
 	{
 		{ U"バレーボール女子 パリオリンピックの出場権獲得は持ち越し" },
 		{ U"【プロ野球結果】交流戦首位の楽天 完封勝ち 勝率5割上回る" },
@@ -1059,7 +898,7 @@ void Main()
 	{
 		if (initTask.isValid())
 		{
-			Circle{ Scene::Center(), 40 }.drawArc(Scene::Time() * 90_deg, 270_deg, 5);
+			Circle{ 640, 360, 40 }.drawArc(Scene::Time() * 90_deg, 270_deg, 5);
 
 			font(U"テキストの埋め込みベクトルを計算しています。事前に計算しておくことで実行時の処理を省略できます。").drawAt(22, Scene::Center().movedBy(0, 100), ColorF{ 0.1 });
 

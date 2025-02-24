@@ -1146,7 +1146,7 @@
 				AwakeAll(bodies);
 			}
 
-			Line{ Vec2{ 400, 300 }, (Vec2{ 400, 300 } + world.getGravity() * 0.1) }.drawArrow(20, SizeF{ 30, 30 });
+			Line{ Vec2{ 640, 360 }, (Vec2{ 640, 360 } + world.getGravity() * 0.1) }.drawArrow(20, SizeF{ 30, 30 });
 		}
 	}
 	```
