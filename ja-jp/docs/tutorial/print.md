@@ -1,12 +1,12 @@
-# 5. 簡易的なデータ表示
-プログラム内でテキストや数値を簡易表示する方法を学びます。簡易表示では、フォントや位置、色を指定できませんが、非常に短いコードで文字列や数値を画面に表示できます。
+# 6. 簡易的な出力
+プログラム内でテキストや数値を簡易表示する方法を学びます。簡易表示では、フォントや位置、色を指定できませんが、最小限のコードで文字列や数値を画面に表示できます。
 
-## 5.1 文字列や数値を簡易表示する
-`Print` を使うと、画面に文字列を簡易表示できます。
+## 6.1 文字列や数値を簡易表示する
+- `Print` に対して、文字列や数値を `<<` 演算子で渡すと、画面の左上に簡易表示されます
+- Siv3D のプログラムで文字列を扱うときは、**ダブルクォーテーションの前に `U`** を付けます
+    - 文字列を Unicode（UTF-32）文字列として扱うための記法です
 
-Siv3D のプログラムで文字列を扱うときは、ダブルクォーテーションの前に `U` を付けます。これは、文字列を Unicode (UTF-32) 文字列として扱うための記法です。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/print/1.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/print/1.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -15,7 +15,7 @@ void Main()
 {
 	Print << U"C++";
 
-	Print << U"Hello, " << U"Siv3D"; // 複数に分けることもできる
+	Print << U"Hello, " << U"Siv3D"; // 複数に分けても OK
 
 	Print << 123;
 
@@ -28,10 +28,12 @@ void Main()
 }
 ```
 
-## 5.2 簡易表示をたくさん行う
-簡易出力したものは画面に残り続けます。画面に収まらなくなったものは、古いものから順に消えていきます。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/print/2.png)
+## 6.2 簡易表示をたくさん行う
+- 簡易出力したものは画面に残り続けます
+- 画面に収まらなくなった場合、古いものから順に消えていきます
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/print/2.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -50,12 +52,13 @@ void Main()
 ```
 
 
-## 5.3 簡易表示を消去する
-`ClearPrint()` を使うと、画面に残っている簡易表示をすべて消去できます。メインループの先頭で常に `ClearPrint()` することで、現在のフレーム内で出力した内容だけを画面に表示することができます。
+## 6.3 簡易表示を消去する
+- 画面の簡易表示をすべて消去するには、`ClearPrint()` を使います
+- メインループの先頭で常に `ClearPrint()` すると、現在のフレーム内で出力した内容だけを画面に表示することができます。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/print/3.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/print/3.png)
 
-```cpp
+```cpp hl_lines="9-10"
 # include <Siv3D.hpp>
 
 void Main()
@@ -76,5 +79,7 @@ void Main()
 
 
 ## 振り返りチェックリスト
-- [x] `Print` を使って画面に文字列や数値を簡易表示する方法を学んだ
-- [x] `ClearPrint()` を使って簡易表示を消去する方法を学んだ
+- [x] `Print` に `<<` で値を送って、画面に文字列や数値を簡易表示することを学んだ
+- [x] 文字列を扱うときは、ダブルクォーテーションの前に `U` を付けることを学んだ
+- [x] `Print` で簡易表示した出力は画面に残り続けることを学んだ
+- [x] `ClearPrint()` で簡易表示を消去することを学んだ

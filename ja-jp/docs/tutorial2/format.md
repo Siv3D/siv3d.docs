@@ -1,12 +1,10 @@
-# 27. 数値と文字列の変換
-数値データを文字列に変換する方法と、文字列を数値データに変換する方法を学びます。
+# 36. 数値と文字列の変換
+数値 → 文字列の変換と、文字列 → 数値の変換の方法を学びます。
 
-## 27.1 数値から文字列への変換
-`Format()` を使うと、**フォーマット可能**な型の値を `String` に変換できます。
-
-フォーマット可能とは、その型の値を文字列に変換する方法が定義されていることを意味します。C++ の基本型や Siv3D の主要なクラスの多くがフォーマット可能です。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/format/1.png)
+## 36.1 数値から文字列への変換
+- `Format()` を使うと、**フォーマット可能**な型の値を `String` に変換できます
+- C++ の基本型や Siv3D の主要なクラスの多くがフォーマット可能です
+- 自作クラスをフォーマット可能にする方法は **36.2** で説明します
 
 ```cpp
 # include <Siv3D.hpp>
@@ -48,37 +46,28 @@ void Main()
 	const String g = Format(Rect{ 30, 50, 100, 50 });
 	Print << g;
 
-	// (復習) Print は String でなくても使える
-	Print << 12345;
-	Print << colors;
-	Print << Rect{ 30, 50, 100, 50 };
-
 	while (System::Update())
 	{
 
 	}
 }
 ```
-
-
-## 27.2 自作クラスをフォーマット可能にする
-自作クラス `X` をフォーマット可能にするには、次のようなメンバ関数 `Format` を定義します。自作クラスをフォーマット可能にすると、`Format()` だけでなく、`Print` など、様々な関数でもそのクラスを扱えるようになります。
-
-```cpp
-struct X
-{
-	friend void Formatter(FormatData& formatData, const X& value)
-	{
-		const String s = /* value を String に変換する処理 */;
-
-		formatData.string.append(s);
-	}
-};
+```txt title="出力"
+12345
+true
+1.23457
+(11, 22)
+{3, 4, 5, 6}
+{(1, 0, 0, 1), (0, 1, 0, 1), (0, 0, 1, 1)}
+(30, 50, 100, 50)
 ```
 
-次のサンプルコードでは、`MyInt` と `RGB` という自作クラスをフォーマット可能にしています。
+- フォーマット可能な型は、直接 `Print` に送ることができるため、`String` が必要でない場合は `Format()` を使う必要はありません
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/format/2.png)
+
+## 36.2 自作クラスをフォーマット可能にする
+- 自作クラスをフォーマット可能にするには、次のようなメンバ関数 `Format` を定義します
+- 自作クラスをフォーマット可能にすると、`Format()` に限らず、`Print` など、様々な出力系機能でそのクラスの値を直接出力できるようになります
 
 ```cpp
 # include <Siv3D.hpp>
@@ -119,12 +108,16 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+(136, 204, 255)
+(136, 204, 255)
+123
+123
+```
 
 
-## 27.3 桁区切り記号を使って数値を文字列に変換する 
-`ThousandsSeparate()` を使うと、桁区切り記号を挿入しながら数値を `String` に変換できます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/format/3.png)
+## 36.3 桁区切り記号を使って数値を文字列に変換する 
+- 数値を、桁区切り記号を挿入しながら `String` に変換するには `ThousandsSeparate()` を使います
 
 ```cpp
 # include <Siv3D.hpp>
@@ -132,9 +125,7 @@ void Main()
 void Main()
 {
 	Print << ThousandsSeparate(123456);
-
 	Print << ThousandsSeparate(3333.3333, 2); // 小数点以下 2 桁まで
-
 	Print << ThousandsSeparate(3333.3333, 4); // 小数点以下 4 桁まで
 
 	while (System::Update())
@@ -143,17 +134,16 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+123,456
+3,333.33
+3,333.3333
+```
 
 
-## 27.4 フォーマット指定子による数値から文字列への変換
-文字列リテラルのあとに `_fmt()` サフィックスを付けると、文字列リテラル内に記述したフォーマット指定子 `{}` に、`( )` 内に記述した引数を文字列化して挿入できます。
-
-### 27.4.1 基本
-`U"{}"_fmt(x)` と書くと、`{}` には値 `x` を文字列にしたものが入ります。
-
-文字列内で `{` や `}` の文字を扱いたい場合は、`{{` や `}}` と書く必要があります。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/format/4.1.png)
+## 36.4 _fmt の基本
+- 文字列リテラルに `_fmt()` サフィックスを付けると、文字列リテラル内に記述したフォーマット指定子 `{}` に、`( )` 内に記述した引数を文字列化して挿入できます
+- 文字列内で `{` や `}` の文字を扱いたい場合は、`{{` や `}}` でエスケープします
 
 ```cpp
 # include <Siv3D.hpp>
@@ -164,7 +154,7 @@ void Main()
 
 	Print << U"Siv{}D"_fmt(n);
 
-	Print << U"{}/{}/{}"_fmt(2023, 12, 31);
+	Print << U"{}/{}/{}"_fmt(2025, 12, 31);
 
 	Print << U"Hello, {}!"_fmt(U"Siv3D");
 
@@ -179,21 +169,26 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+Siv3D
+2025/12/31
+Hello, Siv3D!
+position: (23, 45), color: (0.7, 0.8, 0.9, 1)
+{abc} 123
+```
 
 
-### 27.4.2 インデックスの指定 
-`{0}`, `{1}` のようにインデックスを記述すると、`_fmt()` 内の対応する引数を順序で指定できます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/format/4.2.png)
+## 36.5 _fmt のインデックス指定
+- `{0}`, `{1}` のように、フォーマット指定子内にインデックスを記述すると、`_fmt()` 内の対応する引数を順序で指定できます
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Print << U"{2}/{1}/{0}"_fmt(2023, 12, 31);
+	Print << U"{2}/{1}/{0}"_fmt(2025, 12, 31);
 
-	Print << U"{0}/{1}/{2}"_fmt(2023, 12, 31);
+	Print << U"{0}/{1}/{2}"_fmt(2025, 12, 31);
 
 	Print << U"C{0}{0}"_fmt(U'+');
 
@@ -205,11 +200,16 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+31/12/2025
+2025/12/31
+C++
+Tokyo - Osaka - Tokyo
+```
 
-### 27.4.3 String を使う
-`Fmt(s)` 関数を使うことで、文字列リテラルの代わりにフォーマット指定子が記述された `String` の文字列を用いてフォーマットを実行できます。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/format/4.3.png)
+## 36.6 String を _fmt のように使う
+- 文字列リテラルの代わりに `String` をフォーマット文字列として使いたい場合は、`Fmt(s)` 関数を使います
 
 ```cpp
 # include <Siv3D.hpp>
@@ -217,12 +217,10 @@ void Main()
 void Main()
 {
 	const String s1 = U"{2}/{1}/{0}";
-
 	const String s2 = U"{0}/{1}/{2}";
 
-	Print << Fmt(s1)(2023, 12, 31);
-
-	Print << Fmt(s2)(2023, 12, 31);
+	Print << Fmt(s1)(2025, 12, 31);
+	Print << Fmt(s2)(2025, 12, 31);
 
 	while (System::Update())
 	{
@@ -230,14 +228,20 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+31/12/2025
+2025/12/31
+```
 
 
-### 27.4.4 小数点以下の桁数 
-浮動小数点数型の値 `x` を、小数点以下の桁数を指定して変換する場合、`U"{:.2f}"_fmt(x)` のように書きます（この場合小数点以下 2 桁）。小数点以下を表示しない場合は `U"{:.0f}"_fmt(x)` とします。桁数を明示的に指定しない変換では、その値の精度が失われない最短の桁数になります。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/format/4.4.png)
-
-```cpp
+## 36.7 _fmt の小数点以下桁数の指定
+- フォーマット文字列には、さまざまな書式設定があります
+- 浮動小数点数の値 `x` を、**小数点以下の桁数**を指定して変換する場合 `U"{:.2f}"_fmt(x)` のように書きます
+	- この場合、小数点以下 2 桁まで（それ以降は四捨五入）の文字列が生成されます
+	- 例えば、`U"{:.3f}"_fmt(3.141592)` は `U"3.142"` になります-
+- 小数点以下を表示したくない場合は `U"{:.0f}"_fmt(x)` と書きます
+	- 例えば、`U"{:.0f}"_fmt(3.141592)` は `U"3"` になります
+- 桁数を明示的に指定しなかった場合、値の情報が失われない最短の桁数になります
 
 ```cpp
 # include <Siv3D.hpp>
@@ -273,12 +277,24 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+3.14159265
+3.142
+π ≒ 3.141593
+12345.678
+12345.678
+12345.678000
+9876543.21
+9876543
+(1.111, 2.222)
+(1.1, 2.2)
+```
 
 
-### 27.4.5 パディング 
-値の変換結果が最小 N 文字の幅になるようパティング文字を挿入できます。文字の左にパティング文字 c を挿入したい場合は `{:c>N}`, 右に挿入したい場合は `{:c<N}`, 左右に均等に挿入したい場合は `{:c^N}` と記述します。`c` を省略した場合は半角スペースが使われます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/format/4.5.png)
+## 36.8 _fmt パディング指定
+- 値の変換結果が最小 N 文字の幅になるよう、パティング文字を挿入する書式設定が可能です
+- 変換結果の左にパティング文字 c を挿入したい場合は `{:c>N}`, 右に挿入したい場合は `{:c<N}`, 左右に均等に挿入したい場合は `{:c^N}` と記述します
+- パティング文字を省略した場合は半角空白が使われます
 
 ```cpp
 # include <Siv3D.hpp>
@@ -305,12 +321,32 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+00003
+    3
+   100
+***100
+100
+100***
+ 100
+*100**
+???aaa
+aaabbb
+aaabbbccc
+```
 
 
-### 27.4.6 基数の指定 
-整数を変換するとき、`{:X}` は大文字の 16 進数、`{:x}` は小文字の 16 進数、`{:o}` は 8 進数、`{:b}` は 2 進数に変換します。`#` を付けると基数に応じたプレフィックスが付きます。
+## 36.9 _fmt 基数の指定
+- 整数を 2 進数、8 進数、16 進数に変換する書式設定が可能です
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/format/4.6.png)
+| 書式設定 | 説明 |
+|---|---|
+| `{:X}` | 大文字の 16 進数 |
+| `{:x}` | 小文字の 16 進数 |
+| `{:o}` | 8 進数 |
+| `{:b}` | 2 進数 |
+
+- `#` を付けると基数に応じたプレフィックスが付きます
 
 ```cpp
 # include <Siv3D.hpp>
@@ -334,14 +370,23 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+FF
+ff
+377
+11111111
+0XFF
+0xff
+0377
+0b11111111
+0x000000FF
+0x000000ff
+```
 
 
-### 27.4.7 符号
-`{:+}` は正の値に + 記号を付加し、`{: }` は正の値の前に半角空白を付加します。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/format/4.7.png)
-
-```cpp
+## 36.10 _fmt 符号表示の指定
+- 符号の表示を指定する書式設定が可能です
+- `{:+}` は正の値に + 記号を付加し、`{: }` は正の値の前に半角空白を付加します
 
 ```cpp
 # include <Siv3D.hpp>
@@ -361,12 +406,18 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+-123/123
+-123/+123
+-123/ 123
+0.5/-0.5
++0.5/-0.5
+ 0.5/-0.5
+```
 
 
-## 27.5 自作クラスを _fmt() でフォーマット可能にする
-自作クラスを `_fmt()` でフォーマット可能にするには、次のサンプルを参考に `fmt::formatter` の特殊化を行ってください。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/format/5.png)
+## 36.11 自作クラスの _fmt 対応
+- 自作クラスを `_fmt()` でフォーマット可能にするには、次のサンプルを参考に `fmt::formatter` の特殊化を行います
 
 ```cpp
 # include <Siv3D.hpp>
@@ -448,15 +499,19 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+127
+7F
+(255, 127, 0)
+(FF, 7F, 0)
+```
 
 
-## 27.6 文字列から数値への変換
-`Parse()`, `ParseOr()`, `ParseOpt()` を使うと、文字列を指定した型の値に変換できます。変換するにはその型が**パース可能**である必要があります。配列のパースはサポートされていません。
-
-### 27.6.1 Parse
-`Parse<Type>(s)` は、文字列 `s` を `Type` 型の値に変換し、失敗した場合は例外 `ParseError` を投げます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/format/6.1.png)
+## 36.12 Parse
+- `Parse` を使うと、文字列から**パース可能**な型の値に変換できます
+- 配列のパースはサポートされていません
+- `Parse<Type>(s)` は、文字列 `s` を `Type` 型の値に変換します
+- 変換に失敗した場合は例外 `ParseError` を投げます
 
 ```cpp
 # include <Siv3D.hpp>
@@ -489,11 +544,17 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+123
+-3.14159
+(10, 20)
+[ParseError] Parse<struct s3d::Point>("123") failed
+```
 
-### 27.6.2 ParseOr
-`ParseOr<Type>(s, defaultValue)` は、文字列 `s` を `Type` 型の値に変換し、失敗した場合は代わりに `defaultValue` を返します。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/format/6.2.png)
+## 36.13 ParseOr
+- `ParseOr<Type>(s, defaultValue)` は、文字列 `s` を `Type` 型の値に変換します
+- 失敗した場合は `defaultValue` を返します
 
 ```cpp
 # include <Siv3D.hpp>
@@ -516,12 +577,17 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+123
+-1
+(0, 0, 0, 0)
+(400, 300, 100)
+```
 
 
-### 27.6.3 ParseOpt
-`ParseOpt<Type>(s)` は、文字列 `s` を `Type` 型の値に変換し、`Optional` でラップして返します。変換に失敗した場合は代わりに無効値を返します。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/format/6.3.png)
+## 36.14 ParseOpt
+- `ParseOpt<Type>(s)` は、文字列 `s` を `Type` 型の値に変換し、`Optional<Type>` 型の値で返します
+- 変換に失敗した場合は無効値を返します
 
 ```cpp
 # include <Siv3D.hpp>
@@ -559,12 +625,14 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+a: 123
+d: (400, 300, 100)
+```
 
 
-## 27.7 自作クラスをパース可能にする
-自作クラスを `_fmt()` でフォーマット可能にするには、次のサンプルを参考に `operator >>` をオーバーロードしてます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/format/7.png)
+## 36.15 自作クラスをパース可能にする
+- 自作クラスをパース可能にするには、出力ストリームに対する `operator >>` をオーバーロードします
 
 ```cpp
 # include <Siv3D.hpp>
@@ -625,3 +693,8 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+123
+(255, 127, 0)
+```
+

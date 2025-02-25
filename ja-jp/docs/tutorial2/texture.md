@@ -1,103 +1,136 @@
-# 25. テクスチャを描く
+# 31. テクスチャを描く
 絵文字やアイコン、画像ファイルからテクスチャを作成し描画する方法を学びます。
 
-画面に描画する画像データはテクスチャクラス `Texture` で管理します。テクスチャはいくつかの方法で作成できます。テクスチャの作成にはコストがかかるため、通常はメインループの前で行います。メインループ内で作成する必要がある場合には、毎フレーム作成されないような制御が必要です。
+## 31.1 テクスチャの作成と描画
 
-## 25.1 絵文字からテクスチャを作成する
-`Texture 変数名{ U"絵文字"_emoji };` で、絵文字をもとに固定サイズ（136x128）のテクスチャを作成できます。
+### テクスチャの作成
+- 画面に描画する画像はテクスチャクラス `Texture` で管理します
+- テクスチャの作成にはいくつかの方法があります
+	- **31.2** 絵文字から作成
+	- **31.3** アイコンから作成
+	- **31.4** 画像ファイルから作成
+	- **31.5** 画像データから作成
+- テクスチャの作成にはコストがかかるため、通常はメインループの前で行います
+- メインループ内で作成する場合には、毎フレーム作成されないよう制御が必要です
 
-!!! info "絵文字を探す"
-    - 絵文字の種類は [emojipedia :material-open-in-new:](https://emojipedia.org/){:target="_blank"} で探すと便利です。全部で 3700 種類以上が用意されています。
-    - Windows の場合は、++windows+period++ で出てくる、OS 標準の絵文字入力メニューも使えます。
+### テクスチャの描画
+- テクスチャを描画するには `Texture` のメンバ関数を使います
+	- **31.9** 左上座標を指定した描画 `.draw()`
+	- **31.10** 中心座標を指定した描画 `.drawAt()`
+	- **31.11** それ以外の座標を指定した描画 `.draw(Arg::...)`
+- 拡大縮小・回転・反転・部分切り出しなどの操作を適用したテクスチャを表現する、次のようなクラスが用意されています
+	- `TextureRegion`
+	- `TexturedQuad`
+	- `TexturedCircle`
+	- `TexturedRoundRect`
+- これらのクラスは `Texture` のメンバ関数によって作成されますが、ほとんど意識することなく `Texture` と同様に使えます
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/texture/1.png)
+```cpp
+// .scaled() は TextureRegion を返す
+// .rotated() は TexturedQuad を返す
+texture.scaled(2.0).rotated(30_deg).drawAt(400, 300);
+```
+
+
+## 31.2 絵文字から作成
+- Siv3D には Unicode 15.1 に準拠した 3,700 種類以上の絵文字が標準で同梱されています
+- `Texture{ U"絵文字"_emoji }` で、絵文字からテクスチャを作成します
+
+```cpp
+Texture texture{ U"🐈"_emoji };
+```
+
+- 絵文字一覧は [Emojipedia: Google Noto Color Emoji :material-open-in-new:](https://emojipedia.org/ja/google){:target="_blank"} で確認できます
+- どのプラットフォーム（Windows, macOS, Linux, Web）でも同じデザインの絵文字を描画できます
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/2.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
 	const Texture emoji1{ U"🐈"_emoji };
-
 	const Texture emoji2{ U"🍎"_emoji };
 
 	while (System::Update())
 	{
 		emoji1.drawAt(100, 100);
-
-		emoji2.drawAt(200, 300);
-
 		emoji1.drawAt(400, 300);
 
+		emoji2.drawAt(200, 300);        
 		emoji2.drawAt(Cursor::Pos());
 	}
 }
 ```
 
 
-## 25.2 アイコンからテクスチャを作成する
-`Texture 変数名{ アイコン番号_icon, サイズ };` で、アイコンをもとにテクスチャを作成できます。アイコンは [Material Design Icons :material-open-in-new:](https://pictogrammers.com/library/mdi/){:target="_blank"} または [Font Awesome :material-open-in-new:](https://fontawesome.com/v5/search?o=r&m=free){:target="_blank"} で調べられる 16 進数コードに `_icon` を付けた値を使います。
+## 31.3 アイコンから作成
+- Siv3D には 7,000 種類以上のアイコンが標準で同梱されています
+- `Texture{ 0xアイコン番号_icon, サイズ }` で、アイコンからテクスチャを作成します
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/texture/2.png)
+```cpp
+Texture texture{ 0xF0493_icon, 80 };
+```
+
+- アイコン番号は [Material Design Icons :material-open-in-new:](https://pictogrammers.com/library/mdi/){:target="_blank"} または [Font Awesome :material-open-in-new:](https://fontawesome.com/v5/search?o=r&m=free){:target="_blank"} の 16 進数コードです
+- どのプラットフォーム（Windows, macOS, Linux, Web）でも同じデザインのアイコンを描画できます
+- アイコンの色は白であるため、**31.12** 色の乗算により、描画時に色を変更できます
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/3.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-	const Texture icon1{ 0xF034E_icon, 80 };
-
-	const Texture icon2{ 0xF0493_icon, 120 };
+	const Texture icon1{ 0xF0493_icon, 100 };
+	const Texture icon2{ 0xF0787_icon, 100 };
+	const Texture icon3{ 0xF018C_icon, 100 };
 
 	while (System::Update())
 	{
-		icon1.drawAt(100, 100);
-
-		icon2.drawAt(200, 300);
-
-		icon1.drawAt(400, 300, ColorF{ 0.25 });
-
-		icon2.drawAt(Cursor::Pos(), ColorF{ 0.5, 0.25, 0.0 });
+		icon1.drawAt(200, 200);
+		icon2.drawAt(400, 200, Palette::Seagreen);
+		icon3.drawAt(600, 200, ColorF{ 0.2 });
 	}
 }
 ```
 
 
-## 25.3 画像ファイルからテクスチャを作成する
-`Texture 変数名{ U"ファイルパス" };` で、画像ファイルからテクスチャを作成できます。ファイルパスは、実行ファイルがあるフォルダ（開発中は `App` フォルダ）を基準とする相対パスか、絶対パスを使用します。
-
-例えば `U"example/windmill.png"` とすると、実行ファイルがあるフォルダ（`App` フォルダ）の `example` フォルダの `windmill.png` というファイルを指します。
-
-Siv3D では、次の 9 種類の画像フォーマットの読み込みをサポートしています。
+## 31.4 画像ファイルから作成
+- 画像ファイルからテクスチャを作成するには、`Texture{ ファイルパス }` を使います
+- ファイルパスは、実行ファイルがあるフォルダ（開発中は `App` フォルダ）を基準とする相対パスか、絶対パスを使用します
+	- 例えば `U"example/windmill.png"` は、実行ファイルがあるフォルダ（`App` フォルダ）の `example/` フォルダにある `windmill.png` というファイルを指します
+- Siv3D は次の 9 種類の画像フォーマットの読み込みをサポートします
 
 | フォーマット   | 拡張子             | 対応状況       |
 |----------|-----------------|:----------:|
-| PNG      | png             | ✔          |
-| JPEG     | jpg/jpeg/jfif   | ✔          |
-| BMP      | bmp             | ✔          |
-| SVG      | svg             | ✔          |
-| GIF      | gif             | ✔          |
-| TGA      | tga             | ✔          |
-| PPM      | ppm/pgm/pbm/pnm | ✔          |
-| WebP     | webp            | ✔          |
-| TIFF     | tif/tiff        | ✔          |
-| JPEG2000 | jp2             | (将来のバージョン) |
+| PNG      | png             | ✅          |
+| JPEG     | jpg / jpeg / jfif   | ✅          |
+| BMP      | bmp             | ✅          |
+| SVG      | svg             | ✅          |
+| GIF      | gif             | ✅          |
+| TGA      | tga             | ✅          |
+| PPM      | ppm / pgm / pbm / pnm | ✅          |
+| WebP     | webp            | ✅          |
+| TIFF     | tif / tiff        | ✅          |
 | DDS      | dds             | (将来のバージョン) |
 | WBMP     | wbmp            | (将来のバージョン) |
 | JPEG XL  | jxl             | (将来のバージョン) |
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/texture/3.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/4.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
 	// 風車の画像
 	const Texture texture1{ U"example/windmill.png" };
@@ -115,10 +148,12 @@ void Main()
 ```
 
 
-## 25.4 画像クラス（Image）からテクスチャを作成する
-プログラムで生成・加工した画像データ（`Image` クラス）からテクスチャを作成できます。`Image` クラスについては [チュートリアル 53. 画像編集](../tutorial3/image.md) を参照してください。
+## 31.5 画像データから作成
+- プログラムで生成・加工した画像データ（`Image` クラス）からテクスチャを作成できます
+	- `Image` クラスについては [**チュートリアル 63**](../tutorial4/image.md) を参照してください
+- `Texture{ 画像データ }` で、画像データからテクスチャを作成します
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/texture/4.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/5.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -140,6 +175,8 @@ Image MakeImage()
 
 void Main()
 {
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
 	const Texture texture{ MakeImage() };
 
 	while (System::Update())
@@ -150,69 +187,57 @@ void Main()
 ```
 
 
-## 25.5 ミップマップの生成
-テクスチャを元のサイズよりも縮小して描画する場合には、**ミップマップ**を使用すると、滑らかな描画が可能になります。ミップマップとは、元の画像を縮小した画像の集合です。ミップマップを使用すると、縮小描画時のノイズと処理コストが低減します。
-
-Siv3D では、ミップマップは `Texture` の内部で管理されていて、`Texture` を作成する際に `TextureDesc::Mipped` を指定することでミップマップが生成され、適切に使用されます。絵文字とアイコンからテクスチャを作成する際にはデフォルトでミップマップが生成されます。一方、画像ファイルや `Image` からテクスチャを作成する場合には明示的な `TextureDesc::Mipped` の指定が必要です。
-
-| テクスチャの作成方法 | ミップマップの生成 |
-|-----------------|:----------:|
-| 絵文字から作成        | ✔          |
-| アイコンから作成       | ✔          |
-| 画像ファイルから作成     | `TextureDesc::Mipped` の指定が必要 |
-| `Image` から作成    | `TextureDesc::Mipped` の指定が必要 |
-
-ミップマップを生成すると、そのテクスチャのビデオメモリ使用量が約 30% 増加しますが、縮小描画時の処理負荷は大きく軽減されます。縮小描画を行わない場合には、ミップマップを生成しないという選択肢もあります。
-
-次のサンプルでは、1 つ目のテクスチャはミップマップを生成せず、2 つ目のテクスチャはミップマップを生成して描画しています。縮小時にノイズが少ないことがわかります。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/texture/5.png)
+## 31.6 テクスチャのサイズ
+- テクスチャの幅（ピクセル）は `.width()` で取得できます。戻り値は `int32` 型です
+- テクスチャの高さ（ピクセル）は `.height()` で取得できます。戻り値は `int32` 型です
+- 幅と高さを同時に取得するには `.size()` を使います。戻り値は `Size`（`Point`） 型です
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// ミップマップを生成しない
-	const Texture texture1{ U"example/windmill.png" };
+	const Texture texture{ U"example/windmill.png" };
+	const Texture emoji{ U"🐈"_emoji };
 
-	// ミップマップを生成する
-	const Texture texture2{ U"example/windmill.png", TextureDesc::Mipped };
+	Print << texture.width();
+	Print << texture.height();
+	Print << emoji.size();
 
 	while (System::Update())
 	{
-		const double scale = Periodic::Sine0_1(12s);
 
-		texture1.scaled(scale).drawAt(400, 150);
-
-		texture2.scaled(scale).drawAt(400, 450);
 	}
 }
 ```
+```txt title="出力"
+480
+320
+(136, 128)
+```
 
 
-## 25.6 空のテクスチャ
-`Texture` 型の変数は、デフォルトでは**空のテクスチャ**を持っています。絵文字やアイコン、画像ファイルのロードに失敗した場合も空のテクスチャになります。
-
-空のテクスチャは、16x16 の黄色の画像で、**有効なテクスチャと同じように扱うことができ**、描画してもエラーは発生しません。
-
-空のテクスチャであるかを調べるには、`if (texture.isEmpty())`, `if (texture)`, `if (not texture)` を使います。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/texture/6.png)
+## 31.7 空のテクスチャ
+- `Texture` 型のオブジェクトは、デフォルトでは**空のテクスチャ**を持っています
+- 空のテクスチャは、16 × 16 ピクセルの黄色の画像で、**有効なテクスチャと同じように扱うことができます**
+- 絵文字やアイコン、画像ファイルのロードに失敗した場合にも空のテクスチャになります
+- 空のテクスチャであるかを調べるには、`if (texture.isEmpty())`, `if (texture)`, `if (not texture)` を使います
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/7.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
 	Texture texture1;
 
 	Print << texture1.isEmpty();
 
-    // テクスチャを代入する
+	// テクスチャを代入する
 	texture1 = Texture{ U"🐈"_emoji };
-
-	Print << texture1.isEmpty();
 
 	// 存在しない画像ファイルを指定する
 	const Texture texture2{ U"example/aaa.png" };
@@ -231,495 +256,622 @@ void Main()
 ```
 
 
-## 25.7 テクスチャのサイズ
-テクスチャの幅と高さを調べるには、`.width()`, `.height()`, `.size()` を使います。`.size()` は `Size` 型の値を返します。
+## 31.8 ミップマップの生成
+- 1/2, 1/4, ... サイズの縮小版画像を事前に内部で生成しておく**ミップマップ**という技術があります
+- ミップマップを使うと、そのテクスチャのビデオメモリ使用量が約 30 % 増加しますが、次のようなメリットがあります
+	- 縮小描画時のノイズやちらつきが少なくなる（画質の向上）
+	- 縮小描画時の処理負荷が低減する
+- 一切縮小描画を行わない場合には、ミップマップを生成しないという選択肢もあります
+- Siv3D ではミップマップは `Texture` の内部で管理されています
+- 絵文字やアイコンからテクスチャを作成する際にはデフォルトでミップマップが生成されます
+- 画像ファイルや `Image` からテクスチャを作成する場合には、コンストラクタで明示的に `TextureDesc::Mipped` の指定が必要です
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/texture/7.png)
+| テクスチャの作成方法 | ミップマップの自動生成 |
+|-----------------|:----------:|
+| 絵文字から作成        | ✅          |
+| アイコンから作成       | ✅          |
+| 画像ファイルから作成     | `TextureDesc::Mipped` の指定が必要 |
+| `Image` から作成    | `TextureDesc::Mipped` の指定が必要 |
+
+- 次のサンプルでは、1 つ目のテクスチャはミップマップを生成せず、2 つ目のテクスチャはミップマップを生成して描画しています
+- ミップマップを使用したほうが、縮小時のノイズが少ないことがわかります
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/8.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	const Texture texture1{ U"🐈"_emoji };
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+	const Font font{ FontMethod::MSDF, 48 };
 
-	Print << texture1.size();
-
-	const Texture texture2{ U"example/windmill.png" };
-
-	Print << texture2.width();
-
-	Print << texture2.height();
+	const Texture texture1{ U"example/windmill.png" };
+	const Texture texture2{ U"example/windmill.png", TextureDesc::Mipped };
 
 	while (System::Update())
 	{
+		const double scale = Periodic::Sine0_1(12s);
 
+		font(U"No mipmaps").draw(30, Vec2{ 20, 20 }, ColorF{ 0.2 });
+		font(U"Mipmaps").draw(30, Vec2{ 20, 300 }, ColorF{ 0.2 });
+
+		texture1.scaled(scale).draw(240, 20);
+		texture2.scaled(scale).draw(240, 300);
 	}
 }
 ```
 
 
-## 25.8 テクスチャを描画する
+## 31.9 左上座標を指定した描画
+- 左上の座標を指定してテクスチャを描画するには、`.draw()` を使います
 
-### 25.8.1 左上の座標を指定して描画する
-テクスチャを画面に描画するには、描画するテクスチャの左上の座標を画面のどこに置くかを指定して `.draw(x, y)` または `.draw(pos)` します。座標を省略した場合、`.draw(Vec2{ 0, 0 })` として扱われます。
+| コード | 説明 |
+|---|---|
+| `.draw(色 = Palette::White)` | テクスチャを座標 (0, 0) から描画する |
+| `.draw(x, y, 色 = Palette::White)` | テクスチャを座標 (x, y) から描画する |
+| `.draw(pos, 色 = Palette::White)` | テクスチャを座標 pos から描画する |
+| `.draw(x, y, Arg::top = 上側の色, Arg::bottom = 下側の色)` | 上下の色を指定して描画する |
+| `.draw(x, y, Arg::left = 左側の色, Arg::right = 右側の色)` | 左右の色を指定して描画する |
+| `.draw(pos, Arg::top = 上側の色, Arg::bottom = 下側の色)` | 上下の色を指定して描画する |
+| `.draw(pos, Arg::left = 左側の色, Arg::right = 右側の色)` | 左右の色を指定して描画する |
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/texture/8a.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/9.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
 	const Texture texture1{ U"🐈"_emoji };
-
 	const Texture texture2{ U"example/windmill.png" };
 
 	while (System::Update())
 	{
-		// 座標を指定しない場合 (0, 0) から描画する
 		texture1.draw();
 
-		// テクスチャを座標 (200, 100) から描画する
-		texture2.draw(200, 100);
+		texture2.draw(400, 300);
 	}
 }
 ```
 
-### 25.8.2 中心座標を指定して描画する
-テクスチャの左上位置ではなく、中心座標を指定して描画するには、`.drawAt(x, y)` または `.drawAt(pos)` を使います。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/texture/8b.png)
+## 31.10 中心座標を指定した描画
+- 中心の座標を指定してテクスチャを描画するには、`.drawAt()` を使います
+
+| コード | 説明 |
+|---|---|
+| `.drawAt(x, y, 色 = Palette::White)` | テクスチャを座標 (x, y) を中心に描画する |
+| `.drawAt(pos, 色 = Palette::White)` | テクスチャを座標 pos を中心に描画する |
+| `.drawAt(x, y, Arg::top = 上側の色, Arg::bottom = 下側の色)` | 上下の色を指定して描画する |
+| `.drawAt(x, y, Arg::left = 左側の色, Arg::right = 右側の色)` | 左右の色を指定して描画する |
+| `.drawAt(pos, Arg::top = 上側の色, Arg::bottom = 下側の色)` | 上下の色を指定して描画する |
+| `.drawAt(pos, Arg::left = 左側の色, Arg::right = 右側の色)` | 左右の色を指定して描画する |
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/10.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
 	const Texture texture1{ U"🐈"_emoji };
-
 	const Texture texture2{ U"example/windmill.png" };
 
 	while (System::Update())
 	{
-		// テクスチャを座標 (100, 100) を中心に描画する
-		texture1.drawAt(100, 100);
+		texture1.drawAt(0, 0);
 
-		// テクスチャを座標 (400, 300) を中心に描画する
 		texture2.drawAt(400, 300);
 	}
 }
 ```
 
 
-### 25.8.3 それ以外の座標を指定して描画する
-左上、中心以外の座標を指定する場合は、次の表のパターンを使って、`.draw(Arg::bottomLeft(x, y))` あるいは `.draw(Arg::bottomLeft = pos)` のようにします。この場合、テクスチャの左下が `x, y` または `pos` で指定した位置になるように描画されます。
+## 31.11 それ以外の座標を指定した描画
+- **右端の中心位置**を指定してテクスチャを描画するには、次の方法を使います
+	- `.draw(Arg::topRight = pos, ...)`
+	- `.draw(Arg::topRight(x, y), ...)
+- このように指定できる基準位置は、全部で 9 種類あります
 
-| 座標指定 | 説明 |
+| 基準位置 | 説明 |
 |---|---|
-| `Arg::topLeft` | テクスチャの左上の位置を指定する（通常の `.draw()` と同じ） |
-| `Arg::topCenter` | テクスチャの上辺の中央を指定する |
-| `Arg::topRight` | テクスチャの右上の位置を指定する |
-| `Arg::leftCenter` | テクスチャの左辺の中央を指定する |
-| `Arg::center` | テクスチャの中心を指定する（通常の `.drawAt()` と同じ） |
-| `Arg::rightCenter` | テクスチャの右辺の中央を指定する |
-| `Arg::bottomLeft` | テクスチャの左下の位置を指定する |
-| `Arg::bottomCenter` | テクスチャの下辺の中央を指定する |
-| `Arg::bottomRight` | テクスチャの右下の位置を指定する |
+| `Arg::topLeft` | テクスチャの左上。`.draw()` と同じ |
+| `Arg::topCenter` | 上辺の中央 |
+| `Arg::topRight` | 右上|
+| `Arg::leftCenter` | 左辺の中央 |
+| `Arg::center` | 中心。`.drawAt()` と同じ |
+| `Arg::rightCenter` | 右辺の中央 |
+| `Arg::bottomLeft` | 左下 |
+| `Arg::bottomCenter` | 下辺の中央 |
+| `Arg::bottomRight` | 右下 |
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/texture/8c.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/11.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
 	const Texture texture1{ U"🐈"_emoji };
-
 	const Texture texture2{ U"example/windmill.png" };
 
 	while (System::Update())
 	{
-		// テクスチャを座標 (600, 0) が右上になるように描画する
 		texture1.draw(Arg::topRight = Vec2{ 800, 0 });
 
-		// テクスチャを座標 (20, 580) が左下になるように描画する
 		texture2.draw(Arg::bottomLeft(20, 580));
 	}
 }
 ```
 
 
-## 25.9 色を乗算してテクスチャを描画する
-テクスチャを描画する際に、色を乗算することができます。
+## 31.12 色を乗算した描画
 
-元のテクスチャのピクセル色が `ColorF{ sr, sg, sb }` であるとき、色 `ColorF{ r, g, b }` を乗算すると、描画される色は `ColorF{ (sr * r), (sg * g), (sb * b) }` になります（通常のブレンドモード時）。
-
-つまり、`ColorF{ 0.5 }` を乗算すると、色の成分がすべて半分になるということです。元のテクスチャのピクセル色が `ColorF{ 1.0 }` の場合は乗算した色がそのまま使われます。元のテクスチャのピクセル色が `ColorF{ 0.0 }` の場合は、どのような色を乗算しても `ColorF{ 0.0 }` で描画されます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/texture/9a.png)
+### 31.12.1 RGB 各成分を乗算
+- `.draw()` と `.drawAt()` ではテクスチャに乗算する色を指定できます
+- テクスチャのピクセル `ColorF{ sr, sg, sb }` を描くとき、色 `ColorF{ r, g, b }` を乗算すると、描画される色は `ColorF{ (sr * r), (sg * g), (sb * b) }` になります（通常のブレンドモード時）
+- デフォルトでは `Palette::White`（`ColorF{ 1.0 }`）が乗算色として使われます
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/12-1.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-	const Texture texture1{ 0xF034E_icon, 100 };
-
-	const Texture texture2{ U"example/windmill.png" };
+	const Texture texture{ U"example/windmill.png" };
+	const Texture icon{ 0xF0493_icon, 80 };
 
 	while (System::Update())
 	{
-		texture1.drawAt(100, 100, ColorF{ 0.0 });
+		texture.draw(40, 40, ColorF{ 0.4 });
 
-		texture1.drawAt(300, 100, ColorF{ 0.5 });
+		icon.draw(600, 40, ColorF{ 0.5, 0.0, 0.0 });
 
-		texture1.drawAt(500, 100, ColorF{ 0.3, 0.8, 0.5 });
-
-		texture2.draw(200, 200, ColorF{ 0.5 });
+		icon.draw(600, 140, ColorF{ 0.0, 0.5, 0.0 });
 	}
 }
 ```
 
-不透明度（アルファ値）を使うこともできます。元のテクスチャのピクセル色が `ColorF{ sr, sg, sb }` で、書き込み先のピクセルの色が `ColorF{ dr, dg, db }` であるとき、色 `ColorF{ r, g, b, a }` を乗算すると、描画される色は `ColorF{ (sr * r * a + dr * (1 - a)), (sg  * g * a + dg * (1 - a)), (sb * b * a + db * (1 - a)) }` になります（通常のブレンドモード時）。
+### 31.12.2 アルファ値の使用
+- 不透明度（アルファ値）を使うこともできます
+- テクスチャのピクセル `ColorF{ sr, sg, sb }` を、書き込み先のピクセル `ColorF{ dr, dg, db }` に描くとき、描画される色は `ColorF{ (sr * a + dr * (1 - a)), (sg * a + dg * (1 - a)), (sb * a + db * (1 - a)) }` になります（通常のブレンドモード時）
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/texture/9b.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/12-2.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-	const Texture texture1{ 0xF034E_icon, 100 };
-
-	const Texture texture2{ U"example/windmill.png" };
+	const Texture texture{ U"example/windmill.png" };
+	const Texture icon{ 0xF0493_icon, 80 };
 
 	while (System::Update())
 	{
-		Rect{ 100, 100, 600, 400 }.draw();
+		texture.draw(40, 40, ColorF{ 1.0, 0.5 });
 
-		texture1.drawAt(100, 100, ColorF{ 0.0, 0.2 });
+		icon.draw(500, 40, ColorF{ 0.5, 0.0, 0.0, 0.3 });
 
-		texture1.drawAt(300, 100, ColorF{ 0.5, 0.8 });
-
-		texture1.drawAt(500, 100, ColorF{ 0.3, 0.8, 0.5, 0.5 });
-
-		const double a = Periodic::Sine0_1(4s);
-
-		texture2.draw(200, 200, ColorF{ 1.0, a });
+		icon.draw(500, 140, ColorF{ 0.0, 0.5, 0.0, 0.3 });
 	}
 }
 ```
 
 
-## 25.10 テクスチャを拡大縮小して描画する
+## 31.13 拡大縮小した描画
+- テクスチャを拡大縮小して描画するには、次のメンバ関数を使って、拡大縮小を適用した `TextureRegion` を作成します
 
-### 25.10.1 倍率を指定する
-テクスチャを`.scaled(s)` または `.scaled(sx, sy)` することで、`Texture` にサイズ情報を付加した `TextureRegion` オブジェクトを作成できます。具体的には縦横 s 倍あるいは (sx, sy) 倍の大きさに拡大縮小されたテクスチャです。
+| コード | 説明 |
+|---|---|
+| `.scaled(s)` | テクスチャを縦横 `s` 倍の大きさに拡大縮小した `TextureRegion` を作成する |
+| `.scaled(sx, sy)` | テクスチャを縦横 `sx`, `sy` 倍の大きさに拡大縮小した `TextureRegion` を作成する |
+| `.resized(size)` | テクスチャの長辺を `size`（ピクセル）の大きさに拡大縮小した `TextureRegion` を作成する |
+| `.resized(width, height)` | テクスチャを幅 `width`（ピクセル）, 高さ `height`（ピクセル）の大きさに拡大縮小した `TextureRegion` を作成する |
 
-既存の `Texture` から `TextureRegion` を作成する操作は低コストなので、メインループ内で実行して問題ありません。
+- `TextureRegion` は `Texture` と同じように描画できます
+- 既存の `Texture` から `TextureRegion` を作成するコストは小さいため、メインループ内で実行して問題ありません
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/texture/10a.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/13.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-	const Texture texture{ U"🍎"_emoji };
+	const Texture texture{ U"example/windmill.png", TextureDesc::Mipped };
+	const Texture emoji{ U"🍎"_emoji };
 
 	while (System::Update())
 	{
-		// 0.3 倍の大きさで描画する
-		texture.scaled(0.3).drawAt(100, 100);
+		texture.scaled(0.25).draw(40, 40);
+		texture.scaled(0.8, 0.5).draw(40, 140);
+		texture.scaled(2).draw(40, 340);
 
-		// 1.0 倍の大きさで描画する
-		texture.scaled(1.0).drawAt(200, 200);
-
-		// 2.0 倍の大きさで描画する
-		texture.scaled(2.0).drawAt(400, 400);
-
-		// 幅 0.5 倍、高さ 4.0 倍の大きさで描画する
-		texture.scaled(0.5, 4.0).drawAt(700, 300);
+		emoji.resized(40).draw(500, 40);
+		emoji.resized(120, 40).draw(600, 40);
+		emoji.resized(40, 120).draw(500, 140);
 	}
 }
 ```
 
 
-### 25.10.2 幅と高さを指定する
-倍率の代わりにピクセル数を指定して拡大縮小するには、`.resized(size)` または `.resized(width, height)` を使います。`.scaled()` と同じように、`Texture` にサイズ情報を付加した `TextureRegion` オブジェクトを作成します。`size` は `double` 型の値で長辺を指定するか、`SizeF` 型の値で幅と高さを指定します。
+## 31.14 長方形内に収めた描画
+- あるサイズ内で最大限大きくなるようにテクスチャを描くには、次のメンバ関数を使って、拡大縮小を適用した `TextureRegion` を作成します
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/texture/10b.png)
+| コード | 説明 |
+|---|---|
+| `.fitted(size)` | テクスチャのアスペクト比を保ったまま、幅 `size.x`, 高さ `size.y` 以内に収まり、最大限大きくなるよう拡大縮小した `TextureRegion` を返す |
+| `.fitted(width, height)` | テクスチャのアスペクト比を保ったまま、幅 `width`, 高さ `height` 以内に収まり、最大限大きくなるよう拡大縮小した `TextureRegion` を返す |
+
+- `TextureRegion` は `Texture` と同じように描画できます
+- 既存の `Texture` から `TextureRegion` を作成するコストは小さいため、メインループ内で実行して問題ありません
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/14.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-	const Texture texture{ U"🍎"_emoji };
+	const Texture texture1{ U"example/windmill.png", TextureDesc::Mipped };
+	const Texture texture2{ U"example/siv3d-kun.png", TextureDesc::Mipped };
+
+	const Rect rect1{ 50, 100, 320, 200 };
+	const Rect rect2{ 400, 200, 300 };
 
 	while (System::Update())
 	{
-		// 長辺が 40 ピクセルになるように拡大縮小して描画する
-		texture.resized(40).drawAt(100, 100);
+		rect1.drawFrame(0, 4, Palette::Seagreen);
+		texture1.fitted(rect1.size).drawAt(rect1.center());
 
-		// 長辺が 100 ピクセルになるように拡大縮小して描画する
-		texture.resized(100).drawAt(200, 200);
-
-		// 幅 250 ピクセルになるように拡大縮小して描画する
-		texture.resized(250).drawAt(400, 400);
-
-		// 幅 80 ピクセル、高さ 400 ピクセルになるように拡大縮小して描画する
-		texture.resized(80, 400).drawAt(700, 300);
+		rect2.drawFrame(0, 4, Palette::Seagreen);
+		texture2.fitted(rect2.size).drawAt(rect2.center());
 	}
 }
 ```
 
 
-## 25.11 テクスチャを回転して描画する
-`.rotated(angle)` または `.rotatedAt(pos, angle)` によって、テクスチャに回転情報を付加した `TexturedQuad` オブジェクトを作成できます。`TexturedQuad` は `Texture` のように `.draw()` または `.drawAt()` できます。`TextureRegion` と同様、`TexturedQuad` を作成するのは軽量な操作であるため、メインループ内で実行して問題ありません。
+## 31.15 回転した描画
+- テクスチャを回転して描画するには、次のメンバ関数を使って、回転を適用した `TexturedQuad` を作成します
+	- `.rotated()` は、テクスチャの中心に画鋲を打ち込んだようなイメージで、テクスチャを回転させます
+	- `.rotatedAt()` は、テクスチャ上の指定した座標に画鋲を打ち込んだようなイメージで、テクスチャを回転させます
 
-### 25.11.1 テクスチャの中心を軸にして回転する
-`.rotated(angle)` は、テクスチャの中心を軸にして `angle` だけ回転した `TexturedQuad` を作成します。`angle` は `double` 型の値で、単位はラジアンです。
+| コード | 説明 |
+|---|---|
+| `.rotated(angle)` | テクスチャを `angle`（ラジアン）だけ回転させた `TexturedQuad` を作成する |
+| `.rotatedAt(x, y, angle)` | テクスチャを座標 (x, y) を軸に `angle`（ラジアン）だけ回転させた `TexturedQuad` を作成する |
+| `.rotatedAt(pos, angle)` | テクスチャ上の `pos` を軸に `angle`（ラジアン）だけ回転させた `TexturedQuad` を作成する |
 
-テクスチャの中心に画鋲を打ち込んだようなイメージで、テクスチャを回転させます。
+- `TexturedQuad` は `Texture` のように描画できます
+- 既存の `Texture` から `TexturedQuad` を作成するコストは小さいため、メインループ内で実行して問題ありません
+- `TexturedQuad` で座標を指定した描画した場合の描画位置は、回転前のテクスチャを基準とした位置です
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/texture/11a.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/15.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-	const Texture texture{ U"🍎"_emoji };
+	const Texture texture{ U"example/windmill.png" };
+	const Texture emoji{ U"🍎"_emoji };
 
 	while (System::Update())
 	{
-		// 時計回りに 15° 回転させて描画する
-		texture.rotated(15_deg).drawAt(100, 100);
+		const double angle = (Scene::Time() * 30_deg);
 
-		// 時計回りに 180° 回転させて描画する
-		texture.rotated(180_deg).drawAt(200, 300);
+		texture.rotated(angle).drawAt(200, 300);
 
-		// 時計回りに 45° 回転させて描画する
-		texture.rotated(45_deg).drawAt(400, 300);
-
-		// 0.5 倍に縮小して時計回りに 90° 回転させて描画する
-		texture.scaled(0.5).rotated(90_deg).drawAt(600, 300);
+		emoji.rotatedAt(Vec2{ 58, 13 }, angle).drawAt(600, 300);
 	}
 }
 ```
 
 
-### 25.11.2 テクスチャ上の指定した座標を軸にして回転する
-`.rotatedAt(pos, angle)` は、テクスチャ上の `pos` を軸にして `angle` だけ回転した `TexturedQuad` を作成します。`pos` は `Vec2` 型の値です。`angle` は `double` 型の値で、単位はラジアンです。
+## 31.16 上下・左右反転した描画
+- テクスチャを上下・左右反転して描画するには、次のメンバ関数を使って、反転を適用した `TextureRegion` を作成します
 
-テクスチャ上の指定した座標に画鋲を打ち込んだようなイメージで、テクスチャを回転させます。
+| コード | 説明 |
+|---|---|
+| `.flipped()` | テクスチャを上下反転した `TextureRegion` を作成する |
+| `.flipped(onOff)` | テクスチャを上下反転した `TextureRegion` を作成する。`onOff` が `true` のとき反転する |
+| `.mirrored()` | テクスチャを左右反転した `TextureRegion` を作成する |
+| `.mirrored(onOff)` | テクスチャを左右反転した `TextureRegion` を作成する。`onOff` が `true` のとき反転する |
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/texture/11b.png)
+- `TextureRegion` は `Texture` と同じように描画できます
+- 既存の `Texture` から `TextureRegion` を作成するコストは小さいため、メインループ内で実行して問題ありません
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/16.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-	const Texture texture{ U"🍎"_emoji };
+	const Texture emoji{ U"🐈"_emoji };
 
 	while (System::Update())
 	{
-		const double angle = (Scene::Time() * 90_deg);
+		emoji.drawAt(100, 100);
+		emoji.mirrored().drawAt(300, 100);
+		emoji.mirrored(false).drawAt(500, 100);
+		emoji.mirrored(true).drawAt(700, 100);
 
-		// 画像中の (58, 13) を軸に回転させて、画面の中心に描画する
-		texture.rotatedAt(Vec2{ 58, 13 }, angle).drawAt(Scene::Center());
+		emoji.drawAt(100, 300);
+		emoji.flipped().drawAt(300, 300);
+		emoji.flipped(false).drawAt(500, 300);
+		emoji.flipped(true).drawAt(700, 300);
 	}
 }
 ```
 
 
-## 25.12 テクスチャを上下・左右反転して描画する
-テクスチャを上下反転して描画するには、`.flipped()` または `.flipped(onOff)` を使います。テクスチャを左右反転して描画するには、`.mirrored()` または `.mirrored(onOff)` を使います。
+## 31.17 部分描画
+- テクスチャの一部の長方形領域だけを描画するには、次のメンバ関数を使って、部分切り出しを適用した `TextureRegion` を作成します
 
-これらの関数は `Texture` に上下反転または左右反転の情報を付加した `TextureRegion` オブジェクトを作成します。`onOff` は `bool` 型の値で、`true` のときに反転します。`onOff` を省略した場合は `true` とみなされます。
+| コード | 説明 |
+|---|---|
+| `(x, y, w, h)` | テクスチャの `(x, y)` から幅 `w`, 高さ `h` を切り出した `TextureRegion` を作成する |
+| `(rect)` | テクスチャの `rect` の領域を切り出した `TextureRegion` を作成する |
+| `.uv(u, v, w, h)` | テクスチャの UV 座標 `(u, v)` から幅 `w`, 高さ `h` を切り出した `TextureRegion` を作成する |
+| `.uv(rect)` | テクスチャの UV 座標 `rect` の領域を切り出した `TextureRegion` を作成する |
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/texture/12.png)
+- 前者 2 つはピクセル座標で、後者 2 つは UV 座標で指定します
+- UV 座標はテクスチャの左上を (0.0, 0.0)、右下を (1.0, 1.0) としたときの座標で、画像の大きさに関係なく、常に 0.0 から 1.0 の範囲です
+- テクスチャ `texture` のサイズが 400 × 200 のとき、`texture(0.5, 0.0, 0.5, 1.0)` は `texture(200, 0, 200, 200)` と同じです
 
-```cpp
-# include <Siv3D.hpp>
+---
 
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+- `TextureRegion` は `Texture` と同じように描画できます
+- 既存の `Texture` から `TextureRegion` を作成するコストは小さいため、メインループ内で実行して問題ありません
 
-	const Texture texture{ U"🐈"_emoji };
-
-	while (System::Update())
-	{
-		// 左右反転して描画する
-		texture.mirrored().drawAt(200, 100);
-
-		// 左右反転して描画する
-		texture.mirrored(true).drawAt(400, 100);
-
-		// 通常
-		texture.mirrored(false).drawAt(600, 100);
-
-		// 上下反転して描画する
-		texture.flipped().drawAt(200, 300);
-
-		// 上下反転して描画する
-		texture.flipped(true).drawAt(400, 300);
-
-		// 通常
-		texture.flipped(false).drawAt(600, 300);
-
-		// 左右反転・上下反転して描画する
-		texture.mirrored().flipped().drawAt(200, 500);
-
-		// 左右反転・上下反転して描画する
-		texture.mirrored(true).flipped(true).drawAt(400, 500);
-
-		// 通常
-		texture.mirrored(false).flipped(false).drawAt(600, 500);
-	}
-}
-```
-
-
-## 25.13 テクスチャの一部を描画する（ピクセル指定）
-テクスチャの全部ではなく、一部の長方形の領域だけを描画したい場合は、`(x, y, w, h)` を使って、テクスチャの `(x, y)` から幅 `w`、高さ `h` を選択した `TexturedRegion` オブジェクトを作成し、それを描画します。`x`, `y`, `w`, `h` の単位はピクセルです。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/texture/13.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/17.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-	const Texture texture1{ U"example/windmill.png" };
-
-	const Texture texture2{ U"🍎"_emoji };
+	const Texture texture{ U"example/windmill.png" };
+	const Texture emoji{ U"🍎"_emoji };
 
 	while (System::Update())
 	{
 		// 画像の (250, 100) から幅 200, 高さ 150 の部分を描画する
-		texture1(250, 100, 200, 150).draw(40, 20);
+		texture(250, 100, 200, 150).draw(40, 40);
 
-		// 画像の (0, 0) から幅 68, 高さ 64 の部分を描画する
-		texture2(0, 0, 68, 64).drawAt(400, 300);
+		// 画像の UV 座標 (0.5, 0.0) から幅 0.5, 高さ 0.75 の部分を描画する
+		emoji.uv(0.5, 0.0, 0.5, 0.75).drawAt(400, 300);
 	}
 }
 ```
 
 
-## 25.14 テクスチャの一部を描画する（UV 指定）
-テクスチャの一部の長方形の領域を選択する方法として、UV 座標を指定する方法もあります。UV 座標は、テクスチャの左上を (0.0, 0.0)、右下を (1.0, 1.0) としたときの座標で、画像の大きさに関係なく、常に 0.0 から 1.0 の範囲になります。
+## 31.18 敷き詰め描画
 
-`.uv(u, v, w, h)` を使って、テクスチャの UV 座標 `(u, v)` から幅 `w`、高さ `h` を選択した `TexturedRegion` オブジェクトを作成し、それを描画します。
+### 31.18.1 敷き詰め描画
+- テクスチャを繰り返し敷き詰めて描画するには、次のメンバ関数を使って、敷き詰めを適用した `TextureRegion` を作成し、適切なテクスチャアドレスモードを適用した状態で描画します
 
-例えばテクスチャ `texture` のサイズが 400 x 200 のとき、`texture.uv(0.5, 0.0, 0.5, 1.0)` は `texture(200, 0, 200, 200)` と同じです。計算方法は `texture((texture.width() * 0.5), (texture.height() * 0.0), (texture.width() * 0.5), (texture.height() * 1.0))` です。
+| コード | 説明 |
+|---|---|
+| `.mapped(幅, 高さ)` | テクスチャを指定した幅、高さで敷き詰めた `TextureRegion` を作成する |
+| `.mapped(サイズ)` | テクスチャを指定したサイズで敷き詰めた `TextureRegion` を作成する |
+| `.repeated(X 回数, Y 回数)` | テクスチャを横に `X` 回、縦に `Y` 回敷き詰めた `TextureRegion` を作成する |
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/texture/14.png)
+- `TextureRegion` は `Texture` と同じように描画できます
+- 既存の `Texture` から `TextureRegion` を作成するコストは小さいため、メインループ内で実行して問題ありません
+
+### 31.18.2 テクスチャアドレスモード
+- 2D 描画時のデフォルトのテクスチャアドレスモードは **Clamp** です
+- テクスチャの範囲外を描こうとすると、その部分はテクスチャの端の色で塗りつぶされます
+- UV 座標で 0.0 より小さい値や 1.0 より大きい値を指定したとき、それぞれ 0.0 と 1.0 として扱うということです
+	- 時計の針で 13 を指そうとしても、時計の針が 12 から進まないイメージです
+- 一方、時計の針で 13 を指そうとしたとき、時計の針が 12 から進み、0 に戻って 1 になるように繰り返すこともできます
+- UV 座標で `1.1` や `2.3`, `-0.3` といった値を指定したとき、それぞれ `0.1` や `0.3`, `0.7` として扱うということです
+- このようなテクスチャアドレスモードを **Repeat** といいます
+- テクスチャアドレスモードは、次のようにサンプラーステートを設定することで変更できます
+	- サンプラーステートについては **チュートリアル 48** を参照してください
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/18.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-	const Texture texture1{ U"example/windmill.png" };
-
-	const Texture texture2{ U"🍎"_emoji };
+	const Texture emoji{ U"🌳"_emoji };
 
 	while (System::Update())
 	{
-		// 画像の UV 座標 (0.1, 0.2) から幅 0.5, 高さ 0.8 の部分を描画する
-		texture1.uv(0.1, 0.2, 0.5, 0.8).draw(40, 20);
+		{
+			// テクスチャアドレスモードをリピートに設定する
+			const ScopedRenderStates2D sampler{ SamplerState::RepeatLinear };
 
-		// 画像の UV 座標 (0.5, 0.0) から幅 0.5, 高さ 0.75 の部分を描画する
-		texture2.uv(0.5, 0.0, 0.5, 0.75).drawAt(400, 300);
+			emoji.mapped(300, 400).draw();
+
+			emoji.repeated(2.5, 4).draw(400, 0);
+		}
 	}
 }
 ```
 
 
-## 25.15 基本図形の形に合わせてテクスチャを描く
-`Rect` や `RectF`, `Circle`, `Quad`, `RoundRect` に、テクスチャ全体やテクスチャの一部領域を貼り付けて描くことができます。図形を `shape`, `Texture` あるいは `TextureRegion` を `texture` とすると、`shape(texture).draw()` で、図形の形に合わせてテクスチャを描きます。
+## 31.19 角を丸めた描画
+- テクスチャの角を丸めて描画するには、次のメンバ関数を使って、角を丸めた `TexturedRoundRect` を作成します
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/texture/15.png)
+| コード | 説明 |
+|---|---|
+| `.rounded(半径)` | テクスチャの角を `半径` で丸めた `TexturedRoundRect` を作成する |
+
+- `TexturedRoundRect` は `Texture` のように描画できます
+- 既存の `Texture` から `TexturedRoundRect` を作成するコストは小さいため、メインループ内で実行して問題ありません
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/19.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Texture texture{ U"example/windmill.png"};
+
+	while (System::Update())
+	{
+		texture.rounded(20).drawAt(400, 300);
+	}
+}
+```
+
+
+## 31.20 操作の組み合わせ
+- `TextureRegion` は、`Texture` と同じような操作のためのメンバ関数を持ち、追加の複数の操作を組み合わせてテクスチャを描画できます
+	- 例えば、`(x, y, w, h)` で切り抜いたテクスチャを `.scaled()` で拡大縮小して、さらに `.rotated()` で回転させて描くことができます
+- `TexturedQuad` には、追加の操作を適用するメンバ関数がありません
+
+| 操作 | 戻り値 | `Texture` | `TextureRegion` | `TexturedQuad` |
+|---|---|---|---|---|
+| `.scaled()` | `TextureRegion` | ✅ | ✅ | ❌ |
+| `.resized()` | `TextureRegion` | ✅ | ✅ | ❌ |
+| `.fitted()` | `TextureRegion` | ✅ | ✅ | ❌ |
+| `.rotated()` | `TexturedQuad` | ✅ | ✅ | ❌ |
+| `.rotatedAt()` | `TexturedQuad` | ✅ | ✅ | ❌ |
+| `.flipped()` | `TextureRegion` | ✅ | ✅ | ❌ |
+| `.mirrored()` | `TextureRegion` | ✅ | ✅ | ❌ |
+| `(x, y, w, h)` | `TextureRegion` | ✅ | ❌ | ❌ |
+| `.uv(u, v, w, h)` | `TextureRegion` | ✅ | ❌ | ❌ |
+| `.mapped()` | `TextureRegion` | ✅ | ❌ | ❌ |
+| `.repeated()` | `TextureRegion` | ✅ | ❌ | ❌ |
+| `.rounded()` | `TexturedRoundRect` | ✅ | ✅ | ❌ |
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/20.png)
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Texture texture{ U"example/windmill.png" };
+	const Texture emoji{ U"🐈"_emoji };
+
+	while (System::Update())
+	{
+		texture
+			.uv(0.5, 0.5, 0.5, 0.5)
+			.scaled(2.0)
+			.rotated(20_deg)
+			.draw(20, 20);
+
+		emoji
+			.mirrored()
+			.flipped()
+			.drawAt(600, 300);
+	}
+}
+```
+
+
+## 31.21 図形の形に合わせた描画
+- テクスチャ全体またはテクスチャの一部領域を `Rect` や `RectF`, `Circle`, `Quad`, `RoundRect` に貼り付けて描画できます
+- 次のメンバ関数を使って、図形の形に応じたオブジェクトを作成します
+
+| コード | 説明 |
+|---|---|
+| `rect(texture)` | 長方形（`Rect` または `RectF`）にテクスチャ（`Texture` または `TextureRegion`）を貼り付けた `TexturedQuad` を作成する |
+| `circle(texture)` | `Circle` にテクスチャ（`Texture` または `TextureRegion`）を貼り付けた `TexturedCircle` を作成する |
+| `quad(texture)` | `Quad` にテクスチャ（`Texture` または `TextureRegion`）を貼り付けた `TexturedQuad` を作成する |
+| `roundRect(texture)` | 角丸長方形（`RoundRect`）にテクスチャ（`Texture` または `TextureRegion`）を貼り付けた `TexturedRoundRect` を作成する |
+
+- `TexturedQuad`, `TexturedCircle`, `TexturedRoundRect` は `Texture` のように描画できます
+- 既存の `Texture` から `TexturedQuad`, `TexturedCircle`, `TexturedRoundRect` を作成するコストは小さいため、メインループ内で実行して問題ありません
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/21.png)
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
 	const Texture texture1{ U"example/windmill.png", TextureDesc::Mipped };
 	const Texture texture2{ U"example/siv3d-kun.png", TextureDesc::Mipped };
 
 	const Rect rect{ 430, 50, 100, 100 };
-	const RoundRect roundRect{ 430, 190, 100, 100, 25 };
-	const Circle circle{ 480, 380, 50 };
+	const Circle circle{ 480, 240, 50 };
+	const RoundRect roundRect{ 430, 330, 100, 100, 25 };
 
 	while (System::Update())
 	{
-		// テクスチャを長方形に貼り付けて描画する
 		Rect{ 50, 50, 350, 400 }(texture1).draw();
 
-		rect.draw(HSV{ 0, 0.5, 1.0 });
-		// テクスチャを長方形に貼り付けて描画する
-		rect(texture2(90, 5, 110, 110)).draw();
+		rect
+			.drawShadow(Vec2{ 2, 2 }, 12, 1)
+			.draw(HSV{ 0, 0.5, 1.0 });
+		rect(texture2(90, 3, 110, 110)).draw();
 
-		roundRect.draw(HSV{ 120, 0.5, 1.0 });
-		// テクスチャを角丸長方形に貼り付けて描画する
-		roundRect(texture2(90, 5, 110, 110)).draw();
+		circle
+			.drawShadow(Vec2{ 2, 2 }, 12, 1)
+			.draw(HSV{ 240, 0.5, 1.0 });
+		circle(texture2(90, 3, 110, 110)).draw();
 
-		circle.draw(HSV{ 240, 0.5, 1.0 });
-		// テクスチャを円に貼り付けて描画する
-		circle(texture2(90, 5, 110, 110)).draw();
+		roundRect
+			.drawShadow(Vec2{ 2, 2 }, 12, 1)
+			.draw(HSV{ 120, 0.5, 1.0 });
+		roundRect(texture2(90, 3, 110, 110)).draw();
 	}
 }
 ```
 
 
-## 25.16 Polygon の形に合わせてテクスチャを描く
-`Polygon` にテクスチャを貼り付けるときは、より細かい制御ができます。`Polygon` の `.toBuffer2D(offset, size)` あるいは `.toBuffer(Arg::center = offset, size)` で、`Polygon` の形に合わせてテクスチャを描くための `Buffer2D` オブジェクトを作成します。
+## 31.22 `Polygon` に合わせた描画
+- `Polygon` にテクスチャを貼り付ける場合は、次のような関数を使って `Polygon` から `Buffer2D` を作成し、`Buffer2D` の描画関数を使ってテクスチャを描画します
 
-`offset`はテクスチャを画面座標基準でどの位置に貼り付けるかを指定します。`size` は貼り付けるときのテクスチャのサイズです。`size` が元のテクスチャのサイズより小さい場合、テクスチャは縮小されます。`size` が元のテクスチャのサイズより大きい場合、テクスチャは拡大されます。
+| コード | 説明 |
+| `polygon.toBuffer2D(offset, size)` | `offset` を原点としてサイズ `size` のテクスチャを並べる `Buffer2D` を作成する |
+| `polygon.toBuffer2D(Arg::center = offset, size)` | `offset` を中心としてサイズ `size` のテクスチャを並べる `Buffer2D` を作成する |
 
-`Buffer2D` の作成は少しだけコストがかかるため、可能であればメインループの前で作成し、作成したオブジェクトを使い回すようにするとよいです。
-
-`Buffer2D` オブジェクトを `b`, `Texture`を `t` とすると、`b.draw(t)` で、`Polygon` の形に合わせてテクスチャを描きます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/texture/16.png)
+- `offset` は、テクスチャを画面座標基準でどの位置に貼り付けるかを制御します
+- `size` は貼り付けるテクスチャのサイズです
+	- `size` が元のテクスチャのサイズより小さい場合、テクスチャは縮小され、大きい場合は拡大されます
+- `Buffer2D` の作成は少しだけコストがかかるため、可能であればメインループの前で作成し、作成したオブジェクトを使い回すようにします
+- `Buffer2D` オブジェクトを `b`, `Texture` を `t` とすると、`b.draw(t)` でテクスチャを描画します
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/22.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
 	const Texture texture1{ U"example/windmill.png", TextureDesc::Mipped };
 	const Texture texture2{ U"example/siv3d-kun.png", TextureDesc::Mipped };
@@ -736,120 +888,28 @@ void Main()
 			.draw(texture1);
 
 		hexagon.draw(HSV{ 240, 0.5, 1.0 });
-		// hexagon に対し、(515, 560) を画像の中心とするようにテクスチャを貼り付けて描画する
-		hexagon.toBuffer2D(Arg::center = Vec2{ 515, 560 }, texture2.size())
+
+		// hexagon に対し、(515, 562) を画像の中心とするようにテクスチャを貼り付けて描画する
+		hexagon.toBuffer2D(Arg::center = Vec2{ 515, 562 }, texture2.size())
 			.draw(texture2);
 	}
 }
 ```
 
 
-## 25.17 長方形内にフィットするようにテクスチャを描く
-あるサイズの枠内に、最大限大きくなるようにテクスチャを描くには、`.fitted(size)` を使います。`.fitted(size)` は、テクスチャのアスペクト比を保ったまま、幅 size.x, 高さ size.y の枠内に収まり、最大限大きくなるよう拡大縮小した `TextureRegion` を返します。
+## 31.23 大きな画像の事前縮小
+- 解像度の大きい画像ファイルを読み込むと、メモリの使用量が増え、実行時性能が低下することがあります
+- そのような場合、画像を縮小してからテクスチャを作成することで、メモリの節約や描画速度の向上が期待できます
+- 画像ファイルを `Image` に読み込んでから `.scaled()` で縮小し、その結果の `Image` からテクスチャを作成します
 
-`Rect` および `RectF` には `.center()` という、長方形の中心座標を返すメンバ関数があります。これを組み合わせることで、枠内に収まる形で、最大限大きく、中心にテクスチャを描くことができます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/texture/17.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
-
-	const Texture texture1{ U"example/windmill.png", TextureDesc::Mipped };
-	const Texture texture2{ U"example/siv3d-kun.png", TextureDesc::Mipped };
-
-	const Rect rect1{ 50, 100, 320, 200 };
-	const Rect rect2{ 400, 200, 300 };
-
-	while (System::Update())
-	{
-		rect1.drawFrame(0, 8, ColorF{ 0.25 });
-		texture1.fitted(rect1.size).drawAt(rect1.center());
-
-		rect2.drawFrame(0, 8, ColorF{ 0.25 });
-		texture2.fitted(rect2.size).drawAt(rect2.center());
-	}
-}
-```
-
-
-## 25.18 テクスチャを繰り返し敷き詰めて描く
-通常のテクスチャアドレスモード（Clamp）では、テクスチャの範囲外を描こうとすると、その部分はテクスチャの端の色で塗りつぶされます。UV 座標で 0.0 より小さい値や 1.0 より大きい値を指定したとき、それぞれ 0.0 と 1.0 として扱ういうことです。時計の針で 13 を指そうとしても、時計の針が 12 から進まないイメージです。
-
-一方、時計の針で 13 を指そうとしたとき、時計の針が 12 から進み、0 に戻って 1 になるように繰り返すこともでき、テクスチャでも同じことを行うことができます。UV 座標で 1.1 や 2.3, -0.3 といった値を指定したとき、それぞれ 0.1 や 0.3, 0.7 として扱うということです。このテクスチャアドレスモードは「繰り返し」を意味する Repeat と呼ばれます。
-
-
-### 25.18.1 繰り返しの範囲を指定する
-テクスチャアドレスモードを Repeat にするには、`const ScopedRenderStates2D sampler{ SamplerState::RepeatLinear };` というオブジェクトを作成します。すると、そのオブジェクトが有効な間は、テクスチャアドレスモードが Repeat になります。このオブジェクトは、スコープを抜けると自動的に破棄され、テクスチャアドレスモードは元に戻ります。詳しくはチュートリアル 39. 2D レンダーステートで解説します。
-
-`Texture` を `.mapped(width, height)` すると、そのテクスチャを、幅 width, 高さ height の範囲に敷き詰めるように繰り返した `TextureRegion` が得られます。テクスチャアドレスモードが Repeat であるときにそれを描画すると、テクスチャが敷き詰められて描画されます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/texture/18a.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/23.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
-
-	const Texture texture{ U"🌳"_emoji };
-
-	while (System::Update())
-	{
-		{
-			// テクスチャアドレスモードをリピートに設定する
-			const ScopedRenderStates2D sampler{ SamplerState::RepeatLinear };
-
-			// 600x400 の範囲に敷き詰めるよう繰り返したテクスチャを描画する
-			texture.mapped(600, 400).draw(0, 0);
-		}
-	}
-}
-```
-
-### 25.18.2 繰り返しの回数を指定する
-`Texture` を `.repeated(x, y)` すると、そのテクスチャを、横に x 回、縦に y 回繰り返した `TextureRegion` が得られます。テクスチャアドレスモードが Repeat であるときにそれを描画すると、テクスチャが繰り返されて描画されます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/texture/18b.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
-
-	const Texture texture{ U"🌳"_emoji };
-
-	while (System::Update())
-	{
-		{
-			// テクスチャアドレスモードをリピートに設定する
-			const ScopedRenderStates2D sampler{ SamplerState::RepeatLinear };
-
-			// 横に 4, 縦に 3 繰り返したテクスチャを描画する
-			texture.repeated(4, 3).draw(0, 0);
-		}
-	}
-}
-```
-
-
-## 25.19 大きな画像を縮小して読み込む
-解像度の大きい画像ファイルを縮小してからテクスチャにすることで、メモリの節約や描画速度の向上が期待できます。`Image` を `.scaled(scale)` すると、その画像を scale 倍に縮小した `Image` が得られます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/texture/19.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
 	// 画像を 1/4 に縮小してテクスチャを作成する
 	const Texture texture{ Image{ U"example/bay.jpg"}.scaled(0.25) };
@@ -864,50 +924,98 @@ void Main()
 ```
 
 
-## 25.20 ミップマップを明示的に指定してテクスチャを作成する
-画像ファイルまたは `Image` からテクスチャを作成するとき、`TextureDesc::Mipped` を指定することで自動的に元の画像を縮小していくミップマップが生成されますが、ミップマップの内容を明示的に指定できます。
+## 31.24 テクスチャ描画に関するトラブル
 
-`Texture` のコンストラクタに、`Image` と `Array<Image>` を渡すことで、ミップマップの内容を指定できます。`Image` はミップマップの最上位レベルの画像で、`Array<Image>` はミップマップの下位レベルの画像の配列です。ミップマップの下位レベルの画像は、上位レベルの画像を 2 分の 1 ずつ縮小した画像です。
+### 31.24.1 拡大したときにドット絵のドット感が失われる
+- デフォルトのサンプラーステートでは、テクスチャを拡大すると、なめらかに補間されます
+- これにより、ドット絵を拡大した場合は、ドット感が失われ、ぼやけた印象になります
+- これはサンプラーステートを `Nearest` に変更することで解決できます
+	- サンプラーステートについては **チュートリアル 48** を参照してください
 
-次のサンプルでは、テクスチャの縮小描画時に下位のミップマップが使われることが、色の変化によって可視化されます（ミップマップはレベルをまたいでブレンドされるため、色の変化はなめらかです）。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/texture/20.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/24-1.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
-Texture CreateTexture()
+void Main()
 {
-	const Image image{ 320, 256, HSV{ 0 } };
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-	// 幅と高さを 2 分の 1 ずつ縮小した一連の画像
-	const Array<Image> mipmaps
+	const Texture texture{ U"example/spritesheet/siv3d-kun-16.png" };
+
+	while (System::Update())
 	{
-		Image{ 160, 128, HSV{ 40 }},
-		Image{ 80, 64, HSV{ 80 }},
-		Image{ 40, 32, HSV{ 120 }},
-		Image{ 20, 16, HSV{ 160 }},
-		Image{ 10, 8, HSV{ 200 }},
-		Image{ 5, 4, HSV{ 240 }},
-		Image{ 2, 2, HSV{ 280 }},
-		Image{ 1, 1, HSV{ 320 }},
-	};
+		{
+			texture(20, 0, 20, 28).scaled(8).drawAt(200, 200);
+		}
 
-	return Texture{ image, mipmaps };
+		{
+			const ScopedRenderStates2D rs{ SamplerState::ClampNearest };
+
+			texture(20, 0, 20, 28).scaled(8).drawAt(600, 200);
+		}
+	}
+}
+```
+
+### 31.24.2 マップチップで周囲のピクセルの色がにじむ
+- マップチップが並ぶ画像から特定のマップチップを切り出し、それを拡大したり、浮動小数点数座標で描画した場合に、隣接するマップチップの色がにじみ出てしまうことがあります
+- これは補間の過程で、周囲のピクセルを巻き込んでサンプリングしてしまうために起こります
+- いくつかの対策があります
+	- サンプラーステートを `Nearest` に変更する
+	- テクスチャの周囲に 1 ピクセルの塗り足しを行い、にじみ出ても影響が少なくなるようにする
+	- 浮動小数点数座標で描画せず、整数座標で描画する
+	- `Texture2DArray`（Siv3D v0.8 から使えるようになる機能）で、それぞれのマップチップを独立したテクスチャとして扱う
+
+
+### 31.24.3 透明に囲まれた画像を拡大すると輪郭が黒くなる
+- 絵文字のように、周囲が透明ピクセルで囲まれた画像を拡大描画すると、周囲の黒がにじんでしまうことがあります
+- いくつかの対策があります
+	- サンプラーステートを `Nearest` に変更する
+		- サンプラーステートについては **チュートリアル 48** を参照してください
+	- アルファ乗算済み描画を行う
+		- アルファ乗算済み描画は Siv3D v0.8 で標準サポートされます。現行バージョンでは、次のようなコードが必要です
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/24-3.png)
+
+```cpp
+# include <Siv3D.hpp>
+
+Image PremultiplyAlpha(Image image)
+{
+	Color* p = image.data();
+	const Color* const pEnd = (p + image.num_pixels());
+
+	while (p != pEnd)
+	{
+		p->r = static_cast<uint8>((static_cast<uint16>(p->r) * p->a) / 255);
+		p->g = static_cast<uint8>((static_cast<uint16>(p->g) * p->a) / 255);
+		p->b = static_cast<uint8>((static_cast<uint16>(p->b) * p->a) / 255);
+		++p;
+	}
+
+	return image;
 }
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-	const Texture texture = CreateTexture();
+	const Texture emoji1{ U"⛄"_emoji };
+	const Texture emoji2{ PremultiplyAlpha(Image{ U"⛄"_emoji }) };
 
 	while (System::Update())
 	{
-		const double scale = Periodic::Sine0_1(10s);
+		{
+			emoji1.scaled(3).drawAt(200, 300);
+		}
 
-		// 縮小率に応じて異なるレベルのミップマップテクスチャが使われる
-		texture.scaled(scale).drawAt(Scene::Center());
+		// アルファ乗算済み描画
+		{
+			const ScopedRenderStates2D rs{ BlendState::Premultiplied };
+
+			emoji2.scaled(3).drawAt(600, 300);
+		}
 	}
 }
 ```

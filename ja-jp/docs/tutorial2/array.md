@@ -1,179 +1,60 @@
-# 20. 動的配列
-動的配列クラス `Array` の基本的な使い方を説明します。
+# 22. 配列
+動的配列クラス `Array` の基本的な使い方を学びます。
 
-## 20.1 配列クラス
-Siv3D では `std::vector<Type>` の代わりに `Array<Type>` クラスを使って `Type` 型の動的配列を扱います。
-
-`Array` は内部で `std::vector` を使って配列を管理しています。ただし、標準ライブラリよりも多くのメンバ関数を持ち、様々な便利な機能を提供します。格納されている要素はメモリ上での連続性が保証されています。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/array/1.png)
+## 22.1 Array
+- Siv3D では `Array<Type>` で動的配列を扱います
+- `Array` は `std::vector` と同等の機能を提供するほか、追加のメンバ関数を持ちます
+- `std::vector` のように要素がメモリ上に連続していることが保証されています
 
 ```cpp
-# include <Siv3D.hpp>
+// int32 型の値を格納する配列
+Array<int32> a = { 10, 20, 30, 40, 50 };
 
-void Main()
-{
-	const Array<String> words = { U"apple", U"bird", U"cat" };
+// double 型の値を格納する配列
+Array<double> b = { 1.1, 2.2, 3.3, 4.4, 5.5 };
 
-	Print << words;
-
-	// 5 個の -1 で初期化された配列を作成する
-	Array<int32> numbers(5, -1);
-
-	Print << numbers;
-
-	while (System::Update())
-	{
-
-	}
-}
+// String 型の値を格納する配列
+Array<String> c = { U"Apple", U"Bird", U"Cat", U"Dog" };
 ```
 
 
-## 20.2 配列のサイズ
-配列の要素数は `.size()` で取得します。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/array/2.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	const Array<String> words = { U"apple", U"bird", U"cat" };
-
-	Print << words.size();
-
-	Array<int32> numbers(5, -1);
-
-	Print << numbers.size();
-
-	while (System::Update())
-	{
-
-	}
-}
-```
-
-
-## 20.3 指定したインデックスの要素にアクセスする
-配列内の指定したインデックスにある要素にアクセスするには、`[]` 演算子を使います。インデックスは 0 から始まります。`v.front()` は `v[0]` と同じです。`v.back()` は `v[v.size() - 1]` と同じで末尾の要素にアクセスします。範囲外のインデックスにアクセスしてはいけません。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/array/3.png)
+## 22.2 配列の作成
+- 配列は次のような方法で作成します
+	- 空の配列を作成
+	- リストから配列を作成
+	- 個数 × 値 で配列を作成
+	- 個数 × デフォルト値で配列を作成
+		- `Array<int32> v(5);` は 5 個の 0 で初期化された配列を作成します
+		- `Array<double> v(5);` は 5 個の 0.0 で初期化された配列を作成します
+		- `Array<String> v(5);` は 5 個の空文字列で初期化された配列を作成します
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	const Array<String> words = { U"apple", U"bird", U"cat", U"dog", U"egg" };
-
-	Print << words[0];
-
-	Print << words[3];
-
-	Print << words.front();
-
-	Print << words.back();
-
-	while (System::Update())
+	// パターン ①: 空の配列を作成
 	{
-
-	}
-}
-```
-
-
-## 20.4 範囲ベースの for 文で要素にアクセスする
-範囲ベース for 文を使って配列の各要素にアクセスできます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/array/4.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	const Array<String> words = { U"apple", U"bird", U"cat", U"dog", U"egg" };
-
-	for (const auto& word : words) // 要素を変更しない場合は const 参照
-	{
-		Print << word;
+		Array<int32> v;
+		Print << v;
 	}
 
-	Array<int32> values = { 1, 2, 3, 4, 5 };
-
-	for (auto& value : values) // 要素を変更する場合は参照
+	// パターン ②: リストから配列を作成
 	{
-		value *= 2;
+		Array<int32> v = { 10, 50, 30, 20, 40 };
+		Print << v;
 	}
 
-	Print << values;
-
-	while (System::Update())
+	// パターン ③: 個数 × 値 で配列を作成
 	{
-
-	}
-}
-```
-
-
-## 20.5 空の配列
-要素を保持していない、要素数が 0 の配列は**空の配列**です。代入や追加によって要素を追加すると、空でない配列になります。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/array/5.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Array<String> words;
-
-	Print << words;
-
-	Print << words.size();
-
-	words = { U"apple", U"orange", U"melon" };
-
-	Print << words;
-
-	Print << words.size();
-
-	while (System::Update())
-	{
-
-	}
-}
-```
-
-
-## 20.6 配列が空であるかを調べる
-`Array` 型の値 `v` が空であるかは、`if (v.isEmpty())` や `if (v)` / `if (not v)` で調べられます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/array/6.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Array<String> words;
-
-	Array<int32> numbers = { 1, 2, 3, 4, 5 };
-
-	Print << words.isEmpty();
-
-	Print << numbers.isEmpty();
-
-	if (not words)
-	{
-		Print << U"words is empty";
+		Array<int32> v(5, -5);
+		Print << v;
 	}
 
-	if (numbers)
+	// パターン ④: 個数 × デフォルト値で配列を作成
 	{
-		Print << U"numbers is not empty";
+		Array<int32> v(5);
+		Print << v;
 	}
 
 	while (System::Update())
@@ -182,33 +63,27 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+{}
+{10, 50, 30, 20, 40}
+{-5, -5, -5, -5, -5}
+{0, 0, 0, 0, 0}
+```
 
 
-## 20.7 配列の末尾に要素を追加する
-`<<` で配列の末尾に新しい要素を追加することができます。`<<` は連続して使うこともできます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/array/7.png)
+## 22.3 要素数の取得
+- `.size()` は配列の要素数を `size_t` 型で返します
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Array<String> words;
+	Array<int32> v1 = { 10, 50, 30, 20, 40 };
+	Print << v1.size();
 
-	words << U"apple";
-
-	words << U"bird";
-
-	words << U"cat";
-
-	Print << words;
-
-	Array<int32> numbers = { 1, 2 };
-
-	numbers << 3;
-
-	Print << numbers;
+	Array<int32> v2;
+	Print << v2.size();
 
 	while (System::Update())
 	{
@@ -216,30 +91,25 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+5
+0
+```
 
 
-## 20.8 配列を空にする
-`.clear()` で配列を空にすることができます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/array/8.png)
+## 22.4 空であるかを調べる（1）
+- `.isEmpty()` は配列が空であるか（要素数が 0 であるか）を `bool` 型で返します
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Array<String> words = { U"apple", U"bird", U"cat" };
+	Array<int32> v1 = { 10, 50, 30, 20, 40 };
+	Print << v1.isEmpty();
 
-	Print << words;
-
-	Print << words.isEmpty();
-
-	// 配列を空にする
-	words.clear();
-
-	Print << words;
-
-	Print << words.isEmpty();
+	Array<int32> v2;
+	Print << v2.isEmpty();
 
 	while (System::Update())
 	{
@@ -247,36 +117,34 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+false
+true
+```
 
 
-## 20.9 末尾の要素を削除する
-`.pop_back()` で配列の末尾の要素を削除することができます。`.pop_back_N(n)` で末尾から `n` 要素を削除することができます。
-
-空の配列で `.pop_back()` を呼んではいけません。一方、`.pop_back_N(n)` は空の配列でも呼び出すことができます。`.pop_back_N(n)` は実際の要素数以上を削除しようとした場合に配列を空にします。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/array/9.png)
+## 22.5 空であるかを調べる（2）
+- `if (配列)` を使って配列が空であるかを調べます
+- 配列が空である場合、配列は `false` と評価されます
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Array<int32> numbers = { 100, 200, 300, 400, 500 };
+	Array<int32> v1 = { 10, 50, 30, 20, 40 };
+   
+	if (v1)
+	{
+		Print << U"v1 is not empty";
+	}
 
-	Print << numbers;
+	Array<int32> v2;
 
-	numbers.pop_back();
-
-	Print << numbers;
-
-	numbers.pop_back_N(2);
-
-	Print << numbers;
-
-	// 実際の要素数以上を削除しようとしているので、配列を空にする
-	numbers.pop_back_N(100);
-
-	Print << numbers;
+	if (not v2)
+	{
+		Print << U"v2 is empty";
+	}
 
 	while (System::Update())
 	{
@@ -284,36 +152,30 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+v1 is not empty
+v2 is empty
+```
 
 
-## 20.10 先頭の要素を削除する
-`.pop_front()` で配列の先頭の要素を削除することができます。`.pop_front_N(n)` で先頭から `n` 要素を削除することができます。
-
-空の配列で `.pop_front()` を呼んではいけません。一方、`.pop_front_N(n)` は空の配列でも呼び出すことができます。`.pop_front_N(n)` は実際の要素数以上を削除しようとした場合に配列を空にします。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/array/10.png)
+## 22.6 末尾への要素追加
+- `v << x;` で配列 `v` の末尾に要素 `x` を追加します
+- `std::vector` の `.push_back(x)` を短く書けるようにしたものです
+- 配列の末尾への追加は、それ以外の場所（先頭や途中）への追加に比べて最も効率的です
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Array<int32> numbers = { 100, 200, 300, 400, 500 };
+	Array<int32> v;
+	v << 10;
+	v << 50;
+	v << 30;
+	Print << v;
 
-	Print << numbers;
-
-	numbers.pop_front();
-
-	Print << numbers;
-
-	numbers.pop_front_N(2);
-
-	Print << numbers;
-
-	// 実際の要素数以上を削除しようとしているので、配列を空にする
-	numbers.pop_front_N(100);
-
-	Print << numbers;
+	v << 20 << 40;
+	Print << v;
 
 	while (System::Update())
 	{
@@ -321,31 +183,38 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+{10, 50, 30}
+{10, 50, 30, 20, 40}
+```
 
 
-## 20.11 配列の要素数を変更する
-`.resize(n)` で配列の要素数を `n` に変更することができます。`.resize(n, value)` で配列の要素数を `n` に変更し、新しい要素を `value` で初期化することができます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/array/11.png)
+## 22.7 末尾の要素の削除
+- `.pop_back()` で配列の末尾の要素を削除します
+- 要素数が 0 のときに呼び出してはいけません
+	- 事前に要素数が 0 でないことを確認してください
+- 配列の末尾の要素の削除は、それ以外の場所（先頭や途中）の要素の削除に比べて最も効率的です
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Array<int32> numbers = { 1, 2, 3 };
+	Array<int32> v = { 10, 50, 30, 20, 40 };
+	Print << v;
 
-	numbers.resize(10, -1);
+	v.pop_back();
+	Print << v;
 
-	Print << numbers;
+	v.pop_back();
+	Print << v;
 
-	Print << numbers.size();
+	while (v)
+	{
+		v.pop_back();
+	}
 
-	numbers.resize(2);
-
-	Print << numbers;
-
-	Print << numbers.size();
+	Print << v;
 
 	while (System::Update())
 	{
@@ -353,31 +222,28 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+{10, 50, 30, 20, 40}
+{10, 50, 30, 20}
+{10, 50, 30}
+{}
+```
 
 
-## 20.12 条件を満たす要素を削除する (remove_if)
-`.remove_if(f)` で、条件を満たす要素を削除することができます。`f` は、配列の要素の型を引数に取り、`bool` 型を返す関数です。`f` が `true` を返した要素は削除されます。
-
-#### 関数で条件を指定する
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/array/12.png)
+## 22.8 すべての要素の削除
+- `.clear()` で配列のすべての要素を削除し、空の配列にします
+- 要素数が 0 のときに呼び出しても問題ありません（何もしません）
 
 ```cpp
 # include <Siv3D.hpp>
 
-bool IsLessThanFive(int32 n)
-{
-	return (n < 5);
-}
-
 void Main()
 {
-	Array<int32> values = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+	Array<int32> v = { 10, 50, 30, 20, 40 };
+	Print << v;
 
-	// 値が 5 未満の要素を削除する
-	values.remove_if(IsLessThanFive);
-
-	Print << values;
+	v.clear();
+	Print << v;
 
 	while (System::Update())
 	{
@@ -385,22 +251,29 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+{10, 50, 30, 20, 40}
+{}
+```
 
-#### ラムダ式で条件を指定する
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/array/12.png)
+## 22.9 要素数の変更
+- `.resize(n)` で配列の要素数を `n` に変更します
+- 要素数が増える場合、新しい要素はデフォルト値で初期化されます
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Array<int32> values = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+	Array<int32> v = { 10, 50, 30, 20, 40 };
+	Print << v;
 
-	// 値が 5 未満の要素を削除する
-	values.remove_if([](int32 n) { return (n < 5); });
+	v.resize(3);
+	Print << v;
 
-	Print << values;
+	v.resize(5);
+	Print << v;
 
 	while (System::Update())
 	{
@@ -408,25 +281,252 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+{10, 50, 30, 20, 40}
+{10, 50, 30}
+{10, 50, 30, 0, 0}
+```
 
 
-## 20.13 条件を満たす要素を削除する (イテレータ)
-`std::vector` のように、イテレータと `.erase()` を使って要素を削除することもできます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/array/13.png)
+## 22.10 範囲 for 文による配列走査（const 参照）
+- 範囲 for 文を使って配列の要素を走査します
+- 各要素へのアクセスは、通常は const 参照で行います
+- 範囲 for 文の中で、対象の配列のサイズを変更する操作は行わないでください
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Array<int32> values = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+	Array<int32> v = { 10, 50, 30, 20, 40 };
 
-	for (auto it = values.begin(); it != values.end();)
+	for (const auto& elem : v)
 	{
-		if (*it < 5)
+		Print << elem;
+	}
+
+	while (System::Update())
+	{
+
+	}
+}
+```
+```txt title="出力"
+10
+50
+30
+20
+40
+```
+
+
+## 22.11 範囲 for 文による配列走査（参照）
+- 範囲 for 文を使って配列の要素を走査します
+- ループ内で要素を変更する場合、const 参照の代わりに参照を使って要素にアクセスします
+- 範囲 for 文の中で、対象の配列のサイズを変更する操作は行わないでください
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Array<int32> v = { 10, 50, 30, 20, 40 };
+
+	for (auto& elem : v)
+	{
+		elem *= 2;
+	}
+
+	Print << v;
+
+	while (System::Update())
+	{
+
+	}
+}
+```
+```txt title="出力"
+{20, 100, 60, 40, 80}
+```
+
+
+## 22.12 指定したインデックスの要素へのアクセス
+- `[i]` で配列の `i` 番目の要素にアクセスします
+	- `i` は 0 から数えます。有効なインデックスは `0` から `.size() - 1` までです
+- 範囲外にアクセスしてはいけません
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Array<int32> v = { 10, 50, 30, 20, 40 };
+
+	Print << v[0];
+	Print << v[4];
+
+	v[1] = 500;
+	Print << v;
+
+	while (System::Update())
+	{
+
+	}
+}
+```
+```txt title="出力"
+10
+40
+{10, 500, 30, 20, 40}
+```
+
+
+## 22.13 先頭・末尾の要素へのアクセス
+- `.front()` は先頭の要素への参照を返します
+	- `v[0]` と同じです
+- `.back()` は末尾の要素への参照を返します
+	- `v[v.size() - 1]` と同じです
+- いずれも要素数が 0 のときに呼び出してはいけません
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Array<int32> v = { 10, 50, 30, 20, 40 };
+
+	Print << v.front();
+	Print << v.back();
+
+	v.front() = 100;
+	v.back() = 400;
+	Print << v;
+
+	while (System::Update())
+	{
+
+	}
+}
+```
+```txt title="出力"
+10
+40
+{100, 50, 30, 20, 400}
+```
+
+
+## 22.14 先頭・終端位置のイテレータ取得
+- `.begin()` は先頭位置のイテレータを返します
+- `.end()` は終端位置のイテレータを返します
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Array<int32> v = { 10, 50, 30, 20, 40 };
+
+	auto it = v.begin();
+
+	Print << *it;
+
+	++it;
+
+	Print << *it;
+	
+	while (System::Update())
+	{
+
+	}
+}
+```
+```txt title="出力"
+10
+50
+```
+
+
+## 22.15 その他の挿入・削除操作
+- `.push_front(値)` で、先頭に要素を追加します
+- `.pop_front()` で、先頭の要素を削除します
+- `.insert(イテレータ, 値)` で、指定したイテレータの位置に要素を挿入します
+- `.append(配列)` で、別の配列を末尾に追加します
+- `.erase(イテレータ)` で、指定したイテレータの位置の要素を削除します
+- `.erase(イテレータ1, イテレータ2)` で、指定した範囲の要素を削除します
+- 先頭や途中への要素の挿入・削除は、それ以降の既存要素の移動を伴うため、うしろの要素数に比例したコストがかかります
+	- 通常は避けるか、小さい配列でのみ使用するべきです
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	{
+		Array<int32> v = { 10, 20, 30, 40, 50 };
+
+		v.push_front(5);
+		Print << v;
+
+		v.pop_front();
+		Print << v;
+	}
+
+	{
+		Array<int32> v = { 10, 20, 30, 40, 50 };
+
+		v.insert((v.begin() + 2), 25);
+		Print << v;
+	}
+
+	{
+		Array<int32> v1 = { 10, 20, 30 };
+		Array<int32> v2 = { 40, 50 };
+
+		v1.append(v2);
+		Print << v1;
+	}
+
+	{
+		Array<int32> v = { 10, 20, 30, 40, 50 };
+
+		v.erase(v.begin() + 2);
+		Print << v;
+
+		v.erase(v.begin(), (v.begin() + 2));
+		Print << v;
+	}
+
+	while (System::Update())
+	{
+
+	}
+}
+```
+```txt title="出力"
+{5, 10, 20, 30, 40, 50}
+{10, 20, 30, 40, 50}
+{10, 20, 25, 30, 40, 50}
+{10, 20, 30, 40, 50}
+{10, 20, 40, 50}
+{40, 50}
+```
+
+
+## 22.16 条件を満たす要素の削除（イテレータ方式）
+- イテレータによるループを利用して、条件を満たす要素を削除するには次のようにします
+
+```cpp title="配列から 30 未満の要素を削除する"
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Array<int32> v = { 10, 50, 30, 20, 40 };
+
+	for (auto it = v.begin(); it != v.end();)
+	{
+		if (*it < 30)
 		{
-			it = values.erase(it);
+			it = v.erase(it);
 		}
 		else
 		{
@@ -434,7 +534,7 @@ void Main()
 		}
 	}
 
-	Print << values;
+	Print << v;
 
 	while (System::Update())
 	{
@@ -442,100 +542,38 @@ void Main()
 	}
 }
 ```
-
-
-## 20.14 配列の要素をシャッフルする
-`.shuffle()` で配列の要素をランダムに並び替えます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/array/14.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Array<int32> values = { 1, 2, 3, 4, 5 };
-
-	// ランダムに並び替える
-	values.shuffle();
-
-	Print << values;
-
-	// ランダムに並び替える
-	values.shuffle();
-
-	Print << values;
-
-	while (System::Update())
-	{
-
-	}
-}
+```txt title="出力"
+{50, 30, 40}
 ```
 
 
-## 20.15 配列の要素をソートする
-`.sort()` で配列の要素を昇順にソートします。`.rsort()` で配列の要素を降順にソートします。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/array/15.png)
+## 22.17 条件を満たす要素の削除（`.remove_if()` 方式）
+- `.remove_if(条件を記述した関数)` で、条件を満たす要素を削除します
+	- イテレータ方式よりも簡潔に書けます
+- 「条件を記述した関数」は、要素を引数（値渡しまたは const 参照渡し）で受け取り `bool` を返す関数オブジェクトです
+	- 関数やラムダ式を使います
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Array<int32> values = { 2, 5, 3, 1, 4 };
-
-	// 昇順にソートする
-	values.sort();
-
-	Print << values;
-
-	Array<String> words = { U"apple", U"dog", U"bird", U"cat" };
-
-	// 降順にソートする
-	words.rsort();
-
-	Print << words;
-
-	while (System::Update())
 	{
+		Array<int32> v = { 11, 22, 33, 44, 55 };
 
+		// 偶数の要素を削除する
+		v.remove_if(IsEven);
+
+		Print << v;
 	}
-}
-```
 
-クラスのソートを行うときには、`.sort_by()` にカスタムの比較関数を指定します。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/array/15b.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-struct Player
-{
-	int32 rank;
-
-	String name;
-};
-
-void Main()
-{
-	Array<Player> players =
 	{
-		{ 30, U"Tom" },
-		{ 20, U"Bob" },
-		{ 10, U"Alice" },
-		{ 40, U"David" },
-		{ 50, U"Eve" },
-	};
+		Array<int32> v = { 10, 50, 30, 20, 40 };
 
-	// ランクの昇順にソートする
-	players.sort_by([](const Player& a, const Player& b) { return (a.rank < b.rank); });
+		// 30 未満の要素を削除する
+		v.remove_if([](int32 x) { return x < 30; });
 
-	for (const auto& player : players)
-	{
-		Print << U"{} {}"_fmt(player.rank, player.name);
+		Print << v;
 	}
 
 	while (System::Update())
@@ -544,24 +582,34 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+{11, 33, 55}
+{50, 30, 40}
+```
 
 
-## 20.16 配列の要素を逆順にする
-`.reverse()` で配列の要素を逆順します。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/array/16.png)
+## 22.18 配列のソート
+- `.sort()` で配列を昇順にソートします
+- `.rsort()` で配列を降順にソートします
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Array<int32> values = { 1, 2, 3, 4, 5 };
+	{
+		Array<int32> v = { 10, 50, 30, 20, 40 };
 
-	// 逆順に並び替える
-	values.reverse();
+		v.sort();
+		Print << v;
+	}
 
-	Print << values;
+	{
+		Array<String> v = { U"Bird", U"Dog", U"Apple", U"Cat" };
+
+		v.rsort();
+		Print << v;
+	}
 
 	while (System::Update())
 	{
@@ -569,22 +617,24 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+{10, 20, 30, 40, 50}
+{Dog, Cat, Bird, Apple}
+```
 
 
-## 20.17 配列の要素の合計を計算する
-`.sum()` で配列の要素の合計を計算します。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/array/17.png)
+## 22.19 配列の逆順
+- `.reverse()` で配列を逆順にします
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Array<int32> values = { 1, 2, 3, 4, 5 };
+	Array<int32> v = { 10, 50, 30, 20, 40 };
 
-	// 合計を計算する
-	Print << values.sum();
+	v.reverse();
+	Print << v;
 
 	while (System::Update())
 	{
@@ -592,26 +642,23 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+{40, 20, 30, 50, 10}
+```
 
 
-## 20.18 全ての要素に同じ値を代入する
-`.fill(value)` で配列の全ての要素に `value` を代入します。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/array/18.png)
+## 22.20 配列の要素のシャッフル
+- `.shuffle()` で配列の要素をシャッフルします
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Array<int32> values = { 1, 2, 3, 4, 5 };
+	Array<int32> v = { 1, 2, 3, 4, 5, 6 };
 
-	Print << values;
-
-	// すべての要素に 0 を代入する
-	values.fill(0);
-
-	Print << values;
+	v.shuffle();
+	Print << v;
 
 	while (System::Update())
 	{
@@ -619,35 +666,79 @@ void Main()
 	}
 }
 ```
+```txt title="出力例"
+{4, 6, 2, 1, 5, 3}
+```
 
 
-## 20.19 map 処理
-`.map(f)` で配列の全ての要素に関数 `f` を適用した結果を持つ新しい配列を作成できます。`f` は、配列の要素の型を引数に取り、新しい要素の型を返す関数です。
-
-`Format(value)` は、`value` を文字列に変換する関数です。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/array/19.png)
+## 22.21 配列の要素の合計
+- `.sum()` で配列の要素の合計を計算します
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	const Array<int32> a = { 1, 2, 3, 4, 5 };
+	Array<int32> v = { 10, 50, 30, 20, 40 };
 
-	// a の各要素を 0.1 倍した配列を作成する
-	const Array<double> b = a.map([](int32 n) { return (n * 0.1); });
-
-	Print << b;
-
-	// a の各要素を文字列にした配列を作成する
-	const Array<String> c = a.map(Format);
-
-	Print << c;
+	Print << v.sum();
 
 	while (System::Update())
 	{
 
 	}
 }
+```
+```txt title="出力"
+150
+```
+
+
+## 22.22 すべての要素に同じ値を代入
+- .fill(値) で、すべての要素に同じ値を代入します
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Array<int32> v = { 10, 50, 30, 20, 40 };
+
+	v.fill(100);
+	Print << v;
+
+	while (System::Update())
+	{
+
+	}
+}
+```
+```txt title="出力"
+{100, 100, 100, 100, 100}
+```
+
+
+## 22.23 すべての要素に関数を適用した結果の取得
+- `.map(関数)` で、すべての要素に関数を適用した結果の配列を得ます
+- 関数は、要素を引数にとり、変換後の要素を返す関数オブジェクトです
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Array<int32> v1 = { 10, 50, 30, 20, 40 };
+
+	Array<double> v2 = v1.map([](int32 x) { return (x * 1.01); });
+
+	Print << v2;
+
+	while (System::Update())
+	{
+
+	}
+}
+```
+```txt title="出力"
+{10.1, 50.5, 30.3, 20.2, 40.4}
 ```

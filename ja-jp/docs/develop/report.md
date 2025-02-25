@@ -51,7 +51,7 @@ Siv3D のプロジェクトにおいて、ユーザが自由に利用できる�
 
 ## 6. サンプルやドキュメントを開発する
 - Siv3D のサンプルやドキュメントの執筆者を募集しています。Siv3D Discord や OpenSiv3D 実装会で相談してください。
-- [Scrapbox](../tools/scrapbox.md){:target="_blank"} を使って独自にサンプル集を作成・公開する事もできます。
+- [Cosense](../tools/cosense.md){:target="_blank"} を使って独自にサンプル集を作成・公開する事もできます。
 
 
 

@@ -1,8 +1,7 @@
-# 42. ファイルシステム
-ファイルやディレクトリの情報取得および操作に関する機能を学びます。
+# 53. ファイルシステム
 
-## 42.1 パスを表す型
-ファイルやディレクトリのパスを Siv3D のコードで表現するときは、`String` 型のエイリアス（別名）である `FilePath` を使うと意図が明確になります。
+## 53.1 パスを表す型
+- ファイルやディレクトリのパスを Siv3D のコードで表現するときは、`String` 型のエイリアス（別名）である `FilePath` を使うと意図が明確になります
 
 ```cpp
 # include <Siv3D.hpp>
@@ -21,13 +20,14 @@ void Main()
 }
 ```
 
-ディレクトリパスは、末尾に `/` を付けて表現します。
+- ディレクトリパスは、末尾に `/` を付けて表現します
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
+	// ディレクトリパスは末尾に / を付ける
 	const FilePath videoDirectory = U"example/video/";
 
 	const VideoTexture videoTexture{ videoDirectory + U"river.mp4" };
@@ -42,14 +42,16 @@ void Main()
 ```
 
 
-## 42.2 ファイルやディレクトリが存在するかを調べる
-ファイルやディレクトリが存在するか調べるには `FileSystem::Exists(path)` を使います。ファイルが存在するかを調べるには `FileSystem::IsFile(path)`, ディレクトリが存在するかを調べるには `FileSystem::IsDirectory(path)` を使います。
+## 53.2 存在確認
+- ファイルやディレクトリが存在するか調べるには `FileSystem::Exists(path)` を使います
+- ファイルが存在するかを調べるには `FileSystem::IsFile(path)`
+- ディレクトリが存在するかを調べるには `FileSystem::IsDirectory(path)` を使います
 
-| 関数 | 説明 |
+| コード | 説明 |
 |---|---|
-| `FileSystem::Exists(path)` | `path` で示したファイルやディレクトリが存在するかを返します。 |
-| `FileSystem::IsFile(path)` | `path` で示したファイルが存在するかを返します。 |
-| `FileSystem::IsDirectory(path)` | `path` で示したディレクトリが存在するかを返します。 |
+| `FileSystem::Exists(path)` | `path` で示したファイルやディレクトリが存在するかを返す |
+| `FileSystem::IsFile(path)` | `path` で示したファイルが存在するかを返す |
+| `FileSystem::IsDirectory(path)` | `path` で示したディレクトリが存在するかを返す |
 
 ```cpp
 # include <Siv3D.hpp>
@@ -84,10 +86,26 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+true
+true
+false
+false
+----
+true
+false
+false
+false
+----
+false
+true
+false
+false
+```
 
 
-## 42.3 絶対パスを取得する
-パスを絶対パスに変換するには `FileSystem::Fullpath(path)` を使います。
+## 53.3 絶対パス
+- パスを絶対パスに変換するには `FileSystem::Fullpath(path)` を使います
 
 ```cpp
 # include <Siv3D.hpp>
@@ -104,10 +122,15 @@ void Main()
 	}
 }
 ```
+```txt title="出力例"
+C:/Users/siv3d/Desktop/projects/hello/hello/App/example/windmill.png
+C:/Users/siv3d/Desktop/projects/hello/hello/App/example/video/
+```
 
 
-## 42.4 相対パスに変換する
-パスを、現在のカレントディレクトリからの相対パスに変換するには `FileSystem::RelativePath(path)` を使います。
+
+## 53.4 相対パスへの変換
+- パスを、現在のカレントディレクトリから見た相対パスに変換するには `FileSystem::RelativePath(path)` を使います
 
 ```cpp
 # include <Siv3D.hpp>
@@ -128,42 +151,39 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+example/windmill.png
+example/video/
+```
 
 
-## 42.5 ファイルの名前部分や拡張子を取得する
-ファイルパスから、親ディレクトリ部分を含まずに、ファイル名部分だけを取得するには `FileSystem::FileName(path)` を使います。拡張子を除いたファイル名を取得するには `FileSystem::BaseName(path)` を使います。ファイルの拡張子 (.を含まない) を小文字で取得するには `FileSystem::Extension(path)` を使います。パスがディレクトリである場合、いずれの関数でもディレクトリ名がファイル名であると見なされます。
+## 53.5 ファイルの名前・拡張子
+- ファイルパスから、親ディレクトリ部分を含まずに、ファイル名部分だけを取得するには `FileSystem::FileName(path)` を使います
+- 拡張子を除いたファイル名を取得するには `FileSystem::BaseName(path)` を使います
+- ファイルの拡張子 (.を含まない) を小文字で取得するには `FileSystem::Extension(path)` を使います
+- パスがディレクトリである場合、いずれの関数でもディレクトリ名がファイル名であると見なされます
 
-| 関数 | 説明 |
+| コード | 説明 |
 |---|---|
-| `FileSystem::FileName(path)` | `path` で示したファイルパスから、親ディレクトリ部分を除いたファイル名部分を返します。 |
-| `FileSystem::BaseName(path)` | `path` で示したファイルパスから、親ディレクトリ部分と拡張子を除いたファイル名部分を返します。 |
-| `FileSystem::Extension(path)` | `path` で示したファイルパスから、拡張子を小文字で返します。 |
+| `FileSystem::FileName(path)` | `path` で示したファイルパスから、親ディレクトリ部分を除いたファイル名部分を返す |
+| `FileSystem::BaseName(path)` | `path` で示したファイルパスから、親ディレクトリ部分と拡張子を除いたファイル名部分を返す |
+| `FileSystem::Extension(path)` | `path` で示したファイルパスから、拡張子を小文字で返す |
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	const FilePath path1 = U"example/windmill.png";
-	const FilePath path2 = U"example/video/";
+	const FilePath path = U"example/windmill.png";
 
 	// ファイル名を取得する
-	Print << FileSystem::FileName(path1);
-	Print << FileSystem::FileName(path2);
-
-	Print << U"----";
+	Print << FileSystem::FileName(path);
 
 	// 拡張子を除いたファイル名を取得する
-	Print << FileSystem::BaseName(path1);
-	Print << FileSystem::BaseName(path2);
-
-	Print << U"----";
+	Print << FileSystem::BaseName(path);
 
 	// 拡張子を小文字で取得する
-	Print << FileSystem::Extension(path1);
-	Print << FileSystem::Extension(path2);
-
-	Print << U"----";
+	Print << FileSystem::Extension(path);
 
 	while (System::Update())
 	{
@@ -171,10 +191,15 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+windmill.png
+windmill
+png
+```
 
 
-## 42.6 親ディレクトリを取得する
-あるパスの親ディレクトリを取得するには、`FileSystem::ParentPath(path)` を使います。
+## 53.6 親ディレクトリ
+- あるパスの親ディレクトリを取得するには、`FileSystem::ParentPath(path)` を使います
 
 ```cpp
 # include <Siv3D.hpp>
@@ -193,10 +218,18 @@ void Main()
 	}
 }
 ```
+```txt title="出力例"
+C:/Users/siv3d/Desktop/projects/hello/hello/App/example/
+C:/Users/siv3d/Desktop/projects/hello/hello/App/example/video/
+C:/Users/siv3d/Desktop/projects/hello/hello/App/example/
+C:/Users/siv3d/Desktop/projects/hello/hello/
+```
 
 
-## 42.7 カレントディレクトリを取得する
-現在のカレントディレクトリを取得するには、`FileSystem::CurrentDirectory()` を使います。
+
+## 53.7 カレントディレクトリ
+- 現在のカレントディレクトリを取得するには、`FileSystem::CurrentDirectory()` を使います
+- カレントディレクトリを変更するには、`FileSystem::ChangeCurrentDirectory(path)` を使います
 
 ```cpp
 # include <Siv3D.hpp>
@@ -212,10 +245,13 @@ void Main()
 	}
 }
 ```
+```txt title="出力例"
+C:/Users/siv3d/Desktop/projects/hello/hello/App/
+```
 
 
-## 42.8 実行ファイルのパスを取得する
-現在のプログラムの実行ファイルのパスを取得するには、`FileSystem::ModulePath()` を使います。
+## 53.8 実行ファイルのパス
+- 現在のプログラムの実行ファイルのパスを取得するには、`FileSystem::ModulePath()` を使います
 
 ```cpp
 # include <Siv3D.hpp>
@@ -231,10 +267,15 @@ void Main()
 	}
 }
 ```
+```txt title="出力例"
+C:/Users/siv3d/Desktop/projects/hello/Intermediate/hello/Debug/hello(debug).exe
+```
 
 
-## 42.9 起動ディレクトリを取得する
-起動ディレクトリは、プログラムが起動されたときのカレントディレクトリです。通常は、実行ファイルがあるディレクトリですが、コマンドラインから起動された場合や、拡張子の関連付けでファイルから起動された場合などに、異なるディレクトリになることがあります。起動ディレクトリを取得するには、`FileSystem::InitialDirectory()` を使います。
+## 53.9 起動ディレクトリ
+- 起動ディレクトリとは、プログラムが起動されたときのカレントディレクトリです
+- 通常は、実行ファイルがあるディレクトリですが、コマンドラインから起動された場合や、拡張子の関連付けによってファイルから起動された場合などに、異なるディレクトリになることがあります
+- 起動ディレクトリを取得するには、`FileSystem::InitialDirectory()` を使います
 
 ```cpp
 # include <Siv3D.hpp>
@@ -250,14 +291,18 @@ void Main()
 	}
 }
 ```
+```txt title="出力例"
+C:/Users/siv3d/Desktop/projects/hello/hello/App/
+```
 
 
-## 42.10 特殊フォルダのパスを取得する
-デスクトップやドキュメントなど、特殊な用途のフォルダのパスを取得するには、`FileSystem::GetFolderPath(SpecialFolder)` を使います。存在しない場合は空の文字列を返します。
 
-特殊フォルダの種類を指す `SpecialFolder` は次の値があります。
+## 53.10 特殊フォルダのパス
+- デスクトップやドキュメントなど、特殊フォルダのパスを取得するには、`FileSystem::GetFolderPath(SpecialFolder)` を使います
+- 存在しない場合は空の文字列を返します
+- 特殊フォルダの種類を指す `SpecialFolder` は次の値があります：
 
-| 値 | 説明 |
+| コード | 説明 |
 |--|--|
 |`SpecialFolder::Desktop`| デスクトップ |
 |`SpecialFolder::Documents`| ドキュメント |
@@ -297,10 +342,23 @@ void Main()
 	}
 }
 ```
+```txt title="出力例"
+Desktop: C:/Users/siv3d/Desktop/
+Documents: C:/Users/siv3d/Documents/
+LocalAppData: C:/Users/siv3d/AppData/Local/
+Pictures: C:/Users/siv3d/Pictures/
+Music: C:/Users/siv3d/Music/
+Videos: C:/Users/siv3d/Videos/
+SystemFonts: C:/Windows/Fonts/
+LocalFonts: C:/Windows/Fonts/
+UserFonts: C:/Windows/Fonts/
+UserProfile: C:/Users/siv3d/
+ProgramFiles: C:/Program Files/
+```
 
 
-## 42.11 一時ファイルの保存に使えるディレクトリを取得する
-一時ファイルの保存用に使えるディレクトリを取得するには、`FileSystem::TempDirectory()` を使います。
+## 53.11 一時ディレクトリ
+- 一時ファイルを保存するために使えるディレクトリを取得するには、`FileSystem::TempDirectory()` を使います
 
 ```cpp
 # include <Siv3D.hpp>
@@ -316,12 +374,16 @@ void Main()
 	}
 }
 ```
+```txt title="出力例"
+C:/Users/siv3d/AppData/Local/Temp/
+```
 
 
-## 42.12 一時ファイル用に使えるファイルパスを取得する
-あるディレクトリで、一時ファイル用に使えるファイルパスを取得するには、`FileSystem::UniqueFilePath(directory)` を使います。拡張子は `.tmp` で、これで返されたファイルパスと同名のファイルが存在しないことが保証されています。
 
-引数を省略した場合は、42.11 で説明した、一時ファイルの保存用に使えるディレクトリが使われます。
+## 53.12 一時ファイル
+- あるディレクトリで、一時ファイルの保存用に使えるファイルパスを取得するには、`FileSystem::UniqueFilePath(directory)` を使います
+- ファイルパスの拡張子は `.tmp` で、そのディレクトリに同名のファイルが存在しないことが保証されています
+- 引数を省略した場合は、**53.11** で説明した、一時ファイル保存用に使えるディレクトリが使われます
 
 ```cpp
 # include <Siv3D.hpp>
@@ -342,10 +404,15 @@ void Main()
 	}
 }
 ```
+```txt title="出力例"
+example/8763c77e-8a6c-4b63-9432-b6bf9f6ca95a.tmp
+C:/Users/siv3d/AppData/Local/Temp/5533afc3-c401-4731-81b1-62c938871332.tmp
+```
 
 
-## 42.13 パスを結合する
-ユーザによる入力や、外部からの入力では、ディレクトリパスの末尾に `/` が付いていない場合があります。このようなパスを結合するには、`FileSystem::PathAppend(a, b)` を使います。
+## 53.13 パスの結合
+- ユーザによる入力や、外部からの入力では、ディレクトリパスの末尾に `/` が付いていない場合があります
+- このようなパスを結合するには、`FileSystem::PathAppend(a, b)` を使います
 
 ```cpp
 # include <Siv3D.hpp>
@@ -367,17 +434,25 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+example/windmill.png
+example/windmill.png
+----
+example/
+example/
+```
 
 
-## 42.14 ファイルやディレクトリのサイズを取得する
-ファイルのサイズを取得するには `FileSystem::FileSize(path)` を使います。ファイルおよびディレクトリのサイズを取得するには `FileSystem::Size(path)` を使います。
+## 53.14 サイズ
+- ファイルのサイズを取得するには `FileSystem::FileSize(path)` を使います
+- ファイルまたはディレクトリ全体のサイズを取得するには `FileSystem::Size(path)` を使います
 
-| 関数 | 説明 |
+| コード | 説明 |
 |--|--|
-| `FileSystem::FileSize(path)` | ファイルのサイズをバイト単位で返します。ファイルが存在しないか、空である場合は 0 を返します。 |
-| `FileSystem::Size(path)` | ファイルまたはディレクトリのサイズをバイト単位で返します。ファイルまたはディレクトリが存在しないか、空である場合は 0 を返します。 |
+| `FileSystem::FileSize(path)` | ファイルのサイズをバイト単位で返す。ファイルが存在しないか、空である場合は 0 を返す |
+| `FileSystem::Size(path)` | ファイルまたはディレクトリのサイズをバイト単位で返す。ファイルまたはディレクトリが存在しないか、空である場合は 0 を返す |
 
-`FormatDataSize(int64)` を使うと、ファイルサイズを、2 進接頭辞を用いた見やすい形式の文字列に変換できます（例: `120KiB`）。
+- `FormatDataSize(int64)` を使うと、ファイルサイズを、2 進接頭辞を用いた読みやすい形式の文字列に変換できます（例: `120KiB`）
 
 ```cpp
 # include <Siv3D.hpp>
@@ -398,15 +473,25 @@ void Main()
 	}
 }
 ```
+```txt title="出力例"
+253286
+247KiB
+41456337
+39.5MiB
+```
 
-## 42.15 ファイルのタイムスタンプを取得する
-ファイルの作成日時を取得するには `FileSystem::CreationTime(path)` を使います。ファイルの最終更新日時を取得するには `FileSystem::WriteTime(path)` を使います。ファイルの最終アクセス日時を取得するには `FileSystem::AccessTime(path)` を使います。戻り値は `Optional<DateTime>` で、ファイルが存在しない場合や取得に失敗した場合は `none` が返されます。
 
-| 関数 | 説明 |
+## 53.15 タイムスタンプ
+- ファイルの作成日時を取得するには `FileSystem::CreationTime(path)` を使います
+- ファイルの最終更新日時を取得するには `FileSystem::WriteTime(path)` を使います
+- ファイルの最終アクセス日時を取得するには `FileSystem::AccessTime(path)` を使います
+- 戻り値は `Optional<DateTime>` で、ファイルが存在しない場合や取得に失敗した場合は `none` が返されます
+
+| コード | 説明 |
 |--|--|
-| `FileSystem::CreationTime(path)` | ファイルの作成日時を返します。ファイルが存在しない場合は、`none` を返します。 |
-| `FileSystem::WriteTime(path)` | ファイルの最終更新日時を返します。ファイルが存在しない場合は、`none` を返します。 |
-| `FileSystem::AccessTime(path)` | ファイルの最終アクセス日時を返します。ファイルが存在しない場合は、`none` を返します。 |
+| `FileSystem::CreationTime(path)` | ファイルの作成日時を返す。ファイルが存在しない場合は、`none` を返す |
+| `FileSystem::WriteTime(path)` | ファイルの最終更新日時を返す。ファイルが存在しない場合は、`none` を返す |
+| `FileSystem::AccessTime(path)` | ファイルの最終アクセス日時を返す。ファイルが存在しない場合は、`none` を返す |
 
 ```cpp
 # include <Siv3D.hpp>
@@ -439,12 +524,20 @@ void Main()
 	}
 }
 ```
+```txt title="出力例"
+CreationTime: 2025-01-18 11:18:34
+LastWriteTime: 2022-01-18 18:27:24
+LastAccessTime: 2025-01-18 11:18:34
+```
 
 
-## 42.16 ディレクトリの中身一覧を取得する
-ディレクトリの中身（ファイルやディレクトリ）一覧を取得するには `FileSystem::DirectoryContents(path, recursive)` を使います。戻り値は `Array<FilePath>` です。
+## 53.16 ディレクトリの中身一覧
+- ディレクトリの中身（ファイルやディレクトリ）一覧を取得するには `FileSystem::DirectoryContents(path, recursive)` を使います
+- 戻り値は `Array<FilePath>` です
 
-### 42.16.1 ディレクトリの中身一覧を取得する（再帰的に検索する）
+### 53.16.1 ディレクトリの中身一覧（再帰的な検索あり）
+- デフォルトでは、ディレクトリ内のディレクトリを再帰的に検索するため、ディレクトリの中にあるディレクトリの中身も取得されます
+
 ```cpp
 # include <Siv3D.hpp>
 
@@ -466,8 +559,9 @@ void Main()
 }
 ```
 
-### 42.16.2 ディレクトリの中身一覧を取得する（再帰的に検索しない）
-第 2 引数は、ディレクトリ内のディレクトリを再帰的に検索するかどうかを指定します。デフォルトは `Recursive::Yes` ですが、再帰的に検索しない場合は `Recursive::No` を指定します。再帰的に検索しない場合、ディレクトリの中にあるディレクトリの中身は取得されません。
+### 53.16.2 ディレクトリの中身一覧（再帰的な検索なし）
+- 第 2 引数に `Recursive::No` を指定すると、ディレクトリ内のディレクトリを再帰的に検索しません
+- 最初に指定したディレクトリよりも深い階層のファイルやディレクトリは取得されません
 
 ```cpp
 # include <Siv3D.hpp>
@@ -491,10 +585,9 @@ void Main()
 ```
 
 
-### 42.16.3 ディレクトリに含まれる .png ファイルの一覧を取得する
-ディレクトリの中身一覧を取得した後、`Array::filter()` を使って、条件に合うパスのみを抽出することができます。
-
-下記のサンプルコードでは、`example` ディレクトリに含まれる `.png` ファイルの一覧を取得しています。
+### 53.16.3 特定の拡張子のファイル一覧
+- ディレクトリの中身一覧を取得したあと、`Array::filter()` を使って、条件に合うパスのみを抽出することができます
+- 次のサンプルコードでは、`example` ディレクトリに含まれる `.png` ファイルの一覧を取得しています
 
 ```cpp
 # include <Siv3D.hpp>
@@ -507,7 +600,7 @@ bool IsPngFile(const FilePath& path)
 
 void Main()
 {
-	// ディレクトリの中身一覧を取得する（再帰的には取得しない）
+	// ディレクトリの中身一覧を取得する
 	const Array<FilePath> paths = FileSystem::DirectoryContents(U"example/");
 
 	// png ファイルのみを抽出する
@@ -527,8 +620,8 @@ void Main()
 ```
 
 
-## 42.17 空のディレクトリであるかを調べる
-あるディレクトリが空であるかどうかを調べるには、`FileSystem::IsEmptyDirectory(path)` を使います。
+## 53.17 空のディレクトリ判定
+- あるディレクトリが空であるかどうかを調べるには、`FileSystem::IsEmptyDirectory(path)` を使います
 
 ```cpp
 # include <Siv3D.hpp>
@@ -544,12 +637,17 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+false
+```
 
 
-## 42.18 ディレクトリを作成する
+## 53.18 ディレクトリの作成
 
-### 42.18.1 ディレクトリ名を指定してディレクトリを作成する
-ディレクトリを作成するには、`FileSystem::CreateDirectories(path)` を使います。この関数は、指定したパスのディレクトリが存在しない場合、そのディレクトリを作成します。作成に成功したか、すでに同名のディレクトリが存在する場合 `true`, それ以外の場合は `false` を返します。
+### 53.18.1 ディレクトリ名を指定してディレクトリを作成
+- ディレクトリを新しく作成するには、`FileSystem::CreateDirectories(path)` を使います
+- この関数は、指定したパスのディレクトリが存在しない場合、そのディレクトリを作成します
+- 作成に成功したか、すでに同名のディレクトリが存在する場合 `true`, それ以外の場合は `false` を返します
 
 ```cpp
 # include <Siv3D.hpp>
@@ -568,11 +666,17 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+true
+true
+```
 
-### 42.18.2 パスを指定して、その親ディレクトリまでのディレクトリを作成する
-パスを指定して、その親ディレクトリまでのディレクトリを作成するには、`FileSystem::CreateParentDirectories(path)` を使います。この関数は、指定したパスの親ディレクトリが存在しない場合、そのディレクトリを作成します。作成に成功したか、すでに同名のディレクトリが存在する場合 `true`, それ以外の場合は `false` を返します。パスのうち親ディレクトリ以降の部分（ファイルまたはディレクトリ名）は無視されます。
 
-`FileSystem::CreateParentDirectories(U"aaa/bbb/ccc.txt")` は、`FileSystem::CreateDirectories(U"aaa/bbb/")` と同じです。
+### 53.18.2 パスを指定して、その親ディレクトリまでのディレクトリを作成
+- あるパスについて、その親ディレクトリまでのディレクトリを作成するには、`FileSystem::CreateParentDirectories(path)` を使います
+- この関数は、指定したパスの親ディレクトリが存在しない場合、そのディレクトリを作成します
+- 作成に成功したか、すでに同名のディレクトリが存在する場合 `true`, それ以外の場合は `false` を返します
+- `FileSystem::CreateParentDirectories(U"aaa/bbb/ccc.txt")` は、`FileSystem::CreateDirectories(U"aaa/bbb/")` と同じです
 
 ```cpp
 # include <Siv3D.hpp>
@@ -591,10 +695,16 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+true
+true
+```
 
 
-## 42.19 ファイルまたはディレクトリをコピーする
-ファイルまたはディレクトリをコピーする場合は `FileSystem::Copy(src, dst)` を使います。`src` にはコピー元のファイルまたはディレクトリのパスを、`dst` にはコピー先のパスを指定します。コピーに成功した場合は `true`、失敗した場合は `false` を返します。
+## 53.19 コピー
+- ファイルまたはディレクトリをコピーする場合は `FileSystem::Copy(src, dst)` を使います
+- `src` にはコピー元のファイルまたはディレクトリのパスを、`dst` にはコピー先のパスを指定します
+- コピーに成功した場合は `true`、失敗した場合は `false` を返します
 
 ```cpp
 # include <Siv3D.hpp>
@@ -613,26 +723,29 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+true
+true
+```
 
 
-## 42.20 ファイルまたはディレクトリを削除する
-ファイルやディレクトリを削除する場合は `FileSystem::Remove(path)` を使います。`path` には削除するファイルまたはディレクトリのパスを指定します。削除に成功した場合は `true`、失敗した場合は `false` を返します。
-
-第 2 引数で `AllowUndo::Yes` を指定すると、可能な場合、ファイルはゴミ箱に送られ、あとで手動で復元できます。
+## 53.20 削除
+- ファイルやディレクトリを削除する場合は `FileSystem::Remove(path)` を使います
+- `path` には削除するファイルまたはディレクトリのパスを指定します
+- 削除に成功した場合は `true`、失敗した場合は `false` を返します
+- 第 2 引数で `AllowUndo::Yes` を指定すると、可能な場合にファイルはゴミ箱に送られ、あとで手動で復元できます
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// ファイルやディレクトリをコピーする
+	// ファイルをコピーして削除する
 	FileSystem::Copy(U"example/windmill.png", U"image.png");
-	FileSystem::Copy(U"example/video/", U"test5/");
-
-	// ファイルを削除する
 	Print << FileSystem::Remove(U"image.png");
 
-	// ディレクトリを削除する
+	// ディレクトリをコピーして削除する
+	FileSystem::Copy(U"example/video/", U"test5/");
 	Print << FileSystem::Remove(U"test5/");
 
 	while (System::Update())
@@ -641,12 +754,15 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+true
+true
+```
 
 
-## 42.21 ディレクトリの中身だけを削除する
-ディレクトリの中身だけを削除し、空のディレクトリを残す場合は `FileSystem::RemoveContents(path)` を使います。
-
-第 2 引数で `AllowUndo::Yes` を指定すると、可能な場合、ファイルはゴミ箱に送られ、あとで手動で復元できます。
+## 53.21 ディレクトリの中身の削除
+- ディレクトリの中身だけを削除し、空のディレクトリを残す場合は `FileSystem::RemoveContents(path)` を使います
+- 第 2 引数で `AllowUndo::Yes` を指定すると、可能な場合にファイルはゴミ箱に送られ、あとで手動で復元できます
 
 ```cpp
 # include <Siv3D.hpp>
@@ -665,24 +781,27 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+true
+```
 
 
-## 42.22 ファイルやディレクトリをリネームする
-ファイルやディレクトリをリネームする場合は `FileSystem::Rename(src, dst)` を使います。`src` にはリネーム元のファイルまたはディレクトリのパスを、`dst` にはリネーム先のパスを指定します。リネームに成功した場合は `true`、失敗した場合は `false` を返します。
+## 53.22 リネーム
+- ファイルやディレクトリをリネームするには `FileSystem::Rename(src, dst)` を使います
+- `src` にはリネーム元のファイルまたはディレクトリのパスを、`dst` にはリネーム先のパスを指定します
+- リネームに成功した場合は `true`、失敗した場合は `false` を返します
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// ファイルやディレクトリをコピーする
+	// ファイルをコピーしてリネームする
 	FileSystem::Copy(U"example/windmill.png", U"image.png");
-	FileSystem::Copy(U"example/video/", U"test5/");
-
-	// ファイルをリネームする
 	Print << FileSystem::Rename(U"image.png", U"image2.png");
 
-	// ディレクトリをリネームする
+	// ディレクトリをコピーしてリネームする
+	FileSystem::Copy(U"example/video/", U"test5/");
 	Print << FileSystem::Rename(U"test5/", U"test5-2/");
 
 	while (System::Update())
@@ -691,18 +810,20 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+true
+true
+```
 
 
-## 42.23 ファイルの変更を検知する
-`DirectoryWatcher` を使うと、指定したディレクトリ内でのファイルの変更イベントを検知できます。ユーザがファイルを変更したときに自動でリロードする仕組みの実装などに使えます。
-
-`DirectoryWatcher watcher{ directory };` で、ディレクトリ `directory` 内でのファイルの変更を検知する `DirectoryWatcher` オブジェクトを作成します。
-
-`DirectoryWatcher` のメンバ関数 `.retrieveChanges()` で、変更履歴の一覧を古い順に取得できます。一度取得した変更履歴は削除されます。
-
-変更履歴は `Array<FileChange>` として取得できます。`FileChange` は、変更されたファイルのパス `.path` と、ファイルの操作を表す `.action` をメンバ変数として持ちます。
-
-ファイルの操作には次の種類があります。
+## 53.23 ファイルの変更検知
+- `DirectoryWatcher` を使うと、指定したディレクトリ内でのファイルの変更イベントを検知できます
+	- ユーザがファイルを変更したときに自動でリロードする仕組みの実装などに使えます
+- `DirectoryWatcher watcher{ directory };` で、ディレクトリ `directory` 内でのファイルの変更を検知する `DirectoryWatcher` オブジェクトを作成します
+- `DirectoryWatcher` のメンバ関数 `.retrieveChanges()` で、発生したイベントの一覧を古い順に `Array<FileChange>` として取得できます
+	- 一度取得した変更履歴は削除されます
+- `FileChange` は、変更されたファイルのパス `.path` と、ファイルの操作の種類を表す `.action` をメンバ変数として持ちます
+- ファイルの操作は次の種類があります：
 
 | ファイルの操作 | 説明 |
 |--|--|
@@ -711,8 +832,9 @@ void Main()
 |`FileAction::Modified`| ファイルの中身が変更された |
 |`FileAction::Unknown`| 不明なアクション |
 
-### 42.23.1 ディレクトリ内でのイベントを検知する
-検知が不要になった場合は、空の `DirectoryWatcher` オブジェクトを代入します。
+### 53.23.1 ディレクトリ内でのイベント検知
+- 次のサンプルコードは、`test6/` フォルダを作成し、その中でのファイルの変更を検知して内容を出力します
+- 検知を中断させる場合、空の `DirectoryWatcher` オブジェクトを代入します
 
 ```cpp
 # include <Siv3D.hpp>
@@ -720,10 +842,10 @@ void Main()
 void Main()
 {
 	// テスト用のディレクトリを作成する
-	FileSystem::CreateDirectories(U"test7/");
+	FileSystem::CreateDirectories(U"test6/");
 
 	// test7/ ディレクトリ内でのイベントを監視するオブジェクトを作成する
-	DirectoryWatcher watcher{ U"test7/" };
+	DirectoryWatcher watcher{ U"test6/" };
 
 	while (System::Update())
 	{
@@ -759,15 +881,13 @@ void Main()
 ```
 
 
-### 42.23.2 特定のファイルの更新を検知する
-一般に、ファイルの中身が更新されたときは、次のいずれかのイベントが発生します。
-
-- Removed → Added
-- Modified
-
-したがって、特定のファイルの更新を取りこぼしなく検出するには、`Added` と `Modified` を監視します。ファイルの編集に使うアプリケーションの仕様によっては、1 回の保存で複数回の `Modified` イベントが発生することがあります。
-
-次のサンプルでは `test8/` ディレクトリ内の `test.txt` ファイルの更新を検出します。
+### 53.23.2 特定のファイルの更新検知
+- 一般に、ファイルの中身が更新されたときは、次のいずれかのイベントが発生します。
+	- Removed → Added
+	- Modified
+- 特定のファイルの更新を取りこぼしなく検出するには、`Added` と `Modified` を監視します
+- ファイル編集に使うアプリケーションの仕様によっては、1 回の保存操作で複数回の `Modified` イベントが発生することもあります
+- 次のサンプルでは `test6/` ディレクトリ内の `test.txt` ファイルの更新を追跡します
 
 ```cpp
 # include <Siv3D.hpp>
@@ -775,10 +895,10 @@ void Main()
 void Main()
 {
 	// テスト用のディレクトリを作成する
-	FileSystem::CreateDirectories(U"test8/");
+	FileSystem::CreateDirectories(U"test6/");
 	
 	// 更新を検出したいファイルのパス
-	const FilePath filePath = U"test8/test.txt";
+	const FilePath filePath = U"test6/test.txt";
 
 	// 更新を検出したいファイルの絶対パス
 	const FilePath fullPath = FileSystem::FullPath(filePath);

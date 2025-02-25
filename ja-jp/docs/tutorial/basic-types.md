@@ -1,27 +1,96 @@
-# 6. 基本的なデータ型
-Siv3D プログラムで使用する基本的なデータ型について学びます。
+# 7. 基本的な型とクラス
+Siv3D プログラムで使用する基本的な型とクラスを学びます。
 
-## 6.1 基本的な数値型
-Siv3D の基本的な数値型は次のとおりです。よく使う重要なものに ★ を付けています。
+- よく使う重要な型に ★ を付けています
 
-| 型名        | 説明                                                                      |
-|-----------|-------------------------------------------------------------------------|
-| bool      | ★ ブーリアン型（`false` または `true`）                                            |
-| int8      | 符号付き 8-bit 整数型（-128 ～ 127）                                              |
-| uint8     | 符号無し 8-bit 整数型（0 ～ 255）                                                 |
-| int16     | 符号付き 16-bit 整数型（-32,768 ～ 32,767）                                       |
-| uint16    | 符号無し 16-bit 整数型（0 ～ 65,535）                                             |
-| int32     | ★ 符号付き 32-bit 整数型（-2,147,483,648 ～ 2,147,483,647）                       |
-| uint32    | 符号無し 32-bit 整数型（0 ～ 4,294,967,295）                                    |
-| int64     | 符号付き 64-bit 整数型（-9,223,372,036,854,775,808 ～ 9,223,372,036,854,775,807） |
-| uint64    | 符号無し 64-bit 整数型（0 ～ 18,446,744,073,709,551,615）                         |
-| float     | 単精度浮動小数点数型                                                              |
-| double    | ★ 倍精度浮動小数点数型                                                            |
-| size_t    | ★ オブジェクトのサイズを表現する符号無し 64-bit 整数型（0 ～ 18,446,744,073,709,551,615）        |
+## 7.1 整数
+- 整数を扱う場合、サイズが明示された型名 `int32`, `uint64` などを使います
+- `int`, `long` なども使えますが、サイズが環境によって異なり、移植性が悪いため避けるべきです
+- 配列の要素数は C++ 標準と同じ `size_t` 型で表現します
 
-Siv3D で整数を扱うときは、`int`, `unsigned long long` のような型名の代わりに、`int32`, `uint64` のように明示的にサイズを表現した型名を使います。これにより、プラットフォーム間での移植性が高まり、一貫性のある読みやすいコードになります。
+| 型名 | サイズ | 説明 | 値の範囲 |
+| --- | --- | --- | --- |
+| `int8` | 1 バイト | 符号付き 8 ビット整数 | -128 ～ 127 |
+| `uint8` | 1 バイト | 符号なし 8 ビット整数 | 0 ～ 255 |
+| `int16` | 2 バイト | 符号付き 16 ビット整数 | -32,768 ～ 32,767 |
+| `uint16` | 2 バイト | 符号なし 16 ビット整数 | 0 ～ 65,535 |
+| `int32` ★ | 4 バイト | 符号付き 32 ビット整数 | -2,147,483,648 ～ 2,147,483,647 |
+| `uint32` | 4 バイト | 符号なし 32 ビット整数 | 0 ～ 4,294,967,295 |
+| `int64` | 8 バイト | 符号付き 64 ビット整数 | -9,223,372,036,854,775,808 ～ 9,223,372,036,854,775,807 |
+| `uint64` | 8 バイト | 符号なし 64 ビット整数 | 0 ～ 18,446,744,073,709,551,615 |
+| `size_t` ★ | 8 バイト | 符号なし 64 ビット整数 | 0 ～ 18,446,744,073,709,551,615 |
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/basic-types/1.png)
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	int32 a = 123;
+	size_t b = 100;
+
+	Print << U"a: " << a;
+	Print << U"b: " << b;
+
+	while (System::Update())
+	{
+
+	}
+}
+```
+```txt title="出力"
+a: 123
+b: 100
+```
+
+
+## 7.2 浮動小数点数
+- 小数以下の数を扱う場合、C++ 標準の浮動小数点数型 `float`, `double` を使います
+
+| 型名 | サイズ | 説明 | 値の範囲 | 精度 |
+| --- | --- | --- | --- | --- |
+| `float` | 4 バイト | 単精度浮動小数点数 | 3.4E +/- 38 | 7 桁 |
+| `double` ★ | 8 バイト | 倍精度浮動小数点数 | 1.7E +/- 308 | 15 桁 |
+
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	double a = 123.456;
+	float b = 100.5f;
+
+	Print << U"a: " << a;
+	Print << U"b: " << b;
+
+	while (System::Update())
+	{
+
+	}
+}
+```
+```txt title="出力"
+a: 123.456
+b: 100.5
+```
+
+!!! info "Siv3D で開発者が float 型を使う場面は限られる"
+	- 計算リソースを少しでも節約したいゲーム開発では、通常、浮動小数点数処理に `float` 型を使うことが多いです
+	- 一方、Siv3D の大部分の API では `double` 型が標準で使われています
+		- シミュレーションや科学技術計算など、精度が要求される用途で使われることも想定しているためです
+	- Siv3D エンジン内部では、精度よりも速度が重要な内部処理（描画など）では `float` 型で処理するなど、バランスを取っています
+	- シェーダの定数バッファ、行列、クォータニオン、FFT の結果など、開発者が使う API にも一部 `float` 型は登場します
+	- 通常は `double` 型を使い、必要なケースにだけ `float` 型を使うと良いでしょう
+
+
+## 7.3 真偽値
+- プログラム中で Yes / No のような二択の状態を表す場合は、整数型ではなく、C++ 標準の真偽値 `bool` 型を使います
+- `bool` 型の値は `true` または `false` の 2 種類のみです
+- `true` は真、`false` は偽を表します
+
+| 型名 | サイズ | 説明 | 値の範囲 |
+| --- | --- | --- | --- |
+| `bool` ★ | 1 バイト | 真偽値 | `true` または `false` |
 
 ```cpp
 # include <Siv3D.hpp>
@@ -29,20 +98,10 @@ Siv3D で整数を扱うときは、`int`, `unsigned long long` のような型�
 void Main()
 {
 	bool a = true;
-
-	int32 b = 123;
-
-	double c = 0.5;
-
-	size_t d = 100;
+	bool b = false;
 
 	Print << U"a: " << a;
-
 	Print << U"b: " << b;
-
-	Print << U"c: " << c;
-
-	Print << U"d: " << d;
 
 	while (System::Update())
 	{
@@ -50,46 +109,38 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+a: true
+b: false
+```
 
-??? example "Siv3D で float 型を使う場面は限られる"
-	実行環境のメモリや演算のリソースが限られるゲーム開発においては、浮動小数点数処理に `float` 型を使うことが一般的です。Siv3D もグラフィックスや並列処理に関連する内部処理では `float` 型を使うほか、シェーダの定数バッファ、行列、クォータニオン、FFT の結果など、ユーザの使う API にも `float` 型が登場することがあります。
 
-	一方で、Siv3D は精度が要求されるシミュレーションや科学技術計算で使われることも想定しているため、主要なクラスや関数は `double` 型を扱い、描画など精度が要求されない処理に関しては内部で `float` 型を用いるハイブリッド方式になっています。`double` 型は精度に関連した問題が生じにくく、コードの読みやすさも向上し、一般的なアプリケーションプログラムであれば実行速度への影響もほとんどありません。
+## 7.4 文字
+- 文字を扱うときは、UTF-32 形式の文字リテラルや、UTF-32 形式で文字を表現する `char32` 型を使います
 
+| 型名 | サイズ | 説明 | 値の範囲 |
+| --- | --- | --- | --- |
+| `char32` ★ | 4 バイト | UTF-32 エンコードの文字 | 0 ～ 0x10FFFF |
 
-## 6.2 文字と文字列の基本的な型
-Siv3D の文字と文字列の基本的な型は次のとおりです。重要なものに ★ を付けています。
+- `char` 型では、ひらがなの「あ」を 1 要素で表現できませんが、`char32` 型では 1 要素で表現できて便利です
 
-| 型名        | 説明                                                                      |
-| ----------- | ------------------------------------------------------------------------- |
-| char32       | ★ UTF-32 の 1 要素（`char32_t` の別名） |
-| String       | ★ 文字列クラス。要素は `char32`           |
-| StringView   | 文字列のビュークラス                      |
-| FilePath     | ★ ファイルパス文字列（`String` の別名）       |
-| FilePathView | ファイルパス文字列のビュー（`StringView` の別名） |
+```cpp
+char a = 'あ'; // NG
+char32 b = U'あ'; // OK
+```
 
-Siv3D の API は、文字列を UTF-32 で処理するため、`std::string` の代わりに `String` を使います。詳しくは [文字列クラス](../tutorial2/string.md) で扱います。
-
-`FilePath` は `String` の型エイリアスでどちらも同じ型ですが、プログラムでファイルパス文字列を扱う際に `String` の代わりに `FilePath` を用いることで、変数の目的を明確にできます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/basic-types/2.png)
+- `char32` 型の文字リテラルは、シングルクォーテーションの前に `U` を付けます 
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	char32 a = U'A';
+	char32 c1 = U'A';
+	char32 c2 = U'あ';
 
-	String b = U"Hello";
-
-	FilePath c = U"example/windmill.png";
-
-	Print << U"a: " << a;
-
-	Print << U"b: " << b;
-
-	Print << U"c: " << c;
+	Print << U"c1: " << c1;
+	Print << U"c2: " << c2;
 
 	while (System::Update())
 	{
@@ -97,53 +148,154 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+c1: A
+c2: あ
+```
 
 
-## 6.3 基本的なデータ構造の型
-Siv3D の基本的なデータ構造の型は次のとおりです。重要なものに ★ を付けています。
+## 7.5 文字列
+- 文字列を扱うときは、UTF-32 形式の文字列リテラルや、`String` クラスを使います
+	- `String` クラスは、UTF-32 形式の文字列を扱うためのクラスで、ざっくり言うと `char32` 版の `std::string` です
+	- **チュートリアル 33** で詳しく説明します
+- `std::string_view` に相当する `StringView` クラスもあります
+- 文字列がファイルパスを表す場合、それぞれの型エイリアス `FilePath`, `FilePathView` を使うとコードの可読性が向上します
 
-| 型名        | 説明                                                                      |
-| ----------- | ------------------------------------------------------------------------- |
-| Array&lt;Type, Allocator&gt;                              | ★ 動的配列（C++ 標準ライブラリの `std::vector` の置き換え）                   |
-| Grid&lt;Type, Allocator&gt;                               | 動的な二次元配列                                                 |
-| HashSet&lt;Type, Hash, Eq, Alloc&gt;                      | ハッシュテーブルによる Set（C++ 標準ライブラリの `std::unordered_set` の置き換え） |
-| HashTable&lt;Key, Value, Hash, Eq, Alloc&gt;              | ハッシュテーブルによる Map（C++ 標準ライブラリの `std::unordered_map` の置き換え） |
-| Optional&lt;Type&gt;                                      | ★ 無効値を表現できる型（C++ 標準ライブラリの `std::optional` の置き換え）           |
-| std::array&lt;Type, size_t&gt;                            | 固定長配列                                                    |
+| 型名 | 説明 |
+| --- | --- |
+| `String` ★ | UTF-32 エンコードの文字列 |
+| `StringView` | UTF-32 エンコードの文字列ビュー |
+| `FilePath` | ファイルパス文字列（`String` の別名） |
+| `FilePathView` | ファイルパス文字列ビュー（`StringView` の別名） |
 
-`Array` は、C++ 標準ライブラリの `std::vector` の置き換えです。`std::vector` と同様に、動的に要素を追加・削除できます。処理コストは `std::vector` と同等です。詳しくは [動的配列](../tutorial2/array.md) で扱います。
-
-`Optional` は、値が存在するかしないかを表現できる型です。`std::optional` と同様に、`none` という無効値を表現する値を持ちます。詳しくは [無効値を表現できる型](../tutorial2/optional.md) で扱います。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/basic-types/3.png)
+- UTF-32 形式の文字列リテラルは、ダブルクォーテーションの前に `U` を付けます
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Array<int32> a = { 10, 20, 50, 100 };
+	String s1 = U"Hello!";
+	String s2 = U"こんにちは！";
+	FilePath s3 = U"example/windmill.png";
 
-	Optional<double> b;
-
-	Print << U"a: " << a;
-
-	Print << U"b: " << b;
-
-	b = 12.3;
-
-	Print << U"b: " << b;
+	Print << U"s1: " << s1;
+	Print << U"s2: " << s2;
+	Print << U"s3: " << s3;
+	Print << U"Siv3D!";
 
 	while (System::Update())
 	{
 
 	}
+}
+```
+```txt title="出力"
+s1: Hello!
+s2: こんにちは！
+s3: example/windmill.png
+Siv3D!
+```
+
+
+## 7.6 配列
+- 固定長配列は C++ 標準ライブラリの `std::array<Type, N>` を使います
+	- Type は要素の型、N は要素数です
+- 動的配列は `Array<Type>` クラスを使います
+	- Type は要素の型です
+	- **チュートリアル 22**  で詳しく説明します
+- 動的な二次元配列は `Grid<Type>` クラスで表現できます
+	- Type は要素の型です
+	- **チュートリアル 37** で詳しく説明します
+
+| 型名 | 説明 |
+| --- | --- |
+| `std::array<Type, N>` | 固定長配列 |
+| `Array<Type>` ★ | 動的配列（C++ 標準の `std::vector` に相当） |
+| `Grid<Type>` | 動的二次元配列 |
+
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Array<int32> a = { 1, 2, 3, 4, 5 };
+	Grid<int32> b(4, 3, 0);
+
+	Print << U"a: " << a;
+	Print << U"b:\n" << b;
+
+	while (System::Update())
+	{
+
+	}
+}
+```
+```txt title="出力"
+a: {1, 2, 3, 4, 5}
+b:
+{{0, 0, 0, 0},
+{0, 0, 0, 0},
+{0, 0, 0, 0}}
+```
+
+
+## 7.7 その他のデータ型
+- 任意の型に無効値の表現を追加する `Optional<Type>` クラスがあります
+	- Type は要素の型です
+	- **チュートリアル 33**  で詳しく説明します
+- ハッシュテーブルによる Set（要素が重複しない集合を扱えるコンテナ）は `HashSet<Type>` クラスを使います
+	- Type は要素の型です
+	- **チュートリアル 46**  で詳しく説明します
+- ハッシュテーブルによる Map（キーが重複しない、キーと値のペアの集合を扱えるコンテナ）は `HashTable<Key, Value>` クラスを使います
+	- Key はキーの型、Value は値の型です
+	- **チュートリアル 47**  で詳しく説明します
+
+| 型名 | 説明 |
+| --- | --- |
+| `Optional<Type>` | 任意の型に無効値の表現を追加するクラス（C++ 標準の `std::optional` に相当）|
+| `HashSet<Type>` | ハッシュテーブルによる Set（C++ 標準の `std::unordered_set` に相当）|
+| `HashTable<Key, Value>` | ハッシュテーブルによる Map（C++ 標準の `std::unordered_map` に相当）|
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Optional<int32> a = 42;
+	Optional<int32> b = none;
+	HashSet<int32> c = { 1, 2, 3, 4, 5 };
+	HashTable<int32, String> d = { { 1, U"one" }, { 2, U"two" }, { 3, U"three" } };
+
+	Print << U"a: " << a;
+	Print << U"b: " << b;
+	Print << U"c: " << c;
+	Print << U"d:\n" << d;
+
+	while (System::Update())
+	{
+
+	}
+}
+```
+```txt title="出力"
+a: (Optional)42
+b: none
+c: {4, 1, 5, 2, 3}
+d:
+{
+	{2:	two},
+	{1:	one},
+	{3:	three},
 }
 ```
 
 
 ## 振り返りチェックリスト
-- [x] Siv3D の基本的な数値型、`bool`, `int32`, `double`, `size_t` を理解した
-- [x] Siv3D の基本的な文字型、`char32` を理解した
-- [x] Siv3D の基本的な文字列型、`String`, `FilePath` を理解した
-- [x] Siv3D の基本的なデータ構造型、`Array`, `Optional` を理解した
+- [x] よく使う整数型 `int32`, `size_t` を学んだ
+- [x] よく使う浮動小数点数型 `double` を学んだ
+- [x] よく使う真偽値型 `bool` を学んだ
+- [x] `char32` 型で文字を表現することを学んだ
+- [x] `String` で文字列を扱うことを学んだ
+- [x] `Array<Type>` で動的配列を扱うことを学んだ

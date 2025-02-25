@@ -1,18 +1,28 @@
-# 41. レンダーテクスチャ
-図形やテクスチャ、フォントの描画先をシーンではなくテクスチャにする方法を学びます。
+# 52. レンダーテクスチャ
+図形・テクスチャ・フォントの描画先を、シーンの代わりにテクスチャに変更する方法と、その応用を学びます。
 
-## 41.1 レンダーテクスチャの基本
-これまで、図形やテクスチャ、フォントの描画はシーンに対して行われていましたが、**レンダーテクスチャ**機能を使うことで、プログラムで用意した別のテクスチャ（レンダーテクスチャ）に対して描画できるようになります。そのテクスチャを描画に再利用することで、より高度で複雑なグラフィックス処理を実現できます。
+## 52.1 レンダーテクスチャ
 
-`RenderTexture` を作成し、`ScopedRenderTarget2D` オブジェクトのコンストラクタにレンダーテクスチャを渡すと、`ScopedRenderTarget2D` オブジェクトのスコープが有効な間、図形やテクスチャ、フォントがそのレンダーテクスチャに描画されます（**レンダーターゲット（描画先）の変更**）。描画先になったレンダーテクスチャは、**レンダーターゲットから解除されたあと**に、通常のテクスチャのように描画に使うことができます。`RenderTexture` は `Texture` と同じ描画系のメンバ関数を持ちます。
+### 52.1.1 概要
+- 図形・テクスチャ・フォントの描画は、デフォルトではシーンに対して行われます
+- 一方、プログラムで用意した、描画先として設定可能なテクスチャ（**レンダーテクスチャ**）を描画先にすることもできます
+- そうして何かが描かれたレンダーテクスチャを、別の描画に再利用することで、高度で複雑なグラフィックス表現を実現できます
+- 図形・テクスチャ・フォントの `.draw()` による描画は、**チュートリアル 63** で学ぶ `Image` への書き込み (`.paint()` や `.overwrite()`) と異なり、GPU 上で高速に実行されます
+- レンダーステートも適用されるため、レンダーテクスチャへの描画は、通常のシーンへの描画と同様の効果が得られます
 
-`RenderTexture` の作成にはコストがかかるため、毎フレーム新しく作成するのではなく、事前に作成しておき、使い回すようにしてください。
+### 52.1.2 レンダーテクスチャの使い方
+- `RenderTexture` を作成し、`ScopedRenderTarget2D` オブジェクトのコンストラクタにレンダーテクスチャを渡すと、`ScopedRenderTarget2D` オブジェクトが有効な間、すべての 2D 描画の描画先（レンダーターゲット）が、指定したレンダーテクスチャになります
+- これを **レンダーターゲットの変更** といいます
+- レンダーテクスチャは、`ScopedRenderTarget2D` オブジェクトのスコープ終了によって **レンダーターゲットから解除されたあと**、通常のテクスチャのように自身をシーンや別のレンダーターゲットに描画できます
+- `RenderTexture` は、`Texture` と同じ描画関数や操作関数を持っています
+	- `.draw()`, `.drawAt()`, `.scaled()` など
 
-図形やテクスチャ、フォントの `.draw()` による描画は、チュートリアル 53. で学ぶ `Image` への書き込み (`.paint()` や `.overwrite()`) と異なり、GPU 上で実行されるため高速です。レンダーステートも適用されるため、通常のシーンへの描画と同様に柔軟な描画ができます。
+### 52.1.3 レンダーテクスチャの作成とクリア
+- `RenderTexture` の作成にはコストがかかるため、毎フレーム新しく作成するのではなく、事前に作成したものを使いまわしてください
+- `RenderTexture` は `.clear(color)` によって、その内容を指定した色にクリアできます
+- クリアしない場合は、それまでに描かれた内容が残り続けます
 
-`RenderTexture` は `.clear(color)` によって、内容を指定した色にクリアできます。クリアしない場合は、それまで描いた内容が残り続けます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/render-texture/1.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/render-texture/1.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -23,7 +33,7 @@ void Main()
 
 	const Texture emoji{ U"🐈"_emoji };
 
-	// 200x200 のサイズのレンダーテクスチャを作成する。初期状態は白色
+	// 200 x 200 のサイズのレンダーテクスチャを作成する。初期状態は白色
 	const RenderTexture renderTexture{ Size{ 200, 200 }, Palette::White };
 
 	while (System::Update())
@@ -48,7 +58,7 @@ void Main()
 }
 ```
 
-`RenderTexture` の `.clear()` は自身の参照を返すため、クリアと `ScopedRenderTarget2D` への設定を 1 行に短くまとめて記述することができます。
+- `RenderTexture` の `.clear()` は自身の参照を返すため、次のようにクリアと `ScopedRenderTarget2D` への設定を 1 行に短くまとめて記述できます
 
 ```cpp hl_lines="15-16"
 # include <Siv3D.hpp>
@@ -59,7 +69,7 @@ void Main()
 
 	const Texture emoji{ U"🐈"_emoji };
 
-	// 200x200 のサイズのレンダーテクスチャを作成する。初期状態は白色
+	// 200 x 200 のサイズのレンダーテクスチャを作成する。初期状態は白色
 	const RenderTexture renderTexture{ 200, 200, Palette::White };
 
 	while (System::Update())
@@ -81,12 +91,11 @@ void Main()
 ```
 
 
-## 41.2 クリアをしない使い方
-描画内容が変わらない場合、描画コストの削減のために `RenderTexture` のクリアおよび `RenderTexture` への描画を省略することができます。
+## 52.2 クリアをしない使い方
+- レンダーテクスチャに描画する内容が変化しない場合、クリアを行わないことで描画コストを削減できます
+- 次のサンプルコードでは、最初のフレームでレンダーテクスチャに描画を行い、以降はそれをクリアせずに毎フレーム描画することで、描画コストやクリアのコストを削減しています
 
-下記のサンプルでは、最初のフレームで `RenderTexture` に描画を行い、以降は `RenderTexture` を描画することで、毎フレームの描画コストを削減しています。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/render-texture/2.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/render-texture/2.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -97,7 +106,7 @@ void Main()
 
 	const Texture emoji{ U"🔥"_emoji };
 
-	// 200x200 のサイズのレンダーテクスチャを作成する。初期状態は白色
+	// 200 x 200 のサイズのレンダーテクスチャを作成する。初期状態は白色
 	const RenderTexture renderTexture{ Size{ 400, 400 }, Palette::White };
 	{
 		// レンダーターゲットを renderTexture に変更する
@@ -119,10 +128,11 @@ void Main()
 ```
 
 
-## 41.3 透過レンダーテクスチャへの書き込み
-初期状態が透過色の `RenderTexture` に対してデフォルトのブレンドステートで描画を行うと、`RenderTexture` の内容の RGB 成分は更新されますがアルファ成分は更新されません。つまり全体が透過状態なので、レンダーテクスチャを描画しても何も表示されません。
+## 52.3 透過レンダーテクスチャへの書き込み
+- 初期状態が透過色（アルファ成分が 0.0）のレンダーテクスチャに対して、デフォルトのブレンドステートで描画を行うと、レンダーテクスチャの RGB 成分は更新される一方でアルファ成分は更新されません
+- つまり全体が透過状態のままであり、そのレンダーテクスチャを描画しても何も表示されません
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/render-texture/3a.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/render-texture/3a.png)
 
 ```cpp hl_lines="19-20"
 # include <Siv3D.hpp>
@@ -135,7 +145,7 @@ void Main()
 
 	const Texture emoji{ U"🔥"_emoji };
 
-	// 400x400 のサイズのレンダーテクスチャを作成する。初期状態は ColorF{ 0.5, 0.0 }
+	// 400 x 400 のサイズのレンダーテクスチャを作成する。初期状態は ColorF{ 0.5, 0.0 }
 	const RenderTexture renderTexture{ Size{ 400, 400 }, ColorF{ 0.5, 0.0 } };
 	{
 		// レンダーターゲットを renderTexture に変更する
@@ -150,9 +160,9 @@ void Main()
 
 	while (System::Update())
 	{
-		for (int32 y = 0; y < (Scene::Height() / cellSize); ++y)
+		for (int32 y = 0; y < (600 / cellSize); ++y)
 		{
-			for (int32 x = 0; x < (Scene::Width() / cellSize); ++x)
+			for (int32 x = 0; x < (800 / cellSize); ++x)
 			{
 				if (IsEven(y + x))
 				{
@@ -167,9 +177,10 @@ void Main()
 }
 ```
 
-この問題を解決するには、ブレンドステートを「描画された最大のアルファ成分を保持する」設定に変更します。これによって、`RenderTexture` のアルファ成分が更新されるようになります。
+- この問題を解決するには、ブレンドステートを「描画された最大のアルファ成分を保持する」設定に変更します
+- レンダーテクスチャへの描画時に、アルファ成分も更新されるようになります
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/render-texture/3b.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/render-texture/3b.png)
 
 ```cpp hl_lines="27-28 32-33"
 # include <Siv3D.hpp>
@@ -192,7 +203,7 @@ void Main()
 
 	const Texture emoji{ U"🔥"_emoji };
 
-	// 400x400 のサイズのレンダーテクスチャを作成する。初期状態は ColorF{ 0.5, 0.0 }
+	// 400 x 400 のサイズのレンダーテクスチャを作成する。初期状態は ColorF{ 0.5, 0.0 }
 	const RenderTexture renderTexture{ Size{ 400, 400 }, ColorF{ 0.5, 0.0 } };
 	{
 		// レンダーターゲットを renderTexture に変更する
@@ -210,9 +221,9 @@ void Main()
 
 	while (System::Update())
 	{
-		for (int32 y = 0; y < (Scene::Height() / cellSize); ++y)
+		for (int32 y = 0; y < (600 / cellSize); ++y)
 		{
-			for (int32 x = 0; x < (Scene::Width() / cellSize); ++x)
+			for (int32 x = 0; x < (800 / cellSize); ++x)
 			{
 				if (IsEven(y + x))
 				{
@@ -228,8 +239,10 @@ void Main()
 ```
 
 
-## 41.4 マルチサンプル・レンダーテクスチャ
-`RenderTexture` への描画では、**マルチサンプル・アンチエイリアシング**が適用されず、斜めの線を含むような図形を描画した際にジャギーが生じます。マルチサンプル・アンチエイリアシングを適用したい場合は `MSRenderTexture` を使います。
+## 52.4 マルチサンプル・レンダーテクスチャ
+- `RenderTexture` への描画では、**マルチサンプル・アンチエイリアシング**が適用されません
+	- 斜めの線を含むような図形を描画した際にジャギーが生じます
+- マルチサンプル・アンチエイリアシングを適用したい場合は `MSRenderTexture` を使います
 
 | 描画対象 | マルチサンプル・アンチエイリアシング |
 | :--- | :--- |
@@ -237,44 +250,52 @@ void Main()
 | `RenderTexture` | 無効 |
 | `MSRenderTexture` | 有効 |
 
-`MSRenderTexture` をレンダーターゲットに設定する方法は `RenderTexture` と同様ですが、その描画結果を使う際には下記の 2 つの追加の手順が必要になります。
+- `MSRenderTexture` をレンダーターゲットに設定する方法は `RenderTexture` と同様です
+- `MSRenderTexture` への描画結果を使う際には、次の 2 つの手順が必要になります：
 
-1. `Graphics2D::Flush()` を呼び、その時点までの 2D 描画処理をすべて実行（フラッシュ）して `MSRenderTexture` のマルチサンプル・テクスチャに対する描画内容を確実に書き込む
-2. `MSRenderTexture` の `.resolve()` によって、`MSRenderTexture` 内のマルチサンプル・テクスチャを、描画で使用可能な通常のテクスチャに変換（リゾルブ）する
+	- ① `Graphics2D::Flush()` を呼び、その時点までの 2D 描画処理をすべて実行（フラッシュ）して、`MSRenderTexture` のマルチサンプル・テクスチャへの描画を完了する
+	- ② `MSRenderTexture` の `.resolve()` によって、`MSRenderTexture` 内のマルチサンプル・テクスチャを、描画で使用可能な通常のテクスチャに変換（リゾルブ）する
 
-この手順が必要な理由は、Siv3D における `.draw()` は「予約」で、`.resolve()` は「即時実行」であり、`Graphics2D::Flush()` を行わないと、レンダーテクスチャに何も描かれていない状態で `resolve()` が実行されてしまうためです。
+- この手順が必要な理由：
+	- Siv3D における `.draw()` は「予約」で、`.resolve()` は「即時実行」です
+	- `Graphics2D::Flush()` を行わないと、マルチサンプル・テクスチャに何も描かれていない状態でリゾルブが実行されてしまいます
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/render-texture/4.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/render-texture/4.png)
 
-```cpp hl_lines="31-35"
+```cpp title="レンダーテクスチャとマルチサンプル・レンダーテクスチャの比較" hl_lines="36-40"
 # include <Siv3D.hpp>
+
+void Draw()
+{
+	Rect{ Arg::center(100, 100), 100 }.rotated(Scene::Time() * 30_deg).draw();
+	Circle{ 240, 240, 50 }.draw();
+	Line{ 50, 250, 250, (130 + Periodic::Sine0_1(3s) * 20) }.draw(4);
+}
 
 void Main()
 {
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
 	// レンダーテクスチャ
-	const RenderTexture renderTexture{ 200, 200, Palette::White };
+	const RenderTexture renderTexture{ 300, 300, Palette::White };
 
 	// マルチサンプル・レンダーテクスチャ
-	const MSRenderTexture msRenderTexture{ 200, 200, Palette::White };
+	const MSRenderTexture msRenderTexture{ 300, 300, Palette::White };
 
 	while (System::Update())
 	{
 		// レンダーテクスチャ
 		{
 			const ScopedRenderTarget2D target{ renderTexture.clear(Palette::Black) };
-			Rect{ Arg::center(100, 100), 80 }
-				.rotated(Scene::Time() * 30_deg).draw();
+			Draw();
 		}
 
-		renderTexture.draw(100, 0);
+		renderTexture.draw(40, 150);
 
 		// マルチサンプル・レンダーテクスチャ
 		{
 			const ScopedRenderTarget2D target{ msRenderTexture.clear(Palette::Black) };
-			Rect{ Arg::center(100, 100), 80 }
-				.rotated(Scene::Time() * 30_deg).draw();
+			Draw();
 		}
 
 		// 2D 描画をフラッシュする
@@ -283,44 +304,67 @@ void Main()
 		// マルチサンプル・テクスチャをリゾルブする
 		msRenderTexture.resolve();
 
-		msRenderTexture.draw(400, 0);
+		msRenderTexture.draw(440, 150);
 	}
 }
 ```
 
 
-## 41.5 RenderTexture に対する便利な操作
-`RenderTexture` を使った、次のような高速な画像処理機能が提供されています。
+## 52.5 レンダーテクスチャに対する特別な操作
+- `RenderTexture` を利用した次のような画像処理機能が提供されています
+- いずれも GPU を活用して高速に処理されます
 
-#### void Shader::Downsample(const TextureRegion& from, const RenderTexture& to);
-- `from`: 入力テクスチャ
-- `to`: 出力テクスチャ
+### 52.5.1 ダウンサンプル
+- テクスチャの内容を拡大縮小して別のレンダーテクスチャにコピーします
 
-`from` のテクスチャの内容を拡大縮小して `to` に描画します。`from` と `to` はともに有効なテクスチャで、互いに異なるテクスチャでなければなりません。
+```cpp
+void Shader::Downsample(const TextureRegion& from, const RenderTexture& to);
+```
+
+- 引数:
+	- `from`: 入力テクスチャ
+	- `to`: 出力テクスチャ
+- `from` のテクスチャの内容を拡大縮小して `to` に描画します
+- `from` と `to` はともに有効なテクスチャで、互いに異なるテクスチャでなければなりません
+- **52.6** で詳しい使い方を説明します
+
+### 52.5.2 ガウスぼかし
+- テクスチャにガウスぼかしをかけます
+
+```cpp
+void Shader::GaussianBlur(const TextureRegion& from, const RenderTexture& internalBuffer, const RenderTexture& to);
+```
+
+- 引数:
+	- `from`: 入力テクスチャ
+	- `internalBuffer`: 中間テクスチャ
+	- `to`: 出力テクスチャ
+- `from` のテクスチャに縦方向と横方向のガウスブラーをかけて `to` に描画します
+- `from`, `internalBuffer`, `to` はいずれも有効なテクスチャで、領域のサイズが同じでなければなりません
+- `from` と `to` は同じテクスチャにできます
+- **52.7** で詳しい使い方を説明します
+
+### 52.5.3 コピー
+- テクスチャの内容を別のレンダーテクスチャにコピーします
+
+```cpp
+void Shader::Copy(const TextureRegion& from, const RenderTexture& to);
+```
+
+- 引数:
+	- `from`: 入力テクスチャ
+	- `to`: 出力テクスチャ
+- `from` のテクスチャの内容を `to` に描画します
+- `from` と `to` はともに有効なテクスチャで、互いに異なり、領域のサイズが同じでなければなりません
+- この関数の用途は限られます。例えば大きいテクスチャから一部の領域だけを `Shader::Copy()` で切り出し、大きいレンダーテクスチャのほうを破棄することで、消費メモリを節約できます
 
 
-#### void Shader::GaussianBlur(const TextureRegion& from, const RenderTexture& internalBuffer, const RenderTexture& to);
-- `from`: 入力テクスチャ
-- `internalBuffer`: 中間テクスチャ
-- `to`: 出力テクスチャ
+## 52.6 ダウンサンプル
+- テクスチャの内容を拡大縮小して別のレンダーテクスチャにコピーします
+- 通常は、低解像度版のテクスチャを動的に作成するために使用されます
+	- 動的なダウンサンプルの例は **52.9** に登場します
 
-`from` のテクスチャに縦方向と横方向のガウスブラーをかけて `to` に描画します。`from`, `internalBuffer`, `to` はいずれも有効なテクスチャで、領域のサイズが同じでなければなりません。`from` と `to` は同じテクスチャにできます。
-
-1 回のガウスブラー処理で得られる効果はそれほど大きくありません。大きなぼかし効果を得るには、ダウンサンプルしたテクスチャにガウスブラーをかけたあと、それを元のサイズで拡大描画する方法が有効です。
-
-
-#### void Shader::Copy(const TextureRegion& from, const RenderTexture& to);
-- `from`: 入力テクスチャ
-- `to`: 出力テクスチャ
-
-`from` のテクスチャの内容を `to` に描画します。`from` と `to` はともに有効なテクスチャで、互いに異なり、領域のサイズが同じでなければなりません。
-
-通常は `Texture` 型や `TextureRegion` 型の変数への代入で間に合うため `Shader::Copy()` が必要になるのは特殊なケースです。例えば大きいレンダーテクスチャから一部の領域だけを切り出して使う場合、`Shader::Copy()` の実行後に大きいレンダーテクスチャを破棄することで、消費メモリを節約できます。
-
-
-### 41.5.1 ダウンサンプル
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/render-texture/5a.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/render-texture/6.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -344,8 +388,9 @@ void Main()
 }
 ```
 
-??? info "画像のダウンサンプルの別の方法"
-	`Image` を使ったダウンサンプルも可能です。高品質な結果を得られますが、CPU で処理するため `RenderTexture` を使ったダウンサンプルよりも時間がかかり、毎フレームの実行などリアルタイム処理には向きません。
+??? info "（別の方法）CPU 処理"
+	- `Image` を使ったダウンサンプルも可能です
+	- 高品質な結果を得られますが、CPU で処理するため `RenderTexture` を使ったダウンサンプルよりも時間がかかり、毎フレームの実行などリアルタイム処理には向きません
 
 	```cpp
 	# include <Siv3D.hpp>
@@ -365,9 +410,12 @@ void Main()
 	```
 
 
-### 41.5.2 ガウスぼかし
+## 52.7 ガウスぼかし
+- テクスチャに縦方向と横方向のガウスブラーをかけた結果を得ます
+- 1 回のガウスブラー処理で得られる効果はそれほど大きくありません
+- 大きなぼかし効果を得るには、ダウンサンプルと組み合わせます（**52.8**）
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/render-texture/5b.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/render-texture/7.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -390,10 +438,11 @@ void Main()
 ```
 
 
-## 41.6 強いガウスぼかし
-ガウスぼかしを重ねて適用するよりも、ダウンサンプルしたテクスチャにガウスぼかしをかけたあと元のサイズで拡大描画するほうが、より低いコストで大きなぼかし効果を実現できます (3), (4)。また、ダウンサンプル前にガウスぼかしをかけると、コストは増えますが、ぼかしの品質が向上します (5)。
+## 52.8 強いガウスぼかし
+- ガウスぼかしを重ねて適用するよりも、ダウンサンプルしたテクスチャにガウスぼかしをかけたあと、それを元のサイズで拡大描画するほうが、より低いコストで大きなぼかし効果を実現できます
+- また、ダウンサンプル前にガウスぼかしをかけると、コストは増えますが、ぼかしの品質が向上します
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/render-texture/6.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/render-texture/8.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -440,41 +489,40 @@ void Main()
 	{
 		if (index == 0)
 		{
-			original.draw(40, 40);
+			original.draw();
 		}
 		else if (index == 1)
 		{
-			blur1.draw(40, 40);
+			blur1.draw();
 		}
 		else if (index == 2)
 		{
-			blur2.draw(40, 40);
+			blur2.draw();
 		}
 		else if (index == 3)
 		{
-			downsample2.scaled(2.0).draw(40, 40);
+			downsample2.scaled(2.0).draw();
 		}
 		else if (index == 4)
 		{
-			downsample4.scaled(4.0).draw(40, 40);
+			downsample4.scaled(4.0).draw();
 		}
 		else if (index == 5)
 		{
-			downsampleB4.scaled(4.0).draw(40, 40);
+			downsampleB4.scaled(4.0).draw();
 		}
 
-		SimpleGUI::RadioButtons(index, { U"original", U"1x blur", U"2x blur", U"1/2 scale + 1x blur", U"1/4 scale + 1x blur", U"1x + 1/2 + 1x + 1/2 + 1x" }, Vec2{ 530, 40 });
+		SimpleGUI::RadioButtons(index, { U"original", U"blur", U"2x blur", U"1/2 scale + blur", U"1/4 scale + blur", U"blur + 1/2 + blur + 1/2 + blur" }, Vec2{ 490, 40 });
 	}
 }
 ```
 
 
-## 41.7 指定領域にガウスぼかしをかける
-ぼかした背景が透過するような効果を実現するために、シーン全体をぼかしたレンダーテクスチャを用意して、その一部を切り出して描画するという方法があります。
+## 52.9 指定領域のガウスぼかし
+- シーン全体をぼかしたレンダーテクスチャを用意し、その一部を切り出して描画することで、ぼかされた背景が透過する効果を実現できます
+- 次のサンプルコードではシーン全体をぼかしていますが、ぼかす領域とサイズが固定である場合、最小限の領域だけにぼかしをかけることで、より低コストで処理できます
 
-なお、下記のサンプルコードではシーン全体をぼかしていますが、ぼかす領域が固定である場合、最小限の領域だけにぼかしをかけることで、より高速に処理することができるでしょう。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/render-texture/7.jpg)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/render-texture/9.jpg)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -493,7 +541,7 @@ void Main()
 	// ウィンドウをリサイズする
 	Window::Resize(sceneSize);
 
-	// bay.jpg は 2560x1440 なのでサイズを小さくしてロードする
+	// bay.jpg は 2560 x 1440 なのでサイズを小さくしてロードする
 	const Texture texture{ Image{ U"example/bay.jpg" }.scale(1280, 720) };
 	const Texture emoji1{ U"🚢"_emoji };
 	const Texture emoji2{ U"🐟"_emoji };
@@ -549,17 +597,25 @@ void Main()
 ```
 
 
-## 41.8 任意形状のシャドウ
-シャドウ用のテクスチャを用意して、それをぼかしたものを描画することで、任意形状のシャドウを実現できます。
+## 52.10 任意形状のシャドウ
+- シャドウ用のテクスチャを用意し、それをぼかしたものを影として描画することで、任意形状のシャドウを実現できます
+- レンダーテクスチャを `ColorF{ 1.0, 0.0 }` でクリアしてから、ブレンドステート `BlendState::MaxAlpha` を適用して描き込みをすると、RGB 値は無視され、描画された最大のアルファ値を記録できます
+- テクスチャの RGB 成分を無視しできるため、影のための形状だけを描きたい場合に便利です
+- 次のサンプルコードでは、マウスを左クリックしている間は、ぼかし済みの影テクスチャ `blur4` のみを可視化します
 
-レンダーテクスチャを `ColorF{ 1.0, 0.0 }` でクリアしてから、ブレンドステート `BlendState::MaxAlpha` を適用して描き込みをすると、RGB 値は無視され、描画された最大のアルファ値を保持するようにできます。色の付いた絵文字の RGB 成分を無視しできるため、影用の形状だけを描きたいときに最適です。
-
-下記サンプルコードでは、マウスを左クリックしている間は、ぼかし済みの影テクスチャ `blur4` のみを可視化します。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/render-texture/8.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/render-texture/10.png)
 
 ```cpp
 # include <Siv3D.hpp>
+
+void Draw(double angle, const Texture& emoji)
+{
+	Shape2D::Hexagon(100, Vec2{ 200, 200 }).draw();
+	Shape2D::Star(120, Vec2{ 400, 400 }, angle).draw(Palette::Yellow);
+	Shape2D::RectBalloon(Rect{ 500, 100, 200, 100 }, Vec2{ 480, 240 })
+		.drawFrame(10, Palette::Seagreen);
+	emoji.rotated(angle).drawAt(600, 500);
+}
 
 void Main()
 {
@@ -583,12 +639,9 @@ void Main()
 			const ScopedRenderStates2D blend{ BlendState::MaxAlpha };
 
 			// 影を右下方向に落とすため、描画位置をずらす
-			const Transformer2D transform{ Mat3x2::Translate(2, 2) };
+			const Transformer2D transform{ Mat3x2::Translate(3, 3) };
 
-			Shape2D::Hexagon(100, Vec2{ 200, 200 }).draw();
-			Shape2D::Star(120, Vec2{ 400, 400 }, angle).draw();
-			Shape2D::RectBalloon(Rect{ 500, 103, 200, 100 }, Vec2{ 480, 240 }).drawFrame(10);
-			emoji.rotated(angle).drawAt(600, 500);
+			Draw(angle, emoji);
 		}
 
 		// shadowTexture をダウンサンプリング + ガウスぼかし
@@ -603,21 +656,17 @@ void Main()
 		// 通常の形状を描く
 		if (not MouseL.pressed())
 		{
-			Shape2D::Hexagon(100, Vec2{ 200, 200 }).draw();
-			Shape2D::Star(120, Vec2{ 400, 400 }, angle).draw(Palette::Yellow);
-			Shape2D::RectBalloon(Rect{ 500, 100, 200, 100 }, Vec2{ 480, 240 })
-				.drawFrame(10, Palette::Seagreen);
-			emoji.rotated(angle).drawAt(600, 500);
+			Draw(angle, emoji);
 		}
 	}
 }
 ```
 
 
-## 41.9 アイコンのシャドウ
-41.8 を応用して、シャドウ付きのアイコンテクスチャクラスを作成します。
+## 52.11 アイコンのシャドウ
+- **52.10** を応用して、シャドウ付きのアイコンテクスチャクラスを作成します
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/render-texture/9.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/render-texture/11.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -740,10 +789,10 @@ void Main()
 ```
 
 
-## 41.10 2D ライトブルーム
-ガウスぼかしの結果を加算ブレンドで描画することで、ライトブルームの表現を実現できます。
+## 52.12 ライトブルーム
+- ガウスぼかしの結果を加算ブレンドで描画することで、ライトブルームの表現を実現できます
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/render-texture/10.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/render-texture/12.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -761,10 +810,10 @@ void DrawScene(const Texture& emoji)
 	Circle{ 50, 200, 300 }.drawFrame(4);
 	Circle{ 550, 450, 200 }.drawFrame(4);
 
-	for (auto i : step(12))
+	for (int32 i = 0; i < 12; ++i)
 	{
 		const double angle = (i * 30_deg + Scene::Time() * 5_deg);
-		const Vec2 pos = OffsetCircular{ Scene::Center(), 200, angle };
+		const Vec2 pos = OffsetCircular{ Vec2{ 400, 300 }, 200, angle };
 		Circle{ pos, 8 }.draw(HSV{ i * 30 });
 	}
 
@@ -865,3 +914,46 @@ void Main()
 }
 ```
 
+
+## 52.13 内容の取得
+- `.readAsImage()` を使うと、レンダーテクスチャの画像データを `Image`（**チュートリアル 63**）として取得できます
+	- `Image` は C++ コードで加工したり、各ピクセルにアクセスしたり、ファイルに保存したりすることができます
+- レンダーテクスチャから `Image` を取得する操作はコストが非常に大きいため、毎フレーム実行することは避けるべきです
+- レンダーテクスチャの内容を `Image` として取得するのは最終手段です。レンダーテクスチャのまま目的の処理が実現できないか検討してください
+- 次のサンプルコードでは、レンダーテクスチャに描画された内容を画像ファイルに保存します：
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	const Texture emoji{ U"🔥"_emoji };
+
+	const RenderTexture renderTexture{ Size{ 400, 400 }, Palette::White };
+	{
+		const ScopedRenderTarget2D target{ renderTexture };
+
+		for (int32 i = 0; i < 30; ++i)
+		{
+			emoji.drawAt(RandomVec2(Rect{ 0, 0, 400, 400 }));
+		}
+	}
+
+	{
+		// 2D 描画処理をすべて実行（フラッシュ）し、レンダーテクスチャへの描画を完了する
+		Graphics2D::Flush();
+
+		// レンダーテクスチャの内容を画像として取得する
+		Image image;
+		renderTexture.readAsImage(image);
+
+		// 画像を保存する
+		image.save(U"fire.png");
+	}
+
+	while (System::Update())
+	{
+
+	}
+}
+```

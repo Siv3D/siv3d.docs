@@ -1,20 +1,81 @@
-# 21. 二次元配列
+# 37. 二次元配列
 二次元配列クラス `Grid` の基本的な使い方を学びます。
 
-## 21.1 二次元配列クラス
-Siv3D では二次元配列のための動的配列クラス `Grid<Type>` が用意されています。内部の要素は `Array<Type>` で管理されていて、すべての要素がメモリ上に連続して配置されています。そのため `std::vector<std::vector<Type>>` よりも効率的に要素にアクセスできます。
+## 37.1 Grid
+- Siv3D では二次元配列のための動的配列クラス `Grid<Type>` が用意されています
+- 一連の要素は 1 つの `Array<Type>` で管理され、すべての要素がメモリ上に連続して配置されます
+	- したがって `Array<Arrayr<Type>>` よりも効率的に二次元配列を扱うことができます
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/grid/1.png)
+
+## 37.2 二次元配列の作成
+- 二次元配列は次のような方法で作成します
+	- 空の配列を作成
+	- リストから配列を作成
+	- サイズ × 値で配列を作成
+		- `Grid<int32> grid(Size{ 4, 3 }, -1);` は幅（列数）4, 高さ（行数）3 の配列を作成し、全ての要素を -1 で初期化します
+		- `Grid<int32> grid(4, 3, -1);` も同様です
+	- サイズ × デフォルト値で配列を作成 
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// 4x3 の二次元配列を作成し、全ての要素を -1 で初期化する
-	Grid<int32> grid(4, 3, -1);
+	// パターン ①: 空の配列を作成
+	{
+		Grid<int32> grid;
+		Print << grid;
+	}
 
-	Print << grid;
+	Print << U"----";
+
+	// パターン ②: リストから配列を作成
+	{
+		Grid<int32> grid =
+		{
+			{ 1, 2, 3 },
+			{ 4, 5, 6 },
+			{ 7, 8, 9 },
+			{ 10, 11, 12 },
+		};
+		Print << grid;
+	}
+
+	Print << U"----";
+
+	// パターン ③: サイズ × 値 で配列を作成
+	{
+		// 幅（列数）4, 高さ（行数）3 の配列を作成し、全ての要素を -1 で初期化する
+		Grid<int32> grid(Size{ 4, 3 }, -1);
+		Print << grid;
+	}
+
+	Print << U"----";
+
+	// パターン ④: サイズ × 値 で配列を作成
+	{
+		// 幅（列数）4, 高さ（行数）3 の配列を作成し、全ての要素を -1 で初期化する
+		Grid<int32> grid(4, 3, -1);
+		Print << grid;
+	}
+
+	Print << U"----";
+
+	// パターン ⑤: 個数 × デフォルト値で配列を作成
+	{
+		// 幅（列数）4, 高さ（行数）3 の配列を作成し、全ての要素を 0 で初期化する
+		Grid<int32> grid(Size{ 4, 3 });
+		Print << grid;
+	}
+
+	Print << U"----";
+
+	// パターン ⑥: 個数 × デフォルト値で配列を作成
+	{
+		// 幅（列数）4, 高さ（行数）3 の配列を作成し、全ての要素を 0 で初期化する
+		Grid<int32> grid(4, 3);
+		Print << grid;
+	}
 
 	while (System::Update())
 	{
@@ -22,25 +83,47 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+{}
+----
+{{1, 2, 3},
+{4, 5, 6},
+{7, 8, 9},
+{10, 11, 12}}
+----
+{{-1, -1, -1, -1},
+{-1, -1, -1, -1},
+{-1, -1, -1, -1}}
+----
+{{-1, -1, -1, -1},
+{-1, -1, -1, -1},
+{-1, -1, -1, -1}}
+----
+{{0, 0, 0, 0},
+{0, 0, 0, 0},
+{0, 0, 0, 0}}
+----
+{{0, 0, 0, 0},
+{0, 0, 0, 0},
+{0, 0, 0, 0}}
+```
 
 
-## 21.2 配列のサイズ
-`.width()` で列数（幅）、`.height()` で行数（高さ）、`.size()` で行数と列数をまとめた `Size` 型の値を取得できます。`Size` は `Point` の型エイリアスです。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/grid/2.png)
+## 37.3 サイズの取得
+- `.width()` は幅（列数）を `size_t` 型で返します
+- `.height()` は高さ（行数）を `size_t` 型で返します
+- `.size()` は幅と高さを `Size` 型で返します
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Grid<int32> grid(4, 3, -1);
-
-	Print << grid.size(); // Size 型
+	Grid<int32> grid(Size{ 4, 3 }, -1);
 
 	Print << grid.width();
-
 	Print << grid.height();
+	Print << grid.size();
 
 	while (System::Update())
 	{
@@ -48,26 +131,89 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+4
+3
+(4, 3)
+```
 
 
-## 21.3 指定したインデックスの要素にアクセスする
-`[y][x]` で、指定したインデックス（y 行目, x 列目）の要素にアクセスできます。インデックスは 0 から始まります。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/grid/3.png)
+## 37.4 空であるかを調べる（1）
+- `.isEmpty()` は配列が空であるか（要素数が 0 であるか）を `bool` 型で返します
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Grid<int32> grid(4, 3, -1);
+	Grid<int32> grid1(Size{ 4, 3 }, -1);
+	Print << grid1.isEmpty();
 
-	grid[0][0] = 0;
+	Grid<int32> grid2;
+	Print << grid2.isEmpty();
 
-	grid[0][1] = 10;
+	while (System::Update())
+	{
 
-	grid[1][0] = 20;
+	}
+}
+```
+```txt title="出力"
+false
+true
+```
 
+
+## 37.5 空であるかを調べる（2）
+- `if (配列)` を使って配列が空であるかを調べます
+- 配列が空である場合、配列は `false` と評価されます
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Grid<int32> grid1(Size{ 4, 3 }, -1);
+
+	if (grid1)
+	{
+		Print << U"grid1 is not empty";
+	}
+
+	Grid<int32> grid2;
+
+	if (not grid2)
+	{
+		Print << U"grid2 is empty";
+	}
+
+	while (System::Update())
+	{
+
+	}
+}
+```
+```txt title="出力"
+grid1 is not empty
+grid2 is empty
+```
+
+
+## 37.6 すべての要素の削除
+- `.clear()` で配列のすべての要素を削除し、空の配列にします
+- 要素数が 0 のときに呼び出しても問題ありません（何もしません）
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Grid<int32> grid(Size{ 4, 3 }, -1);
+	Print << grid;
+
+	Print << U"----";
+
+	grid.clear();
 	Print << grid;
 
 	while (System::Update())
@@ -76,53 +222,34 @@ void Main()
 	}
 }
 ```
-
-インデックス `[y][x]` は `Point` 型の値を使って `[Point{ x, y }]` でも指定できます。x と y の順番に注意してください。
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Grid<int32> grid(4, 3, -1);
-
-	const Point index{ 3, 2 };
-
-	grid[index] = 99;
-
-	Print << grid;
-
-	while (System::Update())
-	{
-
-	}
-}
+```txt title="出力"
+{{-1, -1, -1, -1},
+{-1, -1, -1, -1},
+{-1, -1, -1, -1}}
+----
+{}
 ```
 
 
-## 21.4 範囲ベースの for 文で要素にアクセスする
-範囲ベース for 文を使って配列の各要素にアクセスできます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/grid/4.png)
+## 37.7 範囲 for 文による配列走査（const 参照）
+- 範囲 for 文を使って配列の要素を一次元的に走査します
+- 各要素へのアクセスは、通常は const 参照で行います
+- 範囲 for 文の中で、対象の配列のサイズを変更する操作は行わないでください
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// 4x3 の二次元配列を作成し、全ての要素を 0 で初期化する
-	Grid<int32> grid(4, 3);
-
-	int32 count = 0;
-
-	for (auto& elem : grid) // 要素を変更する場合は参照
+	Grid<int32> grid =
 	{
-		elem = count++;
-	}
+		{ 1, 2, 3 },
+		{ 4, 5, 6 },
+		{ 7, 8, 9 },
+		{ 10, 11, 12 },
+	};
 
-	Print << grid;
-
-	for (const auto& elem : grid) // 要素を変更しない場合は const 参照
+	for (const auto& elem : grid)
 	{
 		Print << elem;
 	}
@@ -133,87 +260,46 @@ void Main()
 	}
 }
 ```
-
-
-## 21.5 空の配列
-要素を保持していない、要素数が 0 の配列は**空の配列**です。代入や追加によって要素を追加すると、空でない配列になります。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/grid/5.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Grid<int32> grid;
-
-	Print << grid.size();
-
-	Print << grid.width();
-
-	Print << grid.height();
-
-	while (System::Update())
-	{
-
-	}
-}
+```txt title="出力"
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
 ```
 
 
-## 21.6 配列が空であるかを調べる
-`Grid` 型の値 `g` が空であるかは、`if (g.isEmpty())` や `if (g)` / `if (not g)` で調べられます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/grid/6.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Grid<String> words;
-
-	Grid<int32> numbers(4, 3, -1);
-
-	Print << words.isEmpty();
-
-	Print << numbers.isEmpty();
-
-	if (not words)
-	{
-		Print << U"words is empty";
-	}
-
-	if (numbers)
-	{
-		Print << U"numbers is not empty";
-	}
-
-	while (System::Update())
-	{
-
-	}
-}
-```
 
 
-## 21.7 配列に行を追加する
-`.push_back_row(value)` で配列の末尾に、全ての要素が `value` である行を追加できます。W x H の二次元配列に対して、`.push_back_row(value)` を呼び出すと、W x (H + 1) の二次元配列になります。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/grid/7.png)
+## 37.8 範囲 for 文による配列走査（参照）
+- 範囲 for 文を使って配列の要素を一次元的に走査します
+- ループ内で要素を変更する場合、const 参照の代わりに参照を使って要素にアクセスします
+- 範囲 for 文の中で、対象の配列のサイズを変更する操作は行わないでください
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Grid<int32> grid(4, 3, -1);
+	Grid<int32> grid =
+	{
+		{ 1, 2, 3 },
+		{ 4, 5, 6 },
+		{ 7, 8, 9 },
+		{ 10, 11, 12 },
+	};
 
-	// 要素がすべて 5 である行を末尾に追加し、
-	// 4x4 の二次元配列にする
-	grid.push_back_row(5);
-
-	Print << grid.size();
+	for (auto& elem : grid)
+	{
+		elem *= 2;
+	}
 
 	Print << grid;
 
@@ -223,28 +309,39 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+{{2, 4, 6},
+{8, 10, 12},
+{14, 16, 18},
+{20, 22, 24}}
+```
 
 
-## 21.8 配列を空にする
-`.clear()` で配列を空にすることができます。二次元配列のサイズは 0 x 0 になります。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/grid/8.png)
+## 37.9 指定したインデックスの要素へのアクセス
+- `[y][x]` で、指定したインデックス（y 行目, x 列目）の要素にアクセスします
+- インデックスは 0 から始まります
+- 範囲外にアクセスしてはいけません
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Grid<int32> grid(4, 3, -1);
+	Grid<int32> grid =
+	{
+		{ 1, 2, 3 },
+		{ 4, 5, 6 },
+		{ 7, 8, 9 },
+		{ 10, 11, 12 },
+	};
 
-	// 配列を空にする
-	grid.clear();
+	Print << grid[0][0];
+	Print << grid[3][2];
+
+	grid[0][2] = 30;
+	grid[1][1] = 50;
 
 	Print << grid;
-
-	Print << grid.isEmpty();
-
-	Print << grid.size();
 
 	while (System::Update())
 	{
@@ -252,24 +349,157 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+1
+12
+{{1, 2, 30},
+{4, 50, 6},
+{7, 8, 9},
+{10, 11, 12}}
+```
 
-
-## 21.9 末尾の行を削除する
-`.pop_back_row()` で配列の末尾の行を削除できます。W x H の二次元配列に対して、`.pop_back_row()` を呼び出すと、W x (H - 1) の二次元配列になります。空の配列で `.pop_back_row()` を呼んではいけません。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/grid/9.png)
+- `Point` 型の値を使って `[Point{ x, y }]` でもアクセスできます
+- `x` と `y` の順番が `[y][x]` と異なるに注意してください
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Grid<int32> grid(4, 3, -1);
+	Grid<int32> grid =
+	{
+		{ 1, 2, 3 },
+		{ 4, 5, 6 },
+		{ 7, 8, 9 },
+		{ 10, 11, 12 },
+	};
 
-	// 末尾の行を削除して 4x2 の二次元配列にする
+	Print << grid[Point{ 0, 0 }];
+	Print << grid[Point{ 2, 3 }];
+
+	grid[Point{ 2, 0 }] = 30;
+	grid[Point{ 1, 1 }] = 50;
+
+	Print << grid;
+
+	while (System::Update())
+	{
+
+	}
+}
+```
+```txt title="出力"
+1
+12
+{{1, 2, 30},
+{4, 50, 6},
+{7, 8, 9},
+{10, 11, 12}}
+```
+
+
+## 37.10 終端への行追加
+- `.push_back_row(value)` で、配列の末尾に全ての要素が `value` である行を追加します
+- W × H の二次元配列に対して、`.push_back_row(value)` を 1 回呼び出すと、W × (H + 1) の二次元配列になります
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Grid<int32> grid =
+	{
+		{ 1, 2, 3 },
+		{ 4, 5, 6 },
+		{ 7, 8, 9 },
+		{ 10, 11, 12 },
+	};
+
+	grid.push_back_row(99);
+
+	Print << grid;
+
+	while (System::Update())
+	{
+
+	}
+}
+```
+```txt title="出力"
+{{1, 2, 3},
+{4, 5, 6},
+{7, 8, 9},
+{10, 11, 12},
+{99, 99, 99}}
+```
+
+
+## 37.11 終端からの行削除
+- `.pop_back_row()` で配列の末尾の行を削除します
+- W × H の二次元配列に対して、`.pop_back_row()` を 1 回呼び出すと、W × (H - 1) の二次元配列になります
+- 空の配列に対して `.pop_back_row()` を呼んではいけません
+	- 事前に配列が空でないことを確認してください
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Grid<int32> grid =
+	{
+		{ 1, 2, 3 },
+		{ 4, 5, 6 },
+		{ 7, 8, 9 },
+		{ 10, 11, 12 },
+	};
+
 	grid.pop_back_row();
 
-	Print << grid.size();
+	Print << grid;
+
+	while (System::Update())
+	{
+
+	}
+}
+```
+```txt title="出力"
+{{1, 2, 3},
+{4, 5, 6},
+{7, 8, 9}}
+```
+
+
+## 37.12 要素数の変更
+- 次のようなメンバ関数で、二次元配列のサイズを変更できます
+
+| コード | 説明 |
+|---|---|
+| `.resize(size)` | 幅と高さを `size` に変更し、全ての要素をデフォルト値で初期化します |
+| `.resize(width, height)` | 幅と高さを `width` と `height` に変更し、全ての要素をデフォルト値で初期化します |
+| `.resize(size, value)` | 幅と高さを `size` に変更し、全ての要素を `value` で初期化します |
+| `.resize(width, height, value)` | 幅と高さを `width` と `height` に変更し、全ての要素を `value` で初期化します |
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Grid<int32> grid =
+	{
+		{ 1, 2, 3 },
+		{ 4, 5, 6 },
+		{ 7, 8, 9 },
+		{ 10, 11, 12 },
+	};
+
+	grid.resize(5, 5);
+
+	Print << grid;
+
+	Print << U"----";
+
+	grid.resize(2, 3);
 
 	Print << grid;
 
@@ -279,38 +509,69 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+{{1, 2, 3, 0, 0},
+{4, 5, 6, 0, 0},
+{7, 8, 9, 0, 0},
+{10, 11, 12, 0, 0},
+{0, 0, 0, 0, 0}}
+----
+{{1, 2},
+{4, 5},
+{7, 8}}
+```
 
 
-## 21.10 配列の要素数を変更する
-`.resize(w, h, value)` または `.resize(w, h)` で配列の要素数を変更できます。前者で要素数が増える場合、新しい要素は `value` で初期化されます。後者では、新しい要素はデフォルト値で初期化されます。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/grid/10.png)
+## 37.13 その他の挿入・削除操作
+- `.insert_row(pos, value)` で、指定した位置に全ての要素が `value` である行を挿入します
+- `.push_back_column(value)` で、全ての要素が `value` である列を追加します
+- `.pop_back_column()` で、配列の末尾の列を削除します
+- `.insert_column(pos, value)` で、指定した位置に全ての要素が `value` である列を挿入します
+- `.remove_row(pos)` で、指定した位置の行を削除します
+- `.remove_column(pos)` で、指定した位置の列を削除します
+- これらの関数は、既存要素の移動を伴うため、二次元配列の要素数に比例したコストがかかります
+	- 通常は避けるか、小さい配列でのみ使用するべきです
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Grid<int32> grid(2, 2, -1);
-
-	grid.resize(6, 6, 2);
-
-	Print << grid;
-
-	Print << U"------";
-
-	int32 count = 0;
-
-	for (auto& elem : grid)
+	Grid<int32> grid =
 	{
-		elem = count++;
-	}
+		{ 1, 2, 3 },
+		{ 4, 5, 6 },
+		{ 7, 8, 9 },
+		{ 10, 11, 12 },
+	};
+
+	grid.insert_row(0, -1);
 
 	Print << grid;
+	Print << U"----";
 
-	Print << U"------";
+	grid.push_back_column(100);
 
-	grid.resize(3, 3);
+	Print << grid;
+	Print << U"----";
+
+	grid.pop_back_column();
+
+	Print << grid;
+	Print << U"----";
+
+	grid.insert_column(1, -1);
+
+	Print << grid;
+	Print << U"----";
+
+	grid.remove_row(0);
+
+	Print << grid;
+	Print << U"----";
+
+	grid.remove_column(1);
 
 	Print << grid;
 
@@ -320,23 +581,60 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+{{-1, -1, -1},
+{1, 2, 3},
+{4, 5, 6},
+{7, 8, 9},
+{10, 11, 12}}
+----
+{{-1, -1, -1, 100},
+{1, 2, 3, 100},
+{4, 5, 6, 100},
+{7, 8, 9, 100},
+{10, 11, 12, 100}}
+----
+{{-1, -1, -1},
+{1, 2, 3},
+{4, 5, 6},
+{7, 8, 9},
+{10, 11, 12}}
+----
+{{-1, -1, -1, -1},
+{1, -1, 2, 3},
+{4, -1, 5, 6},
+{7, -1, 8, 9},
+{10, -1, 11, 12}}
+----
+{{1, -1, 2, 3},
+{4, -1, 5, 6},
+{7, -1, 8, 9},
+{10, -1, 11, 12}}
+----
+{{1, 2, 3},
+{4, 5, 6},
+{7, 8, 9},
+{10, 11, 12}}
+```
 
-## 21.11 全ての要素に同じ値を代入する
-`.fill(value)` で配列の全ての要素に `value` を代入できます。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/grid/11.png)
+## 37.14 すべての要素に同じ値を代入
+- .fill(値) で、すべての要素に同じ値を代入します
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Grid<int32> grid(4, 3, -1);
+	Grid<int32> grid =
+	{
+		{ 1, 2, 3 },
+		{ 4, 5, 6 },
+		{ 7, 8, 9 },
+		{ 10, 11, 12 },
+	};
 
-	Print << grid;
-
-	// 全ての要素に 3 を代入する
-	grid.fill(3);
+	grid.fill(1);
 
 	Print << grid;
 
@@ -346,35 +644,32 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+{{1, 1, 1},
+{1, 1, 1},
+{1, 1, 1},
+{1, 1, 1}}
+```
 
 
-## 21.12 map 処理
-`.map(f)` で配列の全ての要素に関数 `f` を適用した結果を持つ新しい二次元配列を作成できます。`f` は、配列の要素の型を引数に取り、新しい要素の型を返す関数です。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/grid/12.png)
+## 37.15 すべての要素に関数を適用した結果の取得
+- `.map(関数)` で、すべての要素に関数を適用した結果の配列を得ます
+- 関数は、要素を引数にとり、変換後の要素を返す関数オブジェクトです
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Grid<int32> grid;
-
-	grid.resize(6, 6);
-
-	int32 count = 0;
-
-	for (auto& elem : grid)
+	Grid<int32> grid1 =
 	{
-		elem = count++;
-	}
+		{ 1, 2, 3 },
+		{ 4, 5, 6 },
+		{ 7, 8, 9 },
+		{ 10, 11, 12 },
+	};
 
-	Print << grid;
-
-	Print << U"------";
-
-	// grid の全ての要素を 0.1 倍した値を持つ Grid<double> を作成する
-	const Grid<double> grid2 = grid.map([](int32 n) { return (n * 0.1); });
+	Grid<double> grid2 = grid1.map([](int32 x) { return (x * 1.01); });
 
 	Print << grid2;
 
@@ -384,37 +679,149 @@ void Main()
 	}
 }
 ```
+```txt title="出力"
+{{1.01, 2.02, 3.03},
+{4.04, 5.05, 6.06},
+{7.07, 8.08, 9.09},
+{10.1, 11.11, 12.12}}
+```
 
 
-## 21.13 一次元でのアクセス
-`.asArray()` で、二次元配列の内部の一次元配列への参照を取得できます。W x H の二次元配列に対して、`.asArray()` を呼び出すと、要素数が (W x H) の一次元配列を得られます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/grid/13.png)
+## 37.16 一次元配列としてのアクセス
+- `.asArray()` で、二次元配列内部の一次元配列への参照を取得できます
 
 ```cpp
 # include <Siv3D.hpp>
 
+void PrintArray(const Array<int32>& a)
+{
+	Print << a;
+}
+
 void Main()
 {
-	Grid<int32> grid;
-
-	grid.resize(4, 3);
-
-	int32 count = 0;
-
-	for (auto& elem : grid)
+	Grid<int32> grid =
 	{
-		elem = count++;
-	}
+		{ 1, 2, 3 },
+		{ 4, 5, 6 },
+		{ 7, 8, 9 },
+		{ 10, 11, 12 },
+	};
 
-	// 内部の一次元配列を取得する
-	const Array<int32>& a = grid.asArray();
+	PrintArray(grid.asArray());
 
-	Print << a;
-	
 	while (System::Update())
 	{
 
+	}
+}
+```
+```txt title="出力"
+{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}
+```
+
+
+## 37.17 二次元配列の可視化（数値）
+- 二次元配列の内容をグリッド状に可視化するサンプルです
+- Siv3D の仕様上、図形は図形で、フォントはフォントでまとめて描画すると実行時性能が向上するため、二重ループを 2 回使って描画します
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/grid/17.png)
+
+```cpp
+# include <Siv3D.hpp>
+
+void VisualizeGrid(const Grid<int32>& grid, const Font& font)
+{
+	// 枠になる背景部分を描画する
+	Rect{ grid.size() * 80 }.draw(ColorF{ 0.2 });
+
+	// 各セルの長方形を描画する
+	for (int32 y = 0; y < grid.height(); ++y)
+	{
+		for (int32 x = 0; x < grid.width(); ++x)
+		{
+			const Rect rect{ (x * 80), (y * 80), 80 };
+			rect.stretched(-1).draw();
+		}
+	}
+
+	// 各セルの数値を描画する
+	for (int32 y = 0; y < grid.height(); ++y)
+	{
+		for (int32 x = 0; x < grid.width(); ++x)
+		{
+			const auto& value = grid[y][x];
+			const Rect rect{ (x * 80), (y * 80), 80 };
+			font(value).drawAt(36, rect.center(), ColorF{ 0.2 });
+		}
+	}
+}
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+
+	Grid<int32> grid =
+	{
+		{ 1, 2, 3 },
+		{ 4, 5, 6 },
+		{ 7, 8, 9 },
+		{ 10, 11, 12 },
+	};
+
+	while (System::Update())
+	{
+		VisualizeGrid(grid, font);
+	}
+}
+```
+
+
+## 37.18 二次元配列の可視化（カラーマップ）
+- 二次元配列の内容をグリッド状のカラーマップで可視化するサンプルです
+- `ColorMap01F(value)` は、`0` から `1` の範囲の値を受け取り、それを人間工学的に見やすいカラーマップの `ColorF` に変換します
+	- 0 ～ 1 の範囲で、値に応じてサーモグラフィーのような色を生成します
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/grid/18.png)
+
+```cpp
+# include <Siv3D.hpp>
+
+void VisualizeGrid(const Grid<double>& grid)
+{
+	// 各セルを描画する
+	for (int32 y = 0; y < grid.height(); ++y)
+	{
+		for (int32 x = 0; x < grid.width(); ++x)
+		{
+			const double value = grid[y][x];
+			const ColorF color = Colormap01F(value);
+			const Rect rect{ (x * 30), (y * 30), 30 };
+			rect.draw(color);
+		}
+	}
+}
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	Grid<double> grid(Size{ 20, 20 });
+
+	for (int32 y = 0; y < grid.height(); ++y)
+	{
+		for (int32 x = 0; x < grid.width(); ++x)
+		{
+			const double value = ((x + y) / 40.0);
+			grid[y][x] = value;
+		}
+	}
+
+	while (System::Update())
+	{
+		VisualizeGrid(grid);
 	}
 }
 ```

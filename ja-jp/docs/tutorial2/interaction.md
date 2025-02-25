@@ -1,12 +1,20 @@
-# 36. インタラクションの実装
-ここまで学んだことを使って、様々なインタラクティブ要素を実装します。
+# 40. インタラクションの実装
+チュートリアル 3 ～ 39 の内容を使って、インタラクティブなプログラムを作成します。
 
-## 36.1 クリックした場所に円を配置する
+## 40.1 クリックした場所への円の配置
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/interaction/1.gif)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/interaction/1.gif)
 
 ```cpp
 # include <Siv3D.hpp>
+
+void DrawCircles(const Array<Circle>& circles)
+{
+	for (const auto& circle : circles)
+	{
+		circle.draw(HSV{ circle.center.x, 0.8, 0.9 });
+	}
+}
 
 void Main()
 {
@@ -22,22 +30,54 @@ void Main()
 			circles << Circle{ Cursor::Pos(), Random(10.0, 30.0) };
 		}
 
-		for (const auto& circle : circles)
-		{
-			// x 座標に応じて色を変える
-			circle.draw(HSV{ circle.center.x, 0.8, 0.9 });
-		}
+		DrawCircles(circles);
 	}
 }
 ```
 
 
-## 36.2 グリッドのマスに色を塗る
+## 40.2 グリッドのマスの色塗り
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/interaction/2.gif)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/interaction/2.gif)
 
 ```cpp
 # include <Siv3D.hpp>
+
+void UpdateGrid(Grid<int32>& grid)
+{
+	// クリックされていない場合は何もしない
+	if (not MouseL.down())
+	{
+		return;
+	}
+
+	for (int32 y = 0; y < grid.height(); ++y)
+	{
+		for (int32 x = 0; x < grid.width(); ++x)
+		{
+			const RectF rect{ (x * 100), (y * 100), 100 };
+
+			if (rect.mouseOver())
+			{
+				// クリックのたびに要素を 0 → 1 → 2 → 3 → 0 → 1 → ... と変化させる
+				++grid[y][x] %= 4;
+			}
+		}
+	}
+}
+
+void DrawGrid(const Grid<int32>& grid)
+{
+	for (int32 y = 0; y < grid.height(); ++y)
+	{
+		for (int32 x = 0; x < grid.width(); ++x)
+		{
+			const RectF rect{ (x * 100), (y * 100), 100 };
+			const ColorF color{ (3 - grid[y][x]) / 3.0 };
+			rect.stretched(-1).draw(color);
+		}
+	}
+}
 
 void Main()
 {
@@ -48,31 +88,17 @@ void Main()
 
 	while (System::Update())
 	{
-		for (int32 y = 0; y < grid.height(); ++y)
-		{
-			for (int32 x = 0; x < grid.width(); ++x)
-			{
-				const RectF rect{ (x * 100), (y * 100), 100 };
+		UpdateGrid(grid);
 
-				if (rect.leftClicked())
-				{
-                    // クリックのたびに要素を 0 → 1 → 2 → 3 → 0 → 1 → ... と変化させる
-					++grid[y][x] %= 4;
-				}
-
-				const ColorF color{ (3 - grid[y][x]) / 3.0 };
-
-				rect.stretched(-1).draw(color);
-			}
-		}
+		DrawGrid(grid);
 	}
 }
 ```
 
 
-## 36.3 バウンドする複数のボール
+## 40.3 バウンドする複数のボール
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/interaction/3.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/interaction/3.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -83,6 +109,34 @@ struct Ball
 
 	Vec2 velocity;
 };
+
+void UpdateBalls(Array<Ball>& balls, double ballRadius)
+{
+	const Size sceneSize{ 800, 600 };
+
+	for (auto& ball : balls)
+	{
+		ball.pos += (ball.velocity * Scene::DeltaTime());
+
+		if ((ball.pos.x <= ballRadius) || (sceneSize.x <= (ball.pos.x + ballRadius)))
+		{
+			ball.velocity.x *= -1.0;
+		}
+
+		if ((ball.pos.y <= ballRadius) || (sceneSize.y <= (ball.pos.y + ballRadius)))
+		{
+			ball.velocity.y *= -1.0;
+		}
+	}
+}
+
+void DrawBalls(const Array<Ball>& balls, double ballRadius)
+{
+	for (const auto& ball : balls)
+	{
+		Circle{ ball.pos, ballRadius }.draw().drawFrame(2, 0, ColorF{ 0.2 });
+	}
+}
 
 void Main()
 {
@@ -99,36 +153,29 @@ void Main()
 
 	while (System::Update())
 	{
-		for (auto& ball : balls)
-		{
-			ball.pos += (ball.velocity * Scene::DeltaTime());
+		UpdateBalls(balls, ballRadius);
 
-			if ((ball.pos.x <= ballRadius) || (Scene::Width() <= (ball.pos.x + ballRadius)))
-			{
-				ball.velocity.x *= -1.0;
-			}
-
-			if ((ball.pos.y <= ballRadius) || (Scene::Height() <= (ball.pos.y + ballRadius)))
-			{
-				ball.velocity.y *= -1.0;
-			}
-		}
-
-		for (const auto& ball : balls)
-		{
-			Circle{ ball.pos, ballRadius }.draw();
-		}
+		DrawBalls(balls, ballRadius);
 	}
 }
 ```
 
 
-## 36.4 抽選
+## 40.4 抽選
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/interaction/4.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/interaction/4.png)
 
 ```cpp
 # include <Siv3D.hpp>
+
+void DrawBox(const Rect& rect, const Font& font, const String& text)
+{
+	rect.rounded(6).draw();
+
+	rect.stretched(-3).rounded(3).drawFrame(2, ColorF{ 0.75 });
+
+	font(text).drawAt(60, rect.center(), ColorF{ 0.2 });
+}
 
 void Main()
 {
@@ -138,28 +185,27 @@ void Main()
 
 	const Array<String> options = { U"New York", U"London", U"Paris", U"Tokyo", U"Sydney", U"Berlin" };
 
-	const Rect optionRect{ Arg::center = Scene::Center().movedBy(0, -60), 400, 100 };
+	const Rect rect{ Arg::center(400, 240), 400, 100 };
 
+	// 抽選中は空の文字列
 	String result;
 
 	while (System::Update())
 	{
-		optionRect.draw();
-
 		if (result)
 		{
-			font(result).drawAt(60, optionRect.center(), ColorF{ 0.11 });
+			DrawBox(rect, font, result);
 
-			if (SimpleGUI::Button(U"Start", Scene::Center().movedBy(-60, 40), 120))
+			if (SimpleGUI::Button(U"Start", Vec2{ 340, 340 }, 120))
 			{
 				result.clear();
 			}
 		}
 		else
 		{
-			font(options.choice()).drawAt(60, optionRect.center(), ColorF{ 0.11 });
+			DrawBox(rect, font, options.choice());
 
-			if (SimpleGUI::Button(U"Stop", Scene::Center().movedBy(-60, 40), 120))
+			if (SimpleGUI::Button(U"Stop", Vec2{ 340, 340 }, 120))
 			{
 				result = options.choice();
 			}
@@ -169,9 +215,9 @@ void Main()
 ```
 
 
-## 36.5 弾幕を発射する
+## 40.5 弾幕の発射
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/interaction/5.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/interaction/5.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -185,68 +231,109 @@ struct Bullet
 	Vec2 velocity;
 };
 
+// 敵の状態
+struct EnemyState
+{
+	// 弾の発射周期（秒）
+	double fireInterval = 0.08;
+
+	// 蓄積時間（秒）
+	double accumulatedTime = 0.0;
+
+	// 弾の発射方向
+	double bulletLaunchAngle = 0_deg;
+
+	// 位置
+	Vec2 pos;
+
+	// 弾の配列
+	Array<Bullet> bullets;
+
+	void update(double deltaTime)
+	{
+		pos = Vec2{ (400 + Periodic::Sine1_1(4s) * 200.0), 200 };
+
+		accumulatedTime += deltaTime;
+
+		// 蓄積時間が周期を超えたら新しい弾を発射する
+		if (fireInterval <= accumulatedTime)
+		{
+			const Vec2 velocity = Circular{ 120, bulletLaunchAngle };
+
+			bullets << Bullet{ pos, velocity };
+
+			bulletLaunchAngle += 15_deg;
+
+			accumulatedTime -= fireInterval;
+		}
+	}
+};
+
+void UpdateBullets(Array<Bullet>& bullets, double deltaTime)
+{
+	// 弾を移動させる
+	for (auto& bullet : bullets)
+	{
+		bullet.pos += (bullet.velocity * deltaTime);
+	}
+
+	// 画面外に出た弾を削除する
+	const Rect sceneRect{ 800, 600 };
+	bullets.remove_if([&](const Bullet& bullet) { return (not bullet.pos.intersects(sceneRect)); });
+}
+
+void DrawBullets(const Array<Bullet>& bullets)
+{
+	for (const auto& bullet : bullets)
+	{
+		Circle{ bullet.pos, 8 }.draw().drawFrame(2, 0, ColorF{ 0.2 });
+	}
+}
+
 void Main()
 {
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
 	const Texture textureEnemy{ U"🛸"_emoji };
 
-	// 発射周期（秒）
-	const double fireInterval = 0.08;
-
-	// 蓄積時間（秒）
-	double accumulatedTime = 0.0;
-
-	// 発射方向
-	double angle = 0.0;
-
-	Array<Bullet> bullets;
+	// 敵の状態
+	EnemyState enemyState;
 
 	while (System::Update())
 	{
-		ClearPrint();
-		Print << bullets.size();
+		/////////////////////////////////
+		//
+		//	更新
+		//
+		/////////////////////////////////
 
-		accumulatedTime += Scene::DeltaTime();
+		const double deltaTime = Scene::DeltaTime();
+		
+		// 敵の状態を更新する
+		enemyState.update(deltaTime);
+		
+		// 弾の状態を更新する
+		UpdateBullets(enemyState.bullets, deltaTime);
 
-		// 敵の位置
-		const Vec2 enemyPos{ (400 + Periodic::Sine1_1(4s) * 200.0), 200 };
-
-		// 蓄積時間が周期を超えたら
-		if (fireInterval <= accumulatedTime)
-		{
-			const Vec2 velocity = Circular{ 120, angle };
-
-			bullets << Bullet{ enemyPos, velocity };
-
-			angle += 15_deg;
-
-			accumulatedTime -= fireInterval;
-		}
-
-		// 弾の移動
-		for (auto& bullet : bullets)
-		{
-			bullet.pos += (bullet.velocity * Scene::DeltaTime());
-		}
-
-		// 画面外に出た弾を削除
-		bullets.remove_if([](const Bullet& bullet) { return (not bullet.pos.intersects(Scene::Rect())); });
-
-		textureEnemy.drawAt(enemyPos);
-
-		for (const auto& bullet : bullets)
-		{
-			Circle{ bullet.pos, 8 }.draw();
-		}
+		/////////////////////////////////
+		//
+		//	描画
+		//
+		/////////////////////////////////
+	
+		// 敵を描く
+		textureEnemy.drawAt(enemyState.pos);
+		
+		// 弾を描く
+		DrawBullets(enemyState.bullets);
 	}
 }
 ```
 
 
-## 36.6 複数の絵文字をマウスで配置する
+## 40.6 複数の絵文字のマウスでの配置
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/interaction/6.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/interaction/6.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -255,11 +342,11 @@ using ItemID = uint32;
 
 struct Item
 {
-	// 更新時刻
+	// 更新時刻（最後にクリックした時刻）
 	uint64 updateTime = 0;
 
 	// 中心座標
-	Vec2 pos = Vec2{ 0, 0 };
+	Vec2 pos{ 0, 0 };
 
 	// ID
 	ItemID id = 0;
@@ -267,6 +354,76 @@ struct Item
 	// 絵文字の種類
 	int32 type = 0;
 };
+
+Array<Item> GenerateItems()
+{
+	Array<Item> items;
+
+	for (int32 i = 0; i < 12; ++i)
+	{
+		const uint64 updateTime = Time::GetMillisec();
+		const Vec2 pos = RandomVec2(Scene::Rect().stretched(-50));
+		const ItemID id = (i + 1);
+		const int32 type = Random(0, 5);
+		items << Item{ updateTime, pos, id, type };
+	}
+
+	return items;
+}
+
+void MoveItem(Array<Item>& items, ItemID selectedItemID)
+{
+	for (auto& item : items)
+	{
+		if (item.id == selectedItemID)
+		{
+			const Vec2 move = Cursor::DeltaF(); // 前フレームからのマウスの移動量
+			item.pos.moveBy(move);
+			return;
+		}
+	}
+}
+
+void SelectItem(Array<Item>& items,
+	Optional<ItemID>& mouseOverItemID, Optional<ItemID>& selectedItemID)
+{
+	for (auto& item : items)
+	{
+		if (Circle{ item.pos, 50 }.mouseOver())
+		{
+			Cursor::RequestStyle(CursorStyle::Hand);
+			mouseOverItemID = item.id;
+
+			if (MouseL.down())
+			{
+				item.updateTime = Time::GetMillisec();
+				selectedItemID = item.id;
+			}
+
+			return;
+		}
+	}
+}
+
+void SortByUpdateTime(Array<Item>& items)
+{
+	items.sort_by([](const Item& a, const Item& b) { return a.updateTime > b.updateTime; });
+}
+
+void DrawItems(const Array<Item>& items, const Array<Texture>& emojis,
+	const Optional<ItemID>& mouseOverItemID, const Optional<ItemID>& selectedItemID)
+{
+	// 更新時刻が古い順に描画する
+	for (int32 i = (static_cast<int32>(items.size()) - 1); 0 <= i; --i)
+	{
+		const auto& item = items[i];
+
+		// マウスオーバーしているか、選択されているアイテムは少し大きく描画する
+		const bool mouseOver = ((item.id == mouseOverItemID) || (item.id == selectedItemID));
+
+		emojis[item.type].scaled(mouseOver ? 1.1 : 1.0).drawAt(item.pos);
+	}
+}
 
 void Main()
 {
@@ -282,83 +439,75 @@ void Main()
 		Texture{ U"🍙"_emoji },
 	};
 
-	// ID 発行用のカウンター
-	ItemID idCounter = 0;
-
-	Array<Item> items;
-
-	for (int32 i = 0; i < 12; ++i)
-	{
-		items << Item{ Time::GetMillisec(), RandomVec2(Scene::Rect().stretched(-50)), ++idCounter, Random(0, static_cast<int32>(emojis.size() - 1))};
-	}
+	Array<Item> items = GenerateItems();
 
 	// 選択されているアイテムの ID
 	Optional<ItemID> selectedItemID;
 
 	while (System::Update())
 	{
-		// マウスオーバーしているアイテムの ID
-		Optional<ItemID> mouseOverItemID;
+		/////////////////////////////////
+		//
+		//	更新
+		//
+		/////////////////////////////////
 
 		if (MouseL.up())
 		{
+			// アイテムの選択を解除する
 			selectedItemID.reset();
 		}
 
+		// マウスオーバーしているアイテムの ID
+		Optional<ItemID> mouseOverItemID;
+
 		if (selectedItemID)
 		{
-			for (auto& item : items)
-			{
-				if (item.id == *selectedItemID)
-				{
-					item.pos.moveBy(Cursor::DeltaF());
-					break;
-				}
-			}
+			// 選択中のアイテムをマウスで移動させる
+			MoveItem(items, *selectedItemID);
 		}
 		else
 		{
-			for (auto& item : items)
-			{
-				if (Circle{ item.pos, 50 }.mouseOver())
-				{
-					Cursor::RequestStyle(CursorStyle::Hand);
-					mouseOverItemID = item.id;
-
-					if (MouseL.down())
-					{
-						item.updateTime = Time::GetMillisec();
-						selectedItemID = item.id;
-					}
-
-					break;
-				}
-			}
+			// アイテムを選択する
+			SelectItem(items, mouseOverItemID, selectedItemID);
 		}
 
 		// 更新時刻が新しい順に並び替える
-		items.sort_by([](const Item& a, const Item& b) { return a.updateTime > b.updateTime; });
+		SortByUpdateTime(items);
 
-		// 更新時刻が古い順に描画する
-		for (int32 i = (static_cast<int32>(items.size()) - 1); 0 <= i; --i)
-		{
-			const auto& item = items[i];
+		/////////////////////////////////
+		//
+		//	描画
+		//
+		/////////////////////////////////
 
-			// マウスオーバーしているか、選択されているアイテムは少し大きく描画する
-			const bool mouseOver = ((item.id == mouseOverItemID) || (item.id == selectedItemID));
-			emojis[item.type].scaled(mouseOver ? 1.1 : 1.0).drawAt(item.pos);
-		}
+		// アイテムを描画する
+		DrawItems(items, emojis, mouseOverItemID, selectedItemID);
 	}
 }
 ```
 
 
-## 36.7 慣性のある移動
+## 40.7 慣性のある移動
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/interaction/7.gif)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/interaction/7.gif)
 
 ```cpp
 # include <Siv3D.hpp>
+
+struct SmoothedVec2
+{
+	Vec2 current{ 400, 300 };
+
+	Vec2 target = current;
+
+	Vec2 velocity{ 0, 0 };
+
+	void update()
+	{
+		current = Math::SmoothDamp(current, target, velocity, 0.3);
+	}
+};
 
 void Main()
 {
@@ -366,11 +515,7 @@ void Main()
 
 	const double speed = 300.0;
 
-	Vec2 targetPos{ 400, 300 };
-
-	Vec2 pos{ 400, 300 };
-
-	Vec2 velocity{ 0, 0 };
+	SmoothedVec2 pos;
 
 	while (System::Update())
 	{
@@ -378,103 +523,124 @@ void Main()
 
 		if (KeyLeft.pressed())
 		{
-			targetPos.x -= (speed * deltaTime);
+			pos.target.x -= (speed * deltaTime);
 		}
 
 		if (KeyRight.pressed())
 		{
-			targetPos.x += (speed * deltaTime);
+			pos.target.x += (speed * deltaTime);
 		}
 
 		if (KeyUp.pressed())
 		{
-			targetPos.y -= (speed * deltaTime);
+			pos.target.y -= (speed * deltaTime);
 		}
 
 		if (KeyDown.pressed())
 		{
-			targetPos.y += (speed * deltaTime);
+			pos.target.y += (speed * deltaTime);
 		}
 
-		pos = Math::SmoothDamp(pos, targetPos, velocity, 0.3);
+		pos.update();
 
-		RectF{ Arg::center = pos, 120, 80 }.draw(ColorF{ 0.2, 0.6, 0.9 });
+		RectF{ Arg::center = pos.current, 120, 80 }.draw(ColorF{ 0.2, 0.6, 0.9 });
 	}
 }
 ```
 
 
-## 36.8 ゲームのメッセージボックス
+## 40.8 ゲームのメッセージボックス
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/interaction/8.gif)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/interaction/8.gif)
 
 ```cpp
 # include <Siv3D.hpp>
 
+struct DialogBox
+{
+	Rect rect{ 40, 440, 720, 120 };
+
+	// メッセージの配列
+	Array<String> messages;
+
+	// 現在のメッセージのインデックス
+	size_t messageIndex = 0;
+
+	// メッセージの表示時間を計測するストップウォッチ
+	Stopwatch stopwatch;
+
+	bool isFinished() const
+	{
+		// 表示する文字数
+		const int32 count = Max(((stopwatch.ms() - 200) / 24), 0);
+
+		// 現在のメッセージがすべて表示されているか
+		return (static_cast<int32>(messages[messageIndex].length()) <= count);
+	}
+
+	void update()
+	{
+		if (isFinished() && (rect.leftClicked() || KeySpace.down()))
+		{
+			// 次のメッセージに切り替える
+			++messageIndex %= messages.size();
+
+			// ストップウォッチをリセットする
+			stopwatch.restart();
+		}
+	}
+
+	void draw(const Font& font) const
+	{
+		// 表示する文字数
+		const int32 count = Max(((stopwatch.ms() - 200) / 24), 0);
+
+		// 会話ボックスを描画する
+		rect.rounded(10).drawShadow(Vec2{ 1, 1 }, 8).draw().drawFrame(2, ColorF{ 0.4 });
+
+		// 会話を描画する
+		font(messages[messageIndex].substr(0, count)).draw(28, rect.stretched(-36, -20), ColorF{ 0.2 });
+
+		if (rect.mouseOver())
+		{
+			Cursor::RequestStyle(CursorStyle::Hand);
+		}
+
+		if (isFinished())
+		{
+			// メッセージの表示が終わっていたら、▼ を描画する
+			Triangle{ rect.br().movedBy(-30, -30), 20, 180_deg }.draw(ColorF{ 0.2, Periodic::Sine0_1(2.0s) });
+		}
+	}
+};
+
 void Main()
 {
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-
 	const Font font{ FontMethod::MSDF, 48, Typeface::Medium };
 
-	// メッセージの配列
-	const Array<String> messages =
+	DialogBox dialogBox;
+	dialogBox.messages =
 	{
 		U"Twinkle, twinkle, little star,\nHow I wonder what you are!",
 		U"Up above the world so high,\nLike a diamond in the sky.",
 		U"When the blazing sun is gone,\nWhen he nothing shines upon,",
 		U"Then you show your little light,\nTwinkle, twinkle, all the night.",
 	};
-
-	// メッセージボックスの位置とサイズ
-	const Rect messageBox{ 40, 440, 720, 120 };
-
-	// メッセージのインデックス
-	size_t messageIndex = 0;
-
-	// メッセージの表示を開始してからの経過時間を測定するストップウォッチ
-	Stopwatch stopwatch{ StartImmediately::Yes };
+	dialogBox.stopwatch.start();
 
 	while (System::Update())
 	{
-		// 表示する文字数
-		int32 count = Max(((stopwatch.ms() - 200) / 24), 0);
-
-		// 現在のメッセージがすべて表示されているか
-		const bool finished = (static_cast<int32>(messages[messageIndex].length()) <= count);
-
-		if (finished && (messageBox.leftClicked() || KeySpace.down()))
-		{
-			// 次のメッセージに切り替える
-			++messageIndex %= messages.size();
-			stopwatch.restart();
-			count = 0;
-		}
-
-		// メッセージボックスを描画する
-		messageBox.rounded(10).drawShadow(Vec2{ 1, 1 }, 8).draw().drawFrame(2, ColorF{ 0.4 });
-
-		// メッセージを描画する
-		font(messages[messageIndex].substr(0, count)).draw(28, messageBox.stretched(-36, -20), ColorF{ 0.11 });
-
-		if (messageBox.mouseOver())
-		{
-			Cursor::RequestStyle(CursorStyle::Hand);
-		}
-
-		if (finished)
-		{
-			// メッセージの表示が終わっていたら、▼ を描画する
-			Triangle{ messageBox.br().movedBy(-30, -30), 20, 180_deg }.draw(ColorF{ 0.11, Periodic::Sine0_1(2.0s) });
-		}
+		dialogBox.update();
+		dialogBox.draw(font);
 	}
 }
 ```
 
 
-## 36.9 メッセージログ
+## 40.9 メッセージログ
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/interaction/9.gif)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/interaction/9.gif)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -524,73 +690,82 @@ void Main()
 ```
 
 
-## 36.10 徐々に変化する数値
+## 40.10 徐々に変化する数値
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/interaction/10.gif)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/interaction/10.gif)
 
 ```cpp
 # include <Siv3D.hpp>
 
-void Main()
+struct SmoothedInt
 {
-	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+	double current = 0.0;
 
-	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
-
-	int32 targetValue = 0;
-
-	double currentValue = 0.0;
+	int32 target = 0;
 
 	double velocity = 0.0;
 
+	void update()
+	{
+		current = Math::SmoothDamp(current, target, velocity, 0.3);
+	}
+
+	int32 rounded() const
+	{
+		return static_cast<int32>(Math::Round(current));
+	}
+};
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+
+	SmoothedInt value;
+
 	while (System::Update())
 	{
-		ClearPrint();
-		Print << U"targetValue: " << targetValue;
-
-		currentValue = Math::SmoothDamp(currentValue, targetValue, velocity, 0.3);
-
-		const int32 value = static_cast<int32>(Math::Round(currentValue));
-
-		font(value).draw(40, Arg::topRight(160, 90), ColorF{ 0.11 });
+		value.update();
 
 		if (SimpleGUI::Button(U"+1", Vec2{ 200, 100 }, 80))
 		{
-			++targetValue;
+			++value.target;
 		}
 
 		if (SimpleGUI::Button(U"-1", Vec2{ 300, 100 }, 80))
 		{
-			--targetValue;
+			--value.target;
 		}
 
 		if (SimpleGUI::Button(U"+10", Vec2{ 400, 100 }, 80))
 		{
-			targetValue += 10;
+			value.target += 10;
 		}
 
 		if (SimpleGUI::Button(U"-10", Vec2{ 500, 100 }, 80))
 		{
-			targetValue -= 10;
+			value.target -= 10;
 		}
 
 		if (SimpleGUI::Button(U"+100", Vec2{ 600, 100 }, 80))
 		{
-			targetValue += 100;
+			value.target += 100;
 		}
 
 		if (SimpleGUI::Button(U"-100", Vec2{ 700, 100 }, 80))
 		{
-			targetValue -= 100;
+			value.target -= 100;
 		}
+
+		font(value.rounded()).draw(40, Arg::topRight(160, 90), ColorF{ 0.2 });
 	}
 }
 ```
 
 
-## 36.11 リストの並び替え
+## 40.11 リストの並び替え
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/interaction/11.gif)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/interaction/11.gif)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -632,7 +807,7 @@ private:
 			rect.rounded(8).draw();
 		}
 
-		font(text).draw(30, Arg::leftCenter = rect.leftCenter().movedBy(30, 0), ColorF{ 0.11 });
+		font(text).draw(30, Arg::leftCenter = rect.leftCenter().movedBy(30, 0), ColorF{ 0.1 });
 	}
 };
 
@@ -645,6 +820,85 @@ struct GrabbedItem
 
 	Vec2 offset{ 0, 0 };
 };
+
+Optional<GrabbedItem> GrabItem(const Array<Item>& items, const Point& basePos)
+{
+	for (int32 order = 0; auto & item : items)
+	{
+		// アイテムの長方形
+		const RectF rect = item.getRect(basePos, order);
+
+		if (rect.mouseOver())
+		{
+			Cursor::RequestStyle(CursorStyle::Hand);
+
+			if (rect.leftClicked())
+			{
+				// アイテムを掴む
+				return GrabbedItem{ item.id, order, Cursor::PosF() };
+			}
+
+			break;
+		}
+
+		++order;
+	}
+
+	return none;
+}
+
+void RearrangeItems(Array<Item>& items, int32 targetOrder, const GrabbedItem& grabbedItem)
+{
+	// 以前と異なるリスト内順序の場合
+	if (targetOrder != grabbedItem.oldOrder)
+	{
+		// アイテムを一旦コピー
+		auto tmp = std::move(items[grabbedItem.oldOrder]);
+
+		// 以前の場所にあったアイテムを削除する
+		items.erase(items.begin() + grabbedItem.oldOrder);
+
+		// 新しい場所にアイテムを挿入する
+		items.insert((items.begin() + targetOrder), std::move(tmp));
+	}
+}
+
+void DrawItems(const Array<Item>& items, const Point& basePos, const Font& font,
+	const Optional<int32>& targetOrder, const Optional<GrabbedItem>& grabbedItem)
+{
+	for (int32 order = 0; const auto & item : items)
+	{
+		// そこに挿入しようとしていたら、その位置をスキップする
+		if (targetOrder == order)
+		{
+			++order;
+		}
+
+		// 現在掴んでいるアイテムは、元あった場所には描画しない
+		if (grabbedItem && (grabbedItem->id == item.id))
+		{
+			continue;
+		}
+
+		item.draw(basePos, font, order);
+
+		++order;
+	}
+}
+
+void DrawGrabbedItem(const Array<Item>& items, const Point& basePos, const Font& font, const GrabbedItem& grabbedItem)
+{
+	// 掴んでいるアイテムだけを描画する
+	for (const auto& item : items)
+	{
+		if (grabbedItem.id == item.id)
+		{
+			item.drawGrabbed(basePos, font, grabbedItem.offset, grabbedItem.oldOrder);
+
+			return;
+		}
+	}
+}
 
 void Main()
 {
@@ -673,94 +927,37 @@ void Main()
 		// アイテムを掴む処理
 		if (not grabbedItem)
 		{
-			// アイテムのリスト内順序
-			int32 order = 0;
-
-			for (auto& item : items)
-			{
-				// アイテムの長方形
-				const RectF rect = item.getRect(basePos, order);
-
-				if (rect.mouseOver())
-				{
-					Cursor::RequestStyle(CursorStyle::Hand);
-
-					if (rect.leftClicked())
-					{
-						// アイテムを掴む
-						grabbedItem = { item.id, order, Cursor::PosF() };
-					}
-
-					break;
-				}
-
-				++order;
-			}
+			grabbedItem = GrabItem(items, basePos);
 		}
 
-		// 掴んでいるアイテムの真下のリスト内順序。アイテムを掴んでいない場合は -1
-		int32 targetOrder = (grabbedItem ? Clamp(((Cursor::Pos().y - basePos.y) / 80), 0, (static_cast<int32>(items.size()) - 1)) : -1);
-
-		// 掴んでいるアイテムを置く処理
-		if (grabbedItem && MouseL.up())
-		{
-			// 以前と異なるリスト内順序の場合
-			if (targetOrder != grabbedItem->oldOrder)
-			{
-				// アイテムを一旦コピー
-				auto tmp = std::move(items[grabbedItem->oldOrder]);
-
-				// 以前の場所にあったアイテムを削除する
-				items.erase(items.begin() + grabbedItem->oldOrder);
-
-				// 新しい場所にアイテムを挿入する
-				items.insert((items.begin() + targetOrder), std::move(tmp));
-			}
-
-			// アイテムを掴んでいない状態にする
-			grabbedItem.reset();
-			targetOrder = -1;
-		}
+		// 掴んでいるアイテムの真下のリスト内順序。アイテムを掴んでいない場合は none
+		Optional<int32> targetOrder;
 
 		if (grabbedItem)
 		{
+			targetOrder = Clamp(((Cursor::Pos().y - basePos.y) / 80), 0, (static_cast<int32>(items.size()) - 1));
+
+			// 掴んでいるアイテムを置く処理
+			if (MouseL.up())
+			{
+				// アイテムの並び順を変更する
+				RearrangeItems(items, *targetOrder, *grabbedItem);
+
+				// アイテムを掴んでいない状態にする
+				grabbedItem.reset();
+				targetOrder.reset();
+			}
+
 			Cursor::RequestStyle(CursorStyle::Hand);
 		}
 
 		// リスト上のアイテムを描画する
-		{
-			int32 order = 0;
-
-			for (const auto& item : items)
-			{
-				if (targetOrder == order)
-				{
-					++order;
-				}
-
-				// その位置に掴んでいるアイテムがある場合は描画しない
-				if (grabbedItem && (grabbedItem->id == item.id))
-				{
-					continue;
-				}
-
-				item.draw(basePos, font, order);
-
-				++order;
-			}
-		}
+		DrawItems(items, basePos, font, targetOrder, grabbedItem);
 
 		// 掴んでいるアイテムを描画する
 		if (grabbedItem)
 		{
-			for (const auto& item : items)
-			{
-				if (grabbedItem->id == item.id)
-				{
-					item.drawGrabbed(basePos, font, grabbedItem->offset, grabbedItem->oldOrder);
-					break;
-				}
-			}
+			DrawGrabbedItem(items, basePos, font, *grabbedItem);
 		}
 	}
 }

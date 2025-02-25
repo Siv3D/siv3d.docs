@@ -1,36 +1,38 @@
-# 13. キーボード入力を扱う
-キーボードの入力を調べる方法を学びます。
+# 17. キーボード入力を扱う
 
-## 13.1 キーが押されたか調べる
-`if (キー名.down())` で、キーが押されたかを調べることができます。
+## 17.1 キーが押されたかを調べる
+- `キー名.donw()` は、キーが押されると `true` を返します
+- おもなキー名は次の表のとおりです
 
-??? info "主なキー名"
-	- ++a++ , ++b++ , ++c++ , ... は `KeyA`, `KeyB`, `KeyC` , ...
-	- ++1++ , ++2++ , ++3++ , ... は `Key1`, `Key2`, `Key3`, ...
-	- ++f1++ , ++f2++ , ++f3++ , ... は `KeyF1`, `KeyF2`, `KeyF3`, ...
-	- ++up++ , ++down++ , ++left++ , ++right++ は `KeyUp`, `KeyDown`, `KeyLeft`, `KeyRight`
-	- ++space++ は `KeySpace`
-	- ++enter++ は `KeyEnter`
-	- ++backspace++ は `KeyBackspace`
-	- ++tab++ キーは `KeyTab`
-	- ++esc++ キーは `KeyEscape`
-	- ++page-up++ , ++page-down++ は `KeyPageUp`, `KeyPageDown`
-	- ++delete++ キーは `KeyDelete`
-	- Numpad の ++num0++ , ++num1++ , ++num2++ , ... は `KeyNum0`, `KeyNum1`, `KeyNum2`, ...
-	- ++shift++ は `KeyShift`
-	- ++left-shift++ (左シフト), ++right-shift++ (右シフト) は `KeyLShift`, `KeyRShift`
-	- ++control++ は `KeyControl`
-	- (macOS) ++command++ は `KeyCommand`
-	- ++comma++ , ++period++ , ++slash++ キーは `KeyComma`, `KeyPeriod`, `KeySlash`
+| キー | キー名 |
+| --- | --- |
+| A, B, C, ... | `KeyA`, `KeyB`, `KeyC`, ... |
+| 1, 2, 3, ... | `Key1`, `Key2`, `Key3`, ... |
+| F1, F2, F3, ... | `KeyF1`, `KeyF2`, `KeyF3`, ... |
+| ↑, ↓, ←, → | `KeyUp`, `KeyDown`, `KeyLeft`, `KeyRight` |
+| スペースキー | `KeySpace` |
+| エンターキー | `KeyEnter` |
+| バックスペースキー | `KeyBackspace` |
+| Tab キー | `KeyTab` |
+| エスケープキー | `KeyEscape` |
+| Page up, Page down | `KeyPageUp`, `KeyPageDown` |
+| Delete キー | `KeyDelete` |
+| テンキーの 0, 1, 2, ... | `KeyNum0`, `KeyNum1`, `KeyNum2`, ... |
+| Shift キー | `KeyShift` |
+| 左シフト, 右シフト | `KeyLShift`, `KeyRShift` |
+| Ctrl キー | `KeyControl` |
+| (macOS) コマンドキー | `KeyCommand` |
+| カンマ, ピリオド, スラッシュ | `KeyComma`, `KeyPeriod`, `KeySlash` |
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/keyboard/1.png)
 
-```cpp
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/keyboard/1.png)
+
+```cpp title="押されたキーの名前を出力する"
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
 	while (System::Update())
 	{
@@ -50,23 +52,22 @@ void Main()
 		if (Key1.down())
 		{
 			Print << U"1";
-		}	
+		}
 	}
 }
 ```
 
+## 17.2 キーが押されているかを調べる
+- `.down()` と異なり、`.pressed()` は押されている間ずっと `true` を返します
 
-## 13.2 キーが押されているか調べる
-`if (キー名.pressed())` で、キーが押されているかを調べることができます。`.down()` は押された瞬間のみ、`.pressed()` は押されている間ずっと `true` になります。
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/keyboard/2.png)
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/keyboard/2.png)
-
-```cpp
+```cpp title="押されているキーの名前を出力する"
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
 	while (System::Update())
 	{
@@ -86,107 +87,216 @@ void Main()
 		if (Key1.pressed())
 		{
 			Print << U"1";
-		}	
+		}
 	}
 }
+
 ```
 
+## 17.3 キーで絵文字を左右に動かす
+- 矢印キーを使って絵文字を左右に動かすプログラムを作成します
 
-## 13.3 キーで左右に移動する
-矢印キーを使って絵文字を左右に移動させるには次のようにします。
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/keyboard/3.png)
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/keyboard/3.png)
-
-```cpp
+```cpp title="左右の矢印キーで絵文字が左右に動く"
 # include <Siv3D.hpp>
 
-void Main()
+// 現在のフレームでの移動量を計算する関数
+Vec2 GetMovement(double speed)
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Vec2 move{ 0, 0 };
 
-	const Texture emoji{ U"☃️"_emoji };
-
-	// 移動の速さ（ピクセル / 秒）
-	const double speed = 200;
-
-	double x = 400;
-
-	while (System::Update())
+	if (KeyLeft.pressed()) // [←] キー
 	{
-		const double deltaTime = Scene::DeltaTime();
-
-		// ← キーが押されていたら
-		if (KeyLeft.pressed())
-		{
-			x -= (speed * deltaTime);
-		}
-
-		// → キーが押されていたら
-		if (KeyRight.pressed())
-		{
-			x += (speed * deltaTime);
-		}
-
-		emoji.drawAt(x, 300);
+		move.x -= speed;
 	}
+
+	if (KeyRight.pressed()) // [→] キー
+	{
+		move.x += speed;
+	}
+
+	return move;
 }
-```
-
-
-## 13.4 キーで上下左右に移動する
-矢印キーを使って絵文字を上下左右に移動させるには次のようにします。`x`, `y` の 2 つの変数を使う代わりに `Vec2` 型の変数を使います。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/keyboard/4.png)
-
-```cpp
-# include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-	const Texture emoji{ U"☃️"_emoji };
+	const Texture emoji{ U"🐥"_emoji };
 
-	// 移動の速さ（ピクセル / 秒）
-	const double speed = 200;
-
+	// 絵文字の位置
 	Vec2 pos{ 400, 300 };
 
 	while (System::Update())
 	{
-		const double deltaTime = Scene::DeltaTime();
+		// 前フレームからの経過時間（秒）* 200
+		const double move = (Scene::DeltaTime() * 200);
 
-		// ← キーが押されていたら
-		if (KeyLeft.pressed())
-		{
-			pos.x -= (speed * deltaTime);
-		}
-
-		// → キーが押されていたら
-		if (KeyRight.pressed())
-		{
-			pos.x += (speed * deltaTime);
-		}
-
-		// ↑ キーが押されていたら
-		if (KeyUp.pressed())
-		{
-			pos.y -= (speed * deltaTime);
-		}
-
-		// ↓ キーが押されていたら
-		if (KeyDown.pressed())
-		{
-			pos.y += (speed * deltaTime);
-		}
+		pos += GetMovement(move);
 
 		emoji.drawAt(pos);
 	}
 }
 ```
 
+## 🧩 練習
+次のようなプログラムを作成してみましょう。
+
+### 練習 ① キーで絵文字を上下左右に動かす
+- ++left++ キーで絵文字を左に移動
+- ++right++ キーで絵文字を右に移動
+- ++up++ キーで絵文字を上に移動
+- ++down++ キーで絵文字を下に移動
+
+<video src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/keyboard/4-1.mp4?raw=true" autoplay loop muted playsinline></video>
+
+??? info "ヒント"
+	- 17.3 のコードを拡張します
+	- ++up++ は `KeyUp`、++down++ は `KeyDown` です
+
+??? success "解答例"
+	```cpp
+	# include <Siv3D.hpp>
+
+	// 現在のフレームでの移動量を計算する関数
+	Vec2 GetMovement(double speed)
+	{
+		Vec2 move{ 0, 0 };
+
+		if (KeyLeft.pressed()) // [←] キー
+		{
+			move.x -= speed;
+		}
+
+		if (KeyRight.pressed()) // [→] キー
+		{
+			move.x += speed;
+		}
+
+		if (KeyUp.pressed()) // [↑] キー
+		{
+			move.y -= speed;
+		}
+
+		if (KeyDown.pressed()) // [↓] キー
+		{
+			move.y += speed;
+		}
+
+		return move;
+	}
+
+	void Main()
+	{
+		Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+		const Texture emoji{ U"🐥"_emoji };
+
+		// 絵文字の位置
+		Vec2 pos{ 400, 300 };
+
+		while (System::Update())
+		{
+			// 前フレームからの経過時間（秒）* 200
+			const double move = (Scene::DeltaTime() * 200);
+
+			pos += GetMovement(move);
+
+			emoji.drawAt(pos);
+		}
+	}
+	```
+
+
+### 練習 ② 4 つの選択肢をキーで切り替える
+- ++left++ キーで選択肢を左に移動
+- ++right++ キーで選択肢を右に移動
+- 最も左の項目の選択中に ++left++ キーを押しても選択肢は変わらない
+- 最も右の項目の選択中に ++right++ キーを押しても選択肢は変わらない
+
+<video src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/keyboard/4-2.mp4?raw=true" autoplay loop muted playsinline></video>
+
+??? info "ヒント"
+	```cpp
+	# include <Siv3D.hpp>
+
+	void Main()
+	{
+		Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+		const Texture emoji0{ U"🍣"_emoji };
+		const Texture emoji1{ U"🍜"_emoji };
+		const Texture emoji2{ U"🍔"_emoji };
+		const Texture emoji3{ U"🍛"_emoji };
+
+		int32 itemIndex = 2;
+
+		while (System::Update())
+		{
+			emoji0.drawAt(100, 200);
+			emoji1.drawAt(300, 200);
+			emoji2.drawAt(500, 200);
+			emoji3.drawAt(700, 200);
+
+			Rect{ Arg::center((100 + 200 * itemIndex), 200), 150 }
+				.drawFrame(6, ColorF{ 0.2 });
+		}
+	}
+	```
+
+??? success "解答例"
+	```cpp
+	# include <Siv3D.hpp>
+
+	// キー入力によって選択中のアイテムインデックスを変更する関数
+	int32 UpdateSelectIndex(int32 itemIndex, int32 maxIndex)
+	{
+		// 一番左でない状態で [←] キーが押されたら、インデックスを 1 減らす
+		if ((0 < itemIndex) && KeyLeft.down())
+		{
+			--itemIndex;
+		}
+
+		// 一番右でない状態で [→] キーが押されたら、インデックスを 1 増やす
+		if ((itemIndex < maxIndex) && KeyRight.down())
+		{
+			++itemIndex;
+		}
+
+		// 新しいインデックスを返す
+		return itemIndex;
+	}
+
+	void Main()
+	{
+		Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+		const Texture emoji0{ U"🍣"_emoji };
+		const Texture emoji1{ U"🍜"_emoji };
+		const Texture emoji2{ U"🍔"_emoji };
+		const Texture emoji3{ U"🍛"_emoji };
+
+		int32 itemIndex = 0;
+
+		while (System::Update())
+		{
+			emoji0.drawAt(100, 200);
+			emoji1.drawAt(300, 200);
+			emoji2.drawAt(500, 200);
+			emoji3.drawAt(700, 200);
+
+			itemIndex = UpdateSelectIndex(itemIndex, 3);
+
+			Rect{ Arg::center((100 + 200 * itemIndex), 200), 150 }
+				.drawFrame(6, ColorF{ 0.2 });
+		}
+	}
+	```
 
 ## 振り返りチェックリスト
-
-- [x] キーが押されたか調べるには `if (キー名.down())` を使うことを学んだ
-- [x] キーが押されているか調べるには `if (キー名.pressed())` を使うことを学んだ
+- [x] 主要なキーのキー名を学んだ
+- [x] `キー名.down()` は、そのキーが押されると `true` を返すことを学んだ
+- [x] `キー名.pressed()` は、そのキーが押されている間ずっと `true` を返すことを学んだ
+- [x] キー入力を使って絵文字を動かすプログラムを作成した
+- [x] キー入力を使って選択肢を切り替えるプログラムを作成した

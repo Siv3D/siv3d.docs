@@ -85,7 +85,7 @@
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/course/radar-chart/3.png)
 
 - 統計情報を格納するクラス `Item` を作成します。
-- `Item` のメンバ変数は次の通りです。
+- `Item` のメンバ変数は次のとおりです。
 	- `name`: 都市名
 	- `household`: 世帯の人数
 	- `perHousehold`: 1 世帯あたりの支出金額（0. 穀類、1. 魚介類、2. 肉類、3. 乳製品、4. 野菜・海藻、5. 果物）の配列

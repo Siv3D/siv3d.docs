@@ -8,7 +8,7 @@
 
 [Windows :material-microsoft-windows:](download/windows.md){ .md-button .md-button--primary }[macOS :material-apple:](download/macos.md){ .md-button .md-button--primary }[Ubuntu :material-ubuntu:](download/ubuntu.md){ .md-button .md-button--primary }[Web * :material-web:](download/web.md){ .md-button .md-button--primary }
 
-<small>* Web 版は有志による非公式の拡張機能で、設定がやや複雑なため Siv3D 中級者以上向けです。</small>
+<small>* Web 版は有志による非公式の拡張機能です。設定が複雑なため Siv3D 中級者以上向けです。</small>
 
 <div class="grid cards" markdown>
 
@@ -106,8 +106,9 @@ C++ のスキルを活かしたいプログラマーや、C++ での開発を学
 	<iframe src="https://store.steampowered.com/widget/2770160/" frameborder="0" width="646" height="190"></iframe>
 	<iframe src="https://store.steampowered.com/widget/3147480/" frameborder="0" width="646" height="190"></iframe>
 	<iframe src="https://store.steampowered.com/widget/2492380/" frameborder="0" width="646" height="190"></iframe>
+	<iframe src="https://store.steampowered.com/widget/3382090/" frameborder="0" width="646" height="190"></iframe>
 	<iframe src="https://store.steampowered.com/widget/2943760/" frameborder="0" width="646" height="190"></iframe>
-
+	<iframe src="https://store.steampowered.com/widget/3328960/" frameborder="0" width="646" height="190"></iframe>
 
 ??? success "3. プログラミングコンテストにおける情報可視化・GUI（クリックで詳細）"
 	C++ で問題を解く際に、Siv3D を使って情報の可視化や GUI を作成することで、問題解決の効率を向上させることができます。全国高等専門学校プログラミングコンテスト（高専プロコン）第 34 回大会（2023 年）の競技部門では、優勝、準優勝、3 位、特別賞を、Siv3D を活用したチームが独占しました。また、第 33 回大会、第 29 大会の優勝チームも Siv3D を使いました。直近の大会では出場校の 3 分の 1 以上が Siv3D を使っています。
@@ -144,7 +145,7 @@ C++ のスキルを活かしたいプログラマーや、C++ での開発を学
 
     ---
 
-    Windows 向けの Siv3D SDK インストーラはわずか 120 MB, インストールは数クリックで完了し、すぐに Visual Studio のメニューに表示されます。開発に必要な情報が公式のチュートリアルにそろっていて、書籍や入門記事を探す必要はありません。
+    Windows 向け Siv3D SDK インストーラはわずか 120 MB です。インストールは数クリックで完了し、Visual Studio のメニューに表示されます。開発に必要な情報が公式のチュートリアルにそろっていて、書籍や入門記事を探す必要はありません。
 
 -   __3. 非常に短いコード__
 
@@ -162,7 +163,7 @@ C++ のスキルを活かしたいプログラマーや、C++ での開発を学
 
     ---
 
-    Siv3D で困ったことがあれば、Discord の [オンラインコミュニティ](community/community.md) が助けになります。学校への [無料訪問勉強会](community/community.md) も行っています。オープンソース開発に興味のある学生には、Siv3D を練習場とするサポートプログラムを提供しています。
+    Siv3D で困ったことがあれば、Discord 上の [**オンラインコミュニティ**](community/community.md) が助けになります。学校への [**無料訪問勉強会**](community/community.md) も行っています。オープンソース開発に興味のある学生には、Siv3D を練習場とするサポートプログラムを提供しています。
 
 -   __6. Web ブラウザで動く__
 
@@ -182,6 +183,7 @@ C++ のスキルを活かしたいプログラマーや、C++ での開発を学
 | --- | --- |
 | <iframe src="https://www.youtube-nocookie.com/embed/3ns8QqGWry4?si=v6JKWmueG9RVxVL0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> | <iframe src="https://www.youtube-nocookie.com/embed/S--QI455r3Q?si=jEabVpHLloiLO_gy" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> |
 
+[さらに確認する](./steam.md){:target="_blank" .md-button .md-button}
 
 ## 法人協賛
 <div class="sponsor"><a href="https://www.bandainamcostudios.com/" target="_blank"><img src="https://siv3d.jp/sponsors/バンダイナムコスタジオ.png" alt="バンダイナムコスタジオ"></a></div>

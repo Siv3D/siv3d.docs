@@ -24,17 +24,22 @@ Siv3D で音や画像、AI を活用するプログラミングを体験しな�
 ## 4. OpenSiv3D チャレンジ / インターンシップ
 Siv3D の新機能を作るいくつかのチャレンジ課題の中から好きなものを選び、Siv3D ユーザコミュニティ Discord 内の専用のチャンネルに参加し、メンバーどうし協力 or 競争しながら実装の完成を目指すイベントです。優先的なコードレビューや実装のアドバイスなど、技術サポートを受けられます。
 
-## 5. Twitter
-ハッシュタグ `#Siv3D` や `#OpenSiv3D` が付いたツイートを巡回しています。Twitter の仕様で検索結果に表示されないこともあるので、確実に返答が必要な場合は [@Reputeless :material-open-in-new:](https://x.com/Reputeless){:target="_blank"} にリプライを送ってください。迅速な解決につながるよう、現象やエラーメッセージ、コンパイラの出力等をスクリーンショットで添付し、[GitHub Gist](../tools/gist.md){target="_blank"} で問題箇所のソースコードを共有してください。
+## 5. 𝕏（旧 Twitter）
+ハッシュタグ `#Siv3D` や `#OpenSiv3D` が付いたツイートを巡回しています。𝕏 の仕様で検索結果に表示されないこともあります。確実に返答がほしい場合は [@Reputeless :material-open-in-new:](https://x.com/Reputeless){:target="_blank"} にリプライを送ってください。迅速な解決につながるよう、現象やエラーメッセージ、コンパイラの出力等をスクリーンショットで添付し、[GitHub Gist](../tools/gist.md){:target="_blank"} で問題箇所のソースコードを共有してください。
 
 - [Siv3D に関するツイートを検索 :material-open-in-new:](https://x.com/search?q=Siv3D%20OR%20OpenSiv3D&src=typed_query&f=live)
 
 ## 6. GitHub
-不具合の報告や新機能、ドキュメントのリクエストは OpenSiv3D の GitHub リポジトリの Issues に投稿してください。フォーマットは自由ですが、情報が不足している場合は棄却される場合があります。
+不具合の報告や新機能、ドキュメントのリクエストは Siv3D の GitHub リポジトリの Issues に投稿してください。フォーマットは自由ですが、情報が不足している場合は棄却される場合があります。
 
-- [OpenSiv3D Issues :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D/issues){:target="_blank"}
+- [Siv3D Issues :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D/issues){:target="_blank"}
 
 ## 7. BBS
 匿名で質問を投稿できる旧式の掲示板です。巡回頻度が低いので Discord や Twitter よりも回答が付くまでに時間がかかる場合があります。
 
 - [Siv3D ユーザ助け合い所 :material-open-in-new:](https://siv3d.jp/bbs/patio.cgi){:target="_blank"}
+
+## 8. ユーザによるサンプル集
+- [Siv3D ミニサンプル集 :material-open-in-new:](https://scrapbox.io/voidproc-siv3d-examples/){:target="_blank"}
+- [Siv3D プチサンプル :material-open-in-new:](https://scrapbox.io/Siv3D-small-sample/){:target="_blank"}
+- [Siv3D 残骸置き場 :material-open-in-new:](https://scrapbox.io/raclamusi-siv3d-zangai/){:target="_blank"}
