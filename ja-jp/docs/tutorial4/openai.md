@@ -667,7 +667,7 @@ void Main()
 		{
 			const String answer = OpenAI::Vision::GetContent(task.getAsJSON());
 
-			Console << answer;
+			Print << answer;
 		}
 
 		if (task.isDownloading())

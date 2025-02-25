@@ -307,12 +307,12 @@ void Main()
 
 			Print << U"{} (VID: {}, PID: {})"_fmt(info.name, info.vendorID, info.productID);
 
-			for (auto [i, button] : Indexed(gamepad.buttons))
+			for (auto&& [i, button] : Indexed(gamepad.buttons))
 			{
 				Print << U"button{}: {}"_fmt(i, button.pressed());
 			}
 
-			for (auto [i, axe] : Indexed(gamepad.axes))
+			for (auto&& [i, axe] : Indexed(gamepad.axes))
 			{
 				Print << U"axe{}: {}"_fmt(i, axe);
 			}

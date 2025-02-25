@@ -1,18 +1,85 @@
 # 72. シリアル通信
 シリアル通信を使って、外部デバイスとデータの送受信を行う方法を学びます。
 
-## 72.1 Serial クラスの基本
+## 72.1 シリアルポートの列挙
+- PC に認識されているシリアルポートの一覧を `System::EnumerateSerialPorts()` で取得できます
+- 結果は `Array<SerialPortInfo>` 型で返されます
+- `SerialPortInfo` 型のメンバ変数は次のとおりです：
+
+| コード | 説明 |
+|---|---|
+| `String port` | シリアルポート名 |
+| `String description` | シリアルポートの説明 |
+| `String hardwareID` | ハードウェア ID |
 
 
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	for (const auto& info : System::EnumerateSerialPorts())
+	{
+		Print << U"[{}] {}"_fmt(info.port, info.description);
+	}
+
+	while (System::Update())
+	{
+
+	}
+}
+```
+```txt title="出力例"
+[COM3] USB シリアル デバイス (COM3)
+[COM4] Arduino Uno (COM4)
+```
 
 
 ## 72.2 接続する COM ポートの選択
+- 次のような関数を使って、接続するシリアルポートを選択する GUI を作成できます
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/serial/2.png)
+
+```cpp
+# include <Siv3D.hpp>
+
+Array<String> GetSerialPortOptions()
+{
+	const Array<SerialPortInfo> infos = System::EnumerateSerialPorts();
+	Array<String> options = infos.map([](const SerialPortInfo& info)
+	{
+		return U"[{}] {}"_fmt(info.port, info.description);
+	});
+
+	options.push_front(U"None");
+	return options;
+}
+
+void Main()
+{
+	const Array<String> options = GetSerialPortOptions();
+	size_t index = 0;
+
+	while (System::Update())
+	{
+		if (SimpleGUI::RadioButtons(index, options, Vec2{ 200, 40 }))
+		{
+
+		}
+	}
+}
+```
 
 
+## 72.3 Serial クラスの基本
 
 
+```cpp
 
-### 72.3 シリアル通信（1 バイト）
+```
+
+
+### 72.4 シリアル通信（1 バイト）
 
 次のサンプルでは、Arduino UNO の LED の点灯/消灯を PC から制御し、1 バイトの数値データをやり取りするサンプルを示します。
 

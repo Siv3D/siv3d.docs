@@ -1052,7 +1052,7 @@ OpenAI の Vision API を活用して、描いた絵でしりとりをするゲ�
 
 	void DrawRecentHistory(const Array<String>& recentWords, const Font& font)
 	{
-		for (const auto& [i, answer] : Indexed(recentWords))
+		for (auto&& [i, answer] : Indexed(recentWords))
 		{
 			font(answer).draw(46, Vec2{ 736, (47 + i * 80) }, ColorF{ 0.1 });
 		}
@@ -1249,7 +1249,7 @@ OpenAI の Vision API を活用して、描いた絵でしりとりをするゲ�
 		// 履歴が満杯のときのあふれ処理
 		const double yOffset = (recentWords.size() < 8) ? 0 : -70;
 
-		for (const auto& [i, answer] : Indexed(recentWords))
+		for (auto&& [i, answer] : Indexed(recentWords))
 		{
 			// 1 文字目
 			const Vec2 pos{ 700, (80 + i * 80 + yOffset) };
@@ -1451,7 +1451,7 @@ OpenAI の Vision API を活用して、描いた絵でしりとりをするゲ�
 		// 履歴が満杯のときのあふれ処理
 		const double yOffset = (recentWords.size() < 8) ? 0 : -70;
 
-		for (const auto& [i, answer] : Indexed(recentWords))
+		for (auto&& [i, answer] : Indexed(recentWords))
 		{
 			// 1 文字目
 			const Vec2 pos{ 700, (80 + i * 80 + yOffset) };
@@ -1669,7 +1669,7 @@ OpenAI の Vision API を活用して、描いた絵でしりとりをするゲ�
 		// 履歴が満杯のときのあふれ処理
 		const double yOffset = (recentWords.size() < 8) ? 0 : -70;
 
-		for (const auto& [i, answer] : Indexed(recentWords))
+		for (auto&& [i, answer] : Indexed(recentWords))
 		{
 			// 1 文字目
 			const Vec2 pos{ 700, (80 + i * 80 + yOffset) };

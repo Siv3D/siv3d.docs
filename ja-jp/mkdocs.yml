@@ -167,7 +167,8 @@ nav:
     - 79. テキスト読み上げ: tutorial4/tts.md
     - 80. 効率的な描画: tutorial4/performance.md
   - チュートリアル 81～ 章:
-    - 81. 2D カスタムシェーダ: tutorial5/empty.md
+    - 今後の更新予定: tutorial5/wip.md
+#    - 81. 2D カスタムシェーダ: tutorial5/empty.md
 #    - 82. 3D 形状を描く ①: tutorial5/empty.md
 #    - 83. 3D 形状を描く ②: tutorial5/empty.md
 #    - 84. 3D の交差判定: tutorial5/empty.md
