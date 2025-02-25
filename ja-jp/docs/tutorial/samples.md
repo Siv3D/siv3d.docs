@@ -1468,11 +1468,11 @@ Siv3D では短いコードでゲームやアプリを開発できます。い�
 	{
 		// ウィンドウのサイズを変更する
 		Window::Resize(1280, 720);
+		Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
 		// 変換するテキスト
-		TextEditState textEdit{ U"Abc" };
+		TextEditState textEdit{ U"abc" };
 
-		// 前回のテキスト
 		String previous;
 
 		// QR コードを表示するための動的テクスチャ
@@ -1481,7 +1481,7 @@ Siv3D では短いコードでゲームやアプリを開発できます。い�
 		while (System::Update())
 		{
 			// テキスト入力
-			SimpleGUI::TextBox(textEdit, Vec2{ 20,20 }, 1240);
+			SimpleGUI::TextBox(textEdit, Vec2{ 20, 20 }, 1240);
 
 			// テキストの更新があれば QR コードを再作成する
 			if (const String current = textEdit.text;
@@ -1490,8 +1490,8 @@ Siv3D では短いコードでゲームやアプリを開発できます。い�
 				// 入力したテキストを QR コードに変換する
 				if (const auto qr = QR::EncodeText(current))
 				{
-					// 枠を付けて拡大した画像で動的テクスチャを更新する
-					texture.fill(QR::MakeImage(qr).scaled(500, 500, InterpolationAlgorithm::Nearest));
+					// 拡大した画像で動的テクスチャを更新する
+					texture.fill(QR::MakeImage(qr).scaled(Size{ 500, 500 }, InterpolationAlgorithm::Nearest));
 				}
 
 				previous = current;
