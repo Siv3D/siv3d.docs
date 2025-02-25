@@ -51,7 +51,7 @@ false
 ```
 
 
-## 79.3 文章読み上げの詳細設定
+## 79.3 テキスト読み上げの詳細設定
 - `TextToSpeech::Speak(text, languageCode)` を使うと、読み上げの詳細設定ができます
 - 音量を `TextToSpeech::SetVolume(volume)` で設定します
     - `volume` は 0.0 から 1.0 の範囲で指定します
