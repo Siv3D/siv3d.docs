@@ -1,10 +1,10 @@
 # 73. OSC 通信
 OSC（Open Sound Control）通信を使って、外部のソフトウェアやデバイスとデータをやり取りする方法を学びます。
 
-## XX.X XXXXX
-- XXX
-	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/xxxx/1.png)
+## 73.1 OSC 通信の基本
+- `OSCSender` は、指定したポートに OSC メッセージを送信します
+- `OSCRceiver` は、指定したポートで OSC メッセージを受信します
+- 次のサンプルコードは、テスト目的で、同一のプログラム内で OSC メッセージを送受信します
 
 ```cpp
 # include <Siv3D.hpp>
@@ -12,19 +12,18 @@ OSC（Open Sound Control）通信を使って、外部のソフトウェアや�
 void Main()
 {
 	const int16 port = 9000;
-
-	OSCReceiver receiver{ IPv4Address::Localhost(), port };
-
 	OSCSender sender{ IPv4Address::Localhost(), port };
+	OSCReceiver receiver{ IPv4Address::Localhost(), port };
 
 	while (System::Update())
 	{
 		if (SimpleGUI::Button(U"Send", Vec2{ 600, 20 }))
 		{
 			OSCMessage messsage;
-			messsage.beginBundle()
+			messsage
+				.beginBundle()
 				.beginMessage(U"/siv3d")
-				.addInt32(Scene::FrameCount())
+				.addInt32(12345)
 				.addString(U"Hello")
 				.addBool(true)
 				.endMessage()
