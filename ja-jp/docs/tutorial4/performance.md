@@ -60,13 +60,15 @@ void Main()
 - 図形描画とテクスチャ（文字）描画は別々のレンダー設定を用いるため、交互に `.draw()` すると Draw call のグループ化を阻害します
 - 図形は図形で、テクスチャはテクスチャでグループ化して描画することで、Draw call を減らすことができます
 
-### 図形描画と文字描画を交互に行った場合
+### 方式 1. 図形描画と文字描画を交互に行った場合
 - 1 つのセルごとに 2 回の Draw call が発行され、非効率です
 
 | 指標 | 値 |
 |--|--|
 | Draw call | ❌ 202 |
 | 三角形 | 461 |
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/performance/2a.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -94,7 +96,7 @@ void Main()
 }
 ```
 
-### 図形描画と文字描画をそれぞれグループ化した場合
+### 方式 2. 図形描画と文字描画をそれぞれグループ化した場合
 - すべての `Rect` の描画が 1 つの Draw call にまとめられます
 - すべての文字描画が 1 つの Draw call にまとめられます
 
@@ -102,6 +104,8 @@ void Main()
 |--|--|
 | Draw call | ✅ 4 |
 | 三角形 | 457 |
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/performance/2b.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -141,12 +145,14 @@ void Main()
 - グリッドの描画を例に、描画方法の工夫で三角形の個数を抑制する方法を考えます
 
 ### 方式 1. すべてのセルで Rect::drawFrame()
-- `Rect::drawFrmae()` は 8 つの三角形を描画します
+- `Rect::drawFrmae()` は 1 回につき 8 つの三角形を描画します
 
 | 指標 | 値 |
 |--|--|
 | Draw call | 3 |
-| 三角形 | ❌❌ 857 |
+| 三角形 | ❌❌ 859 |
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/performance/3a.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -161,11 +167,13 @@ void Main()
 		Print << U"Draw call の数: " << Profiler::GetStat().drawCalls;
 		Print << U"三角形の描画回数: " << Profiler::GetStat().triangleCount;
 
+		Rect{ 400, 400 }.draw();
+
 		for (int32 y = 0; y < 10; ++y)
 		{
 			for (int32 x = 0; x < 10; ++x)
 			{
-				Rect{ (x * 40), (y * 40), 40 }.drawFrame(1, 0);
+				Rect{ (x * 40), (y * 40), 40 }.drawFrame(1, 0, ColorF{ 0.0 });
 			}
 		}
 	}
@@ -174,11 +182,14 @@ void Main()
 
 ### 方式 2. 隙間をあけて Rect::draw()
 - `Rect::draw()` は 2 つの三角形を描画します
+- 三角形の描画回数を抑えることができましたが、塗りピクセル数は方式 1 に比べて倍になります
 
 | 指標 | 値 |
 |--|--|
 | Draw call | 3 |
-| 三角形 | ❌ 257 |
+| 三角形 | ❌ 259 |
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/performance/3b.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -192,6 +203,8 @@ void Main()
 		ClearPrint();
 		Print << U"Draw call の数: " << Profiler::GetStat().drawCalls;
 		Print << U"三角形の描画回数: " << Profiler::GetStat().triangleCount;
+
+		Rect{ 400, 400 }.draw(ColorF{ 0.0 });
 
 		for (int32 y = 0; y < 10; ++y)
 		{
@@ -205,12 +218,14 @@ void Main()
 ```
 
 ### 方式 3. 縦横の線だけを描く
-- 縦横の線だけを描くことで、三角形の描画回数を最小限に抑えられます
+- 背景と縦横の線だけを描くことで、三角形の描画回数と塗りピクセル数を最小限に抑えられます
 
 | 指標 | 値 |
 |--|--|
 | Draw call | 3 |
-| 三角形 | ✅ 99 |
+| 三角形 | ✅ 103 |
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/performance/3c.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -225,10 +240,12 @@ void Main()
 		Print << U"Draw call の数: " << Profiler::GetStat().drawCalls;
 		Print << U"三角形の描画回数: " << Profiler::GetStat().triangleCount;
 
+		Rect{ 400, 400 }.draw();
+
 		for (int32 i = 0; i <= 10; ++i)
 		{
-			Rect{ -1, (-1 + (i * 40)), 402, 2 }.draw();
-			Rect{ (-1 + (i * 40)), -1, 2, 402 }.draw();
+			Rect{ -1, (-1 + (i * 40)), 402, 2 }.draw(ColorF{ 0.0 });
+			Rect{ (-1 + (i * 40)), -1, 2, 402 }.draw(ColorF{ 0.0 });
 		}
 	}
 }
@@ -244,6 +261,8 @@ void Main()
 |--|--|
 | Draw call | 5 |
 | 三角形 | 255 |
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/performance/4.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -328,14 +347,16 @@ void Main()
 
 
 ## 80.5 256x256 のグリッドを描く
-- **80.4** をベースに、`Transformer2D` を用いて 256x256 のグリッドを描きます
-- 文字は読めないため省略します
+- **80.4** をベースに、`Transformer2D` を用いて適切なスケーリングをしながら、画面に 256 x 256 セルのグリッドを描きます
+- セルが小さいため文字は省略します
 - 画面の物量に対して、非常に軽量な処理になっています
 
 | 指標 | 値 |
 |--|--|
 | Draw call | 4 |
 | 三角形 | 1089 |
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/performance/5.png)
 
 ```cpp
 # include <Siv3D.hpp>
