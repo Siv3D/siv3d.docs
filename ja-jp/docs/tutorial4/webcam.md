@@ -303,7 +303,7 @@ void Main()
 	DynamicTexture texture;
 
 	// QR コードスキャナ
-	QRScanner qrScanner;
+	const QRScanner qrScanner;
 
 	// QR コードの内容
 	Array<QRContent> contents;
