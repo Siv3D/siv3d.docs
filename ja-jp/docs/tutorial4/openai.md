@@ -900,7 +900,7 @@ void Main()
 		{
 			Circle{ 640, 360, 40 }.drawArc((Scene::Time() * 120_deg), 300_deg, 4, 4);
 
-			font(U"テキストの埋め込みベクトルを計算しています。事前に計算しておくことで実行時の処理を省略できます。").drawAt(22, Scene::Center().movedBy(0, 100), ColorF{ 0.1 });
+			font(U"テキストの埋め込みベクトルを計算しています。事前に計算しておくことで実行時の処理を省略できます。").drawAt(22, Vec2{ 640, 460 }, ColorF{ 0.1 });
 
 			if (initTask.isReady())
 			{
