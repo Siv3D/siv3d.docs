@@ -29,6 +29,7 @@ Steam で配信されている Siv3D 作品のメディア掲載事例です。
 
 ## Tower o-ven
 - [ゲームメーカーズ: インディーゲーム展示会「東京ゲームダンジョン6」レポート :material-open-in-new:](https://gamemakers.jp/article/2024_11_12_85140/#:~:text=%E3%80%8ETower%20o%2Dven%20Trailer%202%E3%80%8F){:target="_blank"}
+- [gamebiz: インディーゲーム開発スタジオDessert Seed Studio、エンドレスなカジュアルアクションゲーム『Tower o-ven』をSteamでリリース :material-open-in-new:](https://gamebiz.jp/news/400619){:target="_blank"}
 
 <iframe src="https://store.steampowered.com/widget/2943760/" frameborder="0" width="646" height="190"></iframe>
 
