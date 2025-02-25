@@ -1,10 +1,32 @@
 # 79. テキスト読み上げ
 テキストを読み上げる機能を学びます。
 
-## XX.X XXXXX
+## 79.1 XXXXX
 - XXX
-	
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/xxxx/1.png)
+
+```cpp
+
+```
+
+
+## 79.2 XXXXX
+- XXX
+
+```cpp
+
+```
+
+
+## 79.3 XXXXX
+- XXX
+
+```cpp
+
+```
+
+
+## 79.4 XXXXX
+- XXX
 
 ```cpp
 
