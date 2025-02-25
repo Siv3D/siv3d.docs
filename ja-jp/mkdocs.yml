@@ -167,6 +167,7 @@ nav:
     - 79. テキスト読み上げ: tutorial4/tts.md
     - 80. 効率的な描画: tutorial4/performance.md
   - チュートリアル 81～ 章:
+    - 81. メッセージボックス: tutorial5/messagebox.md
     - 今後の更新予定: tutorial5/wip.md
 #    - 81. 2D カスタムシェーダ: tutorial5/empty.md
 #    - 82. 3D 形状を描く ①: tutorial5/empty.md
@@ -198,7 +199,6 @@ nav:
   - 記事:
     - ゲーム開発のヒント集: reference/game_tips.md
     - メッセージボックス: reference/messagebox.md
-    - 非同期処理: reference/async.md
     - 自作クラスと Siv3D の連係: reference/adapter.md
     - Siv3D で Hello world する 21 の方法: reference/helloworld.md
     - グローバル変数として作成できないクラス: reference/avoid-global-variable.md
