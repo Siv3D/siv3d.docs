@@ -1184,3 +1184,31 @@ void Main()
 }
 ```
 
+
+## 38.14 IME の変換候補ウィンドウ
+- Windows 11 では、`SimpleGUI::IMECandidateWindow(pos)` を使って IME の変換候補ウィンドウを表示できます
+- Windows 11 以外のプラットフォームでは何も起こりません
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/14.png)
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	TextEditState state;
+
+	while (System::Update())
+	{
+		SimpleGUI::TextBox(state, Vec2{ 40, 40 }, 600);
+
+		if (state.active)
+		{
+			SimpleGUI::IMECandidateWindow(Vec2{ 40, 80 });
+		}
+	}
+}
+```
+

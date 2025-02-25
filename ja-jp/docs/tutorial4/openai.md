@@ -138,7 +138,7 @@ void Main()
 
 
 ## 67.4 Chat の基本（非同期）
-- `OpenAI::Chat::CompleteAsync(apiKey, prompt)` は、OpenAI の Chat API を利用して、一連の会話に続く回答を取得する非同期タスク `AsyncHTTPTask`（**チュートリアル 62.6**）を作成します
+- `OpenAI::Chat::CompleteAsync(apiKey, prompt)` は、OpenAI の Chat API を利用して、一連の会話に続く回答を取得する非同期タスク `AsyncHTTPTask`（**チュートリアル 62.7**）を作成します
 - 非同期タスクが正常に完了した場合、`OpenAI::Chat::GetContent(task.getAsJSON())` で回答を `String` で取得できます
 - 次のサンプルコードでは、非同期タスクが完了するまでの待ち時間に、回転する円を描きます
 

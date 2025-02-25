@@ -19,7 +19,32 @@ void Main()
 ```
 
 
-## 62.2 Web ブラウザで URL を開く
+## 62.2 インターネット接続の確認
+- `Network::IsConnected()` は、インターネット接続が確立されているかどうかを `bool` 型で返します
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	if (Network::IsConnected())
+	{
+		Print << U"Connected";
+	}
+	else
+	{
+		Print << U"Not connected";
+	}
+
+	while (System::Update())
+	{
+		
+	}
+}
+```
+
+
+## 62.3 Web ブラウザで URL を開く
 - `System::LaunchBrowser(url)` は、指定した URL を Web ブラウザで開きます
 - メインループの中でこの関数を繰り返し呼ぶと、大量にページが開かれるため、注意する必要があります
 
@@ -42,7 +67,7 @@ void Main()
 ```
 
 
-## 62.3 Twitter の投稿画面を開く
+## 62.4 Twitter の投稿画面を開く
 - `Twitter::OpenTweetWindow(text)` は、指定したテキストを含むツイートを投稿するための Twitter（X）の投稿画面を開きます
 - メインループの中でこの関数を繰り返し呼ぶと、大量にページが開かれるため、注意する必要があります
 - Twitter API の性質上、自動で画像を添付することはできませんが、クリップボードに画像をコピー（**チュートリアル 65**）して、ユーザが画像の投稿をしやすくすることはできます
@@ -72,7 +97,7 @@ void Main()
 ```
 
 
-## 62.4 ファイルダウンロード（同期）
+## 62.5 ファイルダウンロード（同期）
 - 指定した URL からファイルをダウンロードしたい場合は `SimpleHTTP::Save(url, saveFilePath)` を使うのが簡単です
 - 戻り値の `HTTPResponse` を調べると、リクエストの結果を得られます。`.isOK()` が `true` であれば成功です
 
@@ -113,7 +138,7 @@ void Main()
 ```
 
 
-## 62.5 レスポンスの可視化
+## 62.6 レスポンスの可視化
 - 次のようなコードで、レスポンスのステータス行とヘッダーを可視化できます：
 
 ```cpp
@@ -157,7 +182,7 @@ void Main()
 ```
 
 
-## 62.6 ファイルダウンロード（非同期）
+## 62.7 ファイルダウンロード（非同期）
 - ファイルのダウンロード中にメインスレッドの処理が止まるのを避けたい場合は、`SimpleHTTP::SaveAsync(url, saveFilePath)` を使います
 - この関数は、ファイルの非同期ダウンロードタスクを開始し、`AsyncHTTPTask` 型のオブジェクトを返します
 - このオブジェクトにタスクの完了を問い合わせ、タスクが完了していたらレスポンスを調べます
@@ -215,7 +240,7 @@ void Main()
 ```
 
 
-## 62.7 ファイルダウンロード（非同期、進捗確認、キャンセル）
+## 62.8 ファイルダウンロード（非同期、進捗確認、キャンセル）
 - `AsyncHTTPTask` オブジェクトに、ダウンロードの進捗を問い合わせたい場合、`.getProgress()` を使うと `HTTPProgress` 型で進捗を取得できます
 - ダウンロードのタスクを取り消したい場合は、`AsyncHTTPTask` の `.cancel()` を呼びます
 - `HTTPProgress` は次のようなメンバ変数を持ちます
@@ -228,7 +253,7 @@ void Main()
 | `Optional<int64> download_total_bytes` | ダウンロードするファイルの合計サイズ（バイト）。不明な場合 none |
 | `Optional<int64> upload_total_bytes` | アップロードするファイルの合計サイズ（バイト）。不明な場合 none |
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/http/7.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial4/http/8.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -340,7 +365,7 @@ void Main()
 ```
 
 
-## 62.8 GET（同期）
+## 62.9 GET（同期）
 - GET リクエストのサンプルです
 
 ```cpp
@@ -373,7 +398,7 @@ void Main()
 ```
 
 
-## 62.9 GET（非同期）
+## 62.10 GET（非同期）
 - GET リクエストの非同期版です
 
 ```cpp
@@ -418,7 +443,7 @@ void Main()
 ```
 
 
-## 62.10 POST（同期）
+## 62.11 POST（同期）
 - POST リクエストのサンプルです
 
 ```cpp
@@ -455,7 +480,7 @@ void Main()
 ```
 
 
-## 62.11 POST（非同期）
+## 62.12 POST（非同期）
 - POST リクエストの非同期版です
 
 ```cpp
