@@ -246,7 +246,7 @@ void Main()
 
 | ロール | 説明 |
 | --- | --- |
-| `Rolu::System` | AI の監督者（無くてもよい） |
+| `Role::System` | AI の監督者（無くてもよい） |
 | `Role::User` | 利用者 |
 | `Role::Assistant` | AI |
 
@@ -333,17 +333,19 @@ public:
 
 	void update()
 	{
+		const Rect sceneRect{ 1280, 720 };
+
 		if (m_state == GameState::Game) // ゲーム中の背景
 		{
-			Scene::Rect().draw(Arg::top = ColorF{ 0.3, 0.7, 1.0 }, Arg::bottom = ColorF{ 0.7, 0.5, 0.1 });
+			sceneRect.draw(Arg::top = ColorF{ 0.3, 0.7, 1.0 }, Arg::bottom = ColorF{ 0.7, 0.5, 0.1 });
 		}
 		else if (m_state == GameState::Lose) // 敗北時の背景
 		{
-			Scene::Rect().draw(Arg::top = ColorF{ 0.8, 0.7, 0.1 }, Arg::bottom = ColorF{ 1.0, 0.5, 0.1 });
+			sceneRect.draw(Arg::top = ColorF{ 0.8, 0.7, 0.1 }, Arg::bottom = ColorF{ 1.0, 0.5, 0.1 });
 		}
 		else if (m_state == GameState::Win) // 勝利時の背景
 		{
-			Scene::Rect().draw(Arg::top = ColorF{ 1.0 }, Arg::bottom = ColorF{ 0.8, 0.7, 0.3 });
+			sceneRect.draw(Arg::top = ColorF{ 1.0 }, Arg::bottom = ColorF{ 0.8, 0.7, 0.3 });
 		}
 
 		// 非同期処理が完了し、正常なレスポンスである場合、非同期処理の結果を取得する
@@ -385,7 +387,7 @@ public:
 			mouseOnTextArea |= textAreaRect.mouseOver();
 
 			// 画面外の場合は描画しない
-			if (not Scene::Rect().intersects(textAreaRect))
+			if (not sceneRect.intersects(textAreaRect))
 			{
 				continue;
 			}

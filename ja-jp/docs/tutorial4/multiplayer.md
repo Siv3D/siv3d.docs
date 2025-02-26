@@ -1660,7 +1660,7 @@ void Main()
 			// ランダムな Point を送るボタン
 			if (SimpleGUI::Button(U"Send Point", Vec2{ 1000, 260 }, 200, network.isInRoom()))
 			{
-				const Point pos = RandomPoint(Scene::Rect());
+				const Point pos = RandomPoint(Rect{ 1280, 720 });
 				Print << U"eventCode: 0, Point" << pos << U" を送信 >>>";
 				network.sendEvent(0, pos);
 			}
@@ -1966,7 +1966,7 @@ void Main()
 
 			if (SimpleGUI::Button(U"Send Point", Vec2{ 1000, 260 }, 200, network.isInRoom()))
 			{
-				const Point pos = RandomPoint(Scene::Rect());
+				const Point pos = RandomPoint(Rect{ 1280, 720 });
 				Print << U"eventCode: 0, Point" << pos << U" を送信 >>>";
 				network.sendEvent(0, pos);
 			}
@@ -2289,7 +2289,7 @@ void Main()
 
 			if (SimpleGUI::Button(U"Send Point", Vec2{ 1000, 260 }, 200, network.isInRoom()))
 			{
-				const Point pos = RandomPoint(Scene::Rect());
+				const Point pos = RandomPoint(Rect{ 1280, 720 });
 				Print << U"eventCode: 0, Point" << pos << U" を送信 >>>";
 				network.sendEvent(0, pos);
 			}
@@ -2321,7 +2321,7 @@ void Main()
 			{
 				MyData myData;
 				myData.word = Sample({ U"apple", U"bird", U"cat", U"dog" });
-				myData.pos = RandomPoint(Scene::Rect());
+				myData.pos = RandomPoint(Rect{ 1280, 720 });
 
 				Print << U"eventCode: 123, MyData(" << myData.word << U", " << myData.pos << U") を送信 >>>";
 				network.sendEvent(123, Serializer<MemoryWriter>{}(myData));

@@ -98,7 +98,7 @@ void Main()
 			System::MessageBoxOK(U"体験版の終了", U"体験版で遊べるのはここまでです。");
 
 			// プログラムを終了する
-			System::Exit();
+			break;
 		}
 	}
 }
@@ -131,7 +131,7 @@ void Main()
 			if (result == MessageBoxResult::Yes)
 			{
 				// プログラムを終了する
-				return;
+				break;
 			}
 		}
 	}
@@ -252,7 +252,8 @@ void Main()
 		{
 			if (saved) // 保存済みなら
 			{
-				return; // 何もせず終了する
+				// 何もせず終了する
+				break;
 			}
 			else // 未保存なら
 			{
@@ -263,7 +264,7 @@ void Main()
 				if (result == MessageBoxResult::OK)
 				{
 					// プログラムを終了する
-					return;
+					break;
 				}
 			}
 		}

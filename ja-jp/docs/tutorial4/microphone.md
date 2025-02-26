@@ -202,7 +202,7 @@ void Main()
 		}
 
 		// 周波数表示
-		Rect{ Cursor::Pos().x, 0, 1, Scene::Height() }.draw();
+		Rect{ Cursor::Pos().x, 0, 1, 600 }.draw();
 		ClearPrint();
 		Print << U"{:.2f} Hz"_fmt(Cursor::Pos().x * fft.resolution);
 	}
