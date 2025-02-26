@@ -7,7 +7,7 @@
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/time/1.png)
 
-```cpp hl_lines="10 16"
+```cpp hl_lines="10 15"
 # include <Siv3D.hpp>
 
 void Main()
