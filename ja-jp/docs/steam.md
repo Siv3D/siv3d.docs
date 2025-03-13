@@ -8,16 +8,17 @@ Steam で配信されている Siv3D 作品のメディア掲載事例です。
 <iframe src="https://store.steampowered.com/widget/2487390/" frameborder="0" width="646" height="190"></iframe>
 
 
+## マクスウェルのパズルな悪魔
+- [AUTOMATON: パブリッシャー付いてない、大規模宣伝されてないゲームも良作いっぱい。AUTOMATONが選ぶ、2024年よかった国産小規模開発ゲーム11本 :material-open-in-new:](https://automaton-media.com/articles/columnjp/20241229-323822/){:target="_blank"}
+- [Thinky Awards 2024 - Best Challenging Game 受賞 / Game of the Year ノミネート / Most Innovative Game ノミネート / Best Aha Moment ノミネート :material-open-in-new:](https://thinkygames.com/awards/){:target="_blank"}
+
+<iframe src="https://store.steampowered.com/widget/2770160/" frameborder="0" width="646" height="190"></iframe>
+
+
 ## Mutable 50
 - [もぐらゲームス: 汝、反則じみた潜伏技を駆使し、“逃げ上手”となれ―スリリングなローグライクステルスアクション『Mutable 50』 :material-open-in-new:](https://www.moguragames.com/mutable-50/){:target="_blank"}
 
 <iframe src="https://store.steampowered.com/widget/3147480/" frameborder="0" width="646" height="190"></iframe>
-
-
-## マクスウェルのパズルな悪魔
-- [AUTOMATON: パブリッシャー付いてない、大規模宣伝されてないゲームも良作いっぱい。AUTOMATONが選ぶ、2024年よかった国産小規模開発ゲーム11本 :material-open-in-new:](https://automaton-media.com/articles/columnjp/20241229-323822/){:target="_blank"}
-
-<iframe src="https://store.steampowered.com/widget/2770160/" frameborder="0" width="646" height="190"></iframe>
 
 
 ## Shooting Game Builder
@@ -38,4 +39,3 @@ Steam で配信されている Siv3D 作品のメディア掲載事例です。
 - [gamebiz: 個人ゲーム開発者sashi、25年発売予定の新作2D探索型アクション『Monad Tachyon』のSteamストアページを公開 :material-open-in-new:](https://gamebiz.jp/news/396584){:target="_blank"}
 
 <iframe src="https://store.steampowered.com/widget/3328960/" frameborder="0" width="646" height="190"></iframe>
-
