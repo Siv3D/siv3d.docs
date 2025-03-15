@@ -422,7 +422,7 @@ void Main()
 
 
 ## 19.14 文字列の一部から新しい文字列を作る
-`.substr(offset, count)` で、文字列の `offset` 文字目から `count` 文字の部分文字列（`String`）を作成することができます。`offset` は 0 から始まります。`count` が省略された場合は、`offset` 文字目から末尾までの部分文字列を作成します。`offset` が実際の文字列の長さより大きい場合は、末尾までの部分文字列を作成します。
+`.substr(offset, count)` で、文字列の `offset` 文字目から `count` 文字の部分文字列（`String`）を作成することができます。`offset` は 0 から始まります。`count` が省略された場合は、`offset` 文字目から末尾までの部分文字列を作成します。`count` が実際の文字列の長さより大きい場合は、末尾までの部分文字列を作成します。
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/string/14a.png)
 
