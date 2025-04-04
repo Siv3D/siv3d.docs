@@ -199,8 +199,9 @@ C++ のスキルを活かしたいプログラマーや、C++ での開発を学
 - [CubeSoft, Inc.](https://www.cube-soft.jp/){:target="_blank"}
 
 #### Silver Sponsor
-- [sknjpn](https://twitter.com/sknjpn){:target="_blank"}
+- [sknjpn](https://x.com/sknjpn){:target="_blank"}
 - 野菜ジュース
+- [kagamiz](https://github.com/kagamiz){:target="_blank"}
 
 #### Bronze Sponsor
 アゲハマ, Fuyutsubaki, 😊, 🐝, jacking75, Chris Ohk, qppon, ysaito, おおやま, ShivAlley, lamuda, 🌻, fal_rnd, As Project, IZUNA, 柏崎でぃすこ, nasatame, sashi, 🌶️
