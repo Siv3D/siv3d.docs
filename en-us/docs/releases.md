@@ -5,22 +5,68 @@
 ???+ summary "v0.6.16 | 2025-04-07"
 
 	#### 前バージョンからの更新ガイド
-	- [v0.6.15 からのアップグレード手順（Windows）](https://zenn.dev/link/comments/5c3c74c675beaf)
+	- [v0.6.15 からのアップグレード手順（Windows）:material-open-in-new:](https://zenn.dev/link/comments/5c3c74c675beaf){:target="_blank"}
 
 	#### 新機能
-	- ...
+	- **Xcode 16.3 でのビルドに対応しました** ([#1289](https://github.com/Siv3D/OpenSiv3D/issues/1289))
+	- **長方形を面取りした `Polygon` を返す `Rect::chamfered()`, `RectF::chamfered()` を追加しました** ([#1268](https://github.com/Siv3D/OpenSiv3D/issues/1268))
+		- [サンプル :material-open-in-new:](https://zenn.dev/link/comments/bdd20930aae203){:target="_blank"}
+	- **平面上の点群に対し最小包含円を求める `Geometry2D::SmallestEnclosingCircle()` を追加しました** ([#1272](https://github.com/Siv3D/OpenSiv3D/pull/1272))
+		- [サンプル :material-open-in-new:](https://zenn.dev/link/comments/d3b2a501acc2ab){:target="_blank"}
+	- 2D 物理演算において、三角形、四角形、多角形、線分などの形状のセンサーを作れるようにしました ([#916](https://github.com/Siv3D/OpenSiv3D/issues/916), [#1251](https://github.com/Siv3D/OpenSiv3D/pull/1251))
+	- 線分に厚みを持たせて四角形を作る `Line::withThickness()` を追加しました ([#1276](https://github.com/Siv3D/OpenSiv3D/issues/1276))
+	- `Rect`, `RectF` に `.stretched(Arg::left)` 等のオーバーロードを追加しました ([#1277](https://github.com/Siv3D/OpenSiv3D/issues/1277), [#1279](https://github.com/Siv3D/OpenSiv3D/pull/1279))
+	- `Font::getGlyphByGlyphIndex()` を追加しました ([#1278](https://github.com/Siv3D/OpenSiv3D/issues/1278))
+	- `SimpleMenuBar::mouseOver()` を追加しました ([#1290](https://github.com/Siv3D/OpenSiv3D/issues/1290))
+	- 文字列中のランダムな要素を返す `String::choice()` を追加しました ([#1253](https://github.com/Siv3D/OpenSiv3D/issues/1253))
+	- `Math::ClampAngle()` を追加しました ([#1271](https://github.com/Siv3D/OpenSiv3D/pull/1271))
+	- `int128`, `uint128` のシリアライズに対応しました ([#1261](https://github.com/Siv3D/OpenSiv3D/issues/1261))
+	- `YesNo` クラスに `operator==` を追加しました ([#1282](https://github.com/Siv3D/OpenSiv3D/pull/1282))
 
 	#### 仕様変更
-	- ...
+	- Windows 版、macOS 版における Boost の内部バージョンを 1.74.0 から 1.83.0 に更新しました。幾何計算系関数の細かい挙動が変化する可能性があります ([#1292](https://github.com/Siv3D/OpenSiv3D/pull/1292))
+	- The Parallel Hashmap ライブラリを v1.3.8 から v2.0.0 に更新しました ([#1297](https://github.com/Siv3D/OpenSiv3D/issues/1297))
+	- 使用していなかったため、Lua 関連のソースファイルをすべて削除しました ([#1293](https://github.com/Siv3D/OpenSiv3D/issues/1293), [#1294](https://github.com/Siv3D/OpenSiv3D/pull/1294))
 
 	#### パフォーマンス向上
-	- ...
+	- `DiscreteSample()` 一部のオーバーロードの戻り値を参照に変更しました ([#1275](https://github.com/Siv3D/OpenSiv3D/pull/1275))
 
 	#### 不具合・バグ修正
-	- ...
+	- Windows において、Web カメラが接続されていない環境で `System::EnumerateWebcams()` がクラッシュした不具合を修正しました ([#1250](https://github.com/Siv3D/OpenSiv3D/issues/1250))
+	- `MemoryReader` と `MemoryViewReader` の `.lookahead()` が指定位置から読み込まなかった不具合を修正しました ([#1264](https://github.com/Siv3D/OpenSiv3D/issues/1264))
+	- `MemoryWriter` のバグを修正しました ([#1266](https://github.com/Siv3D/OpenSiv3D/issues/1266))
+	- `Camera2D` にて `CameraControl::None_` 設定時、マウスホイールがカメラの挙動に干渉していたバグを修正しました ([#1295](https://github.com/Siv3D/OpenSiv3D/issues/1295))
+	- `MemoryReader` と `MemoryViewReader` の `.read()`, `.lookahead()` が範囲外アクセスをチェックしていなかった不具合を修正しました ([#1264](https://github.com/Siv3D/OpenSiv3D/issues/1264))
+	- Windows において、コンソールウィンドウでテキストを選択した状態でコンソール出力すると、選択解除されるまでプログラムが停止した不具合を修正しました ([#1254](https://github.com/Siv3D/OpenSiv3D/issues/1254))
+	- macOS / Linux の `System::LaunchFile()` が、名前にシングルクォーテーションを含むファイルを開けなかった不具合を修正しました ([#1283](https://github.com/Siv3D/OpenSiv3D/issues/1283))
+	- `DebugCamera3D` がコンストラクタで指定した注視点と異なる位置を注視することがあったバグを修正しました ([#1255](https://github.com/Siv3D/OpenSiv3D/issues/1255), [#1274](https://github.com/Siv3D/OpenSiv3D/pull/1274))
+	- `GlyphInfo::buffer` が取得方法によって設定されないことがあったバグを修正しました ([#1256](https://github.com/Siv3D/OpenSiv3D/issues/1256))
+	- `Deserializer<MemoryViewReader>` で列挙型のデシリアライズができなかった不具合を修正しました ([#1288](https://github.com/Siv3D/OpenSiv3D/issues/1288))
+	- 長方形内のテキスト描画において、省略時のドットの間隔がフォントサイズによって変わることがあったバグを修正しました ([#1273](https://github.com/Siv3D/OpenSiv3D/pull/1273))
+	- シーン管理において、フェード時間を 0 に設定したとき二重にシーンの `.draw()` が呼ばれていたバグを修正しました ([#1258](https://github.com/Siv3D/OpenSiv3D/pull/1258))
+	- 一部の環境で 2D 物理演算関連クラスがコンパイルエラーになった不具合を修正しました ([#1286](https://github.com/Siv3D/OpenSiv3D/issues/1286))
+	- `RoundRect::drawShadow()` で `fill` が反映されない場合があったバグを修正しました ([#1269](https://github.com/Siv3D/OpenSiv3D/issues/1269))
+	- 特殊なケースで `Indexed()` がダングリング参照を返すことがあった不具合を修正しました ([#1247](https://github.com/Siv3D/OpenSiv3D/pull/1247))
+	- OpenGL ES 3.0 環境の不具合を修正しました ([#1244](https://github.com/Siv3D/OpenSiv3D/pull/1244))
+	- `BinaryReader::lookahead()` でエラー時に読み込み位置が変化する可能性があった不具合を修正しました ([#1265](https://github.com/Siv3D/OpenSiv3D/issues/1265))
+	- Linux のビルドにおける不具合を修正しました ([#1248](https://github.com/Siv3D/OpenSiv3D/pull/1248), [#1281](https://github.com/Siv3D/OpenSiv3D/pull/1281))
+	- ドキュメントの誤植を修正しました ([#1262](https://github.com/Siv3D/OpenSiv3D/pull/1262), [#1270](https://github.com/Siv3D/OpenSiv3D/pull/1270))
 
 	#### コントリビューション
-	- ...
+	- [Raclamusi](https://github.com/Raclamusi): **長方形内のテキスト描画の不具合修正**, **`DebugCamera3D` の不具合修正**, `DiscreteSample()` の改善
+	- [yaito3014](https://github.com/yaito3014): **`Indexed()` の不具合修正**, Linux ビルドの不具合修正
+	- [Appbird](https://github.com/Appbird): **`Geometry2D::SmallestEnclosingCircle()` の実装**
+	- [Aikawa3311](https://github.com/Aikawa3311): **2D 物理演算のセンサー機能の実装**
+	- [sashi0034](https://github.com/sashi0034): **`Math::ClampAngle()` の実装**
+	- [leaf2326](https://github.com/leaf2326): **`Rect::stretched(Arg::left)` 等のオーバーロードの実装**
+	- [m4saka](https://github.com/m4saka): **`YesNo` の `operator==` の実装**
+	- [yksake](https://github.com/yksake): シーン管理の不具合修正
+	- [aFumihikoKobayashi](https://github.com/aFumihikoKobayashi): Linux ビルドの不具合修正
+	- [yukidoke](https://github.com/yukidoke): ドキュメントの修正
+	- [aoriika05](https://github.com/aoriika05): ドキュメントの修正
+
+	### OpenSiv3D チャレンジ
+	- \#19 SmallestEnclosingCircle: あぷりばーど, Nachia, Luke256, ラクラムシ, polyester, sasa
 
 
 ??? summary "v0.6.15 | 2024-07-03"
