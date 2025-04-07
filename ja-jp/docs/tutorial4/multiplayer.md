@@ -4,7 +4,7 @@ Photon SDK を使用してマルチプレイヤーゲームを作成するため
 ## 75.1 Photon SDK の準備
 
 ### 75.1.1 Photon SDK のダウンロード
-1. 開発環境に応じた [Photon Realtime SDK :material-open-in-new:](https://www.photonengine.com/ja/sdks#realtime-cpp){:target="_blank"} (7z 形式で圧縮) をダウンロードします。Siv3D v0.6.15 で検証済みの SDK バージョンは `v5.0.12` です
+1. 開発環境に応じた [Photon Realtime SDK :material-open-in-new:](https://www.photonengine.com/ja/sdks#realtime-cpp){:target="_blank"} (7z 形式で圧縮) をダウンロードします。Siv3D v0.6.16 で検証済みの SDK バージョンは `v5.0.12` です
 2. ダウンロードしたファイルを展開し、適当な場所に配置します（これ以降の手順でプロジェクトのインクルード / ライブラリパスをこのフォルダパスに対して設定するため、これ以降は移動させません）
 
 ### 75.1.2 Siv3D プロジェクトの準備

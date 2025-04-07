@@ -6,25 +6,25 @@
 
 |  |  |
 |--|--|
-| OS | macOS Big Sur / Monterey / Ventura / Sonoma |
+| OS | macOS Ventura / Sonoma / Sequoia |
 | CPU | Intel 製の CPU / Apple Silicon（Rosetta モード） |
 | GPU | OpenGL 4.1 サポート |
 | 映像出力 | モニタなど、何らかの映像出力装置があること |
-| 開発環境 | Xcode 12.5 以降 |
+| 開発環境 | Xcode 14.3 以降 |
 
 - Apple Silicon（M1 - M4）には、現在開発中の Siv3D v0.8.0 からネイティブ対応します
 - それまでは Rosetta モードで動作します
 
 ??? summary "Xcode をインストールできない場合"
 	- 使用している macOS の OS バージョンが最新でない場合、App Store 経由で Xcode をインストールできないことがあります
-	- その場合は [Apple Developer サイト :material-open-in-new:](https://developer.apple.com/download/more/){:target="_blank"} から、Xcode 13.2 など過去のバージョンの Xcode をダウンロードしてインストールします
+	- その場合は [Apple Developer サイト :material-open-in-new:](https://developer.apple.com/download/more/){:target="_blank"} から、Xcode 14.3 など過去のバージョンの Xcode をダウンロードしてインストールします
 
 ### 1.2 アプリ動作システム要件
-- Siv3D v0.6.15 で開発されたアプリケーションを macOS で実行するのに必要な環境は次のとおりです：
+- Siv3D v0.6.16 で開発されたアプリケーションを macOS で実行するのに必要な環境は次のとおりです：
 
 |  |  |
 |--|--|
-| OS | macOS Mojave / Catalina / Big Sur / Monterey / Ventura / Sonoma |
+| OS | macOS Mojave / Catalina / Big Sur / Monterey / Ventura / Sonoma / Sequoia |
 | CPU | Intel 製の CPU / Apple Silicon（Rosetta モード） |
 | GPU | OpenGL 4.1 サポート |
 | 映像出力 | モニタなど、何らかの映像出力装置があること |
@@ -34,7 +34,7 @@
 
 
 ## 2. プロジェクトテンプレートをダウンロードする
-1. **[OpenSiv3D v0.6.15 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.15_macOS.zip){:target="_blank"}** をダウンロードしてファイルを展開します
+1. **[OpenSiv3D v0.6.16 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.16_macOS.zip){:target="_blank"}** をダウンロードしてファイルを展開します
 1. macOS Catalina 以降の場合、プログラム実行時に、毎回ファイルアクセス許可のダイアログが出現します。これを回避するには、プロジェクトフォルダを `(ユーザ名)/デスクトップ` や `(ユーザ名)/ダウンロード` フォルダではなく、`(ユーザ名)/アプリケーション` フォルダ（root のアプリケーションフォルダではなく、ユーザホームのアプリケーションフォルダ）へ移動させます
 
 ??? summary "過去のバージョン"
@@ -42,6 +42,7 @@
 		- コンパイラの更新等により、最新の開発環境では過去のバージョンでのビルドに失敗することがあります
 		- 古い Siv3D プロジェクトを動かしたい場合は、そのソースコードを最新版のプロジェクトへ移植するのが良い方法です
 
+	- [OpenSiv3D v0.6.15 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.15_macOS.zip){:target="_blank"}
 	- [OpenSiv3D v0.6.14 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.14_macOS.zip){:target="_blank"}
 	- [OpenSiv3D v0.6.13 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.13_macOS.zip){:target="_blank"}
 	- [OpenSiv3D v0.6.12 Project Templates for macOS](https://siv3d.jp/downloads/Siv3D/siv3d_v0.6.12_macOS.zip){:target="_blank"}
