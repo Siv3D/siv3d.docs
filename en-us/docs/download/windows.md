@@ -9,7 +9,7 @@ The necessary development environment for Siv3D programming on Windows is as fol
 | OS | Windows 10 (64-bit) /  Windows 11 |
 | CPU | Intel / AMD CPU |
 | Output Devices | Monitors and speakers |
-| IDE | Microsoft Visual C++ 2022 17.11<br>(Please install "Desktop development with C++" during the installation process) |
+| IDE | Microsoft Visual C++ 2022 17.13<br>(Please install "Desktop development with C++" during the installation process) |
 
 ??? summary "About Visual Studio Editions"
 	For Siv3D programming on Windows 10 or Windows 11, it is convenient to use **Visual Studio Community 2022**. This is a free version of the integrated development environment "Visual Studio" that professional software developers worldwide use. Students, individuals, and small-scale developers can use the same features as the paid version of Visual Studio for free.
