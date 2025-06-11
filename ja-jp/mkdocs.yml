@@ -197,6 +197,7 @@ nav:
   - API:
     - クラス一覧: api/classes.md
   - 記事:
+    - プロジェクトを GitHub で管理する: reference/github.md
     - ゲーム開発のヒント集: reference/game_tips.md
     - メッセージボックス: reference/messagebox.md
     - 自作クラスと Siv3D の連係: reference/adapter.md
