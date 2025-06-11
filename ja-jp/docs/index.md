@@ -205,7 +205,7 @@ C++ のスキルを活かしたいプログラマーや、C++ での開発を学
 - [kagamiz](https://github.com/kagamiz){:target="_blank"}
 
 #### Bronze Sponsor
-アゲハマ, Fuyutsubaki, 😊, 🐝, jacking75, Chris Ohk, ysaito, おおやま, ShivAlley, lamuda, 🌻, fal_rnd, As Project, IZUNA, nasatame, sashi, 🌶️, 💯
+アゲハマ, Fuyutsubaki, 😊, 🐝, jacking75, Chris Ohk, ysaito, おおやま, ShivAlley, lamuda, fal_rnd, As Project, IZUNA, nasatame, sashi, 🌶️, 💯, PlumRice
 
 ---
 
