@@ -1,0 +1,236 @@
+site_dir: '../../siv3d.github.io/en-us'
+
+# Project information
+site_name: Siv3D
+site_url: https://siv3d.github.io/en-us/
+site_author: Ryo Suzuki
+site_description: "Siv3D: A C++ Framework for Creative Applications" 
+
+# Repository
+repo_name: Siv3D/OpenSiv3D
+repo_url: https://github.com/Siv3D/OpenSiv3D
+
+# Copyright
+copyright: Copyright (c) 2012 - 2025, Ryo Suzuki<br>Copyright (c) 2012 - 2025, OpenSiv3D Project
+
+# Theme
+theme:
+  name: material
+  language: en
+  palette:
+    scheme: siv3d
+  logo: 'assets/code-white-48dp.svg'
+  favicon: 'assets/favicon.ico'
+  features:
+  - navigation.instant
+  - navigation.instant.progress
+  - navigation.top
+  - navigation.footer
+  - search.suggest
+  - search.highlight
+  - content.code.annotate
+  - content.code.copy
+  plugins:
+  - search:
+      lang:
+        - en
+extra_css:
+  - "https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"
+  - stylesheets/extra.css
+markdown_extensions:
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - meta
+  - toc:
+      permalink: true
+      toc_depth: 2
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences:
+      preserve_tabs: true
+  - pymdownx.keys
+  - pymdownx.tabbed:
+      alternate_style: true 
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+extra:
+  alternate:
+    - name: 日本語
+      link: https://siv3d.github.io/ja-jp/
+      lang: ja
+    - name: English
+      link: https://siv3d.github.io/en-us/
+      lang: en
+
+# Page tree
+nav:
+  - Get Started with Siv3D: index.md
+  - Siv3D Features: features.md
+  - Release Notes: releases.md
+  - Download:
+    - Windows: download/windows.md
+    - macOS: download/macos.md
+    - Ubuntu: download/ubuntu.md
+    - Web: download/web.md
+  - Tutorial Chapters 1-20:
+    - 1. Your First Siv3D: tutorial/hello.md
+    - 2. Try the Samples: tutorial/samples.md
+    - 3. Siv3D Basics: tutorial/basics.md
+    - 4. Main Function and Main Loop: tutorial/main.md
+    - 5. Basic App Operations: tutorial/app.md
+    - 6. Simple Output: tutorial/print.md
+    - 7. Basic Types and Classes: tutorial/basic-types.md
+    - 8. Changing the Background Color: tutorial/background.md
+    - 9. Screen and Coordinates: tutorial/scene.md
+    - 10. Drawing Circles: tutorial/circle.md
+    - 11. Drawing Rectangles: tutorial/rect.md
+    - 12. Drawing Patterns: tutorial/pattern.md
+    - 13. Drawing Emojis: tutorial/emoji.md
+    - 14. Moving Shapes and Emojis: tutorial/motion.md
+    - 15. Displaying Text: tutorial/text.md
+    - 16. Handling Mouse Input: tutorial/mouse.md
+    - 17. Handling Keyboard Input: tutorial/keyboard.md
+    - 18. Generating Random Numbers: tutorial/random.md
+    - 19. Working with Time: tutorial/time.md
+    - 20. Click Game: tutorial/click.md
+  - Tutorial Chapters 21-40:
+    - 21. Useful Functions: tutorial2/utility.md
+    - 22. Arrays: tutorial2/array.md
+    - 23. Arrays of Shapes: tutorial2/shape-array.md
+    - 24. Shape Intersection: tutorial2/intersection.md
+    - 25. Item Collection Game: tutorial2/collect.md
+    - 26. Drawing Shapes: tutorial2/shape.md
+    - 27. Shape Operations: tutorial2/shape-2.md
+    - 28. Creating Buttons: tutorial2/button.md
+    - 29. Cookie Clicker: tutorial2/cookie-clicker.md
+    - 30. Time and Motion: tutorial2/time.md
+    - 31. Drawing Textures: tutorial2/texture.md
+    - 32. Drawing Videos: tutorial2/video.md
+    - 33. String Class: tutorial2/string.md
+    - 34. Drawing Text: tutorial2/font.md
+    - 35. Types that Can Represent Invalid Values: tutorial2/optional.md
+    - 36. Number and String Conversion: tutorial2/format.md
+    - 37. Two-dimensional Arrays: tutorial2/grid.md
+    - 38. GUI: tutorial2/gui.md
+    - 39. Random: tutorial2/random.md
+    - 40. Implementing Interactions: tutorial2/interaction.md
+  - Tutorial Chapters 41-60:
+    - 41. Audio Playback: tutorial3/audio.md
+    - 42. Keyboard Input: tutorial3/keyboard.md
+    - 43. Mouse Input: tutorial3/mouse.md
+    - 44. Scene and Window: tutorial3/scene.md
+    - 45. Shape Intersection Detection: tutorial3/geometry2d.md
+    - 46. Hash Set: tutorial3/hashset.md
+    - 47. Hash Table: tutorial3/hashtable.md
+    - 48. 2D Render State: tutorial3/2d-render-state.md
+    - 49. 2D Coordinate Transformation and Camera: tutorial3/camera2d.md
+    - 50. Asset Management: tutorial3/asset.md
+    - 51. Effects: tutorial3/effect.md
+    - 52. Render Texture: tutorial3/render-texture.md
+    - 53. File System: tutorial3/filesystem.md
+    - 54. Text Files: tutorial3/text-file.md
+    - 55. Configuration Files: tutorial3/config-file.md
+    - 56. Binary Files: tutorial3/binary-file.md
+    - 57. Embedded Resources: tutorial3/resource.md
+    - 58. Scene Management: tutorial3/scene-manager.md
+    - 59. Gamepad: tutorial3/gamepad.md
+    - 60. Publishing Your App: tutorial3/release.md
+  - Tutorial Chapters 61-80:
+    - 61. File Dialog: tutorial4/file-dialog.md
+    - 62. HTTP Client: tutorial4/http.md
+    - 63. Image Processing: tutorial4/image.md
+    - 64. Drag & Drop: tutorial4/dragdrop.md
+    - 65. Clipboard: tutorial4/clipboard.md
+    - 66. Getting User Environment: tutorial4/user.md
+    - 67. OpenAI API: tutorial4/openai.md
+    - 68. AI Drawing Shiritori: tutorial4/shiritori.md
+    - 69. 2D Physics: tutorial4/physics2d.md
+    - 70. Microphone and Audio Waveform: tutorial4/microphone.md
+    - 71. Web Camera: tutorial4/webcam.md
+    - 72. Serial Communication: tutorial4/serial.md
+    - 73. OSC Communication: tutorial4/osc.md
+    - 74. TCP Communication: tutorial4/tcp.md
+    - 75. Multiplayer: tutorial4/multiplayer.md
+    - 76. Asynchronous Processing: tutorial4/async.md
+    - 77. Math Parser: tutorial4/mathparser.md
+    - 78. QR Code: tutorial4/qr.md
+    - 79. Text-to-Speech: tutorial4/tts.md
+    - 80. Efficient Drawing: tutorial4/performance.md
+  - Tutorial Chapters 81-:
+    - 81. Message Box: tutorial5/messagebox.md
+    - Future Updates: tutorial5/wip.md
+#    - 81. 2D Custom Shaders: tutorial5/empty.md
+#    - 82. Drawing 3D Shapes ①: tutorial5/empty.md
+#    - 83. Drawing 3D Shapes ②: tutorial5/empty.md
+#    - 84. 3D Intersection Detection: tutorial5/empty.md
+  - Sample Collection:
+    - Game Samples: samples/games.md
+    - Application Samples: samples/apps.md
+    - Web Service Integration Samples: samples/web.md
+    - Shape Samples: samples/shapes.md
+    - 2D Drawing Samples: samples/2d.md
+    - Image Samples: samples/image.md
+    - Text Display Samples: samples/text.md
+    - UI Samples: samples/ui.md
+    - Data Visualization Samples: samples/visualize.md
+    - Motion Graphics Samples: samples/motion-graphics.md
+    - Add-on Samples: samples/addon.md
+    - Audio Samples: samples/sound.md
+    - 2D Physics Samples: samples/physics2d.md
+    - 3D Drawing Samples: samples/3d.md
+    - Creating a Game Launcher: samples/gamelauncher.md
+  - Courses:
+    - Creating a Calculator App: course/calculator.md
+    - Using Polymorphism: course/polymorphism.md
+    - Radar Chart: course/radar-chart.md
+    - Creating Depth UI: course/quadwarp.md
+  - API:
+    - Class List: api/classes.md
+  - Articles:
+    - Managing Projects with GitHub: reference/github.md
+    - Game Development Tips: reference/game_tips.md
+    - Message Box: reference/messagebox.md
+    - Connecting Custom Classes with Siv3D: reference/adapter.md
+    - 21 Ways to Hello World with Siv3D: reference/helloworld.md
+    - Classes That Cannot Be Created as Global Variables: reference/avoid-global-variable.md
+    - Implementing Classes Using Polymorphism: reference/polymorphism.md
+  - Community:
+    - Community: community/community.md
+    - Past Events: community/history.md
+  - Useful Tools for Development:
+    - Siv3D Palette Browser: tools/palette.md
+    - Search for Emojis and Icons: tools/emoji.md
+    - Easing Functions Cheat Sheet: tools/easing.md
+    - GitHub Gist: tools/gist.md
+    - Cosense: tools/cosense.md
+    - Xbox Game Bar : tools/gamebar.md
+    - VSColorOutput: tools/vscoloroutput.md
+    - .gitignore: tools/gitignore.md
+    - Hot Reload: tools/hot-reload.md
+    - Displaying Exception Locations: tools/msvc-exception.md
+  - Contributing to Development:
+    - Reports and Suggestions: develop/report.md
+    - Building from Source: develop/build.md
+    - Contribution Guide: develop/commit.md
+    - Coding Style: develop/coding-style.md
+  - Events:
+    - Game Jam: event/gamejam.md
+    - Game Jam Award Winners: event/gamejam2023.md
+  - Corporate Sponsorship:
+    - About Corporate Sponsorship: sponsorship/corporate-sponsor.md
+    - Sponsorship Benefits: sponsorship/corporate-sponsor-guideline.md
+  - Steam: steam.md
+  - Siv3D-kun: mascot.md
+  - Social Contribution: social-contribution.md
+  - Acknowledgments: acknowledgments.md
+  - Contact: contact.md
