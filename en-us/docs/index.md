@@ -1,7 +1,7 @@
 # C++ Framework for Creative Coding: Siv3D
 <div class="logo"><img src="https://siv3d.jp/logo.png" width="1450" height="450"></div>
 
-**Siv3D (C-V-3-D)** is an open-source framework that enables developers to create games and applications using sound, images, and AI with modern C++ code in an enjoyable and simple way. It comes with extensive sample code and tutorials, and an online user community where you can easily ask questions and seek advice.
+**Siv3D** is an open-source framework that enables developers to create games and applications using sound, images, and AI with modern C++ code in an enjoyable and simple way. It comes with extensive sample code and tutorials, and an online user community where you can easily ask questions and seek advice.
 
 
 ## Download Siv3D
@@ -203,6 +203,7 @@ For programmers who want to leverage their C++ skills or those who want to learn
 - [sknjpn](https://x.com/sknjpn){:target="_blank"}
 - 野菜ジュース
 - [kagamiz](https://github.com/kagamiz){:target="_blank"}
+- [kt2763](https://github.com/kt2763){:target="_blank"}
 
 #### Bronze Sponsor
 アゲハマ, Fuyutsubaki, 😊, 🐝, jacking75, Chris Ohk, ysaito, おおやま, ShivAlley, lamuda, fal_rnd, As Project, IZUNA, nasatame, sashi, 🌶️, 💯, PlumRice
