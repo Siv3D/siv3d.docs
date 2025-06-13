@@ -1,65 +1,65 @@
-# 報告や提案
-Siv3D のライブラリやドキュメントの不具合、改善点、機能のリクエストをお持ちの方は、次のようにお知らせください。
+# Reports and Suggestions
+If you have bugs, improvements, or feature requests for Siv3D libraries or documentation, please let us know as follows:
 
-## 1. Siv3D のバグや不具合を報告する
-OpenSiv3D の [GitHub Issues :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D/issues) に、不具合の説明と再現のためのコード、必要に応じてスクリーンショットを投稿してください。誤字修正など些細な変更である場合、直接 Pull Request を開発ブランチ ( `v6_develop`) に対して送っても OK です。
+## 1. Reporting Siv3D Bugs and Issues
+Please post bug descriptions, code for reproduction, and screenshots if necessary to OpenSiv3D's [GitHub Issues :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D/issues). For minor changes such as typo corrections, you can directly send a Pull Request to the development branch (`v6_develop`).
 
-#### バグや不具合を報告する Issues の例
+#### Examples of Issues reporting bugs and issues
 - [https://github.com/Siv3D/OpenSiv3D/issues/558 :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D/issues/558)
 - [https://github.com/Siv3D/OpenSiv3D/issues/549 :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D/issues/549)
 
 
-## 2. 機能の改善やリクエストを送る
-OpenSiv3D の [GitHub Issues :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D/issues) に、提案の説明と、改善や追加が必要な理由を投稿してください。些細な変更である場合、直接 Pull Request を開発ブランチ ( `v6_develop`) に対して送っても OK です。
+## 2. Sending Feature Improvements and Requests
+Please post proposal descriptions and reasons why improvements or additions are needed to OpenSiv3D's [GitHub Issues :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D/issues). For minor changes, you can directly send a Pull Request to the development branch (`v6_develop`).
 
-#### 機能の改善やリクエストの Issues の例
+#### Examples of Issues for feature improvements and requests
 - [https://github.com/Siv3D/OpenSiv3D/issues/486 :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D/issues/486)
 - [https://github.com/Siv3D/OpenSiv3D/issues/630 :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D/issues/630)
 
 
-## 3. ドキュメントの不具合報告やリクエスト
-本 Web サイトは [Siv3D/siv3d.docs :material-open-in-new:](https://github.com/Siv3D/siv3d.docs) リポジトリで管理されています。リポジトリの Issues や Pull Request を利用してください。
+## 3. Documentation Bug Reports and Requests
+This website is managed in the [Siv3D/siv3d.docs :material-open-in-new:](https://github.com/Siv3D/siv3d.docs) repository. Please use Issues and Pull Requests in the repository.
 
 
-## 4. 新機能を開発する
+## 4. Developing New Features
 
-### 4.1 Siv3D 向けのライブラリを開発する
-- Siv3D Discord や OpenSiv3D 実装会で相談してください。実装方針など技術的なサポートを提供します。
-- Siv3D ユーザが使える形でライブラリを開発し、GitHub リポジトリで公開してください。十分なニーズがあり、コードの品質が高い場合、Siv3D の公式機能に組み込むための作業を開始します。
+### 4.1 Developing Libraries for Siv3D
+- Please consult through Siv3D Discord or OpenSiv3D implementation meetups. We provide technical support including implementation policies.
+- Develop libraries in a form that Siv3D users can use and publish them in GitHub repositories. If there is sufficient demand and high code quality, we will begin work to incorporate them into official Siv3D features.
 
-#### Siv3D 向けのライブラリ開発の Issues の例
+#### Examples of Issues for Siv3D library development
 - [https://github.com/Siv3D/OpenSiv3D/issues/482 :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D/issues/482)
 - [https://github.com/Siv3D/OpenSiv3D/issues/734 :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D/issues/734)
 
 
-### 4.2 Siv3D のコードを改善する
-- Siv3D Discord や OpenSiv3D 実装会で相談してください。実装方針など技術的なサポートを提供します。
+### 4.2 Improving Siv3D Code
+- Please consult through Siv3D Discord or OpenSiv3D implementation meetups. We provide technical support including implementation policies.
 
 
-### 4.3 Siv3D に新機能を追加する
-- Siv3D Discord や OpenSiv3D 実装会で相談してください。実装方針など技術的なサポートを提供します。
-- OpenSiv3D チャレンジでは、新機能実装課題を提供しています。
+### 4.3 Adding New Features to Siv3D
+- Please consult through Siv3D Discord or OpenSiv3D implementation meetups. We provide technical support including implementation policies.
+- OpenSiv3D Challenge provides new feature implementation tasks.
 
 
-## 5. Siv3D にサンプル用アセットを提供する
-Siv3D のプロジェクトにおいて、ユーザが自由に利用できる画像や音声素材の提供で Siv3D に貢献できます。Siv3D Discord や OpenSiv3D 実装会で相談してください。
+## 5. Providing Sample Assets for Siv3D
+You can contribute to Siv3D by providing image and audio materials that users can freely use in Siv3D projects. Please consult through Siv3D Discord or OpenSiv3D implementation meetups.
 
-#### サンプル用アセット提供の Issues の例
-- ドット絵: [https://github.com/Siv3D/OpenSiv3D/issues/570 :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D/issues/570)
-- 3D モデル: [https://github.com/Siv3D/OpenSiv3D/issues/621 :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D/issues/621)
-
-
-## 6. サンプルやドキュメントを開発する
-- Siv3D のサンプルやドキュメントの執筆者を募集しています。Siv3D Discord や OpenSiv3D 実装会で相談してください。
-- [Scrapbox](../tools/scrapbox.md){:target="_blank"} を使って独自にサンプル集を作成・公開する事もできます。
+#### Examples of Issues for providing sample assets
+- Pixel art: [https://github.com/Siv3D/OpenSiv3D/issues/570 :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D/issues/570)
+- 3D models: [https://github.com/Siv3D/OpenSiv3D/issues/621 :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D/issues/621)
 
 
+## 6. Developing Samples and Documentation
+- We are recruiting writers for Siv3D samples and documentation. Please consult through Siv3D Discord or OpenSiv3D implementation meetups.
+- You can also create and publish your own sample collections using [Cosense](../tools/cosense.md){:target="_blank"}.
 
-## 7. 開発に参加する特典
-Siv3D は多くの人と共にオープンソース開発を進めながら、便利で品質の高いフレームワークを維持・提供することを目指しています。同時に、十代二十代の若い世代がオープンソースソフトウェア（OSS）活動に取り組むことを応援しています。
 
-Siv3D では、新機能やコードの修正に貢献してくれた開発者が OSS 活動の実績を残せるよう、提案者からの Pull Request によって機能をマージします。これにより、提案者の成果が Siv3D の GitHub リポジトリのコミット履歴に記録されます。不具合の報告や機能の提案に関しても、GitHub Issues の使用を推奨しています。
 
-Siv3D 本体およびドキュメントのリポジトリにコミットをされた方、その他顕著な貢献をされた方には、GitHub の [Siv3D Organization メンバー :material-open-in-new:](https://github.com/orgs/Siv3D/people) への招待が送られます (GitHub に登録しているメールアドレスに届きます）。招待を受諾し、上記ページで自身の表示設定を「Public」に変更すると、GitHub の自身のプロフィールページに Siv3D のアイコンが表示されます（設定が「Private」のままだと、自身と他のメンバーにしかアイコンは表示されません）。
+## 7. Benefits of Participating in Development
+Siv3D aims to maintain and provide a convenient and high-quality framework while advancing open source development with many people. At the same time, we support young people in their teens and twenties to engage in open source software (OSS) activities.
 
-- アイコン表示の例: [https://github.com/Ebishu-0309 :material-open-in-new:](https://github.com/Ebishu-0309)
+In Siv3D, to help developers who contribute new features and code fixes build a track record of OSS activities, we merge features through Pull Requests from proposers. This ensures that the proposer's achievements are recorded in the commit history of Siv3D's GitHub repository. We also recommend using GitHub Issues for bug reports and feature proposals.
+
+Those who have committed to the Siv3D main body and documentation repositories, as well as those who have made notable contributions, will be invited to become [Siv3D Organization members :material-open-in-new:](https://github.com/orgs/Siv3D/people) (the invitation will be sent to the email address registered with GitHub). By accepting the invitation and changing your display setting to "Public" on the above page, the Siv3D icon will be displayed on your GitHub profile page (if the setting remains "Private", the icon will only be visible to yourself and other members).
+
+- Example of icon display: [https://github.com/Ebishu-0309 :material-open-in-new:](https://github.com/Ebishu-0309)

@@ -1,88 +1,72 @@
-# 協賛特典
-法人協賛の特典を紹介します。
+# Sponsorship Benefits
+This introduces the benefits of corporate sponsorship.
 
-## 1. バナー掲載
+## 1. Banner Placement
 
-### 1.1 バナーの条件
+### 1.1 Banner Requirements
 
-| 属性 | 説明 |
+| Attribute | Description |
 |:--|:--|
-| 画像形式 | PNG / JPEG / SVG  |
-| 提出サイズ | 長辺 400px～1200px 目安  |
-| 透過画像 | 可  |
-| アニメーション | 不可  |
-| リンク | `<a href="" target="_blank">` にてリンク付与  |
+| Image Format | PNG / JPEG / SVG |
+| Submission Size | Approximately 400px to 1200px on the long side |
+| Transparency | Allowed |
+| Animation | Not allowed |
+| Link | Links added with `<a href="" target="_blank">` |
 
-- 個人スポンサーより大きい面積（ページ幅の 20～50% の範囲でデザインに応じて）
-- 法人ロゴのデザイン変更など、重要な変更があった場合は期間途中で差し替え可
-- 協賛法人が増え、複数のバナーを掲載することになった場合、大きさのバランスを調整することがあります
-- 協賛額が同一の場合、累計期間が長い順での掲載となります
+- Larger area than individual sponsors (20-50% of page width depending on design)
+- Important changes such as corporate logo design changes can be replaced during the period
+- When there are multiple corporate sponsors and multiple banners are displayed, size balance may be adjusted
+- If sponsorship amounts are the same, placement will be in order of longest cumulative period
 
+### 1.2 Placement Locations
 
-### 1.2 掲載場所
+#### Siv3D Official Website Top Page
+- Japanese: [https://siv3d.github.io/ja-jp/](https://siv3d.github.io/ja-jp/){:target="_blank"}
+- English: [https://siv3d.github.io/](https://siv3d.github.io/){:target="_blank"}
 
-#### Siv3D 公式サイト トップページ
-- 日本語: [https://siv3d.github.io/ja-jp/](https://siv3d.github.io/ja-jp/){:target="_blank"}
-- 英語: [https://siv3d.github.io/](https://siv3d.github.io/){:target="_blank"}
-  
-#### Siv3D Studio (Web IDE) ランディングページ
-- 日本語: https://siv3d.github.io/ja-jp/studio/ (公開準備中)
-- 英語: https://siv3d.github.io/studio/ (公開準備中)
+#### Study Session Event Pages
+- Example: [https://connpass.com/event/334897/ :material-open-in-new:](https://connpass.com/event/334897/){:target="_blank"}
 
-#### 勉強会イベントページ
-- 例: [https://connpass.com/event/276228/ :material-open-in-new:](https://connpass.com/event/276228/){:target="_blank"}
+## 2. Sponsor Role Assignment in Official Forum
+- Up to 3 accounts joining the Siv3D Discord server will be assigned the "corporate sponsor" role
+- Accounts with this role will have their user ID displayed in yellow in chat, indicating to participants that it's a sponsor post
 
-!!! info
-	2022 年の勉強会は参加者 98 名、6 校訪問。2023 年は 150 人以上、10 校訪問を見込んでいます。
+#### How to Join the Official Forum
+- From the "Join Siv3D Discord Server" section on the [**Community**](../community/community.md){:target="_blank"} page, join with your Discord account
+- After joining, please let us know your user ID
 
-## 2. 公式フォーラムにおける Sponsor ロール付与
-Siv3D Discord サーバに参加するアカウント（最大 3 名）に 「corporate sponsor」ロールを付与します。ロールが付与されたアカウントは、チャットにおいてユーザ ID が黄色で表示され、スポンサー投稿であることがほかの参加者に伝わります。
+#### Channels Suitable for Corporate Information Distribution
 
-#### 公式フォーラムへの参加方法
-[**コミュニティ**](../community/community.md){:target="_blank"}ページ内の「Discord Siv3D サーバに参加する」から、ご自身の Discord アカウントで参加してください。参加後、ユーザ ID (例: `しぶ#1234`）をお知らせください。
-
-#### 企業情報の発信に適したチャンネル
-
-| チャンネル名 | チャンネル概要 |
+| Channel Name | Channel Overview |
 |:--|:--|
-| `#外部イベント` | イベントや求人に関する投稿  |
-| `#random` | Siv3D と関係しない自由な話題  |
-| `#questions` | Siv3D への質問   |
+| `#external-events` | Posts about events and job opportunities |
+| `#random` | Free topics not related to Siv3D |
+| `#questions` | Questions about Siv3D |
 
+!!! info "Official Forum Registration Numbers"
+	- As of January 2025, the Siv3D Discord server has approximately 620 registered members
+	- The majority of registered members are university students, technical college students, graduate students, high school students, and vocational school students
 
-!!! info "公式フォーラムの登録人数"
-	Siv3D Discord サーバの登録者は 2023 年 5 月時点で 約 300 人です。600 人超が登録する Siv3D Slack（運用停止済み）よりも少ないですが、Discord は 2022 年 7 月に本格運用を開始したばかりで、休眠ユーザが少ないと考えられます。2023 年内には登録者数が 400 人を超えることを見込んでいます。登録者の構成は 1～2 割が社会人、それ以外は大学生、高専生、大学院生、高校生と推定しています。
+## 3. SNS PR Cooperation
+We will cooperate with corporate PR on social media up to once a month.
 
-!!! info "公式フォーラムにおける採用関連投稿の注意事項"
-	公式フォーラム上で、協賛法人の担当者が、自身で自社の採用に関するメッセージを投稿することは問題ありません。ただし、Siv3D 側は職業紹介事業（職業安定法第 4 条 1 項）への抵触を避けるため、公式フォーラム上において、採用に関する告知への協力や推薦を行うことはなく、傍観者としての立場になります。学生インターンシップについての投稿も同様です。
+- Siv3D representative's personal Twitter account [@Reputeless :material-open-in-new:](https://x.com/Reputeless){:target="_blank"}
+	- Approximately 5,900 followers
+	- Follower interests: C++, game development, programming, competitive programming, creative coding
+	- Posts with `#PR` tag
 
-## 3. SNS での PR 協力
-最大月 1 回の頻度を目安に、SNS での企業 PR に協力いたします。
+## 4. Outreach to Study Session Participants
+- The following outreach to Siv3D study session participants is possible:
+	- Novelty distribution
+	- Pamphlet distribution
+	- Video screening
+	- Lectures (online also possible)
 
-- Siv3D 代表個人の Twitter アカウント [@Reputeless :material-open-in-new:](https://twitter.com/Reputeless){:target="_blank"}
-	- フォロワー約 5,400 人
-	- フォロワーの関心: C++, ゲーム開発, プログラミング、競技プログラミング、クリエイティブコーディング
-- ステルスマーケティングにならない形式
-	- 例:「Siv3D の協賛法人である 〇〇 が ×× をアナウンスしました。（個人的な感想）。（公式のツイートリンク / Web ページ URL）」
-	- 文面については事前確認・調整可です
+## 5. Co-hosted Events
+- Co-hosted events such as studio tours, hackathons, and game jams are possible
 
+## 6. Siv3D Activity Reports
+- Requests and inquiries about the content of quarterly activity reports are possible
 
-## 4. 勉強会参加者への発信
-Siv3D 勉強会の参加者に対して、次のような発信が可能です。
-
-- ノベルティ配布
-- パンフレット配布
-- ムービーの上映（3 分以内目安）
-- オンラインでの講演（3 分以内目安）
-
-
-## 5. 共催イベント
-スタジオツアー、ハッカソン、ゲームジャム等の共催イベントが可能です。
-
-
-## 6. Siv3D 活動報告書
-季節ごとに発行される活動報告書の内容について、ご要望やお問い合わせが可能です。
-
-
-## 7. テクニカルプレビューへのアクセス
-Siv3D の公開前の新サービスやツールに関して、説明や先行体験を受けることができます。  
+## 7. Access to Technical Previews
+- You can receive explanations and early access to Siv3D's new services and tools before public release

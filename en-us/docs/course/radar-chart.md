@@ -1,33 +1,33 @@
-# レーダーチャート
+# Radar Chart
 
 | | | | |
 |:--:|:--:|:--:|:--:|
-| **難易度** | 中級 | **時間** | 60 分～ |
+| **Difficulty** | Intermediate | **Time** | 60 minutes~ |
 
-統計データを用いて、日本の各都市における 1 人あたりの食料支出金額（1. 穀類、2. 魚介類、3. 肉類、4. 乳製品、5. 野菜・海藻、6. 果物）を比較するレーダーチャートを描画します。本コースで使用する統計データは、独立行政法人統計センターが公開している [SSDSE（教育用標準データセット）:material-open-in-new:](https://www.nstac.go.jp/use/literacy/ssdse/){:target="_blank"} を UTF-8 形式の CSV ファイルに改変したものです。
+Using statistical data, we will draw a radar chart comparing the per capita food expenditure amounts in Japanese cities (1. Cereals, 2. Seafood, 3. Meat, 4. Dairy products, 5. Vegetables & Seaweed, 6. Fruits). The statistical data used in this course is based on [SSDSE (Standard Statistical Dataset for Education) :material-open-in-new:](https://www.nstac.go.jp/use/literacy/ssdse/){:target="_blank"} published by the National Statistics Center, converted to a UTF-8 format CSV file.
 
-次の URL を右クリックして「名前を付けてリンク先を保存」でダウンロードしてください。ファイル名は `input1.csv` です。
+Please right-click the following URL and select "Save link as" to download. The file name is `input1.csv`.
 
-統計データ CSV ファイルダウンロード: [input1.csv :material-open-in-new:](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/course/radar-chart/input1.csv){:target="_blank"}
+Statistical data CSV file download: [input1.csv :material-open-in-new:](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/course/radar-chart/input1.csv){:target="_blank"}
 
-ダウンロードした CSV ファイルは、プログラムから開けるよう、プロジェクトフォルダの `App/` フォルダ内に配置します。
+Place the downloaded CSV file in the `App/` folder of your project folder so it can be opened from the program.
 
-## 1. ウィンドウサイズと背景色を設定する
+## 1. Set window size and background color
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/course/radar-chart/1.png)
 
-- グラフの描画に十分な大きさのウィンドウを作成し、背景を明るい色に設定します。
+- Create a window large enough for drawing graphs and set the background to a bright color.
 
-??? note "コード"
+??? note "Code"
 	```cpp hl_lines="5-6 8-9"
 	# include <Siv3D.hpp>
 
 	void Main()
 	{
-		// ウィンドウを 1200x700 にリサイズする
+		// Resize window to 1200x700
 		Window::Resize(1200, 700);
 
-		// 背景色を設定する
+		// Set background color
 		Scene::SetBackground(ColorF{ 0.99, 0.98, 0.97 });
 
 		while (System::Update())
@@ -38,35 +38,35 @@
 	```
 
 
-## 2. レーダーチャートの円を描画する
+## 2. Draw radar chart circles
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/course/radar-chart/2.png)
 
-- レーダーチャートの円を描画します。25 % ごとに円を描画し、4 番目の 100 % の円は太く描画します。
+- Draw the radar chart circles. Draw circles every 25%, with the 4th circle at 100% drawn thicker.
 
-??? note "コード"
+??? note "Code"
 	```cpp hl_lines="11-12 16-28"
 	# include <Siv3D.hpp>
 
 	void Main()
 	{
-		// ウィンドウを 1200x700 にリサイズする
+		// Resize window to 1200x700
 		Window::Resize(1200, 700);
 
-		// 背景色を設定する
+		// Set background color
 		Scene::SetBackground(ColorF{ 0.99, 0.98, 0.97 });
 
-		// レーダーチャートの中心座標
+		// Radar chart center coordinates
 		const Vec2 radarCenter{ 400, 350 };
 
 		while (System::Update())
 		{
-			// レーダーチャートの円を描画する
+			// Draw radar chart circles
 			for (int32 i = 1; i <= 6; ++i)
 			{
 				if (i == 4)
 				{
-					// 100 % の円だけ太く描画する
+					// Draw only the 100% circle thick
 					Circle{ radarCenter, (40 * i) }.drawFrame(3, ColorF{ 0.5 });
 				}
 				else
@@ -80,64 +80,64 @@
 
 
 
-## 3. データ用のクラスを用意する
+## 3. Prepare a class for data
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/course/radar-chart/3.png)
 
-- 統計情報を格納するクラス `Item` を作成します。
-- `Item` のメンバ変数は次の通りです。
-	- `name`: 都市名
-	- `household`: 世帯の人数
-	- `perHousehold`: 1 世帯あたりの支出金額（0. 穀類、1. 魚介類、2. 肉類、3. 乳製品、4. 野菜・海藻、5. 果物）の配列
-	- `perPerson`: 1 人あたりの支出金額の配列
-	- `perPersonRelative`: 1 人あたりの支出金額（全国平均比）の配列
-- 仮のデータとして、札幌市のデータを適当な値で用意します。
+- Create an `Item` class to store statistical information.
+- The member variables of `Item` are as follows:
+	- `name`: City name
+	- `household`: Number of people in household
+	- `perHousehold`: Array of expenditure amounts per household (0. Cereals, 1. Seafood, 2. Meat, 3. Dairy products, 4. Vegetables & Seaweed, 5. Fruits)
+	- `perPerson`: Array of expenditure amounts per person
+	- `perPersonRelative`: Array of expenditure amounts per person (relative to national average)
+- As dummy data, prepare Sapporo city data with arbitrary values.
 
-??? note "コード"
+??? note "Code"
 	```cpp hl_lines="3-20 33-34 52-58"
 	# include <Siv3D.hpp>
 
-	/// @brief アイテム
+	/// @brief Item
 	struct Item
 	{
-		/// @brief 都市の名前
+		/// @brief City name
 		String city;
 
-		/// @brief 世帯の人数
+		/// @brief Number of people in household
 		double household = 0.0;
 
-		/// @brief 1 世帯あたりの支出
+		/// @brief Expenditure per household
 		Array<double> perHousehold;
 
-		/// @brief 1 人あたりの支出
+		/// @brief Expenditure per person
 		Array<double> perPerson;
 
-		/// @brief 1 人あたりの支出（全国平均比）
+		/// @brief Expenditure per person (relative to national average)
 		Array<double> perPersonRelative;
 	};
 
 	void Main()
 	{
-		// ウィンドウを 1200x700 にリサイズする
+		// Resize window to 1200x700
 		Window::Resize(1200, 700);
 
-		// 背景色を設定する
+		// Set background color
 		Scene::SetBackground(ColorF{ 0.99, 0.98, 0.97 });
 
-		// レーダーチャートの中心座標
+		// Radar chart center coordinates
 		const Vec2 radarCenter{ 400, 350 };
 
-		// 仮のアイテム
-		const Item item{ U"札幌市", 1.0, { 100, 200, 300, 400, 500, 600 }, { 100, 200, 300, 400, 500, 600 }, { 1.0, 1.25, 0.75, 0.75, 1.0, 1.25 } };
+		// Dummy item
+		const Item item{ U"Sapporo", 1.0, { 100, 200, 300, 400, 500, 600 }, { 100, 200, 300, 400, 500, 600 }, { 1.0, 1.25, 0.75, 0.75, 1.0, 1.25 } };
 
 		while (System::Update())
 		{
-			// レーダーチャートの円を描画する
+			// Draw radar chart circles
 			for (int32 i = 1; i <= 6; ++i)
 			{
 				if (i == 4)
 				{
-					// 100 % の円だけ太く描画する
+					// Draw only the 100% circle thick
 					Circle{ radarCenter, (40 * i) }.drawFrame(3, ColorF{ 0.5 });
 				}
 				else
@@ -146,9 +146,9 @@
 				}
 			}
 
-			// レーダーチャートのデータを描画する
+			// Draw radar chart data
 			{
-				// 札幌市のデータ
+				// Sapporo city data
 				const auto& values = item.perPersonRelative;
 
 				// ToDo
@@ -158,57 +158,57 @@
 	```
 
 
-## 4. 点を描画する
+## 4. Draw points
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/course/radar-chart/4.png)
 
-- 札幌市の仮のデータをもとに、レーダーチャートの各点を描画します。
-- `GetPoints()` 関数は、レーダーチャートにおける各点の座標を円座標を使って計算し、その結果を返します。
+- Draw each point of the radar chart based on Sapporo's dummy data.
+- The `GetPoints()` function calculates the coordinates of each point in the radar chart using polar coordinates and returns the result.
 
-??? note "コード"
+??? note "Code"
 	```cpp hl_lines="22-47 84-91"
 	# include <Siv3D.hpp>
 
-	/// @brief アイテム
+	/// @brief Item
 	struct Item
 	{
-		/// @brief 都市の名前
+		/// @brief City name
 		String city;
 
-		/// @brief 世帯の人数
+		/// @brief Number of people in household
 		double household = 0.0;
 
-		/// @brief 1 世帯あたりの支出
+		/// @brief Expenditure per household
 		Array<double> perHousehold;
 
-		/// @brief 1 人あたりの支出
+		/// @brief Expenditure per person
 		Array<double> perPerson;
 
-		/// @brief 1 人あたりの支出（全国平均比）
+		/// @brief Expenditure per person (relative to national average)
 		Array<double> perPersonRelative;
 	};
 
-	/// @brief レーダーチャートにおける点の座標の配列を返します。
-	/// @param values データ
-	/// @param radarCenter レーダーチャートの中心座標
-	/// @return レーダーチャートにおける点の座標の配列
+	/// @brief Returns an array of point coordinates in the radar chart.
+	/// @param values Data
+	/// @param radarCenter Radar chart center coordinates
+	/// @return Array of point coordinates in the radar chart
 	Array<Vec2> GetPoints(const Array<double>& values, const Vec2& radarCenter)
 	{
-		// 点の座標の配列
+		// Array of point coordinates
 		Array<Vec2> points;
 
 		for (int32 i = 0; i < values.size(); ++i)
 		{
-			// 角度（0 時の方向が 0 度、時計回り）
+			// Angle (0 degrees at 12 o'clock, clockwise)
 			const double angle = (i * (360_deg / values.size()));
 
-			// 半径
+			// Radius
 			const double r = (160 * values[i]);
 
-			// 角度と半径から点の座標を計算する
+			// Calculate point coordinates from angle and radius
 			const Vec2 pos = OffsetCircular{ radarCenter, r, angle };
 
-			// 点の座標を配列に追加する
+			// Add point coordinates to array
 			points << pos;
 		}
 
@@ -217,26 +217,26 @@
 
 	void Main()
 	{
-		// ウィンドウを 1200x700 にリサイズする
+		// Resize window to 1200x700
 		Window::Resize(1200, 700);
 
-		// 背景色を設定する
+		// Set background color
 		Scene::SetBackground(ColorF{ 0.99, 0.98, 0.97 });
 
-		// レーダーチャートの中心座標
+		// Radar chart center coordinates
 		const Vec2 radarCenter{ 400, 350 };
 
-		// 仮のアイテム
-		const Item item{ U"札幌市", 1.0, { 100, 200, 300, 400, 500, 600 }, { 100, 200, 300, 400, 500, 600 }, { 1.0, 1.25, 0.75, 0.75, 1.0, 1.25 } };
+		// Dummy item
+		const Item item{ U"Sapporo", 1.0, { 100, 200, 300, 400, 500, 600 }, { 100, 200, 300, 400, 500, 600 }, { 1.0, 1.25, 0.75, 0.75, 1.0, 1.25 } };
 
 		while (System::Update())
 		{
-			// レーダーチャートの円を描画する
+			// Draw radar chart circles
 			for (int32 i = 1; i <= 6; ++i)
 			{
 				if (i == 4)
 				{
-					// 100 % の円だけ太く描画する
+					// Draw only the 100% circle thick
 					Circle{ radarCenter, (40 * i) }.drawFrame(3, ColorF{ 0.5 });
 				}
 				else
@@ -245,15 +245,15 @@
 				}
 			}
 
-			// レーダーチャートのデータを描画する
+			// Draw radar chart data
 			{
-				// 札幌市のデータ
+				// Sapporo city data
 				const auto& values = item.perPersonRelative;
 
-				// 点の座標の配列
+				// Array of point coordinates
 				const Array<Vec2> points = GetPoints(values, radarCenter);
 
-				// 点を描画する
+				// Draw points
 				for (const auto& p : points)
 				{
 					Circle{ p, 8 }.draw(ColorF{ 1.0, 0.5, 0.0 });
@@ -264,56 +264,56 @@
 	```
 
 
-## 5. 多角形を描画する
+## 5. Draw polygon
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/course/radar-chart/5.png)
 
-- レーダーチャートの各点を結んだ多角形を描画します。
+- Draw a polygon connecting each point of the radar chart.
 
-??? note "コード"
+??? note "Code"
 	```cpp hl_lines="87-94"
 	# include <Siv3D.hpp>
 
-	/// @brief アイテム
+	/// @brief Item
 	struct Item
 	{
-		/// @brief 都市の名前
+		/// @brief City name
 		String city;
 
-		/// @brief 世帯の人数
+		/// @brief Number of people in household
 		double household = 0.0;
 
-		/// @brief 1 世帯あたりの支出
+		/// @brief Expenditure per household
 		Array<double> perHousehold;
 
-		/// @brief 1 人あたりの支出
+		/// @brief Expenditure per person
 		Array<double> perPerson;
 
-		/// @brief 1 人あたりの支出（全国平均比）
+		/// @brief Expenditure per person (relative to national average)
 		Array<double> perPersonRelative;
 	};
 
-	/// @brief レーダーチャートにおける点の座標の配列を返します。
-	/// @param values データ
-	/// @param radarCenter レーダーチャートの中心座標
-	/// @return レーダーチャートにおける点の座標の配列
+	/// @brief Returns an array of point coordinates in the radar chart.
+	/// @param values Data
+	/// @param radarCenter Radar chart center coordinates
+	/// @return Array of point coordinates in the radar chart
 	Array<Vec2> GetPoints(const Array<double>& values, const Vec2& radarCenter)
 	{
-		// 点の座標の配列
+		// Array of point coordinates
 		Array<Vec2> points;
 
 		for (int32 i = 0; i < values.size(); ++i)
 		{
-			// 角度（0 時の方向が 0 度、時計回り）
+			// Angle (0 degrees at 12 o'clock, clockwise)
 			const double angle = (i * (360_deg / values.size()));
 
-			// 半径
+			// Radius
 			const double r = (160 * values[i]);
 
-			// 角度と半径から点の座標を計算する
+			// Calculate point coordinates from angle and radius
 			const Vec2 pos = OffsetCircular{ radarCenter, r, angle };
 
-			// 点の座標を配列に追加する
+			// Add point coordinates to array
 			points << pos;
 		}
 
@@ -322,26 +322,26 @@
 
 	void Main()
 	{
-		// ウィンドウを 1200x700 にリサイズする
+		// Resize window to 1200x700
 		Window::Resize(1200, 700);
 
-		// 背景色を設定する
+		// Set background color
 		Scene::SetBackground(ColorF{ 0.99, 0.98, 0.97 });
 
-		// レーダーチャートの中心座標
+		// Radar chart center coordinates
 		const Vec2 radarCenter{ 400, 350 };
 
-		// 仮のアイテム
-		const Item item{ U"札幌市", 1.0, { 100, 200, 300, 400, 500, 600 }, { 100, 200, 300, 400, 500, 600 }, { 1.0, 1.25, 0.75, 0.75, 1.0, 1.25 } };
+		// Dummy item
+		const Item item{ U"Sapporo", 1.0, { 100, 200, 300, 400, 500, 600 }, { 100, 200, 300, 400, 500, 600 }, { 1.0, 1.25, 0.75, 0.75, 1.0, 1.25 } };
 
 		while (System::Update())
 		{
-			// レーダーチャートの円を描画する
+			// Draw radar chart circles
 			for (int32 i = 1; i <= 6; ++i)
 			{
 				if (i == 4)
 				{
-					// 100 % の円だけ太く描画する
+					// Draw only the 100% circle thick
 					Circle{ radarCenter, (40 * i) }.drawFrame(3, ColorF{ 0.5 });
 				}
 				else
@@ -350,24 +350,24 @@
 				}
 			}
 
-			// レーダーチャートのデータを描画する
+			// Draw radar chart data
 			{
-				// 札幌市のデータ
+				// Sapporo city data
 				const auto& values = item.perPersonRelative;
 
-				// 点の座標の配列
+				// Array of point coordinates
 				const Array<Vec2> points = GetPoints(values, radarCenter);
 
-				// レーダーチャートの多角形
+				// Radar chart polygon
 				const Polygon polygon{ points };
 
-				// 多角形を描画する
+				// Draw polygon
 				polygon.draw(ColorF{ 0.8, 0.4, 0.0, 0.5 });
 
-				// 多角形の枠を描画する
+				// Draw polygon frame
 				polygon.drawFrame(4, ColorF{ 1.0, 0.5, 0.0 });
 
-				// 点を描画する
+				// Draw points
 				for (const auto& p : points)
 				{
 					Circle{ p, 8 }.draw(ColorF{ 1.0, 0.5, 0.0 });
@@ -378,42 +378,42 @@
 	```
 
 
-## 6. データを CSV ファイルから読み込む
+## 6. Load data from CSV file
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/course/radar-chart/6.png)
 
-- CSV ファイルからデータを読み込む関数 `LoadFromCSV()` を作成します（途中まで）。
-- CSV ファイルには無関係のデータも含まれているため、必要なデータが含まれるセルを指定して読み込みます。
+- Create a function `LoadFromCSV()` to load data from a CSV file (partially completed).
+- Since the CSV file contains irrelevant data, we specify and load cells containing necessary data.
 
-??? note "コード"
+??? note "Code"
 	```cpp hl_lines="22-67"
 	# include <Siv3D.hpp>
 
-	/// @brief アイテム
+	/// @brief Item
 	struct Item
 	{
-		/// @brief 都市の名前
+		/// @brief City name
 		String city;
 
-		/// @brief 世帯の人数
+		/// @brief Number of people in household
 		double household = 0.0;
 
-		/// @brief 1 世帯あたりの支出
+		/// @brief Expenditure per household
 		Array<double> perHousehold;
 
-		/// @brief 1 人あたりの支出
+		/// @brief Expenditure per person
 		Array<double> perPerson;
 
-		/// @brief 1 人あたりの支出（全国平均比）
+		/// @brief Expenditure per person (relative to national average)
 		Array<double> perPersonRelative;
 	};
 
-	/// @brief CSV ファイルからアイテムの配列を読み込みます。
-	/// @param path CSV ファイルのパス
-	/// @return アイテムの配列
+	/// @brief Loads an array of items from a CSV file.
+	/// @param path CSV file path
+	/// @return Array of items
 	Array<Item> LoadFromCSV(const FilePath& path)
 	{
-		// CSV ファイルを読み込む
+		// Load CSV file
 		const CSV csv{ path };
 
 		if (not csv)
@@ -421,19 +421,19 @@
 			return{};
 		}
 
-		// アイテムの配列
+		// Array of items
 		Array<Item> items;
 
-		// 0 行目と 1 行目は無視し、2 行目から 50 行目までのデータを読み込む
+		// Ignore rows 0 and 1, load data from row 2 to row 50
 		for (int32 y = 2; y < 50; ++y)
 		{
-			// 都市の名前
+			// City name
 			const String city = csv[y][2];
 
-			// 世帯の人数
+			// Number of people in household
 			const double household = Parse<double>(csv[y][3]);
 
-			// 各食品の 1 世帯当たりの支出
+			// Expenditure per household for each food category
 			const double d1 = Parse<double>(csv[y][5]);
 			const double d2 = Parse<double>(csv[y][19]);
 			const double d3 = Parse<double>(csv[y][55]);
@@ -446,7 +446,7 @@
 			item.household = household;
 			item.perHousehold = { d1, d2, d3, d4, d5, d6 };
 
-			// アイテムを配列に追加する
+			// Add item to array
 			items << item;
 		}
 
@@ -455,27 +455,27 @@
 		return items;
 	}
 
-	/// @brief レーダーチャートにおける点の座標の配列を返します。
-	/// @param values データ
-	/// @param radarCenter レーダーチャートの中心座標
-	/// @return レーダーチャートにおける点の座標の配列
+	/// @brief Returns an array of point coordinates in the radar chart.
+	/// @param values Data
+	/// @param radarCenter Radar chart center coordinates
+	/// @return Array of point coordinates in the radar chart
 	Array<Vec2> GetPoints(const Array<double>& values, const Vec2& radarCenter)
 	{
-		// 点の座標の配列
+		// Array of point coordinates
 		Array<Vec2> points;
 
 		for (int32 i = 0; i < values.size(); ++i)
 		{
-			// 角度（0 時の方向が 0 度、時計回り）
+			// Angle (0 degrees at 12 o'clock, clockwise)
 			const double angle = (i * (360_deg / values.size()));
 
-			// 半径
+			// Radius
 			const double r = (160 * values[i]);
 
-			// 角度と半径から点の座標を計算する
+			// Calculate point coordinates from angle and radius
 			const Vec2 pos = OffsetCircular{ radarCenter, r, angle };
 
-			// 点の座標を配列に追加する
+			// Add point coordinates to array
 			points << pos;
 		}
 
@@ -484,26 +484,26 @@
 
 	void Main()
 	{
-		// ウィンドウを 1200x700 にリサイズする
+		// Resize window to 1200x700
 		Window::Resize(1200, 700);
 
-		// 背景色を設定する
+		// Set background color
 		Scene::SetBackground(ColorF{ 0.99, 0.98, 0.97 });
 
-		// レーダーチャートの中心座標
+		// Radar chart center coordinates
 		const Vec2 radarCenter{ 400, 350 };
 
-		// 仮のアイテム
-		const Item item{ U"札幌市", 1.0, { 100, 200, 300, 400, 500, 600 }, { 100, 200, 300, 400, 500, 600 }, { 1.0, 1.25, 0.75, 0.75, 1.0, 1.25 } };
+		// Dummy item
+		const Item item{ U"Sapporo", 1.0, { 100, 200, 300, 400, 500, 600 }, { 100, 200, 300, 400, 500, 600 }, { 1.0, 1.25, 0.75, 0.75, 1.0, 1.25 } };
 
 		while (System::Update())
 		{
-			// レーダーチャートの円を描画する
+			// Draw radar chart circles
 			for (int32 i = 1; i <= 6; ++i)
 			{
 				if (i == 4)
 				{
-					// 100 % の円だけ太く描画する
+					// Draw only the 100% circle thick
 					Circle{ radarCenter, (40 * i) }.drawFrame(3, ColorF{ 0.5 });
 				}
 				else
@@ -512,24 +512,24 @@
 				}
 			}
 
-			// レーダーチャートのデータを描画する
+			// Draw radar chart data
 			{
-				// 札幌市のデータ
+				// Sapporo city data
 				const auto& values = item.perPersonRelative;
 
-				// 点の座標の配列
+				// Array of point coordinates
 				const Array<Vec2> points = GetPoints(values, radarCenter);
 
-				// レーダーチャートの多角形
+				// Radar chart polygon
 				const Polygon polygon{ points };
 
-				// 多角形を描画する
+				// Draw polygon
 				polygon.draw(ColorF{ 0.8, 0.4, 0.0, 0.5 });
 
-				// 多角形の枠を描画する
+				// Draw polygon frame
 				polygon.drawFrame(4, ColorF{ 1.0, 0.5, 0.0 });
 
-				// 点を描画する
+				// Draw points
 				for (const auto& p : points)
 				{
 					Circle{ p, 8 }.draw(ColorF{ 1.0, 0.5, 0.0 });
@@ -540,42 +540,42 @@
 	```
 
 
-## 7. 目的のデータを計算する
+## 7. Calculate target data
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/course/radar-chart/7.png)
 
-- `LoadFromCSV()` 内で「1 世帯当たりの支出」から「1 人あたりの支出」を計算し、さらに「1 人あたりの支出の全国平均比」を計算します。
-- 札幌市（`items[1]`）のデータをもとにレーダーチャートを描画します。
+- In `LoadFromCSV()`, calculate "expenditure per person" from "expenditure per household", and then calculate "per person expenditure relative to national average".
+- Draw the radar chart based on Sapporo city (`items[1]`) data.
 
-??? note "コード"
+??? note "Code"
 	```cpp hl_lines="64-83 126-132 153"
 	# include <Siv3D.hpp>
 
-	/// @brief アイテム
+	/// @brief Item
 	struct Item
 	{
-		/// @brief 都市の名前
+		/// @brief City name
 		String city;
 
-		/// @brief 世帯の人数
+		/// @brief Number of people in household
 		double household = 0.0;
 
-		/// @brief 1 世帯あたりの支出
+		/// @brief Expenditure per household
 		Array<double> perHousehold;
 
-		/// @brief 1 人あたりの支出
+		/// @brief Expenditure per person
 		Array<double> perPerson;
 
-		/// @brief 1 人あたりの支出（全国平均比）
+		/// @brief Expenditure per person (relative to national average)
 		Array<double> perPersonRelative;
 	};
 
-	/// @brief CSV ファイルからアイテムの配列を読み込みます。
-	/// @param path CSV ファイルのパス
-	/// @return アイテムの配列
+	/// @brief Loads an array of items from a CSV file.
+	/// @param path CSV file path
+	/// @return Array of items
 	Array<Item> LoadFromCSV(const FilePath& path)
 	{
-		// CSV ファイルを読み込む
+		// Load CSV file
 		const CSV csv{ path };
 
 		if (not csv)
@@ -583,19 +583,19 @@
 			return{};
 		}
 
-		// アイテムの配列
+		// Array of items
 		Array<Item> items;
 
-		// 0 行目と 1 行目は無視し、2 行目から 50 行目までのデータを読み込む
+		// Ignore rows 0 and 1, load data from row 2 to row 50
 		for (int32 y = 2; y < 50; ++y)
 		{
-			// 都市の名前
+			// City name
 			const String city = csv[y][2];
 
-			// 世帯の人数
+			// Number of people in household
 			const double household = Parse<double>(csv[y][3]);
 
-			// 各食品の 1 世帯当たりの支出
+			// Expenditure per household for each food category
 			const double d1 = Parse<double>(csv[y][5]);
 			const double d2 = Parse<double>(csv[y][19]);
 			const double d3 = Parse<double>(csv[y][55]);
@@ -608,18 +608,18 @@
 			item.household = household;
 			item.perHousehold = { d1, d2, d3, d4, d5, d6 };
 
-			// アイテムを配列に追加する
+			// Add item to array
 			items << item;
 		}
 
-		// 各都市について
+		// For each city
 		for (auto& item : items)
 		{
 			item.perPerson = item.perHousehold;
 
 			for (auto& perPerson : item.perPerson)
 			{
-				// 1 人あたりの支出を計算する
+				// Calculate expenditure per person
 				perPerson /= item.household;
 			}
 
@@ -627,7 +627,7 @@
 
 			for (size_t i = 0; auto& perPersonRelative : item.perPersonRelative)
 			{
-				// 全国平均 items[0] との比を計算する
+				// Calculate ratio to national average items[0]
 				perPersonRelative /= items[0].perPerson[i];
 				++i;
 			}
@@ -636,27 +636,27 @@
 		return items;
 	}
 
-	/// @brief レーダーチャートにおける点の座標の配列を返します。
-	/// @param values データ
-	/// @param radarCenter レーダーチャートの中心座標
-	/// @return レーダーチャートにおける点の座標の配列
+	/// @brief Returns an array of point coordinates in the radar chart.
+	/// @param values Data
+	/// @param radarCenter Radar chart center coordinates
+	/// @return Array of point coordinates in the radar chart
 	Array<Vec2> GetPoints(const Array<double>& values, const Vec2& radarCenter)
 	{
-		// 点の座標の配列
+		// Array of point coordinates
 		Array<Vec2> points;
 
 		for (int32 i = 0; i < values.size(); ++i)
 		{
-			// 角度（0 時の方向が 0 度、時計回り）
+			// Angle (0 degrees at 12 o'clock, clockwise)
 			const double angle = (i * (360_deg / values.size()));
 
-			// 半径
+			// Radius
 			const double r = (160 * values[i]);
 
-			// 角度と半径から点の座標を計算する
+			// Calculate point coordinates from angle and radius
 			const Vec2 pos = OffsetCircular{ radarCenter, r, angle };
 
-			// 点の座標を配列に追加する
+			// Add point coordinates to array
 			points << pos;
 		}
 
@@ -665,31 +665,31 @@
 
 	void Main()
 	{
-		// ウィンドウを 1200x700 にリサイズする
+		// Resize window to 1200x700
 		Window::Resize(1200, 700);
 
-		// 背景色を設定する
+		// Set background color
 		Scene::SetBackground(ColorF{ 0.99, 0.98, 0.97 });
 
-		// レーダーチャートの中心座標
+		// Radar chart center coordinates
 		const Vec2 radarCenter{ 400, 350 };
 
-		// CSV ファイルからアイテムの配列を読み込む
+		// Load array of items from CSV file
 		const Array<Item> items = LoadFromCSV(U"input1.csv");
 
 		if (not items)
 		{
-			throw Error{ U"CSV ファイルの読み込みに失敗しました" };
+			throw Error{ U"Failed to load CSV file" };
 		}
 
 		while (System::Update())
 		{
-			// レーダーチャートの円を描画する
+			// Draw radar chart circles
 			for (int32 i = 1; i <= 6; ++i)
 			{
 				if (i == 4)
 				{
-					// 100 % の円だけ太く描画する
+					// Draw only the 100% circle thick
 					Circle{ radarCenter, (40 * i) }.drawFrame(3, ColorF{ 0.5 });
 				}
 				else
@@ -698,24 +698,24 @@
 				}
 			}
 
-			// レーダーチャートのデータを描画する
+			// Draw radar chart data
 			{
-				// 札幌市のデータ
+				// Sapporo city data
 				const auto& values = items[1].perPersonRelative;
 
-				// 点の座標の配列
+				// Array of point coordinates
 				const Array<Vec2> points = GetPoints(values, radarCenter);
 
-				// レーダーチャートの多角形
+				// Radar chart polygon
 				const Polygon polygon{ points };
 
-				// 多角形を描画する
+				// Draw polygon
 				polygon.draw(ColorF{ 0.8, 0.4, 0.0, 0.5 });
 
-				// 多角形の枠を描画する
+				// Draw polygon frame
 				polygon.drawFrame(4, ColorF{ 1.0, 0.5, 0.0 });
 
-				// 点を描画する
+				// Draw points
 				for (const auto& p : points)
 				{
 					Circle{ p, 8 }.draw(ColorF{ 1.0, 0.5, 0.0 });
@@ -726,43 +726,43 @@
 	```
 
 
-## 8. リストボックスを使う
+## 8. Using list box
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/course/radar-chart/8.png)
 
-- Siv3D の GUI 機能「リストボックス」を使って、都市名を表示します。
-- `Array` のメンバ関数 `.map()` を使って、都市名の配列 `Array<String>` を作成し、リストボックスの項目一覧として設定します。
-- この時点では、リストボックスで都市を選択しても何も起こりませんが、次のステップで選択した都市のデータを表示するようにします。
+- Use Siv3D's GUI feature "list box" to display city names.
+- Use the `.map()` member function of `Array` to create an array of city names `Array<String>` and set it as the list of items for the list box.
+- At this point, selecting a city in the list box doesn't do anything, but in the next step we'll display the data for the selected city.
 
-??? note "コード"
+??? note "Code"
 	```cpp hl_lines="134-135 139-140"
 	# include <Siv3D.hpp>
 
-	/// @brief アイテム
+	/// @brief Item
 	struct Item
 	{
-		/// @brief 都市の名前
+		/// @brief City name
 		String city;
 
-		/// @brief 世帯の人数
+		/// @brief Number of people in household
 		double household = 0.0;
 
-		/// @brief 1 世帯あたりの支出
+		/// @brief Expenditure per household
 		Array<double> perHousehold;
 
-		/// @brief 1 人あたりの支出
+		/// @brief Expenditure per person
 		Array<double> perPerson;
 
-		/// @brief 1 人あたりの支出（全国平均比）
+		/// @brief Expenditure per person (relative to national average)
 		Array<double> perPersonRelative;
 	};
 
-	/// @brief CSV ファイルからアイテムの配列を読み込みます。
-	/// @param path CSV ファイルのパス
-	/// @return アイテムの配列
+	/// @brief Loads an array of items from a CSV file.
+	/// @param path CSV file path
+	/// @return Array of items
 	Array<Item> LoadFromCSV(const FilePath& path)
 	{
-		// CSV ファイルを読み込む
+		// Load CSV file
 		const CSV csv{ path };
 
 		if (not csv)
@@ -770,19 +770,19 @@
 			return{};
 		}
 
-		// アイテムの配列
+		// Array of items
 		Array<Item> items;
 
-		// 0 行目と 1 行目は無視し、2 行目から 50 行目までのデータを読み込む
+		// Ignore rows 0 and 1, load data from row 2 to row 50
 		for (int32 y = 2; y < 50; ++y)
 		{
-			// 都市の名前
+			// City name
 			const String city = csv[y][2];
 
-			// 世帯の人数
+			// Number of people in household
 			const double household = Parse<double>(csv[y][3]);
 
-			// 各食品の 1 世帯当たりの支出
+			// Expenditure per household for each food category
 			const double d1 = Parse<double>(csv[y][5]);
 			const double d2 = Parse<double>(csv[y][19]);
 			const double d3 = Parse<double>(csv[y][55]);
@@ -795,18 +795,18 @@
 			item.household = household;
 			item.perHousehold = { d1, d2, d3, d4, d5, d6 };
 
-			// アイテムを配列に追加する
+			// Add item to array
 			items << item;
 		}
 
-		// 各都市について
+		// For each city
 		for (auto& item : items)
 		{
 			item.perPerson = item.perHousehold;
 
 			for (auto& perPerson : item.perPerson)
 			{
-				// 1 人あたりの支出を計算する
+				// Calculate expenditure per person
 				perPerson /= item.household;
 			}
 
@@ -814,7 +814,7 @@
 
 			for (size_t i = 0; auto& perPersonRelative : item.perPersonRelative)
 			{
-				// 全国平均 items[0] との比を計算する
+				// Calculate ratio to national average items[0]
 				perPersonRelative /= items[0].perPerson[i];
 				++i;
 			}
@@ -823,27 +823,27 @@
 		return items;
 	}
 
-	/// @brief レーダーチャートにおける点の座標の配列を返します。
-	/// @param values データ
-	/// @param radarCenter レーダーチャートの中心座標
-	/// @return レーダーチャートにおける点の座標の配列
+	/// @brief Returns an array of point coordinates in the radar chart.
+	/// @param values Data
+	/// @param radarCenter Radar chart center coordinates
+	/// @return Array of point coordinates in the radar chart
 	Array<Vec2> GetPoints(const Array<double>& values, const Vec2& radarCenter)
 	{
-		// 点の座標の配列
+		// Array of point coordinates
 		Array<Vec2> points;
 
 		for (int32 i = 0; i < values.size(); ++i)
 		{
-			// 角度（0 時の方向が 0 度、時計回り）
+			// Angle (0 degrees at 12 o'clock, clockwise)
 			const double angle = (i * (360_deg / values.size()));
 
-			// 半径
+			// Radius
 			const double r = (160 * values[i]);
 
-			// 角度と半径から点の座標を計算する
+			// Calculate point coordinates from angle and radius
 			const Vec2 pos = OffsetCircular{ radarCenter, r, angle };
 
-			// 点の座標を配列に追加する
+			// Add point coordinates to array
 			points << pos;
 		}
 
@@ -852,37 +852,37 @@
 
 	void Main()
 	{
-		// ウィンドウを 1200x700 にリサイズする
+		// Resize window to 1200x700
 		Window::Resize(1200, 700);
 
-		// 背景色を設定する
+		// Set background color
 		Scene::SetBackground(ColorF{ 0.99, 0.98, 0.97 });
 
-		// レーダーチャートの中心座標
+		// Radar chart center coordinates
 		const Vec2 radarCenter{ 400, 350 };
 
-		// CSV ファイルからアイテムの配列を読み込む
+		// Load array of items from CSV file
 		const Array<Item> items = LoadFromCSV(U"input1.csv");
 
 		if (not items)
 		{
-			throw Error{ U"CSV ファイルの読み込みに失敗しました" };
+			throw Error{ U"Failed to load CSV file" };
 		}
 
-		// 都市名からなるリストボックスを用意する
+		// Prepare list box consisting of city names
 		ListBoxState listbox{ items.map([](const Item& item) { return item.city; }) };
 
 		while (System::Update())
 		{
-			// リストボックスを描画する
+			// Draw list box
 			SimpleGUI::ListBox(listbox, Vec2{ 800, 60 }, 160, 580);
 
-			// レーダーチャートの円を描画する
+			// Draw radar chart circles
 			for (int32 i = 1; i <= 6; ++i)
 			{
 				if (i == 4)
 				{
-					// 100 % の円だけ太く描画する
+					// Draw only the 100% circle thick
 					Circle{ radarCenter, (40 * i) }.drawFrame(3, ColorF{ 0.5 });
 				}
 				else
@@ -891,24 +891,24 @@
 				}
 			}
 
-			// レーダーチャートのデータを描画する
+			// Draw radar chart data
 			{
-				// 札幌市のデータ
+				// Sapporo city data
 				const auto& values = items[1].perPersonRelative;
 
-				// 点の座標の配列
+				// Array of point coordinates
 				const Array<Vec2> points = GetPoints(values, radarCenter);
 
-				// レーダーチャートの多角形
+				// Radar chart polygon
 				const Polygon polygon{ points };
 
-				// 多角形を描画する
+				// Draw polygon
 				polygon.draw(ColorF{ 0.8, 0.4, 0.0, 0.5 });
 
-				// 多角形の枠を描画する
+				// Draw polygon frame
 				polygon.drawFrame(4, ColorF{ 1.0, 0.5, 0.0 });
 
-				// 点を描画する
+				// Draw points
 				for (const auto& p : points)
 				{
 					Circle{ p, 8 }.draw(ColorF{ 1.0, 0.5, 0.0 });
@@ -919,42 +919,42 @@
 	```
 
 
-## 9. リストボックスで選択したアイテムのデータを使う
+## 9. Use data of the item selected in the list box
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/course/radar-chart/9.png)
 
-- リストボックスで選択した都市のデータを使って、レーダーチャートを描画します。
-- `listbox.selectedItemIndex.value_or(0)` は、リストボックス `listbox` で選択されている項目のインデックスを返します。何も選択されていない場合は 0 を返します。
+- Draw the radar chart using the data of the city selected in the list box.
+- `listbox.selectedItemIndex.value_or(0)` returns the index of the item selected in the list box `listbox`. Returns 0 if nothing is selected.
 
-??? note "コード"
+??? note "Code"
 	```cpp hl_lines="158-159"
 	# include <Siv3D.hpp>
 
-	/// @brief アイテム
+	/// @brief Item
 	struct Item
 	{
-		/// @brief 都市の名前
+		/// @brief City name
 		String city;
 
-		/// @brief 世帯の人数
+		/// @brief Number of people in household
 		double household = 0.0;
 
-		/// @brief 1 世帯あたりの支出
+		/// @brief Expenditure per household
 		Array<double> perHousehold;
 
-		/// @brief 1 人あたりの支出
+		/// @brief Expenditure per person
 		Array<double> perPerson;
 
-		/// @brief 1 人あたりの支出（全国平均比）
+		/// @brief Expenditure per person (relative to national average)
 		Array<double> perPersonRelative;
 	};
 
-	/// @brief CSV ファイルからアイテムの配列を読み込みます。
-	/// @param path CSV ファイルのパス
-	/// @return アイテムの配列
+	/// @brief Loads an array of items from a CSV file.
+	/// @param path CSV file path
+	/// @return Array of items
 	Array<Item> LoadFromCSV(const FilePath& path)
 	{
-		// CSV ファイルを読み込む
+		// Load CSV file
 		const CSV csv{ path };
 
 		if (not csv)
@@ -962,19 +962,19 @@
 			return{};
 		}
 
-		// アイテムの配列
+		// Array of items
 		Array<Item> items;
 
-		// 0 行目と 1 行目は無視し、2 行目から 50 行目までのデータを読み込む
+		// Ignore rows 0 and 1, load data from row 2 to row 50
 		for (int32 y = 2; y < 50; ++y)
 		{
-			// 都市の名前
+			// City name
 			const String city = csv[y][2];
 
-			// 世帯の人数
+			// Number of people in household
 			const double household = Parse<double>(csv[y][3]);
 
-			// 各食品の 1 世帯当たりの支出
+			// Expenditure per household for each food category
 			const double d1 = Parse<double>(csv[y][5]);
 			const double d2 = Parse<double>(csv[y][19]);
 			const double d3 = Parse<double>(csv[y][55]);
@@ -987,18 +987,18 @@
 			item.household = household;
 			item.perHousehold = { d1, d2, d3, d4, d5, d6 };
 
-			// アイテムを配列に追加する
+			// Add item to array
 			items << item;
 		}
 
-		// 各都市について
+		// For each city
 		for (auto& item : items)
 		{
 			item.perPerson = item.perHousehold;
 
 			for (auto& perPerson : item.perPerson)
 			{
-				// 1 人あたりの支出を計算する
+				// Calculate expenditure per person
 				perPerson /= item.household;
 			}
 
@@ -1006,7 +1006,7 @@
 
 			for (size_t i = 0; auto& perPersonRelative : item.perPersonRelative)
 			{
-				// 全国平均 items[0] との比を計算する
+				// Calculate ratio to national average items[0]
 				perPersonRelative /= items[0].perPerson[i];
 				++i;
 			}
@@ -1015,27 +1015,27 @@
 		return items;
 	}
 
-	/// @brief レーダーチャートにおける点の座標の配列を返します。
-	/// @param values データ
-	/// @param radarCenter レーダーチャートの中心座標
-	/// @return レーダーチャートにおける点の座標の配列
+	/// @brief Returns an array of point coordinates in the radar chart.
+	/// @param values Data
+	/// @param radarCenter Radar chart center coordinates
+	/// @return Array of point coordinates in the radar chart
 	Array<Vec2> GetPoints(const Array<double>& values, const Vec2& radarCenter)
 	{
-		// 点の座標の配列
+		// Array of point coordinates
 		Array<Vec2> points;
 
 		for (int32 i = 0; i < values.size(); ++i)
 		{
-			// 角度（0 時の方向が 0 度、時計回り）
+			// Angle (0 degrees at 12 o'clock, clockwise)
 			const double angle = (i * (360_deg / values.size()));
 
-			// 半径
+			// Radius
 			const double r = (160 * values[i]);
 
-			// 角度と半径から点の座標を計算する
+			// Calculate point coordinates from angle and radius
 			const Vec2 pos = OffsetCircular{ radarCenter, r, angle };
 
-			// 点の座標を配列に追加する
+			// Add point coordinates to array
 			points << pos;
 		}
 
@@ -1044,37 +1044,37 @@
 
 	void Main()
 	{
-		// ウィンドウを 1200x700 にリサイズする
+		// Resize window to 1200x700
 		Window::Resize(1200, 700);
 
-		// 背景色を設定する
+		// Set background color
 		Scene::SetBackground(ColorF{ 0.99, 0.98, 0.97 });
 
-		// レーダーチャートの中心座標
+		// Radar chart center coordinates
 		const Vec2 radarCenter{ 400, 350 };
 
-		// CSV ファイルからアイテムの配列を読み込む
+		// Load array of items from CSV file
 		const Array<Item> items = LoadFromCSV(U"input1.csv");
 
 		if (not items)
 		{
-			throw Error{ U"CSV ファイルの読み込みに失敗しました" };
+			throw Error{ U"Failed to load CSV file" };
 		}
 
-		// 都市名からなるリストボックスを用意する
+		// Prepare list box consisting of city names
 		ListBoxState listbox{ items.map([](const Item& item) { return item.city; }) };
 
 		while (System::Update())
 		{
-			// リストボックスを描画する
+			// Draw list box
 			SimpleGUI::ListBox(listbox, Vec2{ 800, 60 }, 160, 580);
 
-			// レーダーチャートの円を描画する
+			// Draw radar chart circles
 			for (int32 i = 1; i <= 6; ++i)
 			{
 				if (i == 4)
 				{
-					// 100 % の円だけ太く描画する
+					// Draw only the 100% circle thick
 					Circle{ radarCenter, (40 * i) }.drawFrame(3, ColorF{ 0.5 });
 				}
 				else
@@ -1083,24 +1083,24 @@
 				}
 			}
 
-			// レーダーチャートのデータを描画する
+			// Draw radar chart data
 			{
-				// リストボックスで選択されている都市のデータ
+				// Data of the city selected in the list box
 				const auto& values = items[listbox.selectedItemIndex.value_or(0)].perPersonRelative;
 
-				// 点の座標の配列
+				// Array of point coordinates
 				const Array<Vec2> points = GetPoints(values, radarCenter);
 
-				// レーダーチャートの多角形
+				// Radar chart polygon
 				const Polygon polygon{ points };
 
-				// 多角形を描画する
+				// Draw polygon
 				polygon.draw(ColorF{ 0.8, 0.4, 0.0, 0.5 });
 
-				// 多角形の枠を描画する
+				// Draw polygon frame
 				polygon.drawFrame(4, ColorF{ 1.0, 0.5, 0.0 });
 
-				// 点を描画する
+				// Draw points
 				for (const auto& p : points)
 				{
 					Circle{ p, 8 }.draw(ColorF{ 1.0, 0.5, 0.0 });
@@ -1111,41 +1111,41 @@
 	```
 
 
-## 10. ラベルを描画する
+## 10. Draw labels
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/course/radar-chart/10.png)
 
-- レーダーチャートの各頂点にラベルを描画します。
+- Draw labels at each vertex of the radar chart.
 
-??? note "コード"
+??? note "Code"
 	```cpp hl_lines="123-124 126-127 186-197"
 	# include <Siv3D.hpp>
 
-	/// @brief アイテム
+	/// @brief Item
 	struct Item
 	{
-		/// @brief 都市の名前
+		/// @brief City name
 		String city;
 
-		/// @brief 世帯の人数
+		/// @brief Number of people in household
 		double household = 0.0;
 
-		/// @brief 1 世帯あたりの支出
+		/// @brief Expenditure per household
 		Array<double> perHousehold;
 
-		/// @brief 1 人あたりの支出
+		/// @brief Expenditure per person
 		Array<double> perPerson;
 
-		/// @brief 1 人あたりの支出（全国平均比）
+		/// @brief Expenditure per person (relative to national average)
 		Array<double> perPersonRelative;
 	};
 
-	/// @brief CSV ファイルからアイテムの配列を読み込みます。
-	/// @param path CSV ファイルのパス
-	/// @return アイテムの配列
+	/// @brief Loads an array of items from a CSV file.
+	/// @param path CSV file path
+	/// @return Array of items
 	Array<Item> LoadFromCSV(const FilePath& path)
 	{
-		// CSV ファイルを読み込む
+		// Load CSV file
 		const CSV csv{ path };
 
 		if (not csv)
@@ -1153,19 +1153,19 @@
 			return{};
 		}
 
-		// アイテムの配列
+		// Array of items
 		Array<Item> items;
 
-		// 0 行目と 1 行目は無視し、2 行目から 50 行目までのデータを読み込む
+		// Ignore rows 0 and 1, load data from row 2 to row 50
 		for (int32 y = 2; y < 50; ++y)
 		{
-			// 都市の名前
+			// City name
 			const String city = csv[y][2];
 
-			// 世帯の人数
+			// Number of people in household
 			const double household = Parse<double>(csv[y][3]);
 
-			// 各食品の 1 世帯当たりの支出
+			// Expenditure per household for each food category
 			const double d1 = Parse<double>(csv[y][5]);
 			const double d2 = Parse<double>(csv[y][19]);
 			const double d3 = Parse<double>(csv[y][55]);
@@ -1178,18 +1178,18 @@
 			item.household = household;
 			item.perHousehold = { d1, d2, d3, d4, d5, d6 };
 
-			// アイテムを配列に追加する
+			// Add item to array
 			items << item;
 		}
 
-		// 各都市について
+		// For each city
 		for (auto& item : items)
 		{
 			item.perPerson = item.perHousehold;
 
 			for (auto& perPerson : item.perPerson)
 			{
-				// 1 人あたりの支出を計算する
+				// Calculate expenditure per person
 				perPerson /= item.household;
 			}
 
@@ -1197,7 +1197,7 @@
 
 			for (size_t i = 0; auto& perPersonRelative : item.perPersonRelative)
 			{
-				// 全国平均 items[0] との比を計算する
+				// Calculate ratio to national average items[0]
 				perPersonRelative /= items[0].perPerson[i];
 				++i;
 			}
@@ -1206,27 +1206,27 @@
 		return items;
 	}
 
-	/// @brief レーダーチャートにおける点の座標の配列を返します。
-	/// @param values データ
-	/// @param radarCenter レーダーチャートの中心座標
-	/// @return レーダーチャートにおける点の座標の配列
+	/// @brief Returns an array of point coordinates in the radar chart.
+	/// @param values Data
+	/// @param radarCenter Radar chart center coordinates
+	/// @return Array of point coordinates in the radar chart
 	Array<Vec2> GetPoints(const Array<double>& values, const Vec2& radarCenter)
 	{
-		// 点の座標の配列
+		// Array of point coordinates
 		Array<Vec2> points;
 
 		for (int32 i = 0; i < values.size(); ++i)
 		{
-			// 角度（0 時の方向が 0 度、時計回り）
+			// Angle (0 degrees at 12 o'clock, clockwise)
 			const double angle = (i * (360_deg / values.size()));
 
-			// 半径
+			// Radius
 			const double r = (160 * values[i]);
 
-			// 角度と半径から点の座標を計算する
+			// Calculate point coordinates from angle and radius
 			const Vec2 pos = OffsetCircular{ radarCenter, r, angle };
 
-			// 点の座標を配列に追加する
+			// Add point coordinates to array
 			points << pos;
 		}
 
@@ -1235,43 +1235,43 @@
 
 	void Main()
 	{
-		// ウィンドウを 1200x700 にリサイズする
+		// Resize window to 1200x700
 		Window::Resize(1200, 700);
 
-		// 背景色を設定する
+		// Set background color
 		Scene::SetBackground(ColorF{ 0.99, 0.98, 0.97 });
 
-		// フォントを用意する
+		// Prepare font
 		const Font font{ FontMethod::MSDF, 40, Typeface::Bold };
 
-		// レーダーチャートのラベル
-		const Array<String> labels = { U"穀類", U"魚介類", U"肉類", U"乳卵類", U"野菜・海藻", U"果物" };
+		// Radar chart labels
+		const Array<String> labels = { U"Cereals", U"Seafood", U"Meat", U"Dairy & Eggs", U"Vegetables & Seaweed", U"Fruits" };
 
-		// レーダーチャートの中心座標
+		// Radar chart center coordinates
 		const Vec2 radarCenter{ 400, 350 };
 
-		// CSV ファイルからアイテムの配列を読み込む
+		// Load array of items from CSV file
 		const Array<Item> items = LoadFromCSV(U"input1.csv");
 
 		if (not items)
 		{
-			throw Error{ U"CSV ファイルの読み込みに失敗しました" };
+			throw Error{ U"Failed to load CSV file" };
 		}
 
-		// 都市名からなるリストボックスを用意する
+		// Prepare list box consisting of city names
 		ListBoxState listbox{ items.map([](const Item& item) { return item.city; }) };
 
 		while (System::Update())
 		{
-			// リストボックスを描画する
+			// Draw list box
 			SimpleGUI::ListBox(listbox, Vec2{ 800, 60 }, 160, 580);
 
-			// レーダーチャートの円を描画する
+			// Draw radar chart circles
 			for (int32 i = 1; i <= 6; ++i)
 			{
 				if (i == 4)
 				{
-					// 100 % の円だけ太く描画する
+					// Draw only the 100% circle thick
 					Circle{ radarCenter, (40 * i) }.drawFrame(3, ColorF{ 0.5 });
 				}
 				else
@@ -1280,40 +1280,40 @@
 				}
 			}
 
-			// レーダーチャートのデータを描画する
+			// Draw radar chart data
 			{
-				// リストボックスで選択されている都市のデータ
+				// Data of the city selected in the list box
 				const auto& values = items[listbox.selectedItemIndex.value_or(0)].perPersonRelative;
 
-				// 点の座標の配列
+				// Array of point coordinates
 				const Array<Vec2> points = GetPoints(values, radarCenter);
 
-				// レーダーチャートの多角形
+				// Radar chart polygon
 				const Polygon polygon{ points };
 
-				// 多角形を描画する
+				// Draw polygon
 				polygon.draw(ColorF{ 0.8, 0.4, 0.0, 0.5 });
 
-				// 多角形の枠を描画する
+				// Draw polygon frame
 				polygon.drawFrame(4, ColorF{ 1.0, 0.5, 0.0 });
 
-				// 点を描画する
+				// Draw points
 				for (const auto& p : points)
 				{
 					Circle{ p, 8 }.draw(ColorF{ 1.0, 0.5, 0.0 });
 				}
 			}
 
-			// レーダーチャートのラベルを描画する
+			// Draw radar chart labels
 			for (int32 i = 0; i < labels.size(); ++i)
 			{
-				// 角度
+				// Angle
 				const double angle = (i * (360_deg / labels.size()));
 
-				// ラベルの座標
+				// Label coordinates
 				const Vec2 pos = OffsetCircular{ radarCenter, 280, angle };
 
-				// ラベルを描画する
+				// Draw label
 				font(labels[i]).drawAt(30, pos, ColorF{ 0.1 });
 			}
 		}
@@ -1321,21 +1321,21 @@
 	```
 
 
-## 発展
-ここから先は、自分で考えてレーダーチャートのプログラムを改良してみましょう。
+## Advanced Features
+From here on, try improving the radar chart program by thinking for yourself.
 
-### 機能のアイデア
-- データの数字を表示する
-- 2 つのアイテムを比較する
-- より多くのデータを使ってレーダーチャートを描画する
-- CSV に含まれるデータをもっと活用する
+### Feature Ideas
+- Display data numbers
+- Compare two items
+- Draw radar charts using more data
+- Make more use of data included in CSV
 
-### デザインのアイデア
-- UI のサイズや配置をアレンジする
-- 50%, 75%, 100% などの目盛りを表示する
-- グラフのタイトルや説明を表示する
-- 値が平均より顕著に異なる場合に強調する
+### Design Ideas
+- Arrange UI size and layout
+- Display scales like 50%, 75%, 100%
+- Display graph title and description
+- Emphasize when values are significantly different from average
 
-### チャレンジ
-- 今回と同じデータか、インターネットから入手した別のデータを使って、新しいグラフを描画するプログラムを作成してみましょう。
-- CSV ファイルを使う場合、事前に Excel などの表計算ソフトを使って **UTF-8 形式の CSV ファイル** として保存してください。
+### Challenge
+- Try creating a program that draws new graphs using the same data as this time or different data obtained from the internet.
+- When using CSV files, save them as **UTF-8 format CSV files** using spreadsheet software like Excel in advance.

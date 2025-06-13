@@ -1,20 +1,189 @@
-# 19. 文字列クラス
-文字列クラス `String` の基本的な使い方を学びます。
+# 33. String Class
+Learn the basic usage of the `String` class.
 
-## 19.1 文字列クラス
-Siv3D では `String` 型を使って文字列を表現します。`String` は、UTF-32 のコードポイントを表現する `char32` 型（文字）の配列です。UTF-32 の文字や文字列リテラルには、`U'あ'`, `U"Hello"` のように `U` プレフィックスを付けます。
+## 33.1 String
+- In Siv3D, strings are represented using the `String` type
+- `String` is an array of `char32` type (characters) that represent UTF-32 code points
+- UTF-32 character and string literals are prefixed with `U`, like `U'あ'` and `U"Hello"`
+- `String` uses `std::u32string` internally to manage strings
+- The following is guaranteed for the stored string data:
+	- String data is contiguous in memory
+	- There is a null character `U'\0'` immediately after the last element of the string
+- It has more member functions than C++ standard library string classes and provides various convenient features
 
-`String` は内部で `std::u32string` を使って文字列を管理しています。ただし、標準ライブラリの文字列クラスより多くのメンバ関数を持ち、様々な便利な機能を提供します。格納されている文字列はメモリ上での連続性が保証されています。
+```cpp
+String s1 = U"Siv3D";
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/string/1.png)
+String s2 = U"こんにちは、Siv3D!";
+```
+
+
+## 33.2 String Creation
+- `String` is created using the following methods:
+	- Create empty string
+	- Create string from string literal
+	- Create string with count × character
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	const String s = U"Siv3D";
+	{
+		// Create empty string
+		String s;
+		Print << s;
+	}
 
+	{
+		// Create string from string literal
+		String s = U"Siv3D";
+		Print << s;
+	}
+
+	{
+		// Create string with count × character
+		String s(5, U'A');
+		Print << s;
+	}
+
+	while (System::Update())
+	{
+
+	}
+}
+```
+```txt title="Output"
+ 
+Siv3D
+AAAAA
+```
+
+
+## 33.3 String Length
+- `.size()` returns the length (number of elements) of the string as `size_t` type
+- String length is the number of UTF-32 code points represented by `char32` type
+- Most characters like alphabets, hiragana, and kanji are 1 character = 1 code point
+- Some special characters like certain emoji may consist of multiple code points even though they appear as 1 character
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	{
+		String s = U"Siv3D";
+		Print << s.size();
+	}
+
+	{
+		String s = U"こんにちは";
+		Print << s.size();
+	}
+
+	{
+		String s = U"🐈";
+		Print << s.size();
+	}
+
+	{
+		// Some emoji consist of multiple code points
+		String s = U"👩‍🎤";
+		Print << s.size();
+	}
+
+	while (System::Update())
+	{
+
+	}
+}
+```
+```txt title="Output"
+5
+5
+1
+3
+```
+
+
+## 33.4 Checking if Empty (1)
+- `.isEmpty()` returns whether the string is empty (has 0 elements) as `bool` type
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	String s1 = U"Siv3D";
+	Print << s1.isEmpty();
+
+	String s2;
+	Print << s2.isEmpty();
+
+	while (System::Update())
+	{
+
+	}
+}
+```
+```txt title="Output"
+false
+true
+```
+
+
+## 33.5 Checking if Empty (2)
+- Use `if (s)` to check if a string is empty
+- If the string is empty, it evaluates to `false`
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	String s1 = U"Siv3D";
+   
+	if (s1)
+	{
+		Print << U"s1 is not empty";
+	}
+
+	String s2;
+
+	if (not s2)
+	{
+		Print << U"s2 is empty";
+	}
+
+	while (System::Update())
+	{
+
+	}
+}
+```
+```txt title="Output"
+s1 is not empty
+s2 is empty
+```
+
+
+## 33.6 Adding Elements to End
+- `s << ch;` adds element `ch` to the end of string `s`
+- This is a shorthand for `.push_back(ch)`
+- Adding to the end of a string is the most efficient compared to adding to other locations (beginning or middle)
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	String s;
+	s << U'S';
+	s << U'i';
+	s << U'v';
+	Print << s;
+
+	s << U'3' << U'D';
 	Print << s;
 
 	while (System::Update())
@@ -23,47 +192,17 @@ void Main()
 	}
 }
 ```
-
-
-## 19.2 文字列の長さ
-文字列の長さは `.size()` で取得します。一部の絵文字などを除き、文字列の長さは見た目の文字数と同じです。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/string/2.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	const String s1 = U"Siv3D";
-
-	Print << s1.size();
-
-	const String s2 = U"こんにちは";
-
-	Print << s2.size();
-
-	const String s3 = U"🐈";
-
-	Print << s3.size();
-
-	// 複数のコードポイントから構成されている絵文字もある
-	const String s4 = U"👩‍🎤";
-
-	Print << s4.size();
-
-	while (System::Update())
-	{
-
-	}
-}
+```txt title="Output"
+Siv
+Siv3D
 ```
 
 
-## 19.3 指定したインデックスの文字にアクセスする
-文字列内の指定したインデックスにある文字にアクセスするには、`[]` 演算子を使います。インデックスは 0 から始まります。`s.front()` は `s[0]` と同じです。`s.back()` は `s[s.size() - 1]` と同じで末尾の文字にアクセスします。範囲外のインデックスにアクセスしてはいけません。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/string/3.png)
+## 33.7 Removing Last Element
+- `.pop_back()` removes the last element of the string
+- Must not be called when the number of elements is 0
+	- Check that the number of elements is not 0 beforehand
+- Removing the last element of a string is the most efficient compared to removing from other locations (beginning or middle)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -71,23 +210,80 @@ void Main()
 void Main()
 {
 	String s = U"Siv3D";
+	Print << s;
 
-	const char32 c = s[0];
+	s.pop_back();
+	Print << s;
 
-	Print << c;
+	s.pop_back();
+	Print << s;
 
-	Print << s[1];
+	while (s)
+	{
+		s.pop_back();
+	}
 
-	// 先頭の文字にアクセス
-	Print << s.front();
+	Print << s.isEmpty();
 
-	// 末尾の文字にアクセス
-	Print << s.back();
+	while (System::Update())
+	{
 
-	s[3] = U'4';
+	}
+}
+```
+```txt title="Output"
+Siv3D
+Siv3
+Siv
+true
+```
 
-	s.back() = U'X';
 
+## 33.8 Removing All Elements
+- `.clear()` removes all elements from the string, making it an empty string
+- Can be called when the number of elements is 0 (does nothing)
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	String s = U"Siv3D";
+	Print << s;
+
+	s.clear();
+	Print << s.isEmpty();
+
+	while (System::Update())
+	{
+
+	}
+}
+```
+```txt title="Output"
+Siv3D
+true
+```
+
+
+## 33.9 Changing Number of Elements
+- `.resize(n)` changes the number of elements in the string to `n`
+- When the number of elements increases, new elements are initialized with null character U'\0', so they need to be overwritten with other characters
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	String s = U"Siv3D";
+	Print << s;
+
+	s.resize(3);
+	Print << s;
+
+	s.resize(5);
+	s[3] = U'!';
+	s[4] = U'?';
 	Print << s;
 
 	while (System::Update())
@@ -96,19 +292,24 @@ void Main()
 	}
 }
 ```
+```txt title="Output"
+Siv3D
+Siv
+Siv!?
+```
 
 
-## 19.4 範囲ベースの for 文で文字にアクセスする
-範囲ベース for 文を使って文字列の各文字にアクセスできます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/string/4.png)
+## 33.10 Array Traversal with Range-for Loop (const reference)
+- Use range-for loops to traverse array elements
+- Element access is usually done with const references
+- Do not perform operations that change the size of the target string within the range-for loop
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	const String s = U"Siv3D";
+	String s = U"Siv3D";
 
 	for (const auto& ch : s)
 	{
@@ -121,29 +322,33 @@ void Main()
 	}
 }
 ```
+```txt title="Output"
+S
+i
+v
+3
+D
+```
 
 
-## 19.5 空の文字列
-要素を保持していない、長さが 0 の文字列は**空の文字列**です。代入や追加によって要素を追加すると、空でない文字列になります。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/string/5.png)
+## 33.11 Array Traversal with Range-for Loop (reference)
+- Use range-for loops to traverse array elements
+- When modifying elements within the loop, use references instead of const references to access elements
+- Do not perform operations that change the size of the target string within the range-for loop
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	String s;
+	String s = U"Siv3D";
+
+	for (auto& ch : s)
+	{
+		++ch;
+	}
 
 	Print << s;
-
-	Print << s.size();
-
-	s = U"Hello, Siv3D!";
-
-	Print << s;
-
-	Print << s.size();
 
 	while (System::Update())
 	{
@@ -151,38 +356,29 @@ void Main()
 	}
 }
 ```
+```txt title="Output"
+Tjw4E
+```
 
 
-## 19.6 文字列が空であるかを調べる
-`String` 型の値 `s` が空であるかは、`if (s.isEmpty())` や `if (s)` / `if (not s)` で調べられます。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/string/6.png)
-
-!!! info "not について"
-	`not` は `!` と同じです。Siv3D では `!` よりも視認性の高い `not` を使うコーディングスタイルを採用しています。
+## 33.12 Accessing Elements at Specified Index
+- `[i]` accesses the `i`-th element of the string
+	- `i` is counted from 0. Valid indices are from 0 to `size() - 1`
+- Must not access out of range
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	String s1;
+	String s = U"Siv3D";
 
-	String s2 = U"Hello, Siv3D!";
+	Print << s[0];
+	Print << s[4];
 
-	Print << s1.isEmpty();
-
-	Print << s2.isEmpty();
-
-	if (not s1)
-	{
-		Print << U"s1 is empty";
-	}
-
-	if (s2)
-	{
-		Print << U"s2 is not empty";
-	}
+	s[3] = U'4';
+	Print << s;
 
 	while (System::Update())
 	{
@@ -190,30 +386,33 @@ void Main()
 	}
 }
 ```
+```txt title="Output"
+S
+D
+Siv4D
+```
 
 
-## 19.7 文字列の末尾に文字を追加する
-`<<` で文字列の末尾に文字を追加することができます。`<<` は連続して使うこともできます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/string/7.png)
+## 33.13 Accessing First and Last Elements
+- `.front()` returns a reference to the first element
+	- Same as `s[0]`
+- `.back()` returns a reference to the last element
+	- Same as `s[s.size() - 1]`
+- Must not be called when the number of elements is 0
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	String s = U"Siv3";
+	String s = U"Siv3D";
 
+	Print << s.front();
+	Print << s.back();
+
+	s.front() = U's';
+	s.back() = U'd';
 	Print << s;
-
-	s << U'D';
-
-	for (int32 i = 0; i < 3; ++i)
-	{
-		s << U'!';
-
-		Print << s;
-	}
 
 	while (System::Update())
 	{
@@ -221,60 +420,26 @@ void Main()
 	}
 }
 ```
-
-
-## 19.8 文字列の末尾に文字列を追加する
-`+=` で文字列の末尾に文字列を追加することができます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/string/8.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	String s = U"Siv";
-
-	Print << s;
-
-	s += U"3D";
-
-	Print << s;
-
-	for (int32 i = 0; i < 3; ++i)
-	{
-		s += U"!?";
-
-		Print << s;
-	}
-
-	while (System::Update())
-	{
-
-	}
-}
+```txt title="Output"
+S
+D
+siv3d
 ```
 
 
-## 19.9 文字列を結合する
-`+` で左右の文字列を結合した新しい文字列を作成できます。元の文字列は変更されません。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/string/9.png)
+## 33.14 Creating String by Concatenating Two Strings
+- `s1 + s2` creates a new string by concatenating strings `s1` and `s2`
+- `s1` and `s2` are not modified
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	const String s1 = U"Hello, ";
-
-	const String s2 = U"Siv3D!";
-
+	String s1 = U"Hello, ";
+	String s2 = U"Siv3D!";
 	Print << (s1 + s2);
-
-	const String s3 = (s1 + s2);
-
-	Print << (s3 + U"!!!");
+	Print << (s1 + s2 + U"!!!");
 
 	while (System::Update())
 	{
@@ -282,12 +447,130 @@ void Main()
 	}
 }
 ```
+```txt title="Output"
+Hello, Siv3D!
+Hello, Siv3D!!!!
+```
 
 
-## 19.10 文字列を空にする
-`.clear()` で文字列を空にすることができます。
+## 33.15 Adding String to End
+- `+=` adds a string to the end of the string
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/string/10.png)
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	String s = U"Hello, ";
+	s += U"Siv3D!";
+	Print << s;
+
+	s += U"!!!";
+	Print << s;
+
+	while (System::Update())
+	{
+
+	}
+}
+```
+```txt title="Output"
+Hello, Siv3D!
+Hello, Siv3D!!!!
+```
+
+
+
+## 33.16 Getting Iterators for Beginning and End Positions
+- `.begin()` returns an iterator to the beginning position
+- `.end()` returns an iterator to the end position
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	String s = U"Siv3D";
+
+	auto it = s.begin();
+
+	Print << *it;
+
+	++it;
+
+	Print << *it;
+	
+	while (System::Update())
+	{
+
+	}
+}
+```
+```txt title="Output"
+S
+i
+```
+
+
+## 33.17 Other Insert and Delete Operations
+- `.push_front(value)` adds an element to the beginning
+- `.pop_front()` removes the first element
+- `.insert(iterator, value)` inserts an element at the specified iterator position
+- `.erase(iterator)` removes the element at the specified iterator position
+- `.erase(iterator1, iterator2)` removes elements in the specified range
+- Inserting/deleting elements at the beginning or middle involves moving subsequent existing elements, so the cost is proportional to the number of elements after
+	- Should normally be avoided or used only with small strings
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	{
+		String s = U"Siv3D";
+		
+		s.push_front(U'#');
+		Print << s;
+
+		s.pop_front();
+		Print << s;
+	}
+
+	{
+		String s = U"Siv3D";
+		
+		s.insert((s.begin() + 3), U'#');
+		Print << s;
+	}
+
+	{
+		String s = U"Siv3D";
+
+		s.erase(s.begin() + 3);
+		Print << s;
+
+		s.erase(s.begin(), (s.begin() + 2));
+		Print << s;
+	}
+
+	while (System::Update())
+	{
+
+	}
+}
+```
+```txt title="Output"
+#Siv3D
+Siv3D
+Siv#3D
+SivD
+vD
+```
+
+
+## 33.18 Checking if Contains Character or String
+- `.contains(character)` returns whether the string contains the specified character as `bool` type
+- `.contains(string)` returns whether the string contains the specified string as `bool` type
 
 ```cpp
 # include <Siv3D.hpp>
@@ -296,122 +579,13 @@ void Main()
 {
 	String s = U"Hello, Siv3D!";
 
-	Print << s;
-
-	Print << s.isEmpty();
-
-	// 文字列を空にする
-	s.clear();
-
-	Print << s;
-
-	Print << s.isEmpty();
-
-	while (System::Update())
-	{
-
-	}
-}
-```
-
-
-## 19.11 末尾の要素を削除する
-`.pop_back()` で文字列の末尾の要素を削除することができます。`.pop_back_N(n)` で末尾から `n` 要素を削除することができます。
-
-空の文字列で `.pop_back()` を呼んではいけません。一方、`.pop_back_N(n)` は空の文字列でも呼び出すことができます。`.pop_back_N(n)` は実際の要素数以上を削除しようとした場合に文字列を空にします。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/string/11.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	String s = U"Siv3D!";
-
-	Print << s;
-
-	s.pop_back();
-
-	Print << s;
-
-	s.pop_back_N(2);
-
-	Print << s;
-
-	// 実際の要素数以上を削除しようとしているので、文字列を空にする
-	s.pop_back_N(100);
-
-	Print << s.isEmpty();
-
-	while (System::Update())
-	{
-
-	}
-}
-```
-
-
-## 19.12 先頭の文字を削除する
-`.pop_front()` で文字列の先頭の要素を削除することができます。`.pop_front_N(n)` で先頭から `n` 要素を削除することができます。
-
-空の文字列で `.pop_front()` を呼んではいけません。一方、`.pop_front_N(n)` は空の文字列でも呼び出すことができます。`.pop_front_N(n)` は実際の要素数以上を削除しようとした場合に文字列を空にします。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/string/12.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	String s = U"Siv3D!";
-
-	Print << s;
-
-	s.pop_front();
-
-	Print << s;
-
-	s.pop_front_N(2);
-
-	Print << s;
-
-	// 実際の要素数以上を削除しようとしているので、文字列を空にする
-	s.pop_front_N(100);
-
-	Print << s.isEmpty();
-
-	while (System::Update())
-	{
-
-	}
-}
-```
-
-
-## 19.13 ある文字や文字列を含むかを調べる
-ある文字や文字列を含むかを、`.contains()` で調べることができます。ある文字や文字列で始まるかを、`.starts_with()` で調べることができます。ある文字や文字列で終わるかを、`.ends_with()` で調べることができます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/string/13.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	const String s = U"Hello, Siv3D!";
-
-	// 含むかを調べる
-	Print << s.contains(U"Siv");
 	Print << s.contains(U'S');
+	Print << s.contains(U'i');
+	Print << s.contains(U'4');
 
-	// 指定した文字や文字列で始まるかを調べる
-	Print << s.starts_with(U"Siv");
-	Print << s.starts_with(U'H');
-
-	// 指定した文字や文字列で終わるかを調べる
-	Print << s.ends_with(U"3D!");
-	Print << s.ends_with(U'?');
+	Print << s.contains(U"3D");
+	Print << s.contains(U"Hello");
+	Print << s.contains(U"Hi");
 
 	while (System::Update())
 	{
@@ -419,12 +593,64 @@ void Main()
 	}
 }
 ```
+```txt title="Output"
+true
+true
+false
+true
+true
+false
+```
 
 
-## 19.14 文字列の一部から新しい文字列を作る
-`.substr(offset, count)` で、文字列の `offset` 文字目から `count` 文字の部分文字列（`String`）を作成することができます。`offset` は 0 から始まります。`count` が省略された場合は、`offset` 文字目から末尾までの部分文字列を作成します。`count` が実際の文字列の長さより大きい場合は、末尾までの部分文字列を作成します。
+## 33.19 Checking if Starts With or Ends With Character or String
+- `.starts_with(character)` returns whether the string starts with the specified character as `bool` type
+- `.starts_with(string)` returns whether the string starts with the specified string as `bool` type
+- `.ends_with(character)` returns whether the string ends with the specified character as `bool` type
+- `.ends_with(string)` returns whether the string ends with the specified string as `bool` type
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/string/14a.png)
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	String s = U"Hello, Siv3D!";
+
+	Print << s.starts_with(U'H');
+	Print << s.starts_with(U'S');
+
+	Print << s.starts_with(U"Hello");
+	Print << s.starts_with(U"Hi");
+
+	Print << s.ends_with(U'!');
+	Print << s.ends_with(U'D');
+
+	Print << s.ends_with(U"3D!");
+	Print << s.ends_with(U"Hi");
+
+	while (System::Update())
+	{
+
+	}
+}
+```
+```txt title="Output"
+true
+false
+true
+false
+true
+false
+true
+false
+```
+
+
+## 33.20 Creating Substrings
+- `.substr(start_position, length)` creates a substring of `length` characters starting from `start_position` in the string as a new `String`
+	- `start_position` starts from 0
+	- If `length` is omitted, a substring from the `start_position` character to the end is created
+	- If `length` is larger than the actual string length, a substring exactly to the end is created
 
 ```cpp
 # include <Siv3D.hpp>
@@ -433,16 +659,9 @@ void Main()
 {
 	const String s = U"Hello, Siv3D!";
 
-	// 0 文字目から 5 文字の部分文字列を作成する
 	Print << s.substr(0, 5);
-
-	// 7 文字目から 3 文字の部分文字列を作成する
 	Print << s.substr(7, 3);
-
-	// 7 文字目から末尾までの部分文字列を作成する
 	Print << s.substr(7);
-
-	// 第 2 引数が実際の文字列の長さより大きい場合は、末尾までの部分文字列を作成する
 	Print << s.substr(0, 100);
 
 	while (System::Update())
@@ -451,10 +670,14 @@ void Main()
 	}
 }
 ```
+```txt title="Output"
+Hello
+Siv
+Siv3D!
+Hello, Siv3D!
+```
 
-次のように、時間経過に応じて文字列を表示するプログラムに応用することができます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/string/14b.png)
+- This can be applied to programs that display strings over time as follows:
 
 ```cpp
 # include <Siv3D.hpp>
@@ -477,12 +700,40 @@ void Main()
 ```
 
 
-## 19.15 アルファベットを小文字 / 大文字にする
-`.lowercased()` で、アルファベットを小文字にした新しい文字列を作成します。
+## 33.21 Converting Alphabets to Lowercase/Uppercase
+- `.lowercased()` creates a new string with alphabets converted to lowercase
+- `.uppercased()` creates a new string with alphabets converted to uppercase
 
-`.uppercased()` で、アルファベットを大文字にした新しい文字列を作成します。
+```cpp
+# include <Siv3D.hpp>
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/string/15.png)
+void Main()
+{
+	const String s = U"こんにちは、Siv3D!";
+
+	// Create new string with lowercase
+	Print << s.lowercased();
+
+	// Create new string with uppercase
+	Print << s.uppercased();
+
+	while (System::Update())
+	{
+
+	}
+}
+```
+```txt title="Output"
+こんにちは、siv3d!
+こんにちは、SIV3D!
+```
+
+
+## 33.22 Reversing String
+- `.reversed()` creates a new string with the string reversed
+	- The original string is not modified
+- `.reverse()` reverses the string
+	- The original string is modified 
 
 ```cpp
 # include <Siv3D.hpp>
@@ -491,15 +742,14 @@ void Main()
 {
 	const String s1 = U"Hello, Siv3D!";
 
-	Print << s1.lowercased();
+	// Create new string with reversed order
+	Print << s1.reversed();
 
-	Print << s1.uppercased();
+	String s2 = U"Hello, Siv3D!";
 
-	const String s2 = U"こんにちは、Siv3D!";
-
-	Print << s2.lowercased();
-
-	Print << s2.uppercased();
+	// Reverse the string
+	s2.reverse();
+	Print << s2;
 
 	while (System::Update())
 	{
@@ -507,14 +757,51 @@ void Main()
 	}
 }
 ```
+```txt title="Output"
+!D3viS ,olleH
+!D3viS ,olleH
+```
 
 
-## 19.16 文字や文字列を置き換える
-`.replace(from, to)` で、文字列の中の `from` を `to` に置き換えます。
+## 33.23 Shuffling String Elements
+- `.shuffled()` creates a new string with the string elements shuffled
+	- The original string is not modified
+- `.shuffle()` shuffles the string elements
+	- The original string is modified
 
-`.replaced(from, to)` で、文字列の中の `from` を `to` に置き換えた新しい文字列を作成します。元の文字列は変更されません。
+```cpp
+# include <Siv3D.hpp>
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/string/16.png)
+void Main()
+{
+	const String s1 = U"Hello, Siv3D!";
+	
+	// Create new string with shuffled elements
+	Print << s1.shuffled();
+
+	String s2 = U"Hello, Siv3D!";
+
+	// Shuffle string elements
+	s2.shuffle();
+	Print << s2;
+
+	while (System::Update())
+	{
+
+	}
+}
+```
+```txt title="Example Output"
+vel SDH!,loi3
+3 lo!vl,SHDie
+```
+
+
+## 33.24 Character and String Replacement
+- `.replaced(from, to)` creates a new string with `from` replaced by `to` in the string
+	- The original string is not modified
+- `.replace(from, to)` replaces `from` with `to` in the string
+	- The original string is modified
 
 ```cpp
 # include <Siv3D.hpp>
@@ -522,22 +809,16 @@ void Main()
 void Main()
 {
 	String s = U"Hello, Siv3D!";
-
-	// Siv3D を C++ に置き換える
-	s.replace(U"Siv3D", U"C++");
-
-	Print << s;
-
-	// ! を ? に置き換える
+	
+	// Create new string with Siv3D replaced by C++
+	Print << s.replaced(U"Siv3D", U"C++");
+	
+	// Replace ! with ?
 	s.replace(U'!', U'?');
-
 	Print << s;
 
-	// 置き換えた新しい文字列を返す
+	// Create new string with Hello replaced by Hi
 	Print << s.replaced(U"Hello", U"Hi");
-
-	// 元の文字列は変更されていない
-	Print << s;
 
 	while (System::Update())
 	{
@@ -545,14 +826,18 @@ void Main()
 	}
 }
 ```
+```txt title="Output"
+Hello, C++!
+Hello, Siv3D?
+Hi, Siv3D?
+```
 
 
-## 19.17 前後の空白文字を削除する
-`.trim()` で、文字列の前後にある空白文字（スペース、タブ、改行など）を削除します。
-
-`.trimmed()` で、文字列の前後にある空白文字を削除した新しい文字列を作成します。元の文字列は変更されません。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/string/17.png)
+## 33.25 Removing Leading and Trailing Whitespace
+- `.trimmed()` creates a new string with whitespace characters (spaces, tabs, newlines, etc.) removed from the beginning and end of the string
+	- The original string is not modified
+- `.trim()` removes whitespace characters from the beginning and end of the string
+	- The original string is modified
 
 ```cpp
 # include <Siv3D.hpp>
@@ -561,14 +846,14 @@ void Main()
 {
 	String s1 = U" Hello, Siv3D!   ";
 
+	// Remove leading and trailing whitespace
 	s1.trim();
-
 	Print << s1;
-
 	Print << s1.size();
 
 	const String s2 = U"\n\n Siv3D  \n\n\n";
 
+	// Create new string with leading and trailing whitespace removed
 	Print << s2.trimmed();
 
 	while (System::Update())
@@ -577,25 +862,45 @@ void Main()
 	}
 }
 ```
+```txt title="Output"
+Hello, Siv3D!
+13
+Siv3D
+```
 
 
-## 19.18 文字列を指定した文字で分割する
-`.split(delimiter)` を使うと、文字列を `delimiter` で分割した結果を `Array<String>` で返します。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/string/18a.png)
+## 33.26 Splitting by Specified Character
+- `.split(delimiter)` returns the result of splitting the string by `delimiter` as `Array<String>`
+	- `delimiter` is a single character string
+	- If `delimiter` appears consecutively, empty strings are generated
+	- If `delimiter` appears at the beginning or end of the string, empty strings are generated
+	- If `delimiter` is not contained in the string, the original string is returned as is
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	const String s = U"red,green,blue";
-
-	const Array<String> values = s.split(U',');
-
-	for (const auto& value : values)
 	{
-		Print << value;
+		const String s = U"red,green,blue";
+		
+		const Array<String> values = s.split(U',');
+		Print << values;
+	}
+
+	{
+		const String s = U",,a,";
+
+		const Array<String> values = s.split(U',');
+		Print << values;
+	}
+
+	{
+		const String s = U"1, 2, 3, 4, 5";
+
+		// Example converting number strings separated by U',' to Array<int32>
+		const Array<int32> values = s.split(U',').map(Parse<int32>);
+		Print << values;
 	}
 
 	while (System::Update())
@@ -604,43 +909,28 @@ void Main()
 	}
 }
 ```
-
-`U','` で区切られた数字の文字列を `Array<int32>` に変換するサンプルです。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/string/18b.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	const String s = U"1, 2, 3, 4, 5";
-
-	const Array<int32> a = s.split(U',').map(Parse<int32>);
-
-	Print << a;
-
-	while (System::Update())
-	{
-
-	}
-}
+```txt title="Output"
+{red, green, blue}
+{, , a, }
+{1, 2, 3, 4, 5}
 ```
 
 
-## 19.19 他の文字列型へ変換する
-`String` を別の文字列型に変換するには、次のメンバ関数を使います。
+## 33.27 Converting to Other String Types
+- `String` has the following member functions to convert to other string types:
 
-| メンバ関数 | 説明 |
+| Code | Description |
 |---|---|
-| `.narrow()` | `std::string` (文字コードは環境依存) に変換します。 |
-| `.toUTF8()` | `std::string` (UTF-8) に変換します。 |
-| `.toWstr()` | `std::wstring` に変換します。 |
-| `.toUTF16()` | `std::u16string` に変換します。 |
-| `.toUTF32()` | `std::u32string` に変換します。 |
+| `.narrow()` | Convert to `std::string` (character encoding is environment-dependent) |
+| `.toUTF8()` | Convert to `std::string` (UTF-8) |
+| `.toWstr()` | Convert to `std::wstring` |
+| `.toUTF16()` | Convert to `std::u16string` |
+| `.toUTF32()` | Convert to `std::u32string` |
 
-??? example "環境依存の文字コード"
-	`std::string` の文字コードは環境によって異なります。日本語の Windows では Shift_JIS (CP932), macOS や Linux では UTF-8 です。Siv3D v0.8.0 以降は `std::string` の文字コードは UTF-8 に統一される予定です。
+??? example "Environment-dependent character encoding"
+	- The character encoding of `std::string` varies by environment
+	- Japanese Windows uses Shift_JIS (CP932), macOS and Linux use UTF-8
+	- From Siv3D v0.8 onwards, `std::string` character encoding will be unified to UTF-8
 
 ```cpp
 # include <Siv3D.hpp>
@@ -650,13 +940,9 @@ void Main()
 	const String s = U"こんにちは、Siv3D!";
 
 	const std::string s1 = s.narrow();
-
 	const std::string s2 = s.toUTF8();
-
 	const std::wstring s3 = s.toWstr();
-
 	const std::u16string s4 = s.toUTF16();
-
 	const std::u32string s5 = s.toUTF32();
 
 	while (System::Update())
@@ -666,22 +952,36 @@ void Main()
 }
 ```
 
-`const char*` を受け取る関数に `String` の文字列を渡すには、`.narrow()` で得られた `std::string` の先頭ポインタを `c_str()` で取得します。
+- To pass a `String` string to a function that takes `const char*`, get the head pointer of the `std::string` obtained with `.narrow()` using `c_str()`:
+
+```cpp
+f(s.narrow().c_str());
+```
+
+
+## 33.28 Converting from Other String Types
+- The following functions convert from other string types to `String`:
+
+| Code | Description |
+|---|---|
+| `Unicode::Widen(s)` | Convert from `std::string` (character encoding is environment-dependent) to `String` |
+| `Unicode::WidenAscii(s)` | Convert from `std::string` (ASCII) to `String` |
+| `Unicode::FromWstring(s)` | Convert from `std::wstring` to `String` |
+| `Unicode::FromUTF8(s)` | Convert from `std::string` (UTF-8) to `String` |
+| `Unicode::FromUTF16(s)` | Convert from `std::u16string` to `String` |
+| `Unicode::FromUTF32(s)` | Convert from `std::u32string` to `String` |
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	const String s = U"12345";
-
-	// const char* を受け取る関数に String の文字列を渡す
-	const int32 n = atoi(s.narrow().c_str());
-
-	Print << n;
-
-	// String の文字列を int32 に変換する Siv3D の標準的な方法
-	Print << Parse<int32>(s);
+	const String s1 = Unicode::Widen("こんにちは、Siv3D!");
+	const String s2 = Unicode::WidenAscii("Hello, Siv3D!");
+	const String s3 = Unicode::FromWstring(L"こんにちは、Siv3D!");
+	const String s4 = Unicode::FromUTF8("こんにちは、Siv3D!");
+	const String s5 = Unicode::FromUTF16(u"こんにちは、Siv3D!");
+	const String s6 = Unicode::FromUTF32(U"こんにちは、Siv3D!");
 
 	while (System::Update())
 	{
@@ -691,38 +991,24 @@ void Main()
 ```
 
 
-## 19.20 他の文字列型から変換する
-別の文字列型から `String` に変換するには、次の関数を使います。
-
-| 関数 | 説明 |
-|---|---|
-| `Unicode::Widen(s)` | `std::string` (文字コードは環境依存) から `String` に変換します。 |
-| `Unicode::WidenAscii(s)` | `std::string` (ASCII) から `String` に変換します。 |
-| `Unicode::FromWstring(s)` | `std::wstring` から `String` に変換します。 |
-| `Unicode::FromUTF8(s)` | `std::string` (UTF-8) から `String` に変換します。 |
-| `Unicode::FromUTF16(s)` | `std::u16string` から `String` に変換します。 |
-| `Unicode::FromUTF32(s)` | `std::u32string` から `String` に変換します。 |
+## 33.29 FilePath
+- To clarify that a string refers to a file path, `FilePath` is provided as an alias for `String`
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	const String s1 = Unicode::Widen("こんにちは、Siv3D!");
+	FilePath path = U"example/windmill.png";
 
-	const String s2 = Unicode::WidenAscii("Hello, Siv3D!");
-
-	const String s3 = Unicode::FromWstring(L"こんにちは、Siv3D!");
-
-	const String s4 = Unicode::FromUTF8("こんにちは、Siv3D!");
-
-	const String s5 = Unicode::FromUTF16(u"こんにちは、Siv3D!");
-
-	const String s6 = Unicode::FromUTF32(U"こんにちは、Siv3D!");
+	Print << path;
 
 	while (System::Update())
 	{
 
 	}
 }
+```
+```txt title="Output"
+example/windmill.png
 ```

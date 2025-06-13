@@ -1,251 +1,305 @@
-# 14. マウス入力を扱う
-マウスのクリックやカーソルの位置を取得する方法を学びます。
+# 16. Handling Mouse Input
 
-## 14.1 マウスクリックを調べる
-`if (MouseL.down())` でマウスの左ボタンが押されたかを、`if (MouseR.down())` でマウスの右ボタンが押されたかを調べることができます。
+## 16.1 Getting Mouse Cursor Position
+- To get the current coordinates of the mouse cursor, use `Cursor::Pos()`
+- `Cursor::Pos()` returns a `Point` type value
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/mouse/1.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/mouse/1.png)
 
-```cpp
+```cpp title="Display emoji at mouse cursor position" hl_lines="13"
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ FontMethod::MSDF, 48 };
+	
+	const Texture texture{ U"🐥"_emoji };
 
 	while (System::Update())
 	{
-		// 左クリックされたら
+		const Point cursorPos = Cursor::Pos();
+
+		font(U"{}"_fmt(cursorPos)).draw(40, Vec2{ 40, 40 }, ColorF{ 0.1 });
+
+		texture.drawAt(cursorPos);
+	}
+}
+```
+
+
+## 16.2 Checking if Mouse Button is Pressed
+- When the left mouse button is pressed, `MouseL.down()` returns `true`
+- When the right mouse button is pressed, `MouseR.down()` returns `true`
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/mouse/2.png)
+
+```cpp title="Output message when mouse button is pressed" hl_lines="10 16"
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	while (System::Update())
+	{
+		// If left-clicked
 		if (MouseL.down())
 		{
-			Print << U"左クリック";
+			Print << U"Left Click";
 		}
 
-		// 右クリックされたら
+		// If right-clicked
 		if (MouseR.down())
 		{
-			Print << U"右クリック";
+			Print << U"Right Click";
 		}
 	}
 }
 ```
 
-## 14.2 マウスカーソルの座標に移動する
-マウスカーソルの座標を `Point` 型で得るには `Cursor::Pos()` を使います。`Point` 型の値は `Vec2` 型に変換できます。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/mouse/2.png)
+## 16.3 Checking if Mouse Button is Being Pressed
+- Unlike `.down()`, `.pressed()` returns `true` continuously while the button is being pressed
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/mouse/3.png)
+
+```cpp title="Output message while mouse button is being pressed" hl_lines="10 16"
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	while (System::Update())
+	{
+		// If left button is being pressed
+		if (MouseL.pressed())
+		{
+			Print << U"Left Pressed";
+		}
+
+		// If right button is being pressed
+		if (MouseR.pressed())
+		{
+			Print << U"Right Pressed";
+		}
+	}
+}
+```
+
+
+## 16.4 Combining Mouse Inputs
+- Sample code for moving an emoji using mouse input:
+	- The emoji moves to where you left-click
+	- Right-clicking returns it to the center of the screen
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/mouse/4.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-	const Texture emoji{ U"☃️"_emoji };
+	const Texture texture{ U"🐥"_emoji };
 
 	Vec2 pos{ 400, 300 };
 
 	while (System::Update())
 	{
-		// 左クリックされたら
+		// If left-clicked
 		if (MouseL.down())
 		{
-			// 現在のマウスカーソルの座標を代入
+			// Change emoji display position to mouse cursor position
 			pos = Cursor::Pos();
 		}
 
-		emoji.drawAt(pos);
-	}
-}
-```
-
-X 座標、Y 座標をそれぞれ `Cursor::Pos().x`、`Cursor::Pos().y` で得ることもできます。前述のプログラムと次のプログラムは同じ動作をします。
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
-
-	const Texture emoji{ U"☃️"_emoji };
-
-	double x = 400;
-
-	double y = 300;
-
-	while (System::Update())
-	{
-		// 左クリックされたら
-		if (MouseL.down())
+		// If right-clicked
+		if (MouseR.down())
 		{
-			// 現在のマウスカーソルの X 座標を代入
-			x = Cursor::Pos().x;
-
-			// 現在のマウスカーソルの Y 座標を代入
-			y = Cursor::Pos().y;
+			// Reset emoji display position to center of screen
+			pos = Vec2{ 400, 300 };
 		}
 
-		emoji.drawAt(x, y);
+		texture.drawAt(pos);
 	}
 }
 ```
 
 
-## 14.3 図形をクリックしたかを調べる
-`Circle` や `Rect`, `RectF` の `.leftClicked()` で、その図形が左クリックされたかを判定できます。
+## 16.5 Checking if a Shape is Clicked
+- To check if shapes like `Rect` or `Circle` are clicked, use the member function `.leftClicked()` of each shape class
+- `.leftClicked()` returns `true` when that shape is left-clicked
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/mouse/3.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/mouse/5.png)
 
-```cpp
+```cpp title="Output message when shape is clicked" hl_lines="14 20"
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-	const Circle circle{ 200, 200, 50 };
+	const Circle circle{ 200, 150, 100 };
 
-	const Rect rect{ 400, 400, 200, 40 };
+	const Rect rect{ 400, 300, 200, 100 };
 
 	while (System::Update())
 	{
-		// 円を左クリックしたら
+		// If circle is left-clicked
 		if (circle.leftClicked())
 		{
-			Print << U"円をクリック";
+			Print << U"Circle";
 		}
 
-		// 長方形を左クリックしたら
+		// If rectangle is left-clicked
 		if (rect.leftClicked())
 		{
-			Print << U"長方形をクリック";
+			Print << U"Rect";
 		}
 
-		circle.draw(Palette::Orange);
-
-		rect.draw();
+		circle.draw(Palette::Seagreen);
+		rect.draw(ColorF{ 0.4 });
 	}
 }
 ```
 
 
-## 14.4 図形の上にマウスカーソルがあるかを調べる
-`Circle` や `Rect`, `RectF` の `.mouseOver()` で、マウスカーソルがその図形の上にあるかを判定できます。
+## 16.6 Click Detection is Independent of Drawing
+- Whether the shape is actually drawn on screen does not affect the result of `.leftClicked()`
+- The `rect` in the following code represents a rectangle covering the left half of the screen
+- Although it's not drawn using `.draw()`, you can still check if that rectangular area was left-clicked using `.leftClicked()`
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/mouse/4.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/mouse/6.png)
 
-```cpp
+```cpp title="Output message when left half of screen is clicked"
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-	const Circle circle{ 200, 200, 50 };
-
-	const Rect rect{ 400, 400, 200, 40 };
+	// Rectangle covering the left half of the screen
+	const Rect rect{ 0, 0, 400, 600 };
 
 	while (System::Update())
 	{
-		ClearPrint();
-
-		// 円の上にマウスカーソルがあれば
-		if (circle.mouseOver())
+		// If left half of screen is left-clicked
+		if (rect.leftClicked())
 		{
-			Print << U"円の上にある";
+			Print << U"Click!";
 		}
-
-		// 長方形の上にマウスカーソルがあれば
-		if (rect.mouseOver())
-		{
-			Print << U"長方形の上にある";
-		}
-
-		circle.draw(Palette::Orange);
-
-		rect.draw();
 	}
 }
 ```
 
 
-## 14.5 マウスカーソルを手の形にする
-`Cursor::RequestStyle(CursorStyle::Hand);` を呼ぶと、そのフレームはマウスカーソルが手の形のアイコンで表示されます。
+## 16.7 Checking if Mouse Cursor is Over a Shape
+- Using the member function `.mouseOver()` of each shape class, you can check if the mouse cursor is over that shape
+- `.mouseOver()` returns `true` when the mouse cursor is over that shape
+- Like click detection, this doesn't depend on whether the shape is actually drawn
+- The following code uses the conditional operator `A ? B : C` to change the shape's color depending on whether the mouse cursor is over the shape
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/mouse/5.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/mouse/7.png)
 
-```cpp
+```cpp title="Change shape color when mouse cursor is over the shape"
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-	const Circle circle{ 200, 200, 50 };
+	const Circle circle{ 200, 150, 100 };
+
+	const Rect rect{ 400, 300, 200, 100 };
 
 	while (System::Update())
 	{
-		// 円の上にマウスカーソルがあれば
+		circle.draw(circle.mouseOver() ? Palette::Seagreen : Palette::White);
+
+		rect.draw(rect.mouseOver() ? ColorF{ 0.8 } : ColorF{ 0.6 });
+	}
+}
+```
+
+
+## 16.8 Making Mouse Cursor Hand-shaped
+- To inform users that an object can be operated with the mouse, you might change the mouse cursor to a hand shape
+- Calling `Cursor::RequestStyle(CursorStyle::Hand);` makes the mouse cursor hand-shaped for that frame
+
+```cpp title="Make cursor hand-shaped when mouse cursor is over shape" hl_lines="13"
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Circle circle{ 200, 150, 100 };
+
+	while (System::Update())
+	{
 		if (circle.mouseOver())
 		{
-			// マウスカーソルを手のアイコンにする
 			Cursor::RequestStyle(CursorStyle::Hand);
 		}
 
-		circle.draw(Palette::Orange);
+		circle.draw();
 	}
 }
 ```
 
 
-## 14.6 （応用）絵文字をクリックしたかを調べる
-絵文字（テクスチャ）には `.leftClicked()` や `.mouseOver()` が無いため、代わりに近い大きさの円を使って判定します。
+## 16.9 Checking if an Emoji is Clicked
+- Emojis (textures) don't have `.leftClicked()` or `.mouseOver()`
+- Instead, you can approximate with a shape of similar size for detection
+	- For emojis, you can roughly approximate with a circle of radius `60`
+- The following code is a sample for clicking an apple on the screen
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/mouse/9.png)
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/mouse/6.png)
-
-```cpp
+```cpp title="Output message when emoji is clicked" hl_lines="9 14 21"
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-	const Texture emoji{ U"🍪"_emoji };
+	const Texture emoji{ U"🍎"_emoji };
 
-	const Circle circle{ 200, 200, 60 };
+	const Circle circle{ 200, 150, 60 };
 
 	while (System::Update())
 	{
-		// 円の上にマウスカーソルがあれば
+		// If mouse cursor is over the circle
 		if (circle.mouseOver())
 		{
-			// マウスカーソルを手のアイコンにする
+			// Make mouse cursor a hand icon
 			Cursor::RequestStyle(CursorStyle::Hand);
 		}
 
-		// 円を左クリックしたら
+		// If circle is left-clicked
 		if (circle.leftClicked())
 		{
-			Print << U"クッキーをクリック";
+			Print << U"Apple";
 		}
 
-		// 円は描かない
-		//circle.draw();
+		emoji.drawAt(circle.center);
 
-        // circle.center は Vec2{ circle.x, circle.y } と同じ
-		emoji.drawAt(circle.center, Palette::Orange);
+		// Don't draw the circle
+		//circle.draw();
 	}
 }
 ```
 
-
-## 振り返りチェックリスト
-
-- [x] `MouseL`, `MouseR` の `.down()` で、左クリック、右クリックされたかを調べることを学んだ
-- [x] `Cursor::Pos()` で、マウスカーソルの位置を得ることを学んだ
-- [x] `Circle` や `Rect`, `RectF` の `.leftClicked()` で、その図形が左クリックされたかを判定できることを学んだ
-- [x] `Circle` や `Rect`, `RectF` の `.mouseOver()` で、マウスカーソルがその図形の上にあるかを判定できることを学んだ
-- [x] `Cursor::RequestStyle(CursorStyle::Hand);` で、マウスカーソルを手の形にできることを学んだ
-- [x] 絵文字（テクスチャ）には `.leftClicked()` や `.mouseOver()` が無いため、代わりに近い大きさの円を使って判定するテクニックを学んだ
+## Review Checklist
+- [x] Learned that `Cursor::Pos()` gets the mouse cursor position as a `Point` type
+- [x] Learned that `MouseL.down()` returns `true` when the left mouse button is pressed
+- [x] Learned that `MouseL.pressed()` returns `true` continuously while the left mouse button is being pressed
+- [x] Learned that shape classes' `.leftClicked()` returns `true` when that shape is left-clicked
+- [x] Learned that shape classes' `.mouseOver()` returns `true` when the mouse cursor is over that shape
+- [x] Learned that shape mouse-related detection can be performed regardless of whether the shape is drawn
+- [x] Learned that `Cursor::RequestStyle(CursorStyle::Hand);` makes the mouse cursor hand-shaped for that frame only
+- [x] Learned to approximate with shapes for detection since emojis (textures) don't have `.leftClicked()` or `.mouseOver()`

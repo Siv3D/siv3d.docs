@@ -1,126 +1,126 @@
-# メッセージボックス
+# Message Box
 
-## 1. 概要
-メッセージボックス機能を使うと、メインウィンドウとは別のウィンドウとして、ユーザに応答を求めるメッセージボックスを表示し、ユーザの選択を取得できます。メッセージボックスの表示中は、メインループのプログラムの進行がブロックされます。
+## 1. Overview
+The message box feature allows you to display message boxes as separate windows from the main window, requesting user responses and obtaining user selections. While the message box is displayed, the main loop program progress is blocked.
 
-## 2. メッセージボックスの API
+## 2. Message Box API
 
-### 関数
+### Functions
 
-```cpp title="「OK」ボタンを持つメッセージボックスを表示し、その結果を返します。"
+```cpp title="Displays a message box with an 'OK' button and returns the result."
 MessageBoxResult System::MessageBoxOK(StringView text, MessageBoxStyle style = MessageBoxStyle::Default);
 
 MessageBoxResult System::MessageBoxOK(StringView title, StringView text, MessageBoxStyle style = MessageBoxStyle::Default);
 ```
 
 `title`
-:   メッセージボックスのタイトル
+:   Message box title
 
 `text`
-:   本文
+:   Body text
 
 `style`
-:   スタイル
+:   Style
 
-`戻り値`
+`Return value`
 :   `MessageBoxResult::OK`
 
 
 -----------------------------------
 
 
-```cpp title="「OK」「キャンセル」ボタンを持つメッセージボックスを表示し、その結果を返します。"
+```cpp title="Displays a message box with 'OK' and 'Cancel' buttons and returns the result."
 MessageBoxResult System::MessageBoxOKCancel(StringView text, MessageBoxStyle style = MessageBoxStyle::Default);
 
 MessageBoxResult System::MessageBoxOKCancel(StringView title, StringView text, MessageBoxStyle style = MessageBoxStyle::Default);
 ```
 
 `title`
-:   メッセージボックスのタイトル
+:   Message box title
 
 `text`
-:   本文
+:   Body text
 
 `style`
-:   スタイル
+:   Style
 
-`戻り値`
-:   `MessageBoxResult::OK` または `MessageBoxResult::Cancel`
+`Return value`
+:   `MessageBoxResult::OK` or `MessageBoxResult::Cancel`
 
 
 -----------------------------------
 
 
-```cpp title="「はい」「いいえ」ボタンを持つメッセージボックスを表示し、その結果を返します。"
+```cpp title="Displays a message box with 'Yes' and 'No' buttons and returns the result."
 MessageBoxResult System::MessageBoxYesNo(StringView text, MessageBoxStyle style = MessageBoxStyle::Default);
 
 MessageBoxResult System::MessageBoxYesNo(StringView title, StringView text, MessageBoxStyle style = MessageBoxStyle::Default);
 ```
 
 `title`
-:   メッセージボックスのタイトル
+:   Message box title
 
 `text`
-:   本文
+:   Body text
 
 `style`
-:   スタイル
+:   Style
 
-`戻り値`
-:   `MessageBoxResult::Yes` または `MessageBoxResult::No`
+`Return value`
+:   `MessageBoxResult::Yes` or `MessageBoxResult::No`
 
 
-### 列挙型
+### Enumerations
 
 #### MessageBoxResult
-メッセージボックスに対するユーザの操作を表す定数です。プラットフォームによっては、ボタンを選択せずにメッセージボックスを閉じることができる場合があります。
+Constants representing user operations on message boxes. On some platforms, it may be possible to close the message box without selecting a button.
 
-| 値 | 説明 |
+| Value | Description |
 |--|--|
-| `OK` | 「OK」が押された |
-| `Cancel` | 「キャンセル」が押されたか、メッセージボックスが閉じられた |
-| `Yes` | 「はい」が押された |
-| `No` | 「いいえ」が押された |
+| `OK` | 'OK' was pressed |
+| `Cancel` | 'Cancel' was pressed or the message box was closed |
+| `Yes` | 'Yes' was pressed |
+| `No` | 'No' was pressed |
 
 #### MessageBoxStyle
-メッセージボックスのスタイルを表す定数です。プラットフォームによってはスタイルが存在しない場合があり、その場合は通常のスタイルが使われます。
+Constants representing message box styles. If a style doesn't exist on a platform, the normal style is used.
 
-| 値 | 説明 |
+| Value | Description |
 |--|--|
-| `Default` | 通常のスタイル |
-| `Info` | 情報を伝えるスタイル |
-| `Warning` | 警告を伝えるスタイル |
-| `Error` | 深刻なエラーを伝えるスタイル |
-| `Question` | クエスチョンマークのスタイル |
+| `Default` | Normal style |
+| `Info` | Style for conveying information |
+| `Warning` | Style for conveying warnings |
+| `Error` | Style for conveying serious errors |
+| `Question` | Style with question mark |
 
 
 
-## 3. メッセージボックスのサンプル
+## 3. Message Box Samples
 
-### 3.1 一定時間が経過したらプログラムを終了する
+### 3.1 Exit program after a certain time
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// 5 秒間のカウントダウンタイマー
+	// 5-second countdown timer
 	Timer timer{ 5s, StartImmediately::Yes };
 
 	while (System::Update())
 	{
 		ClearPrint();
 
-		// 残り時間を表示する
-		Print << U"残り " << timer.format(U"mm:ss");
+		// Display remaining time
+		Print << U"Time remaining " << timer.format(U"mm:ss");
 
-		// タイマーが 0 に到達したら
+		// When timer reaches zero
 		if (timer.reachedZero())
 		{
-			// OK のメッセージボックスを表示する
-			System::MessageBoxOK(U"体験版の終了", U"体験版で遊べるのはここまでです。");
+			// Display OK message box
+			System::MessageBoxOK(U"Trial Version End", U"This is as far as you can play with the trial version.");
 
-			// プログラムを終了する
+			// Exit program
 			return;
 		}
 	}
@@ -128,28 +128,28 @@ void Main()
 ```
 
 
-### 3.2 ウィンドウの閉じるボタンを押したときに終了するか確認する
+### 3.2 Confirm exit when window close button is pressed
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// ユーザ操作でアプリが終了しないようにする
+	// Prevent app from terminating by user action
 	System::SetTerminationTriggers(UserAction::NoAction);
 
 	while (System::Update())
 	{
-		// ウィンドウの閉じるボタンが押されたら
+		// When window close button is pressed
 		if (System::GetUserActions() & UserAction::CloseButtonClicked)
 		{
-			// Yes か No のメッセージボックスを表示する
-			const MessageBoxResult result = System::MessageBoxYesNo(U"アプリケーションを終了しますか？");
+			// Display Yes or No message box
+			const MessageBoxResult result = System::MessageBoxYesNo(U"Do you want to exit the application?");
 
-			// Yes が選ばれたら
+			// If Yes is chosen
 			if (result == MessageBoxResult::Yes)
 			{
-				// プログラムを終了する
+				// Exit program
 				return;
 			}
 		}
@@ -157,41 +157,41 @@ void Main()
 }
 ```
 
-### 3.3 起動時に前回のセーブデータを読み込むか確認する
+### 3.3 Confirm loading previous save data at startup
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// セーブファイルのパス
+	// Save file path
 	constexpr FilePathView SaveDataPath = U"save.txt";
 
-	// 読み込んだセーブデータ
+	// Loaded save data
 	String saveData;
 
-	// もし前回のデータが存在すれば
+	// If previous data exists
 	if (FileSystem::Exists(SaveDataPath))
 	{
-		// Yes か No のメッセージボックスを表示する
-		const MessageBoxResult result = System::MessageBoxYesNo(U"前回のデータが見つかりました。読み込んでそこから再開しますか？");
+		// Display Yes or No message box
+		const MessageBoxResult result = System::MessageBoxYesNo(U"Previous data found. Do you want to load it and continue from there?");
 
-		// Yes が選ばれたら
+		// If Yes is chosen
 		if (result == MessageBoxResult::Yes)
 		{
-			// セーブファイルから文字列を読み込む
+			// Read string from save file
 			saveData = TextReader{ SaveDataPath }.readAll();
 		}
 	}
 
-	// セーブデータが読み込まれていたら
+	// If save data was loaded
 	if (saveData)
 	{
-		Print << U"前回のセーブデータ: " << saveData;
+		Print << U"Previous save data: " << saveData;
 	}
 	else
 	{
-		Print << U"新規データ";
+		Print << U"New data";
 	}
 
 	while (System::Update())
@@ -199,80 +199,80 @@ void Main()
 
 	}
 
-	// セーブデータ（現在の日付と時刻）をセーブファイルに書き込んでから終了する
+	// Write save data (current date and time) to save file before exiting
 	TextWriter{ SaveDataPath }.writeln(DateTime::Now());
 }
 ```
 
 
-### 3.4 作業内容を保存するか確認する
+### 3.4 Confirm saving work content
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// ユーザ操作でアプリが終了しないようにする
+	// Prevent app from terminating by user action
 	System::SetTerminationTriggers(UserAction::NoAction);
 
-	// セーブファイルのパス
+	// Save file path
 	constexpr FilePathView SaveDataPath = U"save-hsv.txt";
 
-	// 背景色
+	// Background color
 	HSV hsv = ColorF{ 0.8, 0.9, 1.0 };
 
-	// セーブファイルがあればそこから色を読み込む
+	// Load color from save file if it exists
 	if (FileSystem::Exists(SaveDataPath))
 	{
 		Deserializer<BinaryReader> reader{ SaveDataPath };
 		reader(hsv);
 	}
 
-	// 現在選択している色が保存されているか
+	// Whether currently selected color is saved
 	bool saved = true;
 
 	while (System::Update())
 	{
-		// 作業内容が未保存の場合、ウィンドウのタイトルで知らせる
-		Window::SetTitle(saved ? U"色の選択" : U"* 色の選択 [未保存]");
+		// Notify in window title if work is unsaved
+		Window::SetTitle(saved ? U"Color Selection" : U"* Color Selection [Unsaved]");
 
-		// 背景色を設定する
+		// Set background color
 		Scene::SetBackground(hsv);
 
-		// カラーピッカーで色を選択する
+		// Select color with color picker
 		if (SimpleGUI::ColorPicker(hsv, Vec2{ 40,40 }))
 		{
-			// 変更があれば未保存状態にする
+			// Set to unsaved state if there are changes
 			saved = false;
 		}
 
-		// 未保存の場合、「色を保存する」ボタンを表示
-		if (SimpleGUI::Button(U"色を保存する", Vec2{ 240, 40 }, unspecified, (not saved))) // ボタンが押されたら
+		// If unsaved, display "Save Color" button
+		if (SimpleGUI::Button(U"Save Color", Vec2{ 240, 40 }, unspecified, (not saved))) // If button is pressed
 		{
-			// セーブファイルに色を保存
+			// Save color to save file
 			Serializer<BinaryWriter> writer{ SaveDataPath };
 			writer(hsv);
 
-			// 保存済みにする
+			// Set to saved state
 			saved = true;
 		}
 
-		// ウィンドウの閉じるボタンが押されたら
+		// When window close button is pressed
 		if (System::GetUserActions() & UserAction::CloseButtonClicked)
 		{
-			if (saved) // 保存済みなら
+			if (saved) // If saved
 			{
-				return; // 何もせず終了する
+				return; // Exit without doing anything
 			}
-			else // 未保存なら
+			else // If unsaved
 			{
-				// OK か キャンセル のメッセージボックスを表示する
-				const MessageBoxResult result = System::MessageBoxOKCancel(U"色の選択", U"色を保存せずにアプリケーションを終了しますか？");
+				// Display OK or Cancel message box
+				const MessageBoxResult result = System::MessageBoxOKCancel(U"Color Selection", U"Do you want to exit the application without saving the color?");
 
-				// OK が選ばれたら
+				// If OK is chosen
 				if (result == MessageBoxResult::OK)
 				{
-					// プログラムを終了する
+					// Exit program
 					return;
 				}
 			}
@@ -281,7 +281,7 @@ void Main()
 }
 ```
 
-### 3.5 メッセージボックス相当の機能を自作する
+### 3.5 Create your own message box equivalent function
 
 ```cpp
 # include <Siv3D.hpp>
@@ -410,35 +410,35 @@ namespace s3dx
 	[[nodiscard]]
 	inline MessageBoxResult SceneMessageBoxOKCancel(StringView text)
 	{
-		return SceneMessageBoxImpl{}.show(text, { U"OK", MessageBoxResult::OK }, { U"キャンセル", MessageBoxResult::Cancel });
+		return SceneMessageBoxImpl{}.show(text, { U"OK", MessageBoxResult::OK }, { U"Cancel", MessageBoxResult::Cancel });
 	}
 
 	[[nodiscard]]
 	inline MessageBoxResult SceneMessageBoxYesNo(StringView text)
 	{
-		return SceneMessageBoxImpl{}.show(text, { U"はい", MessageBoxResult::Yes }, { U"いいえ", MessageBoxResult::No });
+		return SceneMessageBoxImpl{}.show(text, { U"Yes", MessageBoxResult::Yes }, { U"No", MessageBoxResult::No });
 	}
 }
 
 void Main()
 {
-	// 5 秒間のカウントダウンタイマー
+	// 5-second countdown timer
 	Timer timer{ 5s, StartImmediately::Yes };
 
 	while (System::Update())
 	{
 		ClearPrint();
 
-		// 残り時間を表示する
-		Print << U"残り " << timer.format(U"mm:ss");
+		// Display remaining time
+		Print << U"Time remaining " << timer.format(U"mm:ss");
 
-		// タイマーが 0 に到達したら
+		// When timer reaches zero
 		if (timer.reachedZero())
 		{
-			// OK のメッセージボックスを表示する
-			s3dx::SceneMessageBoxOK(U"体験版で遊べるのはここまでです。");
+			// Display OK message box
+			s3dx::SceneMessageBoxOK(U"This is as far as you can play with the trial version.");
 
-			// プログラムを終了する
+			// Exit program
 			return;
 		}
 	}

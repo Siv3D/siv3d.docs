@@ -1,66 +1,65 @@
-# 11. テキストを表示する
-色や位置を指定して数値やテキストを表示する方法を学びます。
+# 15. Displaying Text
+Learn how to display numbers and text on the screen with specified colors and positions.
 
-## 11.1 数値を文字列に変換する (1)
-`U"{}"_fmt(x)` と書くと、`{}` には値 `x` を文字列にしたものが入ります。
+## 15.1 Converting Numbers to Strings (1)
+- The most convenient way to convert variable values to strings is using **format strings**
+- Writing `U"{}"_fmt(x)` inserts the value `x` converted to a string into `{}`
+- For example, writing `U"{} month {} day"_fmt(month, day)` converts the values of `month` and `day` to strings, generating a string like `U"12 month 31 day"`
 
-例えば `U"{} 月 {} 日"_fmt(12, 31)` は `U"12 月 31 日"` という文字列になります。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/text/1.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	int32 score = 1234;
-
-	Print << U"スコア: {}"_fmt(score);
-
-	int32 month = 12;
-
-	int32 day = 31;
-
-	Print << U"今日は {} 月 {} 日"_fmt(month, day);
-
-	while (System::Update())
-	{
-
-	}
-}
-```
-
-`Print` では次のように書くこともできますが、ひとまとまりの文字列として扱える `_fmt()` を使うほうが今後のプログラムで便利です。
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/text/1.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	int32 score = 1234;
+	int32 score = 12345;
+	Print << U"Score: {} points"_fmt(score);
 
-	Print << U"スコア: " << score;
-
+	int32 year = 2025;
 	int32 month = 12;
-
 	int32 day = 31;
-
-	Print << U"今日は " << month << U" 月 " << day << U" 日";
+	Print << U"{} year {} month {} day"_fmt(year, month, day);
 
 	while (System::Update())
 	{
+		
+	}
+}
+```
 
+- While you can also write it as follows with `Print`, `_fmt()` is more convenient for future programs as it can be treated as a single string and allows format control (see **15.2**)
+
+```cpp title="Method without using format strings"
+# include <Siv3D.hpp>
+
+void Main()
+{
+	int32 score = 12345;
+	Print << U"Score: " << score << U" points";
+
+	int32 year = 2025;
+	int32 month = 12;
+	int32 day = 31;
+	Print << year << U" year " << month << U" month " << day << U" day";
+
+	while (System::Update())
+	{
+		
 	}
 }
 ```
 
 
-## 11.2 数値を文字列に変換する (2)
-`double` 型の値 `x` を、小数点以下の桁数を指定して変換する場合、`U"{:.2f}"_fmt(x)` のように書きます（この場合小数点以下 2 桁）。
+## 15.2 Converting Numbers to Strings (2)
+- Format strings have various formatting options
+- To convert a floating-point value `x` with a specified **number of decimal places**, write `U"{:.2f}"_fmt(x)`
+	- This generates a string with up to 2 decimal places (further digits are rounded)
+	- For example, `U"{:.3f}"_fmt(3.141592)` becomes `U"3.142"`
+- If you don't want to display decimal places, write `U"{:.0f}"_fmt(x)`
+	- For example, `U"{:.0f}"_fmt(3.141592)` becomes `U"3"`
 
-小数点以下を表示しない場合は `U"{:.0f}"_fmt(x)` とします。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/text/2.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/text/2.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -70,11 +69,8 @@ void Main()
 	double x = 123.4567;
 
 	Print << x;
-
 	Print << U"{}"_fmt(x);
-
 	Print << U"{:.2f}"_fmt(x);
-
 	Print << U"{:.0f}"_fmt(x);
 
 	while (System::Update())
@@ -84,129 +80,172 @@ void Main()
 }
 ```
 
-## 11.3 テキストを表示する
-`Print` のような簡易表示ではなく、好きな位置に好きな色でテキストを表示したい場合は、`Font` クラスを使います。
+- Other formatting options will be explained in detail in **Tutorial 36**
 
-まず、メインループの前に `Font 変数名{ FontMethod::MSDF, 48 };` でフォントを作成します。フォントの作成はコストがかかるため、**メインループの前**で行います。
 
-作成したフォント `font` を使って、
-
-- `font(テキスト).draw(サイズ, x, y, color);`
-- `font(テキスト).draw(サイズ, pos, color);`
-
-のようにして、テキストを、サイズ、位置、色を指定して表示します。`color` を省略すると白色になります。
-
-`font(テキスト)` のテキストの部分は、文字列以外の値も記述できます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/text/3.png)
+## 15.3 Creating Fonts
+- While `Print` allows easy display of strings on screen, you cannot change the position, size, or color of text
+- To draw strings more freely, use **fonts** (`Font` class)
+- Fonts are created by loading font files on the computer
+- The simplest way to create a font is from font files bundled with Siv3D
+- You can create a font from bundled font files with simple code like this:
 
 ```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
-
-	const Font font{ FontMethod::MSDF, 48 };
-
-	int32 count = 0;
-
-	while (System::Update())
-	{
-		font(U"C++").draw(50, Vec2{ 100, 100 }, Palette::Black);
-
-		font(U"Siv{}D"_fmt(count)).draw(80, Vec2{ 200, 200 }, ColorF{ 0.2, 0.6, 0.9 });
-
-		font(U"こんにちは").draw(25, Vec2{ 100, 400 }, ColorF{ 0.4 });
-
-		font(count).draw(50, Vec2{ 300, 500 });
-
-		++count;
-	}
-}
+Font font{ FontMethod::MSDF, 48 };
 ```
 
-??? example "フォントの品質"
-	`FontMethod::MSDF` 方式でフォントを作成するときの `48` は、フォントデータの詳細度を表しています。この値は実行時性能とのトレードオフです。詳細度を大きくすると、メモリ消費が増加して処理時間が増えます。小さくすると、複雑な字形の文字の描画品質が低下する場合があります。漢字の場合は `48` がバランスの取れた値です。英数字のみの場合は `32` でも十分です。
+- Thanks to bundled font files, Siv3D can draw text with the same appearance on any platform (Windows, macOS, Linux, Web)
 
 
-## 11.4 太文字のテキストを表示する
-太文字のフォントは `Font 変数名{ FontMethod::MSDF, 48, Typeface::Bold };` で作成できます。通常のフォントは `Typeface::Regular` ですが、これは省略できます。
+## 15.4 Drawing Text
+- After creating a font, pass a string to the `()` operator and draw the string using these methods:
+	- `.draw(font size, pos, color)` 
+	- `.draw(font size, x, y, color)`
+	- Coordinates specify the top-left position. If color is omitted, white (`Palette::White`) is used
+- Strings can include newline characters `\n`
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/text/4.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
-
-	const Font regularFont{ FontMethod::MSDF, 48 }; // Typeface::Regular
-
-	// 太文字のフォント
-	const Font boldFont{ FontMethod::MSDF, 48, Typeface::Bold };
-
-	while (System::Update())
-	{
-		regularFont(U"Hello, Siv3D!").draw(50, Vec2{ 100, 100 }, ColorF{ 0.3 });
-
-		boldFont(U"Hello, Siv3D!").draw(50, Vec2{ 100, 200 }, ColorF{ 0.3 });
-	}
-}
-```
-
-
-## 11.5 テキストの基準位置を変更する
-中心の座標を指定してテキストを表示するには `.drawAt(サイズ, x, y, color);` または  `.drawAt(サイズ, pos, color);` を呼びます。中心が (x, y), あるいは pos になるようにテキストが表示されます。
-
-右端の中心の座標を指定してテキストを表示するには `.draw(サイズ, Arg::rightCenter(x, y), color);` を呼びます。右端の中心が (x, y) になるようにテキストが表示されます。
-
-基準位置は全部で 9 種類用意されています。`Arg::rightCenter = Vec2{ x, y }` や `Arg::rightCenter(pos)` のように、`Vec2` で指定することもできます。
-
-| 基準位置 | 説明 |
-| --- | --- |
-| `Arg::topLeft(x, y)` | 左上。`.draw()` と同じ。 |
-| `Arg::topCenter(x, y)` | 上中央 |
-| `Arg::topRight(x, y)` | 右上 |
-| `Arg::leftCenter(x, y)` | 左中央 |
-| `Arg::center(x, y)` | 中央。`.drawAt()` と同じ。 |
-| `Arg::rightCenter(x, y)` | 右中央 |
-| `Arg::bottomLeft(x, y)` | 左下 |
-| `Arg::bottomCenter(x, y)` | 下中央 |
-| `Arg::bottomRight(x, y)` | 右下 |
-
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial/text/5.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/text/4.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
+	// Create font from bundled font file
 	const Font font{ FontMethod::MSDF, 48 };
 
 	while (System::Update())
 	{
-		font(U"Hello").drawAt(50, Vec2{ 400, 100 }, ColorF{ 0.1 });
+		font(U"Hello, Siv3D!").draw(80, Vec2{ 80, 100 }, ColorF{ 0.2 });
 
-		font(U"Siv3D").draw(50, Arg::rightCenter(780, 300), ColorF{ 0.1 });
+		font(U"C++\nProgramming").draw(60, Vec2{ 80, 300 });
+	}
+}
+```
 
-		font(U"Hello").draw(50, Arg::rightCenter(780, 400), ColorF{ 0.1 });
+- The `48` given in the `Font` constructor is the font's base size (detail level), which affects quality when drawing text large
+- The actual text size is specified by the first argument of `.draw()`, which is `80` or `60`
 
-		font(U"programming").draw(50, Arg::bottomCenter(Cursor::Pos()), ColorF{ 0.1 });
+!!! example "Font Base Size and Text Quality"
+	- The base size `48` when creating a font with `FontMethod::MSDF` represents the detail level of font data
+	- This value is a trade-off with runtime performance
+		- Increasing detail increases memory consumption and processing time
+		- Decreasing it may reduce drawing quality for complex character shapes
+	- For kanji characters, `48` is a well-balanced value. For alphanumeric characters only, `32` is sufficient
+
+
+## 15.5 Bold Fonts
+- Siv3D comes bundled with several font types
+- If not specified, `Typeface::Regular` is used
+- Specifying `Typeface::Bold` creates a **bold font**
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/text/5.png)
+
+```cpp title="Creating a bold font" hl_lines="8"
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	// Create bold font from bundled font file
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+
+	while (System::Update())
+	{
+		font(U"Hello, Siv3D!").draw(80, Vec2{ 80, 100 }, ColorF{ 0.2 });
+
+		font(U"C++\nProgramming").draw(60, Vec2{ 80, 300 });
+	}
+}
+```
+
+- Other fonts will be explained in detail in **Tutorial 34**
+
+
+## 15.6 Drawing Text with Center Position Specified
+- To display text by specifying the **center coordinates** instead of top-left position, use these methods:
+	- `.drawAt(font size, pos, color);`
+	- `.drawAt(font size, x, y, color);`
+	- Text is displayed so that the center coordinates are at pos or (x, y)
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/text/6.png)
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ FontMethod::MSDF, 48 };
+
+	while (System::Update())
+	{
+		font(U"Hello").drawAt(60, Vec2{ 400, 300 }, ColorF{ 0.2 });
+
+		font(U"Siv3D").drawAt(80, Cursor::Pos());
 	}
 }
 ```
 
 
-## 振り返りチェックリスト
-- [x] `_fmt()` を使って数値を文字列に変換する方法を学んだ
-- [x] 小数点以下の桁数を指定して数値を文字列に変換する方法を学んだ
-- [x] フォントを作成する方法を学んだ
-- [x] フォントの作成はコストがかかるため、メインループの前で行うことを学んだ
-- [x] フォントを使ってテキストを表示する方法を学んだ
-- [x] 太文字のフォントを作成する方法を学んだ
-- [x] テキストの基準位置を変更する方法を学んだ
+## 15.7 Drawing Text with Other Reference Positions
+- To display text by specifying the **right center position**, use these methods:
+	- `.draw(font size, Arg::rightCenter = pos, color);`
+	- `.draw(font size, Arg::rightCenter(x, y), color);`
+	- Text is displayed so that the right center coordinates are at pos or (x, y)
+- There are 9 reference positions in total
+
+| Reference Position | Description |
+|---|---|
+| `Arg::topLeft` | Top-left. Same as `.draw()` |
+| `Arg::topCenter` | Center of top edge |
+| `Arg::topRight` | Top-right |
+| `Arg::leftCenter` | Center of left edge |
+| `Arg::center` | Center. Same as `.drawAt()` |
+| `Arg::rightCenter` | Center of right edge |
+| `Arg::bottomLeft` | Bottom-left |
+| `Arg::bottomCenter` | Center of bottom edge |
+| `Arg::bottomRight` | Bottom-right |
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/text/7.png)
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ FontMethod::MSDF, 48 };
+
+	while (System::Update())
+	{
+		font(U"TopLeft").draw(40, Arg::topLeft(20, 20), ColorF{ 0.1 });
+		font(U"TopRight").draw(40, Arg::topRight(780, 20), ColorF{ 0.1 });
+
+		font(U"BottomLeft").draw(40, Arg::bottomLeft(20, 580), ColorF{ 0.1 });
+		font(U"BottomRight").draw(40, Arg::bottomRight(780, 580), ColorF{ 0.1 });
+
+		Rect{ 200, 100, 400, 200 }.draw(ColorF{ 0.8, 0.9, 1.0 });
+		font(U"LeftCenter").draw(20, Arg::leftCenter(200, 200), ColorF{ 0.1 });
+		font(U"RightCenter").draw(20, Arg::rightCenter(600, 200), ColorF{ 0.1 });
+
+		// Draw text with mouse cursor position as bottom center
+		font(U"BottomCenter").draw(40, Arg::bottomCenter = Cursor::Pos(), ColorF{0.1});
+	}
+}
+```
+
+
+## Review Checklist
+- [x] Learned how to convert numbers to strings using format strings `U"{}"_fmt()`
+- [x] Learned how to convert floating-point numbers to strings with specified decimal places using `U"{:.2f}"_fmt(x)`
+- [x] Learned how to create fonts from Siv3D's bundled font files
+- [x] Learned how to draw strings on screen using the font's `.draw()`
+- [x] Learned how to create bold fonts by specifying `Typeface::Bold`
+- [x] Learned how to draw strings with center position specified using `.drawAt()`
+- [x] Learned how to draw strings with 9 different reference positions using `Arg::rightCenter` etc.

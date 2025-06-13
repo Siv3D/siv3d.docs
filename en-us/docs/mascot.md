@@ -1,36 +1,39 @@
-# Siv3D Kun
-"Siv3D Kun" is the mascot character for the C++ framework Siv3D. The design was open for submissions in 2015, and the design by [Haiiro](https://www.pixiv.net/users/2177957) was chosen.
+# Mascot: Siv3D-kun
+
+## 1. Overview
+- "Siv3D-kun" is the mascot character for the C++ framework Siv3D.
+- In 2015, a design contest was held, and the design by [灰色 :material-open-in-new:](https://www.pixiv.net/users/2177957){:target="_blank"} was selected.
 
 <div class="noshadow-75"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/mascot/siv3d-kun.png"></div>
 
+## 2. Character Profile
+- **Age**: 12 years old / **Height**: 144 cm / **Weight**: 36 kg
+- A speedy fighter who relies on brute force.
+- He can move his tail at will.
+- His long arms reach below his pant cuffs.
 
-## Character Details
-- Age: 12 years / Height: 144 cm / Weight: 36 kg
-- A speed type muscular fighter
-- Can move his tail by himself
-- Arms are so long they extend below the hem of his trousers
+=== "Character Sheet 1"
+	<div class="noshadow-75"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/mascot/siv3d-kun-detail-1.png"></div>
 
-<div class="noshadow-75"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/mascot/siv3d-kun-detail-1.png"></div>
-
-<div class="noshadow-75"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/mascot/siv3d-kun-detail-2.png"></div>
+=== "Character Sheet 2"
+    <div class="noshadow-75"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/mascot/siv3d-kun-detail-2.png"></div>
 
 
-## Related Files
-The following files are included in the Siv3D project:
+## 3. Related Files
+- The following files are included in Siv3D projects:
+    - Official image: [`example/siv3d-kun.png`](https://github.com/Siv3D/OpenSiv3D/blob/main/WindowsDesktop/App/example/siv3d-kun.png){:target="_blank"} 
+    - 3D model: [`example/obj/siv3d-kun.obj`](https://github.com/Siv3D/OpenSiv3D/blob/main/WindowsDesktop/App/example/obj/siv3d-kun.obj){:target="_blank"} 
+    - Pixel art: [`example/spritesheet/siv3d-kun-16.png`](https://github.com/Siv3D/OpenSiv3D/blob/main/WindowsDesktop/App/example/spritesheet/siv3d-kun-16.png){:target="_blank"} 
 
-- Official image [`example/siv3d-kun.png`](https://github.com/Siv3D/OpenSiv3D/blob/main/WindowsDesktop/App/example/siv3d-kun.png)
-- 3D model [`example/obj/siv3d-kun.obj`](https://github.com/Siv3D/OpenSiv3D/blob/main/WindowsDesktop/App/example/obj/siv3d-kun.obj)
-- Pixel art [`example/spritesheet/siv3d-kun-16.png`](https://github.com/Siv3D/OpenSiv3D/blob/main/WindowsDesktop/App/example/spritesheet/siv3d-kun-16.png)
-
-## Gallery
+## 4. Gallery
 
 ### 3D Model
-- [Siv3D Kun VRM Model :material-open-in-new:](https://hub.vroid.com/characters/7116531265367998868/models/9089745600456691557) (Provided by [itakawa](https://hub.vroid.com/users/20056775))
+- [Siv3D-kun VRM Model :material-open-in-new:](https://hub.vroid.com/characters/7116531265367998868/models/9089745600456691557){:target="_blank"}  (provided by [itakawa](https://hub.vroid.com/users/20056775){:target="_blank"})
 
 <div class="noshadow-75"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/mascot/vrm.png"></div>
 
 ### Merchandise
-- [Siv3D Kun LINE Stickers :material-open-in-new:](https://line.me/S/sticker/6732840)
+- [Siv3D-kun LINE Stickers :material-open-in-new:](https://line.me/S/sticker/6732840){:target="_blank"} 
 
 <div class="noshadow-75"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/mascot/line.jpg"></div>
 
@@ -39,7 +42,7 @@ The following files are included in the Siv3D project:
 #### Siv3D Advent Calendar 2021 Invitation Illustration
 <div class="noshadow-75"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/mascot/siv3D-gift.png"></div>
 
-#### Siv3D Old Web Site Insert Illustration
+#### Siv3D Legacy Website Illustration
 <div class="noshadow-75"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/mascot/siv3D-earth.png"></div>
 
 #### Siv3D for Kids Title Screen Illustration

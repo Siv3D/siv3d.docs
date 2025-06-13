@@ -1,10 +1,10 @@
-# グローバル変数として作成できないクラス
+# Why Some Siv3D Classes Cannot Be Global
 
-## 説明
+## Description
 
-Siv3D プログラミングにおいて、グローバル変数の使用は不必要なので避けるべきです。
+In Siv3D programming, the use of global variables is unnecessary and should be avoided.
 
-また、Siv3D にはグローバル変数として作成できないクラスがあります。以下のクラスや、以下のクラスをメンバ変数に含むクラスをグローバル変数にすると、エンジンの初期化前にエンジン機能にアクセスしようとして実行時エラーが発生します。
+Additionally, Siv3D has classes that cannot be created as global variables. Creating the following classes, or classes that contain the following classes as member variables, as global variables will cause runtime errors by attempting to access engine functionality before engine initialization.
 
 - `Texture`
 - `DynamicTexture`
@@ -19,8 +19,8 @@ Siv3D プログラミングにおいて、グローバル変数の使用は不�
 - `PixelShader`
 - `Script`
 
-## 代わりの方法 (1)
-Main 関数内でインスタンス化するクラスのメンバ変数としたり、関数の引数として渡したりすることで、グローバル変数を使用することなく、プログラムの様々な場所で上記のクラスを利用できます。
+## Alternative Method (1)
+By making them member variables of classes instantiated within the Main function, or by passing them as function arguments, you can use the above classes in various parts of your program without using global variables.
 
 ```cpp
 # include <Siv3D.hpp>
@@ -63,9 +63,9 @@ void DrawFace(const Faces& faces)
 
 void Main()
 {
-	Game game; // ここで Texture が作成される
+	Game game; // Texture is created here
 
-	Faces faces; // ここで Texture が作成される
+	Faces faces; // Texture is created here
 
 	while (System::Update())
 	{
@@ -76,22 +76,22 @@ void Main()
 }
 ```
 
-## 代わりの方法 (2)
-`Texture`, `Audio`, `Font`, `VertexShader`, `PixelShader` に関しては、アセット管理機能を使うことで、プログラムの様々な場所で特定のアセットにアクセスすることができます。
+## Alternative Method (2)
+For `Texture`, `Audio`, `Font`, `VertexShader`, and `PixelShader`, you can access specific assets from various parts of your program by using the asset management functionality.
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Draw()
 {
-	// アセット管理機能を通してテクスチャアセットを使用する
+	// Use texture assets through the asset management functionality
 	TextureAsset(U"Windmill").draw();
 	TextureAsset(U"Siv3D-kun").scaled(0.8).drawAt(200, 200);
 }
 
 void Main()
 {
-	// アセット管理機能にテクスチャアセットを登録する
+	// Register texture assets with the asset management functionality
 	TextureAsset::Register(U"Windmill", U"example/windmill.png", TextureDesc::Mipped);
 	TextureAsset::Register(U"Siv3D-kun", U"example/siv3d-kun.png", TextureDesc::Mipped);
 

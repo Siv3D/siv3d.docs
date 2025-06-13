@@ -1,14 +1,14 @@
-# 文字表示のサンプル
+# Text Display Samples
 
-## 1. テキストの登場
+## 1. Text Appearance
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/text/1.gif)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
-	// Glyph とエフェクトの関数を組み合わせてテキストを描画
+	// Draw text by combining Glyph and effect functions
 	void DrawText(const Font& font, double fontSize, const String& text, const Vec2& pos, const ColorF& color, double t,
 		void f(const Vec2&, double, const Glyph&, const ColorF&, double), double characterPerSec)
 	{
@@ -38,7 +38,7 @@
 		}
 	}
 
-	// 文字が上からゆっくり降ってくる表現
+	// Effect where characters slowly fall from above
 	void TextEffect1(const Vec2& penPos, double scale, const Glyph& glyph, const ColorF& color, double t)
 	{
 		const double y = EaseInQuad(Saturate(1 - t / 0.3)) * -20.0;
@@ -46,7 +46,7 @@
 		glyph.texture.scaled(scale).draw(penPos + glyph.getOffset(scale) + Vec2{ 0, y }, ColorF{color, a});
 	}
 
-	// 文字が勢いよく現れる表現
+	// Effect where characters appear with impact
 	void TextEffect2(const Vec2& penPos, double scale, const Glyph& glyph, const ColorF& color, double t)
 	{
 		const double s = Min(t / 0.1, 1.0);
@@ -54,7 +54,7 @@
 		glyph.texture.scaled(scale * (3.0 - s * 2)).draw(penPos + glyph.getOffset(scale), ColorF{ color, a });
 	}
 
-	// 落ちてきた文字がしばらく揺れる表現
+	// Effect where falling characters shake for a while
 	void TextEffect3(const Vec2& penPos, double scale, const Glyph& glyph, const ColorF& color, double t)
 	{
 		const double angle = Sin(t * 1440_deg) * 25_deg * Saturate(1.0 - t / 0.6);
@@ -87,11 +87,11 @@
 	```
 
 
-## 2. ランダムなテキストから目的のテキストに変化する
+## 2. Random Text Transforming to Target Text
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/text/2.gif)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -153,24 +153,24 @@
 	```
 
 
-## 3. ルビを振る
+## 3. Adding Ruby (Furigana)
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/text/3.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
-	// ルビの情報
+	// Ruby information
 	struct Ruby
 	{
-		// ルビを振る文字列の先頭の文字のインデックス
+		// Index of the first character to add ruby to
 		int32 indexBegin;
 
-		// ルビを振る文字列の末尾の文字のインデックス
+		// Index of the last character to add ruby to
 		int32 indexEnd;
 
-		// ルビの文字列
+		// Ruby text
 		String text;
 	};
 
@@ -186,28 +186,28 @@
 			const ScopedCustomShader2D shader{ Font::GetPixelShader(font.method()) };
 			Vec2 penPos{ basePos };
 
-			// 文字単位で描画を制御するためのループ
+			// Loop for character-by-character rendering control
 			for (const auto& glyph : font.getGlyphs(text))
 			{
 				allPenPos << penPos;
 
-				// 改行文字なら
+				// If it's a newline character
 				if (glyph.codePoint == U'\n')
 				{
-					// ペンの X 座標をリセット
+					// Reset pen X coordinate
 					penPos.x = basePos.x;
 
-					// ペンの Y 座標をフォントの高さ分進める
+					// Advance pen Y coordinate by font height
 					penPos.y += (font.height() * mainFontScale);
 
 					continue;
 				}
 
-				// 文字のテクスチャをペンの位置に文字ごとのオフセットを加算して描画
-				// FontMethod がビットマップ方式の場合に限り、Math::Round() で整数座標にすると品質が向上
+				// Draw character texture at pen position plus character-specific offset
+				// For bitmap FontMethod only, Math::Round() for integer coordinates improves quality
 				glyph.texture.scaled(mainFontScale).draw(penPos + glyph.getOffset(mainFontScale), ColorF{ 0.11 });
 
-				// ペンの X 座標を文字の幅の分進める
+				// Advance pen X coordinate by character width
 				penPos.x += (glyph.xAdvance * mainFontScale);
 			}
 		}
@@ -250,11 +250,11 @@
 	```
 
 
-## 4. 文字と図形の交差判定
+## 4. Collision Detection Between Text and Shapes
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/text/4.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -288,11 +288,11 @@
 	```
 
 
-## 5. OutlineGlyph の応用
+## 5. Applications of OutlineGlyph
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/text/5.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -335,11 +335,11 @@
 	```
 
 
-## 6. グラデーションのあるテキスト
+## 6. Gradient Text
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/text/6.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -347,7 +347,7 @@
 	{
 		Vec2 penPos{ basePos };
 
-		// 文字単位で描画を制御するためのループ
+		// Loop for character-by-character rendering control
 		for (const auto& glyph : font.getGlyphs(text))
 		{
 			if (glyph.codePoint == U'\n')
@@ -364,11 +364,11 @@
 			const double topT = (topPos / font.height());
 			const double bottomT = (bottomPos / font.height());
 
-			// グラデーションの色
+			// Gradient colors
 			const ColorF c1 = topColor.lerp(bottomColor, topT);
 			const ColorF c2 = topColor.lerp(bottomColor, bottomT);
 
-			// 文字のテクスチャを描画
+			// Draw character texture
 			glyph.texture
 				.draw(penPos + offset, Arg::top = c1, Arg::bottom = c2);
 
@@ -398,15 +398,15 @@
 	```
 
 
-## 7. 光彩のあるテキスト
+## 7. Glowing Text
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/text/7.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
-	// 光彩用の RenderTexture 管理クラス
+	// RenderTexture management class for glow
 	class GlowText
 	{
 	private:
@@ -435,9 +435,9 @@
 				const ScopedRenderTarget2D target{ m_gaussianA1.clear(ColorF{ 0.0 }) };
 				font(text).draw(size, pos);
 			}
-			// オリジナルサイズのガウスぼかし (A1)
-			// A1 を 1/4 サイズにしてガウスぼかし (A4)
-			// A4 を 1/2 サイズにしてガウスぼかし (A8)
+			// Original size Gaussian blur (A1)
+			// A1 to 1/4 size with Gaussian blur (A4)
+			// A4 to 1/2 size with Gaussian blur (A8)
 			Shader::GaussianBlur(m_gaussianA1, m_gaussianB1, m_gaussianA1);
 			Shader::Downsample(m_gaussianA1, m_gaussianA4);
 			Shader::GaussianBlur(m_gaussianA4, m_gaussianB4, m_gaussianA4);
@@ -473,7 +473,7 @@
 	{
 		const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
 
-		GlowText glowText{ 800, 600 }; // 必要最小限のサイズにすると実行時性能向上
+		GlowText glowText{ 800, 600 }; // Minimizing size improves runtime performance
 		double a8 = 0.6, a4 = 0.45, a1 = 0.2;
 		HSV backgroundColor = ColorF{ 0.1, 0.2, 0.3 };
 		HSV textColor = Palette::White;
@@ -487,17 +487,17 @@
 			const String text = U"OpenSiv3D\nABCDEFG\n1234567\nあいうえお\n{}"_fmt(Cursor::Pos());
 			const Vec2 pos{ 320, 80 };
 
-			// 光彩を作成
-			// 前フレームから内容を更新しない場合、スキップすることで実行時のコストを節約できる
+			// Create glow
+			// Can skip if content hasn't changed from previous frame to save runtime cost
 			glowText.renderGlow(font, 60, text, pos);
 
-			// 光彩を描画
+			// Draw glow
 			glowText.draw(Vec2{ 0, 0 }, glowColor, a1, a4, a8, subtractive);
 
-			// テキストを描画
+			// Draw text
 			font(text).draw(60, pos, textColor);
 
-			// 光彩の強さや色を調整
+			// Adjust glow strength and color
 			SimpleGUI::Slider(U"a8: {:.2f}"_fmt(a8), a8, 0.0, 4.0, Vec2{ 20, 20 });
 			SimpleGUI::Slider(U"a4: {:.2f}"_fmt(a4), a4, 0.0, 4.0, Vec2{ 20, 60 });
 			SimpleGUI::Slider(U"a1: {:.2f}"_fmt(a1), a1, 0.0, 4.0, Vec2{ 20, 100 });
@@ -510,11 +510,11 @@
 	```
 
 
-## 8. テキストの反射
+## 8. Text Reflection
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/text/8.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -534,7 +534,7 @@
 			const Vec2 offset = glyph.getOffset();
 			glyph.texture.draw((penPos + offset), color);
 
-			// 反射するテクスチャを描画する
+			// Draw reflected texture
 			glyph.texture.flipped()
 				.draw(penPos.x + offset.x, penPos.y + (font.height() * 2) - offset.y - glyph.texture.size.y + offsetY,
 					Arg::top = ColorF{ color, 0.5 }, Arg::bottom = ColorF{ color, 0.0 });
@@ -556,11 +556,11 @@
 	```
 
 
-## 9. 文字の後ろに図形
+## 9. Shapes Behind Text
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/text/9.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -673,22 +673,22 @@
 	}
 	```
 
-## 10. 絵文字をエイリアスで入力する
-コード内の指示に従い、事前に `emoji.json` を用意してください。
+## 10. Input Emoji Using Aliases
+Prepare `emoji.json` in advance according to the instructions in the code.
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/text/10.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
-	// エイリアスと絵文字のペア
+	// Alias and emoji pair
 	struct EmojiAlias
 	{
-		// エイリアスとして使う単語
+		// Word to use as alias
 		String alias;
 
-		// エイリアスに対応する絵文字
+		// Emoji corresponding to alias
 		String emoji;
 	};
 
@@ -710,9 +710,9 @@
 				m_hashTable.emplace(alias, emoji);
 			}
 
-			// エイリアスの文字数でソート
-			m_emojis.sort_by([]
-			(const EmojiAlias& a, const EmojiAlias& b)
+			// Sort by alias character count
+			m_emojis.sort_by([](
+				const EmojiAlias& a, const EmojiAlias& b)
 				{
 					return (a.alias.size() < b.alias.size());
 				});
@@ -778,8 +778,8 @@
 		const Font emojiFont{ 24, Typeface::ColorEmoji };
 		font.addFallback(emojiFont);
 
-		// エイリアスと絵文字のペアを, エイリアスの文字数でソート
-		// emoji.json は下記から入手
+		// Alias and emoji pairs, sorted by alias character count
+		// Download emoji.json from the link below
 		// https://raw.githubusercontent.com/omnidan/node-emoji/master/lib/emoji.json
 		const EmojiDictionary emojiDictionary{ U"emoji.json" };
 
@@ -791,7 +791,7 @@
 		String previousText, text;
 		String emojiAlias;
 
-		// 候補として表示する絵文字の最大個数
+		// Maximum number of emoji candidates to display
 		constexpr size_t MaxCandidates = 8;
 		Array<EmojiAlias> candidates;
 		Optional<size_t> aliasBeginAt;
@@ -799,7 +799,7 @@
 
 		while (System::Update())
 		{
-			// テキスト入力の処理
+			// Text input processing
 			{
 				TextInput::UpdateText(text, TextInputMode::AllowBackSpace);
 
@@ -839,7 +839,7 @@
 					candidates = emojiDictionary.getCandidates(emojiAlias, MaxCandidates);
 					candidateIndex = 0;
 
-					// デバッグ表示
+					// Debug display
 					{
 						ClearPrint();
 						Print << U"emojiAlias: " << emojiAlias;
@@ -848,7 +848,7 @@
 				}
 			}
 
-			// マウスオーバーによる候補の選択
+			// Candidate selection by mouse over
 			for (auto&& [i, candidate] : Indexed(candidates))
 			{
 				const Rect rect{ 40, (400 - candidates.size() * 40 + i * 40), 720, 38 };
@@ -861,7 +861,7 @@
 				}
 			}
 
-			// キーボードによる候補の選択
+			// Candidate selection by keyboard
 			if (candidates)
 			{
 				if (KeyUp.down())
@@ -874,7 +874,7 @@
 				}
 			}
 
-			// 候補の表示と処理
+			// Display and process candidates
 			for (auto&& [i, candidate] : Indexed(candidates))
 			{
 				const Rect rect{ 40, (400 - candidates.size() * 40 + i * 40), 720, 38 };
@@ -884,7 +884,7 @@
 				emojiFont(candidate.emoji).draw(32, rect.pos.movedBy(10, 4));
 				font(U':' + candidate.alias + U':').draw(24, rect.pos.movedBy(50, 2), ColorF{ 0.11 });
 
-				// 候補がクリックされるか、エンターキーが押されたら
+				// If candidate is clicked or Enter key is pressed
 				if (rect.leftClicked()
 					|| (selected && KeyEnter.down()))
 				{
@@ -893,7 +893,7 @@
 				}
 			}
 
-			// テキストの表示
+			// Display text
 			{
 				Rect{ 40, 400, 720, 50 }.draw();
 				font(text).draw(32, Vec2{ 50, 402 }, ColorF{ 0.11 });
@@ -901,4 +901,3 @@
 		}
 	}
 	```
-

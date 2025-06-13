@@ -12,7 +12,7 @@
 
 ## GitHub Sponsors
 - 現在と過去の支援者の方々を [GitHub Sponsors :material-open-in-new:](https://github.com/sponsors/Reputeless){:target="_blank"} のページに掲載しています
-- 累計 80 万円以上（2024 年時点）のご支援をいただきました
+- 累計 90 万円以上（2024 年時点）のご支援をいただきました
 
 ## 物品・寄付
 - FlexiSpot Japan 株式会社から、公式配信者プログラムの対象として、電動昇降デスクをご提供いただきました（[ツイート :material-open-in-new:](https://x.com/Reputeless/status/1856283532336791803){:target="_blank"}）

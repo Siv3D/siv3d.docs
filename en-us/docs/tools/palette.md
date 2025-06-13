@@ -1,8 +1,8 @@
 # Siv3D Palette Browser
 
-## Siv3D Palette Browser の機能
-Siv3D で色を表現する際に使う `Palette`, `Color`, `ColorF`, `HSV` をブラウザ上で確認し、相互に変換したり、クリップボードにコピーしたりできるツールです。
+## Siv3D Palette Browser Features
+A tool that allows you to view `Palette`, `Color`, `ColorF`, and `HSV` used for color representation in Siv3D in your browser, convert between them, and copy to clipboard.
 
-## 利用手順
-- [Siv3D Palette Browser :material-open-in-new:](https://voidproc.github.io/siv3d-palette-browser/){:target="_blank"} にアクセスします。
-- [公式の README :material-open-in-new:](https://github.com/voidproc/siv3d-palette-browser#readme){:target="_blank"}
+## Usage Instructions
+- Access [Siv3D Palette Browser :material-open-in-new:](https://voidproc.github.io/siv3d-palette-browser/){:target="_blank"}.
+- [Official README :material-open-in-new:](https://github.com/voidproc/siv3d-palette-browser#readme){:target="_blank"}

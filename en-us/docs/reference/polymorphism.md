@@ -1,6 +1,6 @@
-# 多態性を使ったプログラミング
+# Programming with Polymorphism
 
-## 1. 多態性の基礎
+## 1. Basics of Polymorphism
 
 ```cpp
 # include <Siv3D.hpp>
@@ -89,4 +89,3 @@ void Main()
 	}
 }
 ```
-

@@ -1,7 +1,7 @@
-# Siv3D で Hello world する 21 の方法
+# 21 Ways to Say Hello World in Siv3D
 
 ## 1. Print
-- 画面へのデバッグ出力機能 `Print` を使います
+- Use the debug output feature `Print` to display on screen
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/reference/helloworld/1.png)
 
@@ -20,7 +20,7 @@ void Main()
 ```
 
 ## 2. Console
-- コンソール出力機能 `Console` を使います
+- Use the console output feature `Console`
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/reference/helloworld/2.png)
 
@@ -40,8 +40,8 @@ void Main()
 
 
 ## 3. Logger
-- ログ出力機能 `Logger` を使います
-- Visual Studio の場合、デバッグ実行することで「出力」ウィンドウ内に出力されます
+- Use the log output feature `Logger`
+- In Visual Studio, output appears in the "Output" window when debugging
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/reference/helloworld/3.png)
 
@@ -62,10 +62,10 @@ void Main()
 
 
 ## 4. Say
-- 音声読み上げ機能 `Say` を使います
-- 読み上げ話者の言語は `TextToSpeech::SetDefaultLanguage()` で変更できます
-- OS の設定によっては特定の言語がデフォルトでインストールされていない場合があります
-- Linux 版では動作しません
+- Use the text-to-speech feature `Say`
+- The language of the speaker can be changed with `TextToSpeech::SetDefaultLanguage()`
+- Specific languages may not be installed by default depending on OS settings
+- Does not work on Linux
 
 ```cpp
 # include <Siv3D.hpp>
@@ -86,7 +86,7 @@ void Main()
 
 
 ## 5. PutText
-- 座標を指定できるデバッグ表示 `PutText` を使います
+- Use debug display `PutText` that allows coordinate specification
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/reference/helloworld/5.png)
 
@@ -104,8 +104,8 @@ void Main()
 
 
 
-## 6. メッセージボックス
-- `System::MessageBoxOK()` でメッセージボックスを表示します
+## 6. Message Box
+- Display a message box using `System::MessageBoxOK()`
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/reference/helloworld/6.png)
 
@@ -125,9 +125,9 @@ void Main()
 
 
 
-## 7. トースト通知
-- トースト通知でメッセージを表示します
-- Windows 版のみ利用できる機能です
+## 7. Toast Notification
+- Display a message with toast notification
+- This feature is only available on Windows
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/reference/helloworld/7.png)
 
@@ -149,8 +149,8 @@ void Main()
 
 
 
-## 8. ウィンドウタイトル
-- 指定した文字列をウィンドウのタイトルに表示します
+## 8. Window Title
+- Display the specified string in the window title
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/reference/helloworld/8.png)
 
@@ -169,8 +169,8 @@ void Main()
 ```
 
 
-## 9. ボタン
-- `SimpleGUI::Button()` でボタンを表示します
+## 9. Button
+- Display a button using `SimpleGUI::Button()`
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/reference/helloworld/9.png)
 
@@ -193,7 +193,7 @@ void Main()
 
 
 ## 10. Font
-- `FontMethod::MSDF` 設定の `Font` を作成すると、大きさ、位置、色を指定してテキストを描画できます
+- Creating a `Font` with `FontMethod::MSDF` setting allows you to draw text with specified size, position, and color
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/reference/helloworld/10.png)
 
@@ -215,7 +215,7 @@ void Main()
 
 
 ## 11. Glyph
-- `Font::getGlyphs()` で取得できる各文字の `Glyph` を使うと、文字単位で色や位置を制御できます
+- Using `Glyph` for each character obtained with `Font::getGlyphs()` allows you to control color and position per character
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/reference/helloworld/11.png)
 
@@ -261,7 +261,7 @@ void Main()
 
 
 ## 12. OutlineGlyph
-- `Font::renderOutlines()` で取得できる各文字の `OutlineGlyph` は、各文字の輪郭を `LineString` として扱えます
+- `OutlineGlyph` for each character obtained with `Font::renderOutlines()` can treat each character's outline as a `LineString`
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/reference/helloworld/12.png)
 
@@ -302,14 +302,14 @@ void Main()
 
 
 ## 13. Buffer2D
-- `Font::renderPolygons()` で取得できる各文字の `PolygonGlyph` を `Buffer2D` に変換することで、文字にテクスチャを貼り付けて描画できます
+- Converting `PolygonGlyph` for each character obtained with `Font::renderPolygons()` to `Buffer2D` allows you to draw characters with textures applied
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/reference/helloworld/13.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
-// 背景テクスチャ 1 を作成する
+// Create background texture 1
 Texture CreateTexture1()
 {
 	RenderTexture renderTexture{ Size{ 1, 128 } };
@@ -324,7 +324,7 @@ Texture CreateTexture1()
 	return renderTexture;
 }
 
-// 背景テクスチャ 2 を作成する
+// Create background texture 2
 Texture CreateTexture2()
 {
 	MSRenderTexture renderTexture{ Size{ 800, 100 }, ColorF{ 0.2, 0.3, 0.6 } };
@@ -349,12 +349,12 @@ Texture CreateTexture2()
 		}
 	}
 
-	// MSRenderTexture の完成には
-	// 2D 描画命令の発行 (Flush) + MSAA の解決 (Resolve) が必要
+	// MSRenderTexture completion requires
+	// issuing 2D draw commands (Flush) + resolving MSAA (Resolve)
 	Graphics2D::Flush();
 	renderTexture.resolve();
 
-	// 完成したテクスチャを返す
+	// Return completed texture
 	return renderTexture;
 }
 
@@ -409,7 +409,7 @@ void Main()
 
 
 ## 14. Image
-- `Image` にテキストを書き込むことで、柔軟な画像加工ができるようになります
+- Writing text to an `Image` enables flexible image processing
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/reference/helloworld/14.png)
 
@@ -440,7 +440,7 @@ void Main()
 
 
 ## 15. RenderTexture
-- `RenderTexture` にテキストを描画することで、ガウスぼかしやダウンサンプリングを GPU で高速に処理できます
+- Drawing text to a `RenderTexture` allows high-speed GPU processing of Gaussian blur and downsampling
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/reference/helloworld/15.png)
 
@@ -449,7 +449,7 @@ void Main()
 
 constexpr Size BaseSize{ 800, 256 };
 
-// テクスチャを作成する
+// Create texture
 RenderTexture CreateTexture(const Font& font, StringView text)
 {
 	RenderTexture renderTexture{ Size{ 800, 256 }, ColorF{ 0.0 } };
@@ -500,7 +500,7 @@ void Main()
 
 
 ## 16. HTML
-- `HTMLWriter` を使って作成した HTML 文書を、`System::LaunchBrowser()` を使って Web ブラウザで開くことができます
+- You can open HTML documents created with `HTMLWriter` in a web browser using `System::LaunchBrowser()`
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/reference/helloworld/16.png)
 
@@ -526,8 +526,8 @@ void Main()
 ```
 
 
-## 17. ライセンス
-- ライセンス文書には追加のライセンス文を出力できます
+## 17. License
+- You can output additional license text in license documents
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/reference/helloworld/17.png)
 
@@ -551,8 +551,8 @@ void Main()
 
 
 
-## 18. クリップボード
-- `Clipboard::SetText()` でクリップボードの内容を変更できます
+## 18. Clipboard
+- You can change clipboard contents with `Clipboard::SetText()`
 
 ```cpp
 # include <Siv3D.hpp>
@@ -570,8 +570,8 @@ void Main()
 
 
 
-## 19. ツイート
-- `Twitter::OpenTweetWindow()` によって、特定のメッセージをツイートする画面を Web ブラウザに表示できます
+## 19. Tweet
+- `Twitter::OpenTweetWindow()` can display a screen for tweeting specific messages in a web browser
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/reference/helloworld/19.png)
 
@@ -592,7 +592,7 @@ void Main()
 
 
 ## 20. KlattTTS
-- 古典的な音声合成モデルを用いた音声読み上げ機能 `KlattTTS::Speak()` を使います
+- Use the text-to-speech feature `KlattTTS::Speak()` using a classic speech synthesis model
 
 ```cpp
 # include <Siv3D.hpp>
@@ -611,7 +611,7 @@ void Main()
 
 
 ## 21. QR
-- 指定したテキストを QR コードに変換して表示します
+- Convert specified text to a QR code and display it
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/reference/helloworld/21.png)
 
@@ -630,4 +630,3 @@ void Main()
 	}
 }
 ```
-

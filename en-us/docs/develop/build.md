@@ -1,83 +1,83 @@
-# 自前ビルドの手順
-自前で Siv3D のライブラリをソースコードからビルドする手順を説明します。このページは次のような特殊な利用者向けの説明です。
+# Custom Build Instructions
+This page explains the steps to build the Siv3D library from source code yourself. This page is for special users such as:
 
-- 開発中のバージョンの最新のコードを試したい
-- Siv3D の内部を理解したい
-- 内部のコードを改造したい
+- Those who want to try the latest code of the development version
+- Those who want to understand the internals of Siv3D
+- Those who want to modify the internal code
 
-## 1. Windows の場合
-### 1.1 追加のサードパーティ・ライブラリをダウンロードする
-◆ Siv3D のライブラリ本体のビルドに必要な C++ ライブラリ**「Boost」**を準備します。
+## 1. Windows
+### 1.1 Download Additional Third-Party Libraries
+◆ Prepare the C++ library **"Boost"** required for building the Siv3D library itself.
 
-[https://www.boost.org/users/history/version_1_83_0.html :material-open-in-new:](https://www.boost.org/users/history/version_1_83_0.html) から `boost_1_83_0` の圧縮されたソースコードをダウンロードし、展開します。配布されているファイル形式は `.7z` と `.zip` があります。使用しているコンピュータで `.7z` の展開ができる場合は `.7z` のほうが展開にかかる所用時間が短いです。Boost は大量のファイルから構成されるため、Windows OS 標準の ZIP 展開機能を使用すると展開の完了まで数分近く待たされることがあります。
+Download and extract the compressed source code of `boost_1_83_0` from [https://www.boost.org/users/history/version_1_83_0.html :material-open-in-new:](https://www.boost.org/users/history/version_1_83_0.html). The distributed file formats are `.7z` and `.zip`. If you can extract `.7z` files on your computer, `.7z` takes less time to extract. Since Boost consists of a large number of files, using the Windows OS standard ZIP extraction function may take several minutes to complete extraction.
 
-??? info "Boost とは"
-    [Boost](https://www.boost.org/) は 20 年以上の歴史がある、C++ で最も有名なライブラリの 1 つです。様々な目的のために作られた大小さまざま、作者もさまざまなライブラリ群で構成されています。C++11 で標準ライブラリに入った `std::shared_ptr`, C++17 で標準ライブラリに入った `std::optional`, `<filesystem>` はそれぞれ Boost.SmartPtr, Boost.Optional, Boost.Fileystem ライブラリをベースに設計されました。Siv3D では、幾何問題の計算処理のために Boost.Geometry, C++17 をサポートしない環境におけるファイルシステム処理のために Boost.Filesystem, 子プロセスの作成・通信のために Boost.Process, 多倍長計算のために Boost.MultiPrecision, CSV パーサのために Boost.Tokenizer など、いくつかの Boost ライブラリの機能を使用しています。
+??? info "What is Boost"
+    [Boost](https://www.boost.org/) is one of the most famous C++ libraries with over 20 years of history. It consists of various libraries of different sizes and purposes, created by various authors. `std::shared_ptr` that entered the standard library in C++11, `std::optional` and `<filesystem>` that entered the standard library in C++17 were designed based on Boost.SmartPtr, Boost.Optional, and Boost.Filesystem libraries respectively. Siv3D uses features from several Boost libraries: Boost.Geometry for geometric computation processing, Boost.Filesystem for file system processing in environments that don't support C++17, Boost.Process for creating and communicating with child processes, Boost.MultiPrecision for arbitrary precision arithmetic, and Boost.Tokenizer for CSV parsing.
 
-??? info ".7z の展開ソフト"
-    `.7z` の展開に使えるソフトウェアは [7-Zip :material-open-in-new:](https://sevenzip.osdn.jp/) が最も有名です。
+??? info "Software for extracting .7z"
+    [7-Zip :material-open-in-new:](https://sevenzip.osdn.jp/) is the most famous software that can extract `.7z` files.
 
-### 1.2 Siv3D の開発ブランチからソースコードを入手する
-◆ Siv3D の最新コードを公式リポジトリから入手します。
+### 1.2 Get Source Code from Siv3D Development Branch
+◆ Get the latest Siv3D code from the official repository.
 
-[OpenSiv3D 公式リポジトリの main ブランチ :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D) が最新安定版です。「Code」からリポジトリをクローンするか、ZIP ファイルでソースコードをダウンロードします（「Download ZIP」）。
+[The main branch of the official OpenSiv3D repository :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D) is the latest stable version. Clone the repository from "Code" or download the source code as a ZIP file ("Download ZIP").
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/download/ubuntu/repo.png)
 
 
-### 1.3 追加のサードパーティ・ライブラリをコピーして追加する
-◆ ダウンロードしたプロジェクトのフォルダに Boost の一部をコピーします。
+### 1.3 Copy and Add Additional Third-Party Libraries
+◆ Copy part of Boost to the downloaded project folder.
 
-1.2 で入手した OpenSiv3D プロジェクトのフォルダ内に、`Dependencies/boost_1_83_0/` フォルダがあります。この中へ 1.1 で準備した Boost ライブラリの一部である `boost_1_83_0/boost/` フォルダ (約 120 MB) をコピーします。コピー後は `Dependencies/boost_1_83_0/boost/` となります。
+In the OpenSiv3D project folder obtained in 1.2, there is a `Dependencies/boost_1_83_0/` folder. Copy the `boost_1_83_0/boost/` folder (approximately 120 MB), which is part of the Boost library prepared in 1.1, into this folder. After copying, it becomes `Dependencies/boost_1_83_0/boost/`.
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/develop/boost.png)
 
 
-### 1.4 Siv3D ライブラリと Siv3D アプリをビルドする
-◆ Visual Studio で Siv3D ライブラリと Siv3D アプリをビルドします。
+### 1.4 Build Siv3D Library and Siv3D Apps
+◆ Build the Siv3D library and Siv3D apps with Visual Studio.
 
-1.2 で入手した OpenSiv3D プロジェクトのフォルダ内の `WindowsDesktop/OpenSiv3D.sln` を Visual Studio で開くと、Siv3D ライブラリ本体のプロジェクト「Siv3D」と、テスト用のアプリのプロジェクト「Siv3D-Test」を含むソリューションが開きます。
+Opening `WindowsDesktop/OpenSiv3D.sln` in the OpenSiv3D project folder obtained in 1.2 with Visual Studio opens a solution containing the Siv3D library main project "Siv3D" and the test app project "Siv3D-Test".
 
-「Siv3D-Test」プロジェクトをビルドします。初回のビルドでは必要なライブラリファイルが存在しないため、先に自動的に Siv3D のライブラリ本体のプロジェクト「Siv3D」のビルドが始まります。ライブラリのビルドには数分かかります。
+Build the "Siv3D-Test" project. Since the necessary library files don't exist for the first build, the build of the Siv3D library main project "Siv3D" will automatically start first. Building the library takes several minutes.
 
-Windows 版の Siv3D ライブラリビルドで `error C2039: '​CheckForDuplicateEntries': is not a member of 'Microsoft::WRL::Details'` というエラーが出た場合、Visual Studio Installer を使って新しい Windows 10 SDK (バージョン 10.0.18362.0 以降) をインストールすることで解決します。
+If you get the error `error C2039: '​CheckForDuplicateEntries': is not a member of 'Microsoft::WRL::Details'` when building the Windows version Siv3D library, it can be resolved by installing a newer Windows 10 SDK (version 10.0.18362.0 or later) using Visual Studio Installer.
 
-## 2. macOS の場合
+## 2. macOS
 
-### 2.1 追加のサードパーティ・ライブラリをダウンロードする
-◆ Siv3D のライブラリ本体のビルドに必要な C++ ライブラリ**「Boost」**を準備します。
+### 2.1 Download Additional Third-Party Libraries
+◆ Prepare the C++ library **"Boost"** required for building the Siv3D library itself.
 
-[https://www.boost.org/users/history/version_1_83_0.html :material-open-in-new:](https://www.boost.org/users/history/version_1_83_0.html) から `boost_1_83_0` の圧縮されたソースコードをダウンロードし、展開します。
+Download and extract the compressed source code of `boost_1_83_0` from [https://www.boost.org/users/history/version_1_83_0.html :material-open-in-new:](https://www.boost.org/users/history/version_1_83_0.html).
 
-??? info "Boost とは"
-    [Boost](https://www.boost.org/) は 20 年以上の歴史がある、C++ で最も有名なライブラリの 1 つです。様々な目的のために作られた大小さまざま、作者もさまざまなライブラリ群で構成されています。C++11 で標準ライブラリに入った `std::shared_ptr`, C++17 で標準ライブラリに入った `std::optional`, `<filesystem>` はそれぞれ Boost.SmartPtr, Boost.Optional, Boost.Fileystem ライブラリをベースに設計されました。Siv3D では、幾何問題の計算処理のために Boost.Geometry, C++17 をサポートしない環境におけるファイルシステム処理のために Boost.Filesystem, 子プロセスの作成・通信のために Boost.Process, 多倍長計算のために Boost.MultiPrecision, CSV パーサのために Boost.Tokenizer など、いくつかの Boost ライブラリの機能を使用しています。
+??? info "What is Boost"
+    [Boost](https://www.boost.org/) is one of the most famous C++ libraries with over 20 years of history. It consists of various libraries of different sizes and purposes, created by various authors. `std::shared_ptr` that entered the standard library in C++11, `std::optional` and `<filesystem>` that entered the standard library in C++17 were designed based on Boost.SmartPtr, Boost.Optional, and Boost.Filesystem libraries respectively. Siv3D uses features from several Boost libraries: Boost.Geometry for geometric computation processing, Boost.Filesystem for file system processing in environments that don't support C++17, Boost.Process for creating and communicating with child processes, Boost.MultiPrecision for arbitrary precision arithmetic, and Boost.Tokenizer for CSV parsing.
 
 
-### 2.2 Siv3D の開発ブランチからソースコードを入手する
-◆ Siv3D の最新コードを公式リポジトリから入手します。
+### 2.2 Get Source Code from Siv3D Development Branch
+◆ Get the latest Siv3D code from the official repository.
 
-[OpenSiv3D 公式リポジトリの main ブランチ :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D) が最新安定版です。「Code」からリポジトリをクローンするか、ZIP ファイルでソースコードをダウンロードします（「Download ZIP」）。
+[The main branch of the official OpenSiv3D repository :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D) is the latest stable version. Clone the repository from "Code" or download the source code as a ZIP file ("Download ZIP").
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/download/ubuntu/repo.png)
 
 
-### 2.3 追加のサードパーティ・ライブラリをコピーして追加する
-◆ ダウンロードしたプロジェクトのフォルダに Boost の一部をコピーします。
+### 2.3 Copy and Add Additional Third-Party Libraries
+◆ Copy part of Boost to the downloaded project folder.
 
-2.2 で入手した OpenSiv3D プロジェクトのフォルダ内に、`Dependencies/boost_1_83_0/` フォルダがあります。この中へ 2.1 で準備した Boost ライブラリの一部である `boost_1_83_0/boost/` フォルダ (約 120 MB) をコピーします。コピー後は `Dependencies/boost_1_83_0/boost/` となります。
-
-
-### 2.4 Siv3D ライブラリをビルドする
-◆ Xcode で Siv3D ライブラリをビルドします。
-
-2.2 で入手した OpenSiv3D プロジェクトのフォルダ内の `macOS/OpenSiv3D.xcodeproj` を Xcode で開き、「Siv3D」という Target をビルドします。フルビルドには数分前後かかります。ビルドが完了すると `libSiv3D.a` が生成されます。
+In the OpenSiv3D project folder obtained in 2.2, there is a `Dependencies/boost_1_83_0/` folder. Copy the `boost_1_83_0/boost/` folder (approximately 120 MB), which is part of the Boost library prepared in 2.1, into this folder. After copying, it becomes `Dependencies/boost_1_83_0/boost/`.
 
 
-### 2.5 Siv3D アプリをビルドする
-◆ Xcode で Siv3D のテストアプリをビルドします。
+### 2.4 Build Siv3D Library
+◆ Build the Siv3D library with Xcode.
 
-次に「Siv3D-Test」という Target をビルドします。ソースコードは 1 つだけで、`macOS/Main.cpp` です。ビルドには数秒かかります。ビルドが完了すると `Siv3D-Test.app` が生成されます。
+Open `macOS/OpenSiv3D.xcodeproj` in the OpenSiv3D project folder obtained in 2.2 with Xcode and build the target "Siv3D". A full build takes several minutes. When the build is complete, `libSiv3D.a` is generated.
 
 
-## 3. Linux の場合
-通常のセットアップ手順が、自前ビルドの手順になります。
+### 2.5 Build Siv3D Apps
+◆ Build Siv3D test apps with Xcode.
+
+Next, build the target "Siv3D-Test". There is only one source code file: `macOS/Main.cpp`. The build takes a few seconds. When the build is complete, `Siv3D-Test.app` is generated.
+
+
+## 3. Linux
+The normal setup procedure is the custom build procedure.

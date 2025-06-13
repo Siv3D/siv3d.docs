@@ -1,53 +1,85 @@
-# 28. GUI
-ボタンやスライダー、テキストボックスなどの GUI 機能を利用する方法を学びます。
+# 38. GUI
+Learn how to use GUI features such as buttons, sliders, and text boxes.
 
-## 28.1 ボタン
-ボタンを作成するには `SimpleGUI::Button()` 関数を使うと便利です。関数ではボタンのテキストや位置、幅、状態を設定できます。ボタンの幅を省略するか、`unspecified` を指定すると、ボタンの幅はテキストの幅になります。この関数は自身が押されたときに `true` を返します。
+## 38.1 SimpleGUI Overview
+- Siv3D's SimpleGUI provides the functionality to implement common GUI widgets with simple code
+- The supported GUI widgets are as follows:
+	- **38.2** Button
+	- **38.4** Slider
+	- **38.5** Checkbox
+	- **38.6** Radio Button
+	- **38.7** Text Box
+	- **38.8** Text Area
+	- **38.9** Color Picker
+	- **38.10** List Box
+	- **38.12** Menu Bar
+	- **38.13** Table
+- SimpleGUI prioritizes code simplicity, so there are limitations in design flexibility such as colors and fonts
+- Future Siv3D versions plan to provide more advanced and complex GUI functionality as a higher-level version of SimpleGUI
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/gui/1.png)
+
+## 38.2 Button
+- Buttons use the `SimpleGUI::Button()` function
+- You can set text, position, width, state, etc.
+
+```cpp
+bool SimpleGUI::Button(StringView label, const Vec2& pos, const Optional<double>& width = unspecified, bool enabled = true);
+```
+
+- Arguments:
+	- `label` : Text to display on the button
+	- `pos` : Top-left coordinates of the button
+	- `width` : Button width (`unspecified` adjusts to text width)
+	- `enabled` : Whether the button is enabled
+- Return value:
+	- Returns `true` if the button is pressed, `false` otherwise
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/2.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+	
 	while (System::Update())
 	{
-		if (SimpleGUI::Button(U"Red", Vec2{ 100, 100 }))
+		if (SimpleGUI::Button(U"Red", Vec2{ 100, 50 }))
 		{
 			Scene::SetBackground(ColorF{ 0.8, 0.2, 0.2 });
 		}
 
-		if (SimpleGUI::Button(U"Green", Vec2{ 100, 150 }))
+		if (SimpleGUI::Button(U"Green", Vec2{ 100, 100 }))
 		{
 			Scene::SetBackground(ColorF{ 0.2, 0.8, 0.2 });
 		}
 
-		if (SimpleGUI::Button(U"Blue", Vec2{ 100, 200 }))
+		if (SimpleGUI::Button(U"Blue", Vec2{ 100, 150 }))
 		{
 			Scene::SetBackground(ColorF{ 0.2, 0.2, 0.8 });
 		}
 
-		// ボタンの幅を 200px に指定する
-		if (SimpleGUI::Button(U"White", Vec2{ 100, 250 }, 200))
+		// Specify button width as 200px
+		if (SimpleGUI::Button(U"White", Vec2{ 100, 300 }, 200))
 		{
 			Scene::SetBackground(ColorF{ 0.9 });
 		}
 
-		// ボタンの幅を 200px に指定する
-		if (SimpleGUI::Button(U"Black", Vec2{ 100, 300 }, 200))
+		// Specify button width as 200px
+		if (SimpleGUI::Button(U"Black", Vec2{ 100, 350 }, 200))
 		{
 			Scene::SetBackground(ColorF{ 0.1 });
 		}
 
-		// ボタンを無効化する
-		if (SimpleGUI::Button(U"Gray", Vec2{ 100, 350 }, 200, false))
+		// Disable the button
+		if (SimpleGUI::Button(U"Gray", Vec2{ 100, 400 }, 200, false))
 		{
 			Scene::SetBackground(ColorF{ 0.5 });
 		}
 
-		// ボタンを無効化し、ボタンの幅はテキストに合わせる
-		if (SimpleGUI::Button(U"Yellow", Vec2{ 100, 400 }, unspecified, false))
+		// Disable the button and adjust width to text
+		if (SimpleGUI::Button(U"Yellow", Vec2{ 100, 450 }, unspecified, false))
 		{
 			Scene::SetBackground(ColorF{ 0.8, 0.8, 0.1 });
 		}
@@ -55,17 +87,41 @@ void Main()
 }
 ```
 
-## 28.2 スライダー
-スライダーを作成するには `SimpleGUI::Slider()` 関数を使うと便利です。関数ではスライダーのテキストや位置、幅、値の範囲などを設定できます。テキストを持たない縦方向のスライダーは `SimpleGUI::VerticalSlider()` を使います。スライダーの値は `double` 型の変数で管理します。どちらの関数も、スライダーの指す値が変更されたときに `true` を返します。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/gui/2.png)
+## 38.3 Slider
+- Sliders use `SimpleGUI::Slider()` (horizontal) or `SimpleGUI::VerticalSlider()` (vertical)
+- You can set text, position, width, value range, etc.
+	
+```cpp
+bool SimpleGUI::Slider(double& value, double min, double max, const Vec2& pos, double sliderWidth = 120.0, bool enabled = true);
+bool SimpleGUI::Slider(StringView label, double& value, const Vec2& pos, double labelWidth = 80.0, double sliderWidth = 120.0, bool enabled = true);
+bool SimpleGUI::Slider(StringView label, double& value, double min, double max, const Vec2& pos, double labelWidth = 80.0, double sliderWidth = 120.0, bool enabled = true);
+bool SimpleGUI::VerticalSlider(double& value, const Vec2& pos, double sliderHeight = 120.0, bool enabled = true);
+bool SimpleGUI::VerticalSlider(double& value, double min, double max, const Vec2& pos, double sliderHeight = 120.0, bool enabled = true);
+```
+
+- Arguments:
+	- `value` : Slider value
+	- `min` : Minimum slider value
+	- `max` : Maximum slider value
+	- `label` : Slider label
+	- `pos` : Top-left coordinates of the slider
+	- `labelWidth` : Label width
+	- `sliderWidth` : Slider width
+	- `sliderHeight` : Vertical slider height
+	- `enabled` : Whether the slider is enabled
+- For those without min/max specification, the value range is 0.0 to 1.0
+- Return value:
+	- Returns `true` if the slider value changed, `false` otherwise
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/3.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
 	ColorF color1{ 1.0 };
 	ColorF color2{ 1.0, 0.5, 0.0 };
@@ -88,19 +144,19 @@ void Main()
 		SimpleGUI::Slider(U"Blue", color2.b, Vec2{ 100, 280 });
 		Circle{ 50, 260, 30 }.draw(color2);
 
-		// スライダーの値を表示する。ラベルの幅 100px, スライダーの幅 200px
+		// Display slider value. Label width 100px, slider width 200px
 		SimpleGUI::Slider(U"R {:.2f}"_fmt(color3.r), color3.r, Vec2{ 100, 360 }, 100, 200);
 		SimpleGUI::Slider(U"G {:.2f}"_fmt(color3.g), color3.g, Vec2{ 100, 400 }, 100, 200);
 		SimpleGUI::Slider(U"B {:.2f}"_fmt(color3.b), color3.b, Vec2{ 100, 440 }, 100, 200);
 		Circle{ 50, 420, 30 }.draw(color3);
 
-		// 値の範囲が 0.0～10.0
+		// Value range 0.0 to 10.0
 		SimpleGUI::Slider(U"{:.2f}"_fmt(value1), value1, 0.0, 10.0, Vec2{ 500, 40 }, 60, 150);
 
-		// スライダーを無効化する
+		// Disable the slider
 		SimpleGUI::Slider(U"{:.2f}"_fmt(value2), value2, 0.0, 10.0, Vec2{ 500, 100 }, 60, 150, false);
 
-		// 縦のスライダー
+		// Vertical sliders
 		SimpleGUI::VerticalSlider(value3, 0.0, 10.0, Vec2{ 500, 160 }, 200);
 		SimpleGUI::VerticalSlider(value4, 0.0, 10.0, Vec2{ 560, 160 }, 200, false);
 	}
@@ -108,32 +164,35 @@ void Main()
 ```
 
 
-## 28.3 GUI におけるアイコンの使用
-GUI 機能のうち、`SimpleGUI::Button()` や `SimpleGUI::Slider()` のように、フォントを明示的に指定せず使える GUI 関数では、文字列に `\U000F0493` のようにアイコン ID を記述することで、アイコンを表示できます。使えるアイコンは [Material Design Icons :material-open-in-new:](https://pictogrammers.com/library/mdi/){:target="_blank"} に含まれているものです。
+## 38.4 Using Icons
+- The font used by SimpleGUI is `Typeface::CJK_Regular_JP` with `Typeface::Icon_MaterialDesign` added as fallback
+- You can display icons in SimpleGUI text by including icon code points like `\U000F0493` in strings
+- Icon code points can be found at [Material Design Icons :material-open-in-new:](https://pictogrammers.com/library/mdi/){:target="_blank"}
+- SimpleGUI's font can be obtained with `SimpleGUI::GetFont()` and used for purposes other than SimpleGUI
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/gui/3.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/4.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 	int32 up = 0, down = 0;
 	double volume = 1.0;
 
 	while (System::Update())
 	{
-		SimpleGUI::Button(U"\U000F0493 設定", Vec2{ 20, 40 }, 160);
-		SimpleGUI::Button(U"\U000F1398 中断する", Vec2{ 20, 80 }, 160);
+		SimpleGUI::Button(U"\U000F0493 Settings", Vec2{ 20, 40 }, 160);
+		SimpleGUI::Button(U"\U000F1398 Pause", Vec2{ 20, 80 }, 160);
 		SimpleGUI::Button(U"\U000F0E1E OK", Vec2{ 20, 120 }, 160);
-		SimpleGUI::Button(U"\U000F0193 保存", Vec2{ 20, 160 }, 160);
+		SimpleGUI::Button(U"\U000F0193 Save", Vec2{ 20, 160 }, 160);
 
 		// Undo / Redo
 		SimpleGUI::Button(U"\U000F054C", Vec2{ 200, 40 }, 40);
 		SimpleGUI::Button(U"\U000F044E", Vec2{ 250, 40 }, 40);
 
-		// 音量調整
+		// Volume control
 		SimpleGUI::Slider((0.5 < volume) ? U"\U000F057E"
 			: (0.0 < volume) ? U"\U000F0580" : U"\U000F0581", volume, Vec2{ 200, 100 }, 30, 170);
 
@@ -153,17 +212,31 @@ void Main()
 ```
 
 
-## 28.4 チェックボックス
-チェックボックスを作成するには `SimpleGUI::CheckBox()` 関数を使うと便利です。関数ではチェックボックスのテキストや位置、幅、状態などを設定できます。幅を省略するか、`unspecified` を指定すると、チェックボックスの幅はテキストに合わせた幅になります。チェックの状態は `bool` 型の変数で管理します。この関数は値が変更されたときに `true` を返します。
+## 38.5 Checkbox
+- Checkboxes use the `SimpleGUI::CheckBox()` function
+- You can set text, position, width, state, etc.
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/gui/4.png)
+```cpp
+bool SimpleGUI::CheckBox(bool& checked, StringView label, const Vec2& pos, const Optional<double>& width = unspecified, bool enabled = true);
+```
+
+- Arguments:
+	- `checked` : Checkbox state
+	- `label` : Checkbox label
+	- `pos` : Top-left coordinates of the checkbox
+	- `width` : Checkbox width (`unspecified` adjusts to text width)
+	- `enabled` : Whether the checkbox is enabled
+- Return value:
+	- Returns `true` if the checkbox state changed, `false` otherwise
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/5.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
 	bool checked0 = false;
 	bool checked1 = true;
@@ -174,27 +247,43 @@ void Main()
 
 	while (System::Update())
 	{
-		SimpleGUI::CheckBox(checked0, U"Label0", Vec2{ 100, 40 });
-		SimpleGUI::CheckBox(checked1, U"Label1", Vec2{ 100, 80 });
-		SimpleGUI::CheckBox(checked2, U"Label2", Vec2{ 100, 120 });
+		SimpleGUI::CheckBox(checked0, U"Label 0", Vec2{ 100, 40 });
+		SimpleGUI::CheckBox(checked1, U"Label 1", Vec2{ 100, 80 });
+		SimpleGUI::CheckBox(checked2, U"Label 2", Vec2{ 100, 120 });
 
-		// 幅 200px
-		SimpleGUI::CheckBox(checked3, U"Label3", Vec2{ 100, 180 }, 200);
+		// Width 200px
+		SimpleGUI::CheckBox(checked3, U"Label 3", Vec2{ 100, 180 }, 200);
 
-		// 無効化
-		SimpleGUI::CheckBox(checked4, U"Label4", Vec2{ 100, 220 }, 200, false);
+		// Disabled
+		SimpleGUI::CheckBox(checked4, U"Label 4", Vec2{ 100, 220 }, 200, false);
 
-		// 幅はテキストに合わせる
-		SimpleGUI::CheckBox(checked5, U"Label5", Vec2{ 100, 260 }, unspecified, false);
+		// Width adjusts to text
+		SimpleGUI::CheckBox(checked5, U"Label 5", Vec2{ 100, 260 }, unspecified, false);
 	}
 }
 ```
 
 
-## 28.5 ラジオボタン
-ラジオボタン作成するには `SimpleGUI::RadioButtons()` 関数を使うと便利です。関数ではラジオボタンのテキストや位置、幅、状態などを設定できます。水平にアイテムが並ぶラジオボタンは `SimpleGUI::HorizontalRadioButtons()` を使います。ラジオボタンの選択項目は `size_t` 型の変数で管理します。どちらの関数も、ラジオボタンの選択項目が変更されたときに `true` を返します。
+## 38.6 Radio Button
+- Radio buttons use `SimpleGUI::RadioButtons()` (vertical) or `SimpleGUI::HorizontalRadioButtons()` (horizontal)
+- You can set text, position, width, state, etc.
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/gui/5.png)
+```cpp
+bool SimpleGUI::RadioButtons(size_t& index, const Array<String>& options, const Vec2& pos, const Optional<double>& width = unspecified, bool enabled = true);
+bool SimpleGUI::HorizontalRadioButtons(size_t& index, const Array<String>& options, const Vec2& pos, const Optional<double>& itemWidth = unspecified, bool enabled = true);
+```
+
+- Arguments:
+	- `index` : Index of the selected item
+	- `options` : Array of options
+	- `pos` : Top-left coordinates of the radio buttons
+	- `width` : Radio button width (`unspecified` adjusts to text width)
+	- `itemWidth` : Horizontal radio button item width (`unspecified` adjusts to text width)
+	- `enabled` : Whether the radio buttons are enabled
+- Return value:
+	- Returns `true` if the radio button selection changed, `false` otherwise
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/6.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -217,52 +306,70 @@ void Main()
 	{
 		SimpleGUI::RadioButtons(index0, { U"Option1", U"Option2", U"Option3" }, Vec2{ 100, 40 });
 
-		// 選択肢を Array<String> で指定
+		// Specify options with Array<String>
 		if (SimpleGUI::RadioButtons(index1, options, Vec2{ 100, 180 }))
 		{
 			Scene::SetBackground(colors[index1]);
 		}
 
-		// 幅 200px
+		// Width 200px
 		SimpleGUI::RadioButtons(index2, { U"A", U"B" }, Vec2{ 400, 40 }, 200);
 
-		// 無効化
+		// Disabled
 		SimpleGUI::RadioButtons(index3, { U"A", U"B" }, Vec2{ 400, 140 }, 200, false);
 
-		// 幅はテキストに合わせる
+		// Width adjusts to text
 		SimpleGUI::RadioButtons(index4, { U"A", U"B" }, Vec2{ 400, 240 }, unspecified, false);
 
-		// 水平ラジオボタン
+		// Horizontal radio buttons
 		SimpleGUI::HorizontalRadioButtons(index5, { U"Apple", U"Bird", U"Cat", U"Dog" }, Vec2{ 100, 400 });
 	}
 }
 ```
 
 
-## 28.6 テキストボックス
-単一行のテキストボックスを作成するには `SimpleGUI::TextBox()` 関数を使うと便利です。関数ではテキストボックスの位置、幅、文字数の上限、状態などを設定できます。テキストボックスの状態（入力されている文字列など）は `TextEditState` 型のオブジェクトによって管理します。この関数はテキストが変更されたときに `true` を返します。
+## 38.7 Text Box
+- Single-line text boxes use the `TextEditState` class and `SimpleGUI::TextBox()` function
+- You can set text box position, width, character limit, state, etc.
 
-### 28.6.1 テキストボックスの基本
+```cpp
+bool SimpleGUI::TextBox(TextEditState& text, const Vec2& pos, double width = 200.0, const Optional<size_t>& maxChars = unspecified, bool enabled = true);
+```
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/gui/6.1.png)
+- Arguments:
+	- `text` : `TextEditState` object
+	- `pos` : Top-left coordinates of the text box
+	- `width` : Text box width
+	- `maxChars` : Maximum number of input characters (`unspecified` for no limit)
+	- `enabled` : Whether the text box is enabled
+- Return value:
+	- Returns `true` if text changed, `false` otherwise
+
+### 38.7.1 Text Box Basics
+- The initial string for the text box is specified in the `TextEditState` constructor
+- Text box contents can be obtained with the `.text` member variable of `TextEditState`
+- Whether the text box is active can be obtained with the `.active` member variable of `TextEditState`
+- To clear text box contents, use the `.clear()` member function of `TextEditState`
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/7-1.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
 	TextEditState te0;
-	TextEditState te1{ U"Siv3D" };// デフォルトのテキストを設定する
+	TextEditState te1{ U"Siv3D" }; // Set default text
 	TextEditState te2;
 	TextEditState te3;
 
 	while (System::Update())
 	{
 		ClearPrint();
-		Print << te0.active; // アクティブかどうか
-		Print << te0.text; // 入力されたテキスト (String)
+		Print << te0.active; // Whether active
+		Print << te0.text; // Input text (String)
 
 		SimpleGUI::TextBox(te0, Vec2{ 100, 140 });
 
@@ -270,31 +377,37 @@ void Main()
 
 		if (SimpleGUI::Button(U"Clear", Vec2{ 320, 200 }))
 		{
-			// テキストを消去する
+			// Clear text
 			te1.clear();
 		}
 
-		// 幅 100px, 文字数を 4 文字までに制限する
+		// Width 100px, limit to 4 characters
 		SimpleGUI::TextBox(te2, Vec2{ 100, 260 }, 100, 4);
 
-		// 無効化
+		// Disabled
 		SimpleGUI::TextBox(te3, Vec2{ 100, 320 }, 100, 4, false);
 	}
 }
 ```
 
+- Advanced text editing features like string range selection are not currently implemented in SimpleGUI
+- Text boxes display overflow outside the box when character count exceeds the text box width
+	- To avoid this behavior, consider setting a character limit or using **38.8** Text Area
 
-### 28.6.2 前後のテキストボックスへフォーカスを移動させる
-`SimpleGUI::TextBox()` では、あるテキストボックスがアクティブな時、エンターキーや Tab キーを押したり、無関係な場所をクリックしたりすると、そのテキストボックスが非アクティブになります。あるテキストボックスが Tab キーによって非アクティブ化したことを検出し、前後のテキストボックスへフォーカスを移動させるには、次のようにします。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/gui/6.2.png)
+### 38.7.2 Moving Focus Between Text Boxes
+- In `SimpleGUI::TextBox()`, when a text box is active and Enter, Tab is pressed, or an unrelated area is clicked, that text box becomes inactive
+- Whether a text box was deactivated by Tab can be detected by checking if the `TextEditState`'s `.tabKey` member variable is `true`
+- A system to detect Tab key deactivation and move focus to previous/next text boxes can be implemented as follows:
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/7-2.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
 	std::array<TextEditState, 3> textEditStates;
 
@@ -302,8 +415,8 @@ void Main()
 
 	while (System::Update())
 	{
-		// Tab キーの押下と同じフレームで次のテキストボックスをアクティブ化してしまうと
-		// その Tab キーの押下で次のテキストボックスも非アクティブ化してしまうため、1 フレーム後にアクティブ化する
+		// Activate next text box one frame later to avoid Tab key press
+		// activating and immediately deactivating the next text box
 		if (nextTextBox)
 		{
 			if (*nextTextBox < textEditStates.size())
@@ -322,10 +435,10 @@ void Main()
 
 			SimpleGUI::TextBox(state, Vec2{ 100, (100 + i * 60) });
 
-			// Tab キーによって非アクティブ化された
+			// Deactivated by Tab key
 			if (previous && (state.active == false) && state.tabKey)
 			{
-				if (KeyShift.pressed()) // Shift キーが押されていたら前のテキストボックスへ
+				if (KeyShift.pressed()) // Go to previous text box if Shift is pressed
 				{
 					nextTextBox = (i - 1);
 				}
@@ -340,17 +453,31 @@ void Main()
 ```
 
 
-## 28.7 テキストエリア
-複数行のテキストエリアを作成するには、`SimpleGUI::TextArea()` 関数を使うと便利です。関数ではテキストエリアの位置、幅と高さ、文字数の上限、状態などを設定できます。テキストボックスの状態（入力されている文字列など）は `TextAreaEditState` 型のオブジェクトによって管理します。この関数はテキストが変更されたときに `true` を返します。
+## 38.8 Text Area
+- For multi-line text input, use the `TextAreaEditState` class and `SimpleGUI::TextArea()` function
+- You can set text area position, width and height, character limit, state, etc.
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/gui/7.png)
+```cpp
+bool SimpleGUI::TextArea(TextAreaEditState& text, const Vec2& pos, const SizeF& size = SizeF{ 200, 100 }, size_t maxChars = PreferredTextAreaMaxChars, bool enabled = true);
+```
+
+- Arguments:
+	- `text` : `TextAreaEditState` object
+	- `pos` : Top-left coordinates of the text area
+	- `size` : Text area width and height
+	- `maxChars` : Maximum number of input characters
+	- `enabled` : Whether the text area is enabled
+- Return value:
+	- Returns `true` if text changed, `false` otherwise
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/8.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
 	TextAreaEditState textAreaEditState;
 
@@ -367,23 +494,39 @@ void Main()
 
 		SimpleGUI::TextArea(textAreaEditState, Vec2{ 40, 90 }, SizeF{ 720, 300 }, SimpleGUI::PreferredTextAreaMaxChars, enabled);
 
-		// テキストの内容には textAreaEditState.text でアクセスできる
+		// Text content can be accessed with textAreaEditState.text
 	}
 }
 ```
 
+- Advanced text editing features like string range selection are not currently implemented in SimpleGUI
 
-## 28.8 カラーピッカー
-カラーピッカーを作成するには、`SimpleGUI::ColorPicker()` 関数を使うと便利です。関数ではカラーピッカーの位置、状態などを設定できます。色は `HSV` 型の変数で管理します。この関数は色が変更されたときに `true` を返します。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/gui/8.png)
+## 38.9 Color Picker
+- Color pickers use the `SimpleGUI::ColorPicker()` function
+- You can set color picker position, state, etc.
+- Colors are managed with `HSV` type variables
+- Alpha component cannot be manipulated
+
+```cpp
+bool SimpleGUI::ColorPicker(HSV& hsv, const Vec2& pos, bool enabled = true);
+```
+
+- Arguments:
+	- `hsv` : `HSV` type variable
+	- `pos` : Top-left coordinates of the color picker
+	- `enabled` : Whether the color picker is enabled
+- Return value:
+	- Returns `true` if color changed, `false` otherwise
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/9.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
 	HSV color0 = Palette::Orange;
 	HSV color1 = Palette::Skyblue;
@@ -393,7 +536,7 @@ void Main()
 		SimpleGUI::ColorPicker(color0, Vec2{ 100, 100 });
 		Rect{ 100, 300, 100 }.draw(color0);
 
-		// 無効化されているカラーピッカー
+		// Disabled color picker
 		SimpleGUI::ColorPicker(color1, Vec2{ 300, 100 }, false);
 		Rect{ 300, 300, 100 }.draw(color1);
 	}
@@ -401,12 +544,30 @@ void Main()
 ```
 
 
-## 28.9 リストボックス
-リストボックスを作成するには、`SimpleGUI::ListBox()` 関数を使うと便利です。関数ではリストボックスの位置、幅と高さ、状態などを設定できます。リストボックスの状態は `ListBoxState` 型のオブジェクトによって管理します。この関数はリストボックスの選択が変更されたときに `true` を返します。
+## 38.10 List Box
+- List boxes use the `ListBoxState` class and `SimpleGUI::ListBox()` function
+- You can set list box position, width and height, state, etc.
 
-選択されている項目のインデックスは `ListBoxState` の `Optional<size_t>` 型のメンバ変数 `selectedItemIndex` に格納されます。選択肢の配列は `ListBoxState` の `Array<String>` 型のメンバ変数 `items` に格納されます。
+```cpp
+bool SimpleGUI::ListBox(ListBoxState& state, const Vec2& pos, double width = 160.0, double height = 156.0, bool enabled = true);
+```
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/gui/9.png)
+- Arguments:
+	- `state` : `ListBoxState` object
+	- `pos` : Top-left coordinates of the list box
+	- `width` : List box width
+	- `height` : List box height
+	- `enabled` : Whether the list box is enabled
+- Return value:
+	- Returns `true` if list box selection changed, `false` otherwise
+
+---
+
+- List box state is managed by a `ListBoxState` type object
+- The list of options is stored in the `Array<String>` type member variable `.items` of `ListBoxState`
+- The index of the selected item is stored in the `Optional<size_t>` type member variable `.selectedItemIndex` of `ListBoxState`
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/10.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -414,7 +575,7 @@ void Main()
 void Main()
 {
 	Window::Resize(1280, 720);
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
 	ListBoxState listBoxState1{
 		{
@@ -480,17 +641,29 @@ void Main()
 ```
 
 
-## 28.10 見出し
-GUI の各ウィジェットに見出しを付けたい場合、`SimpleGUI::Headline` を使うと便利です。関数では見出しの位置、幅、状態などを設定できます。見出しの高さは 40 ピクセルです。
+## 38.11 Headline
+- To add headlines to widgets, use the `SimpleGUI::Headline()` function
+- You can set headline position, width, state, etc.
+- Headline height is 40 pixels
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/gui/10.png)
+```cpp
+void SimpleGUI::Headline(StringView text, const Vec2& pos, const Optional<double>& width = unspecified, bool enabled = true);
+```
+
+- Arguments:
+	- `text` : Headline text
+	- `pos` : Top-left coordinates of the headline
+	- `width` : Headline width (`unspecified` adjusts to text width)
+	- `enabled` : Whether the headline is enabled
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/11.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
 	bool checked0 = false;
 	bool checked1 = true;
@@ -500,9 +673,9 @@ void Main()
 	while (System::Update())
 	{
 		SimpleGUI::Headline(U"Checkbox", Vec2{ 100, 60 });
-		SimpleGUI::CheckBox(checked0, U"Label0", Vec2{ 100, 100 }, 160);
-		SimpleGUI::CheckBox(checked1, U"Label1", Vec2{ 100, 140 }, 160);
-		SimpleGUI::CheckBox(checked2, U"Label2", Vec2{ 100, 180 }, 160);
+		SimpleGUI::CheckBox(checked0, U"Label 0", Vec2{ 100, 100 }, 160);
+		SimpleGUI::CheckBox(checked1, U"Label 1", Vec2{ 100, 140 }, 160);
+		SimpleGUI::CheckBox(checked2, U"Label 2", Vec2{ 100, 180 }, 160);
 
 		SimpleGUI::Headline(U"ColorPicker", Vec2{ 300, 60 }, 160, false);
 		SimpleGUI::ColorPicker(color, Vec2{ 300, 100 }, false);
@@ -511,17 +684,18 @@ void Main()
 ```
 
 
-## 28.11 メニューバー
-`SimpleMenuBar` クラスを使うと、簡易的なメニューバーを作成できます。メニューバーの項目は、`Array<std::pair<String, Array<String>>>` で指定します。`String` がメニューのタイトル、`Array<String>` がそのメニューに含まれる項目の名前です。
+## 38.12 Menu Bar
+- You can create a simple menu bar using the `SimpleMenuBar` class
+- Menu bar items are set with `Array<std::pair<String, Array<String>>>`
+	- `String` is the menu title, `Array<String>` is the array of item names contained in the menu
 
-### 28.11.1 メニューバーの基本
-`SimpleMenuBar` は、毎フレーム、状態の更新を行うメンバ関数 `.update()` と、描画を行うメンバ関数 `.draw()` を呼ぶ必要があります。
+### 38.12.1 Menu Bar Basics
+- The `SimpleMenuBar` class has a `.update()` member function for state updates and a `.draw()` member function for drawing, both must be called every frame
+	- The return value of `.update()` is `Optional<MenuBarItemIndex>` type. If a menu item is selected, it returns that item index; if not selected, it returns an invalid value
+	- `.draw()` draws the menu bar
+- Item index is represented as `MenuBarItemIndex{ menu index, menu item index }`
 
-`.update()` は `Optional<MenuBarItemIndex>` を返します。メニューの項目が選択されると、その項目のインデックスを返します。項目が選択されなかった場合は `none` を返します。
-
-`.draw()` はメニューバーを描画します。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/gui/11.1.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/12-1.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -530,25 +704,25 @@ void Main()
 {
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-	const Array<std::pair<String, Array<String>>> menus
+	const Array<std::pair<String, Array<String>>> items
 	{
 		{ U"ゲーム", { U"新規", U"スコア", U"終了" }},
 		{ U"ヘルプ", { U"\U000F0625  遊び方", U"\U000F14F7  リリースノート", U"ライセンス" } },
 	};
 
-	SimpleMenuBar menuBar{ menus };
+	SimpleMenuBar menuBar{ items };
 
 	while (System::Update())
 	{
-		if (const auto& item = menuBar.update())
+		if (const auto item = menuBar.update())
 		{
-			// 「終了」が押されたら
+			// If "Game > Exit" is pressed
 			if (item == MenuBarItemIndex{ 0, 2 })
 			{
-				return;
+				System::Exit();
 			}
 
-			// 「ライセンス」が押されたら
+			// If "Help > License" is pressed
 			if (item == MenuBarItemIndex{ 1, 2 })
 			{
 				LicenseManager::ShowInBrowser();
@@ -561,12 +735,13 @@ void Main()
 ```
 
 
-### 28.11.2 チェック可能なメニュー項目
-`SimpleMenuBar` のメンバ関数 `.setItemChecked()` を使うと、メニュー項目のチェック状態をオン/オフできます。`.setItemChecked()` には、`MenuBarItemIndex` と `bool` を渡します。`bool` が `true` の場合、その項目をチェック状態にし、`false` の場合はチェック状態を解除します。
+### 38.12.2 Checkable Menu Items
+- You can turn menu item check states on/off using the `.setItemChecked()` member function of `SimpleMenuBar`
+- Pass `MenuBarItemIndex` and `bool` to `.setItemChecked()`
+	- If `true`, that item becomes checked; if `false`, the check state is removed
+- Whether an item is checked can be obtained with the member function `.getItemChecked(MenuBarItemIndex)`
 
-ある項目がチェック状態であるかは、メンバ関数 `.getItemChecked()` で取得できます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/gui/11.2.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/12-2.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -574,54 +749,60 @@ void Main()
 void Main()
 {
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
 
-	const Array<std::pair<String, Array<String>>> menus
+	const Array<std::pair<String, Array<String>>> items
 	{
 		{ U"ゲーム", { U"新規", U"スコア", U"終了" }},
 		{ U"設定", { U"オプション A", U"オプション B", U"オプション C" } },
 		{ U"ヘルプ", { U"\U000F0625遊び方", U"\U000F14F7リリースノート", U"\U000F05E6ライセンス" } },
 	};
 
-	SimpleMenuBar menuBar{ menus };
+	SimpleMenuBar menuBar{ items };
 
 	while (System::Update())
 	{
-		ClearPrint();
-		Print << menuBar.getItemChecked(MenuBarItemIndex{ 1, 0 });
-		Print << menuBar.getItemChecked(MenuBarItemIndex{ 1, 1 });
-		Print << menuBar.getItemChecked(MenuBarItemIndex{ 1, 2 });
-
 		if (const auto& item = menuBar.update())
 		{
-			// 「終了」が押されたら
+			// If "Game > Exit" is pressed
 			if (item == MenuBarItemIndex{ 0, 2 })
 			{
-				return;
+				System::Exit();
 			}
 
-			// 「ライセンス」が押されたら
+			// If "Settings > Option" is pressed
+			if (item->menuIndex == 1)
+			{
+				// Toggle check state
+				menuBar.setItemChecked(*item, (not menuBar.getItemChecked(*item)));
+			}
+
+			// If "Help > License" is pressed
 			if (item == MenuBarItemIndex{ 2, 2 })
 			{
 				LicenseManager::ShowInBrowser();
 			}
-
-			if (item->menuIndex == 1)
-			{
-				// チェック状態を反転する
-				menuBar.setItemChecked(*item, (not menuBar.getItemChecked(*item)));
-			}
 		}
 
 		menuBar.draw();
+
+		font(U"A: {}"_fmt(menuBar.getItemChecked(MenuBarItemIndex{ 1, 0 })))
+			.draw(30, Vec2{ 400, 100 }, ColorF{ 0.2 });
+
+		font(U"B: {}"_fmt(menuBar.getItemChecked(MenuBarItemIndex{ 1, 1 })))
+			.draw(30, Vec2{ 400, 140 }, ColorF{ 0.2 });
+
+		font(U"C: {}"_fmt(menuBar.getItemChecked(MenuBarItemIndex{ 1, 2 })))
+			.draw(30, Vec2{ 400, 180 }, ColorF{ 0.2 });
 	}
 }
 ```
 
 
-### 28.11.3 メニューバーの色の変更
-`SimpleMenuBar::ColorPalette` クラスで設定したカラーパレットを使って、メニューバーの色を変更できます。
+### 38.12.3 Changing Menu Bar Colors
+- You can customize menu bar colors using the `SimpleMenuBar::ColorPalette` class
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/gui/11.3.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/12-3.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -630,9 +811,7 @@ void Main()
 {
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-	Vec2 pos = Scene::Center(), target = pos, velocity = Vec2::Zero();
-
-	const Array<std::pair<String, Array<String>>> menus
+	const Array<std::pair<String, Array<String>>> items
 	{
 		{ U"ファイル", { U"新規作成", U"開く", U"名前を付けて保存", U"終了" }},
 		{ U"編集", { U"元に戻す", U"切り取り", U"コピー", U"貼り付け", U"削除", U"検索する", U"次を検索", U"前を検索" } },
@@ -640,7 +819,7 @@ void Main()
 		{ U"ヘルプ", { U"\U000F0625  使い方", U"\U000F14F7  リリースノート", U"ライセンス" } },
 	};
 
-	SimpleMenuBar menuBar{ menus };
+	SimpleMenuBar menuBar{ items };
 	menuBar
 		.setItemEnabled(1, 0, false)
 		.setItemEnabled(1, 1, false)
@@ -667,24 +846,7 @@ void Main()
 
 	while (System::Update())
 	{
-		if (const auto& item = menuBar.update())
-		{
-			Print << U"menuIndex: {}, itemIndex: {}"_fmt(item->menuIndex, item->itemIndex);
-		}
-
-		if (Scene::Rect().mouseOver() && (not MouseL.cleared()))
-		{
-			Cursor::RequestStyle(CursorStyle::Hand);
-
-			if (MouseL.down())
-			{
-				target = Cursor::Pos();
-			}
-		}
-
-		pos = Math::SmoothDamp(pos, target, velocity, 0.25);
-
-		pos.asCircle(40).drawShadow(Vec2{ 2, 2 }, 8).draw();
+		menuBar.update();
 
 		menuBar.draw();
 	}
@@ -692,24 +854,29 @@ void Main()
 ```
 
 
-## 28.12 テーブル
+## 38.13 Table
+- You can easily create tables with items arranged vertically and horizontally using the `SimpleTable` class
 
-### 28.12.1 テーブルの基本
-`SimpleTable` クラスを使うと、テーブルを簡単に作成できます。コンストラクタで各列の幅を指定したあと、`push_back_row()` で行の内容を `Array<String>` で追加していきます。追加でアライメントを `Array<int32>` で指定することもできます。アライメントは -1 が左寄せ、0 が中央寄せ、1 が右寄せです。テーブルはメンバ関数 `.draw()` で描画できます。
+### 38.13.1 Table Basics
+- Specify the width of each column in the constructor
+- Add row contents as `Array<String>` with `push_back_row()`
+- You can also specify alignment as `Array<int32>` with the second argument
+	- `-1` is left-aligned, `0` is center-aligned, `1` is right-aligned
+- Tables are drawn with the member function `.draw(pos)`
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/gui/12.1.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/13-1.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-	// 各列の幅が 160, 100, 100 のテーブルを作成
+	// Create table with column widths | 160 | 100 | 100 |
 	SimpleTable table{ { 160, 100, 100 } };
 
-	// 行を追加する
+	// Add rows
 	table.push_back_row({ U"Player", U"Rank", U"Rate" }, { -1, 1, 1 });
 	table.push_back_row({ U"Alice", U"2", U"2832" });
 	table.push_back_row({ U"Bob", U"6", U"2540" });
@@ -723,11 +890,10 @@ void Main()
 }
 ```
 
+### 38.13.2 Table Sample (1)
+- Sample of a table with addable/removable rows
 
-### 28.12.2 テーブルのスタイルの変更
-スタイルの設定をカスタマイズすることで、様々なバリエーションのテーブルを作成できます。サンプルを次に示します。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/gui/12.2.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/13-2.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -735,30 +901,69 @@ void Main()
 void Main()
 {
 	Window::Resize(1280, 720);
-	Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
-	const Font font1{ FontMethod::MSDF, 36 };
-	const Font font2{ FontMethod::MSDF, 36, Typeface::Heavy };
-	const Font font3{ FontMethod::MSDF, 36, Typeface::Bold };
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-	//
-	// table 1
-	//
-	SimpleTable table1{ { 100, 200, 200 }, {
+	const Font font{ FontMethod::MSDF, 36 };
+	const Font fontBold{ FontMethod::MSDF, 36, Typeface::Bold };
+	const Vec2 tablePos{ 40,40 };
+
+	SimpleTable table{ { 100, 200, 200 }, {
 			.variableWidth = true,
-			.font = font1,
-			.columnHeaderFont = font3,
-			.rowHeaderFont = font3,
+			.font = font,
+			.columnHeaderFont = fontBold,
+			.rowHeaderFont = fontBold,
 		} };
-	table1.push_back_row({ U"", U"日本", U"アメリカ" }, { 0, 0, 0 });
-	table1.push_back_row({ U"面積", U"約 37 万 8 千平方キロメートル", U"約 983 万平方キロメートル" }, { 0, -1, -1 });
-	table1.push_back_row({ U"人口", U"約 1 億 2 千万人", U"約 3 億 3 千万人" });
-	table1.push_back_row({ U"言語", U"日本語", U"英語" });
-	table1.push_back_row({ U"通貨", U"円 (JPY)", U"ドル (USD)" });
+	table.push_back_row({ U"", U"日本", U"アメリカ" }, { 0, 0, 0 });
+	table.push_back_row({ U"面積", U"約 37 万 8 千平方キロメートル", U"約 983 万平方キロメートル" }, { 0, -1, -1 });
+	table.push_back_row({ U"人口", U"約 1 億 2 千万人", U"約 3 億 3 千万人" });
+	table.push_back_row({ U"言語", U"日本語", U"英語" });
+	table.push_back_row({ U"通貨", U"円 (JPY)", U"ドル (USD)" });
 
-	//
-	// table 2
-	//
-	SimpleTable table2{ { 160, 100, 100 }, {
+	Optional<Point> activeIndex;
+
+	while (System::Update())
+	{
+		if (SimpleGUI::Button(U"行を追加", Vec2{ 740, 40 }, 130))
+		{
+			table.push_back_row({ 0, -1, -1 });
+		}
+
+		if (SimpleGUI::Button(U"行を削除", Vec2{ 740, 80 }, 130))
+		{
+			table.pop_back_row();
+		}
+
+		if (MouseL.down())
+		{
+			activeIndex = table.cellIndex(tablePos, Cursor::Pos());
+		}
+
+		table.draw(tablePos);
+
+		if (activeIndex)
+		{
+			table.cellRegion(tablePos, *activeIndex).drawFrame(2, 1, ColorF{ 0.1 });
+		}
+	}
+}
+```
+
+### 38.13.3 Table Sample (2)
+- Sample of a table that changes row background color on mouse over
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/13-3.png)
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font fontHeavy{ FontMethod::MSDF, 36, Typeface::Heavy };
+	const Vec2 tablePos{ 40,40 };
+
+	SimpleTable table{ { 160, 100, 100 }, {
 			.cellHeight = 40,
 			.borderThickness = 2,
 			.backgroundColor = none,
@@ -766,7 +971,7 @@ void Main()
 			.borderColor = ColorF{ 0.29, 0.33, 0.41 },
 			.hasVerticalBorder = false,
 			.hasOuterBorder = false,
-			.font = font2,
+			.font = fontHeavy,
 			.fontSize = 24,
 			.hoveredRow = [](const Point& index) -> Optional<ColorF>
 			{
@@ -778,31 +983,51 @@ void Main()
 				return none;
 			},
 		} };
-	table2.push_back_row({ U"Player", U"Rank", U"Rate" }, { -1, 1, 1 });
-	table2.push_back_row({ U"Alice", U"2", U"2832" });
-	table2.push_back_row({ U"Bob", U"6", U"2540" });
-	table2.push_back_row({ U"Carol", U"16", U"2315" });
-	table2.push_back_row({ U"Eve", U"121", U"1874" });
+	table.push_back_row({ U"Player", U"Rank", U"Rate" }, { -1, 1, 1 });
+	table.push_back_row({ U"Alice", U"2", U"2832" });
+	table.push_back_row({ U"Bob", U"6", U"2540" });
+	table.push_back_row({ U"Carol", U"16", U"2315" });
+	table.push_back_row({ U"Eve", U"121", U"1874" });
 
 	for (int32 y = 1; y < 3; ++y)
 	{
-		table2.setRowTextColor(y, ColorF{ 1.00, 0.7, 0.25 });
+		table.setRowTextColor(y, ColorF{ 1.00, 0.7, 0.25 });
 	}
 
 	for (int32 y = 3; y < 5; ++y)
 	{
-		table2.setRowTextColor(y, ColorF{ 0.82, 0.56, 0.84 });
+		table.setRowTextColor(y, ColorF{ 0.82, 0.56, 0.84 });
 	}
 
-	//
-	// table 3
-	//
-	SimpleTable table3{ Array<double>(7, 60.0), {
+	while (System::Update())
+	{
+		table.region(tablePos).stretched(24, 12).rounded(10.0).draw(ColorF{ 0.18, 0.20, 0.35 });
+		table.draw(tablePos);
+	}
+}
+```
+
+### 38.13.4 Table Sample (3)
+- December 2025 calendar sample
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/13-4.png)
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font fontBold{ FontMethod::MSDF, 36, Typeface::Bold };
+	const Vec2 tablePos{ 40,40 };
+
+	SimpleTable table{ Array<double>(7, 60.0), {
 			.borderThickness = 2,
 			.backgroundColor = none,
 			.borderColor = ColorF{ 1.0 },
 			.hasOuterBorder = false,
-			.font = font3,
+			.font = fontBold,
 			.hoveredCell = [](const Point& index) -> Optional<ColorF>
 			{
 				if (index.y != 0)
@@ -813,36 +1038,56 @@ void Main()
 				return none;
 			},
 		} };
-	table3.push_back_row({ U"Sun", U"Mon", U"Tue", U"Wed", U"Thu", U"Fri", U"Sat" }, Array<int32>(7, 0));
-	table3.setRowBackgroundColor(0, ColorF{ 1.00, 0.8, 0.7 });
-	table3.push_back_row(Array<int32>(7, 1));
-	table3.push_back_row();
-	table3.push_back_row();
-	table3.push_back_row();
-	table3.push_back_row();
-	table3.push_back_row();
+	table.push_back_row({ U"Sun", U"Mon", U"Tue", U"Wed", U"Thu", U"Fri", U"Sat" }, Array<int32>(7, 0));
+	table.setRowBackgroundColor(0, ColorF{ 1.00, 0.8, 0.7 });
+	table.push_back_row(Array<int32>(7, 1));
+	table.push_back_row();
+	table.push_back_row();
+	table.push_back_row();
+	table.push_back_row();
 
-	for (int32 i = 0; i < (7 * 6); ++i)
+	for (int32 i = 0; i < (7 * 5); ++i)
 	{
-		const auto date = Date{ 2023, 3, 26 } + Days{ i };
+		const auto date = Date{ 2025, 11, 30 } + Days{ i };
 		const Point index{ (i % 7), (1 + (i / 7)) };
-		table3.setText(index, Format(date.day));
+		table.setText(index, Format(date.day));
 
-		if (date.month != 4)
+		if (date.month != 12)
 		{
-			table3.setTextColor(index, ColorF{ 0.7 });
+			table.setTextColor(index, ColorF{ 0.7 });
 		}
 	}
 
-	//
-	// table 4
-	//
-	SimpleTable table4{ { 100, 80, 80 }, {
+	while (System::Update())
+	{
+		table.region(tablePos).stretched(10, 20).rounded(5).draw();
+		table.draw(tablePos);
+	}
+}
+```
+
+### 38.13.5 Table Sample (4)
+- Timetable sample
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/13-5.png)
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ FontMethod::MSDF, 36 };
+	const Font fontBold{ FontMethod::MSDF, 36, Typeface::Bold };
+	const Vec2 tablePos{ 40,40 };
+
+	SimpleTable table{ { 100, 80, 80 }, {
 			.cellHeight = 28.0,
 			.hasHorizontalBorder = false,
-			.font = font1,
+			.font = font,
 			.fontSize = 16,
-			.columnHeaderFont = font3,
+			.columnHeaderFont = fontBold,
 			.columnHeaderFontSize = 14,
 			.hoveredRow = [](const Point& index) -> Optional<ColorF>
 			{
@@ -854,121 +1099,115 @@ void Main()
 				return none;
 			},
 		} };
-	table4.push_back_row({ U"", U"こだま701", U"のぞみ5" }, { -1, 0, 0 });
-	table4.push_back_row({ U"東　京　発", U"6:30", U"6:33" });
-	table4.push_back_row({ U"品　川　〃", U"6:37", U"6:40" });
-	table4.push_back_row({ U"新横浜　〃", U"6:48", U"6:51" });
-	table4.push_back_row({ U"小田原　〃", U"7:05", U"ﾚ" });
-	table4.push_back_row({ U"熱　海　〃", U"7:14", U"ﾚ" });
-	table4.push_back_row({ U"三　島　〃", U"7:26", U"ﾚ" });
-	table4.push_back_row({ U"新富士　〃", U"7:37", U"ﾚ" });
-	table4.push_back_row({ U"静　岡　〃", U"7:51", U"ﾚ" });
-	table4.push_back_row({ U"掛　川　〃", U"8:08", U"ﾚ" });
-	table4.push_back_row({ U"浜　松　〃", U"8:23", U"ﾚ" });
-	table4.push_back_row({ U"豊　橋　〃", U"8:39", U"ﾚ" });
-	table4.push_back_row({ U"三河安城〃", U"8:56", U"ﾚ" });
-	table4.push_back_row({ U"名古屋　着", U"9:06", U"8:10" });
-	table4.push_back_row({ U"名古屋　発", U"", U"8:12" });
-
-	//
-	// table 5
-	//
-	SimpleTable table5{ { 80, 80, 80, 80 }, {
-		.cellHeight = 26.0,
-		.borderThickness = 2.0,
-		.borderColor = ColorF{ 0.6 },
-		.columnHeaderFont = font3,
-		.columnHeaderFontSize = 15.0,
-		.rowHeaderFont = font3,
-		.rowHeaderFontSize = 15.0,
-	} };
-	table5.push_back_row({ U"", U"今日", U"明日", U"明後日" }, { 0, 0, 0, 0 });
-	table5.push_back_row({ U"札幌", U"\U000F0597\U000F19B0\U000F0590", U"\U000F0590/\U000F0597", U"\U000F0590" });
-	table5.push_back_row({ U"東京", U"\U000F0599\U000F19B0\U000F0590", U"\U000F0597/\U000F0590", U"\U000F0590\U000F19B0\U000F0597" });
-	table5.push_back_row({ U"大阪", U"\U000F0590\U000F19B0\U000F0597", U"\U000F0597", U"\U000F0599/\U000F0590" });
-	table5.push_back_row({ U"福岡", U"\U000F0597\U000F19B0\U000F0590", U"\U000F0590\U000F19B0\U000F0599", U"\U000F0599/\U000F0590" });
-	table5.push_back_row({ U"沖縄", U"\U000F0590", U"\U000F0590/\U000F0597", U"\U000F0590\U000F19B0\U000F0599" });
-	for (size_t y = 1; y < table5.rows(); ++y)
-	{
-		for (size_t x = 1; x < table5.columns(); ++x)
-		{
-			const bool isRainy = table5.getItem(y, x).text.includes(U'\U000F0597');
-			const bool isSunny = table5.getItem(y, x).text.includes(U'\U000F0599');
-			const bool isCloudy = table5.getItem(y, x).text.includes(U'\U000F0590');
-
-			if (isRainy)
-			{
-				table5.setBackgroundColor(y, x, ColorF{ 0.7, 0.9, 1.0 });
-			}
-			else if (isSunny)
-			{
-				table5.setBackgroundColor(y, x, ColorF{ 1.0, 0.9, 0.7 });
-			}
-			else if (isCloudy)
-			{
-				table5.setBackgroundColor(y, x, ColorF{ 0.9 });
-			}
-		}
-	}
-
-
-	Optional<Point> table1ActiveIndex;
+	table.push_back_row({ U"", U"こだま701", U"のぞみ5" }, { -1, 0, 0 });
+	table.push_back_row({ U"東　京　発", U"6:30", U"6:33" });
+	table.push_back_row({ U"品　川　〃", U"6:37", U"6:40" });
+	table.push_back_row({ U"新横浜　〃", U"6:48", U"6:51" });
+	table.push_back_row({ U"小田原　〃", U"7:05", U"ﾚ" });
+	table.push_back_row({ U"熱　海　〃", U"7:14", U"ﾚ" });
+	table.push_back_row({ U"三　島　〃", U"7:26", U"ﾚ" });
+	table.push_back_row({ U"新富士　〃", U"7:37", U"ﾚ" });
+	table.push_back_row({ U"静　岡　〃", U"7:51", U"ﾚ" });
+	table.push_back_row({ U"掛　川　〃", U"8:08", U"ﾚ" });
+	table.push_back_row({ U"浜　松　〃", U"8:23", U"ﾚ" });
+	table.push_back_row({ U"豊　橋　〃", U"8:39", U"ﾚ" });
+	table.push_back_row({ U"三河安城〃", U"8:56", U"ﾚ" });
+	table.push_back_row({ U"名古屋　着", U"9:06", U"8:10" });
+	table.push_back_row({ U"名古屋　発", U"", U"8:12" });
 
 	while (System::Update())
 	{
-		// table1
-		{
-			if (SimpleGUI::Button(U"行を追加", Vec2{ 740, 40 }, 130))
-			{
-				table1.push_back_row({ 0, -1, -1 });
-			}
-
-			if (SimpleGUI::Button(U"行を削除", Vec2{ 740, 80 }, 130))
-			{
-				table1.pop_back_row();
-			}
-
-			constexpr Vec2 TablePos{ 40,40 };
-
-			if (MouseL.down())
-			{
-				table1ActiveIndex = table1.cellIndex(TablePos, Cursor::Pos());
-			}
-
-			table1.draw(TablePos);
-
-			if (table1ActiveIndex)
-			{
-				table1.cellRegion(TablePos, *table1ActiveIndex).drawFrame(2, 1, ColorF{ 0.11 });
-			}
-		}
-
-		// table2
-		{
-			constexpr Vec2 TablePos{ 64, 372 };
-			table2.region(TablePos).stretched(24, 12).rounded(10.0).draw(ColorF{ 0.18, 0.20, 0.35 });
-			table2.draw(TablePos);
-		}
-
-		// table 3
-		{
-			constexpr Vec2 TablePos{ 500, 380 };
-			table3.region(TablePos).stretched(10, 20).rounded(5).draw();
-			table3.draw(TablePos);
-		}
-
-		// table 4
-		{
-			constexpr Vec2 TablePos{ 980, 220 };
-			table4.draw(TablePos);
-		}
-
-		// table 5
-		{
-			constexpr Vec2 TablePos{ 914, 40 };
-			table5.draw(TablePos);
-		}
+		table.draw(tablePos);
 	}
 }
 ```
 
+### 38.13.6 Table Sample (5)
+- Weather forecast sample
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/13-6.png)
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font fontBold{ FontMethod::MSDF, 36, Typeface::Bold };
+	const Vec2 tablePos{ 40,40 };
+
+	SimpleTable table{ { 80, 80, 80, 80 }, {
+		.cellHeight = 26.0,
+		.borderThickness = 2.0,
+		.borderColor = ColorF{ 0.6 },
+		.columnHeaderFont = fontBold,
+		.columnHeaderFontSize = 15.0,
+		.rowHeaderFont = fontBold,
+		.rowHeaderFontSize = 15.0,
+	} };
+
+	table.push_back_row({ U"", U"今日", U"明日", U"明後日" }, { 0, 0, 0, 0 });
+	table.push_back_row({ U"札幌", U"\U000F0597\U000F19B0\U000F0590", U"\U000F0590/\U000F0597", U"\U000F0590" });
+	table.push_back_row({ U"東京", U"\U000F0599\U000F19B0\U000F0590", U"\U000F0597/\U000F0590", U"\U000F0590\U000F19B0\U000F0597" });
+	table.push_back_row({ U"大阪", U"\U000F0590\U000F19B0\U000F0597", U"\U000F0597", U"\U000F0599/\U000F0590" });
+	table.push_back_row({ U"福岡", U"\U000F0597\U000F19B0\U000F0590", U"\U000F0590\U000F19B0\U000F0599", U"\U000F0599/\U000F0590" });
+	table.push_back_row({ U"沖縄", U"\U000F0590", U"\U000F0590/\U000F0597", U"\U000F0590\U000F19B0\U000F0599" });
+
+	for (size_t y = 1; y < table.rows(); ++y)
+	{
+		for (size_t x = 1; x < table.columns(); ++x)
+		{
+			const bool isRainy = table.getItem(y, x).text.includes(U'\U000F0597');
+			const bool isSunny = table.getItem(y, x).text.includes(U'\U000F0599');
+			const bool isCloudy = table.getItem(y, x).text.includes(U'\U000F0590');
+
+			if (isRainy)
+			{
+				table.setBackgroundColor(y, x, ColorF{ 0.7, 0.9, 1.0 });
+			}
+			else if (isSunny)
+			{
+				table.setBackgroundColor(y, x, ColorF{ 1.0, 0.9, 0.7 });
+			}
+			else if (isCloudy)
+			{
+				table.setBackgroundColor(y, x, ColorF{ 0.9 });
+			}
+		}
+	}
+
+	while (System::Update())
+	{
+		table.draw(tablePos);
+	}
+}
+```
+
+
+## 38.14 IME Candidate Window
+- On Windows 11, you can display the IME candidate window using `SimpleGUI::IMECandidateWindow(pos)`
+- On platforms other than Windows 11, nothing happens
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/gui/14.png)
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	TextEditState state;
+
+	while (System::Update())
+	{
+		SimpleGUI::TextBox(state, Vec2{ 40, 40 }, 600);
+
+		if (state.active)
+		{
+			SimpleGUI::IMECandidateWindow(Vec2{ 40, 80 });
+		}
+	}
+}
+```

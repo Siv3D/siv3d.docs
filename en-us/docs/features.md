@@ -1,26 +1,26 @@
-# Features of Siv3D
+# Siv3D Features
 
-Here is a list of the main features provided by Siv3D.
+This is a list of major features provided by Siv3D.
 
 ## Graphics
-- Advanced 2D graphics
-- Basic 3D graphics (Wavefront OBJ, several basic shapes)
-- Custom vertex & pixel shaders (HLSL, GLSL)
+- Various 2D graphics features
+- Basic 3D graphics features (Wavefront OBJ, several basic shapes)
+- Custom vertex and pixel shaders (HLSL, GLSL)
 - Text rendering (Bitmap, SDF, MSDF)
 - Image formats (PNG, JPEG, BMP, SVG, GIF, Animated GIF, TGA, PPM, WebP, TIFF)
-- Over 7,000 icons and Unicode 15.0 emojis
+- Unicode 15.1 emojis and over 7,000 types of icons
+- Video playback
 - Image processing
-- Video rendering
 
 ## Audio
-- Audio formats (WAVE, MP3, AAC, OggVorbis, Opus, MIDI, WMA, FLAC, AIFF)
-- Volume, pan, speed, and pitch adjustments
+- Various audio formats (WAVE, MP3, AAC, OggVorbis, Opus, MIDI, WMA, FLAC, AIFF)
+- Volume, pan, speed, and pitch adjustment
 - Streaming playback (WAVE, MP3, OggVorbis)
-- Writing waveforms to the buffer during playback
-- Fade-in, fade-out
+- Writing waveforms to buffers during playback
+- Fade in, fade out
 - Looping
 - Mixing bus
-- Filter processing (Low-pass filter, High-pass filter, Echo, Reverb)
+- Filter processing (low-pass filter, high-pass filter, echo, reverb)
 - FFT
 - SoundFont rendering
 - Text-to-speech
@@ -32,17 +32,17 @@ Here is a list of the main features provided by Siv3D.
 - Webcam
 - Microphone
 - Joy-Con / Pro Controller
-- XInput Gamepad
-- Pen Tablet
+- XInput gamepad
+- Pen tablet
 - Leap Motion
 
 ## Window
 - Full-screen mode
 - High DPI support
-- Window styles (resizeable, frameless)
-- File dialog
+- Window styles (resizable, frameless)
+- File dialogs
 - Drag & drop
-- Message box
+- Message boxes
 - Toast notifications
 
 ## Network and Communication
@@ -58,41 +58,41 @@ Here is a list of the main features provided by Siv3D.
 - 2D shape classes (`Line`, `Circle`, `Ellipse`, `Rect`, `RectF`, `Triangle`, `Quad`, `RoundRect`, `Polygon`, `MultiPolygon`, `LineString`, `Spline2D`, `Bezier2`, `Bezier3`)
 - 3D shape classes (`Plane`, `InfinitePlane`, `Sphere`, `Box`, `OrientedBox`, `Ray`, `Line3D`, `Triangle3D`, `ViewFrustum`, `Disc`, `Cylinder`, `Cone`)
 - Color classes (`Color`, `ColorF`, `HSV`)
-- Curvilinear coordinate classes
-- 2D / 3D intersection determination and intersection calculations
+- Coordinate system classes
+- 2D / 3D intersection detection and intersection point calculation
 - 2D / 3D geometric calculations
 - Rectangle packing
-- Planar subdivision
-- Linear color space and gamma color space
-- Pseudo random number generator
+- Plane subdivision
+- Linear and gamma color spaces
+- Pseudo-random number generators
 - Interpolation, easing, smoothing
 - Perlin noise
-- Formula parser
-- NavMesh
-- Extended number types (`HalfFloat`, `int128`, `uint128`, `BigInt`, `BigFloat`)
+- Math expression parser
+- Navigation mesh
+- Extended numeric types (`HalfFloat`, `int128`, `uint128`, `BigInt`, `BigFloat`)
 
 ## String Processing
 - String classes (`String`, `StringView`)
 - Unicode conversion (UTF-8 / UTF-16 / UTF-32)
 - Regular expressions
 - `{fmt}` style string formatting
-- Reading and writing text files
+- Text file reading and writing
 - CSV / INI / JSON / XML / TOML parsers
 - CSV / INI / JSON output
 - JSON validation
 
-## Other
+## Other Features
 - Basic GUI (buttons, sliders, radio buttons, checkboxes, text boxes, text areas, list boxes, color pickers, menu bars, tables)
-- Integration of 2D physics engine (Box2D)
+- 2D physics engine integration (Box2D)
 - Array classes (`Array`, `Grid`)
 - Kd-tree
 - Disjoint Set Union
 - Asynchronous file loading
 - Data compression (zlib, Zstandard)
-- Scene transition
+- Scene transitions
 - File system
 - Directory monitoring
-- QR code
+- QR codes
 - GeoJSON
 - Date and time
 - Time measurement
@@ -103,6 +103,6 @@ Here is a list of the main features provided by Siv3D.
 - Clipboard
 - Power management
 - Scripting (AngelScript)
-- OpenAI API (Chat, Image, Embedding)
+- OpenAI API (Chat, Vision, Image, Embedding)
 
-<small>(*Some features are supported only on specific platforms)</small>
+<small>(*Some features are supported on specific platforms only)</small>

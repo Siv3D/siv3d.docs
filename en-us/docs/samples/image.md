@@ -1,111 +1,111 @@
-# 画像のサンプル
+# Image Samples
 
-## 1. スケッチ
+## 1. Sketch
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/image/1.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
 	void Main()
 	{
-		// キャンバスのサイズ
+		// Canvas size
 		constexpr Size CanvasSize{ 600, 600 };
 
-		// ペンの太さ
+		// Pen thickness
 		constexpr int32 PenThickness = 8;
 
-		// ペンの色
+		// Pen color
 		constexpr Color PenColor = Palette::Orange;
 
-		// 書き込み用の画像データを用意する
+		// Prepare image data for drawing
 		Image image{ CanvasSize, Palette::White };
 
-		// 表示用のテクスチャ（内容を更新するので DynamicTexture）
+		// Texture for display (DynamicTexture since content will be updated)
 		DynamicTexture texture{ image };
 
 		while (System::Update())
 		{
 			if (MouseL.pressed())
 			{
-				// 書き込む線の始点は直前のフレームのマウスカーソル座標
-				// （初回はタッチ操作時の座標のジャンプを防ぐため、現在のマウスカーソル座標にする）
+				// Starting point of the line to draw is the mouse cursor position from the previous frame
+				// (Use current mouse cursor position for the first time to prevent coordinate jumps during touch operations)
 				const Point from = (MouseL.down() ? Cursor::Pos() : Cursor::PreviousPos());
 
-				// 書き込む線の終点は現在のマウスカーソル座標
+				// Ending point of the line to draw is the current mouse cursor position
 				const Point to = Cursor::Pos();
 
-				// image に線を書き込む
+				// Draw line to image
 				Line{ from, to }.overwrite(image, PenThickness, PenColor);
 
-				// 書き込み終わった image でテクスチャを更新
+				// Update texture with the drawn image
 				texture.fill(image);
 			}
 
-			// 描いたものを消去するボタンが押されたら
+			// If the clear button is pressed
 			if (SimpleGUI::Button(U"Clear", Vec2{ 640, 40 }, 120))
 			{
-				// 画像を白で塗りつぶす
+				// Fill image with white
 				image.fill(Palette::White);
 
-				// 塗りつぶし終わった image でテクスチャを更新する
+				// Update texture with the filled image
 				texture.fill(image);
 			}
 
-			// テクスチャを表示
+			// Display texture
 			texture.draw();
 		}
 	}
 	```
 
-## 2. 万華鏡スケッチ
+## 2. Kaleidoscope sketch
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/image/2.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
 	void Main()
 	{
-		// キャンバスのサイズ
+		// Canvas size
 		constexpr Size CanvasSize{ 600, 600 };
 
-		// 分割数
+		// Number of divisions
 		constexpr int32 N = 12;
 
-		// 背景色
+		// Background color
 		constexpr Color BackgroundColor{ 20, 40, 60 };
 
-		// ウィンドウをキャンバスのサイズにする
+		// Resize window to canvas size
 		Window::Resize(CanvasSize);
 
-		// 書き込み用の画像
+		// Image for drawing
 		Image image{ CanvasSize, BackgroundColor };
 
-		// 画像を表示するための動的テクスチャ
+		// Dynamic texture for displaying the image
 		DynamicTexture texture{ image };
 
 		while (System::Update())
 		{
 			if (MouseL.pressed())
 			{
-				// 画面の中心が (0, 0) になるようにマウスカーソルの座標を移動させる
+				// Move mouse cursor coordinates so that the center of the screen becomes (0, 0)
 				const Vec2 begin = ((MouseL.down() ? Cursor::PosF() : Cursor::PreviousPosF()) - CanvasSize / 2);
 				const Vec2 end = (Cursor::PosF() - CanvasSize / 2);
 
-				// 時間に応じて色を変化させる
+				// Change color according to time
 				const ColorF color = HSV{ (Scene::Time() * 60.0), 0.5, 1.0 };
 
 				for (int32 i = 0; i < N; ++i)
 				{
-					// 円座標に変換する
+					// Convert to polar coordinates
 					std::array<Circular, 2> cs = { begin, end };
 
 					for (auto& c : cs)
 					{
-						// 角度をずらす
+						// Shift angle
 						if (IsEven(i))
 						{
 							c.theta = (-c.theta - 2_pi / N * (i - 1));
@@ -116,35 +116,35 @@
 						}
 					}
 
-					// ずらした位置をもとに、画像に線を書き込む
+					// Draw line to image based on shifted position
 					Line{ cs[0], cs[1] }.moveBy(CanvasSize / 2)
 						.overwrite(image, 2, color);
 				}
 
-				// 書き込んだ画像でテクスチャを更新する
+				// Update texture with the drawn image
 				texture.fillIfNotBusy(image);
 			}
 
-			if (MouseR.down()) // 右クリックでリセットする
+			if (MouseR.down()) // Reset with right click
 			{
-				// 画像を塗りつぶす
+				// Fill image
 				image.fill(BackgroundColor);
 
-				// 塗りつぶした画像でテクスチャを更新
+				// Update texture with filled image
 				texture.fill(image);
 			}
 
-			// テクスチャを描く
+			// Draw texture
 			texture.draw();
 		}
 	}
 	```
 
-## 3. ペイント
+## 3. Paint
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/image/3.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -152,19 +152,19 @@
 	{
 		Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-		// キャンバスのサイズ
+		// Canvas size
 		constexpr Size CanvasSize{ 600, 600 };
 
-		// ペンの太さ
+		// Pen thickness
 		double penThickness = 8;
 
-		// ペンの色
+		// Pen color
 		HSV penColor = Palette::Orange;
 
-		// 書き込み用の画像データを用意する
+		// Prepare image data for drawing
 		Image image{ CanvasSize, Palette::White };
 
-		// 表示用のテクスチャ（内容を更新するので DynamicTexture）
+		// Texture for display (DynamicTexture since content will be updated)
 		DynamicTexture texture{ image };
 
 		const Array<String> modes = { U"Draw", U"Fill", U"Pick" };
@@ -173,21 +173,21 @@
 
 		while (System::Update())
 		{
-			if (modeIndex == 0) // ペン
+			if (modeIndex == 0) // Pen
 			{
 				if (MouseL.pressed())
 				{
-					// 書き込む線の始点は直前のフレームのマウスカーソル座標
-					// （初回はタッチ操作時の座標のジャンプを防ぐため、現在のマウスカーソル座標にする）
+					// Starting point of the line to draw is the mouse cursor position from the previous frame
+					// (Use current mouse cursor position for the first time to prevent coordinate jumps during touch operations)
 					const Point from = (MouseL.down() ? Cursor::Pos() : Cursor::PreviousPos());
 
-					// 書き込む線の終点は現在のマウスカーソル座標
+					// Ending point of the line to draw is the current mouse cursor position
 					const Point to = Cursor::Pos();
 
-					// image に線を書き込む
+					// Draw line to image
 					Line{ from, to }.overwrite(image, static_cast<int32>(penThickness), penColor, Antialiased::No);
 
-					// 書き込み終わった image でテクスチャを更新
+					// Update texture with the drawn image
 					texture.fill(image);
 				}
 				else if (MouseR.pressed())
@@ -198,7 +198,7 @@
 					texture.fill(image);
 				}
 			}
-			else if (modeIndex == 1) // 塗りつぶし
+			else if (modeIndex == 1) // Fill
 			{
 				if (MouseL.down())
 				{
@@ -211,7 +211,7 @@
 					texture.fill(image);
 				}
 			}
-			else // ピッカー
+			else // Picker
 			{
 				if (MouseL.down())
 				{
@@ -230,26 +230,26 @@
 				image.saveWithDialog();
 			}
 
-			// 描いたものを消去するボタンが押されたら
+			// If the clear button is pressed
 			if (SimpleGUI::Button(U"Clear", Vec2{ 620, 100 }, 160))
 			{
-				// 画像を白で塗りつぶす
+				// Fill image with white
 				image.fill(Palette::White);
 
-				// 塗りつぶし終わった image でテクスチャを更新する
+				// Update texture with the filled image
 				texture.fill(image);
 			}
 
-			// 色の選択
+			// Color selection
 			SimpleGUI::ColorPicker(penColor, Vec2{ 620, 160 });
 
-			// ペンの太さ
+			// Pen thickness
 			SimpleGUI::Slider(penThickness, 1.0, 30.0, Vec2{ 620, 300 }, 160);
 
-			// モードの選択
+			// Mode selection
 			SimpleGUI::RadioButtons(modeIndex, modes, Vec2{ 620, 360 });
 
-			// テクスチャを表示
+			// Display texture
 			texture.draw();
 		}
 	}
@@ -260,51 +260,51 @@
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/image/4.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
 	void Main()
 	{
-		// 使用する画像
+		// Image to use
 		const Image image{ U"example/siv3d-kun.png" };
 
-		// テクスチャの表示位置
+		// Texture display position
 		constexpr Vec2 BasePos{ 40, 80 };
 
-		// テクスチャ
+		// Texture
 		const Texture texture{ image };
 
-		// アルファ値 1 以上の領域を Polygon 化する
+		// Convert regions with alpha value 1 or higher to Polygon
 		const Polygon polygon = image.alphaToPolygon(1, AllowHoles::No);
 
-		// Polygon 単純化の許容距離（ピクセル）
+		// Tolerance distance for Polygon simplification (pixels)
 		double maxDistance = 4.0;
 
-		// 単純化した Polygon
+		// Simplified Polygon
 		Polygon simplifiedPolygon = polygon.simplified(maxDistance);
 
 		while (System::Update())
 		{
-			// 単純化した Polygon の三角形数を表示する
+			// Display the number of triangles in the simplified Polygon
 			ClearPrint();
 			Print << U"{} triangles"_fmt(simplifiedPolygon.num_triangles());
 
 			texture.draw(BasePos);
 
-			// 単純化した Polygon をテクスチャ上に表示する
+			// Display the simplified Polygon on the texture
 			simplifiedPolygon.movedBy(BasePos)
 				.draw(ColorF{ 1.0, 1.0, 0.0, 0.2 })
 				.drawWireframe(2, Palette::Yellow);
 
-			// 単純化した Polygon をテクスチャの横に表示する
+			// Display the simplified Polygon next to the texture
 			simplifiedPolygon.movedBy(BasePos.movedBy(320, 0))
 				.draw(ColorF{ 0.5 });
 
-			// Polygon 単純化の許容距離を設定するスライダー
+			// Slider to set the tolerance distance for Polygon simplification
 			if (SimpleGUI::Slider(U"{:.1f}"_fmt(maxDistance), maxDistance, 0, 50, Vec2{ 400, 40 }, 60, 240))
 			{
-				// スライダーに変更があれば、単純化した Polygon を新しい許容距離で再作成
+				// If the slider changes, recreate the simplified Polygon with the new tolerance distance
 				simplifiedPolygon = polygon.simplified(maxDistance);
 			}
 		}
@@ -316,7 +316,7 @@
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/image/5.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -324,35 +324,35 @@
 	{
 		Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-		// 画像
+		// Image
 		const Image image{ U"example/windmill.png" };
 
-		// 表示用の動的テクスチャ
+		// Dynamic texture for display
 		DynamicTexture texture{ image };
 
-		// JPEG のバイナリデータ
+		// JPEG binary data
 		const Blob originalBlob = image.encodeJPEG();
 
-		// 改変するデータの個数
+		// Number of data points to modify
 		const size_t noiseCount = (image.num_pixels() / 4000);
 
 		while (System::Update())
 		{
 			if (SimpleGUI::Button(U"Glitch", Vec2{ 40, 40 }))
 			{
-				// Array を作成
+				// Create Array
 				Blob modifiedBlob = originalBlob;
 
 				for (size_t i = 0; i < noiseCount; ++i)
 				{
-					// ランダムな位置の 1 バイトについて、ランダムな値に書き換える。
-					// ヘッダ部分（先頭）は改変しない。
+					// Rewrite 1 byte at a random position to a random value.
+					// Do not modify the header part (beginning).
 					const size_t index = Random<size_t>(630, (modifiedBlob.size() - 1));
 
 					modifiedBlob[index] = Byte{ RandomUint8() };
 				}
 
-				// JPEG データとして読み込んで画像を作成、動的テクスチャに転送
+				// Load as JPEG data to create image, transfer to dynamic texture
 				texture.fill(Image{ MemoryReader{ modifiedBlob }, ImageFormat::JPEG });
 			}
 
@@ -362,15 +362,15 @@
 	```
 
 
-## 6. 模写アプリ
+## 6. Tracing app
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/image/6.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
-	// 2 つの画像の距離を計算する関数
+	// Function to calculate distance between two images
 	double Diff(const Image& a, const Image& b)
 	{
 		const Color* pA = a.data();
@@ -378,7 +378,7 @@
 		const Color* const pAEnd = (pA + a.num_pixels());
 		double d = 0.0;
 
-		// すべてのピクセルに対して
+		// For all pixels
 		while (pA != pAEnd)
 		{
 			d += (AbsDiff(pA->r, pB->r) + AbsDiff(pA->g, pB->g) + AbsDiff(pA->b, pB->b));
@@ -393,61 +393,61 @@
 	{
 		Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-		// 目標とする画像をファイルダイアログで選択、シーンのサイズにフィットするようリサイズ
+		// Select target image through file dialog, resize to fit scene size
 		const Image target = Dialog::OpenImage().fit(Scene::Size());
 
-		// 現在の画像
+		// Current image
 		Image image{ target.size(), Palette::White };
 
-		// 直前の画像
+		// Previous image
 		Image old = image;
 
-		// 現在の画像を表示するための動的テクスチャ
+		// Dynamic texture for displaying current image
 		DynamicTexture texture{ image };
 
-		// 目標との距離
+		// Distance to target
 		double d1 = Diff(target, image);
 
 		while (System::Update())
 		{
 			for (int32 i = 0; i < 100; ++i)
 			{
-				// ランダムな座標
+				// Random coordinates
 				const Point pos = RandomPoint(Rect{ image.size() });
 
-				// ランダムな色
+				// Random color
 				const ColorF color{ Random(), Random(), Random(), Random() };
 
-				// ランダムな半径
+				// Random radius
 				const int32 size = Random(1, 10);
 
-				// 円を現在の画像に書き込む
+				// Draw circle to current image
 				Circle{ pos, size }.paint(image, color);
 
-				// 目標との距離を計算
+				// Calculate distance to target
 				const double d2 = Diff(target, image);
 
-				if (d2 < d1) // 目標に近づいていたら採用
+				if (d2 < d1) // Adopt if closer to target
 				{
 					d1 = d2;
 					old = image;
 				}
-				else // 近づいていなかったら元に戻す
+				else // Revert if not closer
 				{
 					image = old;
 				}
 			}
 
-			// 動的テクスチャを更新する
+			// Update dynamic texture
 			texture.fill(image);
 
-			// テクスチャを画面の中心に描画する
+			// Draw texture at center of screen
 			texture.drawAt(Scene::Center());
 
-			// 保存ボタン
+			// Save button
 			if (SimpleGUI::Button(U"Save", Vec2{ 660, 550 }))
 			{
-				// 現在の画像をファイルダイアログ経由で保存する
+				// Save current image through file dialog
 				image.saveWithDialog();
 			}
 		}
@@ -455,11 +455,11 @@
 	```
 
 
-## 7. GrabCut による背景分離と Inpaint による修復
+## 7. GrabCut background separation and Inpaint restoration
 
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/VfhFdJOdWw0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -553,9 +553,9 @@
 	```
 
 
-## 8. ドロップされたイラストから顔を検出
+## 8. Face detection from dropped illustrations
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -565,26 +565,26 @@
 
 		double scale = 1.0;
 
-		// 検出器。正面を向いた顔の学習データを使用して分類
+		// Detector. Classify using training data for front-facing faces
 		const CascadeClassifier animeFaceDetector{ U"example/objdetect/haarcascade/face_anime.xml" };
 
 		Array<Rect> detectedFaces;
 
 		while (System::Update())
 		{
-			// ファイルがドロップされた
+			// File was dropped
 			if (DragDrop::HasNewFilePaths())
 			{
-				// ファイルを画像として読み込めた
+				// File could be loaded as an image
 				if (const Image image{ DragDrop::GetDroppedFilePaths().front().path })
 				{
-					// イラスト内の顔を検出する
+					// Detect faces in the illustration
 					detectedFaces = animeFaceDetector.detectObjects(image);
 
-					// 画面のサイズに合うように画像を拡大縮小
+					// Scale image to fit screen size
 					texture = Texture{ image.fitted(Scene::Size()) };
 
-					// 画像の拡大縮小率
+					// Image scaling ratio
 					scale = (static_cast<double>(texture.width()) / image.width());
 				}
 			}
@@ -593,7 +593,7 @@
 			{
 				texture.draw(0, 0);
 
-				// 顔の領域の座標を表示に合わせる
+				// Adjust face region coordinates for display
 				const Transformer2D transformer{ Mat3x2::Scale(scale) };
 
 				for (const auto& detectedFace : detectedFaces)
@@ -606,11 +606,11 @@
 	```
 
 
-## 9. マンデルブロ集合
+## 9. Mandelbrot set
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/image/9.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -643,10 +643,10 @@
 		Vec2 center(0, 0);
 		double scale = -4.0;
 
-		// 結果を保存する画像
+		// Image to save results
 		Image image{ SceneSize, Palette::Black };
 
-		// 描画用の動的テクスチャ
+		// Dynamic texture for drawing
 		DynamicTexture texture(image);
 
 		while (System::Update())
@@ -654,7 +654,7 @@
 			const double wheel = Mouse::Wheel();
 			const bool clicked = (MouseL | MouseR).down();
 
-			// 最初のフレームか、操作があったときだけ更新する
+			// Update only on first frame or when there's an operation
 			if (wheel || clicked || (Scene::FrameCount() == 1))
 			{
 				scale -= wheel;
@@ -689,19 +689,18 @@
 					}
 				}
 
-				// 動的テクスチャの中身を image で更新する
+				// Update dynamic texture content with image
 				texture.fill(image);
 			}
 
-			// テクスチャを描画する
+			// Draw texture
 			texture.draw();
 		}
 	}
 	```
 
-## 10. 万華鏡ランダムウォーク
+## 10. Kaleidoscope random walk
 
 ![](https://raw.githubusercontent.com/Siv3D/Siv3D-Samples/main/Samples/RandomWalkKaleidoscope/Screenshot/2.png)
 
-[Siv3D-Sample | 万華鏡ランダムウォーク :material-open-in-new:](https://github.com/Siv3D/Siv3D-Samples/blob/main/Samples/RandomWalkKaleidoscope){:target="_blank" .md-button}
-
+[Siv3D-Sample | Kaleidoscope random walk :material-open-in-new:](https://github.com/Siv3D/Siv3D-Samples/blob/main/Samples/RandomWalkKaleidoscope){:target="_blank" .md-button}

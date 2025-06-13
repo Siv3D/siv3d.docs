@@ -1,40 +1,38 @@
-# 27. 数値と文字列の変換
-数値データを文字列に変換する方法と、文字列を数値データに変換する方法を学びます。
+# 36. Formatting and Parsing
+Learn methods for converting numbers → strings and strings → numbers.
 
-## 27.1 数値から文字列への変換
-`Format()` を使うと、**フォーマット可能**な型の値を `String` に変換できます。
-
-フォーマット可能とは、その型の値を文字列に変換する方法が定義されていることを意味します。C++ の基本型や Siv3D の主要なクラスの多くがフォーマット可能です。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/format/1.png)
+## 36.1 Converting Numbers to Strings
+- Use `Format()` to convert values of **formattable** types to `String`
+- Most basic C++ types and major Siv3D classes are formattable
+- How to make custom classes formattable is explained in **36.2**
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// int32 から String への変換
+	// int32 to String conversion
 	const String a = Format(12345);
 	Print << a;
 
-	// bool から String への変換
+	// bool to String conversion
 	const String b = Format(true);
 	Print << b;
 
-	// double から String への変換
+	// double to String conversion
 	const String c = Format(1.23456789);
 	Print << c;
 
-	// Vec2 から String への変換
+	// Vec2 to String conversion
 	const String d = Format(Vec2{ 11, 22 });
 	Print << d;
 
-	// Array から String への変換
+	// Array to String conversion
 	const Array<int32> values = { 3, 4, 5, 6 };
 	const String e = Format(values);
 	Print << e;
 
-	// ColorF の std::array から String への変換
+	// ColorF std::array to String conversion
 	const std::array<ColorF, 3> colors =
 	{
 		ColorF{ 1.0 , 0.0, 0.0 },
@@ -44,14 +42,9 @@ void Main()
 	const String f = Format(colors);
 	Print << f;
 
-	// Rect から String への変換
+	// Rect to String conversion
 	const String g = Format(Rect{ 30, 50, 100, 50 });
 	Print << g;
-
-	// (復習) Print は String でなくても使える
-	Print << 12345;
-	Print << colors;
-	Print << Rect{ 30, 50, 100, 50 };
 
 	while (System::Update())
 	{
@@ -59,26 +52,22 @@ void Main()
 	}
 }
 ```
-
-
-## 27.2 自作クラスをフォーマット可能にする
-自作クラス `X` をフォーマット可能にするには、次のようなメンバ関数 `Format` を定義します。自作クラスをフォーマット可能にすると、`Format()` だけでなく、`Print` など、様々な関数でもそのクラスを扱えるようになります。
-
-```cpp
-struct X
-{
-	friend void Formatter(FormatData& formatData, const X& value)
-	{
-		const String s = /* value を String に変換する処理 */;
-
-		formatData.string.append(s);
-	}
-};
+```txt title="Output"
+12345
+true
+1.23457
+(11, 22)
+{3, 4, 5, 6}
+{(1, 0, 0, 1), (0, 1, 0, 1), (0, 0, 1, 1)}
+(30, 50, 100, 50)
 ```
 
-次のサンプルコードでは、`MyInt` と `RGB` という自作クラスをフォーマット可能にしています。
+- Formattable types can be sent directly to `Print`, so you don't need to use `Format()` when `String` is not required
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/format/2.png)
+
+## 36.2 Making Custom Classes Formattable
+- To make custom classes formattable, define a member function `Format` as follows:
+- Making custom classes formattable allows you to output class values directly with not only `Format()` but also `Print` and various other output functions
 
 ```cpp
 # include <Siv3D.hpp>
@@ -119,12 +108,16 @@ void Main()
 	}
 }
 ```
+```txt title="Output"
+(136, 204, 255)
+(136, 204, 255)
+123
+123
+```
 
 
-## 27.3 桁区切り記号を使って数値を文字列に変換する 
-`ThousandsSeparate()` を使うと、桁区切り記号を挿入しながら数値を `String` に変換できます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/format/3.png)
+## 36.3 Converting Numbers to Strings with Thousands Separators
+- To convert numbers to `String` while inserting thousands separators, use `ThousandsSeparate()`
 
 ```cpp
 # include <Siv3D.hpp>
@@ -132,10 +125,8 @@ void Main()
 void Main()
 {
 	Print << ThousandsSeparate(123456);
-
-	Print << ThousandsSeparate(3333.3333, 2); // 小数点以下 2 桁まで
-
-	Print << ThousandsSeparate(3333.3333, 4); // 小数点以下 4 桁まで
+	Print << ThousandsSeparate(3333.3333, 2); // Up to 2 decimal places
+	Print << ThousandsSeparate(3333.3333, 4); // Up to 4 decimal places
 
 	while (System::Update())
 	{
@@ -143,17 +134,16 @@ void Main()
 	}
 }
 ```
+```txt title="Output"
+123,456
+3,333.33
+3,333.3333
+```
 
 
-## 27.4 フォーマット指定子による数値から文字列への変換
-文字列リテラルのあとに `_fmt()` サフィックスを付けると、文字列リテラル内に記述したフォーマット指定子 `{}` に、`( )` 内に記述した引数を文字列化して挿入できます。
-
-### 27.4.1 基本
-`U"{}"_fmt(x)` と書くと、`{}` には値 `x` を文字列にしたものが入ります。
-
-文字列内で `{` や `}` の文字を扱いたい場合は、`{{` や `}}` と書く必要があります。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/format/4.1.png)
+## 36.4 _fmt Basics
+- Adding the `_fmt()` suffix to string literals allows you to insert string-converted arguments from `( )` into format specifiers `{}` written in the string literal
+- To use `{` or `}` characters in strings, escape them with `{{` or `}}`
 
 ```cpp
 # include <Siv3D.hpp>
@@ -164,13 +154,13 @@ void Main()
 
 	Print << U"Siv{}D"_fmt(n);
 
-	Print << U"{}/{}/{}"_fmt(2023, 12, 31);
+	Print << U"{}/{}/{}"_fmt(2025, 12, 31);
 
 	Print << U"Hello, {}!"_fmt(U"Siv3D");
 
 	Print << U"position: {}, color: {}"_fmt(Point{ 23, 45 }, ColorF{ 0.7, 0.8, 0.9 });
 
-	// '{', '}' を使いたい場合は "{{", "}}" を使う 
+	// Use "{{", "}}" for '{', '}' characters
 	Print << U"{{abc}} {}"_fmt(123);
 
 	while (System::Update())
@@ -179,21 +169,26 @@ void Main()
 	}
 }
 ```
+```txt title="Output"
+Siv3D
+2025/12/31
+Hello, Siv3D!
+position: (23, 45), color: (0.7, 0.8, 0.9, 1)
+{abc} 123
+```
 
 
-### 27.4.2 インデックスの指定 
-`{0}`, `{1}` のようにインデックスを記述すると、`_fmt()` 内の対応する引数を順序で指定できます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/format/4.2.png)
+## 36.5 _fmt Index Specification
+- Writing indices like `{0}`, `{1}` in format specifiers allows you to specify corresponding arguments in `_fmt()` by order
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Print << U"{2}/{1}/{0}"_fmt(2023, 12, 31);
+	Print << U"{2}/{1}/{0}"_fmt(2025, 12, 31);
 
-	Print << U"{0}/{1}/{2}"_fmt(2023, 12, 31);
+	Print << U"{0}/{1}/{2}"_fmt(2025, 12, 31);
 
 	Print << U"C{0}{0}"_fmt(U'+');
 
@@ -205,11 +200,16 @@ void Main()
 	}
 }
 ```
+```txt title="Output"
+31/12/2025
+2025/12/31
+C++
+Tokyo - Osaka - Tokyo
+```
 
-### 27.4.3 String を使う
-`Fmt(s)` 関数を使うことで、文字列リテラルの代わりにフォーマット指定子が記述された `String` の文字列を用いてフォーマットを実行できます。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/format/4.3.png)
+## 36.6 Using String Like _fmt
+- To use `String` as a format string instead of string literals, use the `Fmt(s)` function
 
 ```cpp
 # include <Siv3D.hpp>
@@ -217,12 +217,10 @@ void Main()
 void Main()
 {
 	const String s1 = U"{2}/{1}/{0}";
-
 	const String s2 = U"{0}/{1}/{2}";
 
-	Print << Fmt(s1)(2023, 12, 31);
-
-	Print << Fmt(s2)(2023, 12, 31);
+	Print << Fmt(s1)(2025, 12, 31);
+	Print << Fmt(s2)(2025, 12, 31);
 
 	while (System::Update())
 	{
@@ -230,14 +228,20 @@ void Main()
 	}
 }
 ```
+```txt title="Output"
+31/12/2025
+2025/12/31
+```
 
 
-### 27.4.4 小数点以下の桁数 
-浮動小数点数型の値 `x` を、小数点以下の桁数を指定して変換する場合、`U"{:.2f}"_fmt(x)` のように書きます（この場合小数点以下 2 桁）。小数点以下を表示しない場合は `U"{:.0f}"_fmt(x)` とします。桁数を明示的に指定しない変換では、その値の精度が失われない最短の桁数になります。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/format/4.4.png)
-
-```cpp
+## 36.7 _fmt Decimal Places Specification
+- Format strings have various formatting options
+- To convert floating-point value `x` with specified **decimal places**, write like `U"{:.2f}"_fmt(x)`
+	- This generates a string with up to 2 decimal places (rounded beyond that)
+	- For example, `U"{:.3f}"_fmt(3.141592)` becomes `U"3.142"`
+- To not display decimal places, write `U"{:.0f}"_fmt(x)`
+	- For example, `U"{:.0f}"_fmt(3.141592)` becomes `U"3"`
+- When decimal places are not explicitly specified, the shortest number of digits that doesn't lose value information is used
 
 ```cpp
 # include <Siv3D.hpp>
@@ -250,7 +254,7 @@ void Main()
 
 	Print << U"{:.3f}"_fmt(x);
 
-	// インデックス指定と組み合わせる場合、インデックスは : の左
+	// When combining with index specification, the index goes left of :
 	Print << U"{1} ≒ {0:.6f}"_fmt(x, U"π");
 
 	Print << U"{}"_fmt(12345.678);
@@ -263,7 +267,7 @@ void Main()
 
 	Print << U"{:.0f}"_fmt(9876543.21);
 
-	// Vec2 型にも使える
+	// Also works with Vec2 type
 	Print << U"{}"_fmt(Vec2{ 1.111, 2.222 });
 	Print << U"{:.1f}"_fmt(Vec2{ 1.111, 2.222 });
 
@@ -273,12 +277,24 @@ void Main()
 	}
 }
 ```
+```txt title="Output"
+3.14159265
+3.142
+π ≒ 3.141593
+12345.678
+12345.678
+12345.678000
+9876543.21
+9876543
+(1.111, 2.222)
+(1.1, 2.2)
+```
 
 
-### 27.4.5 パディング 
-値の変換結果が最小 N 文字の幅になるようパティング文字を挿入できます。文字の左にパティング文字 c を挿入したい場合は `{:c>N}`, 右に挿入したい場合は `{:c<N}`, 左右に均等に挿入したい場合は `{:c^N}` と記述します。`c` を省略した場合は半角スペースが使われます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/format/4.5.png)
+## 36.8 _fmt Padding Specification
+- Formatting can insert padding characters to ensure conversion results have a minimum width of N characters
+- To insert padding character c to the left of conversion results use `{:c>N}`, to the right use `{:c<N}`, evenly to both sides use `{:c^N}`
+- If padding character is omitted, half-width space is used
 
 ```cpp
 # include <Siv3D.hpp>
@@ -305,12 +321,32 @@ void Main()
 	}
 }
 ```
+```txt title="Output"
+00003
+    3
+   100
+***100
+100
+100***
+ 100
+*100**
+???aaa
+aaabbb
+aaabbbccc
+```
 
 
-### 27.4.6 基数の指定 
-整数を変換するとき、`{:X}` は大文字の 16 進数、`{:x}` は小文字の 16 進数、`{:o}` は 8 進数、`{:b}` は 2 進数に変換します。`#` を付けると基数に応じたプレフィックスが付きます。
+## 36.9 _fmt Base Specification
+- Formatting can convert integers to binary, octal, and hexadecimal
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/format/4.6.png)
+| Format Setting | Description |
+|---|---|
+| `{:X}` | Uppercase hexadecimal |
+| `{:x}` | Lowercase hexadecimal |
+| `{:o}` | Octal |
+| `{:b}` | Binary |
+
+- Adding `#` includes prefixes according to the base
 
 ```cpp
 # include <Siv3D.hpp>
@@ -334,14 +370,23 @@ void Main()
 	}
 }
 ```
+```txt title="Output"
+FF
+ff
+377
+11111111
+0XFF
+0xff
+0377
+0b11111111
+0x000000FF
+0x000000ff
+```
 
 
-### 27.4.7 符号
-`{:+}` は正の値に + 記号を付加し、`{: }` は正の値の前に半角空白を付加します。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/format/4.7.png)
-
-```cpp
+## 36.10 _fmt Sign Display Specification
+- Formatting can specify sign display
+- `{:+}` adds + symbol to positive values, `{: }` adds half-width space before positive values
 
 ```cpp
 # include <Siv3D.hpp>
@@ -361,12 +406,18 @@ void Main()
 	}
 }
 ```
+```txt title="Output"
+-123/123
+-123/+123
+-123/ 123
+0.5/-0.5
++0.5/-0.5
+ 0.5/-0.5
+```
 
 
-## 27.5 自作クラスを _fmt() でフォーマット可能にする
-自作クラスを `_fmt()` でフォーマット可能にするには、次のサンプルを参考に `fmt::formatter` の特殊化を行ってください。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/format/5.png)
+## 36.11 _fmt Support for Custom Classes
+- To make custom classes formattable with `_fmt()`, specialize `fmt::formatter` as shown in the following sample
 
 ```cpp
 # include <Siv3D.hpp>
@@ -448,15 +499,19 @@ void Main()
 	}
 }
 ```
+```txt title="Output"
+127
+7F
+(255, 127, 0)
+(FF, 7F, 0)
+```
 
 
-## 27.6 文字列から数値への変換
-`Parse()`, `ParseOr()`, `ParseOpt()` を使うと、文字列を指定した型の値に変換できます。変換するにはその型が**パース可能**である必要があります。配列のパースはサポートされていません。
-
-### 27.6.1 Parse
-`Parse<Type>(s)` は、文字列 `s` を `Type` 型の値に変換し、失敗した場合は例外 `ParseError` を投げます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/format/6.1.png)
+## 36.12 Parse
+- Use `Parse` to convert strings to values of **parseable** types
+- Array parsing is not supported
+- `Parse<Type>(s)` converts string `s` to a value of type `Type`
+- Throws `ParseError` exception if conversion fails
 
 ```cpp
 # include <Siv3D.hpp>
@@ -475,11 +530,11 @@ void Main()
 	{
 		const Point d = Parse<Point>(U"(0,0)");
 		const Point e = Parse<Point>(U"(20, 40)");
-		const Point f = Parse<Point>(U"123"); // 失敗して例外を投げる
+		const Point f = Parse<Point>(U"123"); // Fails and throws exception
 	}
 	catch (const ParseError& error)
 	{
-		// 例外の詳細を表示する
+		// Display exception details
 		Print << error;
 	}
 
@@ -489,11 +544,17 @@ void Main()
 	}
 }
 ```
+```txt title="Output"
+123
+-3.14159
+(10, 20)
+[ParseError] Parse<struct s3d::Point>("123") failed
+```
 
-### 27.6.2 ParseOr
-`ParseOr<Type>(s, defaultValue)` は、文字列 `s` を `Type` 型の値に変換し、失敗した場合は代わりに `defaultValue` を返します。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/format/6.2.png)
+## 36.13 ParseOr
+- `ParseOr<Type>(s, defaultValue)` converts string `s` to a value of type `Type`
+- Returns `defaultValue` if it fails
 
 ```cpp
 # include <Siv3D.hpp>
@@ -501,8 +562,8 @@ void Main()
 void Main()
 {
 	const int32 a = ParseOr<int32>(U"123", -1);
-	const int32 b = ParseOr<int32>(U"???", -1); // 失敗して defaultValue を返す
-	const ColorF c = ParseOr<ColorF>(U"123", ColorF{ 0.0, 0.0 }); // 失敗して defaultValue を返す
+	const int32 b = ParseOr<int32>(U"???", -1); // Fails and returns defaultValue
+	const ColorF c = ParseOr<ColorF>(U"123", ColorF{ 0.0, 0.0 }); // Fails and returns defaultValue
 	const Circle d = ParseOr<Circle>(U"(400, 300, 100)", Circle{ 0, 0, 0 });
 
 	Print << a;
@@ -516,12 +577,17 @@ void Main()
 	}
 }
 ```
+```txt title="Output"
+123
+-1
+(0, 0, 0, 0)
+(400, 300, 100)
+```
 
 
-### 27.6.3 ParseOpt
-`ParseOpt<Type>(s)` は、文字列 `s` を `Type` 型の値に変換し、`Optional` でラップして返します。変換に失敗した場合は代わりに無効値を返します。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/format/6.3.png)
+## 36.14 ParseOpt
+- `ParseOpt<Type>(s)` converts string `s` to a value of type `Type` and returns an `Optional<Type>` value
+- Returns an invalid value if conversion fails
 
 ```cpp
 # include <Siv3D.hpp>
@@ -529,8 +595,8 @@ void Main()
 void Main()
 {
 	const Optional<int32> a = ParseOpt<int32>(U"123");
-	const Optional<int32> b = ParseOpt<int32>(U"???"); // 失敗して無効値を返す
-	const Optional<ColorF> c = ParseOpt<ColorF>(U"123"); // 失敗して無効値を返す
+	const Optional<int32> b = ParseOpt<int32>(U"???"); // Fails and returns invalid value
+	const Optional<ColorF> c = ParseOpt<ColorF>(U"123"); // Fails and returns invalid value
 	const Optional<Circle> d = ParseOpt<Circle>(U"(400, 300, 100)");
 
 	if (a)
@@ -559,12 +625,14 @@ void Main()
 	}
 }
 ```
+```txt title="Output"
+a: 123
+d: (400, 300, 100)
+```
 
 
-## 27.7 自作クラスをパース可能にする
-自作クラスを `_fmt()` でフォーマット可能にするには、次のサンプルを参考に `operator >>` をオーバーロードしてます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/format/7.png)
+## 36.15 Making Custom Classes Parseable
+- To make custom classes parseable, overload `operator >>` for the output stream
 
 ```cpp
 # include <Siv3D.hpp>
@@ -600,7 +668,7 @@ struct RGB
 		CharType unused;
 		uint32 rgb[3];
 
-		// () や , を読み飛ばす
+		// Skip (), and ,
 		input >> unused >> rgb[0] >> unused >> rgb[1] >> unused >> rgb[2] >> unused;
 
 		value.r = static_cast<uint8>(rgb[0]);
@@ -624,4 +692,8 @@ void Main()
 
 	}
 }
+```
+```txt title="Output"
+123
+(255, 127, 0)
 ```

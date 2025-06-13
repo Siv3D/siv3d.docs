@@ -1,52 +1,116 @@
-# 31. テキストを表示する
-フォントを使って様々なスタイルのテキストを描く方法を学びます。
+# 34. Drawing Text
+Learn how to draw text in various styles using fonts.
 
-画面にテキストを描画するときのフォントデータはフォントクラス `Font` で管理します。フォントはいくつかの方法と方式で作成できます。フォントの作成にはコストがかかるため、通常はメインループの前で行います。メインループ内で作成する必要がある場合には、毎フレーム作成されないような制御が必要です。
+## 34.1 Font Basics
+- Fonts are managed by the `Font` class when drawing text on screen
 
-この章に入る前に、用語の整理をしておきます。
+### 34.1.1 Rendering Method
+- Regular fonts can choose from 3 **rendering methods**:
+	- **Bitmap method:** Stores font character image data as bitmaps. Quality degrades when drawn larger than the base size. Suitable for drawing fonts at a fixed size or when using typefaces with complex glyphs
+	- **SDF method:** Stores font character image data as single-channel SDF (Signed Distance Field). Quality is maintained even when drawn larger than the base size. Can add shadow and outline effects. Has a side effect of slightly rounding character corners
+	- **MSDF method:** Stores font character image data as 3-channel MSDF (Multi-channel Signed Distance Field). Quality is maintained even when drawn larger than the base size. Can add shadow and outline effects
 
-#### 描画方式
-ほとんどのフォントは、**描画方式 `FontMethod`** を次の 3 つから選ぶことができます。描画方式を指定しない場合は、**ビットマップ方式**が使われます。
+| Rendering Method | Quality | Scaling Down | Scaling Up | Shadow | Outline | Runtime Load |
+|--|:--:|:--:|:--:|:--:|:--:|:--:|
+| Bitmap method| ◎ |  〇 | △ | 〇<br>(2 draws) | × | Low |
+| SDF method| △ |  〇 | 〇 | ◎ | ◎ | Medium |
+| MSDF method| 〇 | ◎ | ◎ | 〇 | 〇 | High |
 
-| 方式 | 説明 | 適した用途 |
-| --- | --- | --- |
-| ビットマップ方式 | 軽量ですが、基本サイズ以上に拡大描画すると品質が低下します。 | 常に固定サイズでフォントを描画する場合や、複雑な字形の書体を用いる場合。 |
-| SDF 方式 | 基本サイズ以上に拡大描画しても品質が維持されます。影や輪郭エフェクトを追加できます。文字の角が少し丸くなる副作用があります。 | 文字に影や輪郭エフェクトを追加したりする場合。 |
-| MSDF 方式 | 基本サイズ以上に拡大描画しても品質が維持されます。影や輪郭エフェクトを追加できます。 | 文字を様々なサイズに拡大縮小したり、文字に影や輪郭エフェクトを追加したりする場合。 |
+- If no rendering method is specified, **bitmap method** is used
+- Some typefaces can only use the bitmap method
+- The rendering method is specified when creating the font and cannot be changed later
 
-#### フォントの基本サイズ
-いずれの方式においても、描画に使用する文字の画像データはエンジン内部で作成され、プログラムのメモリ上にキャッシュ（保存）されます。このとき、キャッシュされる文字画像のサイズを**フォントの基本サイズ**と呼びます。フォントの基本サイズは、フォントを作成するときに指定します。フォントの基本サイズと異なるサイズで描画すると、拡大縮小が行われます。描画時にフォントサイズを指定しない場合は、フォントの基本サイズが描画サイズとして使われます（拡大縮小は行われません）。
+### 34.1.2 Base Size
+- Individual character image data is created internally by the engine and cached in memory
+- The size of the cached character images is called the **base size**
+- The base size is specified when creating the font and cannot be changed later
 
-ビットマップ方式で拡大を行うと、解像度の低い画像を拡大したときのように、文字の見た目が荒くなります。SDF / MSDF 方式では、基本サイズ以上に拡大描画しても品質が維持されます。
+#### Rendering Method and Base Size
+- When text is drawn at a different size than the base size, scaling is performed
+- With bitmap method, when scaling up occurs, the character appearance becomes rough like when enlarging a low-resolution image
+    - **Bitmap method is intended to draw at the same size as the base size**
+- With SDF/MSDF methods, quality is maintained even when drawing text scaled larger than the base size
+- SDF/MSDF methods require a reasonably large base size
+    - For complex characters with small base sizes, quality may degrade and glyph shapes may collapse
+    - For SDF/MSDF methods, base size of `40` is recommended for alphanumeric characters and `48` for Japanese fonts
+    - However, large base sizes increase memory consumption and runtime character image cache creation time, so balance must be considered
 
-SDF / MSDF 方式においては、複雑な文字で基本サイズが小さいと、品質が低下して字形が崩れることがあります。SDF / MSDF 方式において英数字は 40, 日本語フォントは 48 が基本サイズとして推奨されます。一方、大きな基本サイズは、メモリの消費量と文字画像データ作成の時間を増加させるため、バランスを考えて選ぶ必要があります。
+#### Runtime Cost
+- Character image data is created and cached as needed during runtime (see **34.27**)
+- When drawing many new character types that don't exist in the cache in a single frame, all that character image data must be created at once, increasing processing time for that frame
+- Especially with SDF/MSDF methods, creating each character image takes time, potentially causing noticeable delays during runtime
+- Using the preload feature in **34.28** to create necessary character image data in advance can reduce runtime delays
 
-#### 書体
-「メイリオ」「Arial」など、フォントの種類を**書体**と呼びます。書体はフォントを作成するときに指定します。書体を指定しない場合は、デフォルトの書体が使われます。
+### 34.1.3 Typeface
+- The font type such as "Meiryo" or "Arial" is called a **typeface**
+- The typeface is specified when creating the font and cannot be changed later
+- If no typeface is specified, the standard typeface (regular) bundled with Siv3D is used
 
-#### フォントスタイル
-一部のフォントは、**フォントスタイル `FontStyle`** を指定することで、太字や斜体、ビットマップフォントなどのスタイルを変更できます。フォントスタイルは、フォントを作成するときに指定します。フォントスタイルを指定しない場合は、通常のフォントが作成されます。
+### 34.1.4 Font Style
+- Some typefaces can change styles like bold, italic, or bitmap fonts by specifying a **font style**
+- Font style is specified when creating the font and cannot be changed later
+- If no font style is specified, a regular font is created
 
-#### テキストスタイル
-SDF / MSDF 方式のフォントでは、**テキストスタイル `TextStyle`** を指定することで、文字の描画時に影や輪郭エフェクトを追加できます。テキストスタイルは、テキストを描画するときに指定します。テキストスタイルを指定しない場合は、通常のスタイルで描画されます。
+### 34.1.5 Text Style
+- SDF/MSDF method fonts can apply **text styles** during text drawing such as:
+	- **Shadow:** Adds shadows in any direction
+	- **Outline:** Adds outlines to characters
+- Text style is specified during individual text drawing using the font
+- If no text style is specified, drawing is done with normal style
 
-#### フォントのフォールバック
-1 つの書体では、すべての文字をカバーできない場合があります。そこで、別の書体のフォントを**フォールバック**として登録しておくことで、メインの書体でカバーできない文字を別の書体で描画することができます。主にテキスト内に絵文字や複数の言語を含みたい場合に使用します。
+### 34.1.6 Image Buffer Width
+- Image buffer width is the margin width around characters when creating character image data
+- By default, `2` is used
+- For SDF/MSDF methods when creating large shadows or outlines, if the image buffer width is too small, shadows or outlines may be clipped
+- Image buffer width is specified with `.setBufferThickness()` after font creation
+- Large image buffer widths increase memory consumption and runtime character image cache creation time, so balance must be considered
+
+### 34.1.7 Font Fallback
+- A single typeface may not cover all necessary characters
+- You can register a font of a different typeface as a **fallback** to cover characters that the main typeface cannot handle
+- This is mainly used when text contains multiple languages or emoji
+
+## 34.2 Font Creation and Drawing
+
+### Font Creation
+- There are several ways to create fonts:
+    - **34.3, 34.4** Create from standard typeface
+    - **34.5** Create from font file
+    - **34.6** Create from font file installed on PC
+- Font creation has a cost, so it's usually done before the main loop
+- When creating in the main loop, control is needed to prevent creation every frame
+
+### Text Drawing
+- Passing text to the `()` operator of a `Font` object returns a `DrawableText` object
+- To actually draw text, use member functions of `DrawableText`:
+    - **34.10** Drawing with top-left coordinates `.draw()`
+    - **34.11** Drawing with center coordinates `.drawAt()`
+	- **34.12** Drawing with baseline `.drawBase()`
+	- **34.13** Drawing with other coordinates `.draw(Args::...)`
+    - **34.14** Drawing within a rectangle `.draw(rect)`
+
+```cpp
+font(U"Hello, Siv3D!").draw(40, Vec2{ 40, 40 });
+```
 
 
-## 31.1 Font
-フォントは `Font` クラスで管理します。`Font 変数名{ フォントサイズ };` と書くことで**ビットマップ方式**のフォントを作成します。フォントの作成はコストがかかるため、**メインループの前**で行います。
+## 34.3 Standard Typeface (1)
+- Siv3D includes several standard typefaces
+- If no typeface is specified when creating a font, the standard typeface (regular) is used
+- Fonts can be created with 3 rendering methods:
+	- Bitmap method
+	- SDF method
+	- MSDF method
+- If no method is specified when creating a font, bitmap method is used
 
-作成したフォント `font` を使って、
-
-- `font(テキスト).draw(x, y, color);`
-- `font(テキスト).draw(pos, color);`
-
-のようにして、テキストを、位置、色を指定して表示します。`color` を省略すると白色になります。
-
-`font(テキスト)` のテキストの部分には、文字列だけでなく、フォーマット可能な値も記述できます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/1.png)
+| Code | Description |
+| --- | --- |
+| `Font font{ base_size };` | Create bitmap method font with standard typeface (regular) |
+| `Font font{ FontMethod::Bitmap, base_size };` | Create bitmap method font with standard typeface (regular) |
+| `Font font{ FontMethod::SDF, base_size };` | Create SDF method font with standard typeface (regular) |
+| `Font font{ FontMethod::MSDF, base_size };` | Create MSDF method font with standard typeface (regular) |
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/3.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -55,111 +119,46 @@ void Main()
 {
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-	// 基本サイズ 50 のフォントを作成する
-	const Font font{ 50 };
+	const Font fontBitmap{ 48 };
+	const Font fontSDF{ FontMethod::SDF, 48 };
+	const Font fontMSDF{ FontMethod::MSDF, 48 };
 
 	while (System::Update())
 	{
-		// 左上位置 (40, 40) からテキストを描く
-		font(U"Hello, Siv3D!").draw(40, 40);
-
-		// 文字列以外を渡すとフォーマット（文字列化）される
-		font(Cursor::Pos()).draw(50, 300);
-
-		// 複数渡すと、それぞれをフォーマットした文字列をつなげる
-		font(123, U"ABC").draw(50, 400, ColorF{ 0.5, 1.0, 0.5 });
-
-		font(U"{}/{}/{}"_fmt(2023, 12, 31)).draw(50, 500, ColorF{ 1.0, 0.5, 0.0 });
+		fontBitmap(U"Hello, Siv3D!").draw(Vec2{ 40, 100 }, ColorF{ 0.2 });
+		fontSDF(U"Hello, Siv3D!").draw(Vec2{ 40, 200 }, ColorF{ 0.2 });
+		fontMSDF(U"Hello, Siv3D!").draw(Vec2{ 40, 300 }, ColorF{ 0.2 });
 	}
 }
 ```
 
 
-## 31.2 改行する
-テキストの中に改行文字 `'\n'` が含まれていると、そこで改行されます。
+## 34.4 Standard Typeface (2)
+- Siv3D includes the following typefaces as standard:
+	- 7 types of Japanese typefaces with different weights
+	- CJK (Chinese, Korean, Japanese) typefaces for 5 regions
+	- Monochrome emoji typeface
+	- Color emoji typeface
+- You can create fonts from standard typefaces by specifying `Typeface::` in the `Font` constructor
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/2.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-
-	// 基本サイズ 50 のフォントを作成する
-	const Font font{ 50 };
-
-	while (System::Update())
-	{
-		font(U"Hello,\nSiv3D\n\n!!!").draw(40, 40);
-	}
-}
-```
-
-## 31.3 フォントの基本サイズ
-`Font` のコンストラクタの第 1 引数にはフォントの基本サイズを指定します。単位はピクセルです。基本サイズはあとから変更できません。
-
-!!! info "1 つの Font からさまざまなサイズの文字を描くには"
-    ビットマップ方式のフォントは、基本サイズと同じ大きさでテキストを描画することが想定されているため、サイズ別にフォントを作成する必要があります。1 つの `Font` からさまざまなサイズの文字を描くには、後述する SDF / MSDF 方式のフォントを使用します。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/3.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-
-	// 基本サイズ 20 のフォント
-	const Font font20{ 20 };
-
-	// 基本サイズ 40 のフォント
-	const Font font40{ 40 };
-
-	// 基本サイズ 60 のフォント
-	const Font font60{ 60 };
-
-	// 基本サイズ 80 のフォント
-	const Font font80{ 80 };
-
-	const String text = U"Hello, Siv3D!";
-
-	while (System::Update())
-	{
-		font20(text).draw(40, 40);
-
-		font40(text).draw(40, 80);
-
-		font60(text).draw(40, 140);
-
-		font80(text).draw(40, 220);
-	}
-}
-```
-
-## 31.4 標準書体
-Siv3D には異なる太さの 7 種類の日本語フォントと、5 地域向けの CJK（中国語・韓国語・日本語対応）フォント、白黒絵文字フォント、カラー絵文字フォントが同梱されています。`Font` のコンストラクタにおいて `Typeface::` で書体を指定することで、それらの書体を利用できます。何も指定しなかった場合 `Typeface::Regular` が選択されます。
-
-|Typeface|説明|
+| Code |Description|
 |--|--|
-|`Typeface::Thin`|細い日本語フォント|
-|`Typeface::Light`|やや細い日本語フォント|
-|`Typeface::Regular`|通常日本語フォント|
-|`Typeface::Medium`|やや太い日本語フォント|
-|`Typeface::Bold`|太い日本語フォント|
-|`Typeface::Heavy`|とても太い日本語フォント|
-|`Typeface::Black`|最も太い日本語フォント|
-|`Typeface::CJK_Regular_JP`|日本語デザインの CJK フォント|
-|`Typeface::CJK_Regular_KR`|韓国語デザインの CJK フォント|
-|`Typeface::CJK_Regular_SC`|簡体字デザインの CJK フォント|
-|`Typeface::CJK_Regular_TC`|台湾繁体字デザインの CJK フォント|
-|`Typeface::CJK_Regular_HK`|香港繁体字デザインの CJK フォント|
-|`Typeface::MonochromeEmoji`|モノクロ絵文字フォント|
-|`Typeface::ColorEmoji`|カラー絵文字フォント|
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/4.png)
+|`Typeface::Thin`|Thin Japanese typeface|
+|`Typeface::Light`|Light Japanese typeface|
+|`Typeface::Regular`|Regular Japanese typeface|
+|`Typeface::Medium`|Medium Japanese typeface|
+|`Typeface::Bold`|Bold Japanese typeface|
+|`Typeface::Heavy`|Heavy Japanese typeface|
+|`Typeface::Black`|Black Japanese typeface|
+|`Typeface::CJK_Regular_JP`|Japanese design CJK typeface|
+|`Typeface::CJK_Regular_KR`|Korean design CJK typeface|
+|`Typeface::CJK_Regular_SC`|Simplified Chinese design CJK typeface|
+|`Typeface::CJK_Regular_TC`|Traditional Chinese (Taiwan) design CJK typeface|
+|`Typeface::CJK_Regular_HK`|Traditional Chinese (Hong Kong) design CJK typeface|
+|`Typeface::MonochromeEmoji`|Monochrome emoji typeface|
+|`Typeface::ColorEmoji`|Color emoji typeface|
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/4.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -168,24 +167,24 @@ void Main()
 {
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-	const Font fontThin{ 36, Typeface::Thin };
-	const Font fontLight{ 36, Typeface::Light };
-	const Font fontRegular{ 36, Typeface::Regular };
-	const Font fontMedium{ 36, Typeface::Medium };
-	const Font fontBold{ 36, Typeface::Bold };
-	const Font fontHeavy{ 36, Typeface::Heavy };
-	const Font fontBlack{ 36, Typeface::Black };
+	const Font fontThin{ FontMethod::MSDF, 48, Typeface::Thin };
+	const Font fontLight{ FontMethod::MSDF, 48, Typeface::Light };
+	const Font fontRegular{ FontMethod::MSDF, 48, Typeface::Regular };
+	const Font fontMedium{ FontMethod::MSDF, 48, Typeface::Medium };
+	const Font fontBold{ FontMethod::MSDF, 48, Typeface::Bold };
+	const Font fontHeavy{ FontMethod::MSDF, 48, Typeface::Heavy };
+	const Font fontBlack{ FontMethod::MSDF, 48, Typeface::Black };
 
-	const Font fontJP{ 36, Typeface::CJK_Regular_JP };
-	const Font fontKR{ 36, Typeface::CJK_Regular_KR };
-	const Font fontSC{ 36, Typeface::CJK_Regular_SC };
-	const Font fontTC{ 36, Typeface::CJK_Regular_TC };
-	const Font fontHK{ 36, Typeface::CJK_Regular_HK };
+	const Font fontJP{ FontMethod::MSDF, 48, Typeface::CJK_Regular_JP };
+	const Font fontKR{ FontMethod::MSDF, 48, Typeface::CJK_Regular_KR };
+	const Font fontSC{ FontMethod::MSDF, 48, Typeface::CJK_Regular_SC };
+	const Font fontTC{ FontMethod::MSDF, 48, Typeface::CJK_Regular_TC };
+	const Font fontHK{ FontMethod::MSDF, 48, Typeface::CJK_Regular_HK };
 
-	const Font fontMono{ 36, Typeface::MonochromeEmoji };
+	const Font fontMono{ FontMethod::MSDF, 48, Typeface::MonochromeEmoji };
 
-	// カラー絵文字フォントは、サイズの指定が無視されます
-	const Font fontEmoji{ 36, Typeface::ColorEmoji };
+	// Color emoji fonts ignore method and base size
+	const Font fontEmoji{ FontMethod::MSDF, 48, Typeface::ColorEmoji };
 
 	const String s0 = U"Hello, Siv3D!";
 	const String s1 = U"こんにちは 你好 안녕하세요 骨曜喝愛遙扇";
@@ -193,32 +192,33 @@ void Main()
 
 	while (System::Update())
 	{
-		fontThin(s0).draw(40, 20);
-		fontLight(s0).draw(40, 60);
-		fontRegular(s0).draw(40, 100);
-		fontMedium(s0).draw(40, 140);
-		fontBold(s0).draw(40, 180);
-		fontHeavy(s0).draw(40, 220);
-		fontBlack(s0).draw(40, 260);
+		fontThin(s0).draw(36, Vec2{ 40, 20 }, ColorF{ 0.2 });
+		fontLight(s0).draw(36, Vec2{ 40, 60 }, ColorF{ 0.2 });
+		fontRegular(s0).draw(36, Vec2{ 40, 100 }, ColorF{ 0.2 });
+		fontMedium(s0).draw(36, Vec2{ 40, 140 }, ColorF{ 0.2 });
+		fontBold(s0).draw(36, Vec2{ 40, 180 }, ColorF{ 0.2 });
+		fontHeavy(s0).draw(36, Vec2{ 40, 220 }, ColorF{ 0.2 });
+		fontBlack(s0).draw(36, Vec2{ 40, 260 }, ColorF{ 0.2 });
 
-		fontJP(s1).draw(40, 300);
-		fontKR(s1).draw(40, 340);
-		fontSC(s1).draw(40, 380);
-		fontTC(s1).draw(40, 420);
-		fontHK(s1).draw(40, 460);
+		fontJP(s1).draw(36, Vec2{ 40, 300 }, ColorF{ 0.2 });
+		fontKR(s1).draw(36, Vec2{ 40, 340 }, ColorF{ 0.2 });
+		fontSC(s1).draw(36, Vec2{ 40, 380 }, ColorF{ 0.2 });
+		fontTC(s1).draw(36, Vec2{ 40, 420 }, ColorF{ 0.2 });
+		fontHK(s1).draw(36, Vec2{ 40, 460 }, ColorF{ 0.2 });
 
-		fontMono(s2).draw(340, 20);
-		fontEmoji(s2).draw(340, 60);
+		fontMono(s2).draw(36, Vec2{ 340, 20 }, ColorF{ 0.2 });
+		fontEmoji(s2).draw(36, Vec2{ 500, 20 });
 	}
 }
 ```
 
-## 31.5 フォントファイルからフォントを作成する
-コンピュータ上にあるフォントファイルから `Font` を作成するには、`Font` のコンストラクタに、読み込みたいフォントファイルのパスを渡します。ファイルパスは、実行ファイルがあるフォルダ（`App` フォルダ）を基準とする相対パスか、絶対パスを使用します。
 
-例えば `U"example/font/RocknRoll/RocknRollOne-Regular.ttf"` とすると、実行ファイルがあるフォルダ（開発中は `App` フォルダ）の `example/font/RocknRoll` フォルダの `RocknRollOne-Regular.ttf` というファイルを指します。
+## 34.5 Creating from Font File
+- To create a font from your own font file, specify the font file path in the `Font` constructor
+- File paths should use relative paths based on the folder containing the executable (the `App` folder during development) or absolute paths
+	- For example, `U"example/font/RocknRoll/RocknRollOne-Regular.ttf"` refers to the `RocknRollOne-Regular.ttf` file in the `example/font/RocknRoll/` folder of the executable's folder (`App` folder)
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/5.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/5.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -227,26 +227,29 @@ void Main()
 {
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-	// RocknRollOne-Regular.ttf をロードして使う
-	const Font font{ 50, U"example/font/RocknRoll/RocknRollOne-Regular.ttf" };
+	// Load and use RocknRollOne-Regular.ttf
+	const Font font{ FontMethod::MSDF, 48, U"example/font/RocknRoll/RocknRollOne-Regular.ttf" };
 
 	while (System::Update())
 	{
-		font(U"Hello, Siv3D!\nこんにちは！").draw(40, 40);
+		font(U"Hello, Siv3D!\nこんにちは！").draw(60, Vec2{ 40, 40 }, ColorF{ 0.2 });
 	}
 }
 ```
 
-## 31.6 PC にインストールされているフォントを使う
-PC にインストールされているフォントは OS ごとに特殊なフォルダに保存されています。そのフォルダのパスを `FileSystem::GetFolderPath()` で取得し、フォントファイル名とつなげることで、ファイルパスを構築できます。`FileSystem::GetFolderPath()` に渡す `SpecialFolder` の種類と OS によって取得できるパスの対応表は次のとおりです。
 
-|                            | Windows             | macOS                  | Linux       |
-|----------------------------|:---------------------:|:------------------------:|:-------------:|
+## 34.6 Creating from Font File Installed on PC
+- Fonts installed on PC are stored in different locations depending on the OS
+- You can get the folder path with `FileSystem::GetFolderPath()` and construct an absolute path by joining it with the font filename
+- The correspondence between arguments passed to `FileSystem::GetFolderPath()` and the paths obtained is as follows:
+
+| Argument                       | Windows             | macOS                  | Linux       |
+|----------------------------|:---------------------|:------------------------|:-------------|
 | `SpecialFolder::SystemFonts` | (OS):/WINDOWS/Fonts/ | /System/Library/Fonts/ | /usr/share/fonts/ |
-| `SpecialFolder::LocalFonts`  | (OS):/WINDOWS/Fonts/ | /Library/Fonts/        | /usr/local/share/fonts/<br>(存在する場合) |
-| `SpecialFolder::UserFonts`   | (OS):/WINDOWS/Fonts/ | ~/Library/Fonts/       | /usr/local/share/fonts/<br>(存在する場合) |
+| `SpecialFolder::LocalFonts`  | (OS):/WINDOWS/Fonts/ | /Library/Fonts/        | /usr/local/share/fonts/<br>(if exists) |
+| `SpecialFolder::UserFonts`   | (OS):/WINDOWS/Fonts/ | ~/Library/Fonts/       | /usr/local/share/fonts/<br>(if exists) |
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/6.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/6.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -267,36 +270,31 @@ void Main()
 
 	Print << path;
 
-	const Font font{ 60, path };
+	const Font font{ FontMethod::MSDF, 48, path };
 
 	while (System::Update())
 	{
-# if SIV3D_PLATFORM(WINDOWS)
+	# if SIV3D_PLATFORM(WINDOWS)
 
-		font(U"Arial").draw(40, 40);
+		font(U"Arial").draw(80, Vec2{ 40, 40 }, ColorF{ 0.2 });
 
-# elif SIV3D_PLATFORM(MACOS)
+	# elif SIV3D_PLATFORM(MACOS)
 
-		font(U"Helvetica").draw(40, 40);
+		font(U"Helvetica").draw(80, Vec2{ 40, 40 }, ColorF{ 0.2 });
 
-# endif
+	# endif
 	}
 }
 ```
 
-`FilePath` は `String` の別名です。`String` と同じように扱えます。
 
-`SIV3D_PLATFORM(WINDOWS)` や `SIV3D_PLATFORM(MACOS)` は Siv3D でプラットフォーム別のコードを書くときに使えるマクロです。
-
-
-## 31.7 空のフォント
-`Font` 型の変数は、デフォルトでは**空のフォント**を持っています。フォントの作成やロードに失敗した場合も空のフォントになります。
-
-空のフォントは、**使用してもエラーにはなりませんが、描画しても何も表示されません。**
-
-空のフォントであるかを調べるには、`if (font.isEmpty())`, `if (font)`, `if (not font)` を使います。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/7.png)
+## 34.7 Empty Font
+- By default, `Font` type objects hold an **empty font**
+- Using an empty font does not cause an error, but nothing is drawn
+- Empty fonts also result when font file loading fails
+- To check if a font is empty, use `if (font.isEmpty())`, `if (font)`, or `if (not font)`
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/7.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -309,32 +307,33 @@ void Main()
 
 	Print << font1.isEmpty();
 
-	// テクスチャを代入する
-	font1 = Font{ 40 };
+	// Assign a font
+	font1 = Font{ FontMethod::MSDF, 48 };
 
 	Print << font1.isEmpty();
 
-	// 存在しないフォントファイルを指定する
-	const Font font2{ 40, U"example/aaa.ttf" };
+	// Specify a non-existent font file
+	const Font font2{ FontMethod::MSDF, 48, U"example/aaa.ttf" };
 
 	if (not font2)
 	{
-		Print << U"Failed to load a font";
+		Print << U"Failed to load the font file";
 	}
 
 	while (System::Update())
 	{
-		// 空のフォントを使って描画する
-		font2(U"Hello, Siv3D!").draw(40, 40);
+		// Draw using empty font
+		font2(U"Arial").draw(80, Vec2{ 40, 40 }, ColorF{ 0.2 });
 	}
 }
 ```
 
 
-## 31.8 フォントスタイルを変える
-`Font` のコンストラクタに `FontStyle` を指定することで、イタリックやボールドなどのスタイルをフォントに適用できます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/8.png)
+## 34.8 String Formatting
+- Using a created font `font`, display text with specified size, position, and color using `font(text).draw(size, pos, color);`
+- The text part of `font(text)` can contain not only strings but any number of `Print`-able values (numbers, `Point`, etc.)
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/8.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -343,37 +342,28 @@ void Main()
 {
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-	const Font font{ 50, Typeface::Regular };
-
-	// ボールド
-	const Font fontBold{ 50, Typeface::Regular, FontStyle::Bold };
-
-	// イタリック
-	const Font fontItalic{ 50, Typeface::Regular, FontStyle::Italic };
-
-	// ボールド・イタリック
-	const Font fontBoldItalic{ 50, Typeface::Regular, FontStyle::BoldItalic };
-
-	const String text = U"Hello, Siv3D! こんにちは。";
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
 
 	while (System::Update())
 	{
-		font(text).draw(40, 40);
+		font(U"Hello, Siv3D!").draw(60, Vec2{ 40, 40 }, ColorF{ 1.0 });
 
-		fontBold(text).draw(40, 100);
+		// Non-string values are formatted (converted to strings)
+		font(Cursor::Pos()).draw(60, Vec2{ 40, 200 }, ColorF{ 0.2 });
 
-		fontItalic(text).draw(40, 160);
+		// Multiple values are formatted and concatenated
+		font(123, U"ABC").draw(40, Vec2{ 40, 360 }, Palette::Seagreen);
 
-		fontBoldItalic(text).draw(40, 220);
+		font(U"{}/{}/{}"_fmt(2025, 12, 31)).draw(40, Vec2{ 40, 420 }, Palette::Deepskyblue);
 	}
 }
 ```
 
 
-## 31.9 ビットマップフォントを使う
-書体がビットマップフォントに対応している場合、フォントスタイルに `FontStyle::Bitmap` を指定することで、フィルタリングされずドット感を保った文字を描画できます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/9.png)
+## 34.9 Line Breaks
+- If the text contains newline characters `'\n'`, line breaks occur at those positions
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/9.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -382,57 +372,28 @@ void Main()
 {
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-	const Font font1{ 32, U"example/font/DotGothic16/DotGothic16-Regular.ttf" };
-	const Font font2{ 32, U"example/font/DotGothic16/DotGothic16-Regular.ttf", FontStyle::Bitmap };
-	const Font font3{ 60, U"example/font/DotGothic16/DotGothic16-Regular.ttf" };
-	const Font font4{ 60, U"example/font/DotGothic16/DotGothic16-Regular.ttf", FontStyle::Bitmap };
-
-# if SIV3D_PLATFORM(WINDOWS)
-
-	const FilePath path = (FileSystem::GetFolderPath(SpecialFolder::SystemFonts) + U"msgothic.ttc");
-	const Font font5{ 16, path };
-	const Font font6{ 16, path, FontStyle::Bitmap };
-
-# endif
-
-	const String text = U"Hello, Siv3D! こんにちは。";
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
 
 	while (System::Update())
 	{
-		font1(text).draw(40, 40, Palette::Black);
-		font2(text).draw(40, 100, Palette::Black);
-		font3(text).draw(40, 160, Palette::Black);
-		font4(text).draw(40, 240, Palette::Black);
-
-# if SIV3D_PLATFORM(WINDOWS)
-
-		font5(text).draw(40, 360, Palette::Black);
-		font6(text).draw(40, 400, Palette::Black);
-
-# endif
+		font(U"Hello,\nSiv3D!\n\n!!").draw(60, Vec2{ 40, 40 }, ColorF{ 0.2 });
 	}
 }
 ```
 
-## 31.10 自由に拡大縮小できる SDF / MSDF 方式のフォントを使う
-**SDF 方式** / **MSDF 方式**を使うと、文字ごとの Distance field 画像を生成し、基本サイズ以上に拡大しても画質が粗くならない手法で文字をレンダリングできます。さらに、SDF / MSDF には影や輪郭などのエフェクトを 1 回の draw 内で行える仕組みも用意されています。
 
-各方式の利点と欠点は次のとおりです。
+## 34.10 Drawing with Top-Left Coordinates
+- To draw text by specifying the top-left coordinates, use `font(text).draw()`
+- This function returns the area where the text was drawn as a `RectF`
 
-| 描画方式 | 縮小 | 拡大 | 影 | 輪郭 | 実行時負荷 | 備考 |
-|--|:--:|:--:|:--:|:--:|:--:|:--|
-| ビットマップ方式<br>`FontMethod::Bitmap`| 〇 | △ | 〇<br>(2 回 draw) | × | 低 | デフォルトの手法 |
-| SDF 方式<br>`FontMethod::SDF`| 〇 | 〇 | ◎ | ◎ | 中 | 文字の角が丸くなるなど、細部の情報が失われやすい |
-| MSDF 方式<br>`FontMethod::MSDF`| ◎ | ◎ | 〇 | 〇 | 高 | SDF より高品質 |
+| Code | Description |
+| --- | --- |
+| `.draw(x, y, color);` | Draw text from top-left coordinates `(x, y)` |
+| `.draw(pos, color);` | Draw text from top-left coordinates `pos` |
+| `.draw(fontSize, x, y, color);` | Draw text with font size `fontSize` from top-left coordinates `(x, y)` |
+| `.draw(fontSize, pos, color);` | Draw text with font size `fontSize` from top-left coordinates `pos` |
 
-SDF / MSDF 方式時に設定する基本サイズは描画する字形の複雑さに応じて決める必要があります。画数の少ない数字やアルファベット、曲線的でシンプルな字形であれば、基本サイズが 40 以下でもきれいな文字をレンダリングできますが、複雑な字形になるほど、小さな Distance Field では描画結果が乱れたり、ノイズが目立つことがあります。一方で、大きすぎると描画に時間がかかってしまいます。SDF / MSDF をアプリケーションで使用する際は、テキストの描画結果を確認し、書体に応じて適切な基本サイズを選択しましょう。
-
-`.draw()` の第 1 引数で文字の描画サイズを指定できます。各方式について、基本サイズより大きい描画サイズでテキストを描いたときの結果を見てみましょう。
-
-- `font(テキスト).draw(描画サイズ, x, y, color);`
-- `font(テキスト).draw(描画サイズ, pos, color);`
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/10.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/10.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -441,127 +402,131 @@ void Main()
 {
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-	// 基本サイズ
-	const int32 baseSize = 40;
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
 
-	const Font font{ baseSize, Typeface::Bold };
-	const Font fontSDF{ FontMethod::SDF, baseSize, Typeface::Bold };
-	const Font fontMSDF{ FontMethod::MSDF, baseSize, Typeface::Bold };
+	while (System::Update())
+	{
+		font(U"Siv3D").draw(80, Vec2{ 0, 0 }, ColorF{ 0.2 });
+
+		font(U"Siv3D").draw(60, Vec2{ 200, 200 }, ColorF{ 0.2 });
+
+		font(U"Siv3D").draw(40, Cursor::Pos(), ColorF{0.2});
+	}
+}
+```
+
+
+## 34.11 Drawing with Center Coordinates
+- To draw text by specifying the center coordinates, use `font(text).drawAt()`
+- This function returns the area where the text was drawn as a `RectF`
+
+| Code | Description |
+| --- | --- |
+| `.drawAt(x, y, color);` | Draw text from center coordinates `(x, y)` |
+| `.drawAt(pos, color);` | Draw text from center coordinates `pos` |
+| `.drawAt(fontSize, x, y, color);` | Draw text with font size `fontSize` from center coordinates `(x, y)` |
+| `.drawAt(fontSize, pos, color);` | Draw text with font size `fontSize` from center coordinates `pos` |
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/11.png)
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+
+	const Rect rect{ 100, 300, 280, 80 };
+
+	const Circle circle{ 600, 400, 80 };
+
+	while (System::Update())
+	{
+		font(U"Siv3D").drawAt(80, Vec2{ 400, 60 }, ColorF{ 0.2 });
+
+		rect.draw();
+		font(U"Siv3D").drawAt(60, rect.center(), ColorF{ 0.2 });
+
+		circle.draw();
+		font(U"Siv3D").drawAt(40, circle.center, ColorF{ 0.2 });
+	}
+}
+```
+
+
+## 34.12 Drawing with Baseline
+- To draw text by specifying the baseline start position, use `font(text).drawBase()`
+	- When drawing text with different font sizes, baselines can be aligned
+- This function returns the area where the text was drawn as a `RectF`
+
+| Code | Description |
+| --- | --- |
+| `.drawBase(x, y, color);` | Draw text from baseline start position `(x, y)` |
+| `.drawBase(pos, color);` | Draw text from baseline start position `pos` |
+| `.drawBase(fontSize, x, y, color);` | Draw text with font size `fontSize` from baseline start position `(x, y)` |
+| `.drawBase(fontSize, pos, color);` | Draw text with font size `fontSize` from baseline start position `pos` |
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/12.png)
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font1{ FontMethod::MSDF, 48, U"example/font/RocknRoll/RocknRollOne-Regular.ttf" };
+	const Font font2{ FontMethod::MSDF, 48, Typeface::Bold };
+
 	const String text = U"Hello, Siv3D!";
 
 	while (System::Update())
 	{
-		// 文字のサイズ（指定しない場合は基本サイズで描かれる）
-		const double fontSize = 120;
-		const ColorF color{ 0.1 };
-
-		// ビットマップ方式
-		font(text).draw(20, 20, color);
-		font(text).draw(fontSize, 20, 50, color);
-
-		// SDF 方式
-		fontSDF(text).draw(20, 220, color);
-		fontSDF(text).draw(fontSize, 20, 250, color);
-
-		// MSDF 方式
-		fontMSDF(text).draw(20, 420, color);
-		fontMSDF(text).draw(fontSize, 20, 450, color);
-	}
-}
-```
-
-## 31.11 ベースラインを指定してテキストを描く
-文字のベースラインの開始位置を指定して描画したい場合は `.drawBase()` を使います。異なるサイズや種類のフォントを、ベースラインをそろえて描画できます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/11.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-
-	const Font font1{ 30, U"example/font/RocknRoll/RocknRollOne-Regular.ttf" };
-	const Font font2{ FontMethod::MSDF, 40, Typeface::Bold };
-	const String text = U"Hello, Siv3D!";
-
-	while (System::Update())
-	{
-		// ベースラインがそろわない
-		font1(text).draw(40, 100);
-		font2(text).draw(20, 280, 100);
-		font2(text).draw(50, 440, 100);
+		// Baselines don't align
+		font1(text).draw(30, Vec2{ 40, 100 }, ColorF{ 0.2 });
+		font2(text).draw(20, Vec2{ 280, 100 }, ColorF{ 0.2 });
+		font2(text).draw(50, Vec2{ 440, 100 }, ColorF{ 0.2 });
 
 		Rect{ 0, 400, 800, 10 }.draw(Palette::Skyblue);
 
-		// (40, 400) がベースラインの開始位置になるようテキストを描画
-		font1(text).drawBase(40, 400);
+		// Draw text so that (40, 400) becomes the baseline start position
+		font1(text).drawBase(30, Vec2{ 40, 400 }, ColorF{ 0.2 });
 		Circle{ 40, 400 , 5 }.drawFrame(2, Palette::Red);
 
-		// (280, 400) がベースラインの開始位置になるようテキストを描画
-		font2(text).drawBase(20, 280, 400);
+		// Draw text so that (280, 400) becomes the baseline start position
+		font2(text).drawBase(20, Vec2{ 280, 400 }, ColorF{ 0.2 });
 		Circle{ 280, 400 , 5 }.drawFrame(2, Palette::Red);
 
-		// (440, 400) がベースラインの開始位置になるようテキストを描画
-		font2(text).drawBase(50, 440, 400);
+		// Draw text so that (440, 400) becomes the baseline start position
+		font2(text).drawBase(50, Vec2{ 440, 400 }, ColorF{ 0.2 });
 		Circle{ 440, 400 , 5 }.drawFrame(2, Palette::Red);
 	}
 }
 ```
 
-## 31.12 中心座標を指定してテキストを描画する
-テキストの左上位置ではなく、中心座標を指定して描画するには、`.drawAt(x, y)` または `.drawAt(pos)` を使います。
 
-- `font(テキスト).drawAt(x, y, color);`
-- `font(テキスト).drawAt(pos, color);`
-- `font(テキスト).drawAt(描画サイズ, x, y, color);`
-- `font(テキスト).drawAt(描画サイズ, pos, color);`
+## 34.13 Drawing with Other Coordinate References
+- To specify the **right-center position** and draw text aligned to it, use:
+	- `.draw(Arg::topRight = pos, ...)`
+	- `.draw(Arg::topRight(x, y), ...)`
+- There are 9 types of reference positions that can be specified
+- These functions return the area where the text was drawn as a `RectF`
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/12.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-
-	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
-
-	const Rect rect{ 100, 300, 160, 80 };
-
-	while (System::Update())
-	{
-		font(U"C++").drawAt(60, Vec2{ 400, 100 }, ColorF{ 0.11 });
-
-		font(U"Hello, Siv3D!").drawAt(30, Vec2{ 400, 200 }, ColorF{ 0.11 });
-
-		rect.draw();
-
-		// 長方形の中心にテキストを描く
-		font(U"Siv3D").drawAt(30, rect.center(), ColorF{ 0.11 });
-	}
-}
-```
-
-
-## 31.13 描画の基準位置をカスタマイズする
-左上、中心以外を基準座標とする場合は、次の表のパターンを使って、`.draw(Arg::bottomRight(x, y))` あるいは `.draw(Arg::bottomRight = pos)` のようにします。この場合、テキストの右下が `x, y` または `pos` で指定した位置になるように描画されます。
-
-| 座標指定 | 説明 |
+| Reference Position | Description |
 |---|---|
-| `Arg::topLeft` | テキストの左上の位置を指定する（通常の `.draw()` と同じ） |
-| `Arg::topCenter` | テキストの上辺の中央を指定する |
-| `Arg::topRight` | テキストの右上の位置を指定する |
-| `Arg::leftCenter` | テキストの左辺の中央を指定する |
-| `Arg::center` | テキストの中心を指定する（通常の `.drawAt()` と同じ） |
-| `Arg::rightCenter` | テキストの右辺の中央を指定する |
-| `Arg::bottomLeft` | テキストの左下の位置を指定する |
-| `Arg::bottomCenter` | テキストの下辺の中央を指定する |
-| `Arg::bottomRight` | テキストの右下の位置を指定する |
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/13.png)
+| `Arg::topLeft` | Top-left. Same as `.draw()` |
+| `Arg::topCenter` | Top-center |
+| `Arg::topRight` | Top-right|
+| `Arg::leftCenter` | Left-center |
+| `Arg::center` | Center. Same as `.drawAt()` |
+| `Arg::rightCenter` | Right-center |
+| `Arg::bottomLeft` | Bottom-left |
+| `Arg::bottomCenter` | Bottom-center |
+| `Arg::bottomRight` | Bottom-right |
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/13.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -572,26 +537,108 @@ void Main()
 
 	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
 
-	const Rect rect{ 100, 300, 160, 80 };
+	const Rect rect{ 100, 300, 280, 80 };
 
 	while (System::Update())
 	{
-		font(U"C++").draw(60, Arg::topCenter = Vec2{ 400, 20 }, ColorF{ 0.11 });
+		font(U"C++").draw(60, Arg::topCenter = Vec2{ 400, 20 }, ColorF{ 0.2 });
 
-		font(U"Hello, Siv3D!").draw(30, Arg::topRight(780, 20), ColorF{ 0.11 });
+		font(U"Hello, Siv3D!").draw(30, Arg::topRight(780, 20), ColorF{ 0.2 });
 
 		rect.draw();
 
-		// 長方形に右揃えでテキストを描く
-		font(U"Siv3D").draw(30, Arg::rightCenter = rect.rightCenter(), ColorF{ 0.11 });
+		// Draw text right-aligned within the rectangle
+		font(U"Siv3D").draw(32, Arg::rightCenter = rect.rightCenter().movedBy(-20, 0), ColorF{0.2});
 	}
 }
 ```
 
-## 31.14 テキストが描画される領域を調べる
-`Font` の `.draw()` や `.drawAt()` は、描画された領域を `RectF` 型で返します。`.region()` や `.regionAt()` を使うと、描画を伴わずにその領域を取得できます。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/14.png)
+## 34.14 Drawing Within a Rectangle
+- To draw text so it fits within a specified rectangle, use `font(text).draw(rect)`
+- If all text characters fit within the rectangle, the function returns `true`
+- If text overflows, the overflowing part is replaced with "…" and the function returns `false`
+
+| Code | Description |
+| --- | --- |
+| `.draw(rect, color);` | Draw text to fit within rectangle `rect` |
+| `.draw(fontSize, rect, color);` | Draw text with font size `fontSize` to fit within rectangle `rect` |
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/14.png)
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+	const String text = U"The quick brown fox jumps over the lazy dog.";
+
+	const Rect rect1{ 60, 40, 200, 100 };
+	const Rect rect2{ 60, 200, 300, 100 };
+	const Rect rect3{ 60, 360, 420, 120 };
+
+	while (System::Update())
+	{
+		{
+			rect1.draw();
+
+			const bool ok = font(text).draw(24, rect1.stretched(-10), ColorF{ 0.2 });
+
+			if (not ok)
+			{
+				rect1.drawFrame(8, ColorF{ 1.0, 0.0, 0.0, 0.5 });
+			}
+		}
+
+		{
+			rect2.draw();
+
+			const bool ok = font(text).draw(24, rect2.stretched(-10), ColorF{ 0.2 });
+
+			if (not ok)
+			{
+				rect2.drawFrame(8, ColorF{ 1.0, 0.0, 0.0, 0.5 });
+			}
+		}
+
+		{
+			rect3.draw();
+
+			const bool ok = font(text).draw(24, rect3.stretched(-20), ColorF{ 0.2 });
+
+			if (not ok)
+			{
+				rect3.drawFrame(8, ColorF{ 1.0, 0.0, 0.0, 0.5 });
+			}
+		}
+	}
+}
+```
+
+
+## 34.15 Getting the Drawing Area
+- To get the area that would be drawn without actually drawing, use the following member functions of `font(text)`:
+
+| Code | Description |
+| --- | --- |
+| `.region(x, y);` | Return the area as `RectF` when drawing text from `(x, y)` |
+| `.region(pos);` | Return the area as `RectF` when drawing text from `pos` |
+| `.region(fontSize, x, y);` | Return the area as `RectF` when drawing text with font size `fontSize` from `(x, y)` |
+| `.region(fontSize, pos);` | Return the area as `RectF` when drawing text with font size `fontSize` from `pos` |
+| `.regionAt(x, y);` | Return the area as `RectF` when drawing text centered at `(x, y)` |
+| `.regionAt(pos);` | Return the area as `RectF` when drawing text centered at `pos` |
+| `.regionAt(fontSize, x, y);` | Return the area as `RectF` when drawing text with font size `fontSize` centered at `(x, y)` |
+| `.regionAt(fontSize, pos);` | Return the area as `RectF` when drawing text with font size `fontSize` centered at `pos` |
+| `.regionBase(x, y);` | Return the area as `RectF` when drawing text with `(x, y)` as baseline start position |
+| `.regionBase(pos);` | Return the area as `RectF` when drawing text with `pos` as baseline start position |
+| `.regionBase(fontSize, x, y);` | Return the area as `RectF` when drawing text with font size `fontSize` with `(x, y)` as baseline start position |
+| `.regionBase(fontSize, pos);` | Return the area as `RectF` when drawing text with font size `fontSize` with `pos` as baseline start position |
+
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/15.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -604,31 +651,126 @@ void Main()
 	const String text = U"Hello, Siv3D!";
 	const Vec2 pos{ 40, 40 };
 
-	// font を使って text を pos の位置に描画したときのテキストの領域を取得
-	const RectF rect = font(text).region(pos);
+	// Get the text area when drawing text at pos position using font
+	const RectF rect = font(text).region(60,  pos);
 
 	while (System::Update())
 	{
-		// 描画領域の長方形を事前に塗りつぶす
+		// Fill the drawing area rectangle in advance
 		rect.draw(Palette::Skyblue);
 
-		// 長方形の上にテキストを描く
-		font(text).draw(pos, ColorF{ 0.25 });
+		// Draw text on top of the rectangle
+		font(text).draw(60, pos, ColorF{ 0.2 });
 
-		// テキストの領域を
+		// Text area
 		font(text)
-			.drawAt(80, Scene::Center())
-			.stretched(40, 0)	// 横に広げて
-			.shearedX(20)		// 平行四辺形にして
-			.drawFrame(2);		// 枠を描く
+			.drawAt(80, Vec2{ 400, 300 }, ColorF{ 1.0 })
+			.stretched(40, 0)	// Stretch horizontally
+			.shearedX(20)		// Make parallelogram
+			.drawFrame(2);		// Draw frame
 	}
 }
 ```
 
-## 31.15 指定した長方形の中にテキストを描く
-`Font::draw()` に、座標の代わりに `Rect` または `RectF` を渡すと、テキストをその長方形の中に収まるように描画します。テキストのすべての文字が長方形内に収まった場合、関数は `true` を返します。一方、テキストがあふれる場合、最後の文字が `…` に置き換えられ、関数は `false` を返します。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/15.png)
+## 34.16 Font Style (Bold/Italic)
+- You can apply styles like bold and italic to fonts by specifying `FontStyle` in the `Font` constructor
+- If the typeface doesn't support them, bold and italic are simulated, which may cause glyph abnormalities in SDF/MSDF methods
+
+| Code | Description |
+| --- | --- |
+| `FontStyle::Bold` | Bold |
+| `FontStyle::Italic` | Italic |
+| `FontStyle::BoldItalic` | Bold and italic |
+
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/16.png)
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ 48, Typeface::CJK_Regular_JP };
+	const Font fontBold{ 48, Typeface::CJK_Regular_JP, FontStyle::Bold };
+	const Font fontItalic{ 48, Typeface::CJK_Regular_JP, FontStyle::Italic };
+	const Font fontBoldItalic{ 48, Typeface::CJK_Regular_JP, FontStyle::BoldItalic };
+
+	const String text = U"Hello, Siv3D! こんにちは。";
+
+	while (System::Update())
+	{
+		font(text).draw(48, Vec2{ 40, 40 }, ColorF{ 0.2 });
+		fontBold(text).draw(48, Vec2{ 40, 100 }, ColorF{ 0.2 });
+		fontItalic(text).draw(48, Vec2{ 40, 160 }, ColorF{ 0.2 });
+		fontBoldItalic(text).draw(48, Vec2{ 40, 220 }, ColorF{ 0.2 });
+	}
+}
+```
+
+
+## 34.17 Font Style (Bitmap)
+- If the typeface supports bitmap fonts, you can draw characters that preserve the pixel feel by specifying `FontStyle` in the `Font` constructor
+- Uses the bitmap rendering method
+
+| Code | Description |
+| --- | --- |
+| `FontStyle::Bitmap` | Bitmap font |
+| `FontStyle::BoldBitmap` | Bold bitmap font |
+| `FontStyle::ItalicBitmap` | Italic bitmap font |
+| `FontStyle::BoldItalicBitmap` | Bold and italic bitmap font |
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/17.png)
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font1{ 32, U"example/font/DotGothic16/DotGothic16-Regular.ttf", FontStyle::Bitmap };
+	const Font font2{ 32, U"example/font/DotGothic16/DotGothic16-Regular.ttf", FontStyle::ItalicBitmap };
+	const Font font3{ 60, U"example/font/DotGothic16/DotGothic16-Regular.ttf", FontStyle::Bitmap };
+	const Font font4{ 60, U"example/font/DotGothic16/DotGothic16-Regular.ttf", FontStyle::ItalicBitmap };
+
+# if SIV3D_PLATFORM(WINDOWS)
+
+	const FilePath path = (FileSystem::GetFolderPath(SpecialFolder::SystemFonts) + U"msgothic.ttc");
+	const Font font5{ 16, path, FontStyle::Bitmap };
+
+# endif
+
+	const String text = U"こんにちは、Siv3D!";
+
+	while (System::Update())
+	{
+		font1(text).draw(32, Vec2{ 40, 40 }, ColorF{ 0.2 });
+		font2(text).draw(32, Vec2{ 40, 100 }, ColorF{ 0.2 });
+		font3(text).draw(60, Vec2{ 40, 160 }, ColorF{ 0.2 });
+		font4(text).draw(60, Vec2{ 40, 240 }, ColorF{ 0.2 });
+
+	# if SIV3D_PLATFORM(WINDOWS)
+
+		{
+			// Preserve pixel feel when scaling up
+			const ScopedRenderStates2D states{ SamplerState::ClampNearest };
+
+			font5(text).draw(64, Vec2{ 40, 360 }, ColorF{ 0.2 });
+		}
+
+	# endif
+	}
+}
+```
+
+
+## 34.18 Adding Shadow to Text (Double Drawing)
+- You can create a shadow effect by drawing text twice with offset coordinates
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/18.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -638,44 +780,54 @@ void Main()
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
 	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
-	const String text = U"The quick brown fox jumps over the lazy dog.";
+	
+	const Vec2 pos{ 40, 40 };
 
-	const Rect rect1{ 50, 20, 200, 100 };
-	const Rect rect2{ 50, 160, 300, 100 };
-	const Rect rect3{ 50, 300, 400, 100 };
+	const String text = U"Hello, Siv3D!";
 
 	while (System::Update())
 	{
-		rect1.draw();
-		if (not font(text).draw(24, rect1.stretched(-10), ColorF{ 0.11 }))
-		{
-			// 文字が省略されたら赤枠を描く
-			rect1.drawFrame(0, 5, Palette::Red);
-		}
-
-		rect2.draw();
-		if (not font(text).draw(24, rect2.stretched(-10), ColorF{ 0.11 }))
-		{
-			// 文字が省略されたら赤枠を描く
-			rect2.drawFrame(0, 5, Palette::Red);
-		}
-
-		rect3.stretched(10).draw();
-		if (not font(text).draw(24, rect3.stretched(-10), ColorF{ 0.11 }))
-		{
-			// 文字が省略されたら赤枠を描く
-			rect3.drawFrame(0, 5, Palette::Red);
-		}
+		font(text).draw(100, pos.movedBy(4, 4), ColorF{ 0.2, 0.4, 0.3 });
+		font(text).draw(100, pos, ColorF{ 1.0 });
 	}
 }
 ```
 
-## 31.16 テキストを 1 文字ずつ表示する
-`.substr(offset, count)` で、文字列の `offset` 文字目から `count` 文字の部分文字列（`String`）を作成することができます。`offset` は 0 から始まります。`count` が省略された場合は、`offset` 文字目から末尾までの部分文字列を作成します。`count` が実際の文字列の長さより大きい場合は、末尾までの部分文字列を作成します。
 
-これと `Stopwatch` を組み合わせると、文字列を 1 文字ずつ表示することができます。
+## 34.19 Adding Shadow to Text (Text Style)
+- SDF/MSDF method fonts can add shadow effects by specifying `TextStyle::Shadow(shadow offset, shadow color)` during drawing
+- The offset value is relative to the base size
+- If the image buffer width is insufficient, large shadow offsets may cause shadows to be clipped
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/16.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/19.png)
+
+```cpp hl_lines="7 13"
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font = Font{ FontMethod::MSDF, 48, Typeface::Bold }.setBufferThickness(4);
+
+	const String text = U"Hello, Siv3D!";
+
+	while (System::Update())
+	{
+		font(text).draw(TextStyle::Shadow(Vec2{ 2, 2 }, ColorF{ 0.2, 0.4, 0.3 }), 100, Vec2{ 40, 40 }, ColorF{ 1.0 });
+	}
+}
+```
+
+
+## 34.20 Adding Outline to Text
+- SDF/MSDF method fonts can add outline effects by specifying the following styles during drawing:
+	- `TextStyle::Outline(outline scale, outline color)`
+	- `TextStyle::Outline(inner outline scale, outer outline scale, outline color)`
+- If the outline scale is too large, the drawing result will have noise
+- The maximum is around 0.2-0.25 depending on the typeface
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/20.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -684,153 +836,53 @@ void Main()
 {
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
-	const String text = U"The quick brown fox\njumps over the lazy dog.";
-	Stopwatch stopwatch{ StartImmediately::Yes };
+	const Font font = Font{ FontMethod::MSDF, 48, Typeface::Bold }.setBufferThickness(4);
+
+	const String text = U"Hello, Siv3D!";
 
 	while (System::Update())
 	{
-		const int32 count = (stopwatch.ms() / 30);
-
-		font(text.substr(0, count)).draw(40, Vec2{ 40, 40 }, ColorF{ 0.11 });
+		font(text).draw(TextStyle::Outline(0.2, ColorF{ 0.0 }), 100, Vec2{ 40, 40 }, ColorF{ 1.0 });
 	}
 }
 ```
 
-## 31.17 文字に影の効果を付ける（ビットマップ方式、2 回描画する手法）
-ビットマップ方式のフォントでは、座標をずらして 2回 テキストを描くことで、影の効果を作成できます。
 
-`Vec2` のメンバ関数 `.movedBy(x, y)` は、指定した値だけ要素を加算した `Vec2` を作成する関数です。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/17.png)
+## 34.21 Adding Shadow and Outline to Text
+- SDF/MSDF method fonts can add both shadow and outline effects by specifying the following styles during drawing:
+	- `TextStyle::OutlineShadow(outline scale, outline color, shadow offset, shadow color)`
+	- `TextStyle::OutlineShadow(inner outline scale, outer outline scale, outline color, shadow offset, shadow color)`
+- If the outline scale is too large, the drawing result will have noise
+- The maximum is around 0.2-0.25 depending on the typeface
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/21.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.7, 0.9, 0.8 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-	const Font font{ 100, Typeface::Bold };
-
-	const Vec2 center{ 400, 150 };
+	const Font font = Font{ FontMethod::MSDF, 48, Typeface::Bold }.setBufferThickness(4);
 
 	const String text = U"Hello, Siv3D!";
 
 	while (System::Update())
 	{
-		// center から (4, 4) ずらした位置を中心にテキストを描く
-		font(text).drawAt(center.movedBy(4, 4), ColorF{ 0.0, 0.5 });
+		font(text).draw(TextStyle::OutlineShadow(0.2, ColorF{ 0.0 }, Vec2{ 2, 2 }, ColorF{ 0.2, 0.4, 0.3 }), 100, Vec2{ 40, 40 }, ColorF{ 1.0 });
 
-		// center を中心にテキストを描く
-		font(text).drawAt(center);
+		font(text).draw(TextStyle::OutlineShadow(0.15, ColorF{ 0.0 }, Vec2{ 1.0, 1.5 }, ColorF{ 0.0 }), 80, Vec2{ 40, 200 }, ColorF{ 1.0 });
 	}
 }
 ```
 
-## 31.18 文字に影の効果を付ける（SDF / MSDF 方式）
-SDF / MSDF 方式のフォントは、`TextStyle` を `.draw()` や `.drawAt()`, `.drawBase()` に設定することで、影や輪郭エフェクトを付与できます。SDF / MSDF 方式のフォントを使って文字を描画する際に影の効果を付けるには `TextStyle::Shadow(影のオフセット, 影の色)` を設定します。
 
-影のオフセットが大きく、文字の Distance Field の範囲外に及んだ場合、影が途切れてしまいます。それを防ぐには `Font` のメンバ関数 `.setBufferThickness(Distance Field の余白のサイズ)` で、Distance Field を大きめに作成しておきます。デフォルトは 2 です。この値を大きくするとメモリ消費量や描画負荷が増加しますが、影や輪郭の効果をより大きく適用できるようになります。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/18.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.7, 0.9, 0.8 });
-
-	const int32 baseSize = 40;
-	const int32 bufferThickness = 3;
-
-	const Font fontSDF{ FontMethod::SDF, baseSize, Typeface::Bold };
-	fontSDF.setBufferThickness(bufferThickness);
-
-	const Font fontMSDF{ FontMethod::MSDF, baseSize, Typeface::Bold };
-	fontMSDF.setBufferThickness(bufferThickness);
-
-	const String text = U"Hello, Siv3D!";
-
-	while (System::Update())
-	{
-		const Vec2 shadowOffset{ 2, 2 };
-		const ColorF shadowColor{ 0.0, 0.5 };
-		const double fontSize = 100;
-
-		// SDF 方式
-		fontSDF(text).draw(TextStyle::Shadow(shadowOffset, shadowColor), 20, 20);
-		fontSDF(text).draw(TextStyle::Shadow(shadowOffset, shadowColor), fontSize, 20, 60);
-
-		// MSDF 方式
-		fontMSDF(text).draw(TextStyle::Shadow(shadowOffset, shadowColor), 20, 220);
-		fontMSDF(text).draw(TextStyle::Shadow(shadowOffset, shadowColor), fontSize, 20, 260);
-	}
-}
-```
-
-## 31.19 文字に輪郭を付ける（SDF / MSDF）
-SDF / MSDF 方式のフォントを使って文字を描画する際に輪郭の効果を付けるには
-
-- `TextStyle::Outline(輪郭スケール, 輪郭の色)`
-- `TextStyle::Outline(内側方向の輪郭スケール, 外側方向の輪郭スケール, 輪郭の色)`
-
-のいずれかを設定します。
-
-文字に輪郭と影、両方の効果を付けるには
-
-- `TextStyle::OutlineShadow(輪郭スケール, 輪郭の色, 影のオフセット, 影の色)`
-- `TextStyle::OutlineShadow(内側方向の輪郭スケール, 外側方向の輪郭スケール, 輪郭の色, 影のオフセット, 影の色)`
-
-のいずれかを設定します。輪郭スケールの単位はピクセルではないことに注意してください。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/19.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.7, 0.9, 0.8 });
-
-	const int32 baseSize = 40;
-	const int32 bufferThickness = 3;
-
-	const Font fontSDF{ FontMethod::SDF, baseSize, Typeface::Bold };
-	fontSDF.setBufferThickness(bufferThickness);
-
-	const Font fontMSDF{ FontMethod::MSDF, baseSize, Typeface::Bold };
-	fontMSDF.setBufferThickness(bufferThickness);
-
-	const String text = U"Hello, Siv3D!";
-
-	while (System::Update())
-	{
-		const double outlineScale = 0.2;
-		const ColorF outlineColor{ 0.0, 0.3, 0.6 };
-
-		const Vec2 shadowOffset{ 2, 2 };
-		const ColorF shadowColor{ 0.0, 0.5 };
-		const double fontSize = 100;
-
-		// SDF 方式
-		fontSDF(text).draw(TextStyle::Outline(outlineScale, outlineColor), 20, 20);
-		fontSDF(text).draw(TextStyle::Outline(outlineScale, outlineColor), fontSize, 20, 40);
-		fontSDF(text).draw(TextStyle::OutlineShadow(outlineScale, outlineColor, shadowOffset, shadowColor), fontSize, 20, 150);
-
-		// MSDF 方式
-		fontMSDF(text).draw(TextStyle::Outline(outlineScale, outlineColor), 20, 300);
-		fontMSDF(text).draw(TextStyle::Outline(outlineScale, outlineColor), fontSize, 20, 320);
-		fontMSDF(text).draw(TextStyle::OutlineShadow(outlineScale, outlineColor, shadowOffset, shadowColor), fontSize, 20, 430);
-	}
-}
-```
-
-## 31.20 （サンプル）テキストスタイルのプレビューアプリ
-次のサンプルプログラムで、各方式におけるテキストスタイルの効果をプレビューできます。マウスの右クリックやホイールで移動・拡大を行うことができます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/20.png)
+## 34.22 (Reference) Text Style Preview
+- This is a sample to preview text style effects for each method
+- You can move and zoom the view with right-click and wheel
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/22.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -839,20 +891,20 @@ void Main()
 {
 	Window::Resize(1280, 720);
 
-	// 基本サイズ: 大きいと拡大描画時にきれいになるが、フォントの生成時間・メモリ消費が増える
+	// Base size: larger makes scaled drawing cleaner but increases runtime cost
 	const int32 baseSize = 70;
 
-	// このサイズだけ、文字の周囲に輪郭や影のエフェクトを付加できる。フォントの生成時間・メモリ消費が増える
+	// Image buffer width: larger allows large shadow text styles but increases runtime cost
 	const int32 bufferThickness = 5;
 
-	// ビットマップ方式では輪郭や影のエフェクトの利用は不可
+	// Bitmap method cannot use outline or shadow effects
 	const Font fontBitmap{ FontMethod::Bitmap, baseSize, U"example/font/RocknRoll/RocknRollOne-Regular.ttf" };
 
-	// SDF 方式
+	// SDF method
 	const Font fontSDF{ FontMethod::SDF, baseSize, U"example/font/RocknRoll/RocknRollOne-Regular.ttf" };
 	fontSDF.setBufferThickness(bufferThickness);
 
-	// MSDF 方式
+	// MSDF method
 	const Font fontMSDF{ FontMethod::MSDF, baseSize, U"example/font/RocknRoll/RocknRollOne-Regular.ttf" };
 	fontMSDF.setBufferThickness(bufferThickness);
 
@@ -863,9 +915,9 @@ void Main()
 	ColorF textColor{ 1.0 };
 	ColorF outlineColor{ 0.0 };
 	ColorF shadowColor{ 0.0, 0.5 };
-	HSV background = ColorF{ 0.8 };
+	HSV background = ColorF{ 0.6, 0.8, 0.7 };
 
-	Camera2D camera{ Scene::Center(), 1.0 };
+	Camera2D camera{ Vec2{ 640, 360 }, 1.0 };
 
 	while (System::Update())
 	{
@@ -927,82 +979,187 @@ void Main()
 ```
 
 
-## 31.21 文字単位で自由描画をする
-通常のテキスト描画では、文字ごとに色や位置、大きさや回転を自由にカスタマイズすることができません。
+## 34.23 Drawing Text Character by Character
+- You can create a substring from the beginning to `count` characters using the `.substr(0, count)` member function of the `String` class
+	- If `count` is larger than the actual string length, a substring up to the end is created
+	- See **Tutorial 33.20**
+- By increasing `count` using a stopwatch or similar, you can display text character by character
 
-文字単位で自由な描画を行いたい場合、`Font` の `.getGlyphs(text)` を使用して得られる `Array<Glyph>` を使います。`Glyph` には、個々の文字を自由に制御して描画するために必要な情報が用意されています。
-
-### 31.21.1 基本
-`Glyph` の `.codePoint` はその文字の UTF-32 コードポイントを、`.texture` は文字画像の `TextureRegion` を、`.getOffset()` はペンの位置からさらに必要なオフセットを、`.xAdvance` は現在の文字で進む X 座標の距離を表します。
-
-次のようなコードを書くことで、自由描画で通常の描画を再現できます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/21.1.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/23.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
-void DrawGlyphs(const Vec2& basePos, const Font& font, const String& text, const ColorF& color)
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+	const String text = U"The quick brown fox\njumps over the lazy dog.";
+	Stopwatch stopwatch{ StartImmediately::Yes };
+
+	while (System::Update())
+	{
+		const int32 count = (stopwatch.ms() / 30);
+
+		font(text.substr(0, count)).draw(40, Vec2{ 40, 40 }, ColorF{ 0.2 });
+	}
+}
+```
+
+
+## 34.24 Free Drawing by Character
+- Normal text drawing cannot control color, position, size, or rotation on a per-character basis
+- For free per-character drawing, use `Array<Glyph>` obtained from the font's `.getGlyphs(text)`
+- `Glyph` provides the information needed to freely control and draw individual characters
+
+### 34.24.1 Basic Free Drawing (Bitmap Method)
+- `Glyph` has the following members:
+
+| Code | Description |
+| --- | --- |
+| `.codePoint` | UTF-32 code point of the character |
+| `.texture` | Character image `TextureRegion` |
+| `.getOffset(scale)` | Additional offset needed from pen position (with scale factor) |
+| `.xAdvance` | X-coordinate distance to advance for current character |
+
+- The following code uses `Glyph` information for free per-character drawing while reproducing normal text drawing:
+
+```cpp
+# include <Siv3D.hpp>
+
+void DrawGlyphs(const Font& font, const String& text, const double fontSize, const Vec2& basePos, const ColorF& color)
 {
 	const Array<Glyph> glyphs = font.getGlyphs(text);
-
-	const double fontHeight = font.height();
+	const double scale = (fontSize / font.fontSize());
+	const double fontHeight = (font.height() * scale);
 
 	Vec2 penPos{ basePos };
 
-	// 文字単位で描画を制御するためのループ
+	// Loop for per-character drawing control
 	for (const auto& glyph : glyphs)
 	{
-		// 改行文字なら
+		// If newline character
 		if (glyph.codePoint == U'\n')
 		{
-			// ペンの X 座標をリセット
+			// Reset pen X coordinate
 			penPos.x = basePos.x;
 
-			// ペンの Y 座標をフォントの高さ分進める
+			// Advance pen Y coordinate by font height
 			penPos.y += fontHeight;
 
 			continue;
 		}
 
-		// penPos を可視化したい場合はコメントを外す
+		// Uncomment to visualize penPos
 		//penPos.asCircle(3).drawFrame(1, Palette::Red);
-		//Math::Round(penPos + glyph.getOffset()).asCircle(3).drawFrame(1, Palette::Green);
+		//(penPos + glyph.getOffset(scale)).asCircle(3).drawFrame(1, Palette::Green);
 
-		// 文字のテクスチャをペンの位置に文字ごとのオフセットを加算して描画
-		//（ビットマップ方式に限り、Math::Round() で整数座標に調整すると品質が向上する）
-		glyph.texture.draw(Math::Round(penPos + glyph.getOffset()), color);
+		// Draw character texture at pen position plus character-specific offset
+		if (scale == 1.0)
+		{
+			// For bitmap method only at 1x scale, adjusting to integer coordinates with Math::Round() improves quality
+			glyph.texture.draw(Math::Round(penPos + glyph.getOffset()), color);
+		}
+		else
+		{
+			glyph.texture.scaled(scale).draw((penPos + glyph.getOffset(scale)), color);
+		}
 
-		// ペンの X 座標を文字の幅の分進める
-		penPos.x += glyph.xAdvance;
+		// Advance pen X coordinate by character width
+		penPos.x += (glyph.xAdvance * scale);
 	}
 }
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.7, 0.9, 0.8 });
-	const Font font{ 50, Typeface::Bold };
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+	const Font font{ 48, Typeface::Bold };
 	const String text = U"The quick brown fox\njumps over the lazy dog.";
 
 	while (System::Update())
 	{
-		DrawGlyphs(Vec2{ 40, 40 }, font, text, ColorF{ 0.11 });
+		DrawGlyphs(font, text, 48, Vec2{ 40, 40 }, ColorF{ 0.2 });
+
+		DrawGlyphs(font, text, 36, Vec2{ 40, 240 }, ColorF{ 1.0 });
+
+		DrawGlyphs(font, text, 24, Vec2{ 40, 440 }, Palette::Seagreen);
 	}
 }
 ```
 
-### 31.21.2 応用
-前述のコードをカスタマイズすることで、文字単位で自由な描画を行うことができます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/21.2.png)
+### 34.24.2 Basic Free Drawing (SDF/MSDF Method)
+- SDF/MSDF methods require special shader application, so use code like this:
+	- Note that shape drawing is not available while the shader is applied
 
 ```cpp
 # include <Siv3D.hpp>
 
-void DrawGlyphs(const Vec2& basePos, const Font& font, const String& text)
+void DrawGlyphs(const Font& font, const String& text, const double fontSize, const Vec2& basePos, const ColorF& color)
 {
 	const Array<Glyph> glyphs = font.getGlyphs(text);
-	const double fontHeight = font.height();
+	const double scale = (fontSize / font.fontSize());
+	const double fontHeight = (font.height() * scale);
+
+	// While this object exists, SDF/MSDF shader is applied to all 2D drawing
+	const ScopedCustomShader2D shader{ Font::GetPixelShader(font.method()) };
+
+	Vec2 penPos{ basePos };
+
+	// Loop for per-character drawing control
+	for (const auto& glyph : glyphs)
+	{
+		// If newline character
+		if (glyph.codePoint == U'\n')
+		{
+			// Reset pen X coordinate
+			penPos.x = basePos.x;
+
+			// Advance pen Y coordinate by font height
+			penPos.y += fontHeight;
+
+			continue;
+		}
+
+		// Draw character texture at pen position plus character-specific offset
+		glyph.texture.scaled(scale).draw((penPos + glyph.getOffset(scale)), color);
+
+		// Advance pen X coordinate by character width
+		penPos.x += (glyph.xAdvance * scale);
+	}
+}
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+	const String text = U"The quick brown fox\njumps over the lazy dog.";
+
+	while (System::Update())
+	{
+		DrawGlyphs(font, text, 48, Vec2{ 40, 40 }, ColorF{ 0.2 });
+
+		DrawGlyphs(font, text, 36, Vec2{ 40, 240 }, ColorF{ 1.0 });
+
+		DrawGlyphs(font, text, 24, Vec2{ 40, 440 }, Palette::Seagreen);
+	}
+}
+```
+
+### 34.24.3 Advanced Free Drawing
+- Sample controlling coordinates and colors per character
+
+```cpp
+# include <Siv3D.hpp>
+
+void DrawGlyphs(const Font& font, const String& text, const double fontSize, const Vec2& basePos)
+{
+	const Array<Glyph> glyphs = font.getGlyphs(text);
+	const double scale = (fontSize / font.fontSize());
+	const double fontHeight = (font.height() * scale);
+
+	const ScopedCustomShader2D shader{ Font::GetPixelShader(font.method()) };
+
 	Vec2 penPos{ basePos };
 	int32 index = 0;
 
@@ -1012,144 +1169,156 @@ void DrawGlyphs(const Vec2& basePos, const Font& font, const String& text)
 		{
 			penPos.x = basePos.x;
 			penPos.y += fontHeight;
+
 			++index;
 			continue;
 		}
 
-		const Vec2 offset{ 0, (Periodic::Sine1_1(2s, Scene::Time() + index * 0.3) * 8.0) };
-		glyph.texture.draw((penPos + glyph.getOffset() + offset), HSV{ (index * 10) });
-		penPos.x += glyph.xAdvance;
+		const Vec2 offset{ 0, (Periodic::Sine1_1(2s, (Scene::Time() + index * 0.3)) * 8.0) };
+
+		glyph.texture.scaled(scale).draw((penPos + glyph.getOffset(scale) + offset), HSV{ (index * 10) });
+		penPos.x += (glyph.xAdvance * scale);
+
 		++index;
 	}
 }
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.7, 0.9, 0.8 });
-	const Font font{ 50, Typeface::Bold };
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
 	const String text = U"The quick brown fox\njumps over the lazy dog.";
 
 	while (System::Update())
 	{
-		DrawGlyphs(Vec2{ 40, 40 }, font, text);
+		DrawGlyphs(font, text, 55, Vec2{ 40, 40 });
 	}
 }
 ```
 
-### 31.21.3 SDF / MSDF 対応
-SDF / MSDF 方式のフォントを自由描画する場合、次のように `ScopedCustomShader2D` を作成し、そのオブジェクトが有効なスコープ内でグリフテクスチャを描画します。Distance field 画像を描画するために、`Font::GetPixelShader()` で取得できるカスタムシェーダの適用が必要であるためです。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/21.3.png)
+### 34.24.4 Text Style Support
+- To support text styles in free drawing with SDF/MSDF method fonts, do this:
 
 ```cpp
 # include <Siv3D.hpp>
 
-void DrawGlyphs(const Vec2& basePos, const Font& font, const String& text, double fontSize, const ColorF& color)
+void DrawGlyphs(const Font& font, const TextStyle& textStyle, const String& text, const double fontSize, const Vec2& basePos)
 {
 	const Array<Glyph> glyphs = font.getGlyphs(text);
 	const double scale = (fontSize / font.fontSize());
 	const double fontHeight = (font.height() * scale);
+
+	const ScopedCustomShader2D shader{ Font::GetPixelShader(font.method(), textStyle.type) };
+	Graphics2D::SetSDFParameters(textStyle);
+
+	Vec2 penPos{ basePos };
+	int32 index = 0;
+
+	for (const auto& glyph : glyphs)
 	{
-		const ScopedCustomShader2D shader{ Font::GetPixelShader(font.method()) };
-		Vec2 penPos{ basePos };
-
-		for (const auto& glyph : glyphs)
+		if (glyph.codePoint == U'\n')
 		{
-			if (glyph.codePoint == U'\n')
-			{
-				penPos.x = basePos.x;
-				penPos.y += fontHeight;
-				continue;
-			}
+			penPos.x = basePos.x;
+			penPos.y += fontHeight;
 
-			glyph.texture.scaled(scale).draw((penPos + glyph.getOffset(scale)), color);
-			penPos.x += (glyph.xAdvance * scale);
+			++index;
+			continue;
 		}
+
+		const Vec2 offset{ 0, (Periodic::Sine1_1(2s, (Scene::Time() + index * 0.3)) * 8.0) };
+
+		glyph.texture.scaled(scale).draw((penPos + glyph.getOffset(scale) + offset), HSV{ (index * 10) });
+		penPos.x += (glyph.xAdvance * scale);
+
+		++index;
 	}
 }
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.7, 0.9, 0.8 });
-	const Font font{ FontMethod::MSDF, 50, Typeface::Bold };
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
 	const String text = U"The quick brown fox\njumps over the lazy dog.";
 
 	while (System::Update())
 	{
-		DrawGlyphs(Vec2{ 40, 40 }, font, text, 30, ColorF{ 0.11 });
+		DrawGlyphs(font, TextStyle::Default(), text, 55, Vec2{ 40, 40 });
 
-		DrawGlyphs(Vec2{ 40, 240 }, font, text, 50, ColorF{ 0.11 });
+		DrawGlyphs(font, TextStyle::OutlineShadow(0.2, ColorF{ 0.0 }, Vec2{ 2, 2 }, ColorF{ 0.0 }), text, 55, Vec2{ 40, 240 });
 	}
 }
 ```
 
-### 31.21.4 SDF / MSDF + テキストスタイル対応
-SDF / MSDF 方式のフォントの自由描画でテキストスタイルに対応するには、次のようにします。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/21.4.png)
+## 34.25 Vertical Writing
+- Vertical text writing functionality is not yet implemented. It's planned for future versions
+- You can reproduce it with free drawing as follows, but there's a limitation that quotes and punctuation don't become vertical-style
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/25.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
-void DrawGlyphs(const Vec2& basePos, const Font& font, const String& text, double fontSize, const TextStyle& textStyle, const ColorF& color)
+void DrawGlyphs(const Font& font, const String& text, const double fontSize, const Vec2& basePos, const ColorF& color)
 {
 	const Array<Glyph> glyphs = font.getGlyphs(text);
 	const double scale = (fontSize / font.fontSize());
 	const double fontHeight = (font.height() * scale);
+
+	// While this object exists, SDF/MSDF shader is applied to all 2D drawing
+	const ScopedCustomShader2D shader{ Font::GetPixelShader(font.method()) };
+
+	Vec2 penPos{ basePos };
+
+	// Loop for per-character drawing control
+	for (const auto& glyph : glyphs)
 	{
-		const ScopedCustomShader2D shader{ Font::GetPixelShader(font.method(), textStyle.type) };
-		Graphics2D::SetSDFParameters(textStyle);
-		Vec2 penPos{ basePos };
-
-		for (const auto& glyph : glyphs)
+		// If newline character
+		if (glyph.codePoint == U'\n')
 		{
-			if (glyph.codePoint == U'\n')
-			{
-				penPos.x = basePos.x;
-				penPos.y += fontHeight;
-				continue;
-			}
+			// Reset pen Y coordinate
+			penPos.y = basePos.y;
 
-			glyph.texture.scaled(scale).draw((penPos + glyph.getOffset(scale)), color);
-			penPos.x += (glyph.xAdvance * scale);
+			// Advance pen X coordinate
+			penPos.x -= fontHeight;
+
+			continue;
 		}
+
+		// Draw character texture at pen position plus character-specific offset
+		glyph.texture.scaled(scale).draw((penPos + glyph.getOffset(scale)), color);
+
+		// Advance pen Y coordinate by character height
+		penPos.y += (glyph.yAdvance * scale);
 	}
 }
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.7, 0.9, 0.8 });
-	const Font font{ FontMethod::MSDF, 50, Typeface::Bold };
-	const String text = U"The quick brown fox\njumps over the lazy dog.";
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+	const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
+	const String text = U"古池や\n蛙飛び込む\n水の音";
 
 	while (System::Update())
 	{
-		DrawGlyphs(Vec2{ 40, 40 }, font, text, 30, TextStyle::Default(), ColorF{ 0.11 });
+		DrawGlyphs(font, text, 48, Vec2{ 600, 40 }, ColorF{ 0.2 });
 
-		const double outlineScale = 0.2;
-		const ColorF outlineColor{ 0.0, 0.3, 0.6 };
-		const Vec2 shadowOffset{ 2, 2 };
-		const ColorF shadowColor{ 0.0, 0.5 };
+		DrawGlyphs(font, text, 36, Vec2{ 400, 40 }, ColorF{ 1.0 });
 
-		DrawGlyphs(Vec2{ 40, 240 }, font, text, 50, TextStyle::OutlineShadow(outlineScale, outlineColor, shadowOffset, shadowColor), ColorF{ 1.0 });
+		DrawGlyphs(font, text, 24, Vec2{ 200, 40 }, Palette::Seagreen);
 	}
 }
 ```
 
 
-## 31.22 縦書きでテキストを描画する
-テキストの縦書きに関する機能は未実装です。将来のバージョンで実装予定です。
-
-
-## 31.23 フォントのプリロード
-Siv3D の `Font` は、初めて描いた文字の画像を内部でレンダリングしてキャッシュするため、リアルタイムで動作するゲームの途中で大量のテキストを初めて表示すると、そのフレームの実行時間が長くなり、フレームレートが一瞬低下することがあります。`.preload(text)` を使って、`text` に含まれる文字を（重複する場合は除去して）あらかじめレンダリングしてキャッシュしておくと、ゲームの実行中の瞬間的な高負荷を防ぐことができます。
-
-`.getTexture()` を使うと、`Font` の内部にキャッシュされている `Texture` を取得できます。
-
-### 31.23.1 プリロードを使わないときの動作の様子
-次のコードはプリロードを使わない場合の動作の様子です。キャッシュテクスチャには、実行中に随時文字が追加されていきます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/23.1.png)
+## 34.26 Fallback Fonts
+- A single typeface may not cover all characters that appear in text
+- You can register a font of a different typeface as a **fallback** to draw characters that the main typeface can't cover with another typeface
+- When a fallback font is set, if there's a character that can't be drawn with the base font but can be drawn with the fallback font, that font is used
+- Set fallback fonts using `.addFallback()` to pass a created `Font`
+- You can set any number of fallback fonts; earlier registered ones take priority
+- When a color emoji font is set as a fallback font, the drawing size is adjusted to match the registered font's size
+- Fallback fonts are mainly used when text contains emoji or multiple languages
 
 ```cpp
 # include <Siv3D.hpp>
@@ -1158,108 +1327,120 @@ void Main()
 {
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-	const Font font{ 20, Typeface::Bold };
+	const Font font0{ FontMethod::MSDF, 48, Typeface::Regular };
+	const Font font1{ FontMethod::MSDF, 48, Typeface::Regular };
+	const Font font2{ FontMethod::MSDF, 48, Typeface::Regular };
 
-	const String text = U"Siv3D の Font は、初めて描いた文字の画像を内部でレンダリングしてキャッシュするため、リアルタイムで動作するゲームの途中で大量のテキストを初めて表示すると、そのフレームの実行時間が長くなり、フレームレートが一瞬低下することがあります。.preload(text) を使って、text に含まれる文字をあらかじめレンダリングしてキャッシュしておくと、ゲームの実行中の瞬間的な高負荷を防ぐことができます。";
+	const Font fontCJK{ FontMethod::MSDF, 48, Typeface::CJK_Regular_JP };
+	const Font fontEmoji{ 48, Typeface::ColorEmoji };
 
-	Stopwatch stopwatch{ StartImmediately::Yes };
+	// Add one fallback font to font1
+	font1.addFallback(fontCJK);
 
-	while (System::Update())
-	{
-		const int32 count = (stopwatch.ms() / 30);
-
-		font(text.substr(0, count)).draw(Rect{ 20, 20, 760, 240 }, ColorF{ 0.25 });
-
-		font.getTexture().draw(20, 300).drawFrame(0, 1, Palette::Black);
-	}
-}
-```
-
-### 31.23.2 プリロードを使ったときの様子
-次のコードはプリロードを使うサンプルです。実行前にキャッシュテクスチャには、`text` に含まれる文字がすべてレンダリングされています。
-
-`String` のメンバ関数 `.sorted_and_uniqued()` は、文字列中の文字をソートして重複を除去した文字列を返します。文字列に対してこの前処理を行うと、プリロード時の負荷が軽減されます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/23.2.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
-
-	const Font font{ 20, Typeface::Bold };
-
-	const String text = U"Siv3D の Font は、初めて描いた文字の画像を内部でレンダリングしてキャッシュするため、リアルタイムで動作するゲームの途中で大量のテキストを初めて表示すると、そのフレームの実行時間が長くなり、フレームレートが一瞬低下することがあります。.preload(text) を使って、text に含まれる文字をあらかじめレンダリングしてキャッシュしておくと、ゲームの実行中の瞬間的な高負荷を防ぐことができます。";
-
-	// text は .sorted_and_uniqued() で重複をあらかじめ除いておくと、プリロード時の負荷が軽減される
-	font.preload(text.sorted_and_uniqued());
-
-	Stopwatch stopwatch{ StartImmediately::Yes };
-
-	while (System::Update())
-	{
-		const int32 count = (stopwatch.ms() / 30);
-
-		font(text.substr(0, count)).draw(Rect{ 20, 20, 760, 240 }, ColorF{ 0.25 });
-
-		font.getTexture().draw(20, 300).drawFrame(0, 1, Palette::Black);
-	}
-}
-```
-
-
-## 31.24 フォールバックフォントの設定
-1 つの書体では、すべての文字をカバーできない場合があります。そこで、別の書体のフォントを**フォールバック**として登録しておくことで、メインの書体でカバーできない文字を別の書体で描画することができます。
-
-フォールバックフォントを設定すると、基本のフォントで描けない文字が見つかったとき、もしフォールバックフォントで描けたら、そのフォントを使います。フォールバックフォントを設定するには、`.addFallback()` で作成済みの `Font` を渡します。フォールバックフォントは何個でも設定でき、先に設定したものが優先して使われます。また、カラー絵文字フォントをフォールバックフォントとして設定した場合、描画サイズは基本のフォントのサイズに合わせられます。
-
-フォールバックフォントは、主にテキスト内に絵文字や複数の言語を含みたい場合に使用します。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/24.png)
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	Scene::SetBackground(ColorF{ 0.7, 0.9, 0.8 });
-
-	const Font font0{ 36, Typeface::Regular };
-	const Font font1{ 36, Typeface::Regular };
-	const Font font2{ 36, Typeface::Regular };
-
-	const Font fontJP{ 36, Typeface::CJK_Regular_JP };
-	const Font fontEmoji{ 36, Typeface::ColorEmoji };
-
-	// font1 にフォールバックフォントを 1 つ追加
-	font1.addFallback(fontJP);
-
-	// font2 にフォールバックフォントを 2 つ追加
-	font2.addFallback(fontJP);
+	// Add two fallback fonts to font2
+	font2.addFallback(fontCJK);
 	font2.addFallback(fontEmoji);
 
 	const String text = U"Hello! こんにちは 你好 안녕하세요 🐈🐕🚀";
 
 	while (System::Update())
 	{
-		font0(text).draw(40, 40, ColorF{ 0.11 });
-		font1(text).draw(40, 100, ColorF{ 0.11 });
-		font2(text).draw(40, 160, ColorF{ 0.11 });
+		font0(U"font0:\n" + text).draw(36, Vec2{40, 40}, ColorF{ 0.2 });
+		font1(U"font1:\n" + text).draw(36, Vec2{ 40, 200 }, ColorF{ 0.2 });
+		font2(U"font2:\n" + text).draw(36, Vec2{ 40, 360 }, ColorF{ 0.2 });
 	}
 }
 ```
 
-## 31.25 文字を Polygon で取得する
-`Font` のメンバ関数 `.renderPolygons()` を使うと、文字列を描画したときの各文字の `PolygonGlyph` を取得できます。これは文字を画像ではなく多角形で表現するものです。次のコードのようにすると、文字列を指定した位置に描画するときの各文字の `Polygon` を取得できます。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/25.png)
+## 34.27 Accessing Font Cache
+- Fonts render and cache character image data when drawing characters for the first time
+- You can get the font cache as a `Texture` using `.getTexture()` to check its contents
+- Bitmap method uses white + alpha channel images, while SDF/MSDF methods use Distance field format images
+- Running the following sample shows characters being added to the font cache over time
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/27.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
-// 文字列を描画したときの各文字の Polygon を返す関数
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ 24, Typeface::Bold };
+
+	const String text = U"Siv3D（シブスリーディー）は、音や画像、AI を使ったゲームやアプリを、モダンな C++ コードで楽しく簡単に開発できるオープンソースのフレームワークです。豊富なサンプルコードとチュートリアルが用意され、オンラインのユーザコミュニティで気軽に質問や相談ができます。";
+
+	Stopwatch stopwatch{ StartImmediately::Yes };
+
+	while (System::Update())
+	{
+		const int32 count = (stopwatch.ms() / 50);
+
+		font(text.substr(0, count)).draw(Rect{ 20, 20, 760, 240 }, Palette::Seagreen);
+
+		Rect{ 20, 300, font.getTexture().size() }.draw(ColorF{ 0.0 });
+
+		font.getTexture().draw(20, 300);
+	}
+}
+```
+
+
+## 34.28 Font Preloading
+- When displaying large amounts of text for the first time during real-time games, many characters need to be rendered and cached at once
+- This causes frame time spikes (only that frame takes extremely long), which can affect gameplay experience
+- Using `.preload(text)` you can pre-render and cache characters contained in `text`
+- Performing preloading during game startup or loading screens can prevent frame time spikes during gameplay
+- The `String` member function `.sorted_and_uniqued()` returns a string with characters sorted and duplicates removed. Applying this preprocessing to preload strings reduces preloading load
+- The following sample preloads all characters at startup
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/28.png)
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ 24, Typeface::Bold };
+
+	const String text = U"Siv3D（シブスリーディー）は、音や画像、AI を使ったゲームやアプリを、モダンな C++ コードで楽しく簡単に開発できるオープンソースのフレームワークです。豊富なサンプルコードとチュートリアルが用意され、オンラインのユーザコミュニティで気軽に質問や相談ができます。";
+
+	// Removing duplicates with .sorted_and_uniqued() reduces preload load
+	font.preload(text.sorted_and_uniqued());
+
+	Stopwatch stopwatch{ StartImmediately::Yes };
+
+	while (System::Update())
+	{
+		const int32 count = (stopwatch.ms() / 50);
+
+		font(text.substr(0, count)).draw(Rect{ 20, 20, 760, 240 }, Palette::Seagreen);
+
+		Rect{ 20, 300, font.getTexture().size() }.draw(ColorF{ 0.0 });
+
+		font.getTexture().draw(20, 300);
+	}
+}
+```
+
+
+## 34.29 Getting Characters as Polygons
+- You can get and draw characters as `Polygon` format instead of image format
+- This can be used for vertex-level processing or effects using character shapes
+- Using the `Font` member function `.renderPolygons()` you can get `PolygonGlyph` for each character when drawing a string
+	- The rendering method doesn't affect this function
+- Larger font base sizes increase polygon vertex count (giving higher quality polygons)
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/29.png)
+
+```cpp
+# include <Siv3D.hpp>
+
+// Function returning Polygon for each character when drawing a string
 Array<Polygon> ToPolygons(const Vec2& basePos, const Array<PolygonGlyph>& glyphs)
 {
 	Array<Polygon> polygons;
@@ -1281,30 +1462,40 @@ Array<Polygon> ToPolygons(const Vec2& basePos, const Array<PolygonGlyph>& glyphs
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.7, 0.9, 0.8 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
 	const Font font{ 80, Typeface::Bold };
+
 	const String text = U"こんにちは、Siv3D!";
-	const Array<Polygon> polygons = ToPolygons(Vec2{ 40, 40 }, font.renderPolygons(text));
+
+	const Array<Polygon> polygons = ToPolygons(Vec2{ 20, 20 }, font.renderPolygons(text));
 
 	while (System::Update())
 	{
 		for (size_t i = 0; i < polygons.size(); ++i)
 		{
 			polygons[i].draw(HSV{ (i * 50) });
+
+			polygons[i].drawWireframe(1, ColorF{ 0.2, Periodic::Square0_1(2s) });
 		}
 	}
 }
 ```
 
-## 31.26 文字を LineString で取得する
-`Font` のメンバ関数 `.renderOutlines()` を使うと、文字列を描画したときの各文字の `OutlineGlyph` を取得できます。これは文字を画像ではなく輪郭の `LineString` の集合で表現するものです。次のコードのようにすると、文字列を指定した位置に描画するときの各文字の `LineString` を取得できます。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/font/26.png)
+## 34.30 Getting Characters as LineStrings
+- You can get and draw characters as `LineString` format
+- This can be used for outline processing or effects using character shapes
+- Using the `Font` member function `.renderOutlines()` you can get `OutlineGlyph` for each character when drawing a string
+	- The rendering method doesn't affect this function
+- Larger font base sizes increase vertex count (giving higher quality line segments)
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/30.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
-// 文字列を描画したときの各文字の LineString を返す関数
+// Function returning LineString for each character when drawing a string
 Array<LineString> ToLineStrings(const Vec2& basePos, const Array<OutlineGlyph>& glyphs)
 {
 	Array<LineString> lines;
@@ -1326,10 +1517,13 @@ Array<LineString> ToLineStrings(const Vec2& basePos, const Array<OutlineGlyph>& 
 
 void Main()
 {
-	Scene::SetBackground(ColorF{ 0.7, 0.9, 0.8 });
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
 	const Font font{ 80, Typeface::Bold };
+
 	const String text = U"こんにちは、Siv3D!";
-	const Array<LineString> lines = ToLineStrings(Vec2{ 40, 40 }, font.renderOutlines(text));
+
+	const Array<LineString> lines = ToLineStrings(Vec2{ 20, 20 }, font.renderOutlines(text));
 
 	while (System::Update())
 	{

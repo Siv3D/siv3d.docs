@@ -1,15 +1,15 @@
 # VSColorOutput64
 
-## VSColorOutput64 の機能
-Windows 版 Visual Studio の拡張機能「VSColorOutput64」を使うと、ビルドやデバッグの出力メッセージを色分けして表示することができます。例えばエラーを赤、警告を黄色で表示し、出力メッセージの中の重要な情報を見つけやすくします。
+## VSColorOutput64 Features
+Using the Visual Studio extension "VSColorOutput64" for Windows Visual Studio, you can display build and debug output messages with color coding. For example, it displays errors in red and warnings in yellow, making it easier to find important information in output messages.
 
-## VSColorOutput64 の利用に必要なもの
+## What You Need to Use VSColorOutput64
 - Visual Studio 2022
 
-## 利用手順
-Visual Studio Marketplace の [VSColorOutput64 ページ :material-open-in-new:](https://marketplace.visualstudio.com/items?itemName=MikeWard-AnnArbor.VSColorOutput64){:target="_blank"} にアクセスし、拡張機能をダウンロードします。あるいは Visual Studio 内の拡張機能マネージャー経由でもインストールできます。
+## Usage Instructions
+Access the [VSColorOutput64 page :material-open-in-new:](https://marketplace.visualstudio.com/items?itemName=MikeWard-AnnArbor.VSColorOutput64){:target="_blank"} on Visual Studio Marketplace and download the extension. Alternatively, you can install it through Visual Studio's extension manager.
 
-## 発展的な使い方
-- 色の設定は「ツール」→「オプション」→「VSColorOutput64」から行えます。
-- 初期設定では寄付のお願いが表示されます。「ツール」→「オプション」→「VSColorOutput64」→「General」→「Yes, I Donated!」を「True」に変更すると、寄付のお願いが表示されなくなります。
-- VSColorOutput64 の作者への寄付ページは [Become a sponsor to Mike Ward :material-open-in-new:](https://github.com/sponsors/mike-ward){:target="_blank"}
+## Advanced Usage
+- Color settings can be configured from "Tools" → "Options" → "VSColorOutput64".
+- By default, a donation request is displayed. You can hide the donation request by changing "Tools" → "Options" → "VSColorOutput64" → "General" → "Yes, I Donated!" to "True".
+- The donation page for VSColorOutput64's author is [Become a sponsor to Mike Ward :material-open-in-new:](https://github.com/sponsors/mike-ward){:target="_blank"}

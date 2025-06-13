@@ -1,11 +1,11 @@
-# Web サービスとの連係サンプル
+# Web Service Integration Samples
 
 
-## 1. アンケート回答でアイテムを獲得する
+## 1. Earn Items by Answering Surveys
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/web/1.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -25,43 +25,43 @@
 
 			if (not received)
 			{
-				if (SimpleGUI::Button(U"アンケートに回答して秘密のコードを入手", Vec2{ 60, 60 }, 440))
+				if (SimpleGUI::Button(U"Answer survey and get secret code", Vec2{ 60, 60 }, 440))
 				{
 					pushed = true;
 					System::LaunchBrowser(U"https://forms.gle/vyiwgwNFSvZPZ8fu5");
 				}
 
-				SimpleGUI::Headline(U"コードを入力", Vec2{ 60, 118 }, unspecified, pushed);
+				SimpleGUI::Headline(U"Enter code", Vec2{ 60, 118 }, unspecified, pushed);
 
 				SimpleGUI::TextBox(textEditState, Vec2{ 220, 120 }, 160, 8, pushed);
 
-				if (SimpleGUI::Button(U"確認", Vec2{ 400, 120 }, 60, pushed))
+				if (SimpleGUI::Button(U"Confirm", Vec2{ 400, 120 }, 60, pushed))
 				{
 					if (textEditState.text == U"123")
 					{
 						received = true;
-						Print << U"アイテムを獲得しました。";
+						Print << U"Item acquired.";
 					}
 					else
 					{
-						Print << U"無効なコードです。";
+						Print << U"Invalid code.";
 					}
 				}
 			}
 			else
 			{
-				SimpleGUI::Headline(U"アンケートへの回答ありがとうございました。", Vec2{ 60, 90 });
+				SimpleGUI::Headline(U"Thank you for answering the survey.", Vec2{ 60, 90 });
 			}
 		}
 	}
 	```
 
 
-## 2. ゲームのスコアをツイートする
+## 2. Tweet Game Score
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/web/2.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -73,12 +73,12 @@
 
 		while (System::Update())
 		{
-			if (SimpleGUI::Button(U"スコアをツイート", Vec2{ 40, 40 }))
+			if (SimpleGUI::Button(U"Tweet score", Vec2{ 40, 40 }))
 			{
-				// ハッシュタグや URL を含めると広まりやすいです。
-				const String text = U"ゲームで {} 点取ったよ！\n#Test #Siv3D\nhttps://github.com/Siv3D/OpenSiv3D"_fmt(ThousandsSeparate(score));
+				// Including hashtags and URLs helps spread the word.
+				const String text = U"I scored {} points in the game!\n#Test #Siv3D\nhttps://github.com/Siv3D/OpenSiv3D"_fmt(ThousandsSeparate(score));
 
-				// ツイート投稿画面を開く
+				// Open tweet posting screen
 				Twitter::OpenTweetWindow(text);
 			}
 		}
@@ -86,26 +86,26 @@
 	```
 
 
-## 3. チャット
-Photon との連係方法は、[チュートリアル 66. マルチプレイヤー](../tutorial4/multiplayer.md) を参照してください。  
-作成したルームに参加したプレイヤー同士でデータの送受信を行うサンプルです。
+## 3. Chat
+For how to integrate with Photon, see [Tutorial 75. Multiplayer](../tutorial4/multiplayer.md).  
+This is a sample for sending and receiving data between players who joined the created room.
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/web/3.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 	# include "Multiplayer_Photon.hpp"
 	# include "PHOTON_APP_ID.SECRET"
 
-	// ユーザ定義型
+	// User-defined type
 	struct MyData
 	{
 		String word;
 
 		Point pos;
 
-		// シリアライズに対応させるためのメンバ関数を定義する
+		// Define member function for serialization support
 		template <class Archive>
 		void SIV3D_SERIALIZE(Archive& archive)
 		{
@@ -129,14 +129,14 @@ Photon との連係方法は、[チュートリアル 66. マルチプレイヤ�
 		{
 			if (m_verbose)
 			{
-				Print << U"MyNetwork::connectReturn() [サーバへの接続を試みた結果を処理する]";
+				Print << U"MyNetwork::connectReturn() [Process result of attempting to connect to server]";
 			}
 
 			if (errorCode)
 			{
 				if (m_verbose)
 				{
-					Print << U"[サーバへの接続に失敗] " << errorString;
+					Print << U"[Server connection failed] " << errorString;
 				}
 
 				return;
@@ -144,10 +144,10 @@ Photon との連係方法は、[チュートリアル 66. マルチプレイヤ�
 
 			if (m_verbose)
 			{
-				Print << U"[サーバへの接続に成功]";
+				Print << U"[Server connection successful]";
 				Print << U"[region: {}]"_fmt(region);
-				Print << U"[ユーザ名: {}]"_fmt(getUserName());
-				Print << U"[ユーザ ID: {}]"_fmt(getUserID());
+				Print << U"[Username: {}]"_fmt(getUserName());
+				Print << U"[User ID: {}]"_fmt(getUserID());
 			}
 
 			Scene::SetBackground(ColorF{ 0.4, 0.5, 0.6 });
@@ -157,7 +157,7 @@ Photon との連係方法は、[チュートリアル 66. マルチプレイヤ�
 		{
 			if (m_verbose)
 			{
-				Print << U"MyNetwork::disconnectReturn() [サーバから切断したときに呼ばれる]";
+				Print << U"MyNetwork::disconnectReturn() [Called when disconnected from server]";
 			}
 
 			m_localPlayers.clear();
@@ -169,7 +169,7 @@ Photon との連係方法は、[チュートリアル 66. マルチプレイヤ�
 		{
 			if (m_verbose)
 			{
-				Print << U"MyNetwork::joinRandomRoomReturn() [既存のランダムなルームに参加を試みた結果を処理する]";
+				Print << U"MyNetwork::joinRandomRoomReturn() [Process result of attempting to join existing random room]";
 			}
 
 			if (errorCode == NoRandomMatchFound)
@@ -178,8 +178,8 @@ Photon との連係方法は、[チュートリアル 66. マルチプレイヤ�
 
 				if (m_verbose)
 				{
-					Print << U"[参加可能なランダムなルームが見つからなかった]";
-					Print << U"[自分でルーム " << roomName << U" を新規作成する]";
+					Print << U"[No available random room found]";
+					Print << U"[Creating new room " << roomName << U"]";
 				}
 
 				createRoom(roomName, MaxPlayers);
@@ -190,7 +190,7 @@ Photon との連係方法は、[チュートリアル 66. マルチプレイヤ�
 			{
 				if (m_verbose)
 				{
-					Print << U"[既存のランダムなルームへの参加でエラーが発生] " << errorString;
+					Print << U"[Error joining existing random room] " << errorString;
 				}
 
 				return;
@@ -198,7 +198,7 @@ Photon との連係方法は、[チュートリアル 66. マルチプレイヤ�
 
 			if (m_verbose)
 			{
-				Print << U"[既存のランダムなルームに参加できた]";
+				Print << U"[Successfully joined existing random room]";
 			}
 		}
 
@@ -206,14 +206,14 @@ Photon との連係方法は、[チュートリアル 66. マルチプレイヤ�
 		{
 			if (m_verbose)
 			{
-				Print << U"MyNetwork::createRoomReturn() [ルームを新規作成した結果を処理する]";
+				Print << U"MyNetwork::createRoomReturn() [Process result of creating new room]";
 			}
 
 			if (errorCode)
 			{
 				if (m_verbose)
 				{
-					Print << U"[ルームの新規作成でエラーが発生] " << errorString;
+					Print << U"[Error creating new room] " << errorString;
 				}
 
 				return;
@@ -221,7 +221,7 @@ Photon との連係方法は、[チュートリアル 66. マルチプレイヤ�
 
 			if (m_verbose)
 			{
-				Print << U"[ルーム " << getCurrentRoomName() << U" の作成に成功]";
+				Print << U"[Successfully created room " << getCurrentRoomName() << U"]";
 			}
 		}
 
@@ -229,16 +229,16 @@ Photon との連係方法は、[チュートリアル 66. マルチプレイヤ�
 		{
 			if (m_verbose)
 			{
-				Print << U"MyNetwork::joinRoomEventAction() [誰か（自分を含む）が現在のルームに参加したときに呼ばれる]";
+				Print << U"MyNetwork::joinRoomEventAction() [Called when someone (including yourself) joins the current room]";
 			}
 
 			if (m_verbose)
 			{
-				Print << U"[{} (ID: {}) がルームに参加した。ローカル ID: {}] {}"_fmt(newPlayer.userName, newPlayer.userID, newPlayer.localID, (isSelf ? U"(自分自身)" : U""));
+				Print << U"[{} (ID: {}) joined the room. Local ID: {}] {}"_fmt(newPlayer.userName, newPlayer.userID, newPlayer.localID, (isSelf ? U"(yourself)" : U""));
 
 				m_localPlayers = getLocalPlayers();
 
-				Print << U"現在の " << getCurrentRoomName() << U" のルームメンバー";
+				Print << U"Current room members of " << getCurrentRoomName();
 
 				for (const auto& player : m_localPlayers)
 				{
@@ -251,7 +251,7 @@ Photon との連係方法は、[チュートリアル 66. マルチプレイヤ�
 		{
 			if (m_verbose)
 			{
-				Print << U"MyNetwork::joinRoomEventAction() [誰かがルームから退出したら呼ばれる]";
+				Print << U"MyNetwork::joinRoomEventAction() [Called when someone leaves the room]";
 			}
 
 			if (m_verbose)
@@ -260,13 +260,13 @@ Photon との連係方法は、[チュートリアル 66. マルチプレイヤ�
 				{
 					if (player.localID == playerID)
 					{
-						Print << U"[{} (ID: {}, ローカル ID: {}) がルームから退出した]"_fmt(player.userName, player.userID, player.localID);
+						Print << U"[{} (ID: {}, Local ID: {}) left the room]"_fmt(player.userName, player.userID, player.localID);
 					}
 				}
 
 				m_localPlayers = getLocalPlayers();
 
-				Print << U"現在の " << getCurrentRoomName() << U" のルームメンバー";
+				Print << U"Current room members of " << getCurrentRoomName();
 
 				for (const auto& player : m_localPlayers)
 				{
@@ -279,7 +279,7 @@ Photon との連係方法は、[チュートリアル 66. マルチプレイヤ�
 		{
 			if (m_verbose)
 			{
-				Print << U"MyNetwork::leaveRoomReturn() [ルームから退出したときに呼ばれる]";
+				Print << U"MyNetwork::leaveRoomReturn() [Called when leaving room]";
 			}
 
 			m_localPlayers.clear();
@@ -288,7 +288,7 @@ Photon との連係方法は、[チュートリアル 66. マルチプレイヤ�
 			{
 				if (m_verbose)
 				{
-					Print << U"[ルームからの退出でエラーが発生] " << errorString;
+					Print << U"[Error leaving room] " << errorString;
 				}
 
 				return;
@@ -297,37 +297,37 @@ Photon との連係方法は、[チュートリアル 66. マルチプレイヤ�
 
 		void customEventAction(const LocalPlayerID playerID, const uint8 eventCode, const int32 data) override
 		{
-			Print << U"<<< [" << playerID << U"] からの eventCode: " << eventCode << U", data: int32(" << data << U") を受信";
+			Print << U"<<< Received from [" << playerID << U"] eventCode: " << eventCode << U", data: int32(" << data << U")";
 		}
 
 		void customEventAction(const LocalPlayerID playerID, const uint8 eventCode, const String& data) override
 		{
-			Print << U"<<< [" << playerID << U"] からの eventCode: " << eventCode << U", data: String(" << data << U") を受信";
+			Print << U"<<< Received from [" << playerID << U"] eventCode: " << eventCode << U", data: String(" << data << U")";
 		}
 
 		void customEventAction(const LocalPlayerID playerID, const uint8 eventCode, const Point& data) override
 		{
-			Print << U"<<< [" << playerID << U"] からの eventCode: " << eventCode << U", data: Point" << data << U" を受信";
+			Print << U"<<< Received from [" << playerID << U"] eventCode: " << eventCode << U", data: Point" << data;
 		}
 
 		void customEventAction(const LocalPlayerID playerID, const uint8 eventCode, const Array<int32>& data) override
 		{
-			Print << U"<<< [" << playerID << U"] からの eventCode: " << eventCode << U", data: Array<int32>" << data << U" を受信";
+			Print << U"<<< Received from [" << playerID << U"] eventCode: " << eventCode << U", data: Array<int32>" << data;
 		}
 
 		void customEventAction(const LocalPlayerID playerID, const uint8 eventCode, const Array<String>& data) override
 		{
-			Print << U"<<< [" << playerID << U"] からの eventCode: " << eventCode << U", data: Array<String>" << data << U" を受信";
+			Print << U"<<< Received from [" << playerID << U"] eventCode: " << eventCode << U", data: Array<String>" << data;
 		}
 
-		// シリアライズデータを受信したときに呼ばれる関数をオーバーライドしてカスタマイズする
+		// Override function called when serialized data is received for customization
 		void customEventAction(const LocalPlayerID playerID, const uint8 eventCode, Deserializer<MemoryViewReader>& reader) override
 		{
 			if (eventCode == 123)
 			{
 				MyData mydata;
 				reader(mydata);
-				Print << U"<<< [" << playerID << U"] からの MyData(" << mydata.word << U", " << mydata.pos << U") を受信";
+				Print << U"<<< Received MyData(" << mydata.word << U", " << mydata.pos << U") from [" << playerID << U"]";
 			}
 		}
 	};
@@ -370,21 +370,21 @@ Photon との連係方法は、[チュートリアル 66. マルチプレイヤ�
 			if (SimpleGUI::Button(U"Send int32", Vec2{ 1000, 180 }, 200, isInRoom))
 			{
 				const int32 n = Random(0, 10000);
-				Print << U"eventCode: 0, int32(" << n << U") を送信 >>>";
+				Print << U"Sending eventCode: 0, int32(" << n << U") >>>";
 				network.sendEvent(0, n);
 			}
 
 			if (SimpleGUI::Button(U"Send String", Vec2{ 1000, 220 }, 200, isInRoom))
 			{
 				const String s = Sample({ U"Hello!", U"Thank you!", U"Nice!" });
-				Print << U"eventCode: 0, String(" << s << U") を送信 >>>";
+				Print << U"Sending eventCode: 0, String(" << s << U") >>>";
 				network.sendEvent(0, s);
 			}
 
 			if (SimpleGUI::Button(U"Send Point", Vec2{ 1000, 260 }, 200, isInRoom))
 			{
 				const Point pos = RandomPoint(Scene::Rect());
-				Print << U"eventCode: 0, Point" << pos << U" を送信 >>>";
+				Print << U"Sending eventCode: 0, Point" << pos << U" >>>";
 				network.sendEvent(0, pos);
 			}
 
@@ -395,7 +395,7 @@ Photon との連係方法は、[チュートリアル 66. マルチプレイヤ�
 				{
 					n = Random(0, 1000);
 				}
-				Print << U"eventCode: 0, Array<int32>" << v << U" を送信 >>>";
+				Print << U"Sending eventCode: 0, Array<int32>" << v << U" >>>";
 				network.sendEvent(0, v);
 			}
 
@@ -406,18 +406,18 @@ Photon との連係方法は、[チュートリアル 66. マルチプレイヤ�
 				{
 					word = Sample({ U"apple", U"bird", U"cat", U"dog" });
 				}
-				Print << U"eventCode: 0, Array<String>" << words << U" を送信 >>>";
+				Print << U"Sending eventCode: 0, Array<String>" << words << U" >>>";
 				network.sendEvent(0, words);
 			}
 
-			// ランダムな MyData を送るボタン
+			// Button to send random MyData
 			if (SimpleGUI::Button(U"Send MyData", Vec2{ 1000, 380 }, 200, isInRoom))
 			{
 				MyData myData;
 				myData.word = Sample({ U"apple", U"bird", U"cat", U"dog" });
 				myData.pos = RandomPoint(Scene::Rect());
 
-				Print << U"eventCode: 123, MyData(" << myData.word << U", " << myData.pos << U") を送信 >>>";
+				Print << U"Sending eventCode: 123, MyData(" << myData.word << U", " << myData.pos << U") >>>";
 				network.sendEvent(123, Serializer<MemoryWriter>{}(myData));
 			}
 		}
@@ -425,8 +425,8 @@ Photon との連係方法は、[チュートリアル 66. マルチプレイヤ�
 	```
 
 
-## 4. オンライン リーダーボード
+## 4. Online Leaderboard
 
 ![](https://raw.githubusercontent.com/Siv3D/Siv3D-Samples/main/Samples/Leaderboard/Screenshot/1.png)
 
-[Siv3D-Sample | オンライン リーダーボード :material-open-in-new:](https://github.com/Siv3D/Siv3D-Samples/tree/main/Samples/Leaderboard){:target="_blank" .md-button}
+[Siv3D-Sample | Online Leaderboard :material-open-in-new:](https://github.com/Siv3D/Siv3D-Samples/tree/main/Samples/Leaderboard){:target="_blank" .md-button}

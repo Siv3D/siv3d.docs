@@ -1,11 +1,11 @@
-# ホットリロード
+# Hot Reload
 
-## ホットリロードの機能
-Visual Studio のホットリロード機能（Visual Studio デバッグメニューの 🔥 ボタン）を使うことで、プログラムを再起動することなく、数値の変更やコードの追加を実行中のプログラムに反映できます。デフォルトの設定では、Debug ビルトでデバッガをアタッチして実行している場合にのみ有効になります。
+## Hot Reload Features
+Using Visual Studio's hot reload feature (the 🔥 button in Visual Studio's debug menu), you can apply numerical changes and code additions to a running program without restarting it. By default, it is only enabled when running a Debug build with a debugger attached.
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tools/hot-reload.gif)
 
-## ホットリロードの注意
-図形の追加や描画位置の変更、色の変更などの調整作業はホットリロードできる場合が多く、調整のサイクルを加速できます。ただし、ホットリロードに対応しないコード変更の操作もあるため、ホットリロードだけでプログラムを完成させるのは難しいです。将来の Visual Studio のアップデートでホットリロードできる操作の範囲が広がる可能性があります。
+## Hot Reload Limitations
+Adjustment tasks such as adding shapes, changing drawing positions, and color changes can often be hot reloaded, which can accelerate the adjustment cycle. However, there are code change operations that don't support hot reload, so it's difficult to complete a program using only hot reload. Future Visual Studio updates may expand the range of operations that can be hot reloaded.
 
-処理を巻き戻す形でのホットリロードはできないため、すでにロードしたテクスチャやオーディオの再ロードは行われません。テクスチャやオーディオの変更を反映させるには、プログラムを再起動する必要があります。
+Hot reload cannot rewind processing, so already loaded textures and audio will not be reloaded. To reflect changes to textures and audio, you need to restart the program.

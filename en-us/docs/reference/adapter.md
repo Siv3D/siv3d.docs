@@ -1,55 +1,55 @@
-# 自作クラスと Siv3D の連係
+# Integrating Custom Classes with Siv3D
 
-## 1. 概要
+## 1. Overview
 
-本記事では、自作クラスを Siv3D の様々な機能と連係させる方法を説明します。連係によって以下のようなメリットが得られます。
+This article explains how to integrate custom classes with various Siv3D features. Integration provides the following benefits:
 
-- `Print` や `Console` などで直接扱えるようになる
-- `U"{}"_fmt()` で直接扱えるようになる
-- INI や JSON, CSV などの設定ファイルで読み書きできるようになる
-- バイナリデータを読み書きできるようになる
-- `HashSet` や `HashTable` のキーとして使えるようになる
+- Can be used directly with `Print`, `Console`, etc.
+- Can be used directly with `U"{}"_fmt()`
+- Can be read from and written to configuration files like INI, JSON, CSV
+- Can read and write binary data
+- Can be used as keys in `HashSet` and `HashTable`
 
 
-## 2. フォーマット対応
+## 2. Format Support
 
-クラスを「フォーマット可能」にすると、
+Making a class "formattable" enables:
 
-- `Print` による画面へのデバッグ出力
-- `Console` によるコンソール出力
-- `Say` による音声読み上げ
-- `Format()` による `String` への変換
-- `TextWriter` への書き出し
-- `INI`, `JSON`, `CSV` などの設定ファイルへの書き出し
+- Debug output to screen with `Print`
+- Console output with `Console`
+- Voice synthesis with `Say`
+- Conversion to `String` with `Format()`
+- Writing to `TextWriter`
+- Writing to configuration files like `INI`, `JSON`, `CSV`
 - `Font::operator()`
 
-などができるようになります。
+and more.
 
 
-### 2.1 方法
+### 2.1 Method
 
-クラスの定義内に、次のような関数を追加します。
+Add the following function inside your class definition:
 
 ```cpp
-friend void Formatter(FormatData& formatData, const 自作クラス& value)
+friend void Formatter(FormatData& formatData, const CustomClass& value)
 {
 
 }
 ```
 
-この関数内で `value` を文字列化し、`FormatData` の `String` 型のメンバ変数 `.string` に追加します。
+Inside this function, convert `value` to a string and add it to the `String` type member variable `.string` of `FormatData`.
 
-```cpp title="例"
+```cpp title="Example"
 friend void Formatter(FormatData& formatData, const RGB& value)
 {
 	formatData.string += U"({}, {}, {})"_fmt(value.r, value.g, value.b);
 }
 ```
 
-これで自作クラスが「フォーマット可能」になりました。
+Now your custom class is "formattable".
 
 
-### 2.2 サンプル
+### 2.2 Sample
 
 ```cpp
 # include <Siv3D.hpp>
@@ -68,25 +68,25 @@ void Main()
 {
 	const RGB rgb{ 0.1f, 0.2f, 0.3f };
 
-	// 画面へのデバッグ出力
+	// Debug output to screen
 	Print << rgb;
 
-	// コンソール出力
+	// Console output
 	Console << rgb;
 
-	// 音声読み上げ
+	// Voice synthesis
 	Say << rgb;
 
-	// String への変換
+	// Conversion to String
 	const String s = Format(rgb);
 
-	// TextWriter への書き込み
+	// Writing to TextWriter
 	{
 		TextWriter writer{ U"test.txt" };
 		writer << rgb;
 	}
 
-	// INI, JSON, CSV 等各種設定ファイルへの書き込み
+	// Writing to various configuration files like INI, JSON, CSV
 	{
 		INI ini;
 		ini[U"aaa.color"] = rgb;
@@ -106,22 +106,22 @@ void Main()
 
 	while (System::Update())
 	{
-		// Font::operator() での使用
+		// Using with Font::operator()
 		font(rgb).draw(100, 100);
 	}
 }
 ```
 
 
-## 3. `_fmt` 対応
+## 3. `_fmt` Support
 
-クラスを `_fmt` に対応させると、そのクラスを `U"{}"_fmt()` で文字列化できるようになります。
+Making a class compatible with `_fmt` allows you to stringify that class with `U"{}"_fmt()`.
 
-### 3.1 方法
+### 3.1 Method
 
-グローバル名前空間に次のような `fmt::formatter` の特殊化を定義します。例として、先ほどの `RGB` クラスを対応させます。
+Define a specialization of `fmt::formatter` like the following in the global namespace. As an example, we'll make the previous `RGB` class compatible.
 
-```cpp hl_lines="2 12 14" title="例"
+```cpp hl_lines="2 12 14" title="Example"
 template <>
 struct SIV3D_HIDDEN fmt::formatter<RGB, s3d::char32>
 {
@@ -141,9 +141,9 @@ struct SIV3D_HIDDEN fmt::formatter<RGB, s3d::char32>
 ```
 
 
-`{:.2f}` のような特殊なタグにも対応させる場合は次のように実装します。
+To also support special tags like `{:.2f}`, implement as follows:
 
-```cpp hl_lines="14-23" title="例"
+```cpp hl_lines="14-23" title="Example"
 template <>
 struct SIV3D_HIDDEN fmt::formatter<RGB, s3d::char32>
 {
@@ -157,11 +157,11 @@ struct SIV3D_HIDDEN fmt::formatter<RGB, s3d::char32>
 	template <class FormatContext>
 	auto format(const RGB& value, FormatContext& ctx)
 	{
-		if (tag.empty()) // 特殊タグが無い場合
+		if (tag.empty()) // No special tag
 		{
 			return format_to(ctx.out(), U"({}, {}, {})", value.r, value.g, value.b);
 		}
-		else // 特殊タグがある場合
+		else // Special tag present
 		{
 			const std::u32string format
 				= (U"({:" + tag + U"}, {:" + tag + U"}, {:" + tag + U"})");
@@ -171,7 +171,7 @@ struct SIV3D_HIDDEN fmt::formatter<RGB, s3d::char32>
 };
 ```
 
-### 3.2 サンプル
+### 3.2 Sample
 
 ```cpp
 # include <Siv3D.hpp>
@@ -194,11 +194,11 @@ struct SIV3D_HIDDEN fmt::formatter<RGB, s3d::char32>
 	template <class FormatContext>
 	auto format(const RGB& value, FormatContext& ctx)
 	{
-		if (tag.empty()) // 特殊タグが無い場合
+		if (tag.empty()) // No special tag
 		{
 			return format_to(ctx.out(), U"({}, {}, {})", value.r, value.g, value.b);
 		}
-		else // 特殊タグがある場合
+		else // Special tag present
 		{
 			const std::u32string format
 				= (U"({:" + tag + U"}, {:" + tag + U"}, {:" + tag + U"})");
@@ -223,31 +223,31 @@ void Main()
 ```
 
 
-## 4. パース対応
+## 4. Parse Support
 
-クラスを「パース可能」にすると、
+Making a class "parseable" enables:
 
 - `Parse()`, `ParseOr()`, `ParseOpt()`
-- `INI`, `JSON`, `CSV` などの設定ファイルからの読み込み
+- Reading from configuration files like `INI`, `JSON`, `CSV`
 
-などができるようになります。
+and more.
 
 
-### 4.1 方法
+### 4.1 Method
 
-クラスの定義内に、次のような関数を追加します。
+Add the following function inside your class definition:
 
 ```cpp
 template <class CharType>
-friend std::basic_istream<CharType>& operator >>(std::basic_istream<CharType>& input, 自作クラス& value)
+friend std::basic_istream<CharType>& operator >>(std::basic_istream<CharType>& input, CustomClass& value)
 {
 
 }
 ```
 
-この関数内で、入力ストリーム `input` から値を読み込みます。フォーマットした文字列をパースできるような対称的な操作になることが望ましいです。
+Inside this function, read values from the input stream `input`. It's desirable to have symmetric operations that can parse formatted strings.
 
-```cpp title="例"
+```cpp title="Example"
 template <class CharType>
 friend std::basic_istream<CharType>& operator >>(std::basic_istream<CharType>& input, RGB& value)
 {
@@ -259,10 +259,10 @@ friend std::basic_istream<CharType>& operator >>(std::basic_istream<CharType>& i
 }
 ```
 
-これで自作クラスが「パース可能」になりました。
+Now your custom class is "parseable".
 
 
-### 4.2 サンプル
+### 4.2 Sample
 
 ```cpp
 # include <Siv3D.hpp>
@@ -298,21 +298,21 @@ void Main()
 
 	Print << rgb2;
 
-	// 2.3 で作成した設定ファイルから読み込む
+	// Reading from configuration files created in 2.3
 	{
 		INI ini{ U"test.ini" };
 		const RGB x = Parse<RGB>(ini[U"aaa.color"]);
 		Print << U"INI: " << x;
 	}
 
-	// 2.3 で作成した設定ファイルから読み込む
+	// Reading from configuration files created in 2.3
 	{
 		JSON json = JSON::Load(U"test.json");
 		const RGB x = json[U"aaa"][U"color"].get<RGB>();
 		Print << U"JSON: " << x;
 	}
 
-	// 2.3 で作成した設定ファイルから読み込む
+	// Reading from configuration files created in 2.3
 	{
 		CSV csv{ U"test.csv" };
 		const RGB x = csv.get<RGB>(1, 1);
@@ -327,19 +327,17 @@ void Main()
 ```
 
 
-## 5. シリアライズ対応
+## 5. Serialization Support
 
-クラスを「シリアライズ可能」にすると、
+Making a class "serializable" enables use with:
 
 - `Serializer`
 - `Deserializer`
 
-で使えるようになります。
 
+### 5.1 Method
 
-### 5.1 方法
-
-クラスの定義内に、次のようなメンバ関数を追加します。
+Add the following member function inside your class definition:
 
 ```cpp
 template <class Archive>
@@ -349,9 +347,9 @@ void SIV3D_SERIALIZE(Archive& archive)
 }
 ```
 
-この関数内で、各メンバ変数を `archive()` に引数として渡します。各メンバ変数はシリアライズ対応している必要があります。
+Inside this function, pass each member variable as arguments to `archive()`. Each member variable must support serialization.
 
-```cpp title="例"
+```cpp title="Example"
 template <class Archive>
 void SIV3D_SERIALIZE(Archive& archive)
 {
@@ -360,7 +358,7 @@ void SIV3D_SERIALIZE(Archive& archive)
 ```
 
 
-### 5.2 サンプル
+### 5.2 Sample
 
 ```cpp
 # include <Siv3D.hpp>
@@ -384,7 +382,7 @@ struct RGB
 
 void Main()
 {
-	// バイナリデータをファイルに保存
+	// Save binary data to file
 	{
 		const RGB rgb{ 0.1f, 0.2f, 0.3f };
 		const Array<RGB> colors = { RGB{ 0.2f, 0.3f, 0.4f }, RGB{ 0.5f, 0.6f, 0.7f } };
@@ -394,7 +392,7 @@ void Main()
 		writer(colors);
 	}
 
-	// ファイルに保存したバイナリデータを読み込む
+	// Load binary data saved to file
 	{
 		RGB rgb;
 		Array<RGB> colors;
@@ -415,40 +413,40 @@ void Main()
 ```
 
 
-## 6. ハッシュ対応
+## 6. Hash Support
 
-クラスをハッシュ対応させると、`HashSet` や `HashTable` のキーとして使えるようになります。
+Making a class hash-compatible allows it to be used as a key in `HashSet` and `HashTable`.
 
-### 6.1 方法
+### 6.1 Method
 
-クラスに `==` 演算子と、`std::hash<>` の特殊化を定義します。
+Define the `==` operator and a specialization of `std::hash<>` for your class.
 
 ```cpp
-friend bool operator ==(const 自作クラス& a, const 自作クラス& b) noexcept
+friend bool operator ==(const CustomClass& a, const CustomClass& b) noexcept
 {
-	// a と b が等しい場合 true を返す
+	// Return true if a and b are equal
 }
 
-// または
+// Or
 
-bool operator ==(const 自作クラス&) const = default;
+bool operator ==(const CustomClass&) const = default;
 ```
 
 ```cpp
 template<>
-struct std::hash<自作クラス>
+struct std::hash<CustomClass>
 {
-	size_t operator()(const 自作クラス& value) const noexcept
+	size_t operator()(const CustomClass& value) const noexcept
 	{
-		// ハッシュ値を返す
+		// Return hash value
 	}
 };
 ```
 
-クラスが `Trivially Copyable` であれば、ハッシュ値の生成には `Hash::FNV1a()` 関数を使うことができます。
+If the class is `Trivially Copyable`, you can use the `Hash::FNV1a()` function to generate hash values.
 
 
-### 6.2 サンプル
+### 6.2 Sample
 
 ```cpp
 # include <Siv3D.hpp>
@@ -474,9 +472,9 @@ struct std::hash<Calendar>
 void Main()
 {
 	HashTable<Calendar, String> table;
-	table[Calendar{ 1, 1 }] = U"元旦";
-	table[Calendar{ 5, 5 }] = U"こどもの日";
-	table[Calendar{ 11, 3 }] = U"文化の日";
+	table[Calendar{ 1, 1 }] = U"New Year's Day";
+	table[Calendar{ 5, 5 }] = U"Children's Day";
+	table[Calendar{ 11, 3 }] = U"Culture Day";
 
 	const Calendar calendar{ 5, 5 };
 

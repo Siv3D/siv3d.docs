@@ -1,28 +1,27 @@
-# 23. 無効値を表現できる型
-無効値を表現できる型 `Optional` の基本的な使い方を学びます。
+# 35. Optional Values
+Learn the basic usage of the `Optional` type that can represent invalid values.
 
-## 23.1 無効値を表現できる型
-`Optional<Type>` は `std::optional<Type>` に相当する型です。`Type` 型の値を持つことができ、値を持たないことを表す「無効値」を持つこともできます。
-
-イメージとしては、サイズが 0 または 1 である `Array<Type>` です。有効な値を持つとき、サイズが 1 でその値にアクセスできます。無効値を持つときはサイズが 0 で、値にはアクセスできません。
-
-初期値を与えられなかった場合、`Optional<Type>` 型の値は無効値を持ちます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/optional/1.png)
+## 35.1 Optional
+- `Optional<Type>` is a type equivalent to `std::optional<Type>`
+- This type can hold all representations of the `Type` in addition to an "invalid value" that represents having no valid value
+- Conceptually, it's like an `Array<Type>` with a size of either 0 or 1
+	- When it has a valid value, the array size is 1 and you can access that value
+	- When it's an invalid value, the size is 0 and you cannot access the value
+- `Optional<Type>` values are initialized as invalid values when no initial value is given
+- When an `Optional` value is output with `Print`, valid values are output as `(Optional)` followed by the value, and invalid values are output as `none`
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// 無効値で初期化する
-	Optional<Point> pos1;
+	// Initialize with valid value
+	Optional<Point> pos1 = Point{ 100, 200 };
 
-	// 有効値で初期化する
-	Optional<Point> pos2 = Point{ 100, 200 };
+	// Initialize with invalid value
+	Optional<Point> pos2;
 
 	Print << pos1;
-
 	Print << pos2;
 
 	while (System::Update())
@@ -31,52 +30,66 @@ void Main()
 	}
 }
 ```
+```txt title="Output"
+(Optional)(100, 200)
+none
+```
 
-## 23.2 有効値を持つかを調べる
-`Optional` 型の値 `opt` が有効値を持つ場合、`opt.has_value()` が `true` を返します。`if (opt)` や `if(not opt)` で調べることもできます。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/optional/2.png)
+## 35.2 Checking if a Valid Value is Held
+- To check if an `Optional` value `opt` holds a valid value, use these methods:
+	- `opt.has_value()` returns `true` if it holds a valid value
+	- Check with `if (opt)` or `if (not opt)`
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Optional<Point> pos1;
+	// Initialize with valid value
+	Optional<Point> pos1 = Point{ 100, 200 };
 
-	Optional<Point> pos2 = Point{ 100, 200 };
+	// Initialize with invalid value
+	Optional<Point> pos2;
 
 	Print << pos1.has_value();
-
 	Print << pos2.has_value();
+
+	if (pos1)
+	{
+		Print << U"pos1 has a value";
+	}
+
+	if (not pos2)
+	{
+		Print << U"pos2 does not have a value";
+	}
 	
-	if (not pos1)
-	{
-		Print << U"pos1 does not have a value";
-	}
-
-	if (pos2)
-	{
-		Print << U"pos2 has a value";
-	}
-
 	while (System::Update())
 	{
 
 	}
 }
 ```
+```txt title="Output"
+true
+false
+pos1 has a value
+pos2 does not have a value
+```
 
-## 23.3 有効値にアクセスする
-`Optional` 型の値 `opt` が有効値を持つ場合、`*opt` でその値にアクセスできます。`opt->x` や `opt->y` のように、`->` 演算子を使ってメンバにアクセスすることもできます。有効値を持たないときに値にアクセスしてはいけません。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/optional/3.png)
+## 35.3 Accessing Valid Values
+- When an `Optional` value `opt` holds a valid value, you can access that value with `*opt`
+- You can also access members using the `->` operator like `opt->x` or `opt->y`
+- You must not access the value when it doesn't hold a valid value
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
+	// Initialize with valid value
 	Optional<Point> pos = Point{ 100, 200 };
 
 	if (pos)
@@ -84,7 +97,6 @@ void Main()
 		Print << *pos;
 
 		pos->x += 20;
-
 		pos->y += 30;
 
 		Print << *pos;
@@ -96,11 +108,16 @@ void Main()
 	}
 }
 ```
+```txt title="Output"
+(100, 200)
+(120, 230)
+```
 
-## 23.4 無効値にする
-`none` は `Optional` 型の無効値を表す定数です。`Optional` 型の値 `opt` に無効値を代入するには、`opt = none` とします。`opt.reset()` でも同じです。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/optional/4.png)
+## 35.4 Setting to Invalid Value
+- `none` is a constant representing an invalid value for `Optional` types
+- To assign an invalid value to an `Optional` value `opt`, use `opt = none`
+- `opt.reset()` does the same thing
 
 ```cpp
 # include <Siv3D.hpp>
@@ -108,19 +125,16 @@ void Main()
 void Main()
 {
 	Optional<Point> pos = Point{ 100, 200 };
-
-	Print << pos.has_value();
+	Print << pos;
 
 	pos = none;
-
-	Print << pos.has_value();
+	Print << pos;
 
 	pos = Point{ 300, 400 };
+	Print << pos;
 
-	// = none と同じ
 	pos.reset();
-
-	Print << pos.has_value();
+	Print << pos;
 
 	while (System::Update())
 	{
@@ -128,25 +142,30 @@ void Main()
 	}
 }
 ```
+```txt title="Output"
+(Optional)(100, 200)
+none
+(Optional)(300, 400)
+none
+```
 
-## 23.5 有効値または代わりの値を返す
-`Optional` 型の値 `opt` が有効値を持つ場合、`opt.value_or(defaultValue)` は有効値の値を返し、無効値である場合に `defaultValue` を返します。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/optional/5.png)
+## 35.5 Getting Valid Value or Alternative Value
+- `.value_or(defaultValue)` returns the valid value if it holds one, or returns `defaultValue` if it's an invalid value
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Optional<Point> pos1;
+	Optional<Point> pos1 = Point{ 100, 200 };
 
-	Optional<Point> pos2 = Point{ 100, 200 };
+	Optional<Point> pos2;
 
-    // pos1 は有効値を持たないため Point{ 0, 0 } を返す
+	// pos1 holds a valid value so returns Point{ 100, 200 }
 	Print << pos1.value_or(Point{ 0, 0 });
 
-    // pos2 は有効値を持つため Point{ 100, 200 } を返す
+	// pos2 doesn't hold a valid value so returns Point{ 0, 0 }
 	Print << pos2.value_or(Point{ 0, 0 });
 
 	while (System::Update())
@@ -155,11 +174,14 @@ void Main()
 	}
 }
 ```
+```txt title="Output"
+(100, 200)
+(0, 0)
+```
 
-## 23.6 if との組み合わせ
-`Optional` 型を返す関数の戻り値を `if ()` 内で受け取り、有効値を持つかを調べることができます。`Optional` を使うコードを短く書くのに役立ちます。
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/optional/6.png)
+## 35.6 Combining with if
+- By combining with `if` as follows, you can write concise code for processing when an `Optional` value holds a valid value
 
 ```cpp
 # include <Siv3D.hpp>
@@ -192,41 +214,128 @@ void Main()
 	}
 }
 ```
+```txt title="Output"
+123
+```
 
 
-## 23.7 活用例
-`Optional` を使うことで、次のように 1 つの変数だけで「マウスの左ボタンが押された位置」と「矢印を描くか」を表現できます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/optional/7.png)
+## 35.7 Usage Example (1)
+- This is a sample that creates arrows by dragging the mouse
+- The position where the mouse left button was pressed is represented with `Optional<Point>`, and when it holds a valid value, an arrow is drawn from that position to the current mouse cursor position
+- When the mouse left button is released, it's set to an invalid value
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/optional/7.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// マウスの左ボタンが押された位置
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	// Position where mouse left button was pressed
 	Optional<Point> start;
-	
+
 	while (System::Update())
 	{
-		if (MouseL.down()) // マウスの左ボタンが押されたら
+		ClearPrint();
+		Print << start;
+
+		if (MouseL.down()) // When mouse left button is pressed
 		{
-			// マウスカーソルの位置を有効値として記録する
+			// Assign mouse cursor position as valid value
 			start = Cursor::Pos();
 		}
-		else if (MouseL.up()) // マウスの左ボタンが離されたら
+		else if (MouseL.up()) // When mouse left button is released
 		{
-			// 無効値にする
+			// Set to invalid value
 			start.reset();
 		}
 
-		// 有効値を持っていれば
+		// If it holds a valid value
 		if (start)
 		{
-			// 現在のマウスカーソルの位置まで矢印を描く
-			Line{ *start, Cursor::Pos() }.drawArrow(6, SizeF{ 20, 20 }, Palette::Orange);
+			// Draw circle centered at start point
+			start->asCircle(10).draw(ColorF{ 0.2 });
+
+			// Draw arrow to current mouse cursor position
+			Line{ *start, Cursor::Pos() }.drawArrow(6, SizeF{ 20, 20 }, ColorF{ 0.2 });
 		}
 	}
 }
 ```
 
+
+## 35.8 Usage Example (2)
+- This is a sample that moves items by dragging with the mouse
+- The type of item being dragged is represented with `Optional<int32>`, and when it holds a valid value, that item is drawn at the mouse cursor position
+- When dragging ends, it's set to an invalid value
+	
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/optional/8.png)
+
+```cpp
+# include <Siv3D.hpp>
+
+void Main()
+{
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Texture item1Texture{ U"🍌"_emoji };
+	const Texture item2Texture{ U"🍎"_emoji };
+
+	const Circle item1Circle{ 100, 200, 60 };
+	const Circle item2Circle{ 100, 400, 60 };
+	const Rect boxRect{ 500, 200, 200, 200 };
+
+	Optional<int32> grabbedItem;
+
+	while (System::Update())
+	{
+		ClearPrint();
+		Print << grabbedItem;
+
+		if (grabbedItem || item1Circle.mouseOver() || item2Circle.mouseOver())
+		{
+			Cursor::RequestStyle(CursorStyle::Hand);
+		}
+
+		if (item1Circle.leftClicked())
+		{
+			grabbedItem = 1;
+		}
+		else if (item2Circle.leftClicked())
+		{
+			grabbedItem = 2;
+		}
+		else if (MouseL.up())
+		{
+			grabbedItem.reset();
+		}
+
+		item1Texture.drawAt(item1Circle.center);
+		item2Texture.drawAt(item2Circle.center);
+		boxRect.draw();
+
+		// Item is being grabbed
+		if (grabbedItem)
+		{
+			// If cursor is over the box
+			if (boxRect.mouseOver())
+			{
+				// Draw box frame in red
+				boxRect.drawFrame(0, 20, ColorF{ 1.0, 0.5, 0.5 });
+			}
+
+			// Draw item
+			if (grabbedItem == 1)
+			{
+				item1Texture.drawAt(Cursor::Pos());
+			}
+			else if (grabbedItem == 2)
+			{
+				item2Texture.drawAt(Cursor::Pos());
+			}
+		}
+	}
+}
+```

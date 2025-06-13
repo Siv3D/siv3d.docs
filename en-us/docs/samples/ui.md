@@ -1,25 +1,25 @@
-# UI のサンプル
+# UI Samples
 
-## 1. 選択領域を点線で描画する
+## 1. Draw Selection Area with Dotted Lines
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/ui/1.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
-	/// @brief 長方形の領域を選択する点線を描画します。
-	/// @param start 選択の開始位置
-	/// @param cursorPos マウスカーソルの位置
-	/// @param thickness 線の太さ
-	/// @param lineColor 線の色
+	/// @brief Draws dotted lines for selecting a rectangular area.
+	/// @param start Selection start position
+	/// @param cursorPos Mouse cursor position
+	/// @param thickness Line thickness
+	/// @param lineColor Line color
 	void DrawSelectRect(const Vec2& start, const Vec2& cursorPos, double thickness, const ColorF& lineColor = Palette::White)
 	{
 		const RectF rect = RectF::FromPoints(start, cursorPos);
 
 		Line top = rect.top(), right = rect.right(), bottom = rect.bottom(), left = rect.left();
 
-		// 始点からの点線の伸縮が自然になるよう、線の方向を調整する
+		// Adjust line direction for natural dotted line expansion from start point
 		{
 			if (cursorPos.x < start.x)
 			{
@@ -75,11 +75,11 @@
 	}
 	```
 
-## 2. プルダウン
+## 2. Pulldown
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/ui/2.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -280,11 +280,11 @@
 	```
 
 
-## 3. トースト通知（Windows 版）
+## 3. Toast Notification (Windows version)
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/ui/3.jpg)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -292,32 +292,32 @@
 	{
 		Scene::SetBackground(ColorF{ 0.9, 0.6, 0.3 });
 
-		// 通知ごとに割り振られる ID
+		// ID assigned to each notification
 		ToastNotificationID latest = -1;
 
-		// 画像を作成・保存
+		// Create and save image
 		Emoji::CreateImage(U"🍕").save(U"pizza.png");
 
 		while (System::Update())
 		{
 			ClearPrint();
 
-			// 通知の状態
+			// Notification status
 			Print << (int32)Platform::Windows::ToastNotification::GetState(latest);
 
-			// アクションボタンの結果
+			// Action button result
 			Print << U"Action: " << Platform::Windows::ToastNotification::GetAction(latest);
 
 			if (SimpleGUI::Button(U"Send a notification", Vec2{ 10, 70 }))
 			{
 				const ToastNotificationItem toast{
-					.title = U"Title", // 通知のタイトル
-					.message = U"Message", // 通知の本文
-					.imagePath = U"pizza.png", // 大きい画像だと使われないことがある
-					.actions = { U"Yes", U"No" } // アクションボタン（不要な場合は設定しない）
+					.title = U"Title", // Notification title
+					.message = U"Message", // Notification message
+					.imagePath = U"pizza.png", // Large images may not be used
+					.actions = { U"Yes", U"No" } // Action buttons (don't set if not needed)
 				};
 
-				// 通知ごとに割り振られる ID を取得
+				// Get ID assigned to each notification
 				latest = Platform::Windows::ToastNotification::Show(toast);
 			}
 		}
@@ -325,11 +325,11 @@
 	```
 
 
-## 4. 手書き風 UI
+## 4. Hand-drawn Style UI
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/ui/4.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -500,11 +500,11 @@
 	```
 
 
-## 5. メニュー画面
+## 5. Menu Screen
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/ui/5.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -536,11 +536,11 @@
 	```
 
 
-## 6. スプレッドシート
+## 6. Spreadsheet
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/ui/6.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -663,15 +663,15 @@
 	}
 	```
 
-## 7. 絵文字付きのボタン
+## 7. Buttons with Emoji
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/ui/7.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
-	// ボタンの背景テクスチャを作成する
+	// Create button background texture
 	Texture CreateButtonTexture()
 	{
 		MSRenderTexture renderTexture{ Size{ 160, 60 }, ColorF{ 0.96 } };
@@ -693,12 +693,12 @@
 			}
 		}
 
-		// MSRenderTexture の完成には
-		// 2D 描画命令の発行 (Flush) + MSAA の解決 (Resolve) が必要
+		// MSRenderTexture completion requires
+		// 2D drawing command issuance (Flush) + MSAA resolution (Resolve)
 		Graphics2D::Flush();
 		renderTexture.resolve();
 
-		// 完成したテクスチャを返す
+		// Return completed texture
 		return renderTexture;
 	}
 
@@ -797,15 +797,15 @@
 	}
 	```
 
-## 8. 奥行き型 UI
+## 8. Depth-Style UI
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/ui/8.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
-	// ホモグラフィ変換シェーダのパラメータ
+	// Homography transformation shader parameters
 	struct Homography
 	{
 		Float4 m1;
@@ -818,7 +818,7 @@
 		Window::Resize(1000, 600);
 		Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-		// ホモグラフィ変換用のシェーダ
+		// Homography transformation shader
 		const VertexShader vs = HLSL{ U"example/shader/hlsl/homography.hlsl", U"VS" }
 			| GLSL{ U"example/shader/glsl/homography.vert", {{ U"VSConstants2D", 0 }, { U"VSHomography", 1} } };
 		const PixelShader ps = HLSL{ U"example/shader/hlsl/homography.hlsl", U"PS" }
@@ -829,7 +829,7 @@
 			throw Error{ U"Failed to load shader files" };
 		}
 
-		// ホモグラフィ変換シェーダの定数バッファ（パラメータ）
+		// Homography transformation shader constant buffer (parameters)
 		ConstantBuffer<Homography> vsHomography;
 		ConstantBuffer<Homography> psHomography;
 
@@ -842,11 +842,11 @@
 		const ColorF PrimaryColor{ 0.98, 0.96, 0.94 };
 		const ColorF HoverColor{ 1.0, 0.96, 0.8 };
 
-		// 変換前の四角形
+		// Pre-transformation rectangle
 		const Rect BaseRect{ 0, 0, 600, 600 };
-		// 変換後の四角形
+		// Post-transformation rectangle
 		const Quad TargetQuad{ 500, 60, 1000, 0, 1000, 600, 480, 520 };
-		// ホモグラフィ変換の射影行列を得る
+		// Get homography transformation projection matrix
 		const Mat3x3 projection = Mat3x3::Homography(Rect{ 600 }.asQuad(), TargetQuad);
 
 		const Rect Button1{ 40, 40, 560, 200 };
@@ -855,34 +855,34 @@
 		const Rect Button4{ 160, 380, 440, 140 };
 		const Rect Button5{ Arg::center(230, 570), 40 };
 
-		// 各ボタンの射影後の四角形
+		// Post-projection rectangles for each button
 		const Quad Button1Quad = projection.transformRect(Button1);
 		const Quad Button2Quad = projection.transformRect(Button2);
 		const Quad Button3Quad = projection.transformRect(Button3);
 		const Quad Button4Quad = projection.transformRect(Button4);
 		const Quad Button5Quad = projection.transformRect(Button5);
 
-		// UI の描画先のレンダーテクスチャ
+		// UI render texture
 		MSRenderTexture renderTexture{ BaseRect.size };
 
 		while (System::Update())
 		{
-			// レンダーテクスチャに UI を描く
+			// Draw UI to render texture
 			{
-				// renderTexture を ColorF{ 1.0, 0.0 } でクリアし,
-				// renderTexture をレンダーターゲットにする
+				// Clear renderTexture with ColorF{ 1.0, 0.0 } and
+				// set renderTexture as render target
 				const ScopedRenderTarget2D renderTarget{ renderTexture.clear(ColorF{ 1.0, 0.0 }) };
 
-				// renderTexture のアルファ値がすべて 0 なので、最大のアルファ値を書き込むようなブレンドステートを適用する
+				// Since renderTexture alpha values are all 0, apply blend state that writes maximum alpha value
 				BlendState blend = BlendState::Default2D;
 				blend.opAlpha = BlendOp::Max;
 				blend.dstAlpha = Blend::DestAlpha;
 				blend.srcAlpha = Blend::SrcAlpha;
 				const ScopedRenderStates2D renderState{ blend };
 
-				// UI を描画する
+				// Draw UI
 				{
-					// 探索
+					// Exploration
 					{
 						Button1.movedBy(12, 10).draw(ColorF{ 0.5, 0.4, 0.3 });
 						Button1.draw(Button1Quad.mouseOver() ? HoverColor : PrimaryColor);
@@ -893,7 +893,7 @@
 						}
 					}
 
-					// 任務
+					// Mission
 					{
 						Button2.movedBy(12, 10).draw(ColorF{ 0.5, 0.4, 0.3 });
 						Button2.draw(Button2Quad.mouseOver() ? HoverColor : PrimaryColor);
@@ -905,7 +905,7 @@
 						}
 					}
 
-					// 編成
+					// Formation
 					{
 						Button3.movedBy(12, 10).draw(ColorF{ 0.5, 0.4, 0.3 });
 						Button3.draw(Button3Quad.mouseOver() ? HoverColor : PrimaryColor);
@@ -917,7 +917,7 @@
 						}
 					}
 
-					// イベント
+					// Event
 					{
 						Button4.draw(ColorF{ 0.2, 0.4, 0.6 });
 						font(U"イベント").draw(33, Arg::leftCenter(180, 415));
@@ -927,7 +927,7 @@
 						}
 					}
 
-					// ジェムとお金
+					// Gems and money
 					{
 						Rect{ 60, 540, 540, 60 }.draw(ColorF{ 0.0, 0.6 });
 						gemEmoji.scaled(0.36).drawAt(120, 570);
@@ -945,18 +945,18 @@
 					}
 				}
 
-				// MSRenderTexture の完成には
-				// 2D 描画命令の発行 (Flush) + MSAA の解決 (Resolve) が必要
+				// MSRenderTexture completion requires
+				// 2D drawing command issuance (Flush) + MSAA resolution (Resolve)
 				Graphics2D::Flush();
 				renderTexture.resolve();
 			}
 
-			// 奥行き型の UI を描く
+			// Draw depth-style UI
 			{
-				// 右端に向かって影の効果
+				// Shadow effect toward right edge
 				Rect{ 460, 0, 540, 600 }.draw(Arg::left = ColorF{ 0.0, 0.0 }, Arg::right = ColorF{ 0.0, 0.2 });
 
-				// レンダーテクスチャをホモグラフィ変換で射影する
+				// Project render texture with homography transformation
 				{
 					const ScopedCustomShader2D shader{ vs, ps };
 					const ScopedRenderStates2D sampler{ SamplerState::ClampAniso };
@@ -969,7 +969,7 @@
 					psHomography = { Float4{ inv._11_12_13, 0 }, Float4{ inv._21_22_23, 0 }, Float4{ inv._31_32_33, 0 } };
 					Graphics2D::SetPSConstantBuffer(1, psHomography);
 
-					// 1x1 の Rect に貼り付けて描くと、適切にホモグラフィ変換される
+					// Drawing on a 1x1 Rect applies homography transformation properly
 					Rect{ 1 }(renderTexture).draw();
 				}
 			}
@@ -977,11 +977,11 @@
 	}
 	```
 
-## 9. 文章中に画像を挿入する
+## 9. Inserting Images in Text
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/ui/9.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -1005,9 +1005,9 @@
 
 		const Array<Item> items =
 		{
-			{ Texture{ U"🏭"_emoji }, U"工場", U"毎ターン 6 $0 を生産する\n電力 3 $1 が必要" },
-			{ Texture{ U"🏟"_emoji }, U"スタジアム", U"毎ターン 4 $2 を供給する\n電力 2 $1 が必要" },
-			{ Texture{ U"🏖"_emoji }, U"ビーチ", U"毎ターン 2 $2 を供給する\n砂浜にしか建設できない" }
+			{ Texture{ U"🏭"_emoji }, U"Factory", U"Produces 6 $0 per turn\nRequires 3 $1 power" },
+			{ Texture{ U"🏟"_emoji }, U"Stadium", U"Supplies 4 $2 per turn\nRequires 2 $1 power" },
+			{ Texture{ U"🏖"_emoji }, U"Beach", U"Supplies 2 $2 per turn\nCan only be built on sand" }
 		};
 
 		const RoundRect r0{ 0, 0, 360, 100, 6 };
@@ -1073,11 +1073,11 @@
 	```
 
 
-## 10. タイル型のボタン
+## 10. Tile-Style Buttons
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/ui/10.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -1101,7 +1101,7 @@
 		TileButton(const Icon& icon, int32 iconSize, const Font& font, double fontSize, const String& text, const RectF& rect, const Palette& palette)
 			: TileButton{ Texture{ icon, iconSize }, iconSize, font, fontSize, text, rect, palette } {}
 
-		// Texture からアイコンを作成
+		// Create icon from Texture
 		TileButton(const TextureRegion& textureRegion, int32 iconSize, const Font& font, double fontSize, const String& text, const RectF& rect, const Palette& palette)
 			: m_icon{ textureRegion }
 			, m_iconSize{ iconSize }
@@ -1153,7 +1153,7 @@
 
 			const Transformer2D transform{ Mat3x2::Scale((1 + t * 0.06), m_rect.center()) };
 
-			// タイル
+			// Tile
 			{
 				m_rect.draw(m_palette.tileColor1.lerp(m_palette.tileColor2, t));
 
@@ -1161,13 +1161,13 @@
 					.drawFrame(0.1, (1.0 + t * 2.0), m_palette.borderColor1.lerp(m_palette.borderColor2, t));
 			}
 
-			// アイコン
+			// Icon
 			{
 				m_icon
 					.drawAt(m_rect.getRelativePoint(0.5, 0.4), m_palette.tileColor2.lerp(m_palette.tileColor1, t));
 			}
 
-			// ラベル
+			// Label
 			{
 				m_font(m_text)
 					.drawAt(m_fontSize, m_rect.getRelativePoint(0.5, 0.8), m_palette.tileColor2.lerp(m_palette.tileColor1, t));
@@ -1218,27 +1218,27 @@
 		};
 
 		Array<TileButton> buttons = {
-			{ 0xF034D_icon, IconSize1, font1, FontSize1, U"マップ", Rect{40, 40, 130}, Palette1 },
-			{ 0xF018B_icon, IconSize1, font1, FontSize1, U"イベント", Rect{180, 40, 130}, Palette1 },
-			{ 0xF0E10_icon, IconSize1, font1, FontSize1, U"バッグ", Rect{ 320, 40, 130 }, Palette1 },
-			{ 0xF05DA_icon, IconSize1, font1, FontSize1, U"冒険の記録", Rect{ 460, 40, 130 }, Palette1 },
-			{ 0xF0538_icon, IconSize1, font1, FontSize1, U"実績", Rect{ 600, 40, 130 }, Palette1 },
-			{ 0xF0493_icon, IconSize1, font1, FontSize1, U"設定", Rect{ 740, 40, 130 }, Palette1 },
+			{ 0xF034D_icon, IconSize1, font1, FontSize1, U"Map", Rect{40, 40, 130}, Palette1 },
+			{ 0xF018B_icon, IconSize1, font1, FontSize1, U"Event", Rect{180, 40, 130}, Palette1 },
+			{ 0xF0E10_icon, IconSize1, font1, FontSize1, U"Bag", Rect{ 320, 40, 130 }, Palette1 },
+			{ 0xF05DA_icon, IconSize1, font1, FontSize1, U"Adventure Log", Rect{ 460, 40, 130 }, Palette1 },
+			{ 0xF0538_icon, IconSize1, font1, FontSize1, U"Achievements", Rect{ 600, 40, 130 }, Palette1 },
+			{ 0xF0493_icon, IconSize1, font1, FontSize1, U"Settings", Rect{ 740, 40, 130 }, Palette1 },
 
-			{ 0xF034D_icon, IconSize2, font1, FontSize2, U"マップ", Rect{ 40, 200, 90 }, Palette1 },
-			{ 0xF018B_icon, IconSize2, font1, FontSize2, U"イベント", Rect{ 140, 200, 90 }, Palette1 },
-			{ 0xF0E10_icon, IconSize2, font1, FontSize2, U"バッグ", Rect{ 240, 200, 90 }, Palette1 },
-			{ 0xF05DA_icon, IconSize2, font1, FontSize2, U"冒険の記録", Rect{ 340, 200, 90 }, Palette1 },
-			{ 0xF0538_icon, IconSize2, font1, FontSize2, U"実績", Rect{ 440, 200, 90 }, Palette1 },
-			{ 0xF0493_icon, IconSize2, font1, FontSize2, U"設定", Rect{ 540, 200, 90 }, Palette1 },
+			{ 0xF034D_icon, IconSize2, font1, FontSize2, U"Map", Rect{ 40, 200, 90 }, Palette1 },
+			{ 0xF018B_icon, IconSize2, font1, FontSize2, U"Event", Rect{ 140, 200, 90 }, Palette1 },
+			{ 0xF0E10_icon, IconSize2, font1, FontSize2, U"Bag", Rect{ 240, 200, 90 }, Palette1 },
+			{ 0xF05DA_icon, IconSize2, font1, FontSize2, U"Adventure Log", Rect{ 340, 200, 90 }, Palette1 },
+			{ 0xF0538_icon, IconSize2, font1, FontSize2, U"Achievements", Rect{ 440, 200, 90 }, Palette1 },
+			{ 0xF0493_icon, IconSize2, font1, FontSize2, U"Settings", Rect{ 540, 200, 90 }, Palette1 },
 
-			{ 0xF0A70_icon, IconSize3, font2, FontSize3, U"メニュー", Rect{ 40, 360, 150, 120 }, { HSV{ 25, 1, 0.8 }, Palette::White, ColorF{ 1.0, 0.4 }, HSV{ 25, 0.5, 1 } } },
-			{ 0xF0AAF_icon, IconSize3, font2, FontSize3, U"具材", Rect{ 200, 360, 150, 120 }, { HSV{ 75, 1, 0.8 }, Palette::White, ColorF{ 1.0, 0.4 }, HSV{ 75, 0.5, 1 } } },
-			{ 0xF110E_icon, IconSize3, font2, FontSize3, U"調味料", Rect{ 360, 360, 150, 120 }, { HSV{ 125, 1, 0.8 }, Palette::White, ColorF{ 1.0, 0.4 }, HSV{ 125, 0.5, 1 } } },
-			{ 0xF0110_icon, IconSize3, font2, FontSize3, U"仕入れ", Rect{ 520, 360, 150, 120 }, { HSV{ 175, 1, 0.8 }, Palette::White, ColorF{ 1.0, 0.4 }, HSV{ 175, 0.5, 1 } } },
-			{ 0xF04DE_icon, IconSize3, font2, FontSize3, U"設備", Rect{ 680, 360, 150, 120 }, { HSV{ 225, 1, 0.8 }, Palette::White, ColorF{ 1.0, 0.4 }, HSV{ 225, 0.5, 1 } } },
-			{ 0xF00E6_icon, IconSize3, font2, FontSize3, U"宣伝", Rect{ 840, 360, 150, 120 }, { HSV{ 275, 1, 0.8 }, Palette::White, ColorF{ 1.0, 0.4 }, HSV{ 275, 0.5, 1 } } },
-			{ 0xF012A_icon, IconSize3, font2, FontSize3, U"売り上げ", Rect{ 1000, 360, 150, 120 }, { HSV{ 325, 1, 0.8 }, Palette::White, ColorF{ 1.0, 0.4 }, HSV{ 325, 0.5, 1 } } },
+			{ 0xF0A70_icon, IconSize3, font2, FontSize3, U"Menu", Rect{ 40, 360, 150, 120 }, { HSV{ 25, 1, 0.8 }, Palette::White, ColorF{ 1.0, 0.4 }, HSV{ 25, 0.5, 1 } } },
+			{ 0xF0AAF_icon, IconSize3, font2, FontSize3, U"Ingredients", Rect{ 200, 360, 150, 120 }, { HSV{ 75, 1, 0.8 }, Palette::White, ColorF{ 1.0, 0.4 }, HSV{ 75, 0.5, 1 } } },
+			{ 0xF110E_icon, IconSize3, font2, FontSize3, U"Seasonings", Rect{ 360, 360, 150, 120 }, { HSV{ 125, 1, 0.8 }, Palette::White, ColorF{ 1.0, 0.4 }, HSV{ 125, 0.5, 1 } } },
+			{ 0xF0110_icon, IconSize3, font2, FontSize3, U"Procurement", Rect{ 520, 360, 150, 120 }, { HSV{ 175, 1, 0.8 }, Palette::White, ColorF{ 1.0, 0.4 }, HSV{ 175, 0.5, 1 } } },
+			{ 0xF04DE_icon, IconSize3, font2, FontSize3, U"Equipment", Rect{ 680, 360, 150, 120 }, { HSV{ 225, 1, 0.8 }, Palette::White, ColorF{ 1.0, 0.4 }, HSV{ 225, 0.5, 1 } } },
+			{ 0xF00E6_icon, IconSize3, font2, FontSize3, U"Advertising", Rect{ 840, 360, 150, 120 }, { HSV{ 275, 1, 0.8 }, Palette::White, ColorF{ 1.0, 0.4 }, HSV{ 275, 0.5, 1 } } },
+			{ 0xF012A_icon, IconSize3, font2, FontSize3, U"Sales", Rect{ 1000, 360, 150, 120 }, { HSV{ 325, 1, 0.8 }, Palette::White, ColorF{ 1.0, 0.4 }, HSV{ 325, 0.5, 1 } } },
 		};
 
 		while (System::Update())
@@ -1258,11 +1258,11 @@
 	}
 	```
 
-## 11. ゲームに便利なアイコン集
+## 11. Game Icons Collection
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/ui/11.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -1278,22 +1278,22 @@
 
 		while (System::Update())
 		{
-			SimpleGUI::Button(U"\U000F0009 アカウント", Vec2{ 20, 20 }, 220);
-			SimpleGUI::Button(U"\U000F01F0 お知らせ", Vec2{ 20, 60 }, 220);
-			SimpleGUI::Button(U"\U000F01DA ダウンロード", Vec2{ 20, 100 }, 220);
-			SimpleGUI::Button(U"\U000F01A5 最高記録", Vec2{ 20, 140 }, 220);
-			SimpleGUI::Button(U"\U000F0193 保存", Vec2{ 20, 180 }, 220);
+			SimpleGUI::Button(U"\U000F0009 Account", Vec2{ 20, 20 }, 220);
+			SimpleGUI::Button(U"\U000F01F0 Notifications", Vec2{ 20, 60 }, 220);
+			SimpleGUI::Button(U"\U000F01DA Download", Vec2{ 20, 100 }, 220);
+			SimpleGUI::Button(U"\U000F01A5 High Score", Vec2{ 20, 140 }, 220);
+			SimpleGUI::Button(U"\U000F0193 Save", Vec2{ 20, 180 }, 220);
 			SimpleGUI::Button(U"\U000F1268 Copy to clipboard", Vec2{ 20, 220 }, 220);
-			SimpleGUI::Button(U"\U000F0189 メッセージ", Vec2{ 20, 260 }, 220);
-			SimpleGUI::Button(U"\U000F0493 設定", Vec2{ 20, 300 }, 220);
-			SimpleGUI::Button(U"\U000F1398 中断する", Vec2{ 20, 340 }, 220);
+			SimpleGUI::Button(U"\U000F0189 Message", Vec2{ 20, 260 }, 220);
+			SimpleGUI::Button(U"\U000F0493 Settings", Vec2{ 20, 300 }, 220);
+			SimpleGUI::Button(U"\U000F1398 Pause", Vec2{ 20, 340 }, 220);
 			SimpleGUI::Button(U"\U000F0E1E OK", Vec2{ 20, 380 }, 220);
-			SimpleGUI::Button(U"\U000F0639 カードを配る", Vec2{ 20, 420 }, 220);
-			SimpleGUI::Button(U"\U000F0240 領土を広げる", Vec2{ 20, 460 }, 220);
-			SimpleGUI::Button(U"\U000F02A1 プレゼントする", Vec2{ 20, 500 }, 220);
-			SimpleGUI::Button(U"\U000F02DA 履歴", Vec2{ 20, 540 }, 220);
+			SimpleGUI::Button(U"\U000F0639 Deal Cards", Vec2{ 20, 420 }, 220);
+			SimpleGUI::Button(U"\U000F0240 Expand Territory", Vec2{ 20, 460 }, 220);
+			SimpleGUI::Button(U"\U000F02A1 Give Present", Vec2{ 20, 500 }, 220);
+			SimpleGUI::Button(U"\U000F02DA History", Vec2{ 20, 540 }, 220);
 
-			// 音量調整
+			// Volume control
 			SimpleGUI::Slider((0.5 < volume) ? U"\U000F057E"
 				: (0.0 < volume) ? U"\U000F0580" : U"\U000F0581", volume, Vec2{ 260, 20 }, 30, 170);
 
@@ -1313,36 +1313,36 @@
 				++down;
 			}
 
-			SimpleGUI::Button(U"公式サイト \U000F0327", Vec2{ 260, 140 }, 200);
-			SimpleGUI::Button(U"\U000F0544 公式 Twitter", Vec2{ 260, 180 }, 200);
-			SimpleGUI::Button(U"\U000F018C 任務一覧", Vec2{ 260, 220 }, 200);
-			SimpleGUI::Button(U"\U000F0982 マップ", Vec2{ 260, 260 }, 200);
-			SimpleGUI::Button(U"\U000F034E 現在地", Vec2{ 260, 300 }, 200);
-			SimpleGUI::Button(U"\U000F0A7A 削除", Vec2{ 260, 340 }, 200);
-			SimpleGUI::Button(U"\U000F05B7 修繕", Vec2{ 260, 380 }, 200);
-			SimpleGUI::Button(U"\U000F0349 検索", Vec2{ 260, 420 }, 200);
-			SimpleGUI::Button(U"\U000F0432 QR 作成", Vec2{ 260, 460 }, 200);
-			SimpleGUI::Button(U"\U000F0433 QR 読み込み", Vec2{ 260, 500 }, 200);
-			SimpleGUI::Button(U"\U000F04E6 同期", Vec2{ 260, 540 }, 200);
+			SimpleGUI::Button(U"Official Website \U000F0327", Vec2{ 260, 140 }, 200);
+			SimpleGUI::Button(U"\U000F0544 Official Twitter", Vec2{ 260, 180 }, 200);
+			SimpleGUI::Button(U"\U000F018C Mission List", Vec2{ 260, 220 }, 200);
+			SimpleGUI::Button(U"\U000F0982 Map", Vec2{ 260, 260 }, 200);
+			SimpleGUI::Button(U"\U000F034E Current Location", Vec2{ 260, 300 }, 200);
+			SimpleGUI::Button(U"\U000F0A7A Delete", Vec2{ 260, 340 }, 200);
+			SimpleGUI::Button(U"\U000F05B7 Repair", Vec2{ 260, 380 }, 200);
+			SimpleGUI::Button(U"\U000F0349 Search", Vec2{ 260, 420 }, 200);
+			SimpleGUI::Button(U"\U000F0432 Create QR", Vec2{ 260, 460 }, 200);
+			SimpleGUI::Button(U"\U000F0433 Read QR", Vec2{ 260, 500 }, 200);
+			SimpleGUI::Button(U"\U000F04E6 Sync", Vec2{ 260, 540 }, 200);
 
-			// ハート
+			// Hearts
 			iconFont(U"\U000F02D1\U000F02D1\U000F02D1\U000F06DF").draw(500, 20, ColorF{ 0.8, 0.2, 0.2 });
 
-			// サイコロ
+			// Dice
 			iconFont(U"\U000F037D\U000F030C\U000F0297").draw(500, 80, ColorF{ 0.25 });
 
-			// 操作方法
+			// Controls
 			iconFont(U"\U000F114A\U000F114B\U000F114C\U000F114D\U000F114E\U000F114F").draw(500, 140, ColorF{ 0.25 });
 
-			// 動画の再生
+			// Video playback
 			Rect{ 500, 200, 240, 160 }.draw(ColorF{ 0.6 });
 			iconFont(U"\U000F040C").drawAt(80, 620, 280, ColorF{ 1.0 });
 
-			// セリフアイコン
+			// Dialog icon
 			faceEmoji.scaled(0.75).drawAt(560, 440);
 			iconFont(U"\U000F1170").drawAt(50, 630, 400, ColorF{ 0.1 });
 
-			// 拡大縮小
+			// Zoom in/out
 			Circle{ 540, 530, 30 }.draw();
 			iconFont(U"\U000F06EC").drawAt(50, 540, 530, ColorF{ 0.1 });
 			Circle{ 620, 530, 30 }.draw();
@@ -1351,38 +1351,38 @@
 	}
 	```
 
-## 12. タブ
+## 12. Tabs
 
 ![](https://raw.githubusercontent.com/Siv3D/Siv3D-Samples/main/Samples/TabSample/Screenshot/2.png)
 
-[Siv3D-Sample | タブ :material-open-in-new:](https://github.com/Siv3D/Siv3D-Samples/blob/main/Samples/TabSample){:target="_blank" .md-button}
+[Siv3D-Sample | Tabs :material-open-in-new:](https://github.com/Siv3D/Siv3D-Samples/blob/main/Samples/TabSample){:target="_blank" .md-button}
 
 
-## 13. HP バー
+## 13. HP Bar
 
 ![](https://raw.githubusercontent.com/Siv3D/Siv3D-Samples/main/Samples/HPBar/Screenshot/2.png)
 
-[Siv3D-Sample | HP バー :material-open-in-new:](https://github.com/Siv3D/Siv3D-Samples/blob/main/Samples/HPBar){:target="_blank" .md-button}
+[Siv3D-Sample | HP Bar :material-open-in-new:](https://github.com/Siv3D/Siv3D-Samples/blob/main/Samples/HPBar){:target="_blank" .md-button}
 
 
-## 14. パイメニュー
+## 14. Pie Menu
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/ui/14.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
-	/// @brief パイメニュー用のアイコン
+	/// @brief Pie menu icon
 	class PieMenuIcon
 	{
 	public:
 
 		PieMenuIcon() = default;
 
-		/// @brief パイメニュー用のアイコンを作成します。
-		/// @param texture アイコンのテクスチャ
-		/// @param color アイコンの描画色
+		/// @brief Creates an icon for pie menu.
+		/// @param texture Icon texture
+		/// @param color Icon drawing color
 		PieMenuIcon(const Texture& texture, const ColorF& color)
 			: m_texture{ texture }
 			, m_blurTexture{ m_texture.size(), ColorF{ 0.0, 1.0 } }
@@ -1390,20 +1390,20 @@
 		{
 			RenderTexture m_internalTexture{ m_texture.size() };
 
-			// アイコンをやや小さめに描画する
+			// Draw icon slightly smaller
 			{
 				const ScopedRenderTarget2D target{ m_blurTexture };
 				m_texture.scaled(0.8).drawAt(m_blurTexture.size() * 0.5);
 			}
 
-			// ガウスぼかしを 2 回かける
+			// Apply Gaussian blur twice
 			Shader::GaussianBlur(m_blurTexture, m_internalTexture, m_blurTexture);
 			Shader::GaussianBlur(m_blurTexture, m_internalTexture, m_blurTexture);
 		}
 
 		void draw() const
 		{
-			// 背景のぼかした影を減算ブレンディングで描画する
+			// Draw background blurred shadow with subtractive blending
 			{
 				const ScopedRenderStates2D blend{ BlendState::Subtractive };
 				m_blurTexture.scaled(1.35).drawAt(Vec2{ 0, 0 }, ColorF{ 0.25 });
@@ -1420,42 +1420,42 @@
 		ColorF m_color;
 	};
 
-	/// @brief パイメニュークラス
+	/// @brief Pie menu class
 	class PieMenu
 	{
 	public:
 
-		/// @brief パイメニューのスタイル
+		/// @brief Pie menu style
 		struct Style
 		{
-			/// @brief パイメニューの外側の半径
+			/// @brief Pie menu outer radius
 			double outerRadius = 180.0;
 
-			/// @brief パイメニューの内側の半径
+			/// @brief Pie menu inner radius
 			double innerRadius = 90.0;
 
-			/// @brief アクティブなアイテムが外側に移動する距離
+			/// @brief Distance active item moves outward
 			double pieOuterOffset = 10.0;
 
-			/// @brief アクティブなアイテムの枠の太さ
+			/// @brief Active item frame thickness
 			double outlineThickness = 8.0;
 
-			/// @brief パイメニューの色
+			/// @brief Pie menu color
 			ColorF pieColor{ 0.0, 0.75 };
 
-			/// @brief パイメニューの内側の枠の色
+			/// @brief Pie menu inner frame color
 			ColorF pieInnerFrameColor{ 0.6 };
 
-			/// @brief 無効なアイテムの色
+			/// @brief Disabled item color
 			ColorF disabledPieColor{ 0.36, 0.4 };
 
-			/// @brief アクティブなアイテムの色
+			/// @brief Active item color
 			ColorF activePieColor{ 0.36, 0.84, 1.0 };
 
-			/// @brief パイメニューの外側の枠の色
+			/// @brief Pie menu outer frame color
 			ColorF activePieOutlineColor{ 1.0, 0.9, 0.2 };
 
-			/// @brief アイテムを指す矢印の色
+			/// @brief Item pointer arrow color
 			ColorF arrowColor{ 1.0, 0.9, 0.2 };
 
 			[[nodiscard]]
@@ -1468,10 +1468,10 @@
 		SIV3D_NODISCARD_CXX20
 		PieMenu() = default;
 
-		/// @brief パイメニューを作成します。
-		/// @param icons パイメニューのアイコン
-		/// @param center パイメニューの中心座標
-		/// @param style パイメニューのスタイル
+		/// @brief Creates a pie menu.
+		/// @param icons Pie menu icons
+		/// @param center Pie menu center coordinates
+		/// @param style Pie menu style
 		SIV3D_NODISCARD_CXX20
 		PieMenu(const Array<PieMenuIcon>& icons, const Vec2& center, const Style& style = Style::Default())
 			: m_itemCount{ static_cast<int32>(icons.size()) }
@@ -1498,7 +1498,7 @@
 				const Array<Vec2> outline = circle.stretched(activePieOffset + outlineThicknessHalf)
 					.arcAsPolygon((-m_pieAngle / 2), m_pieAngle, (m_style.outerRadius + activePieOffset - m_style.innerRadius + m_style.outlineThickness), 0.0).outer();
 
-				// m_outlinePolygon の生成に失敗する確率を下げるためのおまじない
+				// Incantation to reduce probability of m_outlinePolygon generation failure
 				{
 					m_outlinePolygon = LineString{ outline.rotated(2) }.densified(4.0).calculateRoundBufferClosed(outlineThicknessHalf);
 
@@ -1510,17 +1510,17 @@
 			}
 		}
 
-		/// @brief パイメニューのアイテム数を返します。
-		/// @return パイメニューのアイテム数
+		/// @brief Returns the number of pie menu items.
+		/// @return Number of pie menu items
 		[[nodiscard]]
 		size_t size() const noexcept
 		{
 			return m_itemCount;
 		}
 
-		/// @brief パイメニューの指定したアイテムの有効・無効を設定します。
-		/// @param index アイテムのインデックス
-		/// @param enabled 有効にする場合 true, 無効にする場合は false
+		/// @brief Sets enabled/disabled state for specified pie menu item.
+		/// @param index Item index
+		/// @param enabled true to enable, false to disable
 		/// @return *this
 		PieMenu& setEnabled(size_t index, bool enabled) noexcept
 		{
@@ -1528,24 +1528,24 @@
 			return *this;
 		}
 
-		/// @brief パイメニューの指定したアイテムが有効かを返します。
-		/// @param index アイテムのインデックス
-		/// @return アイテムが有効な場合 true, 無効な場合は false
+		/// @brief Returns whether specified pie menu item is enabled.
+		/// @param index Item index
+		/// @return true if item is enabled, false if disabled
 		[[nodiscard]]
 		bool getEnabled(size_t index) const noexcept
 		{
 			return m_enabled[index];
 		}
 
-		/// @brief パイメニューのアニメーションをリセットします。
+		/// @brief Resets pie menu animation.
 		void reset() noexcept
 		{
 			m_selectedPie.reset();
 			m_transitions.fill(Transition{ 0.1s, 0.2s });
 		}
 
-		/// @brief パイメニューを更新します。
-		/// @return 選択されているアイテムのインデックス。選択されていない場合は none
+		/// @brief Updates pie menu.
+		/// @return Index of selected item. none if no item is selected
 		Optional<int32> update()
 		{
 			m_selectedPie.reset();
@@ -1571,7 +1571,7 @@
 			return m_selectedPie;
 		}
 
-		/// @brief パイメニューを描画します。
+		/// @brief Draws pie menu.
 		void draw() const
 		{
 			for (int32 i = 0; i < m_itemCount; ++i)
@@ -1681,16 +1681,16 @@
 
 		while (System::Update())
 		{
-			// 右クリックされたらパイメニューを登場させる
+			// Show pie menu on right click
 			if (MouseR.down())
 			{
 				pieMenu = std::make_unique<PieMenu>(icons, Cursor::PosF());
 
-				// 1 番目と 3 番目のアイテムを無効化する
+				// Disable 1st and 3rd items
 				pieMenu->setEnabled(1, false).setEnabled(3, false);
 			}
 
-			// 背景の市松模様を描画する
+			// Draw background checkerboard pattern
 			for (int32 y = 0; y < (Scene::Height() / CellSize); ++y)
 			{
 				for (int32 x = 0; x < (Scene::Width() / CellSize); ++x)
@@ -1702,14 +1702,14 @@
 				}
 			}
 
-			// パイメニューがあれば
+			// If pie menu exists
 			if (pieMenu)
 			{
 				const Optional<int32> selected = pieMenu->update();
 
 				pieMenu->draw();
 
-				// 右クリックが離されたら、選択されたアイテムを表示する
+				// When right click is released, display selected item
 				if (MouseR.up())
 				{
 					ClearPrint();
@@ -1722,9 +1722,8 @@
 	```
 
 
-## 15. 数値パッド
+## 15. Numeric Keypad
 
 ![](https://raw.githubusercontent.com/Siv3D/Siv3D-Samples/main/Samples/Numpad/Screenshot/1.png)
 
-[Siv3D-Sample | 数値パッド :material-open-in-new:](https://github.com/Siv3D/Siv3D-Samples/blob/main/Samples/Numpad){:target="_blank" .md-button}
-
+[Siv3D-Sample | Numeric Keypad :material-open-in-new:](https://github.com/Siv3D/Siv3D-Samples/blob/main/Samples/Numpad){:target="_blank" .md-button}

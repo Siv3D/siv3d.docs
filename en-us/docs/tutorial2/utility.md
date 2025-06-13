@@ -1,25 +1,26 @@
-# 35. 便利な関数
-Siv3D プログラミングに役立つ小さな便利関数や機能を学びます。
+# 21. Useful Functions
+Learn about several small functions that make Siv3D programming more convenient.
 
-## 35.1 最小値、最大値
-`Min()`, `Max()` は、渡された引数から最小値、最大値を返します。2 つの引数の型が異なる場合は `Min<size_t>()` のように型を明示的に指定します。
+## 21.1 Minimum and Maximum Values
+- `Min(a, b)` returns the smaller of `a` and `b`
+- `Max(a, b)` returns the larger of `a` and `b`
+- Both arguments must be of the same type
+- If the arguments are of different types, explicitly specify the type like `Min<size_t>(a, b)`
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	const Array<int32> v = { 10, 20, 30 };
+	Print << Min(10, 20);
+	Print << Max(10, 20);
 
-	Print << Max(100, 200);
-	Print << Max(1.234, -3.456);
-	Print << Max<size_t>(v.size(), 10);
-	Print << Max({ 11, 44, 22, 55, 33 });
+	Print << Min(12.3, 45.6);
+	Print << Max(12.3, 45.6);
 
-	Print << Min(100, 200);
-	Print << Min(1.234, -3.456);
-	Print << Min<size_t>(v.size(), 10);
-	Print << Min({ 11, 44, 22, 55, 33 });
+	String s = U"Hello";
+	Print << Min<size_t>(s.size(), 4);
+	Print << Max<size_t>(s.size(), 4);
 
 	while (System::Update())
 	{
@@ -27,23 +28,31 @@ void Main()
 	}
 }
 ```
+```txt title="Output"
+10
+20
+12.3
+45.6
+4
+5
+```
 
 
-## 35.2 指定した範囲に収める
-`Clamp(x, min, max)` は、値 `x` を `min` 以上、`max` 以下に収めて返します。
+## 21.2 Clamping to a Range
+- `Clamp(value, min, max)` returns `value` clamped to the range `[min, max]`
+	- `Clamp(-20, 0, 100)` returns `0`
+	- `Clamp(50, 0, 100)` returns `50`
+	- `Clamp(120, 0, 100)` returns `100`
+- All three arguments must be of the same type
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Print << Clamp(10, 0, 100);
-	Print << Clamp(-10, 0, 100);
-	Print << Clamp(110, 0, 100);
-
-	Print << Clamp(9.99, -1.0, 1.0);
-	Print << Clamp(-9.99, -1.0, 1.0);
-	Print << Clamp(0.0, -1.0, 1.0);
+	Print << Clamp(-20, 0, 100);
+	Print << Clamp(50, 0, 100);
+	Print << Clamp(120, 0, 100);
 
 	while (System::Update())
 	{
@@ -51,23 +60,25 @@ void Main()
 	}
 }
 ```
+``` txt title="Output"
+0
+50
+100
+```
 
 
-## 35.3 指定した範囲内かを調べる
-`InRange(x, min, max)` は、値 `x` が `min` 以上 `max` 以下であるかを `bool` 型で返します。
+## 21.3 Checking if in Range
+- `InRange(value, min, max)` returns a `bool` indicating whether `value` is within the range `[min, max]`
+	- `InRange(50, 0, 100)` returns `true`
+	- `InRange(120, 0, 100)` returns `false`
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	Print << InRange(10, 0, 100);
-	Print << InRange(-10, 0, 100);
-	Print << InRange(110, 0, 100);
-
-	Print << InRange(9.99, -1.0, 1.0);
-	Print << InRange(-9.99, -1.0, 1.0);
-	Print << InRange(0.0, -1.0, 1.0);
+	Print << InRange(50, 0, 100);
+	Print << InRange(120, 0, 100);
 
 	while (System::Update())
 	{
@@ -75,30 +86,26 @@ void Main()
 	}
 }
 ```
+```txt title="Output"
+true
+false
+```
 
 
-## 35.4 奇数か偶数かを判定する
-`IsOdd(n)`, `IsEven(n)` は、それぞれ値 `n` が奇数であるか、偶数であるかを `bool` 型で返します。
-
-!!! info "偶数と奇数の英語の覚え方"
-    「Odd → 3 文字 → 奇数」「Even → 4 文字 → 偶数」と覚えると簡単です。
-
+## 21.4 Checking Odd and Even Numbers
+- `IsOdd(n)` returns a `bool` indicating whether the integer `n` is odd
+- `IsEven(n)` returns a `bool` indicating whether the integer `n` is even
+	
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// IsOdd: 奇数であるか判定する
-	Print << IsOdd(1);
-	Print << IsOdd(0);
-	Print << IsOdd(-11);
-	Print << IsOdd(9876543210ULL);
+	Print << IsOdd(3);
+	Print << IsOdd(4);
 
-	// IsEven: 偶数であるか判定する
-	Print << IsEven(1);
-	Print << IsEven(0);
-	Print << IsEven(-11);
-	Print << IsEven(9876543210ULL);
+	Print << IsEven(3);
+	Print << IsEven(4);
 
 	while (System::Update())
 	{
@@ -106,46 +113,30 @@ void Main()
 	}
 }
 ```
+```txt title="Output"
+true
+false
+false
+true
+```
 
 
-## 35.5 指定した数の範囲をループする
-Siv3D には、`for (int32 i = 0; i < N; ++i)` を `for (auto i : step(N))` と短く書ける機能があります。
-
-また、`for (auto i : Range(from, to))` (ただし `from <= to`) は、`for (auto i = from; i <= to; ++i)` の代わりになります。
-
-`for (auto i : Range(from, to, step))` は
-
-- `0 < step` のとき `for (auto i = from; i <= to; i += step)`
-- `step < 0` のとき `for (auto i = from; to <= i; i += step)`
-
-の代わりになります。
+## 21.5 Absolute Value
+- `Abs(value)` returns the absolute value of `value`
+	- `Abs(-10)` returns `10`
+	- `Abs(10)` returns `10`
+	- `Abs(-3.14)` returns `3.14`
+	- `Abs(3.14)` returns `3.14`
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// 0, 1, 2
-	for (auto i : step(3))
-	{
-		Print << i;
-	}
-
-	Print << U"---";
-
-	// 5, 6, 7, 8, 9, 10
-	for (auto i : Range(5, 10))
-	{
-		Print << i;
-	}
-
-	Print << U"---";
-
-	// 20, 18, 16, 14, 12, 10
-	for (auto i : Range(20, 10, -2))
-	{
-		Print << i;
-	}
+	Print << Abs(-10);
+	Print << Abs(10);
+	Print << Abs(-3.14);
+	Print << Abs(3.14);
 
 	while (System::Update())
 	{
@@ -153,50 +144,30 @@ void Main()
 	}
 }
 ```
-
-
-## 35.6 二重ループを 1 つにまとめる
-`for (auto p : step({size.w, size.h}))` および `for (auto p : step(size))` (`size` は `Size` 型) は、
-
-```cpp
-for (int32 y = 0; y < size.h; ++y)
-{
-	for (int32 x = 0; x < size.w; ++x)
-	{
-		Point p{ x, y };
-	}
-}
+```txt title="Output"
+10
+10
+3.14
+3.14
 ```
 
-の代わりになります。ただし、コンパイラによっては若干のオーバーヘッドが生じるため、速度が最優先の場面では通常の二重ループを書くことが望ましいです。
+
+## 21.6 Absolute Difference
+- `AbsDiff(a, b)` returns the absolute difference between `a` and `b`
+	- `AbsDiff(10, 20)` returns `10`
+	- `AbsDiff(20, 10)` returns `10`
+	- `AbsDiff(3.14, 2.71)` returns `0.43`
+	- `AbsDiff(2.71, 3.14)` returns `0.43`
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	for (auto p : step({ 2, 3 }))
-	{
-		Print << p;
-	}
-
-	Print << U"---";
-
-	const Size size{ 2, 4 };
-
-	for (auto p : step(size))
-	{
-		Print << p;
-	}
-
-	Print << U"---";
-
-	const Grid grid{ {10, 20}, {30, 40} };
-
-	for (auto p : step(grid.size()))
-	{
-		Print << grid[p];
-	}
+	Print << AbsDiff(10, 20);
+	Print << AbsDiff(20, 10);
+	Print << AbsDiff(3.14, 2.71);
+	Print << AbsDiff(2.71, 3.14);
 
 	while (System::Update())
 	{
@@ -204,10 +175,16 @@ void Main()
 	}
 }
 ```
+```txt title="Output"
+10
+10
+0.43
+0.43
+```
 
 
-## 35.7 インデックス付きの range-based for
-range-based for ループにおいて `Indexed()` を使うと、整数のインデックスと範囲の各要素の両方を同時に扱えます。
+## 21.7 Indexed Range-based for Loop
+- In range-based for loops, you can use `Indexed()` to handle both integer indices and elements of the range simultaneously
 
 ```cpp
 # include <Siv3D.hpp>
@@ -218,7 +195,7 @@ void Main()
 
 	for (auto&& [i, animal] : Indexed(animals))
 	{
-        Print << U"{}: {}"_fmt(i, animal);
+		Print << U"{}: {}"_fmt(i, animal);
 	}
 
 	while (System::Update())
@@ -227,21 +204,32 @@ void Main()
 	}
 }
 ```
+```txt title="Output"
+0: cat
+1: dog
+2: bird
+```
 
 
-## 35.8 絶対値を求める
-`Abs(x)` は `x` の絶対値を返します。
+## 21.8 Indexed Range-based for Loop (Reference)
+- To get each element by reference in an indexed range-based for loop, use `IndexedRef()`
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// 絶対値
-	Print << Abs(123);
-	Print << Abs(-123);
-	Print << Abs(3.45);
-	Print << Abs(-3.45);
+	Array<int32> numbers = { 10, 20, 30 };
+
+	for (auto&& [i, number] : IndexedRef(numbers))
+	{
+		number += i;
+	}
+
+	for (const auto& number : numbers)
+	{
+		Print << number;
+	}
 
 	while (System::Update())
 	{
@@ -249,21 +237,33 @@ void Main()
 	}
 }
 ```
+```txt title="Output"
+10
+21
+32
+```
 
 
-## 35.9 差の絶対値を求める
-`AbsDiff(a, b)` は `a` と `b` の差の絶対値を返します。
+## 21.9 Loop Shorthand
+- You can write `for (int32 i = 0; i < N; ++i)` more concisely as `for (auto i : step(N))`
+- You can write `for (auto i = from; i <= to; ++i)` more concisely as `for (auto i : Range(from, to))`
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// 差の絶対値
-	Print << AbsDiff(50, 10);
-	Print << AbsDiff(10u, 50u);
-	Print << AbsDiff(-2000000000, 2000000000);
-	Print << AbsDiff(1.23, -1.23);
+	for (auto i : step(3))
+	{
+		Print << i;
+	}
+
+	Print << U"---";
+
+	for (auto i : Range(5, 10))
+	{
+		Print << i;
+	}
 
 	while (System::Update())
 	{
@@ -271,26 +271,38 @@ void Main()
 	}
 }
 ```
+```txt title="Output"
+0
+1
+2
+---
+5
+6
+7
+8
+9
+10
+```
 
 
-## 35.10 文字の性質を調べる
-文字（ASCII 文字）の性質を調べる次のような関数があります。
+## 21.10 Checking Character Properties
+- There are functions to check properties of characters (mainly ASCII characters)
 
-| 関数 | 説明 |
+| Function | Description |
 |--|--|
-|`bool IsASCII(char32)`| ASCII 文字であるかを返す |
-|`bool IsDigit(char32)`| 10 進数の数字であるかを返す |
-|`bool IsLower(char32)`| アルファベットの小文字であるかを返す |
-|`bool IsUpper(char32)`| アルファベットの大文字であるかを返す |
-|`bool IsAlpha(char32)`| 文字がアルファベットであるかを返す |
-|`bool IsAlnum(char32)`| 文字がアルファベットもしくは数字であるかを返す |
-|`bool IsXdigit(char32)`| 文字が 16 進数の数字であるかを返す |
-|`bool IsControl(char32)`| 文字が制御文字であるかを返す |
-|`bool IsBlank(char32)`| 文字が空白文字 (`' '`, `'\t'`, および全角空白) であるかを返す |
-|`bool IsSpace(char32)`| 文字が空白類文字 (`' '`, `'\t'`, `'\n'`, `'\v'`, `'\f'`, `'\r'`, および全角空白) であるかを返す |
-|`bool IsPrint(char32)`| 文字が印字可能文字であるかを返す |
-|`char32 ToLower(char32)`| アルファベットの大文字を小文字にする |
-|`char32 ToUpper(char32)`| アルファベットの小文字を大文字にする |
+|`bool IsASCII(char32)`| Returns whether the character is an ASCII character |
+|`bool IsDigit(char32)`| Returns whether the character is a decimal digit |
+|`bool IsLower(char32)`| Returns whether the character is a lowercase letter |
+|`bool IsUpper(char32)`| Returns whether the character is an uppercase letter |
+|`bool IsAlpha(char32)`| Returns whether the character is an alphabetic letter |
+|`bool IsAlnum(char32)`| Returns whether the character is alphabetic or numeric |
+|`bool IsXdigit(char32)`| Returns whether the character is a hexadecimal digit |
+|`bool IsControl(char32)`| Returns whether the character is a control character |
+|`bool IsBlank(char32)`| Returns whether the character is a blank character (`' '`, `'\t'`, and full-width space) |
+|`bool IsSpace(char32)`| Returns whether the character is a whitespace character (`' '`, `'\t'`, `'\n'`, `'\v'`, `'\f'`, `'\r'`, and full-width space) |
+|`bool IsPrint(char32)`| Returns whether the character is a printable character |
+|`char32 ToLower(char32)`| Converts an uppercase letter to lowercase |
+|`char32 ToUpper(char32)`| Converts a lowercase letter to uppercase |
 
 ```cpp
 # include <Siv3D.hpp>
@@ -309,69 +321,54 @@ void Main()
 	}
 }
 ```
-
-
-## 35.11 任意の場所に簡単にテキストを簡易表示する
-`PutText(s, pos)` は、文字列 `s` を座標 `pos` を中心に描きます。表示には `Print` と同じフォントが使われます。`Print` とは異なり、出力結果がフレームをまたいで残り続けることはありません。
-
-`PutText(s, Arg::topLeft = pos)` のように基準位置を指定することもできます。
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	while (System::Update())
-	{
-		// 画面の中心にテキストを簡易表示する
-		PutText(DateTime::Now().format(), Scene::Center());
-
-        // マウスカーソルの右上の位置にテキストを簡易表示する
-		PutText(U"Hello, Siv3D!", Arg::bottomLeft = Cursor::Pos());
-	}
-}
+```txt title="Output"
+true false
+true false
+true false
+true false
+a a
 ```
 
 
-## 35.12 数学定数
-Siv3D には次のような数学定数が用意されています。
+## 21.11 Mathematical Constants
+- The following mathematical constants are available
 
-=== "double 型"
-    | 名前 | 説明 | 値 (実際より高い精度の桁数で示しています) |
+=== "double type"
+    | Name | Description | Value (shown with higher precision than actual) |
     |--|--|--|
-    | `Math::E` | 自然対数の底 | 2.718281828459045235360287471352662498 |
-    | `Math::Log2E` | 2 を底とする e の対数 | 1.442695040888963407359924681001892137 |
-    | `Math::Log10E` | 10 を底とする e の対数 | 0.434294481903251827651128918916605082 |
-    | `Math::Pi` | π（円周率） | 3.141592653589793238462643383279502884 |
+    | `Math::E` | Base of natural logarithm | 2.718281828459045235360287471352662498 |
+    | `Math::Log2E` | Base-2 logarithm of e | 1.442695040888963407359924681001892137 |
+    | `Math::Log10E` | Base-10 logarithm of e | 0.434294481903251827651128918916605082 |
+    | `Math::Pi` | π (pi) | 3.141592653589793238462643383279502884 |
     | `Math::QuarterPi` | π/4 | 0.785398163397448309615660845819875721 |
     | `Math::OneThirdPi` | π/3 | 1.047197551196597746154214461093167628 |
     | `Math::HalfPi` | π/2 | 1.570796326794896619231321691639751442 |
     | `Math::TwoPi` | 2π | 6.283185307179586476925286766559005768 |
-    | `Math::Tau` | τ（2π） | 6.283185307179586476925286766559005768 |
+    | `Math::Tau` | τ (2π) | 6.283185307179586476925286766559005768 |
     | `Math::InvTwoPi` | 1/(2π) | 0.159154943091895335768883763372514362 |
     | `Math::InvPi` | 1/π | 0.318309886183790671537767526745028724 |
     | `Math::InvSqrtPi` | 1/√π | 0.564189583547756286948079451560772586 |
-    | `Math::Ln2` | 2 の自然対数 | 0.693147180559945309417232121458176568 |
-    | `Math::Ln10` | 10 の自然対数 | 2.302585092994045684017991454684364208 |
+    | `Math::Ln2` | Natural logarithm of 2 | 0.693147180559945309417232121458176568 |
+    | `Math::Ln10` | Natural logarithm of 10 | 2.302585092994045684017991454684364208 |
     | `Math::Sqrt2` | √2 | 1.414213562373095048801688724209698078 |
     | `Math::Sqrt3` | √3 | 1.732050807568877293527446341505872366 |
     | `Math::InvSqrt2` | 1/√2 | 0.707106781186547524400844362104849039 |
     | `Math::InvSqrt3` | 1/√3 | 0.577350269189625764509148780501957456 |
-    | `Math::EGamma` | オイラーの定数 | 0.577215664901532860606512090082402431 |
-    | `Math::Phi` | 黄金数 (φ) | 1.618033988749894848204586834365638117 |
+    | `Math::EGamma` | Euler's constant | 0.577215664901532860606512090082402431 |
+    | `Math::Phi` | Golden ratio (φ) | 1.618033988749894848204586834365638117 |
     | `Math::QNaN` | Quiet NaN | QNaN |
     | `Math::NaN` | Signaling NaN | SNaN |
     | `Math::Inf` | Inf | Inf |
 
-=== "float 型"
-    | 名前 | 説明 | 値 (実際より高い精度の桁数で示しています) |
+=== "float type"
+    | Name | Description | Value (shown with higher precision than actual) |
     |--|--|--|
-    | `Math::PiF` | π（円周率） | 3.141592653589793238462643383279502884 |
+    | `Math::PiF` | π (pi) | 3.141592653589793238462643383279502884 |
     | `Math::QuarterPiF` | π/4 | 0.785398163397448309615660845819875721 |
     | `Math::OneThirdPiF` | π/3 | 1.047197551196597746154214461093167628 |
     | `Math::HalfPiF` | π/2 | 1.570796326794896619231321691639751442 |
     | `Math::TwoPiF` | 2π | 6.283185307179586476925286766559005768 |
-    | `Math::TauF` | τ（2π） | 6.283185307179586476925286766559005768 |
+    | `Math::TauF` | τ (2π) | 6.283185307179586476925286766559005768 |
     | `Math::InvTwoPiF` | 1/(2π) | 0.159154943091895335768883763372514362 |
     | `Math::InvPiF` | 1/π | 0.318309886183790671537767526745028724 |
     | `Math::InvSqrtPiF` | 1/√π | 0.564189583547756286948079451560772586 |
@@ -384,10 +381,10 @@ Siv3D には次のような数学定数が用意されています。
 
 void Main()
 {
-	// 円周率
+	// Pi
 	Print << Math::Pi;
 
-	// 黄金比
+	// Golden ratio
 	Print << Math::Phi;
 
 	// NaN
@@ -399,20 +396,25 @@ void Main()
 	}
 }
 ```
+```txt title="Output"
+3.14159
+1.61803
+nan
+```
 
 
-## 35.13 度数法、π, τ による角度の表現
-Siv3D の API は角度をラジアンで扱いますが、コード中ではそれ以外の単位で角度を表現することもできます。
+## 21.12 Angle Representation
+- While C++ and Siv3D APIs handle angles in radians, you can use different units for notation for better readability
+- Using the `_deg` suffix, you can express angles in degrees
+	- For example, `90_deg` becomes `(90 * Math::Pi / 180.0)`, which is 90° expressed in radians
+- Using the `_pi` suffix, you can omit multiplication with π
+	- For example, `0.5_pi` is the same as `(0.5 * Math::Pi)`
+- You can express angles using the constant τ, which is defined as the ratio of a circle's circumference to its radius. The suffix is `_tau`
+	- For example, `0.5_tau` is the same as `(0.5 * Math::TwoPi)`, which is 180° expressed in radians
 
-`_deg` というサフィックスを用いることで、度数法で角度を表現できます。例えば `90_deg` は `(90 * Math::Pi / 180.0)` と同じです。
-
-`_pi` というサフィックスを用いることで、π とのかけ算を省略できます。例えば `0.5_pi` は `(0.5 * Math::Pi)` と同じです。
-
-また、円の半径に対する周長の比として定義される定数 τ を用いて、角度を表現することもできます。サフィックスは `_tau` です。例えば `0.5_tau` は `(0.5 * Math::TwoPi)` と同じです。
-
-| サフィックス | 説明 | 乗算する値 |
+| Suffix | Description | Value multiplied to the number |
 | --- | --- | --- |
-| `_deg` | 度数法 | Math::Pi / 180.0 |
+| `_deg` | Degrees | Math::Pi / 180.0 |
 | `_pi` | π | Math::Pi |
 | `_tau` | τ | Math::TwoPi |
 
@@ -422,9 +424,7 @@ Siv3D の API は角度をラジアンで扱いますが、コード中ではそ
 void Main()
 {
 	Print << U"{}"_fmt(180_deg);
-
 	Print << U"{}"_fmt(1_pi);
-
 	Print << U"{}"_fmt(0.5_tau);
 
 	while (System::Update())
@@ -433,10 +433,18 @@ void Main()
 	}
 }
 ```
+```txt title="Output"
+3.141592653589793
+3.141592653589793
+3.141592653589793
+```
 
 
-## 35.14 角度の正規化
-角度（ラジアン）を正規化するには `Math::NormalizeAngle(radian, cenetr = Pi)` を使います。第 2 引数は正規化の中心角度で、Pi の場合の戻り値は `[0, 2π)`, 0 の場合の戻り値は `[-π, π)` です。
+## 21.13 Angle Normalization
+- To normalize an angle (in radians), use `Math::NormalizeAngle(radian, center = Pi)`
+- The second argument is the center angle for normalization. If omitted, `Pi` is used
+	- When the center angle is Pi, the return value range is `[0, 2π)`
+	- When the center angle is 0, the return value range is `[-π, π)`
 
 ```cpp
 # include <Siv3D.hpp>
@@ -451,25 +459,35 @@ void Main()
 		ClearPrint();
 
 		Print << a;
-		// 角度を [0.0, 2π) の範囲に正規化した値を返す
+		// Returns the angle normalized to the range [0.0, 2π)
 		Print << Math::NormalizeAngle(a);
-		// 角度を [-π, π) の範囲に正規化した値を返す
+		// Returns the angle normalized to the range [-π, π)
 		Print << Math::NormalizeAngle(a, 0.0);
 
 		Print << U"----";
 
 		Print << b;
-		// 角度を [0.0, 2π) の範囲に正規化した値を返す
+		// Returns the angle normalized to the range [0.0, 2π)
 		Print << Math::NormalizeAngle(b);
-		// 角度を [-π, π) の範囲に正規化した値を返す
+		// Returns the angle normalized to the range [-π, π)
 		Print << Math::NormalizeAngle(b, 0.0);
 	}
 }
 ```
+```txt title="Example Output"
+-3.86462
+2.41857
+2.41857
+----
+3.86462
+3.86462
+-2.41857
+```
 
 
-## 35.15 ラジアンと度数法の変換
-ラジアンと度数法の変換には `Math::ToDegrees(radian)` と `Math::ToRadians(degrees)` を使います。
+## 21.14 Converting Between Radians and Degrees
+- To convert from radians to degrees, use `Math::ToDegrees(radian)`
+- To convert from degrees to radians, use `Math::ToRadians(degrees)`
 
 ```cpp
 # include <Siv3D.hpp>
@@ -479,9 +497,7 @@ void Main()
 	const double angle = 45_deg;
 
 	Print << angle;
-
 	Print << Math::ToDegrees(angle);
-
 	Print << Math::ToRadians(Math::ToDegrees(angle));
 
 	while (System::Update())
@@ -490,10 +506,15 @@ void Main()
 	}
 }
 ```
+```txt title="Output"
+0.7854
+45
+0.7854
+```
 
 
-## 35.16 列挙型から整数への変換
-`FromEnum(enum)` を使うと、列挙型の値を整数に変換できます。
+## 21.15 Converting from Enum to Integer
+- Use `FromEnum(enum)` to convert an enum value to an integer
 
 ```cpp
 # include <Siv3D.hpp>
@@ -508,9 +529,7 @@ enum class State
 void Main()
 {
 	State state = State::Result;
-
 	const int32 n = FromEnum(state);
-
 	Print << n;
 
 	while (System::Update())
@@ -519,10 +538,13 @@ void Main()
 	}
 }
 ```
+```txt title="Output"
+2
+```
 
 
-## 35.17 整数から列挙型への変換
-`ToEnum<Enum>(i)` を使うと、整数を列挙型に変換できます。 
+## 21.16 Converting from Integer to Enum
+- Use `ToEnum<Enum>(i)` to convert an integer to an enum
 
 ```cpp
 # include <Siv3D.hpp>
@@ -537,9 +559,7 @@ enum class State
 void Main()
 {
 	const int32 n = 2;
-
 	State state = ToEnum<State>(n);
-
 	Print << (state == State::Result);
 
 	while (System::Update())
@@ -548,12 +568,15 @@ void Main()
 	}
 }
 ```
+```txt title="Output"
+true
+```
 
 
-## 35.18 エラー
-Siv3D のプログラムでエラーを伝える例外を簡単に送出したい場合、`Error` クラスを使うと便利です。この例外が捕捉されなかった場合、Siv3D エンジンはエラーメッセージの内容をメッセージボックスに表示してプログラムを終了します。
-
-Windows 版（Visual Studio）において、例外の発生箇所を IDE 上で表示する方法は、[例外の発生箇所の表示](../tools/msvc-exception.md)を参照してください。
+## 21.17 Errors
+- When you want to throw an exception to report an error in a Siv3D program, the `Error` class is convenient
+- If this exception is not caught, the Siv3D engine will display the error message content in a message box and terminate the program
+- For displaying the exception location in the IDE on Windows (Visual Studio), see [Displaying Exception Locations](../tools/msvc-exception.md)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -564,7 +587,7 @@ void Main()
 
 	if (not texture)
 	{
-		// 例外を送出する
+		// Throw an exception
 		throw Error{ U"Failed to load `aaa.png`" };
 	}
 
@@ -576,8 +599,8 @@ void Main()
 ```
 
 
-## 35.19 コマンドライン引数の取得
-プログラムの起動時に渡されたコマンドライン引数を取得するには、`System::GetCommandLineArgs()` を使います。
+## 21.18 Getting Command Line Arguments
+- To get command line arguments passed when the program starts, use `System::GetCommandLineArgs()`
 
 ```cpp
 # include <Siv3D.hpp>
@@ -599,26 +622,10 @@ void Main()
 ```
 
 
-## 35.20 スリープ
-現在のスレッドを指定した時間だけスリープさせるには、`System::Sleep(duration)` を使います。
-
-```cpp
-# include <Siv3D.hpp>
-
-void Main()
-{
-	// 3 秒スリープする
-	System::Sleep(3s);
-
-	while (System::Update())
-	{
-
-	}
-}
-```
-
-## 35.21 データをコンソール出力する
-`Console` に向かって、出力の記号 `<<` で値を送ると、その値がコンソール出力されます。Windows の場合はコマンドプロンプトに出力されます。`Print` では追いきれないほど出力データが大量にある場合や、データをクリップボードにコピーしたい際に便利です。
+## 21.19 Console Output
+- When you want to visualize output data that is too much for `Print` to handle, or when you want to copy output data to the clipboard, console output is convenient
+- By outputting to `Console` instead of `Print`, you can perform console output
+- On Windows, it outputs to the command prompt
 
 ```cpp
 # include <Siv3D.hpp>
@@ -629,7 +636,7 @@ void Main()
 
 	Print << v;
 
-	// コンソール出力
+	// Console output
 	Console << v;
 
 	Console << U"Hello, Siv3D!";
@@ -642,8 +649,9 @@ void Main()
 ```
 
 
-## 35.22 データをログ出力する
-`Logger` に向かって、出力の記号 `<<` で値を送ると、その値がログ出力されます。Windows の場合は Visual Studio の「出力」ウィンドウに出力されます（デバッグ実行時）。`Console` 同様、大量の出力データを確認したい場合に便利です。
+## 21.20 Log Output
+- By outputting to `Logger` instead of `Print`, you can perform log output
+- On Windows, it outputs to the Visual Studio "Output" window (during debug execution)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -654,7 +662,7 @@ void Main()
 
 	Print << v;
 
-	// ログ出力
+	// Log output
 	Logger << v;
 
 	Logger << U"Hello, Siv3D!";

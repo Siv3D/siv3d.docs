@@ -1,38 +1,52 @@
-# 37. オーディオ再生
-効果音や音楽の再生を制御する方法を学びます。
+# 41. Audio Playback
+Learn how to control the playback of sound effects and music.
 
-再生する音声データはオーディオクラス `Audio` で管理します。オーディオはいくつかの方法で作成できます。オーディオの作成にはコストがかかるため、通常はメインループの前で行います。メインループ内で作成する必要がある場合には、毎フレーム作成されないような制御が必要です。
+## 41.1 Creating Audio
+- Audio data to be played is managed by the `Audio` class
+- There are several ways to create audio:
+	- **41.2** Creating from audio files
+	- **41.3** Creating from audio files in streaming mode
+	- **41.4** Creating instrument sounds
+	- **41.5** Creating from audio waveform data
+- Creating audio is costly, so it's usually done before the main loop
+- When creating in the main loop, control is needed to avoid creating every frame
+- Up to 64 audio instances can be played simultaneously
+	- Including mixing buses, it's actually around 60
 
-## 37.1 音声ファイルの読み込みと再生
-`Audio 変数名{ U"ファイルパス" };` で、音声ファイルから `Audio` を作成できます。ファイルパスは、実行ファイルがあるフォルダ（開発中は `App` フォルダ）を基準とする相対パスか、絶対パスを使用します。
+## 41.2 Loading and Playing Audio Files
+- Create `Audio` from an audio file with `Audio variableName{ U"filePath" };`
+- File paths use relative paths from the folder where the executable is located (the `App` folder during development) or absolute paths
+	- For example, `U"example/test.mp3"` refers to the `test.mp3` file in the `example/` folder of the folder where the executable is located (`App` folder)
+- Siv3D supports loading the following audio formats:
+	- Some audio formats have different support depending on the OS
 
-Siv3D では、次のような音声フォーマットの読み込みがサポートされています。一部の音声フォーマットは OS によって対応状況が異なります。
+| Format    | Extension             | Windows | macOS | Linux | Web |
+|-----------|-----------------------|:-------:|:-----:|:-----:|:---:|
+| WAVE      | .wav                  | ✅       | ✅     | ✅     | ✅   |
+| MP3       | .mp3                  | ✅       | ✅     | ✅     | ✅*  |
+| AAC       | .m4a                  | ✅       | ✅     | ✅     | ✅*  |
+| OggVorbis | .ogg                  | ✅       | ✅     | ✅     | ✅   |
+| Opus      | .opus                 | ✅       | ✅     | ✅     | ✅   |
+| MIDI      | .mid                  | ✅       | ✅     | ✅     | ✅   |
+| WMA       | .wma                  | ✅       |       |       |     |
+| FLAC      | .flac                 | ✅       | ✅     |       |     |
+| AIFF      | .aif, .aiff, .aifc    |         | ✅     |       |     |
 
-| フォーマット    | 拡張子                | Windows | macOS | Linux | Web |
-|-----------|--------------------|:-------:|:-----:|:-----:|:---:|
-| WAVE      | .wav               | ✔       | ✔     | ✔     | ✔   |
-| MP3       | .mp3               | ✔       | ✔     | ✔     | ✔*  |
-| AAC       | .m4a               | ✔       | ✔     | ✔     | ✔*  |
-| OggVorbis | .ogg               | ✔       | ✔     | ✔     | ✔   |
-| Opus      | .opus              | ✔       | ✔     | ✔     | ✔   |
-| MIDI      | .mid               | ✔       | ✔     | ✔     | ✔   |
-| WMA       | .wma               | ✔       |       |       |     |
-| FLAC      | .flac              | ✔       | ✔     |       |     |
-| AIFF      | .aif, .aiff, .aifc |         | ✔     |       |     |
+<small>(*) Requires build option settings and use of special functions.</small>
 
-<small>(*) ビルドオプションの設定と、特別な関数の使用が必要です。</small>
-
-オーディオを再生するには `Audio` の `.play()` を呼びます。すでに再生中のオーディオに対して `.play()` をしても何も起こりません。同じオーディオを重ねて再生したい場合は、37.5 の `.playOneShot()` を使います。
+- To play audio, call `Audio`'s `.play()`
+- Calling `.play()` on audio that is already playing does nothing
+- To play the same audio overlapping, use `.playOneShot()` from **41.6**
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// 音声ファイルを読み込んで Audio を作成する
+	// Load audio file and create Audio
 	const Audio audio{ U"example/test.mp3" };
 
-	// オーディオを再生する
+	// Play audio
 	audio.play();
 
 	while (System::Update())
@@ -42,26 +56,30 @@ void Main()
 }
 ```
 
-オーディオの再生中はオーディオオブジェクトが存在していないといけないため、`Audio{ U"example/test.mp3" }.play();` のようなコードでは音声は再生できません。
+- Audio cannot be played if the audio object doesn't exist
+- Code like `Audio{ U"example/test.mp3" }.play();` using temporary objects cannot play audio
 
 
-## 37.2 ストリーミング再生用のオーディオを作成する
-WAVE, MP3, OggVorbis, FLAC 形式の音声ファイルは、ストリーミング再生に対応しています。ストリーミング再生とは、最初にファイル内容の全部を読み込むのではなく、一部だけを読み込んでオーディオを再生しながら、続く部分を逐次読み込む方式のことです。ストリーミング再生を使うと、メモリの使用量やファイルのロード時間が大幅に削減されます。
-
-`Audio` でストリーミング再生を有効にするには、`Audio` のコンストラクタに `Audio::Stream` を渡してストリーミング再生をリクエストします。もし `Audio::Stream` を指定したファイルがストリーミング再生をサポートしていなかった場合は通常の読み込みが行われます。`Audio` でストリーミング再生が有効になっているかは、`.isStreaming()` で調べられます。
+## 41.3 Streaming Playback
+- WAVE, MP3, OggVorbis, and FLAC format audio files support streaming playback
+- Streaming playback doesn't load the entire file content at first, but loads only a portion to start audio playback while progressively loading the remaining parts
+- Using streaming playback significantly reduces file loading time during audio creation and memory usage during playback
+- To enable streaming playback, pass `Audio::Stream` to the `Audio` constructor to request streaming playback
+- If the requested file doesn't support streaming playback, normal loading is performed
+- You can check if streaming playback is enabled with `.isStreaming()`
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// 音声ファイルを読み込んで Audio を作成（ストリーミング再生をリクエスト）
+	// Load audio file and create Audio (request streaming playback)
 	const Audio audio{ Audio::Stream, U"example/test.mp3" };
 
-	// ストリーミング再生になるかを取得
+	// Returns true if streaming playback is enabled
 	Print << audio.isStreaming();
 
-	// オーディオを再生
+	// Play audio
 	audio.play();
 
 	while (System::Update())
@@ -71,154 +89,150 @@ void Main()
 }
 ```
 
-ストリーミング再生を有効にした `Audio` については、次のような制約がありますが、通常のオーディオ再生用途では問題になりません。
+- Audio with streaming playback enabled has the following limitations, but they don't cause problems for normal audio playback:
+	- In loop playback, the loop end position cannot be set to anything other than the audio end
+	- Cannot access audio waveform data with `.getSamples()`
+	- Fewer samples are available when performing FFT
 
-- 区間ループ再生において、ループ末尾位置をオーディオ終端以外に設定できない
-- `.getSamples()` でオーディオの音声波形データにアクセスできない
-- FFT を行うときのサンプル数が少なくなる
 
+## 41.4 Creating Instrument Sounds
+- You can programmatically generate instrument sounds by specifying the instrument type, pitch, length, etc., and create audio
+- Pass the instrument name enumerated in `GMInstrument`, the pitch enumerated in `PianoKey`, and the sound length to the `Audio` constructor
+	- `Audio{ instrumentName, pitch, noteOnTime }`
+		- Note-off time is set to 1.0 second
+	- `Audio{ instrumentName, pitch, noteOnTime, noteOffTime }`
 
-## 37.3 楽器の音のオーディオを作成する
-楽器の種類と音の高さ、長さなどをもとにプログラムで楽器の音を生成して `Audio` を作成できます。`Audio` のコンストラクタに `GMInstrument` で列挙される楽器名、`PianoKey` で列挙される音の高さ、音の長さを渡します。
-
-音の長さは
-
-- ノート・オン（鳴らす）時間
-- ノート・オン時間とノート・オフ（鳴らし終える）時間
-
-の 2 通りの指定方法があります。前者では 1.0 秒のノート・オフ時間が追加で設定されます。
-
-??? info "楽器の一覧"
-    | 定数 | 楽器名 |
-    | --- | --- |
-    | `GMInstrument::Piano1` | アコースティックピアノ |
-    | `GMInstrument::Piano2` | ブライトピアノ |
-    | `GMInstrument::Piano3` | エレクトリック・グランドピアノ |
-    | `GMInstrument::Piano4` | ホンキートンクピアノ |
-    | `GMInstrument::ElectricPiano1` | エレクトリック・グランド・ピアノ |
-    | `GMInstrument::ElectricPiano2` | 	FM エレクトリックピアノ |
-    | `GMInstrument::Harpsichord` | ハープシコード |
-    | `GMInstrument::Clavinet` | クラビネット |
-    | `GMInstrument::Celesta` | チェレスタ |
-    | `GMInstrument::Glockenspiel` | グロッケンシュピール |
-    | `GMInstrument::MusicBox` | オルゴール |
-    | `GMInstrument::Vibraphone` | ヴィブラフォン |
-    | `GMInstrument::Marimba` | マリンバ |
-    | `GMInstrument::Xylophone` | シロフォン |
-    | `GMInstrument::TubularBells` | チューブラーベル |
-    | `GMInstrument::Dulcimer` | ダルシマー |
-    | `GMInstrument::DrawbarOrgan` | ドローバー・オルガン |
-    | `GMInstrument::PercussiveOrgan` | パーカッシブ・オルガン |
-    | `GMInstrument::RockOrgan` | ロック・オルガン |
-    | `GMInstrument::ChurchOrgan` | チャーチ・オルガン |
-    | `GMInstrument::ReedOrgan` | リード・オルガン |
-    | `GMInstrument::Accordion` | アコーディオン |
-    | `GMInstrument::Harmonica` | ハーモニカ |
-    | `GMInstrument::TangoAccordion` | タンゴ・アコーディオン |
-    | `GMInstrument::NylonGuitar` | ナイロン・ギター |
-    | `GMInstrument::SteelGuitar` | スティール・ギター |
-    | `GMInstrument::JazzGuitar` | ジャズ・ギター |
-    | `GMInstrument::CleanGuitar` | クリーン・ギター |
-    | `GMInstrument::MutedGuitar` | ミュート・ギター |
-    | `GMInstrument::OverdrivenGuitar` | オーバードライブ・ギター |
-    | `GMInstrument::DistortionGuitar` | ディストーション・ギター |
-    | `GMInstrument::GuitarHarmonics` | ギター・ハーモニクス |
-    | `GMInstrument::AcousticBass` | アコースティック・ベース |
-    | `GMInstrument::FingeredBass` | フィンガー・ベース |
-    | `GMInstrument::PickedBass` | ピック・ベース |
-    | `GMInstrument::FretlessBass` | フレットレス・ベース |
-    | `GMInstrument::SlapBass1` | スラップ・ベース 1 |
-    | `GMInstrument::SlapBass2` | スラップ・ベース 2 |
-    | `GMInstrument::SynthBass1` | シンセ・ベース 1 |
-    | `GMInstrument::SynthBass2` | シンセ・ベース 2 |
-    | `GMInstrument::Violin` | ヴァイオリン |
-    | `GMInstrument::Viola` | ヴィオラ |
-    | `GMInstrument::Cello` | チェロ |
-    | `GMInstrument::Contrabass` | コントラバス |
-    | `GMInstrument::TremoloStrings` | トレモロ・ストリングス |
-    | `GMInstrument::PizzicatoStrings` | ピッチカート・ストリングス |
-    | `GMInstrument::OrchestralHarp` | オーケストラ・ハープ |
-    | `GMInstrument::Timpani` | ティンパニ |
-    | `GMInstrument::StringEnsemble1` | ストリング・アンサンブル 1 |
-    | `GMInstrument::StringEnsemble2` | ストリング・アンサンブル 2 |
-    | `GMInstrument::SynthStrings1` | シンセ・ストリングス 1 |
-    | `GMInstrument::SynthStrings2` | シンセ・ストリングス 2 |
-    | `GMInstrument::ChoirAahs` | 声「アー」 |
-    | `GMInstrument::VoiceOohs` | 声「オー」 |
-    | `GMInstrument::SynthChoir` | シンセヴォイス |
-    | `GMInstrument::OrchestraHit` | オーケストラ・ヒット |
-    | `GMInstrument::Trumpet` | トランペット |
-    | `GMInstrument::Trombone` | トロンボーン |
-    | `GMInstrument::Tuba` | チューバ |
-    | `GMInstrument::MutedTrumpet` | ミュート・トランペット |
-    | `GMInstrument::FrenchHorn` | フレンチ・ホルン |
-    | `GMInstrument::BrassSection` | ブラス・セクション |
-    | `GMInstrument::SynthBrass1` | シンセ・ブラス 1 |
-    | `GMInstrument::SynthBrass2` | シンセ・ブラス 2 |
-    | `GMInstrument::SopranoSax` | ソプラノ・サックス |
-    | `GMInstrument::AltoSax` | アルト・サックス |
-    | `GMInstrument::TenorSax` | テナー・サックス |
-    | `GMInstrument::BaritoneSax` | バリトン・サックス |
-    | `GMInstrument::Oboe` | オーボエ |
-    | `GMInstrument::EnglishHorn` | イングリッシュ・ホルン |
-    | `GMInstrument::Bassoon` | ファゴット |
-    | `GMInstrument::Clarinet` | クラリネット |
-    | `GMInstrument::Piccolo` | ピッコロ |
-    | `GMInstrument::Flute` | フルート |
-    | `GMInstrument::Recorder` | リコーダー |
-    | `GMInstrument::PanFlute` | パン・フルート |
-    | `GMInstrument::BlownBottle` | ブロウン・ボトル |
-    | `GMInstrument::Shakuhachi` | 尺八 |
-    | `GMInstrument::Whistle` | 口笛 |
-    | `GMInstrument::Ocarina` | オカリナ |
-    | `GMInstrument::SquareWave` | 矩形波 |
-    | `GMInstrument::SawWave` | ノコギリ波 |
-    | `GMInstrument::SynCalliope` | カリオペリード |
-    | `GMInstrument::ChifferLead` | チフリード |
-    | `GMInstrument::Charang` | チャランゴリード |
-    | `GMInstrument::SoloVox` | 声リード |
-    | `GMInstrument::FifthSawWave` | フィフスズリード |
-    | `GMInstrument::BassAndLead` | ベース + リード |
-    | `GMInstrument::Fantasia` | ファンタジア |
-    | `GMInstrument::WarmPad` | ウォーム・パッド |
-    | `GMInstrument::Polysynth` | ポリシンセ |
-    | `GMInstrument::SpaceVoice` | スペース・ヴォイス |
-    | `GMInstrument::BowedGlass` | ボウド・グラス |
-    | `GMInstrument::MetalPad` | メタル・パッド |
-    | `GMInstrument::HaloPad` | ハロー・パッド |
-    | `GMInstrument::SweepPad` | スイープ・パッド |
-    | `GMInstrument::IceRain` | 雨 |
-    | `GMInstrument::Soundtrack` | サウンドトラック |
-    | `GMInstrument::Crystal` | クリスタル |
-    | `GMInstrument::Atmosphere` | アトモスフィア |
-    | `GMInstrument::Brightness` | ブライトネス |
-    | `GMInstrument::Goblin` | ゴブリン |
-    | `GMInstrument::EchoDrops` | エコー・ドロップス |
-    | `GMInstrument::StarTheme` | スター・テーマ |
-    | `GMInstrument::Sitar` | シタール |
-    | `GMInstrument::Banjo` | バンジョー |
-    | `GMInstrument::Shamisen` | 三味線 |
-    | `GMInstrument::Koto` | 琴 |
-    | `GMInstrument::Kalimba` | カリンバ |
-    | `GMInstrument::Bagpipe` | バグパイプ |
-    | `GMInstrument::Fiddle` | フィドル |
-    | `GMInstrument::Shanai` | シャハナイ |
-    | `GMInstrument::TinkleBell` | ティンクル・ベル |
-    | `GMInstrument::Agogo` | アゴゴ |
-    | `GMInstrument::SteelDrums` | スチール・ドラム |
-    | `GMInstrument::Woodblock` | ウッドブロック |
-    | `GMInstrument::TaikoDrum` | 太鼓 |
-    | `GMInstrument::MelodicTom` | メロディック・タム |
-    | `GMInstrument::SynthDrum` | シンセ・ドラム |
-    | `GMInstrument::ReverseCymbal` | リバース・シンバル |
-    | `GMInstrument::GuitarFretNoise` | ギター・フレット・ノイズ |
-    | `GMInstrument::BreathNoise` | ブレス・ノイズ |
-    | `GMInstrument::Seashore` | 海岸 |
-    | `GMInstrument::BirdTweet` | 鳥のさえずり |
-    | `GMInstrument::TelephoneRing` | 電話のベル |
-    | `GMInstrument::Helicopter` | ヘリコプター |
-    | `GMInstrument::Applause` | 拍手 |
-    | `GMInstrument::Gunshot` | 銃声 |
+??? info "List of Instruments"
+	| Code | Instrument Name |
+	| --- | --- |
+	| `GMInstrument::Piano1` | Acoustic Piano |
+	| `GMInstrument::Piano2` | Bright Piano |
+	| `GMInstrument::Piano3` | Electric Grand Piano |
+	| `GMInstrument::Piano4` | Honky-tonk Piano |
+	| `GMInstrument::ElectricPiano1` | Electric Grand Piano |
+	| `GMInstrument::ElectricPiano2` | FM Electric Piano |
+	| `GMInstrument::Harpsichord` | Harpsichord |
+	| `GMInstrument::Clavinet` | Clavinet |
+	| `GMInstrument::Celesta` | Celesta |
+	| `GMInstrument::Glockenspiel` | Glockenspiel |
+	| `GMInstrument::MusicBox` | Music Box |
+	| `GMInstrument::Vibraphone` | Vibraphone |
+	| `GMInstrument::Marimba` | Marimba |
+	| `GMInstrument::Xylophone` | Xylophone |
+	| `GMInstrument::TubularBells` | Tubular Bells |
+	| `GMInstrument::Dulcimer` | Dulcimer |
+	| `GMInstrument::DrawbarOrgan` | Drawbar Organ |
+	| `GMInstrument::PercussiveOrgan` | Percussive Organ |
+	| `GMInstrument::RockOrgan` | Rock Organ |
+	| `GMInstrument::ChurchOrgan` | Church Organ |
+	| `GMInstrument::ReedOrgan` | Reed Organ |
+	| `GMInstrument::Accordion` | Accordion |
+	| `GMInstrument::Harmonica` | Harmonica |
+	| `GMInstrument::TangoAccordion` | Tango Accordion |
+	| `GMInstrument::NylonGuitar` | Nylon Guitar |
+	| `GMInstrument::SteelGuitar` | Steel Guitar |
+	| `GMInstrument::JazzGuitar` | Jazz Guitar |
+	| `GMInstrument::CleanGuitar` | Clean Guitar |
+	| `GMInstrument::MutedGuitar` | Muted Guitar |
+	| `GMInstrument::OverdrivenGuitar` | Overdriven Guitar |
+	| `GMInstrument::DistortionGuitar` | Distortion Guitar |
+	| `GMInstrument::GuitarHarmonics` | Guitar Harmonics |
+	| `GMInstrument::AcousticBass` | Acoustic Bass |
+	| `GMInstrument::FingeredBass` | Fingered Bass |
+	| `GMInstrument::PickedBass` | Picked Bass |
+	| `GMInstrument::FretlessBass` | Fretless Bass |
+	| `GMInstrument::SlapBass1` | Slap Bass 1 |
+	| `GMInstrument::SlapBass2` | Slap Bass 2 |
+	| `GMInstrument::SynthBass1` | Synth Bass 1 |
+	| `GMInstrument::SynthBass2` | Synth Bass 2 |
+	| `GMInstrument::Violin` | Violin |
+	| `GMInstrument::Viola` | Viola |
+	| `GMInstrument::Cello` | Cello |
+	| `GMInstrument::Contrabass` | Contrabass |
+	| `GMInstrument::TremoloStrings` | Tremolo Strings |
+	| `GMInstrument::PizzicatoStrings` | Pizzicato Strings |
+	| `GMInstrument::OrchestralHarp` | Orchestral Harp |
+	| `GMInstrument::Timpani` | Timpani |
+	| `GMInstrument::StringEnsemble1` | String Ensemble 1 |
+	| `GMInstrument::StringEnsemble2` | String Ensemble 2 |
+	| `GMInstrument::SynthStrings1` | Synth Strings 1 |
+	| `GMInstrument::SynthStrings2` | Synth Strings 2 |
+	| `GMInstrument::ChoirAahs` | Choir Aahs |
+	| `GMInstrument::VoiceOohs` | Voice Oohs |
+	| `GMInstrument::SynthChoir` | Synth Choir |
+	| `GMInstrument::OrchestraHit` | Orchestra Hit |
+	| `GMInstrument::Trumpet` | Trumpet |
+	| `GMInstrument::Trombone` | Trombone |
+	| `GMInstrument::Tuba` | Tuba |
+	| `GMInstrument::MutedTrumpet` | Muted Trumpet |
+	| `GMInstrument::FrenchHorn` | French Horn |
+	| `GMInstrument::BrassSection` | Brass Section |
+	| `GMInstrument::SynthBrass1` | Synth Brass 1 |
+	| `GMInstrument::SynthBrass2` | Synth Brass 2 |
+	| `GMInstrument::SopranoSax` | Soprano Sax |
+	| `GMInstrument::AltoSax` | Alto Sax |
+	| `GMInstrument::TenorSax` | Tenor Sax |
+	| `GMInstrument::BaritoneSax` | Baritone Sax |
+	| `GMInstrument::Oboe` | Oboe |
+	| `GMInstrument::EnglishHorn` | English Horn |
+	| `GMInstrument::Bassoon` | Bassoon |
+	| `GMInstrument::Clarinet` | Clarinet |
+	| `GMInstrument::Piccolo` | Piccolo |
+	| `GMInstrument::Flute` | Flute |
+	| `GMInstrument::Recorder` | Recorder |
+	| `GMInstrument::PanFlute` | Pan Flute |
+	| `GMInstrument::BlownBottle` | Blown Bottle |
+	| `GMInstrument::Shakuhachi` | Shakuhachi |
+	| `GMInstrument::Whistle` | Whistle |
+	| `GMInstrument::Ocarina` | Ocarina |
+	| `GMInstrument::SquareWave` | Square Wave |
+	| `GMInstrument::SawWave` | Saw Wave |
+	| `GMInstrument::SynCalliope` | Calliope Lead |
+	| `GMInstrument::ChifferLead` | Chiffer Lead |
+	| `GMInstrument::Charang` | Charang Lead |
+	| `GMInstrument::SoloVox` | Voice Lead |
+	| `GMInstrument::FifthSawWave` | Fifths Lead |
+	| `GMInstrument::BassAndLead` | Bass + Lead |
+	| `GMInstrument::Fantasia` | Fantasia |
+	| `GMInstrument::WarmPad` | Warm Pad |
+	| `GMInstrument::Polysynth` | Polysynth |
+	| `GMInstrument::SpaceVoice` | Space Voice |
+	| `GMInstrument::BowedGlass` | Bowed Glass |
+	| `GMInstrument::MetalPad` | Metal Pad |
+	| `GMInstrument::HaloPad` | Halo Pad |
+	| `GMInstrument::SweepPad` | Sweep Pad |
+	| `GMInstrument::IceRain` | Rain |
+	| `GMInstrument::Soundtrack` | Soundtrack |
+	| `GMInstrument::Crystal` | Crystal |
+	| `GMInstrument::Atmosphere` | Atmosphere |
+	| `GMInstrument::Brightness` | Brightness |
+	| `GMInstrument::Goblin` | Goblin |
+	| `GMInstrument::EchoDrops` | Echo Drops |
+	| `GMInstrument::StarTheme` | Star Theme |
+	| `GMInstrument::Sitar` | Sitar |
+	| `GMInstrument::Banjo` | Banjo |
+	| `GMInstrument::Shamisen` | Shamisen |
+	| `GMInstrument::Koto` | Koto |
+	| `GMInstrument::Kalimba` | Kalimba |
+	| `GMInstrument::Bagpipe` | Bagpipe |
+	| `GMInstrument::Fiddle` | Fiddle |
+	| `GMInstrument::Shanai` | Shanai |
+	| `GMInstrument::TinkleBell` | Tinkle Bell |
+	| `GMInstrument::Agogo` | Agogo |
+	| `GMInstrument::SteelDrums` | Steel Drums |
+	| `GMInstrument::Woodblock` | Woodblock |
+	| `GMInstrument::TaikoDrum` | Taiko Drum |
+	| `GMInstrument::MelodicTom` | Melodic Tom |
+	| `GMInstrument::SynthDrum` | Synth Drum |
+	| `GMInstrument::ReverseCymbal` | Reverse Cymbal |
+	| `GMInstrument::GuitarFretNoise` | Guitar Fret Noise |
+	| `GMInstrument::BreathNoise` | Breath Noise |
+	| `GMInstrument::Seashore` | Seashore |
+	| `GMInstrument::BirdTweet` | Bird Tweet |
+	| `GMInstrument::TelephoneRing` | Telephone Ring |
+	| `GMInstrument::Helicopter` | Helicopter |
+	| `GMInstrument::Applause` | Applause |
+	| `GMInstrument::Gunshot` | Gunshot |
 
 
 ```cpp
@@ -226,13 +240,13 @@ void Main()
 
 void Main()
 {
-	// ピアノの C4 (ド) の音
+	// Piano C4 (Do) sound
 	const Audio piano{ GMInstrument::Piano1, PianoKey::C4, 0.5s };
 
-	// クラリネットの D4 (レ) の音
+	// Clarinet D4 (Re) sound
 	const Audio clarinet{ GMInstrument::Clarinet, PianoKey::D4, 0.5s };
 
-	// トランペットの E4 (ミ) の音。ノート・オン 2.0 秒、ノート・オフ 0.5 秒
+	// Trumpet E4 (Mi) sound. Note-on 2.0 seconds, note-off 0.5 seconds
 	const Audio trumpet{ GMInstrument::Trumpet, PianoKey::E4, 2.0s, 0.5s };
 
 	while (System::Update())
@@ -256,8 +270,9 @@ void Main()
 ```
 
 
-## 37.4 音声波形データからオーディオを作成する
-プログラムで生成・加工した音声波形データ（`Wave` クラス）からオーディオを作成できます。`Wave` クラスについては [チュートリアル 54. 音声波形](wave.md) を参照してください。
+## 41.5 Creating from Audio Waveform Data
+- You can create audio from programmatically generated/processed audio waveform data (`Wave` class)
+- See **Tutorial 70** for the `Wave` class
 
 ```cpp
 # include <Siv3D.hpp>
@@ -278,7 +293,7 @@ Wave MakeWave()
 
 void Main()
 {
-	// 音声波形データからオーディオを作成する
+	// Create audio from audio waveform data
 	const Audio audio{ MakeWave() };
 
 	audio.play();
@@ -291,28 +306,33 @@ void Main()
 ```
 
 
-## 37.5 同じオーディオを重ねて再生する
-1 つの `Audio` を重ねて再生したい場合には `.play()` の代わりに `.playOneShot()` を使います。`.playOneShot()` の引数には音量、パン、再生スピードを渡せます。
+## 41.6 Overlapping Playback of the Same Audio
+- To play one `Audio` overlapping, use `.playOneShot()` instead of `.play()`
+- In the arguments of `.playOneShot()`, you can set volume, pan, playback speed, and mixing bus
+
+```cpp
+void Audio::playOneShot(double volume = 1.0, double pan = 0.0, double speed = 1.0, MixBus = MixBus0) const;
+```
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// ピアノの C4 (ド) の音。
+	// Piano C4 (Do) sound
 	const Audio piano{ GMInstrument::Piano1, PianoKey::C4, 0.5s };
 
-	// クラリネットの D4 (レ) の音
+	// Clarinet D4 (Re) sound
 	const Audio clarinet{ GMInstrument::Clarinet, PianoKey::D4, 0.5s };
 
-	// トランペットの E4 (ミ) の音
+	// Trumpet E4 (Mi) sound
 	const Audio trumpet{ GMInstrument::Trumpet, PianoKey::E4, 0.5s };
 
 	while (System::Update())
 	{
 		if (SimpleGUI::Button(U"Piano", Vec2{ 20, 20 }))
 		{
-			// 音量 0.5 で再生
+			// Play with volume 0.5
 			piano.playOneShot(0.5);
 		}
 
@@ -329,23 +349,19 @@ void Main()
 }
 ```
 
-!!! warning "同時に再生する音声が多くならないようにする"
-    同時に再生する音声が多くなると（とくに 64 を超えると）動作が不安定になる場合があります。音声の時間を短くしたり、重ねて再生する頻度を減らすなどして、同時に再生する音声の数を減らしてください。
 
-
-## 37.6 空のオーディオ
-`Audio` 型の変数は、デフォルトでは**空のオーディオ**を持っています。音声ファイルのロードに失敗した場合も空のオーディオになります。
-
-空のオーディオは、「フワ」と鳴る 0.5 秒の音で、**有効なオーディオと同じように扱うことができ**、再生してもエラーは発生しません。
-
-空のオーディオであるかを調べるには、`if (audio.isEmpty())`, `if (audio)`, `if (not audio)` を使います。
+## 41.7 Empty Audio
+- `Audio` type objects hold **empty audio** by default
+- Empty audio is a 0.5-second sound that makes a "whoosh" sound, and **can be treated the same as valid audio**, with no errors when played
+- Audio file loading failures also result in empty audio
+- To check if audio is empty, use `if (audio.isEmpty())`, `if (audio)`, or `if (not audio)`
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// 初期データを与えないと、空のオーディオになる
+	// Without providing initial data, it becomes empty audio
 	Audio audioA;
 
 	if (not audioA)
@@ -353,7 +369,7 @@ void Main()
 		Print << U"audioA is empty";
 	}
 
-	// 音声ファイルの読み込みに失敗すると、空のオーディオになる
+	// If audio file loading fails, it becomes empty audio
 	Audio audioB{ U"aaa/bbb.wav" };
 
 	if (not audioB)
@@ -377,10 +393,22 @@ void Main()
 ```
 
 
-## 37.7 一時停止と停止
-再生中のオーディオを一時停止するには `.pause()`, 停止して再生位置を最初に戻すには `.stop()` を呼びます。
+## 41.8 Play and Stop
+- There are member functions for audio playback and stop operations:
+- Audio paused with `.pause()` resumes playback from the paused position
+- On the other hand, audio stopped with `.stop()` returns the playback position to the beginning
 
-オーディオが再生中であるかは `.isPlaying()`, 一時停止中であるかは `.isPaused()` で取得できます。
+| Code | Description |
+| --- | --- |
+| `.play()` | Play audio |
+| `.pause()` | Pause audio |
+| `.stop()` | Stop audio and return playback position to the beginning |
+| `.isPlaying()` | Returns whether audio is playing |
+| `.isPaused()` | Returns whether audio is paused |
+| `.playOneShot()` | Play audio (overlapping playback) |
+| `.pauseAllShots()` | Pause all overlapping audio |
+| `.resumeAllShots()` | Resume all paused overlapping audio |
+| `.stopAllShots()` | Stop all overlapping audio |
 
 ```cpp
 # include <Siv3D.hpp>
@@ -393,27 +421,27 @@ void Main()
 	{
 		ClearPrint();
 
-		// 再生されているか
+		// Whether playing
 		Print << U"isPlaying: " << audio.isPlaying();
 
-		// 一時停止中であるか
+		// Whether paused
 		Print << U"isPaused: " << audio.isPaused();
 
 		if (SimpleGUI::Button(U"Play", Vec2{ 200, 20 }))
 		{
-			// 再生・再開
+			// Play/resume
 			audio.play();
 		}
 
 		if (SimpleGUI::Button(U"Pause", Vec2{ 200, 60 }))
 		{
-			// 一時停止
+			// Pause
 			audio.pause();
 		}
 
 		if (SimpleGUI::Button(U"Stop", Vec2{ 200, 100 }))
 		{
-			// 停止して再生位置を最初に戻す
+			// Stop and return playback position to the beginning
 			audio.stop();
 		}
 	}
@@ -421,13 +449,11 @@ void Main()
 ```
 
 
-## 37.8 音量を変える
-個別のオーディオの音量を変更するには `.setVolume()` に 0.0～1.0 の値を設定します。デフォルトの音量は 1.0 です。設定されている音量は `.getVolume()` で取得できます。
-
-`.setVolume()` は、`.playOneShot()` で再生している音声には適用されません。
-
-!!! example "音量は等比で動かすと自然に聞こえる"
-    音量と耳に聞こえる音の大きさの関係は、人間の耳の特性により、線形ではなく対数的な関係になります。1.0 → 0.8 → 0.6 → 0.4 → 0.2 のように等差で変更すると、0 に近づくにつれ耳が感じる音量の変化が大きくなってしまいます。代わりに 1.0 → 0.8 → 0.64 → 0.512 → 0.4096 のように等比で変更すると、より自然な音量変化として聞こえます。
+## 41.9 Volume Control
+- To change audio volume, use `.setVolume(volume)` to set a value from 0.0 to 1.0
+- The default volume is 1.0
+- You can get the set volume with `.getVolume()`
+- `.setVolume(volume)` does not apply to audio played with `.playOneShot()`
 
 ```cpp
 # include <Siv3D.hpp>
@@ -444,20 +470,91 @@ void Main()
 	{
 		ClearPrint();
 
-		// 現在の音量を取得
+		// Get current volume
 		Print << audio.getVolume();
 
 		if (SimpleGUI::Slider(U"volume: {:.2f}"_fmt(volume), volume, Vec2{ 200, 20 }, 160, 140))
 		{
-			// 音量を設定
+			// Set volume
 			audio.setVolume(volume);
 		}
 	}
 }
 ```
 
-## 37.9 フェードイン・フェードアウト
-`.play()`, `.pause()`, `.stop()` の引数に時間を渡すと、その時間をかけて音量がフェードイン・フェードアウトします。一時停止と停止は、フェードアウトが完了するまで遅延されます。
+
+## 41.10 Volume Control Considering Human Characteristics
+- The human ear perceives sound loudness logarithmically rather than linearly relative to volume
+- While 0.0 → 0.5 causes a large change in perceived loudness, 0.5 → 1.0 doesn't feel like the sound gets much louder
+- When implementing volume sliders, you can make volume changes closer to human perception by doing the following:
+
+```cpp
+# include <Siv3D.hpp>
+
+double LinearToLog(double value)
+{
+	if (value == 0.0)
+	{
+		return 0.0;
+	}
+
+	const double minDb = -40.0; // Adjust as needed
+	const double db = (minDb * (1.0 - value));
+	return Math::Pow(10.0, (db / 20.0));
+}
+
+void Main()
+{
+	const Audio audio{ Audio::Stream, U"example/test.mp3" };
+
+	audio.play();
+
+	size_t index = 0;
+
+	double volume = 1.0;
+
+	while (System::Update())
+	{
+		if (SimpleGUI::RadioButtons(index, { U"Linear", U"Log" }, Vec2{ 200, 40 }, 160, 20))
+		{
+			if (index == 0)
+			{
+				audio.setVolume(volume);
+			}
+			else
+			{
+				audio.setVolume(LinearToLog(volume));
+			}
+		}
+
+		if (index == 0)
+		{
+			if (SimpleGUI::Slider(U"volume: {:.4f}"_fmt(volume), volume, Vec2{ 400, 40 }, 160, 140))
+			{
+				audio.setVolume(volume);
+			}
+		}
+		else
+		{
+			if (SimpleGUI::Slider(U"volume: {:.4f}"_fmt(LinearToLog(volume)), volume, Vec2{ 400, 40 }, 160, 140))
+			{
+				audio.setVolume(LinearToLog(volume));
+			}
+		}
+	}
+}
+```
+
+
+## 41.11 Fade In/Fade Out
+- Passing time as an argument to `.play()`, `.pause()`, `.stop()` causes the volume to fade in/out over that time
+- Pause and stop are delayed until fade out is complete
+
+| Code | Description |
+| --- | --- |
+| `.play(duration)` | Start playing from volume 0 and change volume to 1 over the specified time |
+| `.pause(duration)` | Change volume from current volume to 0 over the specified time and pause |
+| `.stop(duration)` | Change volume from current volume to 0 over the specified time, stop and return playback position to the beginning |
 
 ```cpp
 # include <Siv3D.hpp>
@@ -470,30 +567,30 @@ void Main()
 	{
 		ClearPrint();
 
-		// 再生されているか
+		// Whether playing
 		Print << U"isPlaying: " << audio.isPlaying();
 
-		// 一時停止中であるか
+		// Whether paused
 		Print << U"isPaused: " << audio.isPaused();
 
-		// 現在の音量
+		// Current volume
 		Print << audio.getVolume();
 
 		if (SimpleGUI::Button(U"Play", Vec2{ 200, 20 }))
 		{
-			// 2 秒かけて再生・再開
+			// Play/resume over 2 seconds
 			audio.play(2s);
 		}
 
 		if (SimpleGUI::Button(U"Pause", Vec2{ 200, 60 }))
 		{
-			// 2 秒かけて一時停止
+			// Pause over 2 seconds
 			audio.pause(2s);
 		}
 
 		if (SimpleGUI::Button(U"Stop", Vec2{ 200, 100 }))
 		{
-			// 2 秒かけて停止して再生位置を最初に戻す
+			// Stop over 2 seconds and return playback position to the beginning
 			audio.stop(2s);
 		}
 	}
@@ -501,8 +598,8 @@ void Main()
 ```
 
 
-## 37.10 再生中に音量を徐々に変える
-`.fadeVolume(volume, duration)` を使うと、指定した時間 `duration` だけかけて、音量が徐々に `volume` へ変化します。
+## 41.12 Playback Volume Fade Control
+- Using `.fadeVolume(volume, duration)` gradually changes the volume to `volume` over the specified time `duration`
 
 ```cpp
 # include <Siv3D.hpp>
@@ -517,24 +614,24 @@ void Main()
 	{
 		ClearPrint();
 
-		// 現在の音量
+		// Current volume
 		Print << audio.getVolume();
 
 		if (SimpleGUI::Button(U"1.0", Vec2{ 200, 20 }))
 		{
-			// 2 秒かけて音量を 1.0 に
+			// Change volume to 1.0 over 2 seconds
 			audio.fadeVolume(1.0, 2s);
 		}
 
 		if (SimpleGUI::Button(U"0.5", Vec2{ 200, 60 }))
 		{
-			// 1 秒かけて音量を 0.5 に
+			// Change volume to 0.5 over 1 second
 			audio.fadeVolume(0.5, 1s);
 		}
 
 		if (SimpleGUI::Button(U"0.1", Vec2{ 200, 100 }))
 		{
-			// 1.5 秒かけて音量を 0.1 に
+			// Change volume to 0.1 over 1.5 seconds
 			audio.fadeVolume(0.1, 1.5s);
 		}
 	}
@@ -542,10 +639,12 @@ void Main()
 ```
 
 
-## 37.11 再生スピードを変える
-再生スピードを変えるには `.setSpeed(speed)` または `.fadeSpeed(speed, duration)` を使って、再生スピードの倍率を設定します。デフォルトは 1.0 です。再生スピードが速くなると音は高く聞こえ、遅くなると低く聞こえます。スピードを早くしても音の高低が発生しないようにするには、37.18 の「ピッチシフト」と組み合わせます。
-
-現在の再生スピードは `.getSpeed()` で取得できます。
+## 41.13 Playback Speed Control
+- To change playback speed, use `.setSpeed(speed)` or `.fadeSpeed(speed, duration)` to set the playback speed multiplier
+- The default playback speed is 1.0
+- Increasing playback speed makes the sound higher, and decreasing it makes it lower
+- To avoid pitch changes when changing speed, use **41.20** pitch shift
+- You can get the current playback speed with `.getSpeed()`
 
 ```cpp
 # include <Siv3D.hpp>
@@ -560,34 +659,35 @@ void Main()
 	{
 		ClearPrint();
 
-		// 現在のスピード
+		// Current speed
 		Print << audio.getSpeed();
 
 		if (SimpleGUI::Button(U"1.2", Vec2{ 200, 20 }))
 		{
-			// 2 秒かけてスピードを 1.2 に
+			// Change speed to 1.2 over 2 seconds
 			audio.fadeSpeed(1.2, 2s);
 		}
 
 		if (SimpleGUI::Button(U"1.0", Vec2{ 200, 60 }))
 		{
-			// 1 秒かけてスピードを 1.0 に
+			// Change speed to 1.0 over 1 second
 			audio.fadeSpeed(1.0, 1s);
 		}
 
 		if (SimpleGUI::Button(U"0.8", Vec2{ 200, 100 }))
 		{
-			// 1.5 秒かけてスピードを 0.8 に
+			// Change speed to 0.8 over 1.5 seconds
 			audio.fadeSpeed(0.8, 1.5s);
 		}
 	}
 }
 ```
 
-## 37.12 パンを変える
-左右の音量バランス（パン）を変えるには `.setPan(pan)` または `.fadePan(pan, duration)` を使って、パンを -1.0～1.0 の範囲で設定します。-1.0 は最も左、1.0 は最も右、デフォルトは中央の 0.0 です。
 
-現在のパンは `.getPan()` で取得できます。
+## 41.14 Pan Control
+- To change left-right volume balance (pan), use `.setPan(pan)` or `.fadePan(pan, duration)` to set pan in the range -1.0 to 1.0
+- `-1.0` is far left, `1.0` is far right, and the default is center `0.0`
+- You can get the current pan with `.getPan()`
 
 ```cpp
 # include <Siv3D.hpp>
@@ -602,34 +702,42 @@ void Main()
 	{
 		ClearPrint();
 
-		// 現在のパン
+		// Current pan
 		Print << audio.getPan();
 
 		if (SimpleGUI::Button(U"0.9", Vec2{ 200, 20 }))
 		{
-			// 2 秒かけてパンを 0.9 に
+			// Change pan to 0.9 over 2 seconds
 			audio.fadePan(0.9, 2s);
 		}
 
 		if (SimpleGUI::Button(U"0.0", Vec2{ 200, 60 }))
 		{
-			// 1 秒かけてパンを 0.0 に
+			// Change pan to 0.0 over 1 second
 			audio.fadePan(0.0, 1s);
 		}
 
 		if (SimpleGUI::Button(U"-0.9", Vec2{ 200, 100 }))
 		{
-			// 1.5 秒かけてパンを -0.9 に
+			// Change pan to -0.9 over 1.5 seconds
 			audio.fadePan(-0.9, 1.5s);
 		}
 	}
 }
 ```
 
-## 37.13 再生位置を取得する
-オーディオの合計再生時間（秒）は `.lengthSec()`, 合計再生サンプルは `.samples()` で取得できます。現在の再生位置を `.posSec()` では秒、 `.posSample()` ではサンプル数で取得できます。
 
-音楽のタイミングに合わせた演出や、音楽ゲームの判定に、これらの値を使うことができます。
+## 41.15 Getting Playback Position
+- There are member functions to get audio playback time and playback position:
+
+| Code | Description |
+| --- | --- |
+| `.lengthSec()` | Returns total audio playback time (seconds) |
+| `.lengthSample()` | Returns total audio playback sample count |
+| `.posSec()` | Returns current playback position (seconds) |
+| `.posSample()` | Returns current playback position (sample count) |
+
+- These values can be used for timing effects with music and rhythm game timing
 
 ```cpp
 # include <Siv3D.hpp>
@@ -644,18 +752,23 @@ void Main()
 	{
 		ClearPrint();
 
-		// 曲全体の長さ
+		// Total song length
 		Print << U"all: {:.1f} sec ({} samples)"_fmt(audio.lengthSec(), audio.samples());
 
-		// 現在の再生位置
+		// Current playback position
 		Print << U"play: {:.1f} sec ({} samples)"_fmt(audio.posSec(), audio.posSample());
 	}
 }
 ```
 
 
-## 37.14 再生位置を変更する
-再生位置を変更するには、`.seekSamples()` で移動先の位置をサンプル単位で指定するか、`.seekTime()` で移動先の位置を時間（秒）で指定します。
+## 41.16 Changing Playback Position
+- There are member functions to change audio playback position:
+ 
+| Code | Description |
+| --- | --- |
+| `.seekSamples(samples)` | Move playback position to sample count `samples` |
+| `.seekTime(time)` | Move playback position to time `time` (seconds) |
 
 ```cpp
 # include <Siv3D.hpp>
@@ -670,27 +783,27 @@ void Main()
 	{
 		ClearPrint();
 
-		// 曲全体
+		// Total song
 		Print << U"all: {:.1f} sec ({} samples)"_fmt(audio.lengthSec(), audio.samples());
 
-		// 再生位置
+		// Playback position
 		Print << U"play: {:.1f} sec ({} samples)"_fmt(audio.posSec(), audio.posSample());
 
 		if (SimpleGUI::Button(U"0 samples", Vec2{ 300, 20 }))
 		{
-			// 0 サンプル目（曲の先頭）に移動
+			// Move to sample 0 (beginning of song)
 			audio.seekSamples(0);
 		}
 
 		if (SimpleGUI::Button(U"441,000 samples", Vec2{ 300, 60 }))
 		{
-			// 441,000 サンプル目に移動
+			// Move to sample 441,000
 			audio.seekSamples(441000);
 		}
 
 		if (SimpleGUI::Button(U"20.0 sec", Vec2{ 300, 100 }))
 		{
-			// 20 秒の位置に移動
+			// Move to 20 second position
 			audio.seekTime(20.0);
 		}
 	}
@@ -698,8 +811,10 @@ void Main()
 ```
 
 
-## 37.15 ループ再生する
-曲の再生が終端に到達したとき、自動的に先頭から再び再生（ループ）させたい場合は、`Audio` のコンストラクタに `Loop::Yes` を指定します。
+## 41.17 Loop Playback
+- You can set loop playback for audio
+	- When song playback reaches the end, it automatically returns to the beginning and continues playing
+- To loop audio, specify `Loop::Yes` in the `Audio` constructor
 
 ```cpp
 # include <Siv3D.hpp>
@@ -714,36 +829,38 @@ void Main()
 	{
 		ClearPrint();
 
-		// ループが設定されているか
+		// Whether loop is set
 		Print << audio.isLoop();
 
-		// ループ回数
+		// Loop count
 		Print << audio.loopCount();
 
-		// 曲全体
+		// Total song
 		Print << U"all: {:.1f} sec ({} samples)"_fmt(audio.lengthSec(), audio.samples());
 
-		// 再生位置
+		// Playback position
 		Print << U"play: {:.1f} sec ({} samples)"_fmt(audio.posSec(), audio.posSample());
 	}
 }
 ```
 
-## 37.16 区間を指定してループ再生する
-オーディオの再生が指定したループ終端位置に到達したとき、指定したループ先頭位置に戻って区間ループ再生させるには、ループ区間の先頭位置を `Arg::loopBegin`, 終端位置を `Arg::loopEnd` で指定します。位置の指定方法はサンプル数か時間かを選べますが、begin と end で揃える必要があります。
 
-`Arg::loopEnd` を指定するとそれ以降のオーディオデータは保持せず、メモリの消費量が節約されます。
-
-ストリーミング再生では、`Arg::loopEnd` を指定できない制約があります。必要な場合は音声データをあらかじめ事前にカットする加工が必要です。
-
-波形のずれにより、ループの瞬間にノイズ音が生じる場合があります。
+## 41.18 Section Loop
+- You can set a section within audio data to loop
+	- When audio playback reaches the end position of the loop section, it returns to the beginning position of the loop section and continues playing
+	- Due to internal implementation, noise may occur at loop boundaries
+- To loop a section of audio, specify the loop section start position with `Arg::loopBegin` and end position with `Arg::loopEnd` in the `Audio` constructor
+- Position units can be sample count or time, but `begin` and `end` must use the same units
+- Specifying `Arg::loopEnd` doesn't retain audio waveform data beyond that section, saving memory consumption
+- Streaming playback has the limitation that `Arg::loopEnd` cannot be specified
+	- If needed, the audio data needs to be pre-cut
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// 1.5 秒～44.5 秒の区間をループ
+	// Loop section from 1.5 seconds to 44.5 seconds
 	const Audio audio{ U"example/test.mp3", Arg::loopBegin = 1.5s, Arg::loopEnd = 44.5s };
 
 	audio.play();
@@ -752,59 +869,75 @@ void Main()
 	{
 		ClearPrint();
 
-		// ループが設定されているか
+		// Whether loop is set
 		Print << audio.isLoop();
 
-		// ループ回数
+		// Loop count
 		Print << audio.loopCount();
 
-		// 曲全体
+		// Total song
 		Print << U"all: {:.1f} sec ({} samples)"_fmt(audio.lengthSec(), audio.samples());
 
-		// 再生位置
+		// Playback position
 		Print << U"play: {:.1f} sec ({} samples)"_fmt(audio.posSec(), audio.posSample());
 	}
 }
 ```
 
-## 37.17 ミキシングバスとグローバルオーディオ
-オーディオを BGM, 環境音、キャラクターボイスなどのグループに分類し、グループごとに音量などを制御したい場合、**ミキシングバス** が役に立ちます。すべてのオーディオは MixBus0 ～ MixBus3 の 4 つのグループのいずれかのミキシングバスを通り、ミキシングバスを通過したすべてのオーディオは**グローバルオーディオ**を通って再生されます。
+## 41.19 Mixing Bus and Global Audio
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/audio/17.png)
+### 41.19.1 Overview of Mixing Bus and Global Audio
+- You can classify audio played in applications into groups like "BGM", "environmental sounds", "character voices", etc., and control volume and filters for each group
+- Each group is called a **mixing bus**
+- All audio is processed through one of four groups: MixBus0 to MixBus3
+	- Default is set to MixBus0
+- Audio that passes through the mixing bus goes through **global audio** for playback
+	- You can also control volume and filters for global audio
+- The final output volume is calculated as follows:
+	- **Volume set in `Audio` × Mixing bus volume × Global audio volume**
 
-個々のミキシングバスでは次のような操作ができます。
-- 音量の調整
-- 再生中の波形サンプルの取得
-- 再生中の波形の FFT の結果取得
-- オーディオフィルタの適用（次節で説明）
+<div class="noshadow-90"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/audio/19-1.png"></div>
 
-グローバルオーディオでは次のような操作ができます。
-- オーディオの一斉停止・再開
-- 音量の調整
-- 再生中の波形サンプルの取得
-- 再生中の波形の FFT の結果取得
+### 41.19.2 Operations on Mixing Bus
+- Individual mixing buses can perform the following operations:
+	- Volume adjustment
+	- Getting waveform samples during playback
+	- Getting FFT results of waveforms during playback
+	- Applying audio filters (explained in the next section)
+- There are functions to adjust mixing bus volume:
 
-最終的に出力される音量は、  
-**`Audio` で設定された音量 × ミキシングバスの音量 × グローバルオーディオの音量** です。
+| Code | Description |
+| --- | --- |
+| `GlobalAudio::BusSetVolume(busIndex, volume)` | Set volume of mixing bus `busIndex` to `volume` |
+| `GlobalAudio::BusFadeVolume(busIndex, volume, duration)` | Change volume of mixing bus `busIndex` to `volume` over `duration` seconds |
 
-`Audio` をどのミキシングバスで再生するかを指定するには、`.play()` または `.playOneShot()` の引数に `MixBus0` ～ `MixBus3` を指定します（デフォルトでは `MixBus0`）。
+### 41.19.3 Operations on Global Audio
+- Global audio can perform the following operations:
+	- Stop/resume all audio
+	- Volume adjustment
+	- Getting waveform samples during playback
+	- Getting FFT results of waveforms during playback
+- There are functions to adjust global audio volume:
 
-ミキシングバスの音量を調整するには `GlobalAudio::BusSetVolume(busIndex, volume)`, `GlobalAudio::BusFadeVolume(busIndex, volume, duration)` を呼びます。
+| Code | Description |
+| --- | --- |
+| `GlobalAudio::SetVolume(volume)` | Set global audio volume to `volume` |
+| `GlobalAudio::FadeVolume(volume, duration)` | Change global audio volume to `volume` over `duration` seconds |
 
-グローバルオーディオの音量を調整するには `GlobalAudio::SetVolume(volume)`, `GlobalAudio::FadeVolume(volume, duration)` を呼びます。
+### 41.19.4 Sample Code
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// ピアノの C4 (ド) の音
+	// Piano C4 (Do) sound
 	const Audio pianoC{ GMInstrument::Piano1, PianoKey::C4, 0.5s };
 
-	// ピアノの D4 (レ) の音
+	// Piano D4 (Re) sound
 	const Audio pianoD{ GMInstrument::Piano1, PianoKey::D4, 0.5s };
 
-	// ピアノの E4 (ミ) の音
+	// Piano E4 (Mi) sound
 	const Audio pianoE{ GMInstrument::Piano1, PianoKey::E4, 0.5s };
 
 	double globalVolume = 1.0, mixBus0Volume = 1.0, mixBus1Volume = 1.0;
@@ -813,19 +946,19 @@ void Main()
 	{
 		if (SimpleGUI::Slider(U"Global Vol", globalVolume, Vec2{ 20, 20 }, 120, 200))
 		{
-			// グローバルオーディオの音量を変更
+			// Change global audio volume
 			GlobalAudio::SetVolume(globalVolume);
 		}
 
 		if (SimpleGUI::Slider(U"Bus0 Vol", mixBus0Volume, Vec2{ 20, 60 }, 120, 120))
 		{
-			// MixBus0 の音量を変更
+			// Change MixBus0 volume
 			GlobalAudio::BusSetVolume(MixBus0, mixBus0Volume);
 		}
 
 		if (SimpleGUI::Slider(U"Bus1 Vol", mixBus1Volume, Vec2{ 300, 60 }, 120, 120))
 		{
-			// MixBus1 の音量を変更
+			// Change MixBus1 volume
 			GlobalAudio::BusSetVolume(MixBus1, mixBus1Volume);
 		}
 
@@ -862,30 +995,39 @@ void Main()
 }
 ```
 
-## 37.18 ピッチシフト
-ピッチシフトとは、再生スピードを変えずに音の高さを変えることです。ミキシングバスには、ピッチシフトフィルタを適用することができます。
 
-`GlobalAudio::BusSetPitchShiftFilter(mixbus, index, pitchShift)` で、ミキシングバスの `index` 番目のフィルタにピッチシフトを設定します。`pitchShift` は 0.0 がピッチを変えないことを表します。12.0 が 1 オクターブ上げることを表します。-12.0 が 1 オクターブ下げることを表します。
+## 41.20 Pitch Shift
+- Pitch shift changes the pitch of audio without changing the speed
+- You can apply pitch shift filters to mixing buses
+
+| Code | Description |
+| --- | --- |
+| `GlobalAudio::BusSetPitchShiftFilter(mixbus, index, pitchShift)` | Set pitch shift to the `index`-th filter of mixing bus `mixbus` |
+
+- `pitchShift` is specified in semitone units
+	- 0.0 represents no pitch change
+	- 12.0 represents raising by one octave
+	- -12.0 represents lowering by one octave
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// 音声ファイルを読み込んで Audio を作成する
+	// Load audio file and create Audio
 	const Audio audio{ U"example/test.mp3" };
 
-	// オーディオを再生する
+	// Play audio
 	audio.play();
 
-	// ピッチシフトの量
+	// Amount of pitch shift
 	double pitchShift = 0.0;
 
 	while (System::Update())
 	{
 		if (SimpleGUI::Slider(U"pitchShift: {:.2f}"_fmt(pitchShift), pitchShift, -12.0, 12.0, Vec2{ 40, 40 }, 160, 300))
 		{
-			// MixBus0 の 0 番目のフィルタにピッチシフトを設定する
+			// Set pitch shift to the 0th filter of MixBus0
 			GlobalAudio::BusSetPitchShiftFilter(MixBus0, 0, pitchShift);
 		}
 	}
@@ -893,8 +1035,9 @@ void Main()
 ```
 
 
-## 37.19 オーディオの波形を取得する
-ストリーミングでないオーディオからは、`.getSamples(channel)` でオーディオ全体の波形データを取得できます。`channel` は、0 が左チャンネル、1 が右チャンネルを表し、それぞれのチャンネルの波形の先頭のポインタ `const float*` を返します。
+## 41.21 Getting Audio Waveforms
+- From non-streaming audio, you can access the entire audio waveform data with `.getSamples(channel)`
+- `channel` represents 0 for left channel and 1 for right channel, returning a pointer `const float*` to the beginning of each channel's waveform
 
 ```cpp
 # include <Siv3D.hpp>
@@ -913,7 +1056,7 @@ void Main()
 	{
 		const int64 posSample = audio.posSample();
 
-		// 現在の再生位置から 800 サンプル分の波形を取得する
+		// Get 800 samples of waveform from current playback position
 		for (int64 i = posSample; i < (posSample + 800); ++i)
 		{
 			if (i < audio.samples())
@@ -926,20 +1069,21 @@ void Main()
 			}
 		}
 
-		// 波形を描画する
+		// Draw waveform
 		lines.draw(2);
 	}
 }
 ```
 
 
-## 37.20 再生されている直近の波形を取得する
-ミキシングバスを通過した直近 256 サンプルの波形データを取得できます。ストリーミング等の有無にかかわらず、そのミキシングバスを通して再生されるすべてのオーディオの合成波形を取得します。
+## 41.22 Getting Recent Playback Waveforms
+- You can get recent 256 samples of waveform data that passed through mixing buses as `Array<float>`
+- You can get composite waveforms of all audio played through mixing buses regardless of streaming
 
-| 関数 | 取得先 |
+| Code | Source |
 | --- | --- |
-| `GlobalAudio::GetSamples()` | グローバルオーディオ |
-| `GlobalAudio::BusGetSamples(mixbus)` | ミキシングバス |
+| `GlobalAudio::GetSamples()` | Global audio |
+| `GlobalAudio::BusGetSamples(mixbus)` | Mixing bus |
 
 ```cpp
 # include <Siv3D.hpp>
@@ -963,7 +1107,7 @@ void Main()
 			audio2.playOneShot();
 		}
 
-		// グローバルオーディオを通過した直近 256 サンプル分の波形を取得する
+		// Get recent 256 samples of waveform that passed through global audio
 		GlobalAudio::GetSamples(samples);
 
 		for (size_t i = 0; i < samples.size(); ++i)
@@ -971,30 +1115,32 @@ void Main()
 			lines[i].set((i * 800.0 / 256.0), (300 + samples[i] * 200));
 		}
 
-		// 波形を描画する
+		// Draw waveform
 		lines.draw(2);
 	}
 }
 ```
 
 
-## 37.21 オーディオフィルタ
-1 つのミキシングバスには最大 8 つのオーディオフィルタを設定し、オーディオの再生中に、リアルタイムでの音声波形加工ができます。
+## 41.23 Audio Filters
+- You can set up to 8 audio filters on one mixing bus for real-time audio waveform processing during playback
 
-| 関数（引数は省略) | 説明 |
+| Function (arguments omitted) | Description |
 |--|--|
-|`GlobalAudio::BusClearFilter()`| 設定されているフィルタをオフにします |
-|`GlobalAudio::BusSetLowPassFilter()`| ローパスフィルタを設定します |
-|`GlobalAudio::BusSetHighPassFilter()`| ハイパスフィルタを設定します |
-|`GlobalAudio::BusSetEchoFilter()`|  エコーフィルタを設定します |
-|`GlobalAudio::BusSetReverbFilter()`|  リバーブフィルタを設定します |
-|`GlobalAudio::BusSetPitchShiftFilter()`|  ピッチシフトフィルタを設定します |
+|`GlobalAudio::BusClearFilter()`| Turn off set filters |
+|`GlobalAudio::BusSetLowPassFilter()`| Set low-pass filter |
+|`GlobalAudio::BusSetHighPassFilter()`| Set high-pass filter |
+|`GlobalAudio::BusSetEchoFilter()`|  Set echo filter |
+|`GlobalAudio::BusSetReverbFilter()`|  Set reverb filter |
+|`GlobalAudio::BusSetPitchShiftFilter()`|  Set pitch shift filter |
 
-Web 版では、ピッチシフトフィルタを利用できません。`GlobalAudio::SupportsPitchShift()` を使うと、現在の実行環境でピッチシフトフィルタを利用できるかを取得できます。
+- Pitch shift filters are not available in the Web version of Siv3D
+- You can use `GlobalAudio::SupportsPitchShift()` to check if pitch shift filters are available in the current execution environment
+- The following sample is a demo of audio filter functionality
+	- Clicking "Open audio file" allows you to open audio files saved on your computer through a file dialog
+	- See **Tutorial 61** for file dialogs
 
-次のサンプルは、オーディオフィルタ機能のデモです。「Open audio file」をクリックすると、パソコンに保存されているオーディオファイルをオープンできます。詳しくはチュートリアル 46. ファイルダイアログを参照してください。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/audio/21.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/audio/23.png)
 
 ```cpp
 # include <Siv3D.hpp>
@@ -1141,7 +1287,7 @@ void Main()
 
 		if (SimpleGUI::Slider(U"{:.1f} / {:.1f}"_fmt(posSec, audio.lengthSec()), posSec, 0.0, audio.lengthSec(), Vec2{ 600, 60 }, 160, 360))
 		{
-			if (MouseL.down() || !Cursor::DeltaF().isZero()) // シークの連続（ノイズの原因）を防ぐ
+			if (MouseL.down() || !Cursor::DeltaF().isZero()) // Prevent continuous seeking (cause of noise)
 			{
 				audio.seekTime(posSec);
 			}
@@ -1319,7 +1465,7 @@ void Main()
 		}
 	}
 
-	// 再生中の音声があれば、フェードアウトさせてから終了
+	// If there are playing audio, fade out before exiting
 	if (GlobalAudio::GetActiveVoiceCount())
 	{
 		GlobalAudio::FadeVolume(0.0, 0.5s);
@@ -1328,15 +1474,19 @@ void Main()
 }
 ```
 
-## 37.22 オーディオグループ
-オーディオグループを使うと、複数のオーディオを完全に同期するタイミングで再生できます。
-詳しいサンプルとサンプル用の音声ファイルは [Siv3D-Sample | BGM クロスフェード :material-open-in-new:](https://github.com/Siv3D/Siv3D-Samples/tree/main/Samples/AudioCrossfade){:target="_blank"} を参照してください。
+
+## 41.24 Simultaneous Playback of Multiple Audio
+- There are cases where you want to play multiple audio files with perfect sample-level synchronization
+- To play multiple audio files in perfect synchronization, use audio groups
+- For detailed samples and sample audio files, see [Siv3D-Sample | BGM Crossfade :material-open-in-new:](https://github.com/Siv3D/Siv3D-Samples/tree/main/Samples/AudioCrossfade){:target="_blank"}
 
 
-## 37.23 波形のリアルタイム書き込み
-`IAudioStream` を継承したクラスを作成することで、波形のリアルタイム書き込みを行うことができます。
-
-`void getAudio(float* left, float* right, const size_t samplesToWrite) override` は、波形の書き込みを行うための関数です。`left` と `right` は、それぞれ左右のチャンネルの波形を書き込むためのバッファで、書き込む必要があるサンプル数が `samplesToWrite` によって渡されます。再生を終了する場合 `bool hasEnded() override` をオーバーライドして `true` を返します。先頭への巻き戻しが行われる場合に `void rewind() override` が呼ばれます。
+## 41.25 Real-time Waveform Writing
+- By creating a class that inherits from `IAudioStream`, you can perform real-time waveform writing
+- `void getAudio(float* left, float* right, const size_t samplesToWrite) override` is a function for writing waveforms
+	- `left` and `right` are buffers for writing left and right channel waveforms respectively, and the number of samples to write is passed by `samplesToWrite`
+- To end playback, override `bool hasEnded() override` to return `true`
+- When rewinding to the beginning is performed, `void rewind() override` is called
 
 ```cpp
 # include <Siv3D.hpp>

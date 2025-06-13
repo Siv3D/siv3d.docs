@@ -1,9 +1,9 @@
-# コーディングスタイル
+# Coding Style
 
-Siv3D のコーディングスタイルについて説明します。
+This page explains Siv3D's coding style.
 
-## 変数
-- 変数は camelCase
+## Variables
+- Variables use camelCase
 
 ```cpp
 # include <Siv3D.hpp>
@@ -21,7 +21,7 @@ void Main()
 }
 ```
 
-- constexpr 定数は PascalCase
+- constexpr constants use PascalCase
 
 ```cpp
 # include <Siv3D.hpp>
@@ -39,8 +39,8 @@ void Main()
 }
 ```
 
-## 関数
-- 関数名は PascalCase
+## Functions
+- Function names use PascalCase
 
 ```cpp
 # include <Siv3D.hpp>
@@ -63,14 +63,14 @@ void Main()
 ```
 
 
-## クラス
-- クラス名は PascalCase
-- `public`  メンバのみを持つ場合は `struct`, それ以外は `class` を使う
-- `class` の場合、必要でない限り `public:` → `protected:` → `private:` の順に記述する
-- 非静的 `private` メンバ変数は `m_` から始めて camelCase で続ける
-- 非静的メンバ関数は camelCase 
-- 静的メンバ関数は PascalCase
-- 静的メンバ定数は PascalCase 
+## Classes
+- Class names use PascalCase
+- Use `struct` if it only has `public` members, otherwise use `class`
+- For `class`, write in the order `public:` → `protected:` → `private:` unless necessary
+- Non-static `private` member variables start with `m_` and continue with camelCase
+- Non-static member functions use camelCase
+- Static member functions use PascalCase
+- Static member constants use PascalCase
 
 ```cpp
 # include <Siv3D.hpp>
@@ -183,18 +183,18 @@ void Main()
 ```
 
 
-## 列挙型
-- 列挙型名は PascalCase
-- 列挙子は PascalCase
-- `enum` より `enum class` を使う
+## Enums
+- Enum names use PascalCase
+- Enumerators use PascalCase
+- Use `enum class` rather than `enum`
 
 
-## インデント
-- タブ空白を用いる
+## Indentation
+- Use tab characters
 
 
-## 字下げスタイル
-- オールマンスタイルを用いる
+## Brace Style
+- Use Allman style
 
 ```cpp
 # include <Siv3D.hpp>
@@ -212,12 +212,12 @@ void Main()
 ```
 
 
-## 比較演算子
-- とくに理由がない場合 `>` と `>=` は使わない
+## Comparison Operators
+- Don't use `>` and `>=` unless there's a specific reason
 
 
-## 浮動小数点数リテラル
-- つねに . の前後に数字を書く
+## Floating-Point Literals
+- Always write digits before and after the decimal point
 
 ```cpp
 double x = 1.0; // OK
@@ -225,12 +225,12 @@ double y = 1.; // NG
 double z = .1; // NG
 ```
 
-## 括弧
-- 積極的に使う
+## Parentheses
+- Use them actively
 
 
-## 代替トークン
-- 論理否定演算子 `!` は `not` に置き換える
+## Alternative Tokens
+- Replace the logical NOT operator `!` with `not`
 
 ```cpp
 # include <Siv3D.hpp>
@@ -252,13 +252,13 @@ void Main()
 ```
 
 
-## インクリメント・デクリメント演算子
-- とくに理由がない場合、前置演算子を使う
+## Increment/Decrement Operators
+- Use prefix operators unless there's a specific reason
 
 
-## 配列名
-- 複数形にする
-- 複数形が無い語は `~List` とする
+## Array Names
+- Use plural forms
+- For words without plural forms, use `~List`
 
 
 ## include
@@ -266,14 +266,14 @@ void Main()
 - `# include "..."`
 
 
-## インクルードガード
+## Include Guards
 - `# pragma once`
 
 
-## ソースファイル名
+## Source File Names
 - PascalCase
-- ソースファイルは `.cpp`
-- ヘッダファイルは `.hpp`
-- ヘッダファイルでインクルードする詳細実装のヘッダファイルは `.ipp`
+- Source files use `.cpp`
+- Header files use `.hpp`
+- Header files for detailed implementation included by header files use `.ipp`
 
 

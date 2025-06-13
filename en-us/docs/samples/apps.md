@@ -1,26 +1,26 @@
-# アプリケーションのサンプル
+# Application Samples
 
-## 1. ライフゲーム エディタ
+## 1. Game of Life editor
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/apps/1.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
-	// 1 セルが 1 バイトになるよう、ビットフィールドを使用
+	// Using bit fields so that 1 cell becomes 1 byte
 	struct Cell
 	{
 		bool previous : 1 = 0;
 		bool current : 1 = 0;
 	};
 
-	// フィールドをランダムなセル値で埋める関数
+	// Function to fill the field with random cell values
 	void RandomFill(Grid<Cell>& grid)
 	{
 		grid.fill(Cell{});
 
-		// 境界のセルを除いて更新
+		// Update excluding boundary cells
 		for (auto y : Range(1, (grid.height() - 2)))
 		{
 			for (auto x : Range(1, (grid.width() - 2)))
@@ -30,7 +30,7 @@
 		}
 	}
 
-	// フィールドの状態を更新する関数
+	// Function to update the field state
 	void Update(Grid<Cell>& grid)
 	{
 		for (auto& cell : grid)
@@ -38,7 +38,7 @@
 			cell.previous = cell.current;
 		}
 
-		// 境界のセルを除いて更新
+		// Update excluding boundary cells
 		for (auto y : Range(1, (grid.height() - 2)))
 		{
 			for (auto x : Range(1, (grid.width() - 2)))
@@ -55,13 +55,13 @@
 				n += grid[y + 1][x].previous;
 				n += grid[y + 1][x + 1].previous;
 
-				// セルの状態の更新
+				// Update cell state
 				grid[y][x].current = (c == 0 && n == 3) || (c == 1 && (n == 2 || n == 3));
 			}
 		}
 	}
 
-	// フィールドの状態を画像化する関数
+	// Function to convert field state to image
 	void CopyToImage(const Grid<Cell>& grid, Image& image)
 	{
 		for (auto y : step(image.height()))
@@ -76,61 +76,61 @@
 
 	void Main()
 	{
-		// フィールドのセルの数（横）
+		// Number of cells in the field (horizontal)
 		constexpr int32 Width = 60;
 
-		// フィールドのセルの数（縦）
+		// Number of cells in the field (vertical)
 		constexpr int32 Height = 60;
 
-		// 計算をしない境界部分も含めたサイズで二次元配列を確保
+		// Allocate 2D array with size including boundary parts that are not computed
 		Grid<Cell> grid((Width + 2), (Height + 2), Cell{ 0,0 });
 
-		// フィールドの状態を可視化するための画像
+		// Image to visualize the field state
 		Image image{ Width, Height, Palette::Black };
 
-		// 動的テクスチャ
+		// Dynamic texture
 		DynamicTexture texture{ image };
 
 		Stopwatch stopwatch{ StartImmediately::Yes };
 
-		// 自動再生
+		// Auto play
 		bool autoStep = false;
 
-		// 更新頻度
+		// Update frequency
 		double speed = 0.5;
 
-		// グリッドの表示
+		// Grid display
 		bool showGrid = true;
 
-		// 画像の更新の必要があるか
+		// Whether image update is needed
 		bool updated = false;
 
 		while (System::Update())
 		{
-			// フィールドをランダムな値で埋めるボタン
+			// Button to fill field with random values
 			if (SimpleGUI::ButtonAt(U"Random", Vec2{ 700, 40 }, 170))
 			{
 				RandomFill(grid);
 				updated = true;
 			}
 
-			// フィールドのセルをすべてゼロにするボタン
+			// Button to set all field cells to zero
 			if (SimpleGUI::ButtonAt(U"Clear", Vec2{ 700, 80 }, 170))
 			{
 				grid.fill({ 0, 0 });
 				updated = true;
 			}
 
-			// 一時停止 / 再生ボタン
+			// Pause / play button
 			if (SimpleGUI::ButtonAt((autoStep ? U"Pause" : U"Run ▶"), Vec2{ 700, 160 }, 170))
 			{
 				autoStep = (not autoStep);
 			}
 
-			// 更新頻度変更スライダー
+			// Update frequency change slider
 			SimpleGUI::SliderAt(U"Speed", speed, 1.0, 0.1, Vec2{ 700, 200 }, 70, 100);
 
-			// 1 ステップ進めるボタン、または更新タイミングの確認
+			// Step forward button, or update timing check
 			if (SimpleGUI::ButtonAt(U"Step", Vec2{ 700, 240 }, 170, (not autoStep))
 				|| (autoStep && ((speed * speed) <= stopwatch.sF())))
 			{
@@ -139,10 +139,10 @@
 				stopwatch.restart();
 			}
 
-			// グリッド表示の有無を指定するチェックボックス
+			// Checkbox to specify whether to display grid
 			SimpleGUI::CheckBoxAt(showGrid, U"Grid", Vec2{ 700, 320 }, 170);
 
-			// フィールド上でのセルの編集
+			// Cell editing on the field
 			if (Rect{ 0, 0, 599 }.mouseOver())
 			{
 				const Point target = (Cursor::Pos() / 10 + Point{ 1, 1 });
@@ -159,7 +159,7 @@
 				}
 			}
 
-			// 画像を更新する
+			// Update the image
 			if (updated)
 			{
 				CopyToImage(grid, image);
@@ -167,13 +167,13 @@
 				updated = false;
 			}
 
-			// 画像をフィルタなしで拡大して表示する
+			// Display the image enlarged without filter
 			{
 				const ScopedRenderStates2D sampler{ SamplerState::ClampNearest };
 				texture.scaled(10).draw();
 			}
 
-			// グリッドを表示する
+			// Display the grid
 			if (showGrid)
 			{
 				for (auto i : step(61))
@@ -183,7 +183,7 @@
 				}
 			}
 
-			// マウスオーバーしているセルをハイライトする
+			// Highlight the cell under mouse cursor
 			if (Rect{ 0, 0, 599 }.mouseOver())
 			{
 				Cursor::RequestStyle(CursorStyle::Hidden);
@@ -194,11 +194,11 @@
 	```
 
 
-## 2. QR コード作成
+## 2. QR code creation
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/apps/2.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -208,27 +208,27 @@
 
 		Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-		// 変換するテキスト
+		// Text to convert
 		TextEditState textEdit{ U"Abc" };
 
 		String previous;
 
-		// QR コードを表示するための動的テクスチャ
+		// Dynamic texture to display QR code
 		DynamicTexture texture;
 
 		while (System::Update())
 		{
-			// テキスト入力
+			// Text input
 			SimpleGUI::TextBox(textEdit, Vec2{ 20,20 }, 1240);
 
-			// テキストの更新があれば QR コードを再作成する
+			// If text is updated, recreate QR code
 			if (const String current = textEdit.text;
 				current != previous)
 			{
-				// 入力したテキストを QR コードに変換する
+				// Convert input text to QR code
 				if (const auto qr = QR::EncodeText(current))
 				{
-					// 枠を付けて拡大した画像で動的テクスチャを更新する
+					// Update dynamic texture with enlarged image with frame
 					texture.fill(QR::MakeImage(qr).scaled(500, 500, InterpolationAlgorithm::Nearest));
 				}
 
@@ -241,15 +241,15 @@
 	```
 
 
-## 3. ドットお絵かき
+## 3. Pixel art drawing
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/apps/3.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
-	// カーソルが乗っているセルのインデックスを取得する関数
+	// Function to get index of cell under cursor
 	Optional<Point> CursorPosToIndex(int32 cellSize, const Size& gridSize)
 	{
 		const Point cursorPos = Cursor::Pos();
@@ -270,7 +270,7 @@
 		return index;
 	}
 
-	// インデックスからセルの Rect を計算する関数
+	// Function to calculate cell Rect from index
 	Rect IndexToRect(const Point& index, int32 cellSize)
 	{
 		return Rect{ (index * cellSize), cellSize };
@@ -282,12 +282,12 @@
 
 		constexpr int32 CellSize = 40;
 
-		// シーンのサイズとセルの大きさから縦横のセルの個数を計算
+		// Calculate number of cells horizontally and vertically from scene size and cell size
 		Grid<int32> grid(Scene::Size() / CellSize);
 
 		while (System::Update())
 		{
-			// カーソルを手の形にする
+			// Make cursor hand-shaped
 			Cursor::RequestStyle(CursorStyle::Hand);
 
 			for (auto p : step(grid.size()))
@@ -295,18 +295,18 @@
 				IndexToRect(p, CellSize).stretched(-1).draw(ColorF{ 0.95 - grid[p] * 0.3 });
 			}
 
-			// カーソルが乗っているセルのインデックスを取得する
-			// （すべてのセルでクリック判定を行うよりも効率的）
+			// Get index of cell under cursor
+			// (More efficient than performing click detection on all cells)
 			if (const auto index = CursorPosToIndex(CellSize, grid.size()))
 			{
-				// 左クリックされたら
+				// If left clicked
 				if (MouseL.down())
 				{
-					// 0 → 1 → 2 →　3 → 0 → 1 → ... と遷移させる
+					// Transition 0 → 1 → 2 → 3 → 0 → 1 → ...
 					++grid[*index] %= 4;
 				}
 
-				// 右ボタンが押されていたら
+				// If right button is pressed
 				if (MouseR.pressed())
 				{
 					grid[*index] = 0;
@@ -317,11 +317,11 @@
 	```
 
 
-## 4. 時計
+## 4. Clock
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/apps/4.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -336,7 +336,7 @@
 		{
 			Circle{ center, 240 }.drawShadow(Vec2{ 0, 2 }, 12).draw().drawFrame(20, 0, ColorF{ 0.8 });
 
-			// 数字
+			// Numbers
 			for (auto i : Range(1, 12))
 			{
 				const Vec2 pos = OffsetCircular{ center, 170, (i * 30_deg) };
@@ -349,20 +349,20 @@
 				Circle{ pos, (i % 5 ? 3 : 6) }.draw(ColorF{ 0.3 });
 			}
 
-			// 現在時刻を取得
+			// Get current time
 			const DateTime time = DateTime::Now();
 
-			// 時針
+			// Hour hand
 			const double hour = ((time.hour + time.minute / 60.0) * 30_deg);
 			Line{ center, Arg::direction = Circular(110, hour) }
 				.draw(LineStyle::RoundCap, 18, ColorF{ 0.11 });
 
-			// 分針
+			// Minute hand
 			const double minute = ((time.minute + time.second / 60.0) * 6_deg);
 			Line{ center, Arg::direction = Circular(190, minute) }
 				.draw(LineStyle::RoundCap, 8, ColorF{ 0.11 });
 
-			// 秒針
+			// Second hand
 			const double second = (time.second * 6_deg);
 			Line{ center, Arg::direction = Circular(190, second) }
 				.stretched(40, 0)
@@ -372,11 +372,11 @@
 	```
 
 
-## 5. 画像ビューア
+## 5. Image viewer
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/apps/5.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -386,13 +386,13 @@
 
 		while (System::Update())
 		{
-			// ファイルがドロップされた
+			// File was dropped
 			if (DragDrop::HasNewFilePaths())
 			{
-				// ファイルを画像として読み込めた
+				// File could be loaded as image
 				if (const Image image{ DragDrop::GetDroppedFilePaths().front().path })
 				{
-					// 画面のサイズに合うように画像を拡大縮小
+					// Scale image to fit screen size
 					texture = Texture{ image.fitted(Scene::Size()) };
 				}
 			}
@@ -406,11 +406,11 @@
 	```
 
 
-## 6. リサイズ可能な画像ビューア
+## 6. Resizable image viewer
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/apps/6.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -426,10 +426,10 @@
 
 		while (System::Update())
 		{
-			// ファイルがドロップされた
+			// File was dropped
 			if (DragDrop::HasNewFilePaths())
 			{
-				// ファイルを画像として読み込めた
+				// File could be loaded as image
 				if (const Image image{ DragDrop::GetDroppedFilePaths().front().path })
 				{
 					texture = Texture{ image, TextureDesc::Mipped };
@@ -445,11 +445,11 @@
 	```
 
 
-## 7. 世界地図
+## 7. World map
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/apps/7.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -476,11 +476,11 @@
 				Print << Cursor::PosF();
 				Print << camera.getScale() << U"x";
 
-				Rect{ Arg::center(0, 0), 360, 180 }.draw(ColorF{ 0.2, 0.6, 0.9 }); // 海
+				Rect{ Arg::center(0, 0), 360, 180 }.draw(ColorF{ 0.2, 0.6, 0.9 }); // Ocean
 				{
 					for (auto&& [i, country] : Indexed(countries))
 					{
-						// 画面外にある場合は描画をスキップ
+						// Skip drawing if outside screen
 						if (not country.computeBoundingRect().intersects(viewRect))
 						{
 							continue;
@@ -502,11 +502,11 @@
 	```
 
 
-## 8. 動画プレイヤー
+## 8. Video player
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/apps/8.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -527,10 +527,10 @@
 			const double videoTime = videoTexture.posSec();
 			const double audioTime = audio.posSec();
 
-			// 動画の再生位置と音声の再生位置の差が 0.1 秒以上ある場合
+			// If difference between video and audio playback position is 0.1 seconds or more
 			if (audio && (0.1 < AbsDiff(audioTime, videoTime)))
 			{
-				// 音声の再生位置を動画の再生位置に合わせる
+				// Sync audio playback position to video playback position
 				audio.seekTime(videoTime);
 			}
 
@@ -594,11 +594,11 @@
 	```
 
 
-## 9. コッホ曲線
+## 9. Koch curve
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/apps/9.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -687,9 +687,8 @@
 	}
 	```
 
-## 10. AI による物語生成
+## 10. AI story generation
 
 ![](https://raw.githubusercontent.com/Siv3D/Siv3D-Samples/main/Samples/GPT3Story/Screenshot/1.png)
 
-[Siv3D-Sample | AI による物語生成 :material-open-in-new:](https://github.com/Siv3D/Siv3D-Samples/blob/main/Samples/GPT3Story){:target="_blank" .md-button}
-
+[Siv3D-Sample | AI story generation :material-open-in-new:](https://github.com/Siv3D/Siv3D-Samples/blob/main/Samples/GPT3Story){:target="_blank" .md-button}

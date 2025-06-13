@@ -1,19 +1,19 @@
-# 多態性の活用
+# Utilizing Polymorphism
 
 | | | | |
 |:--:|:--:|:--:|:--:|
-| **難易度** | 中級 | **時間** | 60 分～ |
+| **Difficulty** | Intermediate | **Time** | 60 minutes~ |
 
-## 1. カニクラス
+## 1. Crab Class
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/course/polymorphism/1.png)
 
-- まずは普通のクラスを作成します。
+- First, create a normal class.
 
-??? note "コード"
+??? note "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
-	// カニ
+	// Crab
 	class Crab
 	{
 	public:
@@ -26,20 +26,20 @@
 
 		void update()
 		{
-			// 残り時間を減らす
+			// Decrease remaining time
 			m_timer -= Scene::DeltaTime();
 
-			// 残り時間が 0 以下になったら
+			// When remaining time becomes 0 or less
 			if (m_timer <= 0.0)
 			{
-				// 残り時間をリセットする
+				// Reset remaining time
 				m_timer = Random(3.0, 6.0);
 
-				// 次の目標位置を設定する
+				// Set next target position
 				m_targetPos = getNextTarget();
 			}
 
-			// 現在の位置を目標の位置に近づける
+			// Move current position closer to target position
 			m_pos = Math::SmoothDamp(m_pos, m_targetPos, m_velocity, 0.2, 200.0);
 		}
 
@@ -50,21 +50,21 @@
 
 	private:
 
-		// 現在の位置
+		// Current position
 		Vec2 m_pos{ 0, 0 };
 
-		// 目標の位置
+		// Target position
 		Vec2 m_targetPos{ 0, 0 };
 
-		// 現在の速度
+		// Current velocity
 		Vec2 m_velocity{ 0,0 };
 
-		// 目標変更までの残り時間
+		// Remaining time until target change
 		double m_timer = 0.0;
 
 		Vec2 getNextTarget() const
 		{
-			// Y 座標の移動量は抑えめにする
+			// Keep Y coordinate movement moderate
 			return{ Random(0, 1280), (m_pos.y + Random(-40, 40)) };
 		}
 	};
@@ -88,16 +88,16 @@
 	```
 
 
-## 2. ネコクラスと蝶クラス
+## 2. Cat Class and Butterfly Class
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/course/polymorphism/2.png)
 
-- カニクラスと使い方（メンバ関数のインタフェース）が同じクラスを 2 つ追加します。
+- Add two classes that have the same usage (member function interface) as the Crab class.
 
-??? note "コード"
+??? note "Code"
 	```cpp hl_lines="59-114 116-171 179-180 183-185 190-192 195-197"
 	# include <Siv3D.hpp>
 
-	// カニ
+	// Crab
 	class Crab
 	{
 	public:
@@ -110,20 +110,20 @@
 
 		void update()
 		{
-			// 残り時間を減らす
+			// Decrease remaining time
 			m_timer -= Scene::DeltaTime();
 
-			// 残り時間が 0 以下になったら
+			// When remaining time becomes 0 or less
 			if (m_timer <= 0.0)
 			{
-				// 残り時間をリセットする
+				// Reset remaining time
 				m_timer = Random(3.0, 6.0);
 
-				// 次の目標位置を設定する
+				// Set next target position
 				m_targetPos = getNextTarget();
 			}
 
-			// 現在の位置を目標の位置に近づける
+			// Move current position closer to target position
 			m_pos = Math::SmoothDamp(m_pos, m_targetPos, m_velocity, 0.2, 200.0);
 		}
 
@@ -134,26 +134,26 @@
 
 	private:
 
-		// 現在の位置
+		// Current position
 		Vec2 m_pos{ 0, 0 };
 
-		// 目標の位置
+		// Target position
 		Vec2 m_targetPos{ 0, 0 };
 
-		// 現在の速度
+		// Current velocity
 		Vec2 m_velocity{ 0,0 };
 
-		// 目標変更までの残り時間
+		// Remaining time until target change
 		double m_timer = 0.0;
 
 		Vec2 getNextTarget() const
 		{
-			// Y 座標の移動量は抑えめにする
+			// Keep Y coordinate movement moderate
 			return{ Random(0, 1280), (m_pos.y + Random(-40, 40)) };
 		}
 	};
 
-	// ネコ
+	// Cat
 	class Cat
 	{
 	public:
@@ -166,42 +166,42 @@
 
 		void update()
 		{
-			// 残り時間を減らす
+			// Decrease remaining time
 			m_timer -= Scene::DeltaTime();
 
-			// 残り時間が 0 以下になったら
+			// When remaining time becomes 0 or less
 			if (m_timer <= 0.0)
 			{
-				// 残り時間をリセットする
+				// Reset remaining time
 				m_timer = Random(3.0, 6.0);
 
-				// 次の目標位置を設定する
+				// Set next target position
 				m_targetPos = getNextTarget();
 			}
 
-			// 現在の位置を目標の位置に近づける
+			// Move current position closer to target position
 			m_pos = Math::SmoothDamp(m_pos, m_targetPos, m_velocity, 0.2, 200.0);
 		}
 
 		void draw() const
 		{
-			// 速度に応じて左右を反転させる
+			// Flip horizontally based on velocity
 			const bool mirrored = (0.0 < m_velocity.x);
 			TextureAsset(U"Cat").mirrored(mirrored).drawAt(m_pos);
 		}
 
 	private:
 
-		// 現在の位置
+		// Current position
 		Vec2 m_pos{ 0, 0 };
 
-		// 目標の位置
+		// Target position
 		Vec2 m_targetPos{ 0, 0 };
 
-		// 現在の速度
+		// Current velocity
 		Vec2 m_velocity{ 0,0 };
 
-		// 目標変更までの残り時間
+		// Remaining time until target change
 		double m_timer = 0.0;
 
 		Vec2 getNextTarget() const
@@ -210,7 +210,7 @@
 		}
 	};
 
-	// 蝶
+	// Butterfly
 	class Butterfly
 	{
 	public:
@@ -223,42 +223,42 @@
 
 		void update()
 		{
-			// 残り時間を減らす
+			// Decrease remaining time
 			m_timer -= Scene::DeltaTime();
 
-			// 残り時間が 0 以下になったら
+			// When remaining time becomes 0 or less
 			if (m_timer <= 0.0)
 			{
-				// 残り時間をリセットする
+				// Reset remaining time
 				m_timer = Random(3.0, 6.0);
 
-				// 次の目標位置を設定する
+				// Set next target position
 				m_targetPos = getNextTarget();
 			}
 
-			// 現在の位置を目標の位置に近づける
+			// Move current position closer to target position
 			m_pos = Math::SmoothDamp(m_pos, m_targetPos, m_velocity, 0.2, 200.0);
 		}
 
 		void draw() const
 		{
-			// 上下に揺らすオフセット
+			// Vertical swaying offset
 			const double yOffset = (10.0 * Periodic::Sine1_1(0.5s));
 			TextureAsset(U"Butterfly").drawAt(m_pos + Vec2{ 0, yOffset });
 		}
 
 	private:
 
-		// 現在の位置
+		// Current position
 		Vec2 m_pos{ 0, 0 };
 
-		// 目標の位置
+		// Target position
 		Vec2 m_targetPos{ 0, 0 };
 
-		// 現在の速度
+		// Current velocity
 		Vec2 m_velocity{ 0,0 };
 
-		// 目標変更までの残り時間
+		// Remaining time until target change
 		double m_timer = 0.0;
 
 		Vec2 getNextTarget() const
@@ -296,19 +296,19 @@
 	}
 	```
 
-!!! info "チャレンジ"
-	- 新しい動物クラスを追加してみよう
-		- 🐕 Dog: マウスカーソルに向かって移動する
-		- 👻 Ghost: 移動中は半透明になる
-		- 🐢 Turtle: 目標の変更までの時間が長く、移動速度も遅い
+!!! info "Challenge"
+	- Try adding new animal classes
+		- 🐕 Dog: Moves toward the mouse cursor
+		- 👻 Ghost: Becomes semi-transparent while moving
+		- 🐢 Turtle: Long time until target change and slow movement speed
 
-??? note "チャレンジの実装例"
+??? note "Challenge Implementation Example"
 	![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/course/polymorphism/2-2.png)
 
 	```cpp hl_lines="173-228 230-292 294-349 359-361 367-369 377-379 385-387"
 	# include <Siv3D.hpp>
 
-	// カニ
+	// Crab
 	class Crab
 	{
 	public:
@@ -321,20 +321,20 @@
 
 		void update()
 		{
-			// 残り時間を減らす
+			// Decrease remaining time
 			m_timer -= Scene::DeltaTime();
 
-			// 残り時間が 0 以下になったら
+			// When remaining time becomes 0 or less
 			if (m_timer <= 0.0)
 			{
-				// 残り時間をリセットする
+				// Reset remaining time
 				m_timer = Random(3.0, 6.0);
 
-				// 次の目標位置を設定する
+				// Set next target position
 				m_targetPos = getNextTarget();
 			}
 
-			// 現在の位置を目標の位置に近づける
+			// Move current position closer to target position
 			m_pos = Math::SmoothDamp(m_pos, m_targetPos, m_velocity, 0.2, 200.0);
 		}
 
@@ -345,26 +345,26 @@
 
 	private:
 
-		// 現在の位置
+		// Current position
 		Vec2 m_pos{ 0, 0 };
 
-		// 目標の位置
+		// Target position
 		Vec2 m_targetPos{ 0, 0 };
 
-		// 現在の速度
+		// Current velocity
 		Vec2 m_velocity{ 0,0 };
 
-		// 目標変更までの残り時間
+		// Remaining time until target change
 		double m_timer = 0.0;
 
 		Vec2 getNextTarget() const
 		{
-			// Y 座標の移動量は抑えめにする
+			// Keep Y coordinate movement moderate
 			return{ Random(0, 1280), (m_pos.y + Random(-40, 40)) };
 		}
 	};
 
-	// ネコ
+	// Cat
 	class Cat
 	{
 	public:
@@ -377,42 +377,42 @@
 
 		void update()
 		{
-			// 残り時間を減らす
+			// Decrease remaining time
 			m_timer -= Scene::DeltaTime();
 
-			// 残り時間が 0 以下になったら
+			// When remaining time becomes 0 or less
 			if (m_timer <= 0.0)
 			{
-				// 残り時間をリセットする
+				// Reset remaining time
 				m_timer = Random(3.0, 6.0);
 
-				// 次の目標位置を設定する
+				// Set next target position
 				m_targetPos = getNextTarget();
 			}
 
-			// 現在の位置を目標の位置に近づける
+			// Move current position closer to target position
 			m_pos = Math::SmoothDamp(m_pos, m_targetPos, m_velocity, 0.2, 200.0);
 		}
 
 		void draw() const
 		{
-			// 速度に応じて左右を反転させる
+			// Flip horizontally based on velocity
 			const bool mirrored = (0.0 < m_velocity.x);
 			TextureAsset(U"Cat").mirrored(mirrored).drawAt(m_pos);
 		}
 
 	private:
 
-		// 現在の位置
+		// Current position
 		Vec2 m_pos{ 0, 0 };
 
-		// 目標の位置
+		// Target position
 		Vec2 m_targetPos{ 0, 0 };
 
-		// 現在の速度
+		// Current velocity
 		Vec2 m_velocity{ 0,0 };
 
-		// 目標変更までの残り時間
+		// Remaining time until target change
 		double m_timer = 0.0;
 
 		Vec2 getNextTarget() const
@@ -421,7 +421,7 @@
 		}
 	};
 
-	// 蝶
+	// Butterfly
 	class Butterfly
 	{
 	public:
@@ -434,42 +434,42 @@
 
 		void update()
 		{
-			// 残り時間を減らす
+			// Decrease remaining time
 			m_timer -= Scene::DeltaTime();
 
-			// 残り時間が 0 以下になったら
+			// When remaining time becomes 0 or less
 			if (m_timer <= 0.0)
 			{
-				// 残り時間をリセットする
+				// Reset remaining time
 				m_timer = Random(3.0, 6.0);
 
-				// 次の目標位置を設定する
+				// Set next target position
 				m_targetPos = getNextTarget();
 			}
 
-			// 現在の位置を目標の位置に近づける
+			// Move current position closer to target position
 			m_pos = Math::SmoothDamp(m_pos, m_targetPos, m_velocity, 0.2, 200.0);
 		}
 
 		void draw() const
 		{
-			// 上下に揺らすオフセット
+			// Vertical swaying offset
 			const double yOffset = (10.0 * Periodic::Sine1_1(0.5s));
 			TextureAsset(U"Butterfly").drawAt(m_pos + Vec2{ 0, yOffset });
 		}
 
 	private:
 
-		// 現在の位置
+		// Current position
 		Vec2 m_pos{ 0, 0 };
 
-		// 目標の位置
+		// Target position
 		Vec2 m_targetPos{ 0, 0 };
 
-		// 現在の速度
+		// Current velocity
 		Vec2 m_velocity{ 0,0 };
 
-		// 目標変更までの残り時間
+		// Remaining time until target change
 		double m_timer = 0.0;
 
 		Vec2 getNextTarget() const
@@ -478,7 +478,7 @@
 		}
 	};
 
-	// 犬
+	// Dog
 	class Dog
 	{
 	public:
@@ -491,42 +491,42 @@
 
 		void update()
 		{
-			// 残り時間を減らす
+			// Decrease remaining time
 			m_timer -= Scene::DeltaTime();
 
-			// 残り時間が 0 以下になったら
+			// When remaining time becomes 0 or less
 			if (m_timer <= 0.0)
 			{
-				// 残り時間をリセットする
+				// Reset remaining time
 				m_timer = 0.5;
 
-				// 次の目標位置を設定する
+				// Set next target position
 				m_targetPos = getNextTarget();
 			}
 
-			// 現在の位置を目標の位置に近づける
+			// Move current position closer to target position
 			m_pos = Math::SmoothDamp(m_pos, m_targetPos, m_velocity, 0.2, 500.0);
 		}
 
 		void draw() const
 		{
-			// 速度に応じて左右を反転させる
+			// Flip horizontally based on velocity
 			const bool mirrored = (0.0 < m_velocity.x);
 			TextureAsset(U"Dog").mirrored(mirrored).drawAt(m_pos);
 		}
 
 	private:
 
-		// 現在の位置
+		// Current position
 		Vec2 m_pos{ 0, 0 };
 
-		// 目標の位置
+		// Target position
 		Vec2 m_targetPos{ 0, 0 };
 
-		// 現在の速度
+		// Current velocity
 		Vec2 m_velocity{ 0,0 };
 
-		// 目標変更までの残り時間
+		// Remaining time until target change
 		double m_timer = 0.0;
 
 		Vec2 getNextTarget() const
@@ -535,7 +535,7 @@
 		}
 	};
 
-	// 幽霊
+	// Ghost
 	class Ghost
 	{
 	public:
@@ -548,20 +548,20 @@
 
 		void update()
 		{
-			// 残り時間を減らす
+			// Decrease remaining time
 			m_timer -= Scene::DeltaTime();
 
-			// 残り時間が 0 以下になったら
+			// When remaining time becomes 0 or less
 			if (m_timer <= 0.0)
 			{
-				// 残り時間をリセットする
+				// Reset remaining time
 				m_timer = Random(3.0, 6.0);
 
-				// 次の目標位置を設定する
+				// Set next target position
 				m_targetPos = getNextTarget();
 			}
 
-			// 現在の位置を目標の位置に近づける
+			// Move current position closer to target position
 			m_pos = Math::SmoothDamp(m_pos, m_targetPos, m_velocity, 0.2, 200.0);
 		}
 
@@ -569,28 +569,28 @@
 		{
 			double alpha = 1.0;
 
-			if (2.0 < m_velocity.length()) // 速度が 2.0 以上の場合はアルファを下げる
+			if (2.0 < m_velocity.length()) // Lower alpha when velocity is 2.0 or higher
 			{
 				alpha = 0.3;
 			}
 
-			// 速度に応じて左右を反転させる
+			// Flip horizontally based on velocity
 			const bool mirrored = (0.0 < m_velocity.x);
 			TextureAsset(U"Ghost").mirrored(mirrored).drawAt(m_pos, ColorF{ 1.0, alpha });
 		}
 
 	private:
 
-		// 現在の位置
+		// Current position
 		Vec2 m_pos{ 0, 0 };
 
-		// 目標の位置
+		// Target position
 		Vec2 m_targetPos{ 0, 0 };
 
-		// 現在の速度
+		// Current velocity
 		Vec2 m_velocity{ 0,0 };
 
-		// 目標変更までの残り時間
+		// Remaining time until target change
 		double m_timer = 0.0;
 
 		Vec2 getNextTarget() const
@@ -599,7 +599,7 @@
 		}
 	};
 
-	// カメ
+	// Turtle
 	class Turtle
 	{
 	public:
@@ -612,42 +612,42 @@
 
 		void update()
 		{
-			// 残り時間を減らす
+			// Decrease remaining time
 			m_timer -= Scene::DeltaTime();
 
-			// 残り時間が 0 以下になったら
+			// When remaining time becomes 0 or less
 			if (m_timer <= 0.0)
 			{
-				// 残り時間をリセットする
+				// Reset remaining time
 				m_timer = Random(8.0, 12.0);
 
-				// 次の目標位置を設定する
+				// Set next target position
 				m_targetPos = getNextTarget();
 			}
 
-			// 現在の位置を目標の位置に近づける
+			// Move current position closer to target position
 			m_pos = Math::SmoothDamp(m_pos, m_targetPos, m_velocity, 0.4, 50.0);
 		}
 
 		void draw() const
 		{
-			// 速度に応じて左右を反転させる
+			// Flip horizontally based on velocity
 			const bool mirrored = (0.0 < m_velocity.x);
 			TextureAsset(U"Turtle").mirrored(mirrored).drawAt(m_pos);
 		}
 
 	private:
 
-		// 現在の位置
+		// Current position
 		Vec2 m_pos{ 0, 0 };
 
-		// 目標の位置
+		// Target position
 		Vec2 m_targetPos{ 0, 0 };
 
-		// 現在の速度
+		// Current velocity
 		Vec2 m_velocity{ 0,0 };
 
-		// 目標変更までの残り時間
+		// Remaining time until target change
 		double m_timer = 0.0;
 
 		Vec2 getNextTarget() const
@@ -698,16 +698,16 @@
 	```
 
 
-## 3. 継承を使う
+## 3. Using Inheritance
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/course/polymorphism/3.png)
 
-- 基底クラス `BaseAnimal` を作成し、動物クラスは `BaseAnimal` を継承するようにします。
+- Create a base class `BaseAnimal` and make the animal classes inherit from `BaseAnimal`.
 
-??? note "コード"
+??? note "Code"
 	```cpp hl_lines="3-38 41 48 50 69 75 84 91 93 112 120 129 135 137 156 164"
 	# include <Siv3D.hpp>
 
-	// 動物の基底クラス
+	// Animal base class
 	class BaseAnimal
 	{
 	public:
@@ -718,33 +718,33 @@
 			: m_pos{ pos }
 			, m_targetPos{ pos } {}
 
-		// 仮想デストラクタ
+		// Virtual destructor
 		virtual ~BaseAnimal() = default;
 
-		// virtual = 0 によって、純粋仮想関数になる
-		// BaseAnimal を継承したクラスは、update() を必ず実装しなければならない
+		// By using virtual = 0, this becomes a pure virtual function
+		// Classes inheriting from BaseAnimal must implement update()
 		virtual void update() = 0;
 
-		// virtual = 0 によって、純粋仮想関数になる
-		// BaseAnimal を継承したクラスは、draw() を必ず実装しなければならない
+		// By using virtual = 0, this becomes a pure virtual function
+		// Classes inheriting from BaseAnimal must implement draw()
 		virtual void draw() const = 0;
 
-	protected: // BaseAnimal を継承したクラスからアクセスできる
+	protected: // Accessible from classes inheriting from BaseAnimal
 
-		// 現在の位置
+		// Current position
 		Vec2 m_pos{ 0, 0 };
 
-		// 目標の位置
+		// Target position
 		Vec2 m_targetPos{ 0, 0 };
 
-		// 現在の速度
+		// Current velocity
 		Vec2 m_velocity{ 0,0 };
 
-		// 目標変更までの残り時間
+		// Remaining time until target change
 		double m_timer = 0.0;
 	};
 
-	// カニ
+	// Crab
 	class Crab : public BaseAnimal
 	{
 	public:
@@ -754,26 +754,26 @@
 		explicit Crab(const Vec2& pos)
 			: BaseAnimal{ pos } {}
 
-		void update() override // override によって、BaseAnimal の update() をオーバーライドしていることを明示する
+		void update() override // override explicitly indicates that this overrides BaseAnimal's update()
 		{
-			// 残り時間を減らす
+			// Decrease remaining time
 			m_timer -= Scene::DeltaTime();
 
-			// 残り時間が 0 以下になったら
+			// When remaining time becomes 0 or less
 			if (m_timer <= 0.0)
 			{
-				// 残り時間をリセットする
+				// Reset remaining time
 				m_timer = Random(3.0, 6.0);
 
-				// 次の目標位置を設定する
+				// Set next target position
 				m_targetPos = getNextTarget();
 			}
 
-			// 現在の位置を目標の位置に近づける
+			// Move current position closer to target position
 			m_pos = Math::SmoothDamp(m_pos, m_targetPos, m_velocity, 0.2, 200.0);
 		}
 
-		void draw() const override // override によって、BaseAnimal の draw() をオーバーライドしていることを明示する
+		void draw() const override // override explicitly indicates that this overrides BaseAnimal's draw()
 		{
 			TextureAsset(U"Crab").drawAt(m_pos);
 		}
@@ -782,12 +782,12 @@
 
 		Vec2 getNextTarget() const
 		{
-			// Y 座標の移動量は抑えめにする
+			// Keep Y coordinate movement moderate
 			return{ Random(0, 1280), (m_pos.y + Random(-40, 40)) };
 		}
 	};
 
-	// ネコ
+	// Cat
 	class Cat : public BaseAnimal
 	{
 	public:
@@ -797,28 +797,28 @@
 		explicit Cat(const Vec2& pos)
 			: BaseAnimal{ pos } {}
 
-		void update() override // override によって、BaseAnimal の update() をオーバーライドしていることを明示する
+		void update() override // override explicitly indicates that this overrides BaseAnimal's update()
 		{
-			// 残り時間を減らす
+			// Decrease remaining time
 			m_timer -= Scene::DeltaTime();
 
-			// 残り時間が 0 以下になったら
+			// When remaining time becomes 0 or less
 			if (m_timer <= 0.0)
 			{
-				// 残り時間をリセットする
+				// Reset remaining time
 				m_timer = Random(3.0, 6.0);
 
-				// 次の目標位置を設定する
+				// Set next target position
 				m_targetPos = getNextTarget();
 			}
 
-			// 現在の位置を目標の位置に近づける
+			// Move current position closer to target position
 			m_pos = Math::SmoothDamp(m_pos, m_targetPos, m_velocity, 0.2, 200.0);
 		}
 
-		void draw() const override // override によって、BaseAnimal の draw() をオーバーライドしていることを明示する
+		void draw() const override // override explicitly indicates that this overrides BaseAnimal's draw()
 		{
-			// 速度に応じて左右を反転させる
+			// Flip horizontally based on velocity
 			const bool mirrored = (0.0 < m_velocity.x);
 			TextureAsset(U"Cat").mirrored(mirrored).drawAt(m_pos);
 		}
@@ -831,7 +831,7 @@
 		}
 	};
 
-	// 蝶
+	// Butterfly
 	class Butterfly : public BaseAnimal
 	{
 	public:
@@ -843,26 +843,26 @@
 
 		void update() override
 		{
-			// 残り時間を減らす
+			// Decrease remaining time
 			m_timer -= Scene::DeltaTime();
 
-			// 残り時間が 0 以下になったら
+			// When remaining time becomes 0 or less
 			if (m_timer <= 0.0)
 			{
-				// 残り時間をリセットする
+				// Reset remaining time
 				m_timer = Random(3.0, 6.0);
 
-				// 次の目標位置を設定する
+				// Set next target position
 				m_targetPos = getNextTarget();
 			}
 
-			// 現在の位置を目標の位置に近づける
+			// Move current position closer to target position
 			m_pos = Math::SmoothDamp(m_pos, m_targetPos, m_velocity, 0.2, 200.0);
 		}
 
 		void draw() const override
 		{
-			// 上下に揺らすオフセット
+			// Vertical swaying offset
 			const double yOffset = (10.0 * Periodic::Sine1_1(0.5s));
 			TextureAsset(U"Butterfly").drawAt(m_pos + Vec2{ 0, yOffset });
 		}
@@ -905,17 +905,17 @@
 	```
 
 
-## 4. 多態性を使う
+## 4. Using Polymorphism
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/course/polymorphism/4.png)
 
-- 派生したクラスは、基底クラスのポインタや参照でまとめて扱えます。
-- 仮想関数を呼び出すと、基底クラスのポインタや参照を通して、派生クラスのメンバ関数（オーバーライドした関数）を呼び出すことができます。
+- Derived classes can be handled collectively through pointers or references to the base class.
+- When calling virtual functions, you can call derived class member functions (overridden functions) through base class pointers or references.
 
-??? note "コード"
+??? note "Code"
 	```cpp hl_lines="180-185 189-192 194-197"
 	# include <Siv3D.hpp>
 
-	// 動物の基底クラス
+	// Animal base class
 	class BaseAnimal
 	{
 	public:
@@ -926,33 +926,33 @@
 			: m_pos{ pos }
 			, m_targetPos{ pos } {}
 
-		// 仮想デストラクタ
+		// Virtual destructor
 		virtual ~BaseAnimal() = default;
 
-		// virtual = 0 によって、純粋仮想関数になる
-		// BaseAnimal を継承したクラスは、update() を必ず実装しなければならない
+		// By using virtual = 0, this becomes a pure virtual function
+		// Classes inheriting from BaseAnimal must implement update()
 		virtual void update() = 0;
 
-		// virtual = 0 によって、純粋仮想関数になる
-		// BaseAnimal を継承したクラスは、draw() を必ず実装しなければならない
+		// By using virtual = 0, this becomes a pure virtual function
+		// Classes inheriting from BaseAnimal must implement draw()
 		virtual void draw() const = 0;
 
-	protected: // BaseAnimal を継承したクラスからアクセスできる
+	protected: // Accessible from classes inheriting from BaseAnimal
 
-		// 現在の位置
+		// Current position
 		Vec2 m_pos{ 0, 0 };
 
-		// 目標の位置
+		// Target position
 		Vec2 m_targetPos{ 0, 0 };
 
-		// 現在の速度
+		// Current velocity
 		Vec2 m_velocity{ 0,0 };
 
-		// 目標変更までの残り時間
+		// Remaining time until target change
 		double m_timer = 0.0;
 	};
 
-	// カニ
+	// Crab
 	class Crab : public BaseAnimal
 	{
 	public:
@@ -962,26 +962,26 @@
 		explicit Crab(const Vec2& pos)
 			: BaseAnimal{ pos } {}
 
-		void update() override // override によって、BaseAnimal の update() をオーバーライドしていることを明示する
+		void update() override // override explicitly indicates that this overrides BaseAnimal's update()
 		{
-			// 残り時間を減らす
+			// Decrease remaining time
 			m_timer -= Scene::DeltaTime();
 
-			// 残り時間が 0 以下になったら
+			// When remaining time becomes 0 or less
 			if (m_timer <= 0.0)
 			{
-				// 残り時間をリセットする
+				// Reset remaining time
 				m_timer = Random(3.0, 6.0);
 
-				// 次の目標位置を設定する
+				// Set next target position
 				m_targetPos = getNextTarget();
 			}
 
-			// 現在の位置を目標の位置に近づける
+			// Move current position closer to target position
 			m_pos = Math::SmoothDamp(m_pos, m_targetPos, m_velocity, 0.2, 200.0);
 		}
 
-		void draw() const override // override によって、BaseAnimal の draw() をオーバーライドしていることを明示する
+		void draw() const override // override explicitly indicates that this overrides BaseAnimal's draw()
 		{
 			TextureAsset(U"Crab").drawAt(m_pos);
 		}
@@ -990,12 +990,12 @@
 
 		Vec2 getNextTarget() const
 		{
-			// Y 座標の移動量は抑えめにする
+			// Keep Y coordinate movement moderate
 			return{ Random(0, 1280), (m_pos.y + Random(-40, 40)) };
 		}
 	};
 
-	// ネコ
+	// Cat
 	class Cat : public BaseAnimal
 	{
 	public:
@@ -1005,28 +1005,28 @@
 		explicit Cat(const Vec2& pos)
 			: BaseAnimal{ pos } {}
 
-		void update() override // override によって、BaseAnimal の update() をオーバーライドしていることを明示する
+		void update() override // override explicitly indicates that this overrides BaseAnimal's update()
 		{
-			// 残り時間を減らす
+			// Decrease remaining time
 			m_timer -= Scene::DeltaTime();
 
-			// 残り時間が 0 以下になったら
+			// When remaining time becomes 0 or less
 			if (m_timer <= 0.0)
 			{
-				// 残り時間をリセットする
+				// Reset remaining time
 				m_timer = Random(3.0, 6.0);
 
-				// 次の目標位置を設定する
+				// Set next target position
 				m_targetPos = getNextTarget();
 			}
 
-			// 現在の位置を目標の位置に近づける
+			// Move current position closer to target position
 			m_pos = Math::SmoothDamp(m_pos, m_targetPos, m_velocity, 0.2, 200.0);
 		}
 
-		void draw() const override // override によって、BaseAnimal の draw() をオーバーライドしていることを明示する
+		void draw() const override // override explicitly indicates that this overrides BaseAnimal's draw()
 		{
-			// 速度に応じて左右を反転させる
+			// Flip horizontally based on velocity
 			const bool mirrored = (0.0 < m_velocity.x);
 			TextureAsset(U"Cat").mirrored(mirrored).drawAt(m_pos);
 		}
@@ -1039,7 +1039,7 @@
 		}
 	};
 
-	// 蝶
+	// Butterfly
 	class Butterfly : public BaseAnimal
 	{
 	public:
@@ -1051,26 +1051,26 @@
 
 		void update() override
 		{
-			// 残り時間を減らす
+			// Decrease remaining time
 			m_timer -= Scene::DeltaTime();
 
-			// 残り時間が 0 以下になったら
+			// When remaining time becomes 0 or less
 			if (m_timer <= 0.0)
 			{
-				// 残り時間をリセットする
+				// Reset remaining time
 				m_timer = Random(3.0, 6.0);
 
-				// 次の目標位置を設定する
+				// Set next target position
 				m_targetPos = getNextTarget();
 			}
 
-			// 現在の位置を目標の位置に近づける
+			// Move current position closer to target position
 			m_pos = Math::SmoothDamp(m_pos, m_targetPos, m_velocity, 0.2, 200.0);
 		}
 
 		void draw() const override
 		{
-			// 上下に揺らすオフセット
+			// Vertical swaying offset
 			const double yOffset = (10.0 * Periodic::Sine1_1(0.5s));
 			TextureAsset(U"Butterfly").drawAt(m_pos + Vec2{ 0, yOffset });
 		}
@@ -1092,7 +1092,7 @@
 		TextureAsset::Register(U"Cat", U"🐈"_emoji);
 		TextureAsset::Register(U"Butterfly", U"🦋"_emoji);
 
-		// BaseAnimal 型のポインタの配列
+		// Array of BaseAnimal type pointers
 		Array<std::unique_ptr<BaseAnimal>> animals;
 		animals << std::make_unique<Crab>(Vec2{ 600, 500 });
 		animals << std::make_unique<Cat>(Vec2{ 300, 200 });
@@ -1115,17 +1115,17 @@
 	```
 
 
-## 5. 仮想メンバ関数を追加する
+## 5. Adding Virtual Member Functions
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/course/polymorphism/5.png)
 
-- 動物の名前を返すメンバ関数を追加します。
-- 動物の領域（`Circle`）を返すメンバ関数を追加します。
+- Add a member function that returns the animal's name.
+- Add a member function that returns the animal's area (`Circle`).
 
-??? note "コード"
+??? note "Code"
 	```cpp hl_lines="25-34 85-88 135-138 184-187 189-195 231"
 	# include <Siv3D.hpp>
 
-	// 動物の基底クラス
+	// Animal base class
 	class BaseAnimal
 	{
 	public:
@@ -1136,44 +1136,44 @@
 			: m_pos{ pos }
 			, m_targetPos{ pos } {}
 
-		// 仮想デストラクタ
+		// Virtual destructor
 		virtual ~BaseAnimal() = default;
 
-		// virtual = 0 によって、純粋仮想関数になる
-		// BaseAnimal を継承したクラスは、update() を必ず実装しなければならない
+		// By using virtual = 0, this becomes a pure virtual function
+		// Classes inheriting from BaseAnimal must implement update()
 		virtual void update() = 0;
 
-		// virtual = 0 によって、純粋仮想関数になる
-		// BaseAnimal を継承したクラスは、draw() を必ず実装しなければならない
+		// By using virtual = 0, this becomes a pure virtual function
+		// Classes inheriting from BaseAnimal must implement draw()
 		virtual void draw() const = 0;
 
-		// virtual = 0 によって、純粋仮想関数になる
-		// BaseAnimal を継承したクラスは、getAnimalName() を必ず実装しなければならない
+		// By using virtual = 0, this becomes a pure virtual function
+		// Classes inheriting from BaseAnimal must implement getAnimalName()
 		virtual String getAnimalName() const = 0;
 
-		// 関数を実装している（= 0 ではない）ので、オーバーライドは任意
-		// オーバーライドしなかった場合は BaseAnimal の getCircle() が呼ばれる
+		// The function is implemented (not = 0), so overriding is optional
+		// If not overridden, BaseAnimal's getCircle() will be called
 		virtual Circle getCircle() const
 		{
 			return Circle{ m_pos, 60 };
 		}
 
-	protected: // BaseAnimal を継承したクラスからアクセスできる
+	protected: // Accessible from classes inheriting from BaseAnimal
 
-		// 現在の位置
+		// Current position
 		Vec2 m_pos{ 0, 0 };
 
-		// 目標の位置
+		// Target position
 		Vec2 m_targetPos{ 0, 0 };
 
-		// 現在の速度
+		// Current velocity
 		Vec2 m_velocity{ 0,0 };
 
-		// 目標変更までの残り時間
+		// Remaining time until target change
 		double m_timer = 0.0;
 	};
 
-	// カニ
+	// Crab
 	class Crab : public BaseAnimal
 	{
 	public:
@@ -1183,45 +1183,45 @@
 		explicit Crab(const Vec2& pos)
 			: BaseAnimal{ pos } {}
 
-		void update() override // override によって、BaseAnimal の update() をオーバーライドしていることを明示する
+		void update() override // override explicitly indicates that this overrides BaseAnimal's update()
 		{
-			// 残り時間を減らす
+			// Decrease remaining time
 			m_timer -= Scene::DeltaTime();
 
-			// 残り時間が 0 以下になったら
+			// When remaining time becomes 0 or less
 			if (m_timer <= 0.0)
 			{
-				// 残り時間をリセットする
+				// Reset remaining time
 				m_timer = Random(3.0, 6.0);
 
-				// 次の目標位置を設定する
+				// Set next target position
 				m_targetPos = getNextTarget();
 			}
 
-			// 現在の位置を目標の位置に近づける
+			// Move current position closer to target position
 			m_pos = Math::SmoothDamp(m_pos, m_targetPos, m_velocity, 0.2, 200.0);
 		}
 
-		void draw() const override // override によって、BaseAnimal の draw() をオーバーライドしていることを明示する
+		void draw() const override // override explicitly indicates that this overrides BaseAnimal's draw()
 		{
 			TextureAsset(U"Crab").drawAt(m_pos);
 		}
 
-		String getAnimalName() const override // override によって、BaseAnimal の getAnimalName() をオーバーライドしていることを明示する
+		String getAnimalName() const override // override explicitly indicates that this overrides BaseAnimal's getAnimalName()
 		{
-			return U"カニ";
+			return U"Crab";
 		}
 
 	private:
 
 		Vec2 getNextTarget() const
 		{
-			// Y 座標の移動量は抑えめにする
+			// Keep Y coordinate movement moderate
 			return{ Random(0, 1280), (m_pos.y + Random(-40, 40)) };
 		}
 	};
 
-	// ネコ
+	// Cat
 	class Cat : public BaseAnimal
 	{
 	public:
@@ -1231,35 +1231,35 @@
 		explicit Cat(const Vec2& pos)
 			: BaseAnimal{ pos } {}
 
-		void update() override // override によって、BaseAnimal の update() をオーバーライドしていることを明示する
+		void update() override // override explicitly indicates that this overrides BaseAnimal's update()
 		{
-			// 残り時間を減らす
+			// Decrease remaining time
 			m_timer -= Scene::DeltaTime();
 
-			// 残り時間が 0 以下になったら
+			// When remaining time becomes 0 or less
 			if (m_timer <= 0.0)
 			{
-				// 残り時間をリセットする
+				// Reset remaining time
 				m_timer = Random(3.0, 6.0);
 
-				// 次の目標位置を設定する
+				// Set next target position
 				m_targetPos = getNextTarget();
 			}
 
-			// 現在の位置を目標の位置に近づける
+			// Move current position closer to target position
 			m_pos = Math::SmoothDamp(m_pos, m_targetPos, m_velocity, 0.2, 200.0);
 		}
 
-		void draw() const override // override によって、BaseAnimal の draw() をオーバーライドしていることを明示する
+		void draw() const override // override explicitly indicates that this overrides BaseAnimal's draw()
 		{
-			// 速度に応じて左右を反転させる
+			// Flip horizontally based on velocity
 			const bool mirrored = (0.0 < m_velocity.x);
 			TextureAsset(U"Cat").mirrored(mirrored).drawAt(m_pos);
 		}
 
-		String getAnimalName() const override // override によって、BaseAnimal の getAnimalName() をオーバーライドしていることを明示する
+		String getAnimalName() const override // override explicitly indicates that this overrides BaseAnimal's getAnimalName()
 		{
-			return U"ネコ";
+			return U"Cat";
 		}
 
 	private:
@@ -1270,7 +1270,7 @@
 		}
 	};
 
-	// 蝶
+	// Butterfly
 	class Butterfly : public BaseAnimal
 	{
 	public:
@@ -1282,39 +1282,39 @@
 
 		void update() override
 		{
-			// 残り時間を減らす
+			// Decrease remaining time
 			m_timer -= Scene::DeltaTime();
 
-			// 残り時間が 0 以下になったら
+			// When remaining time becomes 0 or less
 			if (m_timer <= 0.0)
 			{
-				// 残り時間をリセットする
+				// Reset remaining time
 				m_timer = Random(3.0, 6.0);
 
-				// 次の目標位置を設定する
+				// Set next target position
 				m_targetPos = getNextTarget();
 			}
 
-			// 現在の位置を目標の位置に近づける
+			// Move current position closer to target position
 			m_pos = Math::SmoothDamp(m_pos, m_targetPos, m_velocity, 0.2, 200.0);
 		}
 
 		void draw() const override
 		{
-			// 上下に揺らすオフセット
+			// Vertical swaying offset
 			const double yOffset = (10.0 * Periodic::Sine1_1(0.5s));
 			TextureAsset(U"Butterfly").drawAt(m_pos + Vec2{ 0, yOffset });
 		}
 
 		String getAnimalName() const override
 		{
-			return U"蝶";
+			return U"Butterfly";
 		}
 
-		// デフォルト実装では不正確なため、オーバーライドする
+		// Override because the default implementation is inaccurate
 		Circle getCircle() const override
 		{
-			// 上下に揺らすオフセット
+			// Vertical swaying offset
 			const double yOffset = (10.0 * Periodic::Sine1_1(0.5s));
 			return{ (m_pos + Vec2{ 0, yOffset }), 60 };
 		}
@@ -1336,7 +1336,7 @@
 		TextureAsset::Register(U"Cat", U"🐈"_emoji);
 		TextureAsset::Register(U"Butterfly", U"🦋"_emoji);
 
-		// BaseAnimal 型のポインタの配列
+		// Array of BaseAnimal type pointers
 		Array<std::unique_ptr<BaseAnimal>> animals;
 		animals << std::make_unique<Crab>(Vec2{ 600, 500 });
 		animals << std::make_unique<Cat>(Vec2{ 300, 200 });
@@ -1360,5 +1360,5 @@
 	```
 
 
-## 演習
-ここから先は、自分で考えてプログラムを追加・改良してみましょう。
+## Exercise
+From here on, try adding and improving the program by thinking for yourself.

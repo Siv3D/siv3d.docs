@@ -1,28 +1,28 @@
-# ゲームのサンプル
+# Game Samples
 
-## 1. ブロックくずし
+## 1. Block breaking game
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/games/1.gif)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
 	void Main()
 	{
-		// 1 つのブロックのサイズ | Size of a single block
+		// Size of a single block | Size of a single block
 		constexpr Size BrickSize{ 40, 20 };
 
-		// ボールの速さ（ピクセル / 秒） | Ball speed (pixels / second)
+		// Ball speed (pixels / second) | Ball speed (pixels / second)
 		constexpr double BallSpeedPerSec = 480.0;
 
-		// ボールの速度 | Ball velocity
+		// Ball velocity | Ball velocity
 		Vec2 ballVelocity{ 0, -BallSpeedPerSec };
 
-		// ボール | Ball
+		// Ball | Ball
 		Circle ball{ 400, 400, 8 };
 
-		// ブロックの配列 | Array of bricks
+		// Array of bricks | Array of bricks
 		Array<Rect> bricks;
 
 		for (int32 y = 0; y < 5; ++y)
@@ -35,261 +35,308 @@
 
 		while (System::Update())
 		{
-			// パドル | Paddle
+			// Paddle | Paddle
 			const Rect paddle{ Arg::center(Cursor::Pos().x, 500), 60, 10 };
 
-			// ボールを移動させる | Move the ball
+			// Move the ball | Move the ball
 			ball.moveBy(ballVelocity * Scene::DeltaTime());
 
-			// ブロックを順にチェックする | Check bricks in sequence
+			// Check bricks in sequence | Check bricks in sequence
 			for (auto it = bricks.begin(); it != bricks.end(); ++it)
 			{
-				// ブロックとボールが交差していたら | If block and ball intersect
+				// If block and ball intersect | If block and ball intersect
 				if (it->intersects(ball))
 				{
-					// ブロックの上辺、または底辺と交差していたら | If ball intersects with top or bottom of the block
+					// If ball intersects with top or bottom of the block | If ball intersects with top or bottom of the block
 					if (it->bottom().intersects(ball) || it->top().intersects(ball))
 					{
-						// ボールの速度の Y 成分の符号を反転する | Reverse the sign of the Y component of the ball's velocity
+						// Reverse the sign of the Y component of the ball's velocity | Reverse the sign of the Y component of the ball's velocity
 						ballVelocity.y *= -1;
 					}
-					else // ブロックの左辺または右辺と交差していたら
+					else // If intersecting with left or right side of the block
 					{
-						// ボールの速度の X 成分の符号を反転する | Reverse the sign of the X component of the ball's velocity
+						// Reverse the sign of the X component of the ball's velocity | Reverse the sign of the X component of the ball's velocity
 						ballVelocity.x *= -1;
 					}
 
-					// ブロックを配列から削除する（イテレータは無効になる） | Remove the block from the array (the iterator becomes invalid)
+					// Remove the block from the array (the iterator becomes invalid) | Remove the block from the array (the iterator becomes invalid)
 					bricks.erase(it);
 
-					// これ以上チェックしない | Do not check any more
+					// Do not check any more | Do not check any more
 					break;
 				}
 			}
 
-			// 天井にぶつかったら | If the ball hits the ceiling
+			// If the ball hits the ceiling | If the ball hits the ceiling
 			if ((ball.y < 0) && (ballVelocity.y < 0))
 			{
-				// ボールの速度の Y 成分の符号を反転する | Reverse the sign of the Y component of the ball's velocity
+				// Reverse the sign of the Y component of the ball's velocity | Reverse the sign of the Y component of the ball's velocity
 				ballVelocity.y *= -1;
 			}
 
-			// 左右の壁にぶつかったら | If the ball hits the left or right wall
+			// If the ball hits the left or right wall | If the ball hits the left or right wall
 			if (((ball.x < 0) && (ballVelocity.x < 0))
 				|| ((Scene::Width() < ball.x) && (0 < ballVelocity.x)))
 			{
-				// ボールの速度の X 成分の符号を反転する | Reverse the sign of the X component of the ball's velocity
+				// Reverse the sign of the X component of the ball's velocity | Reverse the sign of the X component of the ball's velocity
 				ballVelocity.x *= -1;
 			}
 
-			// パドルにあたったら | If the ball hits the left or right wall
+			// If the ball hits the left or right wall | If the ball hits the left or right wall
 			if ((0 < ballVelocity.y) && paddle.intersects(ball))
 			{
-				// パドルの中心からの距離に応じてはね返る方向（速度ベクトル）を変える | Change the direction (velocity vector) of the ball depending on the distance from the center of the paddle
+				// Change the direction (velocity vector) of the ball depending on the distance from the center of the paddle | Change the direction (velocity vector) of the ball depending on the distance from the center of the paddle
 				ballVelocity = Vec2{ (ball.x - paddle.center().x) * 10, -ballVelocity.y }.setLength(BallSpeedPerSec);
 			}
 
-			// すべてのブロックを描画する | Draw all the bricks
+			// Draw all the bricks | Draw all the bricks
 			for (const auto& brick : bricks)
 			{
-				// ブロックの Y 座標に応じて色を変える | Change the color of the brick depending on the Y coordinate
+				// Change the color of the brick depending on the Y coordinate | Change the color of the brick depending on the Y coordinate
 				brick.stretched(-1).draw(HSV{ brick.y - 40 });
 			}
 
-			// マウスカーソルを非表示にする | Hide the mouse cursor
+			// Hide the mouse cursor | Hide the mouse cursor
 			Cursor::RequestStyle(CursorStyle::Hidden);
 
-			// ボールを描く | Draw the ball
+			// Draw the ball | Draw the ball
 			ball.draw();
 
-			// パドルを描く | Draw the paddle
+			// Draw the paddle | Draw the paddle
 			paddle.rounded(3).draw();
 		}
 	}
 	```
 
-## 2. 落ちてくるアイテムを拾うゲーム
+## 2. Collecting falling items game
 
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/games/2.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/collect/10.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
-	// アイテムの情報
-	struct ItemInfo
+	// Player class
+	struct Player
 	{
-		// アイテムのテクスチャ
-		Texture texture;
+		Circle circle{ 400, 530, 30 };
 
-		// 落下速度（ピクセル / 秒）
-		double speed;
+		Texture texture{ U"😃"_emoji };
 
-		// 得点
-		int32 score;
+		// Function to update player state
+		void update(double deltaTime)
+		{
+			const double speed = (deltaTime * 400.0);
+
+			// Move left when [←] key is pressed
+			if (KeyLeft.pressed())
+			{
+				circle.x -= speed;
+			}
+
+			// Move right when [→] key is pressed
+			if (KeyRight.pressed())
+			{
+				circle.x += speed;
+			}
+
+			// Keep player within screen bounds
+			circle.x = Clamp(circle.x, 30.0, 770.0);
+		}
+
+		// Function to draw player
+		void draw() const
+		{
+			texture.scaled(0.5).drawAt(circle.center);
+		}
 	};
 
-	// フィールド上のアイテム
+	// Item class
 	struct Item
 	{
-		// アイテムの種類
+		Circle circle;
+
+		// Item type (0: candy, 1: cake)
 		int32 type;
 
-		// アイテムの現在位置
-		Vec2 pos;
+		void update(double deltaTime)
+		{
+			// Move item downward
+			circle.y += (deltaTime * 200.0);
+		}
+
+		// Function to draw item
+		void draw(const Array<Texture>& itemTextures) const
+		{
+			// Draw texture based on item type
+			itemTextures[type].scaled(0.5).rotated(circle.y * 0.3_deg).drawAt(circle.center);
+		}
 	};
+
+	void UpdateItems(Array<Item>& items, double deltaTime, const Player& player, int32& score)
+	{
+		// Update all item states
+		for (auto& item : items)
+		{
+			item.update(deltaTime);
+		}
+
+		// For each item
+		for (auto it = items.begin(); it != items.end();)
+		{
+			// If player and item intersect
+			if (player.circle.intersects(it->circle))
+			{
+				// Add score (candy: 10 points, cake: 50 points)
+				score += ((it->type == 0) ? 10 : 50);
+
+				// Remove item
+				it = items.erase(it);
+			}
+			else
+			{
+				++it;
+			}
+		}
+
+		// Remove items that fell to the ground
+		items.remove_if([](const Item& item) { return (580 < item.circle.y); });
+	}
+
+	// Function to draw background
+	void DrawBackground()
+	{
+		// Draw sky
+		Rect{ 0, 0, 800, 550 }.draw(Arg::top(0.3, 0.6, 1.0), Arg::bottom(0.6, 0.9, 1.0));
+
+		// Draw ground
+		Rect{ 0, 550, 800, 50 }.draw(ColorF{ 0.3, 0.6, 0.3 });
+	}
+
+	// Function to draw items
+	void DrawItems(const Array<Item>& items, const Array<Texture>& itemTextures)
+	{
+		for (const auto& item : items)
+		{
+			item.draw(itemTextures);
+		}
+	}
+
+	// Function to draw UI
+	void DrawUI(int32 score, double remainingTime, const Font& font)
+	{
+		// Draw score
+		font(U"SCORE: {}"_fmt(score)).draw(30, Vec2{ 20, 20 });
+
+		// Draw remaining time
+		font(U"TIME: {:.0f}"_fmt(remainingTime)).draw(30, Arg::topRight(780, 20));
+
+		if (remainingTime <= 0.0)
+		{
+			font(U"TIME'S UP!").drawAt(80, Vec2{ 400, 270 }, ColorF{ 0.3 });
+		}
+	}
 
 	void Main()
 	{
-		// プレイヤーの絵文字テクスチャ
-		const Texture playerTexture{ U"😃"_emoji };
-
-		// スコア表示用のフォント
 		const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
 
-		// プレイヤーのスピード（ピクセル / 秒)
-		constexpr double PlayerSpeed = 500.0;
-
-		// アイテムが発生する時間間隔（秒）
-		constexpr double ItemSpawnInterval = 0.5;
-
-		// アイテムのあたり判定の円の半径（ピクセル）
-		constexpr double ItemRadius = 40.0;
-
-		// アイテムのテクスチャ
-		const Array<ItemInfo> ItemInfos =
+		// Item texture array
+		const Array<Texture> itemTextures =
 		{
-			{ Texture{ U"🍩"_emoji }, 200.0, 100 },
-			{ Texture{ U"🍰"_emoji }, 300.0, 500 },
+			Texture{ U"🍬"_emoji },
+			Texture{ U"🍰"_emoji },
 		};
 
-		// 最後にアイテムが発生してからの経過時間（秒）
-		double itemSpawnAccumulatedTime = 0.0;
+		Player player;
 
-		// プレイヤーの座標
-		Vec2 playerPos{ 400, 500 };
-
-		// 現在画面上にあるアイテムの配列
+		// Item array
 		Array<Item> items;
+		items << Item{ Circle{ 200, 200, 30 }, 0 };
+		items << Item{ Circle{ 600, 100, 30 }, 1 };
 
-		// スコア
+		// Item spawn interval (seconds)
+		const double spawnInterval = 0.8;
+
+		// Accumulated time (seconds)
+		double accumulatedTime = 0.0;
+
+		// Score
 		int32 score = 0;
+
+		// Remaining time (seconds)
+		double remainingTime = 20.0;
 
 		while (System::Update())
 		{
-			////////////////////////////////
+			/////////////////////////////////
 			//
-			//	状態更新
+			//	Update
 			//
-			////////////////////////////////
+			/////////////////////////////////
 
-			// 前のフレームからの経過時間 (秒)
 			const double deltaTime = Scene::DeltaTime();
 
-			// プレイヤーの移動に関する処理
+			// Decrease remaining time
+			remainingTime = Max((remainingTime - deltaTime), 0.0);
+
+			// If game is still running
+			if (0.0 < remainingTime)
 			{
-				if (KeyLeft.pressed()) // [←] キーが押されていたら
+				// Increase accumulated time
+				accumulatedTime += deltaTime;
+
+				// If accumulated time exceeds interval
+				if (spawnInterval < accumulatedTime)
 				{
-					playerPos.x -= (PlayerSpeed * deltaTime);
-				}
-				else if (KeyRight.pressed()) // [→] キーが押されていたら
-				{
-					playerPos.x += (PlayerSpeed * deltaTime);
+					// Add new item
+					items << Item{ Circle{ Random(30.0, 770.0), -30, 30 }, Random(0, 1) };
+
+					// Reduce accumulated time by interval
+					accumulatedTime -= spawnInterval;
 				}
 
-				// 壁の外に出ないようにする
-				// Clamp(x, min, max) は, x を min～max の範囲に収めた値を返す
-				playerPos.x = Clamp(playerPos.x, 0.0, 800.0);
+				// Update player state
+				player.update(deltaTime);
+
+				// Update all item states
+				UpdateItems(items, deltaTime, player, score);
+			}
+			else
+			{
+				items.clear();
 			}
 
-			// アイテムの出現と移動と消滅に関する処理
-			{
-				itemSpawnAccumulatedTime += deltaTime;
-
-				// spawnTime が経過するごとに新しいアイテムを出現させる
-				while (ItemSpawnInterval <= itemSpawnAccumulatedTime)
-				{
-					// 新しく出現するアイテムを配列に追加する
-					items << Item
-					{
-						.type = (RandomBool(0.9) ? 0 : 1), // アイテムの種類
-						.pos = { Random(100, 700), -100 }, // アイテムの初期座標
-					};
-
-					itemSpawnAccumulatedTime -= ItemSpawnInterval;
-				}
-
-				// すべてのアイテムについて移動処理を行う
-				for (auto& item : items)
-				{
-					item.pos.y += (ItemInfos[item.type].speed * deltaTime);
-				}
-
-				// プレイヤーのあたり判定の円
-				const Circle playerCircle{ playerPos, 60 };
-
-				// アイテムのあたり判定と回収したアイテムの削除
-				for (auto it = items.begin(); it != items.end();)
-				{
-					// アイテムのあたり判定の円
-					const Circle itemCircle{ it->pos, ItemRadius };
-
-					// 交差したらアイテムを削除
-					if (playerCircle.intersects(itemCircle))
-					{
-						// (削除する前に) スコアを加算する
-						score += ItemInfos[it->type].score;
-
-						// アイテムを削除する
-						it = items.erase(it);
-					}
-					else
-					{
-						// イテレータを次のアイテムに進める
-						++it;
-					}
-				}
-
-				// 画面外に出たアイテムを消去する
-				items.remove_if([](const Item& item) { return (700 < item.pos.y); });
-			}
-
-			////////////////////////////////
+			/////////////////////////////////
 			//
-			//	描画
+			//	Drawing
 			//
-			////////////////////////////////
+			/////////////////////////////////
 
-			// 背景を描画する
-			Scene::Rect().draw(Arg::top = ColorF{ 0.1, 0.4, 0.8 }, Arg::bottom = ColorF{ 0.3, 0.7, 1.0 });
+			// Draw background
+			DrawBackground();
 
-			// 地面を描画する
-			Rect{ Arg::bottomLeft(0, Scene::Height()), Scene::Width(), 60 }.draw(ColorF{ 0.2, 0.6, 0.3 });
+			// Draw player
+			player.draw();
 
-			// プレイヤーのテクスチャを描画する
-			playerTexture.drawAt(playerPos);
+			// Draw all items
+			DrawItems(items, itemTextures);
 
-			// アイテムを描画する
-			for (const auto& item : items)
-			{
-				ItemInfos[item.type].texture.resized(ItemRadius * 2).drawAt(item.pos);
-			}
-
-			// スコアを描画する
-			font(ThousandsSeparate(score)).draw(30, Vec2{ 20, 20 });
+			// Draw UI
+			DrawUI(score, remainingTime, font);
 		}
 	}
 	```
 
-## 3. 15 パズル
+## 3. 15 puzzle
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/games/3.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
-	// 2つ のピースが隣り合っているかを判定する
+	// Check if two pieces are adjacent
 	bool Swappable(int32 a, int32 b)
 	{
 		return ((a / 4 == b / 4) && (AbsDiff(a, b) == 1))
@@ -300,22 +347,22 @@
 	{
 		Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
 
-		// ピースのサイズ
+		// Piece size
 		constexpr int32 CellSize = 100;
 
-		// 位置
+		// Position
 		constexpr Point Offset{ 60, 40 };
 
-		// ダイアログから画像を選択する
+		// Select image from dialog
 		const Image image = Dialog::OpenImage();
 
-		// 正方形に切り抜く
+		// Crop to square
 		const Texture texture{ image.squareClipped(), TextureDesc::Mipped };
 
-		// ランダムな操作でパズルをシャッフルする
+		// Shuffle puzzle with random operations
 		Array<int32> pieces = Range(0, 15);
 		{
-			// 空白の位置
+			// Empty space position
 			int32 blankPos = 15;
 
 			for (int32 i = 0; i < 1000; ++i)
@@ -330,7 +377,7 @@
 			}
 		}
 
-		// 掴んでいるピースの番号
+		// Currently grabbed piece number
 		Optional<int32> grabbed;
 
 		while (System::Update())
@@ -381,7 +428,7 @@
 				}
 			}
 
-			// 見本を描く
+			// Draw reference image
 			texture.resized(180)
 				.draw((Offset.x + CellSize * 4 + 40), Offset.y)
 				.drawFrame(0, 4, ColorF{ 0.3, 0.5, 0.7 });
@@ -390,26 +437,26 @@
 	```
 
 
-## 4. 数つなぎ
+## 4. Number chain
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/games/4.gif)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
 	struct Bubble
 	{
-		// バブルの円の半径
+		// Bubble circle radius
 		static constexpr int32 Radius = 30;
 
-		// バブルの円
+		// Bubble circle
 		Circle circle;
 
-		// バブルのインデックス
+		// Bubble index
 		int32 index;
 
-		// 接続済みなら true に
+		// True if connected
 		bool connected = false;
 
 		void draw(const Font& font) const
@@ -428,14 +475,14 @@
 		}
 	};
 
-	// バブルどうしが重なっていないかチェックする
+	// Check if bubbles overlap each other
 	bool CheckBubbles(const Array<Bubble>& bubbles)
 	{
 		for (size_t i = 0; i < bubbles.size(); ++i)
 		{
 			for (size_t k = (i + 1); k < bubbles.size(); ++k)
 			{
-				// 重なっている
+				// Overlapping
 				if (bubbles[i].circle.stretched(5)
 					.intersects(bubbles[k].circle.stretched(5)))
 				{
@@ -447,7 +494,7 @@
 		return true;
 	}
 
-	// 指定した個数のバブルを重ならないように生成する
+	// Generate specified number of bubbles without overlap
 	Array<Bubble> MakeBubbles(int32 count)
 	{
 		Array<Bubble> bubbles(count);
@@ -456,10 +503,10 @@
 		{
 			for (int32 i = 0; i < count; ++i)
 			{
-				// バブルのインデックス
+				// Bubble index
 				bubbles[i].index = i;
 
-				// バブルの円
+				// Bubble circle
 				bubbles[i].circle.set(RandomVec2(Circle{ Scene::Center(), (Scene::Height() / 2 - Bubble::Radius) }), Bubble::Radius);
 			}
 		} while (not CheckBubbles(bubbles));
@@ -467,13 +514,13 @@
 		return bubbles;
 	}
 
-	// 指定したレベルにおけるバブルの個数
+	// Number of bubbles at specified level
 	constexpr int32 GetBubbleCount(int32 level)
 	{
 		return Min(level, 15);
 	}
 
-	// 指定したレベルにおける制限時間（秒）
+	// Time limit at specified level (seconds)
 	constexpr Duration GetTime(int32 level)
 	{
 		return Duration{ (level <= 15) ? 8.0 : 8.0 - Min((level - 15) * 0.05, 2.0) };
@@ -487,25 +534,25 @@
 
 		Effect effect;
 
-		// 効果音を作成する
+		// Create sound effects
 		const Array<PianoKey> keys = { PianoKey::C5,  PianoKey::D5, PianoKey::E5, PianoKey::F5, PianoKey::G5,
 			PianoKey::A5, PianoKey::B5, PianoKey::C6, PianoKey::D6, PianoKey::E6,
 			PianoKey::F6, PianoKey::G6, PianoKey::A6, PianoKey::B6, PianoKey::C7 };
 		const Array<Audio> sounds = keys.map([](auto k) { return Audio{ GMInstrument::Glockenspiel, k, 0.3s }; });
 
-		// ハイスコア
+		// High score
 		int32 highScore = 0;
 
-		// 現在のレベル
+		// Current level
 		int32 level = 1;
 
-		// 接続数
+		// Connection count
 		int32 connected = 0;
 
-		// 残り時間のタイマー
+		// Remaining time timer
 		Timer timer{ GetTime(level), StartImmediately::Yes };
 
-		// バブル
+		// Bubbles
 		Array<Bubble> bubbles = MakeBubbles(GetBubbleCount(level));
 
 		while (System::Update())
@@ -518,78 +565,78 @@
 					&& (not bubble.connected)
 					&& bubble.circle.stretched(10).mouseOver())
 				{
-					// 接続済みにする
+					// Mark as connected
 					bubble.connected = true;
 
-					// 接続数を増やす
+					// Increase connection count
 					++connected;
 
-					// エフェクトを追加する
+					// Add effect
 					effect.add([pos = Cursor::Pos()](double t)
 					{
 						Circle{ pos, (Bubble::Radius + t * 200) }.drawFrame(2, 0, ColorF{ 0.2, 0.5, 1.0, (1.0 - t * 2.5) });
 						return (t < 0.4);
 					});
 
-					// バブルの数字に応じて効果音を鳴らす
+					// Play sound based on bubble number
 					sounds[bubble.index].playOneShot(0.8);
 				}
 
-				// バブルを円周に沿って移動させる
+				// Move bubbles around circumference
 				bubble.circle.center = OffsetCircular{ Scene::Center(), bubble.circle.center }
 					.rotate((IsEven(bubble.index) ? 20_deg : -20_deg) * delta);
 			}
 
-			// バブルをすべてつなぐか、時間切れになったら
+			// When all bubbles are connected or time runs out
 			if (const bool failed = timer.reachedZero();
 				(connected == GetBubbleCount(level)) || failed)
 			{
-				// レベルを更新する
+				// Update level
 				level = (failed ? 1 : ++level);
 
-				// 接続数をリセットする
+				// Reset connection count
 				connected = 0;
 
-				// 制限時間をリセットする
+				// Reset time limit
 				timer = Timer{ GetTime(level), StartImmediately::Yes };
 
-				// バブルを再生成する
+				// Regenerate bubbles
 				bubbles = MakeBubbles(GetBubbleCount(level));
 
-				// ハイスコアを更新する
+				// Update high score
 				highScore = Max(highScore, level);
 
-				// タイトルを更新する
+				// Update title
 				Window::SetTitle(U"Level {} (High score: {})"_fmt(level, highScore));
 			}
 
-			// 制限時間を表す背景を描画する
+			// Draw background representing time limit
 			RectF{ Scene::Width(), (Scene::Height() * timer.progress0_1()) }.draw(HSV{ (level * 30), 0.3, 0.9 });
 
-			// バブルをつなぐ線を描画する
+			// Draw lines connecting bubbles
 			for (int32 i = 0; i < (connected - 1); ++i)
 			{
 				Line{ bubbles[i].circle.center, bubbles[i + 1].circle.center }.draw(3, Palette::Orange);
 			}
 
-			// バブルを描画する
+			// Draw bubbles
 			for (const auto& bubble : bubbles)
 			{
 				bubble.draw(font);
 			}
 
-			// エフェクトを描画する
+			// Draw effects
 			effect.update();
 		}
 	}
 	```
 
 
-## 5. タイピングゲーム
+## 5. Typing game
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/games/5.gif)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -597,7 +644,7 @@
 	{
 		Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-		// 問題文のリスト
+		// List of problem texts
 		const Array<String> texts =
 		{
 			U"Practice makes perfect.",
@@ -607,62 +654,62 @@
 			U"Bad news travels fast.",
 		};
 
-		// 問題文をランダムに選ぶ
+		// Randomly select problem text
 		String target = texts.choice();
 
-		// 入力中の文字列
+		// Input string
 		String input;
 
 		const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
 
 		while (System::Update())
 		{
-			// テキスト入力（TextInputMode::DenyControl: エンターやタブ、バックスペースは受け付けない）
+			// Text input (TextInputMode::DenyControl: don't accept enter, tab, backspace)
 			TextInput::UpdateText(input, TextInputMode::DenyControl);
 
-			// 誤った入力が含まれていたら削除する
+			// Delete incorrect input
 			while (not target.starts_with(input))
 			{
 				input.pop_back();
 			}
 
-			// 一致したら次の問題へ移る
+			// Move to next problem if matched
 			if (input == target)
 			{
-				// 問題文をランダムに選ぶ
+				// Randomly select problem text
 				target = texts.choice();
 
-				// 入力文字列をクリアする	
+				// Clear input string	
 				input.clear();
 			}
 
-			// 問題文を描画する
+			// Draw problem text
 			font(target).draw(40, Vec2{ 40, 80 }, ColorF{ 0.98 });
 
-			// 入力中の文字を描画する
+			// Draw input text
 			font(input).draw(40, Vec2{ 40, 80 }, ColorF{ 0.12 });
 		}
 	}
 	```
 
 
-## 6. 絵文字タワー
+## 6. Emoji tower
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/games/6.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
 	void Main()
 	{
-		// ウィンドウを 1280x720 にリサイズ
+		// Resize window to 1280x720
 		Window::Resize(1280, 720);
 
-		// 背景色を設定
+		// Set background color
 		Scene::SetBackground(ColorF{ 0.2, 0.7, 1.0 });
 
-		// 登場する絵文字
+		// Appearing emojis
 		const Array<String> emojis = { U"🐘", U"🐧", U"🐐", U"🐤" };
 
 		Array<MultiPolygon> polygons;
@@ -671,35 +718,35 @@
 
 		for (const auto& emoji : emojis)
 		{
-			// 絵文字の画像から形状情報を作成する
+			// Create shape information from emoji image
 			polygons << Emoji::CreateImage(emoji).alphaToPolygonsCentered().simplified(2.0);
 
-			// 絵文字の画像からテクスチャを作成する
+			// Create texture from emoji image
 			textures << Texture{ Emoji{ emoji } };
 		}
 
-		// 2D 物理演算のシミュレーションステップ（秒）
+		// 2D physics simulation step (seconds)
 		constexpr double StepTime = (1.0 / 200.0);
 
-		// 2D 物理演算のシミュレーション蓄積時間（秒）
+		// 2D physics simulation accumulated time (seconds)
 		double accumulatedTime = 0.0;
 
-		// 2D 物理演算のワールド
+		// 2D physics world
 		P2World world;
 
-		// [_] 地面
+		// [_] Ground
 		const P2Body ground = world.createLine(P2Static, Vec2{ 0, 0 }, Line{ -300, 0, 300, 0 });
 
-		// 動物の物体
+		// Animal bodies
 		Array<P2Body> bodies;
 
-		// 物体の ID と絵文字のインデックスの対応テーブル
+		// Correspondence table between body ID and emoji index
 		HashTable<P2BodyID, size_t> table;
 
-		// 絵文字のインデックス
+		// Emoji index
 		size_t index = Random(polygons.size() - 1);
 
-		// 2D カメラ
+		// 2D camera
 		Camera2D camera{ Vec2{ 0, -200 } };
 
 		while (System::Update())
@@ -708,18 +755,18 @@
 
 			while (StepTime <= accumulatedTime)
 			{
-				// 2D 物理演算のワールドを更新する
+				// Update 2D physics world
 				world.update(StepTime);
 
 				accumulatedTime -= StepTime;
 			}
 
-			// 地面より下に落ちた物体は削除する
+			// Remove bodies that fell below ground
 			for (auto it = bodies.begin(); it != bodies.end();)
 			{
 				if (100 < it->getPos().y)
 				{
-					// 対応テーブルからも削除
+					// Also remove from correspondence table
 					table.erase(it->id());
 
 					it = bodies.erase(it);
@@ -730,51 +777,51 @@
 				}
 			}
 
-			// 2D カメラを更新する
+			// Update 2D camera
 			camera.update();
 			{
-				// 2D カメラから Transformer2D を作成する
+				// Create Transformer2D from 2D camera
 				const auto t = camera.createTransformer();
 
-				// 左クリックされたら
+				// If left clicked
 				if (MouseL.down())
 				{
-					// ボディを追加する
+					// Add body
 					bodies << world.createPolygons(P2Dynamic, Cursor::PosF(), polygons[index], P2Material{ 0.1, 0.0, 1.0 });
 
-					// ボディ ID と絵文字のインデックスの組を対応テーブルに追加する
+					// Add body ID and emoji index pair to correspondence table
 					table.emplace(bodies.back().id(), std::exchange(index, Random(polygons.size() - 1)));
 				}
 
-				// すべてのボディを描画する
+				// Draw all bodies
 				for (const auto& body : bodies)
 				{
 					textures[table[body.id()]].rotated(body.getAngle()).drawAt(body.getPos());
 				}
 
-				// 地面を描画する
+				// Draw ground
 				ground.draw(Palette::Green);
 
-				// 現在操作できる絵文字を描画する
-				textures[index].drawAt(Cursor::PosF(), AlphaF(0.5 + Periodic::Sine0_1(1s) * 0.5));
+				// Draw currently controllable emoji
+				textures[index].drawAt(Cursor::PosF(), ColorF{ 1.0, (0.5 + Periodic::Sine0_1(1s) * 0.5) });
 			}
 
-			// 2D カメラの操作を描画する
+			// Draw 2D camera controls
 			camera.draw(Palette::Orange);
 		}
 	}
 	```
 
 
-## 7. シューティングゲーム
+## 7. Shooting game
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/games/7.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
-	// 敵の位置をランダムに作成する関数
+	// Function to create random enemy position
 	Vec2 GenerateEnemy()
 	{
 		return RandomVec2({ 50, 750 }, -20);
@@ -786,57 +833,57 @@
 
 		const Font font{ FontMethod::MSDF, 48 };
 
-		// 自機テクスチャ
+		// Player texture
 		const Texture playerTexture{ U"🤖"_emoji };
-		// 敵テクスチャ
+		// Enemy texture
 		const Texture enemyTexture{ U"👾"_emoji };
 
-		// 自機
+		// Player
 		Vec2 playerPos{ 400, 500 };
-		// 敵
+		// Enemy
 		Array<Vec2> enemies = { GenerateEnemy() };
 
-		// 自機ショット
+		// Player shots
 		Array<Vec2> playerBullets;
-		// 敵ショット
+		// Enemy shots
 		Array<Vec2> enemyBullets;
 
-		// 自機のスピード
+		// Player speed
 		constexpr double PlayerSpeed = 550.0;
-		// 自機ショットのスピード
+		// Player shot speed
 		constexpr double PlayerBulletSpeed = 500.0;
-		// 敵のスピード
+		// Enemy speed
 		constexpr double EnemySpeed = 100.0;
-		// 敵ショットのスピード
+		// Enemy shot speed
 		constexpr double EnemyBulletSpeed = 300.0;
 
-		// 敵の発生間隔の初期値（秒）
+		// Initial enemy spawn interval (seconds)
 		constexpr double InitialEnemySpawnInterval = 2.0;
-		// 敵の発生間隔（秒）
+		// Enemy spawn interval (seconds)
 		double enemySpawnTime = InitialEnemySpawnInterval;
-		// 敵の発生の蓄積時間（秒）
+		// Enemy spawn accumulated time (seconds)
 		double enemyAccumulatedTime = 0.0;
 
-		// 自機ショットのクールタイム（秒）
+		// Player shot cooltime (seconds)
 		constexpr double PlayerShotCoolTime = 0.1;
-		// 自機ショットのクールタイムタイマー（秒）
+		// Player shot cooltime timer (seconds)
 		double playerShotTimer = 0.0;
 
-		// 敵ショットのクールタイム（秒）
+		// Enemy shot cooltime (seconds)
 		constexpr double EnemyShotCoolTime = 0.9;
-		// 敵ショットのクールタイムタイマー（秒）
+		// Enemy shot cooltime timer (seconds)
 		double enemyShotTimer = 0.0;
 
 		Effect effect;
 
-		// ハイスコア
+		// High score
 		int32 highScore = 0;
-		// 現在のスコア
+		// Current score
 		int32 score = 0;
 
 		while (System::Update())
 		{
-			// ゲームオーバー判定
+			// Game over check
 			bool gameover = false;
 
 			const double deltaTime = Scene::DeltaTime();
@@ -844,7 +891,7 @@
 			playerShotTimer = Min((playerShotTimer + deltaTime), PlayerShotCoolTime);
 			enemyShotTimer += deltaTime;
 
-			// 敵を発生させる
+			// Generate enemies
 			while (enemySpawnTime <= enemyAccumulatedTime)
 			{
 				enemyAccumulatedTime -= enemySpawnTime;
@@ -852,37 +899,37 @@
 				enemies << GenerateEnemy();
 			}
 
-			// 自機の移動
+			// Player movement
 			const Vec2 move = Vec2{ (KeyRight.pressed() - KeyLeft.pressed()), (KeyDown.pressed() - KeyUp.pressed()) }
 				.setLength(deltaTime * PlayerSpeed * (KeyShift.pressed() ? 0.5 : 1.0));
 			playerPos.moveBy(move).clamp(Scene::Rect());
 
-			// 自機ショットの発射
+			// Player shot firing
 			if (PlayerShotCoolTime <= playerShotTimer)
 			{
 				playerShotTimer -= PlayerShotCoolTime;
 				playerBullets << playerPos.movedBy(0, -50);
 			}
 
-			// 自機ショットを移動させる
+			// Move player shots
 			for (auto& playerBullet : playerBullets)
 			{
 				playerBullet.y += (deltaTime * -PlayerBulletSpeed);
 			}
-			// 画面外に出た自機ショットを削除する
+			// Remove player shots that went off screen
 			playerBullets.remove_if([](const Vec2& b) { return (b.y < -40); });
 
-			// 敵を移動させる
+			// Move enemies
 			for (auto& enemy : enemies)
 			{
 				enemy.y += (deltaTime * EnemySpeed);
 			}
-			// 画面外に出た敵を削除する
+			// Remove enemies that went off screen
 			enemies.remove_if([&](const Vec2& e)
 			{
 				if (700 < e.y)
 				{
-					// 敵が画面外に出たらゲームオーバー
+					// Game over if enemy goes off screen
 					gameover = true;
 					return true;
 				}
@@ -892,7 +939,7 @@
 				}
 			});
 
-			// 敵ショットの発射
+			// Fire enemy shots
 			if (EnemyShotCoolTime <= enemyShotTimer)
 			{
 				enemyShotTimer -= EnemyShotCoolTime;
@@ -903,21 +950,21 @@
 				}
 			}
 
-			// 敵ショットを移動させる
+			// Move enemy shots
 			for (auto& enemyBullet : enemyBullets)
 			{
 				enemyBullet.y += (deltaTime * EnemyBulletSpeed);
 			}
-			// 画面外に出た自機ショットを削除する
+			// Remove player shots that went off screen
 			enemyBullets.remove_if([](const Vec2& b) {return (700 < b.y); });
 
 			////////////////////////////////
 			//
-			//	攻撃判定
+			//	Hit detection
 			//
 			////////////////////////////////
 
-			// 敵 vs 自機ショット
+			// Enemy vs player shot
 			for (auto itEnemy = enemies.begin(); itEnemy != enemies.end();)
 			{
 				const Circle enemyCircle{ *itEnemy, 40 };
@@ -927,11 +974,11 @@
 				{
 					if (enemyCircle.intersects(*itBullet))
 					{
-						// 爆発エフェクトを追加する
+						// Add explosion effect
 						effect.add([pos = *itEnemy](double t)
 						{
 							const double t2 = ((0.5 - t) * 2.0);
-							Circle{ pos, (10 + t * 280) }.drawFrame((20 * t2), AlphaF(t2 * 0.5));
+							Circle{ pos, (10 + t * 280) }.drawFrame((20 * t2), ColorF{ 1.0, (t2 * 0.5) });
 							return (t < 0.5);
 						});
 
@@ -953,19 +1000,19 @@
 				++itEnemy;
 			}
 
-			// 敵ショット vs 自機
+			// Enemy shot vs player
 			for (const auto& enemyBullet : enemyBullets)
 			{
-				// 敵ショットが playerPos の 20 ピクセル以内に接近したら
+				// If enemy shot approaches within 20 pixels of playerPos
 				if (enemyBullet.distanceFrom(playerPos) <= 20)
 				{
-					// ゲームオーバーにする
+					// Game over
 					gameover = true;
 					break;
 				}
 			}
 
-			// ゲームオーバーならリセットする
+			// Reset if game over
 			if (gameover)
 			{
 				playerPos = Vec2{ 400, 500 };
@@ -979,57 +1026,57 @@
 
 			////////////////////////////////
 			//
-			//	描画
+			//	Drawing
 			//
 			////////////////////////////////
 
-			// 背景のアニメーションを描画する
+			// Draw background animation
 			for (int32 i = 0; i < 12; ++i)
 			{
 				const double a = Periodic::Sine0_1(2s, Scene::Time() - (2.0 / 12 * i));
 				Rect{ 0, (i * 50), 800, 50 }.draw(ColorF(1.0, a * 0.2));
 			}
 
-			// 自機を描画する
+			// Draw player
 			playerTexture.resized(80).flipped().drawAt(playerPos);
 
-			// 自機ショットを描画する
+			// Draw player shots
 			for (const auto& playerBullet : playerBullets)
 			{
 				Circle{ playerBullet, 8 }.draw(Palette::Orange);
 			}
 
-			// 敵を描画する
+			// Draw enemies
 			for (const auto& enemy : enemies)
 			{
 				enemyTexture.resized(60).drawAt(enemy);
 			}
 
-			// 敵ショットを描画する
+			// Draw enemy shots
 			for (const auto& enemyBullet : enemyBullets)
 			{
 				Circle{ enemyBullet, 4 }.draw(Palette::White);
 			}
 
-			// 爆発エフェクトを描画する
+			// Draw explosion effects
 			effect.update();
 
-			// スコアを描画する
+			// Draw score
 			font(U"{} [{}]"_fmt(score, highScore)).draw(30, Arg::bottomRight(780, 580));
 		}
 	}
 	```
 
 
-## 8. ピンボール
+## 8. Pinball
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/games/8.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
-	// 外周の枠の頂点リストを作成する関数
+	// Function to create frame vertex list
 	LineString CreateFrame(const Vec2& leftAnchor, const Vec2& rightAnchor)
 	{
 		Array<Vec2> points = { leftAnchor, Vec2{ -70, -20 } };
@@ -1041,7 +1088,7 @@
 		return LineString{ points };
 	}
 
-	// 接触しているかに応じて色を決定する関数
+	// Function to determine color based on contact
 	ColorF GetColor(const P2Body& body, const HashSet<P2BodyID>& list)
 	{
 		return list.contains(body.id()) ? Palette::White : Palette::Orange;
@@ -1049,33 +1096,33 @@
 
 	void Main()
 	{
-		// 背景色を設定する
+		// Set background color
 		Scene::SetBackground(ColorF(0.2, 0.3, 0.4));
 
-		// 2D 物理演算のシミュレーションステップ（秒）
+		// 2D physics simulation step (seconds)
 		constexpr double StepTime = (1.0 / 200.0);
 
-		// 2D 物理演算のシミュレーション蓄積時間（秒）
+		// 2D physics simulation accumulated time (seconds)
 		double accumulatedTime = 0.0;
 
-		// 物理演算用のワールド
+		// Physics world
 		P2World world{ 60.0 };
 
-		// 左右フリッパーの軸の座標
+		// Left and right flipper axis coordinates
 		constexpr Vec2 LeftFlipperAnchor{ -25, 10 }, RightFlipperAnchor{ 25, 10 };
 
-		// 固定の枠
+		// Fixed frames
 		Array<P2Body> frames;
 		{
-			// 外周
+			// Perimeter
 			frames << world.createLineString(P2Static, Vec2{ 0, 0 }, CreateFrame(LeftFlipperAnchor, RightFlipperAnchor));
-			// 左上の (
+			// Top left (
 			frames << world.createLineString(P2Static, Vec2{ 0, 0 }, LineString{ Range(-25, -10).map([=](int32 i) { return OffsetCircular(Vec2{ 0.0, -120 }, 55, (i * 3_deg)).toVec2(); }) });
-			// 右上の )
+			// Top right )
 			frames << world.createLineString(P2Static, Vec2{ 0, 0 }, LineString{ Range(10, 25).map([=](int32 i) { return OffsetCircular(Vec2{ 0.0, -120 }, 55, (i * 3_deg)).toVec2(); }) });
 		}
 
-		// バンパー
+		// Bumpers
 		Array<P2Body> bumpers;
 		{
 			// ● x3
@@ -1095,90 +1142,90 @@
 
 		const P2Material softMaterial{ .density = 0.1, .restitution = 0.0 };
 
-		// 左フリッパー
+		// Left flipper
 		P2Body leftFlipper = world.createRect(P2Dynamic, LeftFlipperAnchor, RectF{ 0, 0.4, 21, 4.5 }, softMaterial);
-		// 左フリッパーのジョイント
+		// Left flipper joint
 		const P2PivotJoint leftJoint = world.createPivotJoint(frames[0], leftFlipper, LeftFlipperAnchor).setLimits(-20_deg, 25_deg).setLimitsEnabled(true);
 
-		// 右フリッパー
+		// Right flipper
 		P2Body rightFlipper = world.createRect(P2Dynamic, RightFlipperAnchor, RectF{ -21, 0.4, 21, 4.5 }, softMaterial);
-		// 右フリッパーのジョイント
+		// Right flipper joint
 		const P2PivotJoint rightJoint = world.createPivotJoint(frames[0], rightFlipper, RightFlipperAnchor).setLimits(-25_deg, 20_deg).setLimitsEnabled(true);
 
-		// スピナー ＋
+		// Spinner ＋
 		const P2Body spinner = world.createRect(P2Dynamic, Vec2{ -58, -120 }, SizeF{ 20, 1 }, softMaterial).addRect(RectF{ Arg::center(0, 0), 1, 20 }, P2Material{ 0.01, 0.0 });
-		// スピナーのジョイント
+		// Spinner joint
 		P2PivotJoint spinnerJoint = world.createPivotJoint(frames[0], spinner, Vec2{ -58, -120 }).setMaxMotorTorque(0.05).setMotorSpeed(0).setMotorEnabled(true);
 
-		// 風車の |
+		// Windmill |
 		frames << world.createLine(P2Static, Vec2{ 0, 0 }, Line{ -40, -60, -40, -40 });
-		// 風車の羽 ／
+		// Windmill wing ／
 		const P2Body windmillWing = world.createRect(P2Dynamic, Vec2{ -40, -60 }, SizeF{ 30, 2 }, P2Material{ 0.1, 0.8 });
-		// 風車のジョイント
+		// Windmill joint
 		const P2PivotJoint windmillJoint = world.createPivotJoint(frames.back(), windmillWing, Vec2{ -40, -60 }).setMotorSpeed(240_deg).setMaxMotorTorque(10000.0).setMotorEnabled(true);
 
-		// 振り子の軸
+		// Pendulum axis
 		const P2Body pendulumBase = world.createPlaceholder(P2Static, Vec2{ 0, -190 });
-		// 振り子 ●
+		// Pendulum ●
 		P2Body pendulum = world.createCircle(P2Dynamic, Vec2{ 0, -120 }, 4, P2Material{ 0.1, 1.0 });
-		// 振り子のジョイント
+		// Pendulum joint
 		const P2DistanceJoint pendulumJoint = world.createDistanceJoint(pendulumBase, Vec2{ 0, -190 }, pendulum, Vec2{ 0, -120 }, 70);
 
-		// エレベーターの上部 ●
+		// Elevator top ●
 		const P2Body elevatorA = world.createCircle(P2Static, Vec2{ 40, -100 }, 3);
-		// エレベーターの床 －
+		// Elevator floor －
 		const P2Body elevatorB = world.createRect(P2Dynamic, Vec2{ 40, -100 }, SizeF{ 20, 2 });
-		// エレベーターのジョイント
+		// Elevator joint
 		P2SliderJoint elevatorSliderJoint = world.createSliderJoint(elevatorA, elevatorB, Vec2{ 40, -100 }, Vec2::Down()).setLimits(5, 50).setLimitEnabled(true).setMaxMotorForce(10000).setMotorSpeed(-100);
 
-		// ボール 〇
+		// Ball 〇
 		const P2Body ball = world.createCircle(P2Dynamic, Vec2{ -40, -120 }, 4, P2Material{ 0.05, 0.0 });
 		const P2BodyID ballID = ball.id();
 
-		// エレベーターのアニメーション用ストップウォッチ
+		// Elevator animation stopwatch
 		Stopwatch sliderStopwatch{ StartImmediately::Yes };
 
-		// 2D カメラ
+		// 2D camera
 		const Camera2D camera{ Vec2{ 0, -80 }, 2.4 };
 
 		while (System::Update())
 		{
 			////////////////////////////////
 			//
-			//	更新
+			//	Update
 			//
 			////////////////////////////////
 
 			if (4s < sliderStopwatch)
 			{
-				// エレベーターの巻き上げを停止
+				// Stop elevator lifting
 				elevatorSliderJoint.setMotorEnabled(false);
 				sliderStopwatch.restart();
 			}
 			else if (2s < sliderStopwatch)
 			{
-				// エレベーターの巻き上げ
+				// Elevator lifting
 				elevatorSliderJoint.setMotorEnabled(true);
 			}
 
-			// ボールと接触しているボディの ID
+			// IDs of bodies in contact with ball
 			HashSet<P2BodyID> collidedIDs;
 
-			// 物理演算ワールドの更新
+			// Update physics world
 			for (accumulatedTime += Scene::DeltaTime(); StepTime <= accumulatedTime; accumulatedTime -= StepTime)
 			{
-				// 振り子の揺れをおさえる抵抗
+				// Resistance to suppress pendulum oscillation
 				pendulum.applyForce(Vec2{ (pendulum.getVelocity().x < 0.0) ? 0.0001 : -0.0001, 0.0 });
 
-				// 左フリッパーの操作
+				// Left flipper control
 				leftFlipper.applyTorque(KeyLeft.pressed() ? -80 : 40);
 
-				// 右フリッパーの操作
+				// Right flipper control
 				rightFlipper.applyTorque(KeyRight.pressed() ? 80 : -40);
 
 				world.update(StepTime);
 
-				// ボールと接触しているボディの ID を格納
+				// Store IDs of bodies in contact with ball
 				for (auto&& [pair, collision] : world.getCollisions())
 				{
 					if (pair.a == ballID)
@@ -1194,46 +1241,46 @@
 
 			////////////////////////////////
 			//
-			//	描画
+			//	Drawing
 			//
 			////////////////////////////////
 
-			// 描画用の Transformer2D
+			// Drawing Transformer2D
 			const auto transformer = camera.createTransformer();
 
-			// 枠の描画
+			// Draw frames
 			for (const auto& frame : frames)
 			{
 				frame.draw(Palette::Skyblue);
 			}
 
-			// スピナーの描画
+			// Draw spinner
 			spinner.draw(GetColor(spinner, collidedIDs));
 
-			// バンパーの描画
+			// Draw bumpers
 			for (const auto& bumper : bumpers)
 			{
 				bumper.draw(GetColor(bumper, collidedIDs));
 			}
 
-			// 風車の描画
+			// Draw windmill
 			windmillWing.draw(GetColor(windmillWing, collidedIDs));
 
-			// 振り子の描画
+			// Draw pendulum
 			pendulum.draw(GetColor(pendulum, collidedIDs));
 
-			// エレベーターの描画
+			// Draw elevator
 			elevatorA.draw(GetColor(elevatorA, collidedIDs));
 			elevatorB.draw(GetColor(elevatorB, collidedIDs));
 
-			// ボールの描画
+			// Draw ball
 			ball.draw(Palette::White);
 
-			// フリッパーの描画
+			// Draw flippers
 			leftFlipper.draw(Palette::Orange);
 			rightFlipper.draw(Palette::Orange);
 
-			// ジョイントの可視化
+			// Visualize joints
 			leftJoint.draw(Palette::Red);
 			rightJoint.draw(Palette::Red);
 			spinnerJoint.draw(Palette::Red);
@@ -1245,22 +1292,22 @@
 	```
 
 
-## 9. クッキークリッカー
+## 9. Cookie clicker
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/games/9.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
-	//ゲームのセーブデータ
+	// Game save data
 	struct SaveData
 	{
 		double cookies;
 
 		Array<int32> itemCounts;
 
-		// シリアライズに対応させるためのメンバ関数を定義する
+		// Define member function for serialization support
 		template <class Archive>
 		void SIV3D_SERIALIZE(Archive& archive)
 		{
@@ -1268,15 +1315,15 @@
 		}
 	};
 
-	/// @brief アイテムのボタン
-	/// @param rect ボタンの領域
-	/// @param texture ボタンの絵文字
-	/// @param font 文字描画に使うフォント
-	/// @param name アイテムの名前
-	/// @param desc アイテムの説明
-	/// @param count アイテムの所持数
-	/// @param enabled ボタンを押せるか
-	/// @return ボタンが押された場合 true, それ以外の場合は false
+	/// @brief Item button
+	/// @param rect Button area
+	/// @param texture Button emoji
+	/// @param font Font for text drawing
+	/// @param name Item name
+	/// @param desc Item description
+	/// @param count Item possession count
+	/// @param enabled Whether button can be pressed
+	/// @return true if button was pressed, false otherwise
 	bool Button(const Rect& rect, const Texture& texture, const Font& font, const String& name, const String& desc, int32 count, bool enabled)
 	{
 		if (enabled)
@@ -1308,16 +1355,16 @@
 		return (enabled && rect.leftClicked());
 	}
 
-	// クッキーが降るエフェクト
+	// Cookie falling effect
 	struct CookieBackgroundEffect : IEffect
 	{
-		// 初期座標
+		// Initial position
 		Vec2 m_start;
 
-		// 回転角度
+		// Rotation angle
 		double m_angle;
 
-		// テクスチャ
+		// Texture
 		Texture m_texture;
 
 		CookieBackgroundEffect(const Vec2& start, const Texture& texture)
@@ -1335,22 +1382,22 @@
 		}
 	};
 
-	// クッキーが舞うエフェクト
+	// Cookie dancing effect
 	struct CookieEffect : IEffect
 	{
-		// 初期座標
+		// Initial position
 		Vec2 m_start;
 
-		// 初速
+		// Initial velocity
 		Vec2 m_velocity;
 
-		// 拡大倍率
+		// Scale factor
 		double m_scale;
 
-		// 回転角度
+		// Rotation angle
 		double m_angle;
 
-		// テクスチャ
+		// Texture
 		Texture m_texture;
 
 		CookieEffect(const Vec2& start, const Texture& texture)
@@ -1371,13 +1418,13 @@
 		}
 	};
 
-	// 「+1」が上昇するエフェクト
+	// "+1" rising effect
 	struct PlusOneEffect : IEffect
 	{
-		// 初期座標
+		// Initial position
 		Vec2 m_start;
 
-		// フォント
+		// Font
 		Font m_font;
 
 		PlusOneEffect(const Vec2& start, const Font& font)
@@ -1392,53 +1439,53 @@
 		}
 	};
 
-	// アイテムのデータ
+	// Item data
 	struct Item
 	{
-		// アイテムの絵文字
+		// Item emoji
 		Texture emoji;
 
-		// アイテムの名前
+		// Item name
 		String name;
 
-		// アイテムを初めて購入するときのコスト
+		// Cost when purchasing item for the first time
 		int32 initialCost;
 
-		// アイテムの CPS
+		// Item CPS
 		int32 cps;
 
-		// アイテムを count 個持っているときの購入コストを返す
+		// Returns purchase cost when owning count items
 		int32 getCost(int32 count) const
 		{
 			return initialCost * (count + 1);
 		}
 	};
 
-	// クッキーのばね
+	// Cookie spring
 	class CookieSpring
 	{
 	public:
 
 		void update(double deltaTime, bool pressed)
 		{
-			// ばねの蓄積時間を加算する
+			// Add to spring accumulated time
 			m_accumulatedTime += deltaTime;
 
 			while (0.005 <= m_accumulatedTime)
 			{
-				// ばねの力（変化を打ち消す方向）
+				// Spring force (direction to cancel change)
 				double force = (-0.02 * m_x);
 
-				// 画面を押しているときに働く力
+				// Force when screen is pressed
 				if (pressed)
 				{
 					force += 0.004;
 				}
 
-				// 速度に力を適用（減衰もさせる）
+				// Apply force to velocity (also dampen)
 				m_velocity = (m_velocity + force) * 0.92;
 
-				// 位置に反映
+				// Reflect in position
 				m_x += m_velocity;
 
 				m_accumulatedTime -= 0.005;
@@ -1452,17 +1499,17 @@
 
 	private:
 
-		// ばねの伸び
+		// Spring extension
 		double m_x = 0.0;
 
-		// ばねの速度
+		// Spring velocity
 		double m_velocity = 0.0;
 
-		// ばねの蓄積時間
+		// Spring accumulated time
 		double m_accumulatedTime = 0.0;
 	};
 
-	// クッキーの後光を描く関数
+	// Function to draw cookie halo
 	void DrawHalo(const Vec2& center)
 	{
 		for (int32 i = 0; i < 4; ++i)
@@ -1478,7 +1525,7 @@
 		}
 	}
 
-	// アイテムの所有数をもとに CPS を計算する関数
+	// Function to calculate CPS based on item ownership counts
 	int32 CalculateCPS(const Array<Item>& ItemTable, const Array<int32>& itemCounts)
 	{
 		int32 cps = 0;
@@ -1493,46 +1540,46 @@
 
 	void Main()
 	{
-		// クッキーの絵文字
+		// Cookie emoji
 		const Texture texture{ U"🍪"_emoji };
 
-		// アイテムのデータ
+		// Item data
 		const Array<Item> ItemTable = {
-			{ Texture{ U"🌾"_emoji }, U"クッキー農場", 10, 1 },
-			{ Texture{ U"🏭"_emoji }, U"クッキー工場", 100, 10 },
-			{ Texture{ U"⚓"_emoji }, U"クッキー港", 1000, 100 },
+			{ Texture{ U"🌾"_emoji }, U"Cookie Farm", 10, 1 },
+			{ Texture{ U"🏭"_emoji }, U"Cookie Factory", 100, 10 },
+			{ Texture{ U"⚓"_emoji }, U"Cookie Port", 1000, 100 },
 		};
 
-		// 各アイテムの所有数
+		// Number of each item owned
 		Array<int32> itemCounts(ItemTable.size()); // = { 0, 0, 0 }
 
-		// フォント
+		// Font
 		const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
 
-		// クッキーのクリック円
+		// Cookie click circle
 		constexpr Circle CookieCircle{ 170, 300, 100 };
 
-		// エフェクト
+		// Effects
 		Effect effectBackground, effect;
 
-		// クッキーのばね
+		// Cookie spring
 		CookieSpring cookieSpring;
 
-		// クッキーの個数
+		// Number of cookies
 		double cookies = 0;
 
-		// ゲームの経過時間の蓄積
+		// Game elapsed time accumulation
 		double accumulatedTime = 0.0;
 
-		// 背景のクッキーの蓄積時間
+		// Background cookie accumulated time
 		double cookieBackgroundAccumulatedTime = 0.0;
 
-		// セーブデータが見つかればそれを読み込む
+		// Load save data if found
 		{
-			// バイナリファイルをオープン
+			// Open binary file
 			Deserializer<BinaryReader> reader{ U"game.save" };
 
-			if (reader) // もしオープンに成功したら
+			if (reader) // If successfully opened
 			{
 				SaveData saveData;
 
@@ -1546,24 +1593,24 @@
 
 		while (System::Update())
 		{
-			// クッキーの毎秒の生産量を計算する
+			// Calculate cookies per second production
 			const int32 cps = CalculateCPS(ItemTable, itemCounts);
 
-			// ゲームの経過時間を加算する
+			// Add game elapsed time
 			accumulatedTime += Scene::DeltaTime();
 
-			// 0.1 秒以上蓄積していたら
+			// If accumulated 0.1 seconds or more
 			if (0.1 <= accumulatedTime)
 			{
 				accumulatedTime -= 0.1;
 
-				// 0.1 秒分のクッキー生産を加算する
+				// Add 0.1 seconds worth of cookie production
 				cookies += (cps * 0.1);
 			}
 
-			// 背景のクッキー
+			// Background cookies
 			{
-				// 背景のクッキーが発生する適当な間隔を cps から計算（多くなりすぎないよう緩やかに小さくなり、下限も設ける）
+				// Calculate appropriate interval for background cookie generation from cps (gradually decrease to prevent too many, with lower limit)
 				const double cookieBackgroundSpawnTime = cps ? Max(1.0 / Math::Log2(cps * 2), 0.03) : Math::Inf;
 
 				if (cps)
@@ -1579,63 +1626,63 @@
 				}
 			}
 
-			// クッキーのばねを更新する
+			// Update cookie spring
 			cookieSpring.update(Scene::DeltaTime(), CookieCircle.leftPressed());
 
-			// クッキー円上にマウスカーソルがあれば
+			// If mouse cursor is over cookie circle
 			if (CookieCircle.mouseOver())
 			{
 				Cursor::RequestStyle(CursorStyle::Hand);
 			}
 
-			// クッキー円が左クリックされたら
+			// If cookie circle is left clicked
 			if (CookieCircle.leftClicked())
 			{
 				++cookies;
 
-				// クッキーが舞うエフェクトを追加する
+				// Add cookie dancing effect
 				effect.add<CookieEffect>(Cursor::Pos().movedBy(Random(-5, 5), Random(-5, 5)), texture);
 
-				// 「+1」が上昇するエフェクトを追加する
+				// Add "+1" rising effect
 				effect.add<PlusOneEffect>(Cursor::Pos().movedBy(Random(-5, 5), Random(-15, -5)), font);
 
-				// 背景のクッキーを追加する
+				// Add background cookie
 				effectBackground.add<CookieBackgroundEffect>(RandomVec2(Rect{ 0, -150, 800, 100 }), texture);
 			}
 
-			// 背景を描く
+			// Draw background
 			Rect{ 0, 0, 800, 600 }.draw(Arg::top = ColorF{ 0.6, 0.5, 0.3 }, Arg::bottom = ColorF{ 0.2, 0.5, 0.3 });
 
-			// 背景で降り注ぐクッキーを描画する
+			// Draw background falling cookies
 			effectBackground.update();
 
-			// クッキーの後光を描く
+			// Draw cookie halo
 			DrawHalo(CookieCircle.center);
 
-			// クッキーの数を整数で表示する
+			// Display cookie count as integer
 			font(ThousandsSeparate((int32)cookies)).drawAt(60, 170, 100);
 
-			// クッキーの生産量を表示する
-			font(U"毎秒: {}"_fmt(cps)).drawAt(24, 170, 160);
+			// Display cookie production rate
+			font(U"Per second: {}"_fmt(cps)).drawAt(24, 170, 160);
 
-			// クッキーを描画する
+			// Draw cookie
 			texture.scaled(1.5 - cookieSpring.get()).drawAt(CookieCircle.center);
 
-			// エフェクトを描画する
+			// Draw effects
 			effect.update();
 
 			for (size_t i = 0; i < ItemTable.size(); ++i)
 			{
-				// アイテムの所有数
+				// Item ownership count
 				const int32 itemCount = itemCounts[i];
 
-				// アイテムの現在の価格
+				// Current item price
 				const int32 itemCost = ItemTable[i].getCost(itemCount);
 
-				// アイテム 1 つあたりの CPS
+				// CPS per item
 				const int32 itemCps = ItemTable[i].cps;
 
-				// ボタン
+				// Button
 				if (Button(Rect{ 340, (40 + 120 * i), 420, 100 }, ItemTable[i].emoji,
 					font, ItemTable[i].name, U"C{} / {} CPS"_fmt(itemCost, itemCps), itemCount, (itemCost <= cookies)))
 				{
@@ -1645,23 +1692,23 @@
 			}
 		}
 
-		// メインループの後、終了時にゲームをセーブ
+		// Save game at exit after main loop
 		{
-			// バイナリファイルをオープン
+			// Open binary file
 			Serializer<BinaryWriter> writer{ U"game.save" };
 
-			// シリアライズに対応したデータを書き出す
+			// Write serializable data
 			writer(SaveData{ cookies, itemCounts });
 		}
 	}
 	```
 
 
-## 10. トランプを描く
+## 10. Drawing playing cards
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/games/10.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -1671,13 +1718,13 @@
 
 		Scene::SetBackground(Palette::Darkgreen);
 
-		// カードの幅が 75 ピクセルで裏面が赤色のカードパックを作成
+		// Create card pack with 75 pixel card width and red back
 		const PlayingCard::Pack pack{ 75, Palette::Red };
 
-		// ジョーカーの枚数
+		// Number of jokers
 		constexpr int32 NumJokers = 2;
 
-		// 52 枚 + ジョーカーを含むカードを作成する
+		// Create deck including 52 cards + jokers
 		Array<PlayingCard::Card> cards = PlayingCard::CreateDeck(NumJokers);
 
 		while (System::Update())
@@ -1692,12 +1739,12 @@
 
 					if (MouseL.down())
 					{
-						// カードをめくる
+						// Flip card
 						cards[i].flip();
 					}
 				}
 
-				// カードを描画する
+				// Draw card
 				pack(cards[i]).drawAt(center);
 			}
 		}
@@ -1705,15 +1752,15 @@
 	```
 
 
-## 11. 三目並べ
+## 11. Tic-tac-toe
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/games/11.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
-	// 3 つのマークがつながったかを返す関数
+	// Function to check if 3 marks are connected
 	bool CheckLine(const Grid<int32>& grid, const Point& cellA, const Point& cellB, const Point& cellC)
 	{
 		const int32 a = grid[cellA];
@@ -1722,12 +1769,12 @@
 		return ((a != 0) && (a == b) && (b == c));
 	}
 
-	// マークがつながったラインの一覧を返す関数
+	// Function to return list of connected lines
 	Array<std::pair<Point, Point>> CheckLines(const Grid<int32>& grid)
 	{
 		Array<std::pair<Point, Point>> results;
 
-		// 縦 3 列を調べる
+		// Check 3 vertical columns
 		for (int32 x = 0; x < 3; ++x)
 		{
 			if (CheckLine(grid, Point{ x, 0 }, Point{ x, 1 }, Point{ x, 2 }))
@@ -1736,7 +1783,7 @@
 			}
 		}
 
-		// 横 3 行を調べる
+		// Check 3 horizontal rows
 		for (int32 y = 0; y < 3; ++y)
 		{
 			if (CheckLine(grid, Point{ 0, y }, Point{ 1, y }, Point{ 2, y }))
@@ -1745,13 +1792,13 @@
 			}
 		}
 
-		// 斜め（左上 -> 右下) を調べる
+		// Check diagonal (top-left -> bottom-right)
 		if (CheckLine(grid, Point{ 0, 0 }, Point{ 1, 1 }, Point{ 2, 2 }))
 		{
 			results.emplace_back(Point{ 0, 0 }, Point{ 2, 2 });
 		}
 
-		// 斜め（右上 -> 左下) を調べる
+		// Check diagonal (top-right -> bottom-left)
 		if (CheckLine(grid, Point{ 2, 0 }, Point{ 1, 1 }, Point{ 0, 2 }))
 		{
 			results.emplace_back(Point{ 2, 0 }, Point{ 0, 2 });
@@ -1764,13 +1811,13 @@
 	{
 	public:
 
-		// セルの大きさ
+		// Cell size
 		static constexpr int32 CellSize = 150;
 
-		// O マークの値
+		// O mark value
 		static constexpr int32 O_Mark = 1;
 
-		// X マークの値
+		// X mark value
 		static constexpr int32 X_Mark = 2;
 
 		void update()
@@ -1780,38 +1827,38 @@
 				return;
 			}
 
-			// 3x3 のセル
+			// 3x3 cells
 			for (auto p : step(Size{ 3, 3 }))
 			{
-				// セル
+				// Cell
 				const Rect cell{ (p * CellSize), CellSize };
 
-				// セルのマーク
+				// Cell mark
 				const int32 mark = m_grid[p];
 
-				// セルが空白で、なおかつクリックされたら
+				// If cell is empty and clicked
 				if ((mark == 0) && cell.leftClicked())
 				{
-					// セルに現在のマークを書き込む
+					// Write current mark to cell
 					m_grid[p] = m_currentMark;
 
-					// 現在のマークを入れ替える
+					// Switch current mark
 					m_currentMark = ((m_currentMark == O_Mark) ? X_Mark : O_Mark);
 
-					// つながったラインを探す
+					// Look for connected lines
 					m_lines = CheckLines(m_grid);
 
-					// 空白セルが 0 になるか、つながったラインが見つかったら
+					// If empty cells become 0 or connected lines are found
 					if (m_grid.count(0) == 0 || m_lines)
 					{
-						// ゲーム終了
+						// Game over
 						m_gameOver = true;
 					}
 				}
 			}
 		}
 
-		// ゲームをリセット
+		// Reset game
 		void reset()
 		{
 			m_currentMark = O_Mark;
@@ -1823,7 +1870,7 @@
 			m_gameOver = false;
 		}
 
-		// 描画
+		// Drawing
 		void draw() const
 		{
 			drawGridLines();
@@ -1833,7 +1880,7 @@
 			drawResults();
 		}
 
-		// ゲームが終了したかを返す
+		// Returns whether game is over
 		bool isGameOver() const
 		{
 			return m_gameOver;
@@ -1841,22 +1888,22 @@
 
 	private:
 
-		// 3x3 の二次元配列 (初期値は全要素 0)
+		// 3x3 2D array (initial value is 0 for all elements)
 		Grid<int32> m_grid = Grid<int32>(3, 3);
 
-		// これから置くマーク
+		// Mark to be placed next
 		int32 m_currentMark = O_Mark;
 
-		// ゲーム終了フラグ
+		// Game over flag
 		bool m_gameOver = false;
 
-		// 3 つ連続したラインの一覧
+		// List of 3 consecutive lines
 		Array<std::pair<Point, Point>> m_lines;
 
-		// 格子を描く
+		// Draw grid
 		void drawGridLines() const
 		{
-			// 線を引く
+			// Draw lines
 			for (auto i : { 1, 2 })
 			{
 				Line{ (i * CellSize), 0, (i * CellSize), (3 * CellSize) }
@@ -1867,60 +1914,60 @@
 			}
 		}
 
-		// セルを描く
+		// Draw cells
 		void drawCells() const
 		{
-			// 3x3 のセル
+			// 3x3 cells
 			for (auto p : step(Size{ 3, 3 }))
 			{
-				// セル
+				// Cell
 				const Rect cell{ (p * CellSize), CellSize };
 
-				// セルのマーク
+				// Cell mark
 				const int32 mark = m_grid[p];
 
-				// X マークだったら
+				// If X mark
 				if (mark == X_Mark)
 				{
-					// X マークを描く
+					// Draw X mark
 					Shape2D::Cross(CellSize * 0.4, 10, cell.center())
 						.draw(ColorF{ 0.2 });
 
-					// このセルはこれ以上処理しない
+					// Don't process this cell further
 					continue;
 				}
-				else if (mark == O_Mark) // O マークだったら
+				else if (mark == O_Mark) // If O mark
 				{
-					// 〇 マークを描く
+					// Draw O mark
 					Circle{ cell.center(), (CellSize * 0.4 - 10) }
 					.drawFrame(10, 0, ColorF{ 0.2 });
 
-					// このセルはこれ以上処理しない
+					// Don't process this cell further
 					continue;
 				}
 
-				// セルがマウスオーバーされたら
+				// If cell is moused over
 				if (!m_gameOver && cell.mouseOver())
 				{
-					// カーソルを手のアイコンにする
+					// Change cursor to hand icon
 					Cursor::RequestStyle(CursorStyle::Hand);
 
-					// セルの上に半透明の白を描く
+					// Draw semi-transparent white over cell
 					cell.stretched(-2).draw(ColorF{ 1.0, 0.6 });
 				}
 			}
 		}
 
-		// つながったラインを描く
+		// Draw connected lines
 		void drawResults() const
 		{
 			for (const auto& line : m_lines)
 			{
-				// つながったラインの始点と終点のセルを取得
+				// Get start and end cells of connected line
 				const Rect cellBegin{ line.first * CellSize, CellSize };
 				const Rect cellEnd{ line.second * CellSize, CellSize };
 
-				// 線を引く
+				// Draw line
 				Line{ cellBegin.center(), cellEnd.center() }
 					.stretched(CellSize * 0.45)
 					.draw(LineStyle::RoundCap, 5, ColorF{ 0.6 });
@@ -1930,7 +1977,7 @@
 
 	void Main()
 	{
-		// 背景色
+		// Background color
 		Scene::SetBackground(ColorF{ 0.8, 1.0, 0.9 });
 
 		constexpr Point Offset{ 175, 30 };
@@ -1940,7 +1987,7 @@
 		while (System::Update())
 		{
 			{
-				// 2D 描画とマウスカーソル座標を移動
+				// Move 2D drawing and mouse cursor coordinates
 				const Transformer2D transform{ Mat3x2::Translate(Offset), TransformCursor::Yes };
 
 				gameBoard.update();
@@ -1948,10 +1995,10 @@
 				gameBoard.draw();
 			}
 
-			// ゲームが終了していたら
+			// If game is over
 			if (gameBoard.isGameOver())
 			{
-				// Reset ボタンを押せばリセット
+				// Reset if Reset button is pressed
 				if (SimpleGUI::ButtonAt(U"Reset", Vec2{ 400, 520 }))
 				{
 					gameBoard.reset();
@@ -1961,12 +2008,12 @@
 	}
 	```
 
-## 12. 音ゲー基礎
+## 12. Rhythm game basics
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/games/12.png)
 
-??? memo "コード"
-	あらかじめ次のように書かれた譜面ファイル `notes.txt` を、プロジェクトの `App/` フォルダ内に配置しておきます。
+??? memo "Code"
+	First, place a chart file `notes.txt` written as follows in the `App/` folder of your project.
 
 	```txt title="notes.txt"
 	2000 0
@@ -1987,64 +2034,64 @@
 	9500 0
 	```
 
-	実際のゲームでは `Audio` の `.posSec()` や `.posSample()` から経過時間を計算すべきですが、このサンプルでは音声ファイルを使わずに `Stopwatch` で経過時間を決めています。
+	In actual games, elapsed time should be calculated from `.posSec()` or `.posSample()` of `Audio`, but this sample uses `Stopwatch` to determine elapsed time without using audio files.
 
 	```cpp
 	# include <Siv3D.hpp>
 
-	// ノート
+	// Note
 	struct Note
 	{
-		// ノートの時刻
+		// Note time
 		int32 time;
 
-		// 押すべきキーのインデックス (0, 1, 2, 3)
+		// Key index to press (0, 1, 2, 3)
 		int32 key;
 
-		// 消えたら false
+		// false when disappeared
 		bool active = true;
 	};
 
-	// ノート情報を譜面ファイルからロードする関数
+	// Function to load note information from chart file
 	Array<Note> LoadNotes(const FilePath& path)
 	{
 		TextReader reader{ path };
 
 		if (not reader)
 		{
-			throw Error{ U"譜面 {} が見つかりません。"_fmt(path) };
+			throw Error{ U"Chart {} not found."_fmt(path) };
 		}
 
 		Array<Note> notes;
 
 		String line;
 
-		// 1 行ずつ読み込む
+		// Read line by line
 		while (reader.readLine(line))
 		{
-			// 空白行はスキップ
+			// Skip empty lines
 			if (line.isEmpty())
 			{
 				continue;
 			}
 
-			// 読み込んだ行を半角スペースで分割
+			// Split read line by half-width space
 			const Array<String> params = line.split(U' ');
 
-			// 分割した結果が 2 要素でない場合は不正な譜面
+			// If split result is not 2 elements, it's an invalid chart
 			if (params.size() != 2)
 			{
-				throw Error{ U"不正な譜面です。" };
+				throw Error{ U"Invalid chart." };
 			}
 
-			// 分割した結果をそれぞれ int32 型に変換
+			// Convert split results to int32 type
 			notes.emplace_back(Parse<int32>(params[0]), Parse<int32>(params[1]));
 		}
 
 		return notes;
 	}
 
-	// ノートの座標を計算する関数
+	// Function to calculate note position
 	Vec2 GetNotePos(const Note& note, int32 time)
 	{
 		const double x = (250 + note.key * 100);
@@ -2052,7 +2099,7 @@
 		return{ x, y };
 	}
 
-	// ノートを押したときのエフェクト
+	// Effect when note is hit
 	struct NoteEffect : IEffect
 	{
 		Vec2 m_start;
@@ -2085,27 +2132,27 @@
 
 	void Main()
 	{
-		// ノート配列
+		// Note array
 		Array<Note> notes = LoadNotes(U"notes.txt");
 
-		// 判定キー
+		// Judgment keys
 		const Array<Input> Keys = { KeyA, KeyS, KeyD, KeyF };
 
-		// キー入力エフェクトのトランジション
+		// Key input effect transitions
 		Array<Transition> keyTransitions(Keys.size(), Transition{ 0.0s, 0.2s });
 
-		// 時間測定用ストップウォッチ
+		// Stopwatch for time measurement
 		Stopwatch stopwatch{ StartImmediately::Yes };
 
-		// フォント
+		// Font
 		const Font font{ FontMethod::MSDF, 48, Typeface::Heavy };
 
-		// エフェクト管理
+		// Effect management
 		Effect effect;
 
 		while (System::Update())
 		{
-			// 経過時間（ミリ秒）
+			// Elapsed time (milliseconds)
 			const int32 time = stopwatch.ms();
 
 			ClearPrint();
@@ -2114,7 +2161,7 @@
 
 			////////////////////////////////
 			//
-			//	状態更新
+			//	State update
 			//
 			////////////////////////////////
 
@@ -2125,47 +2172,47 @@
 
 			for (auto& note : notes)
 			{
-				// 消えているノートはスキップ
+				// Skip disappeared notes
 				if (not note.active)
 				{
 					continue;
 				}
 
-				// 現在のタイムとノートのタイムとの差（ミリ秒）
+				// Difference between current time and note time (milliseconds)
 				const int32 diffMillisec = (time - note.time);
 
-				// 差の絶対値が 250 ミリ秒未満なら
+				// If absolute difference is less than 250 milliseconds
 				if (Abs(diffMillisec) < 250)
 				{
-					// ノートに対応するキーが押されていたら
+					// If key corresponding to note is pressed
 					if (Keys[note.key].down())
 					{
-						// ノートを消す
+						// Remove note
 						note.active = false;
 
-						// ノートの座標
+						// Note position
 						const Vec2 notePos = GetNotePos(note, time);
 
-						// エフェクトを追加する
+						// Add effect
 						effect.add<NoteEffect>(Vec2{ notePos.x, 500 }, (Abs(diffMillisec) < 80 ? 2 : 1), font);
 					}
 				}
 
-				// 250 ミリ秒以上の遅れはミス
+				// Delay of 250 milliseconds or more is a miss
 				if (note.active && (250 <= diffMillisec))
 				{
-					// ノートを消す
+					// Remove note
 					note.active = false;
 				}
 			}
 
 			////////////////////////////////
 			//
-			//	描画
+			//	Drawing
 			//
 			////////////////////////////////
 
-			// 入力を描画する
+			// Draw input
 			for (int32 i = 0; i < 4; ++i)
 			{
 				const double x = (250 + i * 100);
@@ -2173,165 +2220,165 @@
 					.draw(Arg::top = ColorF{ 1.0, 0.0 }, Arg::bottom = ColorF{ 1.0, keyTransitions[i].easeOut() * 0.5 });
 			}
 
-			// 長方形を描画する
+			// Draw rectangle
 			Rect{ 0, 480, 800, 40 }.draw(ColorF{ 0.5 });
 
-			// キー名を描画する
+			// Draw key names
 			for (int32 i = 0; i < 4; ++i)
 			{
 				const double x = (250 + i * 100);
 				font(Keys[i].name()).drawAt(20, Vec2{ x, 500 }, ColorF{ 0.7 });
 			}
 
-			// ノートを描画する
+			// Draw notes
 			for (const auto& note : notes)
 			{
-				// 消えているノートはスキップ
+				// Skip disappeared notes
 				if (not note.active)
 				{
 					continue;
 				}
 
-				// ノートの座標
+				// Note position
 				const Vec2 notePos = GetNotePos(note, time);
 
-				// 画面内にあるノートのみ描画する
+				// Only draw notes that are on screen
 				if (-100.0 < notePos.y)
 				{
 					Circle{ notePos, 30 }.draw();
 				}
 			}
 
-			// エフェクトの描画
+			// Draw effects
 			effect.update();
 		}
 	}
 	```
 
-## 13. マインスイーパー
+## 13. Minesweeper
 
 ![](https://raw.githubusercontent.com/Siv3D/Siv3D-Samples/main/Samples/Minesweeper/Screenshot/3.png)
 
-[Siv3D-Sample | マインスイーパー :material-open-in-new:](https://github.com/Siv3D/Siv3D-Samples/tree/main/Samples/Minesweeper){:target="_blank" .md-button}
+[Siv3D-Sample | Minesweeper :material-open-in-new:](https://github.com/Siv3D/Siv3D-Samples/tree/main/Samples/Minesweeper){:target="_blank" .md-button}
 
 
-## 14. AI オセロ
+## 14. AI Othello
 
 ![](https://raw.githubusercontent.com/Siv3D/Siv3D-Samples/main/Samples/SimpleOthelloAI/Screenshot/2.png)
 
-[Siv3D-Sample | AI オセロ :material-open-in-new:](https://github.com/Siv3D/Siv3D-Samples/tree/main/Samples/SimpleOthelloAI){:target="_blank" .md-button}
+[Siv3D-Sample | AI Othello :material-open-in-new:](https://github.com/Siv3D/Siv3D-Samples/tree/main/Samples/SimpleOthelloAI){:target="_blank" .md-button}
 
 
-## 15. クロンダイク
+## 15. Klondike
 
 ![](https://raw.githubusercontent.com/Siv3D/Siv3D-Samples/main/Samples/Klondike/Screenshot/2.png)
 
-[Siv3D-Sample | クロンダイク :material-open-in-new:](https://github.com/Siv3D/Siv3D-Samples/tree/main/Samples/Klondike){:target="_blank" .md-button}
+[Siv3D-Sample | Klondike :material-open-in-new:](https://github.com/Siv3D/Siv3D-Samples/tree/main/Samples/Klondike){:target="_blank" .md-button}
 
 
-## 16. 神経衰弱
+## 16. Memory game
 
 ![](https://raw.githubusercontent.com/Reputeless/games/main/games/003/A.png)
 
-[ゲーム典型 | 神経衰弱 :material-open-in-new:](https://github.com/Reputeless/games/blob/main/games/003/A.md){:target="_blank" .md-button}
+[Game Patterns | Memory game :material-open-in-new:](https://github.com/Reputeless/games/blob/main/games/003/A.md){:target="_blank" .md-button}
 
 
-## 17. ハノイの塔
+## 17. Tower of Hanoi
 
 ![](https://raw.githubusercontent.com/Reputeless/games/main/games/004/A.png)
 
-[ゲーム典型 | ハノイの塔 :material-open-in-new:](https://github.com/Reputeless/games/blob/main/games/004/A.md){:target="_blank" .md-button}
+[Game Patterns | Tower of Hanoi :material-open-in-new:](https://github.com/Reputeless/games/blob/main/games/004/A.md){:target="_blank" .md-button}
 
 
-## 18. Wheel of Fortune (ルーレット)
+## 18. Wheel of Fortune (Roulette)
 
 ![](https://raw.githubusercontent.com/Reputeless/games/main/games/006/A.png)
 
-[ゲーム典型 | Wheel of Fortune (ルーレット) :material-open-in-new:](https://github.com/Reputeless/games/blob/main/games/006/A.md){:target="_blank" .md-button}
+[Game Patterns | Wheel of Fortune (Roulette) :material-open-in-new:](https://github.com/Reputeless/games/blob/main/games/006/A.md){:target="_blank" .md-button}
 
 
-## 19. 2D RPG のマップと移動の基本
+## 19. 2D RPG map and movement basics
 
 ![](https://raw.githubusercontent.com/Reputeless/games/main/games/007/A.png)
 
-[ゲーム典型 | 2D RPG のマップと移動の基本 :material-open-in-new:](https://github.com/Reputeless/games/blob/main/games/007/A.md){:target="_blank" .md-button}
+[Game Patterns | 2D RPG map and movement basics :material-open-in-new:](https://github.com/Reputeless/games/blob/main/games/007/A.md){:target="_blank" .md-button}
 
 
-## 20. オートタイル
+## 20. Auto tiles
 
 ![](https://raw.githubusercontent.com/Siv3D/Siv3D-Samples/main/Samples/AutoTiles/Screenshot/1.png)
 
-[Siv3D-Sample | オートタイル :material-open-in-new:](https://github.com/Siv3D/Siv3D-Samples/tree/main/Samples/AutoTiles){:target="_blank" .md-button}
+[Siv3D-Sample | Auto tiles :material-open-in-new:](https://github.com/Siv3D/Siv3D-Samples/tree/main/Samples/AutoTiles){:target="_blank" .md-button}
 
-## 21. すごろくの基本
+## 21. Board game basics
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/games/21.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
-	/// @brief すごろくのマスの種類
+	/// @brief Board game square types
 	enum class SquareType
 	{
-		/// @brief スタート
+		/// @brief Start
 		Start,
 
-		/// @brief 通常
+		/// @brief Normal
 		Normal,
 
-		/// @brief ゴール
+		/// @brief Goal
 		Goal,
 	};
 
-	/// @brief すごろくのマスの情報
+	/// @brief Board game square information
 	struct SquareInfo
 	{
-		/// @brief マスの位置
+		/// @brief Square position
 		Point pos;
 
-		/// @brief マスの種類
+		/// @brief Square type
 		SquareType type;
 	};
 
-	/// @brief すごろくのマスを描画します。
-	/// @param squares すごろくのマス
-	/// @param font フォント
+	/// @brief Draws board game squares.
+	/// @param squares Board game squares
+	/// @param font Font
 	void DrawSquares(const Array<SquareInfo>& squares, const Font& font)
 	{
-		// マスの間の線を描画する
+		// Draw lines between squares
 		for (size_t i = 0; i < (squares.size() - 1); ++i)
 		{
 			Line{ squares[i].pos, squares[i + 1].pos }
 				.draw(32, ColorF{ 1.0, 0.95, 0.9 });
 		}
 
-		// 各マスについて
+		// For each square
 		for (const auto& square : squares)
 		{
 			if (square.type == SquareType::Start)
 			{
-				// スタートマスを描画する
+				// Draw start square
 				RoundRect{ Arg::center = square.pos, 144, 144, 24 }
 					.draw(ColorF{ 0.5, 0.5, 0.8 }).drawFrame(4, ColorF{ 0.3 });
 
-				// スタートの文字を描画する
+				// Draw start text
 				font(U"START")
 					.drawAt(36, square.pos);
 			}
 			else if (square.type == SquareType::Normal)
 			{
-				// 通常マスを描画する
+				// Draw normal square
 				RoundRect{ Arg::center = square.pos, 100, 100, 24 }
 					.draw().drawFrame(4, ColorF{ 0.3 });
 			}
 			else if (square.type == SquareType::Goal)
 			{
-				// ゴールマスを描画する
+				// Draw goal square
 				RoundRect{ Arg::center = square.pos, 144, 144, 24 }
 					.draw(ColorF{ 0.8, 0.5, 0.5 }).drawFrame(4, ColorF{ 0.3 });
 
-				// ゴールの文字を描画する
+				// Draw goal text
 				font(U"GOAL")
 					.drawAt(36, square.pos);
 			}
@@ -2340,16 +2387,16 @@
 
 	void Main()
 	{
-		// 背景色を設定する
+		// Set background color
 		Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-		// フォント
+		// Font
 		const Font font{ FontMethod::MSDF, 30, Typeface::Bold };
 
-		// プレイヤーの絵文字
+		// Player emoji
 		const Texture playerEmoji{ U"🐥"_emoji };
 
-		// すごろくのマスの情報
+		// Board game square information
 		const Array<SquareInfo> squares = {
 			{ {100, 500}, SquareType::Start },
 			{ {300, 500}, SquareType::Normal },
@@ -2365,153 +2412,153 @@
 			{ {700, 200}, SquareType::Goal },
 		};
 
-		// サイコロの回転タイマー
+		// Dice rotation timer
 		Timer diceTimer{ 1s };
 
-		// プレイヤーの移動タイマー
+		// Player movement timer
 		Timer walkTimer{ 0.5s };
 
-		// サイコロをふれるか
+		// Can roll dice
 		bool canRollDice = true;
 
-		// プレイヤーの位置
+		// Player position
 		size_t playerPos = 0;
 
-		// サイコロの結果
+		// Dice result
 		int32 diceResult = 0;
 
-		// 歩数
+		// Step count
 		int32 walkCount = 0;
 
 		while (System::Update())
 		{
-			// サイコロをふるボタン
-			if (SimpleGUI::Button(U"サイコロをふる",
+			// Roll dice button
+			if (SimpleGUI::Button(U"Roll dice",
 				Vec2{ 40, 40 }, 200, canRollDice))
 			{
-				// サイコロの回転を開始する
+				// Start dice rotation
 				diceTimer.start();
 
-				// サイコロをふれないようにする
+				// Disable dice rolling
 				canRollDice = false;
 			}
 
-			// サイコロが回転中
+			// Dice is rotating
 			if (diceTimer.isRunning())
 			{
-				// サイコロの目を描画する
+				// Draw dice face
 				Circle{ 300, 60, 40 }.draw();
 				font(U"0/{}"_fmt(Random(1, 6)))
 					.drawAt(30, Vec2{ 300, 60 }, ColorF{ 0.11 });
 			}
 
-			// サイコロの結果を確定させる
+			// Finalize dice result
 			if (diceTimer.reachedZero())
 			{
-				// サイコロの結果を決定する
+				// Determine dice result
 				diceResult = Random(1, 6);
 
-				// サイコロの回転を停止する
+				// Stop dice rotation
 				diceTimer.reset();
 
-				// プレイヤーの移動を開始する
+				// Start player movement
 				walkTimer.restart();
 			}
 
-			// サイコロの結果の表示
+			// Display dice result
 			if (diceResult)
 			{
-				// サイコロの目と歩数を描画する
+				// Draw dice face and step count
 				Circle{ 300, 60, 40 }.draw();
 				font(U"{}/{}"_fmt(walkCount, diceResult))
 					.drawAt(30, Vec2{ 300, 60 }, ColorF{ 0.11 });
 			}
 
-			// プレイヤーの移動
+			// Player movement
 			if ((walkCount != diceResult) && walkTimer.reachedZero())
 			{
-				// 歩数を進める
+				// Advance step count
 				++walkCount;
 
-				// ゴールの先に進まないようにする
+				// Don't advance beyond goal
 				playerPos = Min((playerPos + 1), (squares.size() - 1));
 
-				// 移動タイマーを再スタートさせる
+				// Restart movement timer
 				walkTimer.restart();
 			}
 
-			// 移動が完了したら
+			// When movement is complete
 			if ((diceResult == walkCount) && walkTimer.reachedZero())
 			{
-				// サイコロの結果をリセットする
+				// Reset dice result
 				diceResult = 0;
 
-				// 歩数をリセットする
+				// Reset step count
 				walkCount = 0;
 
-				// 移動タイマーをリセットする
+				// Reset movement timer
 				walkTimer.reset();
 
-				// サイコロをふれるようにする
+				// Enable dice rolling
 				canRollDice = true;
 			}
 
-			// すごろくのマスを描する
+			// Draw board game squares
 			DrawSquares(squares, font);
 
-			// プレイヤーの丸影を描画する
+			// Draw player shadow
 			Ellipse{ squares[playerPos].pos.movedBy(0, 30), 40, 10 }
 				.draw(ColorF{ 0.0, 0.2 });
 
-			// プレイヤーを描画する
+			// Draw player
 			playerEmoji.drawAt(squares[playerPos].pos.movedBy(0, -24));
 		}
 	}
 	```
 
 
-## 22. スロットマシン
+## 22. Slot machine
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/games/22.png)
 
-++space++ で操作します。
+Control with ++space++.
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
-	/// @brief スロットゲームの絵柄
+	/// @brief Slot game symbol
 	struct Symbol
 	{
-		/// @brief 絵柄
+		/// @brief Symbol
 		Texture symbol;
 
-		/// @brief 賞金
+		/// @brief Prize money
 		int32 score;
 	};
 
 	void Main()
 	{
-		// 背景色を設定する
+		// Set background color
 		Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-		// フォント
+		// Font
 		const Font font{ FontMethod::MSDF, 48,
 			U"example/font/RocknRoll/RocknRollOne-Regular.ttf" };
 
-		// ゲーム開始の効果音
+		// Game start sound effect
 		const Audio soundStart{ Wave{ GMInstrument::Agogo,
 			PianoKey::A3, 0.3s, 0.2s } };
 
-		// リール停止の効果音
+		// Reel stop sound effect
 		const Audio soundStop{ Wave{ GMInstrument::SteelDrums,
 			PianoKey::A3, 0.3s, 0.2s } };
 
-		// 賞金獲得の効果音（ループ再生）
+		// Prize winning sound effect (loop playback)
 		const Audio soundGet{ Wave{ GMInstrument::TinkleBell,
 			PianoKey::A6, 0.1s, 0.0s }, Loop::Yes };
 
-		// 絵柄のリスト
+		// Symbol list
 		const Array<Symbol> symbols
 		{
 			{ Texture{ U"💎"_emoji }, 1000 },
@@ -2522,11 +2569,11 @@
 			{ Texture{ U"🍒"_emoji }, 10 },
 		};
 
-		// 1 つのリールに用意される絵柄の基本リスト
+		// Basic symbol list for one reel
 		const Array<int32> symbolListBase =
 			{ 0, 1, 2, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5 };
 
-		// 3 つのリールに用意される絵柄のリスト（基本リストをシャッフル）
+		// Symbol lists for 3 reels (shuffled basic list)
 		const std::array<Array<int32>, 3> symbolLists =
 		{
 			symbolListBase.shuffled(),
@@ -2534,7 +2581,7 @@
 			symbolListBase.shuffled()
 		};
 
-		// 3 つのリールの描画位置
+		// Drawing positions for 3 reels
 		const std::array<Rect, 3> reels
 		{
 			Rect{ 80, 100, 130, 300 },
@@ -2542,54 +2589,54 @@
 			Rect{ 380, 100, 130, 300 },
 		};
 
-		// 所持金の描画位置
+		// Money display position
 		const RoundRect moneyRect{ 560, 440, 190, 60, 20 };
 
-		// 3 つのリールの回転量
+		// Rotation amounts for 3 reels
 		std::array<double, 3> rolls = { 0.0, 0.0, 0.0 };
 
-		// 現在のゲームにおけるリール停止カウント（3 回で結果判定）
+		// Reel stop count for current game (result determination at 3)
 		int32 stopCount = 3;
 
-		// 所持金
+		// Money
 		int32 money = 1000;
 
 		while (System::Update())
 		{
-			// スペースキーが押されたら
+			// If space key is pressed
 			if (KeySpace.down())
 			{
-				// 3 つのリールが停止している場合
+				// If all 3 reels are stopped
 				if (stopCount == 3)
 				{
-					// 所持金が 3 以上ある場合
+					// If money is 3 or more
 					if (3 <= money)
 					{
-						// 所持金を 3 減らす
+						// Subtract 3 from money
 						money -= 3;
 
-						// リール停止回数を 0 に戻す
+						// Reset reel stop count to 0
 						stopCount = 0;
 
-						// ゲーム開始の効果音を再生する
+						// Play game start sound effect
 						soundStart.playOneShot();
 					}
 				}
 				else
 				{
-					// リールを整数位置で停止させる
+					// Stop reel at integer position
 					rolls[stopCount] = Math::Ceil(rolls[stopCount]);
 
-					// リール停止カウントを増やす
+					// Increase reel stop count
 					++stopCount;
 
-					// リール停止の効果音を再生する
+					// Play reel stop sound effect
 					soundStop.playOneShot();
 
-					// 3 つのリールが停止した場合
+					// If all 3 reels are stopped
 					if (stopCount == 3)
 					{
-						// 各リールの絵柄
+						// Symbols on each reel
 						const int32 r0 = symbolLists[0][(
 							static_cast<int32>(rolls[0] + 1) % symbolLists[0].size())];
 						const int32 r1 = symbolLists[1][(
@@ -2597,105 +2644,105 @@
 						const int32 r2 = symbolLists[2][(
 							static_cast<int32>(rolls[2] + 1) % symbolLists[2].size())];
 
-						// 3 つのリールの絵柄がすべて同じ場合
+						// If all 3 reel symbols are the same
 						if ((r0 == r1) && (r1 == r2))
 						{
-							// 所持金に賞金を加算する
+							// Add prize money to money
 							money += symbols[r0].score;
 
-							// 賞金獲得の効果音を再生する
+							// Play prize winning sound effect
 							soundGet.play();
 
-							// 賞金獲得の効果音を 1.5 秒後に停止する
+							// Stop prize winning sound effect after 1.5 seconds
 							soundGet.stop(1.5s);
 						}
 					}
 				}
 			}
 
-			// リールの回転
+			// Reel rotation
 			for (int32 i = 0; i < 3; ++i)
 			{
-				// 停止済みのリールはスキップ
+				// Skip stopped reels
 				if (i < stopCount)
 				{
 					continue;
 				}
 
-				// 前フレームからの経過時間に応じてリールの回転量を増やす
+				// Increase reel rotation amount according to elapsed time from previous frame
 				rolls[i] += (Scene::DeltaTime() * 12);
 			}
 
-			// リールの描画
+			// Draw reels
 			for (int32 k = 0; k < 3; ++k)
 			{
-				// リールの背景
+				// Reel background
 				reels[k].draw();
 
-				// リールの絵柄を描画
+				// Draw reel symbols
 				for (int32 i = 0; i < 4; ++i)
 				{
-					// リールの何番目の要素を指すか（回転量の整数部分）
+					// Which element of the reel to point to (integer part of rotation amount)
 					const int32 index = (static_cast<int32>(rolls[k] + i)
 						% symbolLists[k].size());
 
-					// 絵柄のインデックス
+					// Symbol index
 					const int32 symbolIndex = symbolLists[k][index];
 
-					// 絵柄の位置補正（回転量の小数部分）
+					// Symbol position correction (fractional part of rotation amount)
 					const double t = Math::Fraction(rolls[k]);
 
-					// 絵柄の描画
+					// Draw symbol
 					symbols[symbolIndex].symbol.resized(90)
 						.drawAt(reels[k].center().movedBy(0, 140 * (1 - i + t)));
 				}
 			}
 
-			// リールの上下に背景色を描くことで、はみ出した絵柄を隠す
+			// Draw background color above and below reels to hide overflowing symbols
 			Rect{ 80, 0, 430, 100 }.draw(Scene::GetBackground());
 			Rect{ 80, 400, 430, 200 }.draw(Scene::GetBackground());
 
-			// リールの影と枠線の描画
+			// Draw reel shadows and frames
 			for (const auto& reel : reels)
 			{
-				// 上の影
+				// Top shadow
 				Rect{ reel.tl(), reel.w, 40 }.draw(Arg::top(0.0, 0.3), Arg::bottom(0.0, 0.0));
 
-				// 下の影
+				// Bottom shadow
 				Rect{ (reel.bl() - Point{ 0, 40 }), reel.w, 40 }.draw(Arg::top(0.0, 0.0), Arg::bottom(0.0, 0.3));
 
-				// 枠線
+				// Frame
 				reel.drawFrame(4, ColorF{ 0.5 });
 			}
 
-			// 中央を指す 2 つの三角形の描画
+			// Draw 2 triangles pointing to center
 			Triangle{ 60, 250, 36, 90_deg }.draw(ColorF{ 1.0, 0.2, 0.2 });
 			Triangle{ 530, 250, 36, -90_deg }.draw(ColorF{ 1.0, 0.2, 0.2 });
 
-			// 絵柄リストを描く
+			// Draw symbol list
 			RoundRect{ 560, 100, 190, 300, 20 }.draw(ColorF{ 0.9, 0.95, 1.0 });
 
 			for (size_t i = 0; i < symbols.size(); ++i)
 			{
-				// 絵柄を描く
+				// Draw symbol
 				symbols[i].symbol.resized(32).draw(Vec2{ 586, (114 + i * 48) });
 
-				// 賞金を描く
+				// Draw prize money
 				font(symbols[i].score).draw(TextStyle::OutlineShadow(0.2, ColorF{ 0.5, 0.3, 0.2 },
 					Vec2{ 1.5, 1.5 }, ColorF{ 0.5, 0.3, 0.2 }),
 					25, Arg::topRight(720, (109 + i * 48)), ColorF{ 1.0, 0.9, 0.1 });
 
 				if (i != 0)
 				{
-					// 絵柄の間に区切り線を描く
+					// Draw separator line between symbols
 					Rect{ 570, (105 + i * 48), 170, 1 }.draw(ColorF{ 0.7 });
 				}
 			}
 
-			// 所持金の背景の描画
+			// Draw money background
 			if (soundGet.isPlaying())
 			{
-				// 賞金獲得中は点滅させる
+				// Flash during prize winning
 				const ColorF color = Periodic::Sine0_1(0.3s) * ColorF { 0.5, 0.6, 0.7 };
 				moneyRect.draw(color).drawFrame(1);
 			}
@@ -2704,7 +2751,7 @@
 				moneyRect.draw(ColorF{ 0.1, 0.2, 0.3 }).drawFrame(1);
 			}
 
-			// 所持金の描画
+			// Draw money
 			font(money).draw(30, Arg::rightCenter(moneyRect.rightCenter().movedBy(-30, 0)));
 		}
 	}

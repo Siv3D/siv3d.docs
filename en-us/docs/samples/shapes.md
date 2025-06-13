@@ -1,10 +1,10 @@
-# 図形のサンプル
+# Shape Samples
 
-## 1. 市松模様の背景
+## 1. Checkerboard Background
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/shapes/1.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -30,16 +30,16 @@
 	}
 	```
 
-## 2. 不規則に見える長方形グリッド
+## 2. Irregular-Looking Rectangular Grid
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/shapes/2.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
 	//
-	// 参考: OffGrid by Chris Cox
+	// Reference: OffGrid by Chris Cox
 	// https://gitlab.com/chriscox/offgrid
 	//
 
@@ -141,11 +141,11 @@
 	}
 	```
 
-## 3. ボロノイ図
+## 3. Voronoi Diagram
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/shapes/3.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -158,7 +158,7 @@
 
 		Subdivision2D subdiv{ SceneRect };
 
-		// シーンの長方形内にほどよい間隔で点を生成する
+		// Generate points at reasonable intervals within the scene rectangle
 		for (const PoissonDisk2D pd{ SceneSize, 40 };
 			const auto& point : pd.getPoints())
 		{
@@ -169,8 +169,8 @@
 		}
 
 		const Array<Polygon> facetPolygons = subdiv
-			.calculateVoronoiFacets() // ボロノイ図を計算する
-			.map([SceneRect](const VoronoiFacet& f) // シーンの長方形内にクリッピングする
+			.calculateVoronoiFacets() // Calculate Voronoi diagram
+			.map([SceneRect](const VoronoiFacet& f) // Clip to scene rectangle
 		{
 			return Geometry2D::And(Polygon{ f.points }, SceneRect).front();
 		});
@@ -188,11 +188,11 @@
 	```
 
 
-## 4. ボロノイ図・ドロネー図の動的な生成
+## 4. Dynamic Generation of Voronoi and Delaunay Diagrams
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/shapes/4.gif)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -207,32 +207,32 @@
 
 		Subdivision2D subdiv{ AreaRect };
 
-		// ドロネー三角形分割の三角形リスト
+		// List of triangles from Delaunay triangulation
 		Array<Triangle> triangles;
 
-		// ボロノイ図の情報のリスト
+		// List of Voronoi facet information
 		Array<VoronoiFacet> facets;
 
-		// facets を長方形でクリップし Polygon に変換したリスト
+		// List of facets clipped to rectangle and converted to Polygons
 		Array<Polygon> facetPolygons;
 
 		while (System::Update())
 		{
 			const Vec2 pos = Cursor::PosF();
 
-			// 長方形上をクリックしたら
+			// When clicking on the rectangle
 			if (AreaRect.leftClicked())
 			{
-				// 点を追加
+				// Add point
 				subdiv.addPoint(pos);
 
-				// ドロネー三角形分割の計算
+				// Calculate Delaunay triangulation
 				subdiv.calculateTriangles(triangles);
 
-				// ボロノイ図を計算する
+				// Calculate Voronoi diagram
 				subdiv.calculateVoronoiFacets(facets);
 
-				// エリアの範囲内にクリッピングする
+				// Clip to area rectangle
 				facetPolygons = facets.map([AreaRect](const VoronoiFacet& f)
 				{
 					return Geometry2D::And(Polygon{ f.points }, AreaRect).front();
@@ -256,7 +256,7 @@
 				Circle{ facet.center, 6 }.drawFrame(5).draw(ColorF{ 0.25 });
 			}
 
-			// 現在のマウスカーソルから最短距離にある点を探す
+			// Find the nearest point to current mouse cursor
 			if (const auto nearestVertexID = subdiv.findNearest(pos))
 			{
 				const Vec2 nearestVertex = subdiv.getVertex(nearestVertexID.value());
@@ -268,11 +268,11 @@
 	```
 
 
-## 5. 図形の輪郭の一部を LineString として取得する
+## 5. Getting Part of Shape Outline as LineString
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/shapes/5.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -302,11 +302,11 @@
 	```
 
 
-## 6. GPU での頂点生成
+## 6. GPU Vertex Generation
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/shapes/6.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -334,8 +334,8 @@
 			{
 				const ScopedCustomShader2D shader{ vs };
 
-				// 頂点情報の無い三角形を 360 個描画する
-				// （頂点情報は頂点シェーダで設定する）
+				// Draw 360 triangles without vertex data
+				// (Vertex data is set in the vertex shader)
 				Graphics2D::DrawTriangles(360);
 			}
 		}
@@ -343,15 +343,15 @@
 	```
 
 
-## 7. 長方形詰込み
+## 7. Rectangle Packing
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/shapes/7.gif)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
-	// 画面上に散らばるランダムな長方形の配列を作成する関数
+	// Function to create an array of random rectangles scattered on screen
 	Array<Rect> GenerateRandomRects()
 	{
 		Array<Rect> rects(Random(4, 32));
@@ -384,7 +384,7 @@
 				rotations.resize(input.size());
 				rotations.fill(0.0);
 
-				// AllowFlip::Yes を指定すると、90° 回転による詰め込みを許可する
+				// AllowFlip::Yes allows 90° rotation for packing
 				output = RectanglePacking::Pack(input, 1024, AllowFlip::Yes);
 
 				for (size_t i = 0; i < input.size(); ++i)
@@ -395,7 +395,7 @@
 					}
 				}
 
-				// 画面中央に表示するよう位置を調整
+				// Adjust position to center on screen
 				offset = ((Scene::Size() - output.size) / 2);
 				for (auto& rect : output.rects)
 				{
@@ -405,7 +405,7 @@
 				stopwatch.restart();
 			}
 
-			// アニメーション
+			// Animation
 			const double k = Min(stopwatch.sF() * 10, 1.0);
 			const double t = Math::Saturate(stopwatch.sF() - 0.2);
 			const double e = EaseInOutExpo(t);
@@ -428,11 +428,11 @@
 	```
 
 
-## 8. 六角形タイル
+## 8. Hexagonal Tiles
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/shapes/8.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -446,7 +446,7 @@
 			return{ (index.x * tileWidth + IsOdd(index.y) * halfWidth), (index.y * tileHeight) };
 		}
 
-		// 参考
+		// Reference
 		// https://stackoverflow.com/questions/7705228/hexagonal-grids-how-do-you-find-which-hexagon-a-point-is-in
 		inline Point PixelToIndex(const Vec2& _pos, const double hexR)
 		{
@@ -509,11 +509,11 @@
 	```
 
 
-## 9. 2D マップの可視領域
+## 9. 2D Map Visibility Area
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/shapes/9.gif)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -715,11 +715,11 @@
 	```
 
 
-## 10. ほどよい距離で重ならない点群を生成する
+## 10. Generate Non-Overlapping Points at Reasonable Distances
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/shapes/10.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -731,7 +731,7 @@
 
 		double r = 15.0;
 
-		// 点群を生成する
+		// Generate point set
 		PoissonDisk2D pd{ AreaRect.size, r };
 
 		while (System::Update())
@@ -747,7 +747,7 @@
 
 			if (SimpleGUI::Slider(r, 5.0, 40.0, Vec2{ 40, 40 }))
 			{
-				// 点群を再生成する
+				// Regenerate point set
 				pd = PoissonDisk2D{ AreaRect.size, r };
 			}
 		}
@@ -758,21 +758,21 @@
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/shapes/11.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
 	void Main()
 	{
-		// 作成した Polygon の配列
+		// Array of created Polygons
 		Array<Polygon> polygons;
 
-		// 書き途中の LineString
+		// LineString being drawn
 		LineString points;
 
 		while (System::Update())
 		{
-			// 左クリックもしくはクリックしたままの移動が発生したら
+			// If left click occurs or continues with movement
 			if (MouseL.down() ||
 				(MouseL.pressed() && (not Cursor::DeltaF().isZero())))
 			{
@@ -790,7 +790,7 @@
 				points.clear();
 			}
 
-			// それぞれの Polygon を描画する
+			// Draw each Polygon
 			for (auto&& [i, polygon] : Indexed(polygons))
 			{
 				polygon.draw(HSV{ (i * 20), 0.4, 1.0 })

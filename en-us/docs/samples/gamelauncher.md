@@ -1,6 +1,5 @@
-# ゲームランチャーを作る
+# Creating a Game Launcher
 
 !!! info
-    準備中です。以前の記事を下記から読むことができます。  
-    [Siv3D リファレンス | ゲームランチャー :material-open-in-new:](https://zenn.dev/reputeless/books/siv3d-documentation/viewer/course-game-launcher){:target="_blank"}
-
+    Under construction. You can read the previous article from the link below.  
+    [Siv3D Reference | Game Launcher :material-open-in-new:](https://zenn.dev/reputeless/books/siv3d-documentation/viewer/course-game-launcher){:target="_blank"}

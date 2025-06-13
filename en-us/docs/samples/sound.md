@@ -1,35 +1,35 @@
-# 音のサンプル
+# Sound Samples
 
-## 1. ピアノ
+## 1. Piano
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/sound/1.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
 	void Main()
 	{
-		// 白鍵の大きさ
+		// White key size
 		constexpr Size KeySize{ 55, 400 };
 
-		// ウインドウをリサイズする
+		// Resize window
 		Window::Resize((12 * KeySize.x), KeySize.y);
 
-		// 楽器の種類
+		// Instrument type
 		constexpr GMInstrument Instrument = GMInstrument::Piano1;
 
-		// 鍵盤の数
+		// Number of keys
 		constexpr int32 NumKeys = 20;
 
-		// 音を作成
+		// Create sounds
 		std::array<Audio, NumKeys> sounds;
 		for (int32 i = 0; i < NumKeys; ++i)
 		{
 			sounds[i] = Audio{ Instrument, static_cast<uint8>(PianoKey::A3 + i), 0.5s };
 		}
 
-		// 対応するキー
+		// Corresponding keys
 		constexpr std::array<Input, NumKeys> Keys =
 		{
 			KeyTab, Key1, KeyQ,
@@ -37,7 +37,7 @@
 			KeyO, Key0, KeyP, KeyMinus, KeyEnter,
 		};
 
-		// 描画位置計算用のオフセット値（白鍵は偶数、黒鍵は奇数）
+		// Offset values for calculating drawing positions (white keys are even, black keys are odd)
 		constexpr std::array<int32, NumKeys> KeyPositions =
 		{
 			0, 1, 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15, 16, 18, 19, 20, 21, 22
@@ -45,7 +45,7 @@
 
 		while (System::Update())
 		{
-			// キーが押されたら対応する音を再生
+			// Play corresponding sound when key is pressed
 			for (int32 i = 0; i < NumKeys; ++i)
 			{
 				if (Keys[i].down())
@@ -54,10 +54,10 @@
 				}
 			}
 
-			// 白鍵を描画する
+			// Draw white keys
 			for (int32 i = 0; i < NumKeys; ++i)
 			{
-				// オフセット値が偶数であるものが白鍵
+				// Those with even offset values are white keys
 				if (IsEven(KeyPositions[i]))
 				{
 					RectF{ (KeyPositions[i] / 2 * KeySize.x), 0, KeySize.x, KeySize.y }
@@ -65,10 +65,10 @@
 				}
 			}
 
-			// 黒鍵を描画する
+			// Draw black keys
 			for (int32 i = 0; i < NumKeys; ++i)
 			{
-				// オフセット値が奇数であるものが黒鍵
+				// Those with odd offset values are black keys
 				if (IsOdd(KeyPositions[i]))
 				{
 					RectF{ (KeySize.x * 0.68 + KeyPositions[i] / 2 * KeySize.x), 0, (KeySize.x * 0.58), (KeySize.y * 0.62) }
@@ -80,11 +80,11 @@
 	```
 
 
-## 2. 音楽プレイヤー
+## 2. Music Player
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/sound/2.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -95,42 +95,42 @@
 
 	void Main()
 	{
-		// 音楽
+		// Music
 		Audio audio;
 
-		// 音量
+		// Volume
 		double volume = 1.0;
 
-		// FFT の結果
+		// FFT result
 		FFTResult fft;
 
-		// 再生位置の変更の有無
+		// Whether playback position has changed
 		bool seeking = false;
 
 		while (System::Update())
 		{
 			ClearPrint();
 
-			// 再生・演奏時間
+			// Playback and total time
 			const String time = FormatTime(SecondsF{ audio.posSec() }, U"M:ss")
 				+ U" / " + FormatTime(SecondsF{ audio.lengthSec() }, U"M:ss");
 
-			// プログレスバーの進み具合
+			// Progress bar progress
 			double progress = static_cast<double>(audio.posSample()) / audio.samples();
 
 			if (audio.isPlaying())
 			{
-				// FFT 解析
+				// FFT analysis
 				FFT::Analyze(fft, audio);
 
-				// 結果を可視化
+				// Visualize results
 				for (int32 i = 0; i < Min(Scene::Width(), static_cast<int32>(fft.buffer.size())); ++i)
 				{
 					const double size = Pow(fft.buffer[i], 0.6f) * 1000;
 					RectF{ Arg::bottomLeft(i, 480), 1, size }.draw(HSV{ 240.0 - i });
 				}
 
-				// 周波数表示
+				// Frequency display
 				if (InRange(Cursor::Pos().x, 0, 800))
 				{
 					Rect{ Cursor::Pos().x, 0, 1, 480 }.draw();
@@ -140,7 +140,7 @@
 
 			Rect{ 0, 480, Scene::Width(), 120 }.draw(ColorF{ 0.5 });
 
-			// フォルダから音楽ファイルを開く
+			// Open music file from folder
 			if (SimpleGUI::Button(U"Open", Vec2{ 40, 500 }, 100))
 			{
 				audio.stop(0.5s);
@@ -149,51 +149,51 @@
 				audio.play();
 			}
 
-			// 再生
+			// Play
 			if (SimpleGUI::Button(U"\U000F040A", Vec2{ 150, 500 }, 60, (audio && (not audio.isPlaying()))))
 			{
 				audio.setVolume(ConvertVolume(volume));
 				audio.play(0.2s);
 			}
 
-			// 一時停止
+			// Pause
 			if (SimpleGUI::Button(U"\U000F03E4", Vec2{ 220, 500 }, 60, audio.isPlaying()))
 			{
 				audio.pause(0.2s);
 			}
 
-			// 音量
+			// Volume
 			if (SimpleGUI::Slider(((volume == 0.0) ? U"\U000F075F" : (volume < 0.5) ? U"\U000F0580" : U"\U000F057E"),
 				volume, Vec2{ 40, 540 }, 30, 120, (not audio.isEmpty())))
 			{
 				audio.setVolume(ConvertVolume(volume));
 			}
 
-			// スライダー
+			// Slider
 			if (SimpleGUI::Slider(time, progress, Vec2{ 200, 540 }, 130, 420, (not audio.isEmpty())))
 			{
 				audio.pause(0.05s);
 
-				while (audio.isPlaying()) // 再生が止まるまで待機
+				while (audio.isPlaying()) // Wait until playback stops
 				{
 					System::Sleep(0.01s);
 				}
 
-				// 再生位置を変更
+				// Change playback position
 				audio.seekSamples(static_cast<size_t>(audio.samples() * progress));
 
-				// ノイズを避けるため、スライダーから手を離すまで再生は再開しない
+				// To avoid noise, don't resume playback until the slider is released
 				seeking = true;
 			}
 			else if (seeking && MouseL.up())
 			{
-				// 再生を再開
+				// Resume playback
 				audio.play(0.05s);
 				seeking = false;
 			}
 		}
 
-		// 終了時に再生中の場合、音量をフェードアウト
+		// If playing when exiting, fade out volume
 		if (audio.isPlaying())
 		{
 			audio.fadeVolume(0.0, 0.3s);
@@ -203,22 +203,22 @@
 	```
 
 
-## 3. マイクで入力した音の周波数解析
+## 3. Frequency Analysis of Microphone Input
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/sound/3.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
 	void Main()
 	{
-		// マイクをセットアップ（ただちに録音をスタート）
+		// Set up microphone (start recording immediately)
 		Microphone mic{ StartImmediately::Yes };
 
 		if (not mic)
 		{
-			// マイクを利用できない場合、終了
+			// Exit if microphone is not available
 			throw Error{ U"Microphone not available" };
 		}
 
@@ -226,7 +226,7 @@
 
 		while (System::Update())
 		{
-			// FFT の結果を取得
+			// Get FFT results
 			mic.fft(fft);
 
 			ClearPrint();
@@ -236,14 +236,14 @@
 				Print << U"{:.1f} Hz"_fmt(Cursor::Pos().x * fft.resolution);
 			}
 
-			// 結果を可視化
+			// Visualize results
 			for (int32 i = 0; i < 800; ++i)
 			{
 				const double size = (Pow(fft.buffer[i], 0.6f) * 1200);
 				RectF{ Arg::bottomLeft(i, 600), 1, size }.draw(HSV{ 240 - i });
 			}
 
-			// 周波数表示
+			// Frequency display
 			Rect{ Cursor::Pos().x, 0, 1, Scene::Height() }.draw();
 
 			ClearPrint();
@@ -253,11 +253,11 @@
 	```
 
 
-## 4. ZIP ファイルに含まれる音声ファイルを再生する
-事前に `music/test.mp3` を `music.zip` に圧縮しておきます。
+## 4. Playing Audio Files from ZIP
+Prepare by compressing `music/test.mp3` into `music.zip` beforehand.
 
-??? memo "コード"
-	=== "非ストリーミング再生"
+??? memo "Code"
+	=== "Non-streaming playback"
 		```cpp
 		# include <Siv3D.hpp>
 
@@ -278,8 +278,8 @@
 		}
 		```
 
-	=== "ストリーミング再生"
-		ファイルを一時ファイルに展開してからストリーミング再生します。
+	=== "Streaming playback"
+		Extract the file to a temporary file and then stream playback.
 		```cpp
 		# include <Siv3D.hpp>
 
@@ -293,24 +293,24 @@
 
 			if (const Blob blob = zip.extractToBlob(U"music/test.mp3"))
 			{
-				Print << U"ZIP データ展開完了";
+				Print << U"ZIP data extraction complete";
 
 				temporaryFilePath = FileSystem::UniqueFilePath();
 
-				Print << temporaryFilePath << U" に保存";
+				Print << temporaryFilePath << U" saved to";
 
 				if (blob.save(temporaryFilePath))
 				{
-					Print << U"保存に成功";
+					Print << U"Save successful";
 				}
 				else
 				{
-					Print << U"保存に失敗";
+					Print << U"Save failed";
 				}
 			}
 			else
 			{
-				Print << U"データ展開に失敗";
+				Print << U"Data extraction failed";
 			}
 
 			Audio audio{ Audio::Stream, temporaryFilePath };
@@ -324,20 +324,20 @@
 
 			}
 
-			// Audio をリリース
+			// Release Audio
 			audio.release();
 
-			// どの Audio からも参照されていなければファイル削除可能
+			// Delete file if no Audio references it
 			FileSystem::Remove(temporaryFilePath);
 		}
 		```
 
 
-## 5. 楽譜記述言語の自作
+## 5. Creating a Custom Musical Notation Language
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/sound/5.png)
 
-??? memo "コード"
+??? memo "Code"
 	```txt title="score.txt"
 	ドレミドレミ
 	```
@@ -347,22 +347,22 @@
 
 	String LoadScore(const FilePath& path)
 	{
-		// テキストファイル読み込み
+		// Load text file
 		TextReader reader{ path };
 
 		if (not reader)
 		{
-			throw Error{ U"score.txt が見つかりません" };
+			throw Error{ U"score.txt not found" };
 		}
 
 		String result;
 
 		String line;
 
-		// 一行ずつ読み込む
+		// Read line by line
 		while (reader.readLine(line))
 		{
-			// score の末尾に追加
+			// Add to end of score
 			result += line;
 		}
 
@@ -371,41 +371,41 @@
 
 	void Main()
 	{
-		// 楽譜を格納する変数
+		// Variable to store the score
 		const String score = LoadScore(U"score.txt");
 
-		Print << U"読み込んだ楽譜: " << score;
+		Print << U"Loaded score: " << score;
 
-		// ド、レ、ミの音を用意
+		// Prepare Do, Re, Mi sounds
 		const Audio soundDo{ s3d::GMInstrument::Piano1, PianoKey::C4, 0.5s };
 		const Audio soundRe{ s3d::GMInstrument::Piano1, PianoKey::D4, 0.5s };
 		const Audio soundMi{ s3d::GMInstrument::Piano1, PianoKey::E4, 0.5s };
-		// 参考
-		// ド: C4, レ: D4, ミ: E4, ファ: F4, ソ: G4, ラ: A4, シ: B4, ド: C5, ...
-		// ド#: CS4, レ#: DS4, ...
+		// Reference
+		// Do: C4, Re: D4, Mi: E4, Fa: F4, So: G4, La: A4, Ti: B4, Do: C5, ...
+		// Do#: CS4, Re#: DS4, ...
 
-		// 再生位置
+		// Playback position
 		int32 pos = -1;
 
-		// 音量
+		// Volume
 		double volume = 0.5;
 
-		// 即座に開始するストップウォッチ
+		// Stopwatch that starts immediately
 		Stopwatch stopwatch{ StartImmediately::Yes };
 
 		while (System::Update())
 		{
-			// ストップウォッチの経過時間（ミリ秒）/ 1000 を newPos とする
+			// Set newPos to elapsed time (milliseconds) / 1000
 			const int32 newPos = (stopwatch.ms() / 1000);
 
 			if (pos != newPos)
 			{
 				pos = newPos;
 
-				// 範囲内であれば
+				// If within range
 				if (pos < score.size())
 				{
-					// pos 番目の文字
+					// Character at position pos
 					const char32 ch = score[pos];
 
 					Print << U"{}: {}"_fmt(pos, ch);
@@ -428,11 +428,11 @@
 	}
 	```
 
-## 6. 音の高さを変えずに再生速度を変更する
+## 6. Changing Playback Speed Without Changing Pitch
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/sound/6.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -456,25 +456,24 @@
 		{
 			if (SimpleGUI::Slider(U"Speed: {:.2f}"_fmt(speed), speed, 0.25, 4.0, Vec2{ 40, 40 }, 180, 240))
 			{
-				// 再生速度の変更
+				// Change playback speed
 				audio.setSpeed(speed);
 
-				// ピッチシフトの計算
+				// Calculate pitch shift
 				pitchShift = -(Math::Log2(speed) * 12);
 
-				// ピッチシフトの適用
+				// Apply pitch shift
 				GlobalAudio::BusSetPitchShiftFilter(MixBus0, 0, pitchShift);
 			}
 
-			// ピッチシフトに連動して動くスライダー
+			// Slider that moves in conjunction with pitch shift
 			if (SimpleGUI::Slider(U"PitchShift: {:.2f}"_fmt(pitchShift), pitchShift, -24, 24, Vec2{ 40, 80 }, 180, 240, false)) {}
 		}
 	}
 	```
 
-## 7. BGM クロスフェード
+## 7. BGM Crossfade
 
 ![](https://raw.githubusercontent.com/Siv3D/Siv3D-Samples/main/Samples/AudioCrossfade/Screenshot/2.png)
 
-[Siv3D-Sample | BGM クロスフェード :material-open-in-new:](https://github.com/Siv3D/Siv3D-Samples/blob/main/Samples/AudioCrossfade){:target="_blank" .md-button}
-
+[Siv3D-Sample | BGM Crossfade :material-open-in-new:](https://github.com/Siv3D/Siv3D-Samples/blob/main/Samples/AudioCrossfade){:target="_blank" .md-button}

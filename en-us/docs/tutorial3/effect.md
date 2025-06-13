@@ -1,15 +1,21 @@
-# 40. エフェクト
-ちょっとしたアニメーションやエフェクトの演出に便利な `Effect` クラスの使い方を学びます。
+# 51. Effects
+Learn how to use the `Effect` and `IEffect` classes, which are convenient for creating small motions and effects.
 
+## 51.1 Effect Basics
+- Effects allow you to efficiently create time-based short motion expressions
+- To implement an effect, first create a class that inherits from the `IEffect` class and override the member function `bool update(double t)`
+	- `t` is the elapsed time (in seconds) since the effect occurred
+	- Draw according to the elapsed time and return a `bool` value indicating whether the effect continues to exist
+	- For example, `return (t < 3.0);` will make the effect continue for 3 seconds before ending
+		- To control runtime load, effects that continue for more than 10 seconds are automatically terminated
+- The `Effect` class manages multiple `IEffect` derived classes and updates them all at once
+	- Add effects with `.add<DerivedClassName>(constructor arguments)`
+	- Execute `.update()` on active effects with `IEffect::update()`
+	- `.num_effects()` returns the number of active effects
+- The following sample code generates an expanding ring at the clicked location
+	- This effect continues for 1 second due to `return (t < 1.0);`
 
-## 40.1 Effect の基本
-エフェクト機能を使うには、エフェクトを管理する `Effect` オブジェクトを作成し、`Effect::add<EffectType>()` で個々のエフェクトのパラメータを追加してエフェクトを発生させます。ここでいう `EffectType` は、`IEffect` を継承したクラスです。このクラスに必要な実装は `bool update(double t) override` メンバ関数です。
-
-この関数は、エフェクトが発生してからの経過時間 `t` を受け取り、それに応じたエフェクトの描画を行います。そして、戻り値として、エフェクトを次のフレームも継続させるかを `bool` 値で返します。例えば `return (t < 3.0);` とすれば、エフェクトは 3 秒間継続してから終了します。
-
-`Effect` は、時間ベースのアニメーションを簡単に作れるため、ゲームの演出に重宝します。次のプログラムは、クリックした場所に、時間とともに大きくなる輪を発生させるエフェクトを実装したものです。このエフェクトは 1 秒間継続します。
-
-<video src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/effect/1.mp4?raw=true" autoplay loop muted playsinline></video>
+<video src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/effect/1.mp4?raw=true" autoplay loop muted playsinline></video>
 
 ```cpp
 # include <Siv3D.hpp>
@@ -20,17 +26,17 @@ struct RingEffect : IEffect
 
 	ColorF m_color;
 
-	// このコンストラクタ引数が、Effect::add<RingEffect>() の引数になる
+	// This constructor's arguments become the arguments for .add<RingEffect>()
 	explicit RingEffect(const Vec2& pos)
 		: m_pos{ pos }
 		, m_color{ RandomColorF() } {}
 
 	bool update(double t) override
 	{
-		// 時間に応じて大きくなる輪を描く
+		// Draw a ring that grows with time
 		Circle{ m_pos, (t * 100) }.drawFrame(4, m_color);
 
-		// 1 秒未満なら継続する
+		// Continue if less than 1 second
 		return (t < 1.0);
 	}
 };
@@ -43,25 +49,29 @@ void Main()
 	{
 		ClearPrint();
 
-		// アクティブなエフェクトの数
+		// Number of active effects
 		Print << U"Active effects: {}"_fmt(effect.num_effects());
 
 		if (MouseL.down())
 		{
-			// エフェクトを追加する
+			// Add an effect
 			effect.add<RingEffect>(Cursor::Pos());
 		}
 
-		// アクティブなエフェクトのプログラム IEffect::update() を実行する
+		// Execute IEffect::update() on all managed effects
 		effect.update();
 	}
 }
 ```
 
-## 40.2 ラムダ式でエフェクトを実装する
-`IEffect` の派生クラスの代わりに、引数が `double`, 戻り値が `bool` 型のラムダ式でエフェクトを記述することもできます。数行で書ける単純なエフェクトで、わざわざクラスを定義するのが面倒な場合はこの方法が便利です。
 
-40.1 と同じエフェクトのプログラムをラムダ式で書くと、次のようになります。
+## 51.2 Effect Implementation with Lambda Expressions
+- Instead of creating a derived class of `IEffect`, you can also describe effects using lambda expressions
+- This is particularly convenient for simple effects that can be written in a few lines
+- The argument is of type `double`, representing elapsed time (in seconds)
+- The return value is of type `bool`, indicating whether the effect continues
+	- `return (t < 1.0);` will make the effect continue for 1 second
+- The same effect as **51.1** written with a lambda expression:
 
 ```cpp
 # include <Siv3D.hpp>
@@ -74,32 +84,33 @@ void Main()
 	{
 		ClearPrint();
 
-		// アクティブなエフェクトの数
+		// Number of active effects
 		Print << U"Active effects: {}"_fmt(effect.num_effects());
 
 		if (MouseL.down())
 		{
-			// エフェクトを追加する
+			// Add an effect
 			effect.add([pos = Cursor::Pos(), color = RandomColorF()](double t)
 			{
-				// 時間に応じて大きくなる輪
+				// Draw a ring that grows with time
 				Circle{ pos, (t * 100) }.drawFrame(4, color);
 
-				// 1 秒未満なら継続する
+				// Continue if less than 1 second
 				return (t < 1.0);
 			});
 		}
 
-		// アクティブなエフェクトのプログラム IEffect::update() を実行する
+		// Execute IEffect::update() on all managed effects
 		effect.update();
 	}
 }
 ```
 
-## 40.3 イージングをエフェクトで使う
-チュートリアル 18 章で学んだイージングを組み合わせると、より洗練された動きを作れます。
 
-<video src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/effect/3.mp4?raw=true" autoplay loop muted playsinline></video>
+## 51.3 Using Easing
+- Using easing (**Tutorial 30**) can change the impression of motion
+
+<video src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/effect/3.mp4?raw=true" autoplay loop muted playsinline></video>
 
 ```cpp
 # include <Siv3D.hpp>
@@ -116,7 +127,7 @@ struct RingEffect : IEffect
 
 	bool update(double t) override
 	{
-		// イージング
+		// Easing
 		const double e = EaseOutExpo(t);
 
 		Circle{ m_pos, (e * 100) }.drawFrame((20.0 * (1.0 - e)), m_color);
@@ -146,10 +157,18 @@ void Main()
 ```
 
 
-## 40.4 エフェクトの一時停止と速度変更、消去
-`Effect` の `.pause()` でエフェクトの更新を一時停止、`.resume()` 再開、`.setSpeed(double)` でスピードの変更、`.clear()` でアクティブなエフェクトをすべて消去できます。
+## 51.4 Pausing, Speed Control, and Clearing Effects
+- `Effect` can control the managed effects using the following member functions:
+- Speed changes are implemented by increasing or decreasing the rate of increase of `t` passed to each `.update()`
 
-<video src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/effect/4.mp4?raw=true" autoplay loop muted playsinline></video>
+| Code | Description |
+|---|---|
+| `.pause()` | Pause effect updates |
+| `.resume()` | Resume effect updates |
+| `.setSpeed(double)` | Change effect speed |
+| `.clear()` | Clear all active effects |
+
+<video src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/effect/4.mp4?raw=true" autoplay loop muted playsinline></video>
 
 ```cpp
 # include <Siv3D.hpp>
@@ -159,11 +178,12 @@ struct RingEffect : IEffect
 	Vec2 m_pos;
 
 	explicit RingEffect(const Vec2& pos)
-		: m_pos{ pos } {}
+		: m_pos{ pos } {
+	}
 
 	bool update(double t) override
 	{
-		Circle{ m_pos, (t * 100) }.drawFrame(4);
+		Circle{ m_pos, (t * 120) }.drawFrame(4 * (1.0 - t));
 
 		return (t < 1.0);
 	}
@@ -173,11 +193,17 @@ void Main()
 {
 	Effect effect;
 
-	// 出現間隔（秒）
+	// Spawn interval (seconds)
 	constexpr double SpawnInterval = 0.15;
 
-	// 蓄積された時間（秒）
+	// Accumulated time (seconds)
 	double accumulatedTime = 0.0;
+
+	// Ball position
+	Vec2 pos{ 200, 300 };
+
+	// Ball velocity
+	Vec2 velocity{ 320, 360 };
 
 	while (System::Update())
 	{
@@ -187,16 +213,31 @@ void Main()
 
 		if (not effect.isPaused())
 		{
-			accumulatedTime += (Scene::DeltaTime() * effect.getSpeed());
+			const double deltaTime = (Scene::DeltaTime() * effect.getSpeed());
+			accumulatedTime += deltaTime;
+			pos += (deltaTime * velocity);
+
+			// Reflect when ball hits wall
+			if (((0 < velocity.x) && (800 < pos.x))
+				|| ((velocity.x < 0) && (pos.x < 0)))
+			{
+				velocity.x = -velocity.x;
+			}
+			else if (((0 < velocity.y) && (600 < pos.y))
+				|| ((velocity.y < 0) && (pos.y < 0)))
+			{
+				velocity.y = -velocity.y;
+			}
 		}
 
-		// 蓄積時間が出現間隔を超えたら
+		// When accumulated time exceeds spawn interval
 		if (SpawnInterval <= accumulatedTime)
 		{
 			accumulatedTime -= SpawnInterval;
-
-			effect.add<RingEffect>(Cursor::Pos());
+			effect.add<RingEffect>(pos);
 		}
+
+		pos.asCircle(10).draw();
 
 		effect.update();
 
@@ -204,7 +245,7 @@ void Main()
 		{
 			if (SimpleGUI::Button(U"Resume", Vec2{ 600, 20 }, 100))
 			{
-				// エフェクトの更新を再開する
+				// Resume effect updates
 				effect.resume();
 			}
 		}
@@ -212,45 +253,47 @@ void Main()
 		{
 			if (SimpleGUI::Button(U"Pause", Vec2{ 600, 20 }, 100))
 			{
-				// エフェクトの更新を一時停止する
+				// Pause effect updates
 				effect.pause();
 			}
 		}
 
 		if (SimpleGUI::Button(U"x2.0", Vec2{ 600, 60 }, 100))
 		{
-			// 2.0 倍速にする
+			// Set to 2.0x speed
 			effect.setSpeed(2.0);
 		}
 
 		if (SimpleGUI::Button(U"x1.0", Vec2{ 600, 100 }, 100))
 		{
-			// 1.0 倍速にする
+			// Set to 1.0x speed
 			effect.setSpeed(1.0);
 		}
 
 		if (SimpleGUI::Button(U"x0.5", Vec2{ 600, 140 }, 100))
 		{
-			// 0.5 倍速にする
+			// Set to 0.5x speed
 			effect.setSpeed(0.5);
 		}
 
 		if (SimpleGUI::Button(U"Clear", Vec2{ 600, 180 }, 100))
 		{
-			// 発生中のエフェクトをすべて消去する
+			// Clear all active effects
 			effect.clear();
 		}
 	}
 }
 ```
 
-この章では扱いませんが、より大量のパーティクルを効率的に制御したい場合は、`ParticleSystem2D` を使うと便利です。
+- While not covered in this chapter, `ParticleSystem2D` is useful for efficiently controlling large amounts of particles
 
 
-## 40.5 （サンプル）上昇する文字
-フォントを使ったエフェクトの例です。
+## 51.5 (Sample) Rising Text
+- An example of effects using fonts
+- Random numbers rise from the clicked position
+- The color of the numbers changes according to the score
 
-<video src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/effect/5.mp4?raw=true" autoplay loop muted playsinline></video>
+<video src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/effect/5.mp4?raw=true" autoplay loop muted playsinline></video>
 
 ```cpp
 # include <Siv3D.hpp>
@@ -270,9 +313,10 @@ struct ScoreEffect : IEffect
 
 	bool update(double t) override
 	{
-		const HSV color{ (180 - m_score * 1.8), 1.0 - (t * 2.0) };
+		const HSV color{ (180 - m_score * 1.8), (1.0 - (t * 2.0)) };
 
-		m_font(m_score).drawAt(m_start.movedBy(0, t * -120), color);
+		m_font(m_score).drawAt(TextStyle::Outline(0.2, ColorF{ 0.0, color.a }),
+			60, m_start.movedBy(0, t * -120), color);
 
 		return (t < 0.5);
 	}
@@ -280,7 +324,9 @@ struct ScoreEffect : IEffect
 
 void Main()
 {
-	const Font font{ FontMethod::MSDF, 48, Typeface::Heavy };
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	const Font font{ FontMethod::MSDF, 48, Typeface::Heavy, FontStyle::Italic };
 
 	Effect effect;
 
@@ -296,10 +342,12 @@ void Main()
 }
 ```
 
-## 40.6 （サンプル）飛び散る破片
-一つのエフェクトで複数の図形を描く例です。
+## 51.6 (Sample) Scattering Fragments
+- An example of drawing multiple shapes with one effect
+- Draws triangles scattering in random directions from the clicked position
+- The triangle colors change according to the Y coordinate
 
-<video src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/effect/6.mp4?raw=true" autoplay loop muted playsinline></video>
+<video src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/effect/6.mp4?raw=true" autoplay loop muted playsinline></video>
 
 ```cpp
 # include <Siv3D.hpp>
@@ -320,9 +368,8 @@ struct Spark : IEffect
 	{
 		for (auto& particle : m_particles)
 		{
-			particle.start = start + RandomVec2(10.0);
-
-			particle.velocity = RandomVec2(1.0) * Random(80.0);
+			particle.start = (start + RandomVec2(12.0));
+			particle.velocity = (RandomVec2(1.0) * Random(100.0));
 		}
 	}
 
@@ -330,10 +377,10 @@ struct Spark : IEffect
 	{
 		for (const auto& particle : m_particles)
 		{
-			const Vec2 pos = particle.start
-				+ particle.velocity * t + 0.5 * t * t * Vec2{ 0, 240 };
+			const Vec2 pos = (particle.start
+				+ particle.velocity * t + 0.5 * t * t * Vec2{ 0, 240 });
 
-			Triangle{ pos, 16.0, (pos.x * 5_deg) }.draw(HSV{ pos.y - 40, (1.0 - t) });
+			Triangle{ pos, (20.0 * (1.0 - t)), (pos.x * 10_deg) }.draw(HSV{ pos.y - 40 });
 		}
 
 		return (t < 1.0);
@@ -342,6 +389,8 @@ struct Spark : IEffect
 
 void Main()
 {
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
 	Effect effect;
 
 	while (System::Update())
@@ -357,10 +406,10 @@ void Main()
 ```
 
 
-## 40.7 （サンプル）飛び散る星
-複雑な制御を行うエフェクトの例です。
+## 51.7 (Sample) Scattering Stars
+- Creates star-shaped effects centered at the clicked position
 
-<video src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/effect/7.mp4?raw=true" autoplay loop muted playsinline></video>
+<video src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/effect/7.mp4?raw=true" autoplay loop muted playsinline></video>
 
 ```cpp
 # include <Siv3D.hpp>
@@ -384,7 +433,7 @@ struct StarEffect : IEffect
 		{
 			const Vec2 velocity = RandomVec2(Circle{ 60 });
 			Star star{
-				.start = (pos + velocity),
+				.start = (pos + velocity * 0.5),
 				.velocity = velocity,
 				.color = HSV{ baseHue + Random(-20.0, 20.0) },
 			};
@@ -398,13 +447,11 @@ struct StarEffect : IEffect
 
 		for (auto& star : m_stars)
 		{
-			const Vec2 pos = star.start
-				+ star.velocity * t + 0.5 * t * t * Gravity;
-
+			const Vec2 pos = (star.start
+				+ star.velocity * t + 0.5 * t * t * Gravity);
 			const double angle = (pos.x * 3_deg);
 
-			Shape2D::Star((30 * (1.0 - t)), pos, angle)
-				.draw(star.color);
+			Shape2D::Star((36 * (1.0 - t)), pos, angle).draw(star.color);
 		}
 
 		return (t < 1.0);
@@ -413,8 +460,10 @@ struct StarEffect : IEffect
 
 void Main()
 {
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
 	Effect effect;
-	Circle circle{ Scene::Center(), 30 };
+	Circle circle{ 400, 300, 30 };
 	double baseHue = 180.0;
 
 	while (System::Update())
@@ -426,7 +475,7 @@ void Main()
 
 		if (circle.leftClicked())
 		{
-			effect.add<StarEffect>(Cursor::PosF(), baseHue);
+			effect.add<StarEffect>(Cursor::Pos(), baseHue);
 			circle.center = RandomVec2(Scene::Rect().stretched(-80));
 			baseHue = Random(0.0, 360.0);
 		}
@@ -438,10 +487,11 @@ void Main()
 ```
 
 
-## 40.8 （サンプル）泡のようなエフェクト
-時間差で図形を登場させる、高度な制御を行うエフェクトの例です。
+## 51.8 (Sample) Bubble-like Effect
+- An example of an effect that controls the appearance of shapes with time delays
+- Render state settings are more efficient when applied to `Effect::update()` rather than within individual effect `.update()`
 
-<video src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/effect/8.mp4?raw=true" autoplay loop muted playsinline></video>
+<video src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/effect/8.mp4?raw=true" autoplay loop muted playsinline></video>
 
 ```cpp
 # include <Siv3D.hpp>
@@ -467,7 +517,7 @@ struct BubbleEffect : IEffect
 		{
 			Bubble bubble{
 				.offset = RandomVec2(Circle{30}),
-				.startTime = Random(-0.3, 0.1), // 登場の時間差
+				.startTime = Random(-0.3, 0.1), // Time delay for appearance
 				.scale = Random(0.1, 1.2),
 				.color = HSV{ baseHue + Random(-30.0, 30.0) }
 			};
@@ -499,13 +549,15 @@ struct BubbleEffect : IEffect
 
 void Main()
 {
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
 	Effect effect;
 
 	while (System::Update())
 	{
 		if (MouseL.down())
 		{
-			effect.add<BubbleEffect>(Cursor::PosF(), Random(0.0, 360.0));
+			effect.add<BubbleEffect>(Cursor::Pos(), Random(0.0, 360.0));
 		}
 
 		{
@@ -517,10 +569,10 @@ void Main()
 ```
 
 
-## 40.9 （サンプル）クリック時のエフェクト
-1 つのエフェクトでたくさんの描画を行う例です。
+## 51.9 (Sample) Click Effect
+- An example of performing many drawings with one effect
 
-<video src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/effect/9.mp4?raw=true" autoplay loop muted playsinline></video>
+<video src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/effect/9.mp4?raw=true" autoplay loop muted playsinline></video>
 
 ```cpp
 # include <Siv3D.hpp>
@@ -627,13 +679,15 @@ struct TouchEffect : IEffect
 
 void Main()
 {
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
 	Effect effect;
 
 	while (System::Update())
 	{
 		if (MouseL.down())
 		{
-			effect.add<TouchEffect>(Cursor::PosF());
+			effect.add<TouchEffect>(Cursor::Pos());
 		}
 
 		{
@@ -645,52 +699,53 @@ void Main()
 ```
 
 
-## 40.10 （サンプル）エフェクトの再帰
-エフェクトの中でエフェクトを発生させる例です。
+## 51.10 (Sample) Effect Recursion
+- An example of generating new effects within an effect
+- To prevent infinite growth, generations that can generate new effects are limited
 
-<video src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial3/effect/10.mp4?raw=true" autoplay loop muted playsinline></video>
+<video src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/effect/10.mp4?raw=true" autoplay loop muted playsinline></video>
 
 ```cpp
 # include <Siv3D.hpp>
 
-// 重力加速度
-constexpr Vec2 Gravity{ 0, 240 };
-
-// 火花の状態
+// Spark state
 struct Fire
 {
-	// 初速
+	// Initial velocity
 	Vec2 v0;
 
-	// 色相のオフセット
+	// Hue offset
 	double hueOffset;
 
-	// スケーリング
+	// Scaling
 	double scale;
 
-	// 破裂するまでの時間
+	// Time until explosion
 	double nextFireSec;
 
-	// 破裂して子エフェクトを作成したか
+	// Whether a child effect has been created after explosion
 	bool hasChild = false;
+
+	// Gravitational acceleration
+	static constexpr Vec2 Gravity{ 0, 240 };
 };
 
-// 火花エフェクト
+// Spark effect
 struct Firework : IEffect
 {
-	// 火花の個数
+	// Number of sparks
 	static constexpr int32 FireCount = 12;
 
-	// 循環参照を避けるため、IEffect の中で Effect を持つ場合、参照またはポインタにすること
+	// To avoid circular reference, use reference or pointer when holding Effect in IEffect
 	const Effect& m_parent;
 
-	// 花火の中心座標
+	// Firework center coordinates
 	Vec2 m_center;
 
-	// 火の状態
+	// Fire states
 	std::array<Fire, FireCount> m_fires;
 
-	// 何世代目？ [0, 1, 2]
+	// Generation number [0, 1, 2]
 	int32 m_n;
 
 	Firework(const Effect& parent, const Vec2& center, int32 n, const Vec2& v0)
@@ -713,20 +768,20 @@ struct Firework : IEffect
 	{
 		for (const auto& fire : m_fires)
 		{
-			const Vec2 pos = m_center + fire.v0 * t + 0.5 * t * t * Gravity;
+			const Vec2 pos = (m_center + fire.v0 * t + 0.5 * t * t * Fire::Gravity);
 			pos.asCircle((10 - (m_n * 3)) * ((1.5 - t) / 1.5) * fire.scale)
 				.draw(HSV{ 10 + m_n * 120.0 + fire.hueOffset, 0.6, 1.0 - m_n * 0.2 });
 		}
 
-		if (m_n < 2) // 0, 1 世代目なら
+		if (m_n < 2) // If generation 0 or 1
 		{
 			for (auto& fire : m_fires)
 			{
 				if (!fire.hasChild && (fire.nextFireSec <= t))
 				{
-					// 子エフェクトを作成
-					const Vec2 pos = m_center + fire.v0 * t + 0.5 * t * t * Gravity;
-					m_parent.add<Firework>(m_parent, pos, (m_n + 1), fire.v0 + (t * Gravity));
+					// Create child effect
+					const Vec2 pos = (m_center + fire.v0 * t + 0.5 * t * t * Fire::Gravity);
+					m_parent.add<Firework>(m_parent, pos, (m_n + 1), fire.v0 + (t * Fire::Gravity));
 					fire.hasChild = true;
 				}
 			}
@@ -736,26 +791,27 @@ struct Firework : IEffect
 	}
 };
 
-// 打ち上げエフェクト
+// Launch effect
 struct FirstFirework : IEffect
 {
-	// 循環参照を避けるため、IEffect の中で Effect を持つ場合、参照またはポインタにすること
+	// To avoid circular reference, use reference or pointer when holding Effect in IEffect
 	const Effect& m_parent;
 
-	// 打ち上げ位置
+	// Launch position
 	Vec2 m_start;
 
-	// 打ち上げ初速
+	// Launch initial velocity
 	Vec2 m_v0;
 
 	FirstFirework(const Effect& parent, const Vec2& start, const Vec2& v0)
 		: m_parent{ parent }
 		, m_start{ start }
-		, m_v0{ v0 } {}
+		, m_v0{ v0 } {
+	}
 
 	bool update(double t) override
 	{
-		const Vec2 pos = m_start + m_v0 * t + 0.5 * t * t * Gravity;
+		const Vec2 pos = (m_start + m_v0 * t + 0.5 * t * t * Fire::Gravity);
 		Circle{ pos, 6 }.draw();
 		Line{ m_start, pos }.draw(LineStyle::RoundCap, 8, ColorF{ 0.0 }, ColorF{ 1.0 - (t / 0.6) });
 
@@ -765,8 +821,8 @@ struct FirstFirework : IEffect
 		}
 		else
 		{
-			// 終了間際に子エフェクトを作成
-			const Vec2 velocity = m_v0 + t * Gravity;
+			// Create child effect when ending
+			const Vec2 velocity = (m_v0 + t * Fire::Gravity);
 			m_parent.add<Firework>(m_parent, pos, 0, velocity);
 			return false;
 		}
@@ -793,4 +849,3 @@ void Main()
 	}
 }
 ```
-

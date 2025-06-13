@@ -1,9 +1,9 @@
 # .gitignore
 
-## .gitignore の機能
-.gitignore ファイルは、Git に、特定のファイルやフォルダを無視するように指示するためのものです。ビルドの過程で生成されるファイルや、Git に追跡させたくないファイルを無視するために使います。Siv3D では、次のような .gitignore ファイルを使うことができます。
+## .gitignore Features
+The .gitignore file is used to instruct Git to ignore specific files and folders. It's used to ignore files generated during the build process or files you don't want Git to track. For Siv3D, you can use the following .gitignore file.
 
-[Siv3D 用の .gitignore を開く](https://github.com/Siv3D/gitignore/blob/main/.gitignore){:target="_blank" .md-button .md-button--primary }
+[Open Siv3D .gitignore](https://github.com/Siv3D/gitignore/blob/main/.gitignore){:target="_blank" .md-button .md-button--primary }
 
 ```gitignore
 # Ignore Visual Studio temporary files, build results, and
@@ -423,7 +423,7 @@ gmon.out
 #**/App/dll
 ```
 
-example, engine, dll ファイルもリポジトリ管理に含めないようにするためには、末尾の 3 行のコメントアウトを外してください。
+To exclude example, engine, and dll files from repository management as well, uncomment the last 3 lines:
 
 ```gitignore
 # Ignore resource files

@@ -1,35 +1,32 @@
-# 43. テキストファイル
-テキストファイルの内容を読み込んだり、テキストファイルに文字列を書き込んだりする方法を学びます。
+# 54. Text Files
+Learn how to read the contents of text files and write strings to text files.
 
-!!! info "設定ファイルは専用のクラスを使う"
-	JSON, INI, CSV, XML, TOML などの設定ファイルを扱いたい場合は、チュートリアル 44 章で学ぶ、設定ファイル専用のクラスを使うと便利です。
+!!! info "Use dedicated classes for configuration files"
+	- When handling configuration files like JSON, INI, CSV, XML, TOML, it's convenient to use the dedicated classes learned in **Tutorial 55**
 
-## 43.1 テキストファイルをオープンする
-`TextReader 変数名{ U"ファイルパス" };` で、テキストファイルを読み取り専用でオープンできます。ファイルパスは、実行ファイルがあるフォルダ（開発中は `App` フォルダ）を基準とする相対パスか、絶対パスを使用します。
-
-Siv3D で対応するテキストファイルのエンコーディングは次のとおりです。
-
-- UTF-8
-- UTF-8（BOM あり）
-- UTF-16LE
-- UTF-16BE
-
-ファイルをオープンできたかを調べるには、`if (reader.isOpen())` や `if (reader)`, `if (not reader)` を使います。
-
-オープンしたファイルはデストラクタでクローズされるため、明示的にクローズする必要はありません。
+## 54.1 Opening Text Files
+- You can open text files for read-only access with `TextReader variable_name{ U"file_path" };`
+- File paths use relative paths based on the folder containing the executable file (the `App` folder during development) or absolute paths
+- The text file encodings supported by Siv3D are:
+	- UTF-8
+	- UTF-8 (with BOM)
+	- UTF-16LE
+	- UTF-16BE
+- To check if a file was opened successfully, use `if (reader.isOpen())`, `if (reader)`, or `if (not reader)`
+- Opened files are closed by the destructor, so explicit closing is not necessary
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// ファイルをオープンする
+	// Open file
 	TextReader reader{ U"example/txt/en.txt" };
 
-	// ファイルをオープンできなかったら
+	// If file couldn't be opened
 	if (not reader)
 	{
-		// 例外を投げて終了する
+		// Throw exception and exit
 		throw Error{ U"Failed to open `en.txt`" };
 	}
 
@@ -38,15 +35,24 @@ void Main()
 
 	}
 
-	// reader のデストラクタで自動的にファイルがクローズされる
+	// File is automatically closed by reader's destructor
 }
 ```
 
 
-## 43.2 テキストファイルから 1 行ずつ読み込む
-テキストファイルのオープン直後は、読み込み位置がファイルの先頭にセットされています。`.readLine()` に `String` 型の変数を参照で渡すと、読み込み位置から次の改行またはファイル終端までを読み込んだ内容をその変数に格納し、読み込み位置をその直後まで進めて `true` を返します。読み込んだ文字列には改行文字は含まれません。読み込み位置がすでにファイルの終端にあって、これ以上読み込めないときには、空の文字列を格納し `false` を返します。
+## 54.2 Reading Line by Line
+- Immediately after opening a text file, the read position is set to the beginning of the file
+- Passing a `String` type variable by reference to `.readLine()` reads from the read position to the next newline or end of file (whichever comes first), stores the content in that variable, advances the read position to just after that, and returns `true`
+- The read string does not include newline characters
+- When the read position is already at the end of the file and cannot read further, it stores an empty string and returns `false`
 
-例えば次のようなテキストファイルを読み込む場合、1 回目の `.readLine()` では `abc`, 2 回目の `.readLine()` では `defg`, 3 回目の `.readLine()` では空の文字列、4 回目の `.readLine()` では `hijklmn` が読み込まれます。それ以降の `.readLine()` は空の文字列となり `false` を返します。
+### Example
+- Consider reading the following text file:
+	- 1st `.readLine()` reads `abc`
+	- 2nd `.readLine()` reads `defg`
+	- 3rd `.readLine()` reads an empty string
+	- 4th `.readLine()` reads `hijklmn`
+	- Subsequent `.readLine()` calls result in empty strings and return `false`
 
 ```txt
 abc
@@ -55,38 +61,38 @@ defg
 hijklmn
 ```
 
-| `.readLine()` の呼び出し | `.readLine()` の戻り値 | `String` 型の変数の内容 |
+| `.readLine()` call | `.readLine()` return value | `String` variable content |
 | --- | --- | --- |
-| 1 回目 | `true` | `abc` |
-| 2 回目 | `true` | `defg` |
-| 3 回目 | `true` | 空の文字列 |
-| 4 回目 | `true` | `hijklmn` |
-| 5 回目以降 | `false` | 空の文字列 |
+| 1st | `true` | `abc` |
+| 2nd | `true` | `defg` |
+| 3rd | `true` | empty string |
+| 4th | `true` | `hijklmn` |
+| 5th and later | `false` | empty string |
 
-`.readLine()` は、次のサンプルコードのように `while` ループと組み合わせると便利です。
+- `.readLine()` is convenient when combined with a `while` loop as in the following sample code
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// ファイルをオープンする
+	// Open file
 	TextReader reader{ U"example/txt/en.txt" };
 
-	// ファイルをオープンできなかったら
+	// If file couldn't be opened
 	if (not reader)
 	{
-		// 例外を投げて終了する
+		// Throw exception and exit
 		throw Error{ U"Failed to open `en.txt`" };
 	}
 
-	// 行の内容を読み込む変数
+	// Variable to read line content
 	String line;
 
-	// 行数のカウント
+	// Line count
 	size_t count = 0;
 
-	// 終端に達するまで 1 行ずつ読み込む
+	// Read line by line until end
 	while (reader.readLine(line))
 	{
 		Print << ++count;
@@ -101,25 +107,26 @@ void Main()
 ```
 
 
-## 43.3 テキストファイルの内容を一度に全部読み込む
-テキストファイルの内容全部を、一度に全部 `String` として取得するには `.readAll()` を使います。ただし、非常に大きいサイズ（数 MB 以上）のファイルを `.readAll()` で読み込むと、関数が制御を返すまでの時間が長くなることがあるため、あらかじめサイズが小さいとわかっているファイルに対して使うことが望ましいです。
+## 54.3 Reading All Content
+- To get all content of a text file as a `String`, use `.readAll()`
+- However, using `.readAll()` on very large files (several MB or more) can take a long time for the function to return control, so it's recommended to use it on files known to be small in advance
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// ファイルをオープンする
+	// Open file
 	TextReader reader{ U"example/txt/en.txt" };
 
-	// ファイルをオープンできなかったら
+	// If file couldn't be opened
 	if (not reader)
 	{
-		// 例外を投げて終了する
+		// Throw exception and exit
 		throw Error{ U"Failed to open `en.txt`" };
 	}
 
-	// テキストファイルの内容をすべて読み込む
+	// Read all text file content
 	const String text = reader.readAll();
 
 	Print << text;
@@ -132,8 +139,9 @@ void Main()
 ```
 
 
-## 43.4 ファイルをオープン・クローズするタイミングを制御する
-コンストラクタでファイルをオープンする代わりに、`.open()` でファイルをオープンできます。オープンに成功した場合は `true`, 失敗した場合は `false` を返します。
+## 54.4 Controlling Open/Close Timing
+- Instead of opening files in the constructor, you can open files with `.open()`
+- Returns `true` on success, `false` on failure
 
 ```cpp
 # include <Siv3D.hpp>
@@ -142,7 +150,7 @@ void Main()
 {
 	TextReader reader;
 
-	// en.txt をオープンする
+	// Open en.txt
 	if (not reader.open(U"example/txt/en.txt"))
 	{
 		throw Error{ U"Failed to open `en.txt`" };
@@ -153,21 +161,21 @@ void Main()
 
 	}
 
-	// reader のデストラクタで自動的にファイルがクローズされる
+	// File is automatically closed by reader's destructor
 }
 ```
 
-ファイルが既にオープンされている場合、`.open()` は現在のファイルをクローズしてから指定されたファイルをオープンします。
+- If a file is already open, `.open()` closes the current file and then opens the specified file
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// en.txt をオープンする
+	// Open en.txt
 	TextReader reader{ U"example/txt/en.txt" };
 
-	// en.txt をクローズして jp.txt をオープンする
+	// Close en.txt and open jp.txt
 	if (not reader.open(U"example/txt/jp.txt"))
 	{
 		throw Error{ U"Failed to open `jp.txt`" };
@@ -178,25 +186,25 @@ void Main()
 
 	}
 
-	// reader のデストラクタで自動的にファイルがクローズされる
+	// File is automatically closed by reader's destructor
 }
 ```
 
-ファイルのクローズは、通常 `TextReader` のデストラクタで行われますが、プログラムでファイルの内容を読み込んだあとにそのテキストファイルを削除したり、別の内容を改めて書き込んだりする場合には、ファイルがオープンされたままでは操作ができないため、直ちにファイルをクローズする必要があります。その場合は、`.close()` でファイルを明示的にクローズします。
-
-ファイルがすでにクローズされている場合、`.close()` やデストラクタは何もしません。
+- File closing is normally done by the `TextReader` destructor, but if you need to immediately close a file after reading its contents to delete the text file or write different content to it, you need to close the file immediately since operations cannot be performed while the file is open
+- In such cases, explicitly close the file with `.close()`
+- If a file is already closed, subsequent `.close()` calls or destructor do nothing
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// ファイルをオープンする
+	// Open file
 	TextReader reader{ U"example/txt/en.txt" };
 
 	Print << reader.isOpen();
 
-	// ファイルを明示的にクローズする
+	// Explicitly close file
 	reader.close();
 
 	Print << reader.isOpen();
@@ -209,10 +217,10 @@ void Main()
 ```
 
 
-## 43.5 テキストファイルから数値データを読み込む
-`.readLine()` と、チュートリアル 27 章で学んだパース関数を組み合わせることで、テキストファイルから数値データを読み込むことができます。
+## 54.5 Reading Numeric Data
+- By combining `.readLine()` with the parse functions learned in **Tutorial 36**, you can read numeric data from text files
 
-### 43.5.1 各行に 1 つの数値がある場合
+### 54.5.1 When Each Line Contains One Number
 
 ```txt title="test1.txt"
 123
@@ -232,15 +240,15 @@ void Main()
 		throw Error{ U"Failed to open a file" };
 	}
 
-	// 数値を格納する配列
+	// Array to store numbers
 	Array<int32> values;
 
 	String line;
 
-	// 1 行ずつ読み込む
+	// Read line by line
 	while (reader.readLine(line))
 	{
-		// 読み込んだ文字列を数値に変換して配列に追加する
+		// Convert read string to number and add to array
 		values << Parse<int32>(line);
 	}
 
@@ -253,8 +261,9 @@ void Main()
 }
 ```
 
-### 43.5.2 各行に 1 つの数値がある場合（改良版）
-43.5.1 では、テキストファイルの途中に空白行が含まれていたり、末尾が 2 つ以上の改行で終わる場合に空の文字列を数値に変換しようとしてエラーが発生します。これを回避するには、`.readLine()` で読み込んだ文字列が空の文字列の場合にスキップするようにします。
+### 54.5.2 When Each Line Contains One Number (Improved Version)
+- The method in **54.5.1** will cause errors when trying to convert empty strings to numbers if the text file contains blank lines or ends with two or more newlines
+- To avoid this, skip processing when the string read by `.readLine()` is empty
 
 ```cpp
 # include <Siv3D.hpp>
@@ -268,21 +277,21 @@ void Main()
 		throw Error{ U"Failed to open a file" };
 	}
 
-	// 数値を格納する配列
+	// Array to store numbers
 	Array<int32> values;
 
 	String line;
 
-	// 1 行ずつ読み込む
+	// Read line by line
 	while (reader.readLine(line))
 	{
-		// 空の文字列だった場合はスキップする
+		// Skip if empty string
 		if (not line)
 		{
 			continue;
 		}
 		
-		// 読み込んだ文字列を数値に変換して配列に追加する
+		// Convert read string to number and add to array
 		values << Parse<int32>(line);
 	}
 
@@ -296,10 +305,10 @@ void Main()
 ```
 
 
-### 43.5.3 各行に複数のデータがある場合
-1 行に複数の情報を含む場合は、`String` のメンバ関数 `.split(ch)` を使って、1 行を複数の文字列に分割します。`.split(ch)` は、`ch` を区切り文字として分割した文字列を `Array<String>` として返します。
-
-例えば `U"123,456,789"` を `U','` で分割した場合や、`U"123 456 789"` を `U' '` で分割した場合は、`Array<String>{ U"123", U"456", U"789" }` が得られます。
+### 54.5.3 When Each Line Contains Multiple Data
+- When a text line contains multiple pieces of information, use the `String` member function `.split(delimiter)` (**Tutorial 33.26**) to split one line into multiple elements
+- `.split(delimiter)` returns an `Array<String>` of strings split using `delimiter` as the separator
+- For example, splitting `U"123,456,789"` with `U','` or splitting `U"123 456 789"` with `U' '` yields `Array<String>{ U"123", U"456", U"789" }`
 
 ```txt title="test2.txt"
 Alice 111 222
@@ -326,34 +335,34 @@ void Main()
 		throw Error{ U"Failed to open a file" };
 	}
 
-	// データを格納する配列
+	// Array to store data
 	Array<Player> players;
 
 	String line;
 
-	// 1 行ずつ読み込む
+	// Read line by line
 	while (reader.readLine(line))
 	{
-		// 空の文字列だった場合はスキップする
+		// Skip if empty string
 		if (not line)
 		{
 			continue;
 		}
 
-		// 空白文字で分割する
+		// Split by space character
 		const Array<String> items = line.split(U' ');
 
-		// 想定した要素数でなかった場合はエラーを投げる
+		// Throw error if not expected number of elements
 		if (items.size() != 3)
 		{
 			throw Error{ U"Invalid format" };
 		}
 
-		// データを格納する
+		// Store data
 		players << Player{ items[0], Parse<int32>(items[1]), Parse<int32>(items[2]) };
 	}
 
-	// データを表示する
+	// Display data
 	for (const auto& player : players)
 	{
 		Print << U"{} (ID {}): {}"_fmt(player.name, player.id, player.score);
@@ -366,13 +375,11 @@ void Main()
 }
 ```
 
-### 43.5.4 各行に複数のデータがある場合（改良版）
-43.5.3 のプログラムに対して、
-
-- データの読み込みが終わったらすぐにファイルをクローズする
-- データの異常に対応する
-
-といった処理を追加して関数化すると便利です。これを実装したものが次のサンプルコードです。
+### 54.5.4 When Each Line Contains Multiple Data (Improved Version)
+- For the program in **54.5.3**, it's convenient to add processing like:
+	- Close the file immediately after data reading is complete
+	- Handle data anomalies
+- The following sample code implements this:
 
 ```cpp
 # include <Siv3D.hpp>
@@ -386,12 +393,12 @@ struct Player
 
 bool LoadPlayers(const FilePath& path, Array<Player>& players)
 {
-	// 一旦クリアする
+	// Clear first
 	players.clear();
 
 	TextReader reader{ path };
 
-	// ファイルをオープンできなかった場合は失敗
+	// Failed if file couldn't be opened
 	if (not reader)
 	{
 		return false;
@@ -401,23 +408,23 @@ bool LoadPlayers(const FilePath& path, Array<Player>& players)
 
 	while (reader.readLine(line))
 	{
-		// 空白行はスキップする
+		// Skip blank lines
 		if (not line)
 		{
 			continue;
 		}
 
-		// 空白で分割する
+		// Split by spaces
 		const Array<String> items = line.split(U' ');
 
-		// 想定した要素数でなかった場合は失敗
+		// Failed if not expected number of elements
 		if (items.size() != 3)
 		{
 			players.clear();
 			return false;
 		}
 
-		// パースに失敗した場合は失敗
+		// Failed if parsing fails
 		try
 		{
 			players << Player{ items[0], Parse<int32>(items[1]), Parse<int32>(items[2]) };
@@ -434,16 +441,16 @@ bool LoadPlayers(const FilePath& path, Array<Player>& players)
 
 void Main()
 {
-	// データを格納する配列
+	// Array to store data
 	Array<Player> players;
 
-	// データを読み込む
+	// Read data
 	if (not LoadPlayers(U"test2.txt", players))
 	{
 		throw Error{ U"Failed to load players" };
 	}
 
-	// データを表示する
+	// Display data
 	for (const auto& player : players)
 	{
 		Print << U"{} (ID {}): {}"_fmt(player.name, player.id, player.score);
@@ -457,27 +464,27 @@ void Main()
 ```
 
 
-## 43.6 書き込み用のテキストファイルをオープンする
-`TextWriter 変数名{ U"ファイルパス" };` で、テキストファイルを書き込み専用でオープンします。ファイルパスは、実行ファイルがあるフォルダ（開発中は `App` フォルダ）を基準とする相対パスか、絶対パスを使用します。
-
-指定したパスのファイルが存在しない場合は、新しく空のファイルが作成されます。親ディレクトリが存在しない場合は、親ディレクトリも作成されます。
-
-ファイルをオープンできたかを調べるには、`if (writer.isOpen())` や `if (writer)`, `if (not writer)` を使います。
-
-オープンしたファイルはデストラクタでクローズされるため、明示的にクローズする必要はありません。ファイルをオープン・クローズするタイミングを制御したい場合は、`TextReader` と同じように、`.open()` を使ってファイルをオープン, `.close()` を使ってファイルをクローズできます。
+## 54.6 Opening Text Files for Writing
+- Open text files for write-only access with `TextWriter variable_name{ U"file_path" };`
+- File paths use relative paths based on the folder containing the executable file (the `App` folder during development) or absolute paths
+- If a file at the specified path doesn't exist, a new empty file is created
+- If the parent directory doesn't exist, the parent directory is also created
+- To check if a file was opened successfully, use `if (writer.isOpen())`, `if (writer)`, or `if (not writer)`
+- Opened files are closed by the destructor, so explicit closing is not necessary
+- If you want to control the timing of file opening and closing, use `.open()` to open files and `.close()` to close files, just like with `TextReader`
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// 書き込み用のテキストファイルをオープンする
+	// Open text file for writing
 	TextWriter writer{ U"test3.txt" };
 
-	// ファイルをオープンできなかったら
+	// If file couldn't be opened
 	if (not writer)
 	{
-		// 例外を投げて終了する
+		// Throw exception and exit
 		throw Error{ U"Failed to open `test3.txt`" };
 	}
 
@@ -486,47 +493,47 @@ void Main()
 
 	}
 
-	// writer のデストラクタで自動的にファイルがクローズされる
+	// File is automatically closed by writer's destructor
 }
 ```
 
 
-## 43.7 テキストファイルに書き込む
-`TextWriter` を使ってテキストファイルに文字列を書き込むには、次の方法があります。
-
-- `Print` のように `<<` を使って書き込む
-- `.write(s)` を使って書き込む
-- `.writeln(s)` を使って書き込む
-
-書き込む値はフォーマット可能であれば自動的に文字列に変換されます。`<<` または `.writeln()` で書き込んだ場合、書き込みの最後には改行（`"\r\n"`）が自動で挿入されます。これを避けたい場合は `.write()` を使います。`.writeln(U"Siv3D")` は `.write(U"Siv3D\r\n")` と同じです。
+## 54.7 Writing to Text Files
+- There are three ways to write strings to text files using `TextWriter`:
+	- Write using `<<` like `Print`
+	- Write using `.write(s)`
+	- Write using `.writeln(s)`
+- Values that can be formatted are automatically converted to strings
+- When writing with `<<` or `.writeln()`, a newline (`"\r\n"`) is automatically inserted at the end
+- Use `.write()` if you want to avoid inserting newlines
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// 書き込み用のテキストファイルをオープンする
+	// Open text file for writing
 	TextWriter writer{ U"test3.txt" };
 
-	// ファイルをオープンできなかったら
+	// If file couldn't be opened
 	if (not writer)
 	{
-		// 例外を投げて終了する
+		// Throw exception and exit
 		throw Error{ U"Failed to open `test3.txt`" };
 	}
 
-	// 文章を 1 行書き込む
+	// Write a sentence on one line
 	writer << U"Hello, Siv3D!";
 
-	// 値や文字を　1 行書き込む
+	// Write values and characters on one line
 	writer << 123 << U", " << 456 << U", " << Point{ 10, 20 };
 
-	// 1 文字書き込んで改行する
+	// Write one character and newline
 	writer.writeln(-3333);
 	writer.writeln(1.234);
 	writer.writeln(U"C++");
 
-	// 値を書き込む（改行無し）
+	// Write values (no newline)
 	writer.write(777);
 	writer.write(U", ");
 	writer.write(888);
@@ -538,7 +545,7 @@ void Main()
 }
 ```
 
-```txt title="書き込み結果"
+```txt title="Write result"
 Hello, Siv3D!
 123, 456, (10, 20)
 -3333
@@ -548,27 +555,27 @@ C++
 ```
 
 
-## 43.8 既存のテキストファイルに追加で書き込む
-既存のテキストファイルの末尾に追加する形で書き込みを行いたい場合は、オープン時にファイルオープンモードとして `OpenMode::Append` (追加モード) を指定します。同名のテキストファイルが存在しなかった場合は、新しいファイルが作成されます。
-
-次のサンプルコードでは、プログラムを実行するたび、`test4.txt` に `Hello, Siv3D!` と現在時刻を追加します。
+## 54.8 Appending to Existing Text Files
+- When you want to write by appending to the end of an existing text file, specify `OpenMode::Append` (append mode) as the file open mode when opening
+- If a text file with the same name doesn't exist, a new file is created
+- The following sample code appends the string `Hello, Siv3D!` and the current time to `test4.txt` each time the program is run
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// 書き込み用のテキストファイルを「追加モード」でオープンする
+	// Open text file for writing in "append mode"
 	TextWriter writer{ U"test4.txt", OpenMode::Append };
 
-	// ファイルをオープンできなかったら
+	// If file couldn't be opened
 	if (not writer)
 	{
-		// 例外を投げて終了する
+		// Throw exception and exit
 		throw Error{ U"Failed to open `test4.txt`" };
 	}
 
-	// 文章をと現在時刻を書き込む
+	// Write sentence and current time
 	writer << U"Hello, Siv3D!";
 	writer << DateTime::Now();
 
@@ -580,18 +587,18 @@ void Main()
 ```
 
 
-## 43.9 スコープによる制御
-次のサンプルコードでは、`TextWriter` によってオープンしたファイル `test5.txt` をクローズせずに `TextReader` でオープンしようとするため、オープンに失敗します。
+## 54.9 Control by Scope
+- The following sample code fails to open because it tries to open file `test5.txt` with `TextReader` without closing the file opened by `TextWriter`
 
 ```cpp hl_lines="17-18"
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// 書き込み用のテキストファイルをオープンする
+	// Open text file for writing
 	TextWriter writer{ U"test5.txt" };
 
-	// ファイルをオープンできなかったら
+	// If file couldn't be opened
 	if (not writer)
 	{
 		Print << U"Error 1";
@@ -600,10 +607,10 @@ void Main()
 	writer << U"Hello, Siv3D!";
 	writer << DateTime::Now();
 
-	// TextWriter でオープン中であるため、オープンに失敗する
+	// Opening fails because it's already open with TextWriter
 	TextReader reader{ U"test5.txt" };
 
-	// ファイルをオープンできなかったら
+	// If file couldn't be opened
 	if (not reader)
 	{
 		Print << U"Error 2";
@@ -619,17 +626,17 @@ void Main()
 }
 ```
 
-次のようにファイルのオープンとクローズのタイミングの制御を行う事で、問題を解決できます。
+- The problem can be solved by controlling the timing of file opening and closing as follows:
 
 ```cpp hl_lines="17-18"
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// 書き込み用のテキストファイルをオープンする
+	// Open text file for writing
 	TextWriter writer{ U"test5.txt" };
 
-	// ファイルをオープンできなかったら
+	// If file couldn't be opened
 	if (not writer)
 	{
 		Print << U"Error 1";
@@ -638,13 +645,13 @@ void Main()
 	writer << U"Hello, Siv3D!";
 	writer << DateTime::Now();
 
-	// ファイルをクローズする
+	// Close file
 	writer.close();
 
-	// 読み込み用でファイルをオープンする
+	// Open file for reading
 	TextReader reader{ U"test5.txt" };
 
-	// ファイルをオープンできなかったら
+	// If file couldn't be opened
 	if (not reader)
 	{
 		Print << U"Error 2";
@@ -660,9 +667,9 @@ void Main()
 }
 ```
 
-上記のサンプルコードのように、同じファイルを指す `TextWriter` や `TextReader` を同一スコープ内に混在させると、コードが複雑になり、間違いやすいです。
-
-そこで、`{ }` でスコープを作り、その中に限定して `TextWriter` や `TextReader` の変数を作成することをおすすめします。ファイルのオープンとクローズの期間をスコープの範囲と一致させることで、コードの可読性が向上します。スコープの外では変数が破棄されるため、クローズしているファイルに対して操作を行うことがなくなります。
+- As in the above sample code, mixing `TextWriter` and `TextReader` for the same file in the same scope makes code complex and error-prone
+- Therefore, creating scopes with `{ }` and creating `TextWriter` or `TextReader` variables limited within them improves code readability
+- Since variables cannot be used outside the scope, it also prevents accidentally operating on closed files
 
 ```cpp
 # include <Siv3D.hpp>
@@ -670,10 +677,10 @@ void Main()
 void Main()
 {
 	{
-		// 書き込み用のテキストファイルをオープンする
+		// Open text file for writing
 		TextWriter writer{ U"test5.txt" };
 
-		// ファイルをオープンできなかったら
+		// If file couldn't be opened
 		if (not writer)
 		{
 			Print << U"Error 1";
@@ -684,10 +691,10 @@ void Main()
 	}
 
 	{
-		// 読み込み用でファイルをオープンする
+		// Open file for reading
 		TextReader reader{ U"test5.txt" };
 
-		// ファイルをオープンできなかったら
+		// If file couldn't be opened
 		if (not reader)
 		{
 			Print << U"Error 2";
@@ -705,28 +712,29 @@ void Main()
 ```
 
 
-## 43.10 エンコーディングを指定した書き込み
-`TextWriter` でテキストファイルを新規作成する際に、エンコーディングを指定できます。エンコーディングを指定しなかった場合は、BOM 付きの UTF-8 が使われます。
+## 54.10 Writing with Specified Encoding
+- You can specify encoding when creating new text files with `TextWriter`
+- If no encoding is specified, UTF-8 with BOM is used
 
-| 定数 | エンコーディング |
+| Code | Encoding |
 | --- | --- |
-| `TextEncoding::UTF8_NO_BOM` | BOM なしの UTF-8 |
-| `TextEncoding::UTF8_WITH_BOM` | BOM 付きの UTF-8 |
-| `TextEncoding::UTF16LE` | BOM 付きの UTF-16 (LE) |
-| `TextEncoding::UTF16BE` | BOM 付きの UTF-16 (BE) |
+| `TextEncoding::UTF8_NO_BOM` | UTF-8 without BOM |
+| `TextEncoding::UTF8_WITH_BOM` | UTF-8 with BOM |
+| `TextEncoding::UTF16LE` | UTF-16 (LE) with BOM |
+| `TextEncoding::UTF16BE` | UTF-16 (BE) with BOM |
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// BOM 付き UTF-8
+	// UTF-8 with BOM
 	{
 		TextWriter writer{ U"test-utf8bom.txt" };
 		writer.write(U"Siv3D");
 	}
 
-	// BOM なし UTF-8
+	// UTF-8 without BOM
 	{
 		TextWriter writer{ U"test-utf8.txt", TextEncoding::UTF8_NO_BOM };
 		writer.write(U"Siv3D");
@@ -739,18 +747,19 @@ void Main()
 }
 ```
 
-## 43.11 設定ファイルの書き出し
-`TextWriter` を使って、HTML や XML, JSON, INI, CSV などの設定ファイルをプログラムによって書き出すことができます。
+
+## 54.11 Writing Configuration Files
+- You can use `TextWriter` to programmatically write configuration files like HTML, XML, JSON, INI, CSV
 
 !!! info
-	CSV, INI, JSON, HTML ファイルの書き出しに関しては、専用のクラスが用意されています。詳しくはチュートリアル 44 章を参照してください。
+	- Dedicated classes are available for writing CSV, INI, JSON, HTML files. See **Tutorial 55** for details
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// CSV ファイルを書き出す
+	// Write CSV file
 	{
 		TextWriter writer{ U"test.csv" };
 		writer.writeln(U"name,id,score");
@@ -759,7 +768,7 @@ void Main()
 		writer.writeln(U"Carol,3,60");
 	}
 
-	// HTML ファイルを書き出す
+	// Write HTML file
 	{
 		TextWriter writer{ U"test.html" };
 		writer.writeln(U"<html>");

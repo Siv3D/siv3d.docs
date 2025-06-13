@@ -1,10 +1,10 @@
-# データ可視化のサンプル
+# Data Visualization Samples
 
-## 1. 有向グラフの描画
+## 1. Directed Graph Drawing
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/visualize/1.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -78,11 +78,11 @@
 	```
 
 
-## 2. 有向グラフの描画（3D）
+## 2. Directed Graph Drawing (3D)
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/visualize/2.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -140,7 +140,7 @@
 
 		while (System::Update())
 		{
-			// カメラを更新する
+			// Update camera
 			{
 				eyePosition = Cylindrical{ 20, Scene::Time() * 30_deg, 8 + Periodic::Sine0_1(4s) * 8 };
 				camera.setView(eyePosition, focusPosition);
@@ -170,7 +170,7 @@
 				}
 			}
 
-			// 3D シーンを 2D シーンに描画
+			// Draw 3D scene to 2D scene
 			{
 				Graphics3D::Flush();
 				renderTexture.resolve();
@@ -190,11 +190,11 @@
 	```
 
 
-## 3. 二次元のヒートマップ
+## 3. Two-Dimensional Heatmap
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/visualize/3.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -263,7 +263,7 @@
 
 		while (System::Update())
 		{
-			// データを再生成する
+			// Regenerate data
 			if (SimpleGUI::Button(U"Generate", Vec2{ 630, 40 }))
 			{
 				grid = GenerateGrid();
@@ -271,14 +271,14 @@
 				texture.fill(ToImage(grid, ColorType));
 			}
 
-			// ヒートマップを表示する
+			// Display heatmap
 			{
 				const ScopedRenderStates2D sampler{ SamplerState::ClampNearest };
 
 				texture.scaled(CellSize).draw();
 			}
 
-			// ヒートマップ上で値を表示する
+			// Display values on heatmap
 			{
 				const Point index = (Cursor::Pos() / CellSize);
 
@@ -293,7 +293,7 @@
 				}
 			}
 
-			// カラーバーを表示する
+			// Display color bar
 			{
 				const Rect colorBarRect{ 630, 320, 30, 200 };
 
@@ -316,11 +316,11 @@
 	```
 
 
-## 4. 折れ線グラフ
+## 4. Line Graph
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/visualize/4.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -372,11 +372,11 @@
 	```
 
 
-## 5. 関数グラフ
+## 5. Function Graph
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/visualize/5.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -444,11 +444,11 @@
 	```
 
 
-## 6. 円グラフ
+## 6. Pie Chart
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/visualize/6.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -484,23 +484,23 @@
 
 		const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
 
-		// ラベル
+		// Labels
 		const Array<String> labels = { U"Apple", U"Bird", U"Cat", U"Dog" };
 
-		// 数値
+		// Values
 		const Array<double> values = { 15.0, 10.0, 5.0, 2.0 };
 
-		// 円グラフで占める割合
+		// Ratios in pie chart
 		const Array<double> ratios = ToRatios(values);
 
-		// 円グラフの開始位置（割合）
+		// Pie chart start positions (ratios)
 		const Array<double> starts = CumulativeSum(ratios);
 
 		const Circle circle{ Scene::Center(), 180.0 };
 
 		while (System::Update())
 		{
-			// 円グラフを描画する
+			// Draw pie chart
 			for (size_t i = 0; i < values.size(); ++i)
 			{
 				const double startAngle = (starts[i] * 360_deg);
@@ -508,21 +508,21 @@
 				circle.drawPie(startAngle, angle, HSV{(120 + 70 * i), 0.5, 0.95});
 			}
 
-			// 境界線を描画する
+			// Draw borders
 			for (size_t i = 0; i < values.size(); ++i)
 			{
 				const double startAngle = (starts[i] * 360_deg);
 				Line{ circle.center, Arg::angle = startAngle, circle.r }.draw(3);
 			}
 
-			// ラベルを描画する
+			// Draw labels
 			for (size_t i = 0; i < values.size(); ++i)
 			{
 				const double startAngle = (starts[i] * 360_deg);
 				const double angle = (ratios[i] * 360_deg);
 				const double midAngle = (startAngle + angle / 2.0);
 
-				// 割合に応じてラベルの位置を調整する
+				// Adjust label position based on ratio
 				const Vec2 pos = OffsetCircular{ circle.center, ((ratios[i] < 0.1) ? 220.0 : (ratios[i] < 0.4) ? 120.0 : 90.0), midAngle };
 
 				font(labels[i]).draw(24, Arg::bottomCenter = pos, ColorF{ 0.11 });
@@ -533,11 +533,11 @@
 	```
 
 
-## 7. kd 木
+## 7. kd-tree
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/visualize/7.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -553,7 +553,7 @@
 		}
 	};
 
-	// Unit を KDTree で扱えるようにするためのアダプタ
+	// Adapter for handling Unit with KDTree
 	struct UnitAdapter : KDTreeAdapter<Array<Unit>, Vec2>
 	{
 		static const element_type* GetPointer(const point_type& point)
@@ -569,7 +569,7 @@
 
 	void Main()
 	{
-		// 4000 個の Unit を生成する
+		// Generate 4000 Units
 		Array<Unit> units;
 		for (size_t i = 0; i < 4000; ++i)
 		{
@@ -582,24 +582,24 @@
 			units << unit;
 		}
 
-		// kd-tree を構築する
+		// Build kd-tree
 		KDTree<UnitAdapter> kdTree{ units };
 
-		// 探索の種類（ラジオボタンのインデックス）
+		// Search type (radio button index)
 		size_t searchTypeIndex = 0;
 
-		// radius search する際の探索距離
+		// Search distance for radius search
 		double searchDistance = 4.0;
 
-		// 2D カメラ
+		// 2D camera
 		Camera2D camera{ Vec2{ 0, 0 }, 24.0 };
 
 		while (System::Update())
 		{
-			// 2D カメラを更新する
+			// Update 2D camera
 			camera.update();
 
-			// 画面内のユニットだけ処理するための基準の長方形
+			// Reference rectangle for processing only units within screen
 			const RectF viewRect = camera.getRegion();
 			const RectF viewRectScaled = viewRect.scaledAt(viewRect.center(), 1.2);
 			{
@@ -611,7 +611,7 @@
 				{
 					Circle{ cursorPos, searchDistance }.draw(ColorF{ 1.0, 0.2 });
 
-					// searchDistance 以内の距離にある Unit のインデックスを取得
+					// Get indices of Units within searchDistance
 					for (auto index : kdTree.radiusSearch(cursorPos, searchDistance))
 					{
 						Line{ cursorPos, units[index].circle.center }.draw(0.1);
@@ -621,17 +621,17 @@
 				{
 					const size_t k = ((searchTypeIndex == 1) ? 1 : 5);
 
-					// 最も近い k 個の Unit のインデックスを取得
+					// Get indices of k nearest Units
 					for (auto index : kdTree.knnSearch(k, cursorPos))
 					{
 						Line{ cursorPos, units[index].circle.center }.draw(0.1);
 					}
 				}
 
-				// ユニットを描画する
+				// Draw units
 				for (const auto& unit : units)
 				{
-					// 描画負荷削減のため、画面内 (viewRectScaled) に無ければスキップする
+					// Skip if not within screen (viewRectScaled) to reduce rendering load
 					if (not unit.circle.center.intersects(viewRectScaled))
 					{
 						continue;
@@ -645,13 +645,13 @@
 			SimpleGUI::Slider(U"searchDistance", searchDistance, 0.0, 20.0, Vec2{ 180, 20 }, 160, 120, (searchTypeIndex == 0));
 			if (SimpleGUI::Button(U"Move units", Vec2{ 180, 60 }))
 			{
-				// Unit をランダムに移動する
+				// Move Units randomly
 				for (auto& unit : units)
 				{
 					unit.circle.moveBy(RandomVec2(0.5));
 				}
 
-				// Unit の座標が更新されたので kd-tree を再構築する
+				// Rebuild kd-tree since Unit coordinates have been updated
 				kdTree.rebuildIndex();
 			}
 
@@ -664,7 +664,7 @@
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/visualize/8.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -673,36 +673,36 @@
 		Window::Resize(1280, 720);
 		Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
 
-		// フォント
+		// Font
 		const Font font{ FontMethod::MSDF, 48, Typeface::Heavy };
 
-		// セルの大きさ
+		// Cell size
 		constexpr int32 CellSize = 16;
 
-		// マス目の数
+		// Number of cells
 		constexpr Size GridSize{ 1280 / CellSize, 720 / CellSize };
 
-		// 塗りつぶし (白: true, 黒: false)
+		// Fill (white: true, black: false)
 		Grid<bool> grid(GridSize, true);
 
 		// Disjoint Set (Union-Find)
 		DisjointSet<int32> ds{ GridSize.x* GridSize.y };
 
-		// 現在存在する領域の root と, 領域の座標の合計値 (中心計算用)
+		// Currently existing region roots and sum of region coordinates (for center calculation)
 		HashTable<int32, Vec2> currentRoots;
 
-		// root の番号と色 (hue) の対応表
+		// Correspondence table between root numbers and colors (hue)
 		HashTable<int32, int32> globalColorTable;
 		int32 colorIndex = 0;
 
-		// UnionFind を更新する必要があるか
+		// Whether UnionFind needs to be updated
 		bool isDirty = true;
 
 		while (System::Update())
 		{
 			if (isDirty)
 			{
-				// Disjoint Set を更新する
+				// Update Disjoint Set
 				{
 					ds.reset();
 
@@ -734,7 +734,7 @@
 					}
 				}
 
-				// 存在する root 一覧を作成する
+				// Create list of existing roots
 				{
 					currentRoots.clear();
 
@@ -761,7 +761,7 @@
 					}
 				}
 
-				// root と色の対応表を更新する
+				// Update root and color correspondence table
 				{
 					for (auto& currentRoot : currentRoots)
 					{
@@ -777,7 +777,7 @@
 				isDirty = false;
 			}
 
-			// すべてのマスを描画する
+			// Draw all cells
 			for (auto p : step(GridSize))
 			{
 				const Rect rect = Rect{ (p * CellSize), CellSize }.stretched(-1);
@@ -794,7 +794,7 @@
 				}
 			}
 
-			// クリックされたらマスの状態を更新する
+			// Update cell state when clicked
 			if ((MouseL | MouseR).pressed())
 			{
 				const Point pos = (Cursor::Pos() / CellSize);
@@ -808,7 +808,7 @@
 				}
 			}
 
-			// 領域の情報を表示する
+			// Display region information
 			for (const auto& currentRoot : currentRoots)
 			{
 				const int32 root = currentRoot.first;
@@ -826,15 +826,15 @@
 	}
 	```
 
-## 9. DisjointSet による画像の塗りつぶし領域の検出
+## 9. Image Fill Region Detection Using DisjointSet
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/visualize/9.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
-	// グループ情報を構築する関数
+	// Function to build group information
 	void RebuildGroup(DisjointSet<int32>& ds, const Image& image)
 	{
 		assert(ds.size() == image.num_pixels());
@@ -848,17 +848,17 @@
 
 				if ((x + 1) < image.width())
 				{
-					if (image[y][x] == image[y][x + 1]) // 右隣のピクセルと同じ色なら
+					if (image[y][x] == image[y][x + 1]) // If same color as right neighbor pixel
 					{
-						ds.merge(i, (i + 1)); // グループ化
+						ds.merge(i, (i + 1)); // Group them
 					}
 				}
 
 				if ((y + 1) < image.height())
 				{
-					if (image[y][x] == image[y + 1][x]) // 下のピクセルと同じ色なら
+					if (image[y][x] == image[y + 1][x]) // If same color as bottom pixel
 					{
-						ds.merge(i, (i + image.width())); // グループ化
+						ds.merge(i, (i + image.width())); // Group them
 					}
 				}
 			}
@@ -931,7 +931,7 @@
 		return updated;
 	}
 
-	// 画像を描画する関数
+	// Function to draw image
 	void DrawImage(const Texture& texture, const Point& canvasPos, int32 canvasScale)
 	{
 		const ScopedRenderStates2D sampler{ SamplerState::ClampNearest };
@@ -949,7 +949,7 @@
 		}
 	}
 
-	// グループ番号を可視化する関数
+	// Function to visualize group numbers
 	void DrawGroup(const Font& font, DisjointSet<int32>& ds, const Size& canvasSize, const Point& canvasPos, int32 canvasScale)
 	{
 		assert(ds.size() == (canvasSize.x * canvasSize.y));
@@ -974,49 +974,49 @@
 
 		const Font font{ FontMethod::MSDF, 36, Typeface::Bold };
 
-		// 画像のサイズ
+		// Image size
 		constexpr Size CanvasSize{ 16, 16 };
 
-		// 総ピクセル数
+		// Total pixel count
 		constexpr int32 NumPixels = (CanvasSize.x * CanvasSize.y);
 
-		// デフォルトの色
+		// Default color
 		constexpr Color DefaultColor{ 255, 255, 255, 0 };
 
-		// 画像の拡大率
+		// Image scale factor
 		constexpr int32 CanvasScale = 32;
 
-		// 画像の描画位置
+		// Image drawing position
 		constexpr Point CanvasPos{ 200, 60 };
 
-		// ペンの色
+		// Pen color
 		Color penColor{ 0, 0, 0, 255 };
 		HSV penColorHSV = penColor;
 
-		// 画像
+		// Image
 		Image image{ CanvasSize, DefaultColor };
 
-		// 塗りつぶしグループ情報（上下左右で接続されている同じ色 → 同じグループ番号）
+		// Fill group information (same color connected up/down/left/right → same group number)
 		DisjointSet<int32> ds(NumPixels);
 
-		// グループ情報を更新する
+		// Update group information
 		RebuildGroup(ds, image);
 
-		// 動的テクスチャ
+		// Dynamic texture
 		DynamicTexture dtexture{ image };
 
 		while (System::Update())
 		{
-			// 選択されているピクセルのインデックス
+			// Selected pixel index
 			const Optional<Point> pixelIndex = GetPixelIndexFromCursorPos(CanvasSize, CanvasPos, CanvasScale);
 
 			ClearPrint();
 			Print << pixelIndex;
 
-			// 更新
+			// Update
 			if (pixelIndex)
 			{
-				// 左クリックでピクセルの更新
+				// Left click to update pixel
 				if (MouseL.pressed())
 				{
 					if (SetPixel(image, *pixelIndex, penColor))
@@ -1026,7 +1026,7 @@
 					}
 				}
 
-				// 右クリックで塗りつぶし
+				// Right click to flood fill
 				if (MouseR.pressed())
 				{
 					if (FillPixel(image, *pixelIndex, ds, penColor))
@@ -1037,15 +1037,15 @@
 				}
 			}
 
-			// 描画
+			// Draw
 			{
-				// 画像の描画
+				// Draw image
 				DrawImage(dtexture, CanvasPos, CanvasScale);
 
-				// グループ番号の可視化
+				// Visualize group numbers
 				DrawGroup(font, ds, CanvasSize, CanvasPos, CanvasScale);
 
-				// マウスオーバー時のピクセルの枠線
+				// Pixel border on mouse over
 				if (pixelIndex)
 				{
 					Cursor::RequestStyle(CursorStyle::Hand);
@@ -1053,7 +1053,7 @@
 					PixelIndexToRect(*pixelIndex, CanvasPos, CanvasScale).drawFrame(4, 0, penColor);
 				}
 
-				// カラーピッカー
+				// Color picker
 				if (SimpleGUI::ColorPicker(penColorHSV, Vec2{ 900, 40 }))
 				{
 					penColor = penColorHSV;
@@ -1063,26 +1063,26 @@
 	}
 	```
 
-## 10. 幅優先探索の可視化
+## 10. Breadth-First Search Visualization
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/visualize/10.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
 	void Main()
 	{
-		// 背景色を水色に
+		// Set background to light blue
 		Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
 
-		// 距離の表示用フォント
+		// Font for displaying distances
 		const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
 
-		// 迷路を可視化するときのマスのサイズ（ピクセル）
+		// Cell size for maze visualization (pixels)
 		constexpr int32 CellSize = 40;
 
-		// 二次元配列: 迷路 (0: 通行可能, 1: 壁)
+		// 2D array: maze (0: passable, 1: wall)
 		const Grid<int32> maze =
 		{
 			{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
@@ -1097,38 +1097,38 @@
 			{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
 		};
 
-		// 無限大を表現する数
+		// Number representing infinity
 		constexpr int32 INF = 10000;
 
-		// 二次元配列: maze と同じサイズ、すべての要素を INF にセット
+		// 2D array: same size as maze, set all elements to INF
 		Grid<int32> distances(maze.size(), INF);
 
-		// 上、左、右、下のマスへのオフセット
+		// Offsets to up, left, right, down cells
 		constexpr Point Offsets[4] = { Point{ 0, -1 }, Point{ -1, 0 }, Point{ 1, 0 }, Point{ 0, 1 } };
 
-		// 全要素を確認できるように、std::queue の代わりに std::deque を使う
+		// Use std::deque instead of std::queue to inspect all elements
 		std::deque<Point> q;
 
-		// スタート位置
+		// Start position
 		const Point start{ 1, 1 };
 		q.push_back(start);
 		distances[start] = 0;
 
-		// 更新の間隔（秒）
+		// Update interval (seconds)
 		constexpr double UpdateTime = 0.5;
 
-		// 蓄積時間（秒）
+		// Accumulated time (seconds)
 		double accumulatedTime = 0.0;
 
 		while (System::Update())
 		{
-			// 状態更新フラグ
+			// State update flag
 			bool update = false;
 
-			// 前フレームからの経過時間を加算
+			// Add elapsed time from previous frame
 			accumulatedTime += Scene::DeltaTime();
 
-			// 更新間隔を超えていたら
+			// If update interval has been exceeded
 			if (UpdateTime <= accumulatedTime)
 			{
 				accumulatedTime -= UpdateTime;
@@ -1136,7 +1136,7 @@
 				update = true;
 			}
 
-			// 幅優先探索
+			// Breadth-first search
 			if (update && (not q.empty()))
 			{
 				const Point currentPos = q.front(); q.pop_front();
@@ -1154,34 +1154,34 @@
 				}
 			}
 
-			// 迷路の状態を可視化
+			// Visualize maze state
 			for (int32 y = 0; y < maze.height(); ++y)
 			{
 				for (int32 x = 0; x < maze.width(); ++x)
 				{
-					// マスの正方形
+					// Cell square
 					const Rect rect = Rect{ (x * CellSize), (y * CellSize), CellSize }.stretched(-1);
 
-					if (maze[y][x] == 1) // 壁のマス
+					if (maze[y][x] == 1) // Wall cell
 					{
-						// 黒で表示
+						// Display in black
 						rect.draw(ColorF{ 0.25 });
 					}
-					else // 通行可能なマス
+					else // Passable cell
 					{
-						// 距離情報
+						// Distance information
 						const int32 distance = distances[y][x];
 
 						if (distance == INF)
 						{
-							// 灰色で表示
+							// Display in gray
 							rect.draw(ColorF{ 0.75 });
 
 							font(U"∞").drawAt(18, rect.center(), ColorF{ 0.25 });
 						}
 						else
 						{
-							// 白で表示
+							// Display in white
 							rect.draw();
 
 							font(distances[y][x]).drawAt(18, rect.center(), ColorF{ 0.25 });
@@ -1190,10 +1190,10 @@
 				}
 			}
 
-			// queue に入っているマスの可視化
+			// Visualize cells in queue
 			for (const auto& point : q)
 			{
-				// 赤い半透明の正方形を重ねる
+				// Overlay red semi-transparent square
 				Rect{ (point * CellSize), CellSize }.draw(ColorF{ 1.0, 0.0, 0.0, 0.5 });
 			}
 		}
@@ -1201,11 +1201,11 @@
 	```
 
 
-## 11. 二次元いもす法の可視化
+## 11. 2D Imos Method Visualization
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/visualize/11.png)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
@@ -1214,36 +1214,36 @@
 		Window::Resize(1280, 720);
 		Scene::SetBackground(ColorF{ 0.8, 0.9, 1.0 });
 
-		// フォント
+		// Font
 		const Font font{ FontMethod::MSDF, 48, Typeface::Bold };
 
-		// セルの大きさ
+		// Cell size
 		constexpr int32 CellSize = 40;
 
-		// マス目の数
+		// Number of cells
 		constexpr Size GridSize{ 1080 / CellSize, 720 / CellSize };
 
 		Grid<int32> grid(GridSize);
 
-		// 選択開始したセル
+		// Cell where selection started
 		Optional<Point> grabbed;
 
-		// 長方形領域
+		// Rectangular areas
 		Array<Rect> rects;
 
-		// 累積和計算位置
+		// Cumulative sum calculation position
 		int32 iX = GridSize.x;
 		int32 iY = GridSize.y;
 
-		// 累積和アニメーションのストップウォッチ
+		// Cumulative sum animation stopwatch
 		Stopwatch stopwatch;
 
-		// アニメーションの速さ
+		// Animation speed
 		double speed = 0.4;
 
 		while (System::Update())
 		{
-			// すべてのマスを描画
+			// Draw all cells
 			for (auto p : step(GridSize))
 			{
 				const Rect rect{ (p * CellSize), CellSize };
@@ -1261,7 +1261,7 @@
 				}
 			}
 
-			// セルの数値を描画
+			// Draw cell values
 			for (auto p : step(GridSize))
 			{
 				const Rect rect = Rect{ (p * CellSize), CellSize }.stretched(-1);
@@ -1269,14 +1269,14 @@
 				font(grid[p]).drawAt(24, rect.center(), ColorF{ grid[p] ? 1.0 : 0.8 });
 			}
 
-			// 長方形の領域を描画
+			// Draw rectangular areas
 			for (const auto& rect : rects)
 			{
 				Rect{ (rect.pos * CellSize), (rect.size * CellSize) }
 					.drawFrame(3, 1, ColorF{ 0.7 });
 			}
 
-			// 領域の選択を開始
+			// Start area selection
 			if (MouseL.down())
 			{
 				const Point pos = (Cursor::Pos() / CellSize);
@@ -1288,7 +1288,7 @@
 				}
 			}
 
-			// 領域選択中
+			// During area selection
 			if (grabbed)
 			{
 				Point pos = (Cursor::Pos() / CellSize);
@@ -1367,7 +1367,7 @@
 
 			SimpleGUI::Slider(U">>", speed, 0.0, 0.5, Vec2{ 1100, 200 }, 30, 110);
 
-			// X 方向累積和（アニメーション）
+			// X direction cumulative sum (animation)
 			if (iX < GridSize.x)
 			{
 				Line{ (iX * CellSize), 0, (iX * CellSize), 720 }.draw(4, Palette::Red);
@@ -1384,7 +1384,7 @@
 				}
 			}
 
-			// Y 方向累積和（アニメーション）
+			// Y direction cumulative sum (animation)
 			if (iY < GridSize.y)
 			{
 				Line{ 0, (iY * CellSize), 1080, (iY * CellSize) }.draw(4, Palette::Red);
@@ -1403,4 +1403,3 @@
 		}
 	}
 	```
-

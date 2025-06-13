@@ -1,36 +1,39 @@
-# 26. 動画を描く
-動画や GIF アニメーションを描画する方法を学びます。
+# 32. Drawing Videos
+Learn how to draw videos and GIF animations.
 
-## 26.1 動画を描く
-画面上で動画を再生するには `VideoTexture` を作成し、`.draw()` または `.drawAt()` します。`VideoTexture` は `Texture` とほぼ同じメンバ関数を持ち、動画ファイルを `Texture` のように扱えます。動画のフレームを進めるには、`VideoTexture` は毎フレーム `.advance()` を呼んで再生位置を進める必要があります。
+## 32.1 Video Drawing
+- The `VideoTexture` class allows you to draw videos like textures
+- `VideoTexture` has almost the same member functions as `Texture`, allowing you to treat each frame of the video like a `Texture`
+- To advance video time, you need to call `.advance()` every frame to advance the playback position
+	- Since background threads prefetch the next video frame, playing videos in the forward direction doesn't impose a significant load
+	- You should avoid calling `.advance()` on videos that are not playing
+- `VideoTexture` does not create mipmaps. If you need to draw videos at sizes smaller than their original resolution, it's advisable to prepare videos with smaller resolutions from a runtime performance and memory usage perspective
+- Supported video formats vary by platform. MP4 files are supported on Windows, macOS, and Linux
 
-Siv3D はバックグラウンドのスレッドで動画の次のフレームの先読みを行っているため、時間を進める方向への動画の再生は、そこまで大きな負荷にはなりません。
+!!! example "Embedding Video Files on Windows"
+	- On Windows, there is a limitation where video files embedded using "resource file embedding" (explained in later tutorials) cannot be loaded by `VideoTexture`
+	- As a workaround, there is a [method to write to temporary files :material-open-in-new:](https://gist.github.com/Reputeless/3d527302d459792f7a5e1094d30d0529){:target="_blank"}.
 
-`VideoTexture` ではミップマップが作成されないため、動画を縮小して描く場合は、あらかじめ小さい解像度の動画を用意しておくことが望ましいです。
-
-対応する動画フォーマットはプラットフォームによって異なります。MP4 ファイルは Windows, macOS, Linux でサポートされています。
-
-!!! example "Windows における動画ファイルの埋め込み"
-	Windows では、のちのチュートリアルで説明する「リソースファイルの埋め込み」で埋め込んだ動画ファイルは `VideoTexture` で読み込めない制約があります。ワークアラウンドとして、[一時ファイルに書き出す方法 :material-open-in-new:](https://gist.github.com/Reputeless/3d527302d459792f7a5e1094d30d0529){:target="_blank"} があります。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/video/1.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/video/1.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// ループする場合は Loop::Yes, ループしない場合は Loop::No
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	// Loop::Yes for looping, Loop::No for non-looping
 	const VideoTexture videoTexture{ U"example/video/river.mp4", Loop::Yes };
 
 	while (System::Update())
 	{
 		ClearPrint();
 
-		// 再生位置（秒） / 動画の長さ（秒）
+		// Playback position (seconds) / Video length (seconds)
 		Print << U"{:.2f}/{:.2f}"_fmt(videoTexture.posSec(), videoTexture.lengthSec());
 
-		// 動画の時間を進める (デフォルトでは Scece::DeltaTime() 秒)
+		// Advance video time (default is Scene::DeltaTime() seconds)
 		videoTexture.advance();
 
 		videoTexture
@@ -45,62 +48,69 @@ void Main()
 ```
 
 
-## 26.2 音声付きの動画に対応する
-音声付きの動画ファイルから `VideoTexture` と `Audio` を同時に作成し、タイミングを合わせて再生することで、音声付きの動画を再生することができます。`Audio` については [チュートリアル 37. オーディオ再生 :material-open-in-new:](../tutorial3/audio.md) で詳しく説明します。プラットフォームによっては、音声付きの動画ファイルの読み込みに対応していない場合があります。
-
-次のサンプルでは、動画の再生位置と音声の再生位置の差が 0.1 秒以上ある場合、音声の再生位置を動画の再生位置に合わせるようにしています。これにより、動画と音声の再生位置がずれることを防げますが、音声が途切れる可能性があります。
-
-!!! warning "動画ファイルの用意"
-	Siv3D のプロジェクトには音声付きの動画ファイルは同梱されていません。サンプルを実行する前に動画ファイルを自前で用意してください。
+## 32.2 (Reference Implementation) Support for Videos with Audio
+- There is no dedicated class for playing videos with audio
+- You can play videos with audio by simultaneously creating `VideoTexture` and `Audio` from a video file with audio and synchronizing their playback
+	- `Audio` is explained in detail in [**Tutorial 41. Audio Playback**](../tutorial3/audio.md)
+	- Some platforms may not support loading video files with audio
+- The following sample is an implementation example:
+	- When the difference between video playback position and audio playback position exceeds 0.1 seconds, the audio playback position is adjusted to match the video playback position
+	- This prevents desynchronization between video and audio, but may introduce noise in the audio
+	
+!!! warning "Preparing Video Files"
+	- Siv3D projects do not include video files with audio
+	- Please prepare your own video files before running the sample
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// 音声付きの動画ファイルのパス（プロジェクトには同梱されていません）
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	// Path to video file with audio (not included in the project)
 	const FilePath path = U"test.mp4";
 
 	if (not FileSystem::Exists(path))
 	{
-		throw Error{ U"{} が見つかりませんでした"_fmt(path) };
+		throw Error{ U"{} was not found"_fmt(path) };
 	}
 
-	// ループする場合は Loop::Yes, ループしない場合は Loop::No
+	// Loop::Yes for looping, Loop::No for non-looping
 	const VideoTexture videoTexture{ path, Loop::Yes };
 
-	// 動画の音声を再生するための Audio オブジェクト
+	// Audio object for playing the video's audio
 	const Audio audio{ Audio::Stream, path, Loop::Yes };
 
-	// 音声の読み込みに成功したら
+	// If audio loading succeeded
 	if (not audio)
 	{
-		throw Error{ U"音声の読み込みに失敗しました" };
+		throw Error{ U"Failed to load audio" };
 	}
 
-	// 音声を再生する
+	// Play audio
 	audio.play();
 
 	while (System::Update())
 	{
 		ClearPrint();
 
-		// 動画の再生位置（秒）
+		// Video playback position (seconds)
 		const double videoTime = videoTexture.posSec();
 
-		// 音声の再生位置（秒）
+		// Audio playback position (seconds)
 		const double audioTime = audio.posSec();
 
 		Print << U"{:.2f}/{:.2f}/{:.2f}"_fmt(videoTime, audioTime, videoTexture.lengthSec());
 
-		// 動画の再生位置と音声の再生位置の差が 0.1 秒以上ある場合
+		// If the difference between video and audio playback positions exceeds 0.1 seconds
 		if (0.1 < AbsDiff(audioTime, videoTime))
 		{
-			// 音声の再生位置を動画の再生位置に合わせる
+			// Adjust audio playback position to match video playback position
 			audio.seekTime(videoTime);
 		}
 
-		// 動画の時間を進める (デフォルトでは Scece::DeltaTime() 秒)
+		// Advance video time (default is Scene::DeltaTime() seconds)
 		videoTexture.advance();
 
 		videoTexture
@@ -110,48 +120,56 @@ void Main()
 ```
 
 
-## 26.3 GIF アニメーションを描く
-`AnimatedGIFReader` を使うと、各フレームの画像データ `Image` と、次のフレームまでのディレイ（ミリ秒）の配列を取得できます。`Image` の配列から `Texture` の配列を作成し、適切なタイミングでフレームを描くことで、GIF アニメーションを描画できます。
+## 32.3 GIF Animation Drawing
+- GIF animations can be drawn by creating an array of `Texture` from each frame and drawing them at appropriate timing
+	- GIF animation itself is a legacy image format, so its use for game animations is not recommended
+- `AnimatedGIFReader` allows you to get arrays of image data `Image` for each frame and delays (in milliseconds) to the next frame
+- Create an array of `Texture` from the array of `Image` and draw frames at appropriate timing
+- When given time `t`, you can determine which frame to draw using `AnimatedGIFReader::GetFrameIndex()`
 
-ある時間が与えられたとき、何番目のフレームを描けばよいかは、`AnimatedGIFReader::GetFrameIndex()` を使うって求められます。
-
-![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/tutorial2/video/2.png)
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/video/3.png)
 
 ```cpp
 # include <Siv3D.hpp>
 
 void Main()
 {
-	// GIF アニメーション画像を開く
+	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+	// Open GIF animation image
 	const AnimatedGIFReader gif{ U"example/gif/test.gif" };
 
-	// 各フレームの画像と、次のフレームへのディレイ（ミリ秒）をロード
+	// Load image and delay (milliseconds) to next frame for each frame
 	Array<Image> images;
 	Array<int32> delays;
 	gif.read(images, delays);
 
-	// フレーム数
-	Print << images.size() << U" frames";
-
-	// 各フレームのディレイ（ミリ秒）一覧
-	Print << U"delays: " << delays;
-
-	// 各フレームの Image から Texure を作成
+	// Create Texture from each frame's Image
 	const Array<Texture> textures = images.map([](const Image& image) { return Texture{ image }; });
 
-	// 画像データはもう使わないため、消去してメモリ消費を減らす
+	// Clear image data to reduce memory consumption as it's no longer needed
 	images.clear();
 
 	while (System::Update())
 	{
-		// アニメーションの経過時間
+		ClearPrint();
+
+		// Number of frames
+		Print << textures.size() << U" frames";
+
+		// List of delays (milliseconds) for each frame
+		Print << U"delays: " << delays;
+
+		// Animation elapsed time
 		const double t = Scene::Time();
 
-		// 経過時間と各フレームのディレイに基づいて、何番目のフレームを描けばよいかを計算
+		// Calculate which frame to draw based on elapsed time and frame delays
 		const size_t frameIndex = AnimatedGIFReader::GetFrameIndex(t, delays);
+
+		// Current frame number
+		Print << U"frameIndex: " << frameIndex;
 
 		textures[frameIndex].draw(200, 200);
 	}
 }
 ```
-

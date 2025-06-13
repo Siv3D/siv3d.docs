@@ -1,24 +1,24 @@
-# アドオンのサンプル
+# Addon Samples
 
-ゲームやアプリにおいて特定のタイミングだけ有効にしたい機能は、アドオンとして実装すると、コード（`Main()` の中など）を汚しません。ここでは、アドオンで実装できるいくつかの機能のサンプルを紹介します。
+Features that you want to enable only at specific times in games or apps can be implemented as addons to avoid cluttering your code (such as inside `Main()`). Here are samples of several features that can be implemented with addons.
 
-## 1. ロード中の円の表示
+## 1. Loading circle display
 
 <video src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/addon/1.mp4?raw=true" autoplay loop muted playsinline></video>
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
-	/// @brief ロード中の円を描画するアドオン
+	/// @brief Addon that draws a loading circle
 	class LoadingCircleAddon : public IAddon
 	{
 	public:
 
-		/// @brief ロード中の円の描画を開始します。
-		/// @param circle 円
-		/// @param thickness 軌跡の太さ 
-		/// @param color 軌跡の色
+		/// @brief Starts drawing the loading circle.
+		/// @param circle Circle
+		/// @param thickness Trail thickness 
+		/// @param color Trail color
 		static void Begin(const Circle& circle, double thickness, const ColorF& color)
 		{
 			if (auto p = Addon::GetAddon<LoadingCircleAddon>(U"LoadingCircleAddon"))
@@ -27,7 +27,7 @@
 			}
 		}
 
-		/// @brief ロード中の円の描画を終了します。
+		/// @brief Ends drawing the loading circle.
 		static void End()
 		{
 			if (auto p = Addon::GetAddon<LoadingCircleAddon>(U"LoadingCircleAddon"))
@@ -36,7 +36,7 @@
 			}
 		}
 
-		/// @brief ロード中の円の描画が有効かを返します。
+		/// @brief Returns whether the loading circle drawing is active.
 		[[nodiscard]]
 		static bool IsActive()
 		{
@@ -121,7 +121,7 @@
 			m_color = color;
 			m_active = true;
 
-			// 開始時点で十分な長さの軌跡を生成しておく
+			// Generate a trail of sufficient length at the start
 			prewarm();
 		}
 
@@ -132,7 +132,7 @@
 
 		void prewarm()
 		{
-			// 前回の軌跡を消去する。v0.6.14 では m_trail.clear() が使える
+			// Clear previous trail. In v0.6.14, m_trail.clear() can be used
 			m_trail.update(LifeTime);
 
 			m_accumulatedTime = LifeTime;
@@ -145,7 +145,7 @@
 
 	void Main()
 	{
-		// アドオンを登録する
+		// Register the addon
 		Addon::Register<LoadingCircleAddon>(U"LoadingCircleAddon");
 
 		while (System::Update())
@@ -155,12 +155,12 @@
 			{
 				if (not isActive)
 				{
-					// ロード中の円の描画を開始する
+					// Start drawing the loading circle
 					LoadingCircleAddon::Begin(Circle{ 400, 300, 80 }, 10, ColorF{ 0.8, 0.9, 1.0 });
 				}
 				else
 				{
-					// ロード中の円の描画を終了する
+					// End drawing the loading circle
 					LoadingCircleAddon::End();
 				}
 			}
@@ -168,75 +168,75 @@
 	}
 	```
 
-## 2. メッセージの通知
+## 2. Message notifications
 
 <video src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/addon/2.mp4?raw=true" autoplay loop muted playsinline></video>
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
-	/// @brief 通知を管理するアドオン
+	/// @brief Addon that manages notifications
 	class NotificationAddon : public IAddon
 	{
 	public:
 
-		/// @brief 通知の種類
+		/// @brief Notification types
 		enum class Type
 		{
-			/// @brief 通常
+			/// @brief Normal
 			Normal,
 
-			/// @brief 情報
+			/// @brief Information
 			Information,
 
-			/// @brief 疑問
+			/// @brief Question
 			Question,
 
-			/// @brief 成功
+			/// @brief Success
 			Success,
 
-			/// @brief 警告
+			/// @brief Warning
 			Warning,
 
-			/// @brief 失敗
+			/// @brief Failure
 			Failure,
 		};
 
-		/// @brief 通知のスタイル
+		/// @brief Notification style
 		struct Style
 		{
-			/// @brief 通知の幅
+			/// @brief Notification width
 			double width = 300.0;
 
-			/// @brief 通知の背景色
+			/// @brief Notification background color
 			ColorF backgroundColor{ 0.0, 0.8 };
 
-			/// @brief 通知の枠線色
+			/// @brief Notification frame color
 			ColorF frameColor{ 0.75 };
 
-			/// @brief 通知の文字色
+			/// @brief Notification text color
 			ColorF textColor{ 1.0 };
 
-			/// @brief 情報アイコンの色
+			/// @brief Information icon color
 			ColorF informationColor{ 0.0, 0.72, 0.83 };
 
-			/// @brief 疑問アイコンの色
+			/// @brief Question icon color
 			ColorF questionColor{ 0.39, 0.87, 0.09 };
 
-			/// @brief 成功アイコンの色
+			/// @brief Success icon color
 			ColorF successColor{ 0.0, 0.78, 0.33 };
 
-			/// @brief 警告アイコンの色
+			/// @brief Warning icon color
 			ColorF warningColor{ 1.0, 0.57, 0.0 };
 
-			/// @brief 失敗アイコンの色
+			/// @brief Failure icon color
 			ColorF failureColor{ 1.00, 0.32, 0.32 };
 		};
 
-		/// @brief 通知を表示します。
-		/// @param message メッセージ
-		/// @param type 通知の種類
+		/// @brief Shows a notification.
+		/// @param message Message
+		/// @param type Notification type
 		static void Show(const StringView message, const Type type = NotificationAddon::Type::Normal)
 		{
 			if (auto p = Addon::GetAddon<NotificationAddon>(U"NotificationAddon"))
@@ -245,8 +245,8 @@
 			}
 		}
 
-		/// @brief 通知の表示時間を設定します。
-		/// @param lifeTime 表示時間（秒）
+		/// @brief Sets the notification display time.
+		/// @param lifeTime Display time (seconds)
 		static void SetLifeTime(const double lifeTime)
 		{
 			if (auto p = Addon::GetAddon<NotificationAddon>(U"NotificationAddon"))
@@ -255,8 +255,8 @@
 			}
 		}
 
-		/// @brief 通知のスタイルを設定します。
-		/// @param style スタイル
+		/// @brief Sets the notification style.
+		/// @param style Style
 		static void SetStyle(const Style& style)
 		{
 			if (auto p = Addon::GetAddon<NotificationAddon>(U"NotificationAddon"))
@@ -376,7 +376,7 @@
 	{
 		Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
 
-		// アドオンを登録する
+		// Register the addon
 		Addon::Register<NotificationAddon>(U"NotificationAddon");
 
 		while (System::Update())
@@ -415,21 +415,21 @@
 	```
 
 
-## 3. ホモグラフィ変換を適用した 2D 描画
+## 3. 2D drawing with homography transformation
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/addon/3.gif)
 
-??? memo "コード"
+??? memo "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
-	/// @brief ホモグラフィ変換を適用した 2D 描画を行うアドオン
+	/// @brief Addon for 2D drawing with homography transformation
 	class HomographyAddon : public IAddon
 	{
 	public:
 
-		/// @brief ホモグラフィ変換を適用した 2D 描画を行います。
-		/// @param quad 射影先の四角形
-		/// @param texture 描画するテクスチャ
+		/// @brief Performs 2D drawing with homography transformation.
+		/// @param quad Projection target quadrilateral
+		/// @param texture Texture to draw
 		static void Draw(const Quad& quad, const Texture& texture)
 		{
 			if (auto p = Addon::GetAddon<HomographyAddon>(U"HomographyAddon"))
@@ -497,18 +497,18 @@
 		const MSRenderTexture renderTexture{ Size{ 800, 600 } };
 		const Texture texture{ U"example/windmill.png", TextureDesc::Mipped };
 
-		// アドオンを登録する
+		// Register the addon
 		Addon::Register<HomographyAddon>(U"HomographyAddon");
 
 		const Quad q1{ Vec2{ 150, 300 }, Vec2{ 650, 300 }, Vec2{ 800, 600 }, Vec2{ 0, 600 } };
 		const Quad q2{ Vec2{ 400, 50 }, Vec2{ 800, 0 }, Vec2{ 800, 300 }, Vec2{ 400, 250 } };
 
-		// q1 から Scene::Rect() へのホモグラフィ変換行列
+		// Homography transformation matrix from q1 to Scene::Rect()
 		const Mat3x3 mat = Mat3x3::Homography(q1, Rect{ 800, 600 }.asQuad());
 
 		while (System::Update())
 		{
-			// q1 上の座標を Scene::Rect() 上の座標に変換してセルのインデックスを計算する
+			// Transform coordinates on q1 to coordinates on Scene::Rect() and calculate cell index
 			const Point index = (mat.transformPoint(Cursor::Pos()).asPoint() / 40);
 			{
 				const ScopedRenderTarget2D target{ renderTexture.clear(ColorF{ 1.0 }) };
@@ -529,7 +529,7 @@
 				}
 			}
 
-			// MSRenderTexture の内容確定と resolve
+			// Finalize and resolve MSRenderTexture content
 			{
 				Graphics2D::Flush();
 				renderTexture.resolve();
