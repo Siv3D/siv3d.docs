@@ -3,6 +3,8 @@
 ## 1. Siv3D Discord Server
 This is a group chat for Siv3D users. It has dedicated channels for various purposes, allowing you to discuss Siv3D, ask questions, and showcase your work. There are also channels for those interested in the development of the Siv3D engine itself, where we share progress updates and collaborate on new features.
 
+While many conversations are in Japanese, we warmly welcome posts and questions in English. Many of our Japanese members use translation tools, so don't let the language barrier stop you from joining the conversation!
+
 [:fontawesome-brands-discord: Join the Siv3D Discord Server](https://discord.gg/mzevvsY){ .md-button .md-button--primary }
 
 ## 2. Siv3D Implementation Meetups
@@ -12,9 +14,9 @@ Meetups can be either offline or online. Online meetups are held on the Siv3D Di
 
 ### Comments from Implementation Meetup Participants
 
-<blockquote>This was my first time participating, and as a beginner, I was very anxious. However, they clearly explained everything I didn't understand and answered all my questions. I also had the valuable experience of creating and completing a game from scratch in just three hours. It was a very meaningful time.</blockquote>  
+> This was my first time participating, and as a beginner, I was very anxious. However, they clearly explained everything I didn't understand and answered all my questions. I also had the valuable experience of creating and completing a game from scratch in just three hours. It was a very meaningful time.
 
-<blockquote>It had been about a year since I last participated in an OpenSiv3D implementation meetup. I spent my time leisurely creating sample code while learning about new features. The script functionality, which doesn't require compilation, is powerful. Seeing a game being made in real-time with this ultra-high-speed development was very educational.</blockquote>
+> It had been about a year since I last participated in an OpenSiv3D implementation meetup. I spent my time leisurely creating sample code while learning about new features. The script functionality, which doesn't require compilation, is powerful. Seeing a game being made in real-time with this ultra-high-speed development was very educational.
 
 ## 3. Siv3D Study Sessions
 These are events where you can learn game and app development by programming with sound, images, and AI in Siv3D. They are also a great opportunity to share your opinions and ask questions directly to the Siv3D developer.
