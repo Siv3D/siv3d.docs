@@ -1,7 +1,7 @@
 # Getting Started with Siv3D Programming on Ubuntu
 
 ## 1. System Requirements
-The development environment required for Siv3D programming on Ubuntu is as follows. We use the default version of GCC for Ubuntu.
+The development environment required for Siv3D programming on Ubuntu is as follows. The default version of GCC for your Ubuntu distribution should be used.
 
 |  |  |
 |--|--|
@@ -12,22 +12,22 @@ The development environment required for Siv3D programming on Ubuntu is as follo
 | Development Environment | GCC 9.3.0 (+ Boost 1.71.0) / GCC 11.2 (+ Boost 1.74.0) / Clang 14.0.0 (+ Boost 1.74.0) |
 
 ## 2. Get the Latest Siv3D Code
-[The main branch of the official OpenSiv3D repository :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D) is the latest stable version. Clone the repository from "Code" or download the source code as a ZIP file ("Download ZIP").
+The `main` branch of the [official OpenSiv3D repository :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D) contains the latest stable version. Clone the repository using "Code" > "Clone", or download the source code as a ZIP file ("Download ZIP").
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/download/ubuntu/repo.png)
 
 ## 3. Build Siv3D
-1. Install the required dependency packages.
+1. Install the required dependency packages by running the commands at this link:
 [https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ubuntu.yml#L22-L23](https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ubuntu.yml#L22-L23)
-2. Build the Siv3D library to create `libSiv3D.a`.
+2. Build the Siv3D library (`libSiv3D.a`) by running the commands at this link: 
 [https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ubuntu.yml#L25-L34](https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ubuntu.yml#L25-L34)
-3. Install Siv3D.
+3. Install Siv3D by running the commands at this link: 
 [https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ubuntu.yml#L36-L39](https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ubuntu.yml#L36-L39)
-4. Build Siv3D apps.
+4. Build a Siv3D app by running the commands at this link: 
 [https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ubuntu.yml#L41-L50](https://github.com/Siv3D/OpenSiv3D/blob/main/.github/workflows/ubuntu.yml#L41-L50)
 
 ## 4. Sample Program
-The default [Main.cpp code](https://github.com/Siv3D/OpenSiv3D/blob/main/Linux/App/Main.cpp) for the Linux version is a simple program that outputs to standard output and exits immediately. Please overwrite it with sample code like the following by changing the commented-out sections. You can exit the running program by pressing ++esc++ or closing the window.
+The default [Main.cpp code](https://github.com/Siv3D/OpenSiv3D/blob/main/Linux/App/Main.cpp) for the Linux version is a simple program that prints to standard output and exits immediately. Please replace its content with the sample code provided below. To exit the running program, press ++esc++ or close the window.
 
 ??? summary "Sample Code"
 	```cpp
