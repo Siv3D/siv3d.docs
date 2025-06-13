@@ -1,16 +1,16 @@
 # Mascot: Siv3D-kun
 
 ## 1. Overview
-- "Siv3D-kun" is the mascot character of the C++ framework Siv3D
-- In 2015, a design contest was held, and the design by [灰色 :material-open-in-new:](https://www.pixiv.net/users/2177957){:target="_blank"} was selected
+- "Siv3D-kun" is the mascot character for the C++ framework Siv3D.
+- In 2015, a design contest was held, and the design by [灰色 :material-open-in-new:](https://www.pixiv.net/users/2177957){:target="_blank"} was selected.
 
 <div class="noshadow-75"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/mascot/siv3d-kun.png"></div>
 
-## 2. Character Settings
-- Age: 12 years old / Height: 144 cm / Weight: 36 kg
-- Speed-type muscle-brained fighter
-- Can move his tail by himself
-- Long arms extend below the hem of his pants
+## 2. Character Profile
+- **Age**: 12 years old / **Height**: 144 cm / **Weight**: 36 kg
+- A speedy fighter who relies on brute force.
+- He can move his tail at will.
+- His long arms reach below his pant cuffs.
 
 === "Character Sheet 1"
 	<div class="noshadow-75"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/mascot/siv3d-kun-detail-1.png"></div>
@@ -20,10 +20,10 @@
 
 
 ## 3. Related Files
-- The following files are included with Siv3D projects:
-    - Official image [`example/siv3d-kun.png`](https://github.com/Siv3D/OpenSiv3D/blob/main/WindowsDesktop/App/example/siv3d-kun.png){:target="_blank"} 
-    - 3D model [`example/obj/siv3d-kun.obj`](https://github.com/Siv3D/OpenSiv3D/blob/main/WindowsDesktop/App/example/obj/siv3d-kun.obj){:target="_blank"} 
-    - Pixel art [`example/spritesheet/siv3d-kun-16.png`](https://github.com/Siv3D/OpenSiv3D/blob/main/WindowsDesktop/App/example/spritesheet/siv3d-kun-16.png){:target="_blank"} 
+- The following files are included in Siv3D projects:
+    - Official image: [`example/siv3d-kun.png`](https://github.com/Siv3D/OpenSiv3D/blob/main/WindowsDesktop/App/example/siv3d-kun.png){:target="_blank"} 
+    - 3D model: [`example/obj/siv3d-kun.obj`](https://github.com/Siv3D/OpenSiv3D/blob/main/WindowsDesktop/App/example/obj/siv3d-kun.obj){:target="_blank"} 
+    - Pixel art: [`example/spritesheet/siv3d-kun-16.png`](https://github.com/Siv3D/OpenSiv3D/blob/main/WindowsDesktop/App/example/spritesheet/siv3d-kun-16.png){:target="_blank"} 
 
 ## 4. Gallery
 
