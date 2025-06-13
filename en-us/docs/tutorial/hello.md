@@ -12,7 +12,7 @@ Experience Siv3D programming by modifying the first sample.
 	3. Handle keyboard input (++left++ and ++right++ move the player 🦖)
 
 - The details of the functions modified in the sample will be explained in future tutorials
-- First, let's actually touch the main features and get a feel for Siv3D programming
+- First, let's explore the main features and get a feel for Siv3D programming
 
 !!! warning "End the program before building"
 	- When building modified code in Visual Studio or Xcode, if the previous program is still running, the executable file cannot be updated and the build will fail
