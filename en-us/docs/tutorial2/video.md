@@ -51,7 +51,7 @@ void Main()
 ## 32.2 (Reference Implementation) Support for Videos with Audio
 - There is no dedicated class for playing videos with audio
 - You can play videos with audio by simultaneously creating `VideoTexture` and `Audio` from a video file with audio and synchronizing their playback
-	- `Audio` is explained in detail in [**Tutorial 41. Audio Playback**](../tutorial3/audio.md)
+	- `Audio` is explained in detail in [**Tutorial 41. Audio Playback**](../tutorial3/audio.md){:target="_blank"}
 	- Some platforms may not support loading video files with audio
 - The following sample is an implementation example:
 	- When the difference between video playback position and audio playback position exceeds 0.1 seconds, the audio playback position is adjusted to match the video playback position

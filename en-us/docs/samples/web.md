@@ -87,7 +87,7 @@
 
 
 ## 3. Chat
-For how to integrate with Photon, see [Tutorial 75. Multiplayer](../tutorial4/multiplayer.md).  
+For how to integrate with Photon, see [Tutorial 75. Multiplayer](../tutorial4/multiplayer.md){:target="_blank"}.  
 This is a sample for sending and receiving data between players who joined the created room.
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/web/3.png)

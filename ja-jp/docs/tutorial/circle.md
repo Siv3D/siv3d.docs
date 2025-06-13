@@ -45,7 +45,7 @@ void Main()
 
 ## 10.3 色のついた円を描く
 - 図形に色を付けるには、`.draw()` 関数の引数に色を渡します
-- 色の指定には、[**チュートリアル 8. 背景の色を変える**](./background.md) で学んだ `Palette` や `ColorF`, `HSV` を使います
+- 色の指定には、[**チュートリアル 8. 背景の色を変える**](./background.md){:target="_blank"} で学んだ `Palette` や `ColorF`, `HSV` を使います
 - 色を指定しなかった場合は白色になります
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/circle/3.png)

@@ -164,7 +164,7 @@ C++ のスキルを活かしたいプログラマーや、C++ での開発を学
 
     ---
 
-    Siv3D で困ったことがあれば、Discord 上の [**オンラインコミュニティ**](community/community.md) が助けになります。学校への [**無料訪問勉強会**](community/community.md) も行っています。オープンソース開発に興味のある学生には、Siv3D を練習場とするサポートプログラムを提供しています。
+    Siv3D で困ったことがあれば、Discord 上の [**オンラインコミュニティ**](community/community.md){:target="_blank"} が助けになります。学校への [**無料訪問勉強会**](community/community.md){:target="_blank"} も行っています。オープンソース開発に興味のある学生には、Siv3D を練習場とするサポートプログラムを提供しています。
 
 -   __6. Web ブラウザで動く__
 

@@ -272,7 +272,7 @@ void Main()
 
 ??? example "Hot Reload"
 	- In Visual Studio, under certain conditions, you can use "hot reload" to apply code changes while the program is running
-	- If you want to know how to use hot reload, refer to [**Hot Reload**](../tools/hot-reload.md)
+	- If you want to know how to use hot reload, refer to [**Hot Reload**](../tools/hot-reload.md){:target="_blank"}
 
 
 ## Review Checklist

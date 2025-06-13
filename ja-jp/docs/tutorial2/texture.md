@@ -150,7 +150,7 @@ void Main()
 
 ## 31.5 画像データから作成
 - プログラムで生成・加工した画像データ（`Image` クラス）からテクスチャを作成できます
-	- `Image` クラスについては [**チュートリアル 63**](../tutorial4/image.md) を参照してください
+	- `Image` クラスについては [**チュートリアル 63**](../tutorial4/image.md){:target="_blank"} を参照してください
 - `Texture{ 画像データ }` で、画像データからテクスチャを作成します
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/5.png)

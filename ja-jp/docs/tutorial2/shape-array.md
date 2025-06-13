@@ -136,7 +136,7 @@ void Main()
 
 ## 23.5 クリックによる Circle 削除（`.remove_if()` 方式）
 - `.remove_if()` を使って、左クリックされた `Circle` を削除します
-    - `.remove_if()` での要素削除については [**チュートリアル 22.17**](./array.md) 参照
+    - `.remove_if()` での要素削除については [**チュートリアル 22.17**](./array.md){:target="_blank"} 参照
 - 「その円が左クリックされたか」を判定するラムダ式を `.remove_if()` に渡します
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape-array/5.png)
@@ -173,7 +173,7 @@ void Main()
 
 ## 23.6 クリックによる Circle 削除（イテレータ方式）
 - イテレータ方式で、左クリックされた `Circle` を削除します
-    - イテレータ方式での要素削除については [**チュートリアル 22.16**](./array.md) 参照
+    - イテレータ方式での要素削除については [**チュートリアル 22.16**](./array.md){:target="_blank"} 参照
 - `.remove_if()` 方式に比べ、削除に合わせた追加の処理（得点の加算、これ以上の削除の打ち切りなど）を書きやすい特徴があります
 - 要素へのアクセスは、`.erase()` による削除を行う前に行う必要があります
 
@@ -274,7 +274,7 @@ void Main()
 
 
 ## 23.8 一定時間ごとの Circle 追加
-- [**チュートリアル 19.3**](../tutorial/time.md) の「一定時間おきに何かをする」を応用して、0.5 秒ごとに `Circle` を追加します
+- [**チュートリアル 19.3**](../tutorial/time.md){:target="_blank"} の「一定時間おきに何かをする」を応用して、0.5 秒ごとに `Circle` を追加します
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape-array/8.png)
 

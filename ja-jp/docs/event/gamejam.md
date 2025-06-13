@@ -235,7 +235,7 @@ my_game/
 ### 9.4 実行ファイルのサイズを削減する（Siv3D に慣れている人向け）
 実行ファイルのサイズは、使っていない Siv3D 機能のファイルの埋め込みを削除することで減らすことができます。詳しくは [Zenn Siv3D チュートリアル 41 | アプリの公開 :material-open-in-new:](https://zenn.dev/reputeless/books/siv3d-documentation/viewer/tutorial-release){:target="_blank"} の 41.10 を確認してください。この際、必要なファイルを誤って削除してしまうと、プログラムが正常に動作しなかったり、フォントが表示されなかったりするため、注意が必要です。
 
-Web 版に関しては、これとは別のファイルサイズ削減方法があります。[Web 版の利用ガイド](../download/web.md) を確認するか、Siv3D Discord サーバでご相談ください。
+Web 版に関しては、これとは別のファイルサイズ削減方法があります。[Web 版の利用ガイド](../download/web.md){:target="_blank"} を確認するか、Siv3D Discord サーバでご相談ください。
 
 
 ### 9.5 ファイル一式の提出
@@ -333,7 +333,7 @@ App フォルダ内に画像や音声、テキストなどの外部ファイル�
 
 
 #### E. より複雑な場合（GitHub リポジトリで公開）
-より複雑な場合は、可能な範囲ソースファイル・関連ファイルを GitHub リポジトリで公開してください。必要に応じて、[Siv3D プロジェクト用の .gitignore ファイル](../tools/gitignore.md) も活用してください。
+より複雑な場合は、可能な範囲ソースファイル・関連ファイルを GitHub リポジトリで公開してください。必要に応じて、[Siv3D プロジェクト用の .gitignore ファイル](../tools/gitignore.md){:target="_blank"} も活用してください。
 
 
 #### F. 直接アップロード

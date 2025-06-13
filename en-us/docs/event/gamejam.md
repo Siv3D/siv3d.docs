@@ -235,7 +235,7 @@ You can embed image and audio files used in your work into the executable file. 
 ### 9.4 Reducing Executable File Size (For Those Familiar with Siv3D)
 Executable file size can be reduced by removing embedded files for unused Siv3D features. For details, see section 41.10 of [Zenn Siv3D Tutorial 41 | App Publishing :material-open-in-new:](https://zenn.dev/reputeless/books/siv3d-documentation/viewer/tutorial-release){:target="_blank"}. Be careful during this process, as accidentally deleting necessary files can cause programs to malfunction or fonts not to display.
 
-For web versions, there are different file size reduction methods. Check the [Web Version Usage Guide](../download/web.md) or consult on the Siv3D Discord server.
+For web versions, there are different file size reduction methods. Check the [Web Version Usage Guide](../download/web.md){:target="_blank"} or consult on the Siv3D Discord server.
 
 
 ### 9.5 Submitting Complete File Set
@@ -333,7 +333,7 @@ When you place external files like images, audio, and text in the App folder, pu
 
 
 #### E. For More Complex Cases (Publish with GitHub Repository)
-For more complex cases, please publish source files and related files in a GitHub repository to the extent possible. Use the [.gitignore file for Siv3D projects](../tools/gitignore.md) as needed.
+For more complex cases, please publish source files and related files in a GitHub repository to the extent possible. Use the [.gitignore file for Siv3D projects](../tools/gitignore.md){:target="_blank"} as needed.
 
 
 #### F. Direct Upload

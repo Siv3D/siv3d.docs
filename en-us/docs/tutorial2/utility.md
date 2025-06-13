@@ -576,7 +576,7 @@ true
 ## 21.17 Errors
 - When you want to throw an exception to report an error in a Siv3D program, the `Error` class is convenient
 - If this exception is not caught, the Siv3D engine will display the error message content in a message box and terminate the program
-- For displaying the exception location in the IDE on Windows (Visual Studio), see [Displaying Exception Locations](../tools/msvc-exception.md)
+- For displaying the exception location in the IDE on Windows (Visual Studio), see [Displaying Exception Locations](../tools/msvc-exception.md){:target="_blank"}
 
 ```cpp
 # include <Siv3D.hpp>

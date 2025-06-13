@@ -4,7 +4,7 @@ Learn how to handle time and motion in Siv3D.
 ## 30.1 Measuring Elapsed Time
 - `Scene::DeltaTime()` returns the **elapsed time from the previous frame (in seconds)** as a `double` type
     - This value can be used to create motion that is independent of frame rate
-    - For details, see [**Tutorial 14**](../tutorial/motion.md)
+    - For details, see [**Tutorial 14**](../tutorial/motion.md){:target="_blank"}
 - Generally, if the elapsed time from the previous frame is too large, animation and physics simulation steps in the game become large, potentially compromising stability
 - Therefore, `Scene::DeltaTime()` is limited to not exceed the value of `Scene::GetMaxDeltaTime()` (default is `0.1`)
 

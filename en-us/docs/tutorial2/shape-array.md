@@ -136,7 +136,7 @@ void Main()
 
 ## 23.5 Removing Circles by Clicking (`.remove_if()` Method)
 - Use `.remove_if()` to remove `Circle`s that are left-clicked
-    - See [**Tutorial 22.17**](./array.md) for element removal using `.remove_if()`
+    - See [**Tutorial 22.17**](./array.md){:target="_blank"} for element removal using `.remove_if()`
 - Pass a lambda expression to `.remove_if()` that determines "whether the circle was left-clicked"
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape-array/5.png)
@@ -173,7 +173,7 @@ void Main()
 
 ## 23.6 Removing Circles by Clicking (Iterator Method)
 - Remove `Circle`s that are left-clicked using the iterator method
-    - See [**Tutorial 22.16**](./array.md) for element removal using iterators
+    - See [**Tutorial 22.16**](./array.md){:target="_blank"} for element removal using iterators
 - Compared to the `.remove_if()` method, this approach makes it easier to write additional processing along with removal (such as adding points, stopping further removals, etc.)
 - Access to elements must be done before removal with `.erase()`
 
@@ -274,7 +274,7 @@ void Main()
 
 
 ## 23.8 Adding Circles at Regular Intervals
-- Apply the "doing something at regular intervals" from [**Tutorial 19.3**](../tutorial/time.md) to add a `Circle` every 0.5 seconds
+- Apply the "doing something at regular intervals" from [**Tutorial 19.3**](../tutorial/time.md){:target="_blank"} to add a `Circle` every 0.5 seconds
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/shape-array/8.png)
 

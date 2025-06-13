@@ -45,7 +45,7 @@ void Main()
 
 ## 10.3 Drawing Colored Circles
 - To add color to shapes, pass a color as an argument to the `.draw()` function
-- For color specification, use `Palette`, `ColorF`, or `HSV` as learned in [**Tutorial 8. Changing Background Color**](./background.md)
+- For color specification, use `Palette`, `ColorF`, or `HSV` as learned in [**Tutorial 8. Changing Background Color**](./background.md){:target="_blank"}
 - When no color is specified, it defaults to white
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial/circle/3.png)

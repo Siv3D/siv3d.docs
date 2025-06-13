@@ -164,7 +164,7 @@ For programmers who want to leverage their C++ skills or those who want to learn
 
     ---
 
-    If you encounter difficulties with Siv3D, the [**online community**](community/community.md) on Discord will help. We also conduct [**free school visit study sessions**](community/community.md). For students interested in open source development, we provide support programs using Siv3D as a practice ground.
+    If you encounter difficulties with Siv3D, the [**online community**](community/community.md){:target="_blank"} on Discord will help. We also conduct [**free school visit study sessions**](community/community.md){:target="_blank"}. For students interested in open source development, we provide support programs using Siv3D as a practice ground.
 
 -   __6. Runs in Web Browsers__
 

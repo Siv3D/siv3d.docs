@@ -6,7 +6,7 @@ Learn how to create motion by changing variable values over time to make shapes 
 - Specifically, prepare variables that manage the motion state and change the variable values over time
 
 ### Problems with Fixed Value Addition Motion
-- **Adding fixed values every frame** as in the following code causes the motion speed to vary depending on the main loop execution frequency ([**Tutorial 4.3**](./main.md))
+- **Adding fixed values every frame** as in the following code causes the motion speed to vary depending on the main loop execution frequency ([**Tutorial 4.3**](./main.md){:target="_blank"})
 
 ```cpp title="Program that moves 1 pixel per frame" hl_lines="10"
 # include <Siv3D.hpp>

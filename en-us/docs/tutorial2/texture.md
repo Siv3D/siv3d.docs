@@ -150,7 +150,7 @@ void Main()
 
 ## 31.5 Creating from Image Data
 - You can create a texture from image data (`Image` class) generated or processed by a program
-	- See [**Tutorial 63**](../tutorial4/image.md) for more about the `Image` class
+	- See [**Tutorial 63**](../tutorial4/image.md){:target="_blank"} for more about the `Image` class
 - Use `Texture{ image_data }` to create a texture from image data
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/texture/5.png)
