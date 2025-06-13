@@ -1,14 +1,14 @@
-# C++ Framework for Creative Coding: Siv3D
+# Siv3D: A C++ Framework for Creative Coding
 <div class="logo"><img src="https://siv3d.jp/logo.png" width="1450" height="450"></div>
 
-**Siv3D** is an open-source framework that enables developers to create games and applications using sound, images, and AI with modern C++ code in an enjoyable and simple way. It comes with extensive sample code and tutorials, and an online user community where you can easily ask questions and seek advice.
+**Siv3D** is an open-source framework for creating games, media art, and other applications easily and enjoyably with modern C++. It comes with extensive sample code and tutorials, and an online user community where you can easily ask questions and seek advice.
 
 
 ## Download Siv3D
 
 [Windows :material-microsoft-windows:](download/windows.md){ .md-button .md-button--primary }[macOS :material-apple:](download/macos.md){ .md-button .md-button--primary }[Ubuntu :material-ubuntu:](download/ubuntu.md){ .md-button .md-button--primary }[Web * :material-web:](download/web.md){ .md-button .md-button--primary }
 
-<small>* The Web version is an unofficial extension by volunteers. It requires complex setup and is recommended for intermediate to advanced Siv3D users.</small>
+<small>* The Web version is a community-driven, unofficial extension. It requires a more complex setup and is recommended for intermediate or advanced Siv3D users.</small>
 
 <div class="grid cards" markdown>
 
@@ -51,7 +51,7 @@
 
 
 ## Streamlining Game and Application Development with C++
-Rich classes and functions for 2D/3D graphics rendering, audio playback, input handling, physics simulation, image processing, AI, network communication, and other essential features for practical software development are provided.
+Siv3D provides a rich set of classes and functions for 2D/3D graphics, audio, input handling, physics, image processing, AI, networking, and all the essentials for developing practical software.
 
 Unlike commercial game engines such as Unity and Unreal Engine, Siv3D doesn't require proprietary editors or scripts, allowing you to complete games and applications using pure C++ code only.
 
@@ -121,7 +121,7 @@ For programmers who want to leverage their C++ skills or those who want to learn
 
 	<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/AAbWaGPMjg0?si=RC7OVc9PtSoLUi7x" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-??? success "5. Participation in Open Source Activities (Click for details)"
+??? success "5. Contributing to Open Source (Click for details)"
 	You can leverage your programming experience and implementation skills to participate in open source activities that improve the Siv3D development experience, such as developing the Siv3D engine itself, reporting bugs, creating sample code, and writing articles. So far, more than 60 people, including middle school students, have committed source code to the Siv3D engine.
 
 ??? success "6. Web Browser Distribution (Click for details)"
@@ -136,7 +136,7 @@ For programmers who want to leverage their C++ skills or those who want to learn
 
 <div class="grid cards" markdown>
 
--   __1. Open Source and Secure__
+-   __1. Open Source and Trustworthy__
 
     ---
 
@@ -148,19 +148,19 @@ For programmers who want to leverage their C++ skills or those who want to learn
 
     The Siv3D SDK installer for Windows is only 120 MB. Installation is completed with just a few clicks and appears in the Visual Studio menu. All information needed for development is available in the official tutorials, eliminating the need to search for books or introductory articles.
 
--   __3. Very Short Code__
+-   __3. Concise Code__
 
     ---
 
     Abundant convenient functions and classes for rendering and input/output are provided, allowing you to complete simple applications in a single .cpp file. Share your source code instantly on GitHub or GitHub Gist to exchange techniques with Siv3D users worldwide.
 
--  __4. Small Learning, Big Power__
+-  __4. Low Learning Curve, High Power__
 
     ---
 
     Siv3D is a large-scale engine consisting of 2,200 source files and 90 third-party software packages. You can freely handle its powerful features by learning only the consistent Siv3D API. Learning costs are minimized, allowing you to focus on project development.
 
--  __5. Helpful Community__
+-  __5. Friendly & Helpful Community__
 
     ---
 
