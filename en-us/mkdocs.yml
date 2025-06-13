@@ -74,7 +74,7 @@ extra:
 
 # Page tree
 nav:
-  - Get Started with Siv3D: Siv3D: index.md
+  - "Get Started with Siv3D: Siv3D": index.md
   - Siv3D Features: features.md
   - Release Notes: releases.md
   - Download:
