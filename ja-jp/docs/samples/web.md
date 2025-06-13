@@ -87,7 +87,7 @@
 
 
 ## 3. チャット
-Photon との連係方法は、[チュートリアル 66. マルチプレイヤー](../tutorial4/multiplayer.md) を参照してください。  
+Photon との連係方法は、[チュートリアル 75. マルチプレイヤー](../tutorial4/multiplayer.md) を参照してください。  
 作成したルームに参加したプレイヤー同士でデータの送受信を行うサンプルです。
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/web/3.png)
