@@ -919,5 +919,4 @@
 
 
 ## Previous Versions
-
-For complete release history including older versions, please refer to the [GitHub Releases page :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D/releases){:target="_blank"}.
+- [旧 Siv3D 更新履歴 :material-open-in-new:](https://github.com/Siv3D/Reference-JP/wiki/%E6%9B%B4%E6%96%B0%E5%B1%A5%E6%AD%B4){:target="_blank"}
