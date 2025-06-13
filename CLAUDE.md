@@ -15,21 +15,27 @@ pip install mkdocs-material
 
 ### Build Documentation
 ```bash
-cd ja-jp/    # Navigate to language directory
+cd ja-jp/    # Navigate to Japanese language directory
 mkdocs build # Generates static site in ../../siv3d.github.io/ja-jp/
+
+cd en-us/    # Navigate to English language directory  
+mkdocs build # Generates static site in ../../siv3d.github.io/en-us/
 ```
 
 ### Development Server
 ```bash
 cd ja-jp/
-mkdocs serve  # Live preview with auto-reload
+mkdocs serve  # Live preview with auto-reload (Japanese)
+
+cd en-us/
+mkdocs serve  # Live preview with auto-reload (English)
 ```
 
 ## Architecture
 
 ### Multi-language Structure
 - `ja-jp/` - Japanese documentation (primary, complete)
-- `en-us/` - English documentation (secondary, incomplete/in development)
+- `en-us/` - English documentation (secondary, complete)
 - Each language has its own `mkdocs.yml` configuration and `docs/` content directory
 
 ### Content Organization
@@ -61,4 +67,4 @@ Documentation follows a progressive learning structure:
 - Test builds locally with `mkdocs serve` before pushing changes
 - Markdown files use various extensions (admonitions, code blocks, tables, etc.)
 - Images and assets go in `docs/assets/` directory
-- The English documentation appears to be undergoing restructuring (many deleted files on current branch)
+- Both language versions are now complete and maintain feature parity
