@@ -1,4 +1,4 @@
-# 35. Types That Can Represent Invalid Values
+# 35. Optional Values
 Learn the basic usage of the `Optional` type that can represent invalid values.
 
 ## 35.1 Optional

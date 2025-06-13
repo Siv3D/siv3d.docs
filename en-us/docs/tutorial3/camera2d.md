@@ -1,4 +1,4 @@
-# 49. 2D Coordinate Transformation and Camera
+# 49. 2D Camera and Transformations
 Learn how to apply coordinate transformations such as translation, scaling, and rotation to drawing coordinates and mouse cursor coordinates.
 
 ## 49.1 Applying Offset to Drawing Coordinates (Vec2 Addition)

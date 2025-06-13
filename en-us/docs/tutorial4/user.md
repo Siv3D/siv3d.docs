@@ -1,4 +1,4 @@
-# 66. Getting User Environment
+# 66. Accessing System and User Information
 Learn how to get user information and environment variables.
 
 ## 66.1 Getting User Information

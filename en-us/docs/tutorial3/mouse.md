@@ -1,4 +1,4 @@
-# 43. Mouse Input
+# 43. Advanced Mouse Input
 Learn how to handle mouse input.
 
 ## 43.1 Mouse Cursor Position

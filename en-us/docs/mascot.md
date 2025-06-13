@@ -1,4 +1,4 @@
-# Siv3D-kun
+# Mascot: Siv3D-kun
 
 ## 1. Overview
 - "Siv3D-kun" is the mascot character of the C++ framework Siv3D

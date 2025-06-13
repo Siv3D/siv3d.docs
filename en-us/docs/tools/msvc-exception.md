@@ -1,4 +1,4 @@
-# Displaying Exception Locations
+# Debugging: Displaying Exception Locations in Visual Studio
 
 ## Configuration Method
 Due to the design of Windows Siv3D running `Main()` in a subthread, by default, the line where an exception occurs is not displayed in the code editor.

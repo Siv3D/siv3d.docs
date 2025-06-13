@@ -1,4 +1,4 @@
-# Integration of Custom Classes with Siv3D
+# Integrating Custom Classes with Siv3D
 
 ## 1. Overview
 

@@ -1,4 +1,4 @@
-# 42. Keyboard Input
+# 42. Advanced Keyboard Input
 Learn how to handle keyboard input.
 
 ## 42.1 Key Input State

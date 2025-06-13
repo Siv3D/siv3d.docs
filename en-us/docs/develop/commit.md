@@ -1,4 +1,4 @@
-# Contribution Guide to Siv3D
+# Siv3D Contribution Guide
 
 Thank you for considering contributing to Siv3D.  
 We appreciate your efforts and contributions to improving the project.  

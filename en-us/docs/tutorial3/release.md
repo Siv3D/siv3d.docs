@@ -1,4 +1,4 @@
-# 60. App Distribution
+# 60. Distributing Your Application
 Learn the procedures for distributing the applications you've created.
 
 ## 60.1 Considering Various Environments

@@ -1,4 +1,4 @@
-# 40. Implementing Interactions
+# 40. Creating Interactive UI
 Create interactive programs using the content from Tutorials 3-39.
 
 ## 40.1 Placing Circles at Clicked Locations

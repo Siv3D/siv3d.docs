@@ -1,4 +1,4 @@
-# 25. Item Collection Game
+# 25. Project: Item Collection Game
 Using the content from tutorials 3-24, we'll create a game where you collect falling items.
 
 ## 25.1 Drawing the Background

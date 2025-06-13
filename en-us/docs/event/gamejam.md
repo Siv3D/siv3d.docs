@@ -1,8 +1,8 @@
-# Siv3D Game Jam Information Hub
+# Siv3D Game Jam 2023
 
 <img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/bnscup2023.png" alt="BANDAI NAMCO Studios Cup | Siv3D Game Jam">
 
-## Theme: "Scoop"
+## Theme: "すくう"
 
 [Winning Works](./gamejam2023.md){:target="_blank" .md-button } 
 

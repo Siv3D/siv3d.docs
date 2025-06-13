@@ -1,4 +1,4 @@
-# 5. Basic App Operations
+# 5. Application Basics
 Learn the basic operations of Siv3D applications.
 
 ## 5.1 Exit the Program and Close the Window

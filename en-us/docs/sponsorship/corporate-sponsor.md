@@ -1,4 +1,4 @@
-# Corporate Sponsorship Recruitment
+# Corporate Partners & Sponsorship
 
 ### To Corporate Partners
 Siv3D has been working for many years to develop and provide open-source programming frameworks, support user communities, hold study sessions throughout Japan, and support young people's participation in open source, with the goal of sharing tools and techniques that make C++ game and application development fun and easy with everyone. We ask for your support and sponsorship in agreement with Siv3D's mission.

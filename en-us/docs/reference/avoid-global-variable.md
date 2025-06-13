@@ -1,4 +1,4 @@
-# Classes That Cannot Be Created as Global Variables
+# Why Some Siv3D Classes Cannot Be Global
 
 ## Description
 

@@ -1,4 +1,4 @@
-# 36. Number and String Conversion
+# 36. Formatting and Parsing
 Learn methods for converting numbers → strings and strings → numbers.
 
 ## 36.1 Converting Numbers to Strings

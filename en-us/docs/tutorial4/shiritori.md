@@ -1,4 +1,4 @@
-# 68. AI Drawing Word Chain Game
+# 68. Project: AI Shiritori (Word Chain Game)
 Create a word chain game using drawings by leveraging OpenAI's Vision API. The AI judges the drawn illustrations.
 
 !!! info "OpenAI API Key Required"

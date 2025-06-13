@@ -1,4 +1,4 @@
-# 20. Click Game
+# 20. Project: A Simple Clicker Game
 Create a game where you click items using the content from Tutorials 3-19.
 
 ## 20.1 Item Drawing and Click Detection

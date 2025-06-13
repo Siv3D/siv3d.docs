@@ -1,4 +1,4 @@
-# BANDAI NAMCO Studios Cup 2023 Winning Works
+# Siv3D Game Jam 2023 Award Winners
 The BANDAI NAMCO Studios Cup Siv3D Game Jam 2023 had **74 participants with 44 works**.  
 After rigorous judging, the following 6 works won awards.
 
@@ -60,12 +60,12 @@ After rigorous judging, the following 6 works won awards.
 <img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/bnscup2023.png" alt="BANDAI NAMCO Studios Cup | Siv3D Game Jam">
 
 - Event period: 2 weeks (October 21, 2023 ～ November 5, 2023)
-- Theme: "Scoop"
+- Theme: "すくう"
 
 [Event Page](./gamejam.md){:target="_blank" .md-button } 
 
 ### Judges
 
 - Judge: Kunio Yamaguchi (BANDAI NAMCO Studios)
-- Judge: Shiron Ozawa (BANDAI NAMCO Studios)
+- Judge: Michinori Ozawa (BANDAI NAMCO Studios)
 - Advisor: Ryo Suzuki (Siv3D)

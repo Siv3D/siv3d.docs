@@ -1,4 +1,4 @@
-# 24. Intersection between Shapes
+# 24. Shape Intersection
 
 ## 24.1 Intersection between Shapes
 - To determine if shape A and shape B intersect, use `A.intersects(B)`
