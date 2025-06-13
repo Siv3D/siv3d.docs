@@ -4,7 +4,7 @@ site_dir: '../../siv3d.github.io/en-us'
 site_name: Siv3D
 site_url: https://siv3d.github.io/en-us/
 site_author: Ryo Suzuki
-site_description: "Siv3D: A C++ Framework for Creative Applications" 
+site_description: "Siv3D: A C++ Framework for Creative Coding" 
 
 # Repository
 repo_name: Siv3D/OpenSiv3D
