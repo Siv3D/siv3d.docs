@@ -204,6 +204,7 @@ For programmers who want to leverage their C++ skills or those who want to learn
 - 野菜ジュース
 - [kagamiz](https://github.com/kagamiz){:target="_blank"}
 - [kt2763](https://github.com/kt2763){:target="_blank"}
+- [ぼっちマスター](https://profile.bocchi-master.net/){:target="_blank"}
 
 #### Bronze Sponsor
 アゲハマ, Fuyutsubaki, 😊, 🐝, jacking75, Chris Ohk, ysaito, おおやま, ShivAlley, lamuda, fal_rnd, As Project, IZUNA, nasatame, sashi, 🌶️, 💯, PlumRice
