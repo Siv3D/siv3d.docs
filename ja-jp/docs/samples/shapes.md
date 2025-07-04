@@ -802,3 +802,393 @@
 		}
 	}
 	```
+
+
+## 12. Spline2D の曲率取得
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/BMUod9VWbgI?si=iPu3wvIvn3wbTBWs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+??? memo "コード"
+	```cpp
+	# include <Siv3D.hpp>
+
+	void Main()
+	{
+		Window::Resize(1280, 720);
+		Scene::SetBackground(ColorF{ 0.75 });
+
+		Array<Vec2> points;
+		Spline2D spline;
+
+		Polygon polygon;
+		Stopwatch stopwatch;
+		SplineIndex si;
+
+		while (System::Update())
+		{
+			// 制御点を追加する
+			if (MouseL.down())
+			{
+				points << Cursor::Pos();
+				spline = Spline2D{ points, CloseRing::Yes };
+				polygon = spline.calculateRoundBuffer(24);
+				stopwatch.restart();
+			}
+
+			// 各区間の Bounding Rect を可視化する
+			for (size_t i = 0; i < spline.size(); ++i)
+			{
+				const ColorF color = Colormap01F(i / 18.0);
+				spline.boundingRect(i)
+					.draw(ColorF{ color, 0.1 })
+					.drawFrame(1, 0, ColorF{ color, 0.5 });
+			}
+
+			// 点を追加してから 1 秒間は三角形分割を表示する
+			if (stopwatch.isRunning()
+				&& (stopwatch < 1s))
+			{
+				polygon.drawWireframe(1, ColorF{ 0.25, (1.0 - stopwatch.sF()) });
+				polygon.draw(ColorF{ 0.4, stopwatch.sF() });
+			}
+			else
+			{
+				polygon.draw(ColorF{ 0.4 });
+				// 曲率に応じた色でスプラインを描画する
+				spline.draw(10, [&](SplineIndex si) { return Colormap01F(spline.curvature(si) * 24); });
+			}
+
+			// 制御点を表示する
+			for (const auto& point : points)
+			{
+				Circle{ point, 8 }.drawFrame(2, ColorF{ 0.8 });
+			}
+
+			// スプライン上を移動する物体を描く
+			if (spline)
+			{
+				si = spline.advanceWrap(si, (Scene::DeltaTime() * 400));
+				Circle{ spline.position(si), 20 }.draw(HSV{ 145, 0.9, 0.95 });
+			}
+		}
+	}
+	```
+
+
+## 13. LineString の総距離と、指定した距離にある点
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/f18dwkDLApI?si=IuIMLb1nCHDBkwvy" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+??? memo "コード"
+	```cpp
+	# include <Siv3D.hpp>
+
+	void Main()
+	{
+		Window::Resize(1280, 720);
+		Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+		LineString points;
+		Polygon polygon;
+
+		// 移動する物体の、スタート位置からの移動距離
+		double distanceFromOrigin = 0.0;
+
+		// LineString 全体の長さ
+		double length = 0.0;
+
+		while (System::Update())
+		{
+			if (MouseL.down())
+			{
+				points << Cursor::Pos();
+				polygon = points.calculateRoundBuffer(20);
+				length = points.calculateLength();
+			}
+
+			polygon.draw().drawFrame(2, ColorF{ 0.7 });
+			points.draw(2, ColorF{ 0.75 });
+
+			if ((2 <= points.size()) && length)
+			{
+				distanceFromOrigin += (Scene::DeltaTime() * 800);
+
+				if (length < distanceFromOrigin)
+				{
+					distanceFromOrigin = Math::Fmod(distanceFromOrigin, length);
+				}
+
+				// LineString 上を指定した距離だけ移動した点
+				const Vec2 position = points.calculatePointFromOrigin(distanceFromOrigin);
+				position.asCircle(20).draw(ColorF{ 0.5 });
+			}
+		}
+	}
+	```
+
+
+## 14. ハウスドルフ距離
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/shapes/14.gif)
+
+??? memo "コード"
+	```cpp
+	# include <Siv3D.hpp>
+
+	void Main()
+	{
+		Scene::SetBackground(ColorF{ 1.0, 0.96, 0.92 });
+		const Font font{ FontMethod::MSDF, 48, Typeface::Heavy };
+
+		const Polygon polygon = Shape2D::Star(240, Scene::Center());
+		const LineString contour = polygon.outline();
+
+		// 多角形を一周する、始点と終点を結ぶ LineString を基準とする
+		LineString contourClosed = contour;
+		contourClosed << contour.front();
+
+		// 計算の精度を高めるため LineString を細かくする
+		const LineString base = contourClosed.densified(10.0);
+
+		LineString lines;
+		double distance = Math::Inf;
+
+		while (System::Update())
+		{
+			contour.drawClosed(12, ColorF{ 0.7 });
+
+			lines.draw(10, HSV{ 10, 1.0, 0.95 });
+
+			if (MouseL.pressed())
+			{
+				lines << Cursor::Pos();
+
+				// ハウスドルフ距離
+				distance = Geometry2D::HausdorffDistance(base, lines);
+			}
+
+			if (MouseR.pressed())
+			{
+				lines.clear();
+				distance = Math::Inf;
+			}
+
+			if (IsFinite(distance))
+			{
+				font(U"{:.2f}"_fmt(distance)).draw(40, Vec2{ 20, 20 }, ColorF{ 0.25 });
+			}
+		}
+	}
+	```
+
+
+## 15. 点群の凸包
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/shapes/15.gif)
+
+??? memo "コード"
+	```cpp
+	# include <Siv3D.hpp>
+
+	void Main()
+	{
+		Array<Vec2> points;
+
+		Polygon convexHull;
+
+		while (System::Update())
+		{
+			if (MouseL.down())
+			{
+				// 点を追加する
+				points << Cursor::Pos();
+
+				// 凸包を計算する
+				convexHull = Geometry2D::ConvexHull(points);
+			}
+
+			convexHull.draw(Palette::Skyblue);
+
+			for (const auto& point : points)
+			{
+				Circle{ point, 5 }.draw(Palette::Seagreen);
+			}
+		}
+	}
+	```
+
+
+## 16. Polygon の拡張
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/shapes/16.gif)
+
+??? memo "コード"
+	```cpp
+	# include <Siv3D.hpp>
+
+	void Main()
+	{
+		Polygon polygon;
+
+		while (System::Update())
+		{
+			const Rect rect{ Arg::center = Cursor::Pos(), 100 };
+
+			if (MouseL.down())
+			{
+				// polygon に rect を追加する
+				// ただし、polygon と rect がつながらない場合は失敗して false を返す
+				polygon.append(rect);
+			}
+
+			polygon
+				.draw(Palette::Skyblue)
+				.drawWireframe(1, Palette::White);
+
+			rect.drawFrame(1, 0, Palette::Skyblue);
+		}
+	}
+	```
+
+
+## 17. 頂点の配列が時計回りかどうかの判定
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/shapes/17.png)
+
+??? memo "コード"
+	```cpp
+	# include <Siv3D.hpp>
+
+	void DrawArrow(const Vec2& start, const Vec2& end)
+	{
+		Line{ start, end }.stretched(-10)
+			.drawArrow(3, Vec2::All(20), ColorF{ 0.25 });
+	}
+
+	void Main()
+	{
+		Scene::SetBackground(ColorF{ 0.96, 0.98, 1.0 });
+
+		Array<Vec2> points;
+
+		while (System::Update())
+		{
+			// 左クリックで点を追加する
+			if (MouseL.down())
+			{
+				points << Cursor::Pos();
+			}
+
+			// 右クリックですべての点を削除する
+			if (MouseR.down())
+			{
+				points.clear();
+			}
+
+			const bool isClockwise = Geometry2D::IsClockwise(points);
+
+			ClearPrint();
+			Print << isClockwise;
+
+			for (const auto& point : points)
+			{
+				Circle{ point, 10 }.draw(Palette::Orange);
+			}
+
+			if (2 < points.size())
+			{
+				// どのような場合でも時計回りになるように矢印を描く
+				if (isClockwise)
+				{
+					for (size_t i = 0; i < points.size(); ++i)
+					{
+						DrawArrow(points[i], points[(i + 1) % points.size()]);
+					}
+				}
+				else
+				{
+					for (size_t i = 0; i < points.size(); ++i)
+					{
+						// 逆向きに矢印を描く
+						DrawArrow(points[(i + 1) % points.size()], points[i]);
+					}
+				}
+			}
+		}
+	}
+	```
+
+
+## 18. 不正な Polygon 頂点の自動修正
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/shapes/18.gif)
+
+??? memo "コード"
+	```cpp
+	# include <Siv3D.hpp>
+
+	void Main()
+	{
+		Window::Resize(1280, 720);
+
+		const Font font{ 20, Typeface::Bold };
+
+		// 入力頂点列
+		Array<Vec2> points;
+
+		// 頂点列から生成された、適切な Polygon の配列
+		Array<Polygon> solvedPolygons;
+
+		while (System::Update())
+		{
+			if (MouseL.down())
+			{
+				points << Cursor::Pos();
+
+				// 入力頂点列から適切な Polygon を作成する
+				solvedPolygons = Polygon::Correct(points, {});
+			}
+			else if (MouseR.down())
+			{
+				points.clear();
+				solvedPolygons.clear();
+			}
+
+			// 入力頂点列の可視化
+			for (auto [i, point] : Indexed(points))
+			{
+				Circle{ point, 5 }.draw();
+				Line{ points[i], points[(i + 1) % points.size()] }
+					.drawArrow(2, Vec2{ 20, 20 }, Palette::Orange);
+			}
+
+			font(points).draw(Rect{ 20, 20, 600, 720 });
+
+			// Polygon の可視化
+			{
+				const Transformer2D transformer{ Mat3x2::Translate(640, 0) };
+
+				for (auto [i, solvedPolygon] : Indexed(solvedPolygons))
+				{
+					const HSV color{ (i * 40.0), 0.7, 1.0 };
+					solvedPolygon.draw(color);
+
+					const auto& outer = solvedPolygon.outer();
+
+					for (auto [k, point] : Indexed(outer))
+					{
+						const Vec2 begin = outer[k];
+						const Vec2 end = outer[(k + 1) % outer.size()];
+						const Vec2 v = (end - begin).normalized();
+						const Vec2 c = (begin + end) / 2;
+						const Vec2 oc = c + v.rotated(-90_deg) * 10;
+						Line{ oc - v * 20, oc + v * 20 }
+						.drawArrow(2, Vec2{ 10, 10 }, color);
+					}
+				}
+
+				font(solvedPolygons).draw(Rect{ 20, 20, 600, 720 });
+			}
+		}
+	}
+	```

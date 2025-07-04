@@ -802,3 +802,393 @@
 		}
 	}
 	```
+
+
+## 12. Getting Spline2D Curvature
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/BMUod9VWbgI?si=iPu3wvIvn3wbTBWs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+??? memo "Code"
+	```cpp
+	# include <Siv3D.hpp>
+
+	void Main()
+	{
+		Window::Resize(1280, 720);
+		Scene::SetBackground(ColorF{ 0.75 });
+
+		Array<Vec2> points;
+		Spline2D spline;
+
+		Polygon polygon;
+		Stopwatch stopwatch;
+		SplineIndex si;
+
+		while (System::Update())
+		{
+			// Add a control point
+			if (MouseL.down())
+			{
+				points << Cursor::Pos();
+				spline = Spline2D{ points, CloseRing::Yes };
+				polygon = spline.calculateRoundBuffer(24);
+				stopwatch.restart();
+			}
+
+			// Visualize the Bounding Rect of each segment
+			for (size_t i = 0; i < spline.size(); ++i)
+			{
+				const ColorF color = Colormap01F(i / 18.0);
+				spline.boundingRect(i)
+					.draw(ColorF{ color, 0.1 })
+					.drawFrame(1, 0, ColorF{ color, 0.5 });
+			}
+
+			// Display the triangulation for 1 second after adding a point
+			if (stopwatch.isRunning()
+				&& (stopwatch < 1s))
+			{
+				polygon.drawWireframe(1, ColorF{ 0.25, (1.0 - stopwatch.sF()) });
+				polygon.draw(ColorF{ 0.4, stopwatch.sF() });
+			}
+			else
+			{
+				polygon.draw(ColorF{ 0.4 });
+				// Draw the spline with a color corresponding to its curvature
+				spline.draw(10, [&](SplineIndex si) { return Colormap01F(spline.curvature(si) * 24); });
+			}
+
+			// Display the control points
+			for (const auto& point : points)
+			{
+				Circle{ point, 8 }.drawFrame(2, ColorF{ 0.8 });
+			}
+
+			// Draw an object moving along the spline
+			if (spline)
+			{
+				si = spline.advanceWrap(si, (Scene::DeltaTime() * 400));
+				Circle{ spline.position(si), 20 }.draw(HSV{ 145, 0.9, 0.95 });
+			}
+		}
+	}
+	```
+
+
+## 13. LineString Total Length and Point at a Specific Distance
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/f18dwkDLApI?si=IuIMLb1nCHDBkwvy" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+??? memo "Code"
+	```cpp
+	# include <Siv3D.hpp>
+
+	void Main()
+	{
+		Window::Resize(1280, 720);
+		Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });
+
+		LineString points;
+		Polygon polygon;
+
+		// The distance of the moving object from the starting position
+		double distanceFromOrigin = 0.0;
+
+		// The total length of the LineString
+		double length = 0.0;
+
+		while (System::Update())
+		{
+			if (MouseL.down())
+			{
+				points << Cursor::Pos();
+				polygon = points.calculateRoundBuffer(20);
+				length = points.calculateLength();
+			}
+
+			polygon.draw().drawFrame(2, ColorF{ 0.7 });
+			points.draw(2, ColorF{ 0.75 });
+
+			if ((2 <= points.size()) && length)
+			{
+				distanceFromOrigin += (Scene::DeltaTime() * 800);
+
+				if (length < distanceFromOrigin)
+				{
+					distanceFromOrigin = Math::Fmod(distanceFromOrigin, length);
+				}
+
+				// The point on the LineString at the specified distance
+				const Vec2 position = points.calculatePointFromOrigin(distanceFromOrigin);
+				position.asCircle(20).draw(ColorF{ 0.5 });
+			}
+		}
+	}
+	```
+
+
+## 14. Hausdorff Distance
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/shapes/14.gif)
+
+??? memo "Code"
+	```cpp
+	# include <Siv3D.hpp>
+
+	void Main()
+	{
+		Scene::SetBackground(ColorF{ 1.0, 0.96, 0.92 });
+		const Font font{ FontMethod::MSDF, 48, Typeface::Heavy };
+
+		const Polygon polygon = Shape2D::Star(240, Scene::Center());
+		const LineString contour = polygon.outline();
+
+		// Use a LineString that goes around the polygon, connecting the start and end points, as a reference
+		LineString contourClosed = contour;
+		contourClosed << contour.front();
+
+		// Densify the LineString to improve the calculation accuracy
+		const LineString base = contourClosed.densified(10.0);
+
+		LineString lines;
+		double distance = Math::Inf;
+
+		while (System::Update())
+		{
+			contour.drawClosed(12, ColorF{ 0.7 });
+
+			lines.draw(10, HSV{ 10, 1.0, 0.95 });
+
+			if (MouseL.pressed())
+			{
+				lines << Cursor::Pos();
+
+				// Hausdorff distance
+				distance = Geometry2D::HausdorffDistance(base, lines);
+			}
+
+			if (MouseR.pressed())
+			{
+				lines.clear();
+				distance = Math::Inf;
+			}
+
+			if (IsFinite(distance))
+			{
+				font(U"{:.2f}"_fmt(distance)).draw(40, Vec2{ 20, 20 }, ColorF{ 0.25 });
+			}
+		}
+	}
+	```
+
+
+## 15. Convex Hull of a Point Set
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/shapes/15.gif)
+
+??? memo "Code"
+	```cpp
+	# include <Siv3D.hpp>
+
+	void Main()
+	{
+		Array<Vec2> points;
+
+		Polygon convexHull;
+
+		while (System::Update())
+		{
+			if (MouseL.down())
+			{
+				// Add a point
+				points << Cursor::Pos();
+
+				// Calculate the convex hull
+				convexHull = Geometry2D::ConvexHull(points);
+			}
+
+			convexHull.draw(Palette::Skyblue);
+
+			for (const auto& point : points)
+			{
+				Circle{ point, 5 }.draw(Palette::Seagreen);
+			}
+		}
+	}
+	```
+
+
+## 16. Extending a Polygon
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/shapes/16.gif)
+
+??? memo "Code"
+	```cpp
+	# include <Siv3D.hpp>
+
+	void Main()
+	{
+		Polygon polygon;
+
+		while (System::Update())
+		{
+			const Rect rect{ Arg::center = Cursor::Pos(), 100 };
+
+			if (MouseL.down())
+			{
+				// Add a rect to the polygon
+				// However, it will fail and return false if the polygon and rect do not connect
+				polygon.append(rect);
+			}
+
+			polygon
+				.draw(Palette::Skyblue)
+				.drawWireframe(1, Palette::White);
+
+			rect.drawFrame(1, 0, Palette::Skyblue);
+		}
+	}
+	```
+
+
+## 17. Determining if a Vertex Array is Clockwise
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/shapes/17.png)
+
+??? memo "Code"
+	```cpp
+	# include <Siv3D.hpp>
+
+	void DrawArrow(const Vec2& start, const Vec2& end)
+	{
+		Line{ start, end }.stretched(-10)
+			.drawArrow(3, Vec2::All(20), ColorF{ 0.25 });
+	}
+
+	void Main()
+	{
+		Scene::SetBackground(ColorF{ 0.96, 0.98, 1.0 });
+
+		Array<Vec2> points;
+
+		while (System::Update())
+		{
+			// Add a point with a left-click
+			if (MouseL.down())
+			{
+				points << Cursor::Pos();
+			}
+
+			// Remove all points with a right-click
+			if (MouseR.down())
+			{
+				points.clear();
+			}
+
+			const bool isClockwise = Geometry2D::IsClockwise(points);
+
+			ClearPrint();
+			Print << isClockwise;
+
+			for (const auto& point : points)
+			{
+				Circle{ point, 10 }.draw(Palette::Orange);
+			}
+
+			if (2 < points.size())
+			{
+				// Draw arrows to always appear clockwise
+				if (isClockwise)
+				{
+					for (size_t i = 0; i < points.size(); ++i)
+					{
+						DrawArrow(points[i], points[(i + 1) % points.size()]);
+					}
+				}
+				else
+				{
+					for (size_t i = 0; i < points.size(); ++i)
+					{
+						// Draw arrows in the opposite direction
+						DrawArrow(points[(i + 1) % points.size()], points[i]);
+					}
+				}
+			}
+		}
+	}
+	```
+
+
+## 18. Automatic Correction of Invalid Polygon Vertices
+
+![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/shapes/18.gif)
+
+??? memo "Code"
+	```cpp
+	# include <Siv3D.hpp>
+
+	void Main()
+	{
+		Window::Resize(1280, 720);
+
+		const Font font{ 20, Typeface::Bold };
+
+		// Input vertex sequence
+		Array<Vec2> points;
+
+		// Array of proper Polygons generated from the vertex sequence
+		Array<Polygon> solvedPolygons;
+
+		while (System::Update())
+		{
+			if (MouseL.down())
+			{
+				points << Cursor::Pos();
+
+				// Create proper Polygons from the input vertex sequence
+				solvedPolygons = Polygon::Correct(points, {});
+			}
+			else if (MouseR.down())
+			{
+				points.clear();
+				solvedPolygons.clear();
+			}
+
+			// Visualize the input vertex sequence
+			for (auto [i, point] : Indexed(points))
+			{
+				Circle{ point, 5 }.draw();
+				Line{ points[i], points[(i + 1) % points.size()] }
+					.drawArrow(2, Vec2{ 20, 20 }, Palette::Orange);
+			}
+
+			font(points).draw(Rect{ 20, 20, 600, 720 });
+
+			// Visualize the Polygon
+			{
+				const Transformer2D transformer{ Mat3x2::Translate(640, 0) };
+
+				for (auto [i, solvedPolygon] : Indexed(solvedPolygons))
+				{
+					const HSV color{ (i * 40.0), 0.7, 1.0 };
+					solvedPolygon.draw(color);
+
+					const auto& outer = solvedPolygon.outer();
+
+					for (auto [k, point] : Indexed(outer))
+					{
+						const Vec2 begin = outer[k];
+						const Vec2 end = outer[(k + 1) % outer.size()];
+						const Vec2 v = (end - begin).normalized();
+						const Vec2 c = (begin + end) / 2;
+						const Vec2 oc = c + v.rotated(-90_deg) * 10;
+						Line{ oc - v * 20, oc + v * 20 }
+						.drawArrow(2, Vec2{ 10, 10 }, color);
+					}
+				}
+
+				font(solvedPolygons).draw(Rect{ 20, 20, 600, 720 });
+			}
+		}
+	}
+	```
