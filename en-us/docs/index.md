@@ -207,7 +207,7 @@ For programmers who want to leverage their C++ skills or those who want to learn
 - [ぼっちマスター](https://profile.bocchi-master.net/){:target="_blank"}
 
 #### Bronze Sponsor
-アゲハマ, Fuyutsubaki, 😊, 🐝, jacking75, Chris Ohk, ysaito, おおやま, ShivAlley, lamuda, fal_rnd, As Project, IZUNA, nasatame, sashi, 🌶️, 💯, PlumRice
+アゲハマ, Fuyutsubaki, 😊, 🐝, jacking75, Chris Ohk, ysaito, おおやま, ShivAlley, lamuda, fal_rnd, As Project, IZUNA, nasatame, sashi, 🌶️, 💯, PlumRice, 緑獺おがめ
 
 ---
 
