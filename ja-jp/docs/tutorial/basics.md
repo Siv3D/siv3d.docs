@@ -206,5 +206,5 @@ void Main()
 - [x] メインループの書き方と、メインループによってウィンドウを表示し続ける方法を学んだ
 - [x] `System::Update()` の戻り値が `false` になると、メインループから抜けてアプリケーションが終了することを学んだ
 - [x] 具体的には、ウィンドウを閉じるか ++esc++ を押すと `System::Update()` が `false` を返すことを学んだ
-- [x] `System::Exit()` で `System::Update()` の戻り値を `false` に設定できることを学んた
+- [x] `System::Exit()` で `System::Update()` の戻り値を `false` に設定できることを学んだ
 - [x] `System::Exit()` は必須ではないことを学んだ
