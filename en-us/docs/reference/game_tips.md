@@ -869,7 +869,7 @@ You can hide the mouse cursor by calling `Cursor::RequestStyle(CursorStyle::Hidd
 
 
 ## 14. Avoid UI that distinguishes by color alone
-UI that distinguishes elements by color alone can be difficult to operate for people with P-type or D-type [color vision characteristics](https://cudo.jp/?page_id=540){:target="_blank"}, depending on color combinations. Making distinctions possible through non-color elements (like shapes or text) or changing color combinations can create UI that's easier to operate for people with color vision characteristics.
+UI that distinguishes elements by color alone can be difficult to operate for people with P-type or D-type [color vision characteristics :material-open-in-new:](https://cudo.jp/?page_id=540){:target="_blank"}, depending on color combinations. Making distinctions possible through non-color elements (like shapes or text) or changing color combinations can create UI that's easier to operate for people with color vision characteristics.
 
 === "C Type"
 

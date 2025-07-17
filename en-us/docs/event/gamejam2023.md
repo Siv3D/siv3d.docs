@@ -4,12 +4,12 @@ After rigorous judging, the following 6 works won awards.
 
 | Award | Work Name | Author |
 |:---:| --- | --- |
-| Grand Prize | [Mutant](https://scrapbox.io/bnscup2023/Mutant){:target="_blank"} | sashi |
-| Excellence Award | [もぐらにがし](https://scrapbox.io/bnscup2023/もぐらにがし){:target="_blank"} | あぐろ |
-| Excellence Award | [The HAND of Salvation - 救いの手](https://scrapbox.io/bnscup2023/The_HAND_of_Salvation_-_救いの手){:target="_blank"} | voidProc |
-| Excellence Award | [Emojent](https://scrapbox.io/bnscup2023/Emojent){:target="_blank"} | Aikawa |
-| Excellence Award | [くものいと](https://scrapbox.io/bnscup2023/くものいと){:target="_blank"} | チーカレ |
-| Encouragement Award | [ぺんぺんの大冒険](https://scrapbox.io/bnscup2023/ぺんぺんの大冒険){:target="_blank"} | 学生1号 |
+| Grand Prize | [Mutant :material-open-in-new:](https://scrapbox.io/bnscup2023/Mutant){:target="_blank"} | sashi |
+| Excellence Award | [もぐらにがし :material-open-in-new:](https://scrapbox.io/bnscup2023/もぐらにがし){:target="_blank"} | あぐろ |
+| Excellence Award | [The HAND of Salvation - 救いの手 :material-open-in-new:](https://scrapbox.io/bnscup2023/The_HAND_of_Salvation_-_救いの手){:target="_blank"} | voidProc |
+| Excellence Award | [Emojent :material-open-in-new:](https://scrapbox.io/bnscup2023/Emojent){:target="_blank"} | Aikawa |
+| Excellence Award | [くものいと :material-open-in-new:](https://scrapbox.io/bnscup2023/くものいと){:target="_blank"} | チーカレ |
+| Encouragement Award | [ぺんぺんの大冒険 :material-open-in-new:](https://scrapbox.io/bnscup2023/ぺんぺんの大冒険){:target="_blank"} | 学生1号 |
 
 [View All Participating Works :material-open-in-new:](https://scrapbox.io/bnscup2023/){:target="_blank" .md-button } 
 

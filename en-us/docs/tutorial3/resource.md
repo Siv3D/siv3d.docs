@@ -26,7 +26,7 @@ Learn how to embed files such as images and audio into the application executabl
 
 !!! warning "Notes on using embedded resources on Windows"
 	- In the Windows version of Siv3D, some types of files cannot be loaded properly when embedded (such as video files used with `VideoTexture`)
-	- There is a workaround to [write embedded resources to temporary files](https://gist.github.com/Reputeless/3d527302d459792f7a5e1094d30d0529)
+	- There is a workaround to [write embedded resources to temporary files :material-open-in-new:](https://gist.github.com/Reputeless/3d527302d459792f7a5e1094d30d0529){:target="_blank"}
 
 ### 57.2.2 macOS
 - Drag folders into Xcode's project navigator and select "Create folder references" to display them as blue folder icons in the project navigator

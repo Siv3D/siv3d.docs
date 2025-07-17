@@ -3,7 +3,7 @@
 ## 1. Siv3D Discord サーバー
 Siv3D ユーザのためのグループチャットです。目的別のチャンネルが用意され、Siv3D について話したり、質問をしたり、自分の作品を紹介したりできます。Siv3D 本体の開発に興味のある方のためのチャンネルもあり、開発状況をいちはやく共有するほか、新機能の共同開発も行っています。
 
-[:fontawesome-brands-discord: Siv3D Discord サーバーに参加する](https://discord.gg/mzevvsY){ .md-button .md-button--primary }
+[:fontawesome-brands-discord: Siv3D Discord サーバーに参加する](https://discord.gg/mzevvsY){:target="_blank" .md-button .md-button--primary }
 
 ## 2. Siv3D 実装会
 Siv3D の開発者やユーザが集まって、プログラムについて質問・相談したり、ドキュメントやテストを作ったり、新機能を提案・議論・実装したり、Siv3D で何かを作ったりする会です。年に数回開催されます。

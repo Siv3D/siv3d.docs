@@ -5,7 +5,7 @@ This is a group chat for Siv3D users. It has dedicated channels for various purp
 
 While many conversations are in Japanese, we warmly welcome posts and questions in English. Many of our Japanese members use translation tools, so don't let the language barrier stop you from joining the conversation!
 
-[:fontawesome-brands-discord: Join the Siv3D Discord Server](https://discord.gg/mzevvsY){ .md-button .md-button--primary }
+[:fontawesome-brands-discord: Join the Siv3D Discord Server](https://discord.gg/mzevvsY){:target="_blank" .md-button .md-button--primary }
 
 ## 2. Siv3D Implementation Meetups
 These are gatherings for Siv3D developers and users to ask questions about programming, create documentation and tests, propose and implement new features, or just build things with Siv3D. They are held several times a year.

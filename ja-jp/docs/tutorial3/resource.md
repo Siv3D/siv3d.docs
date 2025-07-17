@@ -26,7 +26,7 @@
 
 !!! warning "Windows での埋め込みリソース利用の注意"
 	- Windows 版の Siv3D では、一部の種類のファイルについて、埋め込みをすると正常に読み込めなくなるものがあります（`VideoTexture` で使う動画ファイルなど）
-	- 埋め込みリソースを [一時ファイルに書き出す](https://gist.github.com/Reputeless/3d527302d459792f7a5e1094d30d0529) というワークアラウンドがあります
+	- 埋め込みリソースを [一時ファイルに書き出す :material-open-in-new:](https://gist.github.com/Reputeless/3d527302d459792f7a5e1094d30d0529){:target="_blank"} というワークアラウンドがあります
 
 ### 57.2.2 macOS
 - Xcode のプロジェクトナビゲータにフォルダをドラッグし「Create folder references」を選択すると、プロジェクトナビゲータ上で青いフォルダアイコンになって表示されます

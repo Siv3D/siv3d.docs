@@ -9,18 +9,18 @@ This page explains the steps to build the Siv3D library from source code yoursel
 ### 1.1 Download Additional Third-Party Libraries
 ◆ Prepare the C++ library **"Boost"** required for building the Siv3D library itself.
 
-Download and extract the compressed source code of `boost_1_83_0` from [https://www.boost.org/users/history/version_1_83_0.html :material-open-in-new:](https://www.boost.org/users/history/version_1_83_0.html). The distributed file formats are `.7z` and `.zip`. If you can extract `.7z` files on your computer, `.7z` takes less time to extract. Since Boost consists of a large number of files, using the Windows OS standard ZIP extraction function may take several minutes to complete extraction.
+Download and extract the compressed source code of `boost_1_83_0` from [https://www.boost.org/users/history/version_1_83_0.html :material-open-in-new:](https://www.boost.org/users/history/version_1_83_0.html){:target="_blank"}. The distributed file formats are `.7z` and `.zip`. If you can extract `.7z` files on your computer, `.7z` takes less time to extract. Since Boost consists of a large number of files, using the Windows OS standard ZIP extraction function may take several minutes to complete extraction.
 
 ??? info "What is Boost"
-    [Boost](https://www.boost.org/) is one of the most famous C++ libraries with over 20 years of history. It consists of various libraries of different sizes and purposes, created by various authors. `std::shared_ptr` that entered the standard library in C++11, `std::optional` and `<filesystem>` that entered the standard library in C++17 were designed based on Boost.SmartPtr, Boost.Optional, and Boost.Filesystem libraries respectively. Siv3D uses features from several Boost libraries: Boost.Geometry for geometric computation processing, Boost.Filesystem for file system processing in environments that don't support C++17, Boost.Process for creating and communicating with child processes, Boost.MultiPrecision for arbitrary precision arithmetic, and Boost.Tokenizer for CSV parsing.
+    [Boost :material-open-in-new:](https://www.boost.org/){:target="_blank"} is one of the most famous C++ libraries with over 20 years of history. It consists of various libraries of different sizes and purposes, created by various authors. `std::shared_ptr` that entered the standard library in C++11, `std::optional` and `<filesystem>` that entered the standard library in C++17 were designed based on Boost.SmartPtr, Boost.Optional, and Boost.Filesystem libraries respectively. Siv3D uses features from several Boost libraries: Boost.Geometry for geometric computation processing, Boost.Filesystem for file system processing in environments that don't support C++17, Boost.Process for creating and communicating with child processes, Boost.MultiPrecision for arbitrary precision arithmetic, and Boost.Tokenizer for CSV parsing.
 
 ??? info "Software for extracting .7z"
-    [7-Zip :material-open-in-new:](https://sevenzip.osdn.jp/) is the most famous software that can extract `.7z` files.
+    [7-Zip :material-open-in-new:](https://sevenzip.osdn.jp/){:target="_blank"} is the most famous software that can extract `.7z` files.
 
 ### 1.2 Get Source Code from Siv3D Development Branch
 ◆ Get the latest Siv3D code from the official repository.
 
-[The main branch of the official OpenSiv3D repository :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D) is the latest stable version. Clone the repository from "Code" or download the source code as a ZIP file ("Download ZIP").
+[The main branch of the official OpenSiv3D repository :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D){:target="_blank"} is the latest stable version. Clone the repository from "Code" or download the source code as a ZIP file ("Download ZIP").
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/download/ubuntu/repo.png)
 
@@ -47,16 +47,16 @@ If you get the error `error C2039: '​CheckForDuplicateEntries': is not a membe
 ### 2.1 Download Additional Third-Party Libraries
 ◆ Prepare the C++ library **"Boost"** required for building the Siv3D library itself.
 
-Download and extract the compressed source code of `boost_1_83_0` from [https://www.boost.org/users/history/version_1_83_0.html :material-open-in-new:](https://www.boost.org/users/history/version_1_83_0.html).
+Download and extract the compressed source code of `boost_1_83_0` from [https://www.boost.org/users/history/version_1_83_0.html :material-open-in-new:](https://www.boost.org/users/history/version_1_83_0.html){:target="_blank"}.
 
 ??? info "What is Boost"
-    [Boost](https://www.boost.org/) is one of the most famous C++ libraries with over 20 years of history. It consists of various libraries of different sizes and purposes, created by various authors. `std::shared_ptr` that entered the standard library in C++11, `std::optional` and `<filesystem>` that entered the standard library in C++17 were designed based on Boost.SmartPtr, Boost.Optional, and Boost.Filesystem libraries respectively. Siv3D uses features from several Boost libraries: Boost.Geometry for geometric computation processing, Boost.Filesystem for file system processing in environments that don't support C++17, Boost.Process for creating and communicating with child processes, Boost.MultiPrecision for arbitrary precision arithmetic, and Boost.Tokenizer for CSV parsing.
+    [Boost :material-open-in-new:](https://www.boost.org/){:target="_blank"} is one of the most famous C++ libraries with over 20 years of history. It consists of various libraries of different sizes and purposes, created by various authors. `std::shared_ptr` that entered the standard library in C++11, `std::optional` and `<filesystem>` that entered the standard library in C++17 were designed based on Boost.SmartPtr, Boost.Optional, and Boost.Filesystem libraries respectively. Siv3D uses features from several Boost libraries: Boost.Geometry for geometric computation processing, Boost.Filesystem for file system processing in environments that don't support C++17, Boost.Process for creating and communicating with child processes, Boost.MultiPrecision for arbitrary precision arithmetic, and Boost.Tokenizer for CSV parsing.
 
 
 ### 2.2 Get Source Code from Siv3D Development Branch
 ◆ Get the latest Siv3D code from the official repository.
 
-[The main branch of the official OpenSiv3D repository :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D) is the latest stable version. Clone the repository from "Code" or download the source code as a ZIP file ("Download ZIP").
+[The main branch of the official OpenSiv3D repository :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D){:target="_blank"} is the latest stable version. Clone the repository from "Code" or download the source code as a ZIP file ("Download ZIP").
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/download/ubuntu/repo.png)
 

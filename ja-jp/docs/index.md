@@ -42,12 +42,13 @@
 
 | 日付 | イベント | 対象者 |
 | --- | --- | --- |
+| 2025-09-29 | Siv3D 実装会 in 電気通信大学 2025 | 電気通信大学の学生・教職員 |
 | 2025-06-21 | [Siv3D 実装会 in 大阪 2025 :material-open-in-new:](https://connpass.com/event/357822/){:target="_blank"} | だれでも |
 | 2024-12-15 | [Siv3D 勉強会 in 京都 2024 :material-open-in-new:](https://connpass.com/event/334897/){:target="_blank"} | だれでも |
 | 2024-12-14 | [Siv3D 実装会 in 京都 2024 :material-open-in-new:](https://connpass.com/event/332833/){:target="_blank"} | だれでも |
 | 2024-12-01～25 | [Siv3D Advent Calendar 2024 :material-open-in-new:](https://qiita.com/advent-calendar/2024/siv3d){:target="_blank"} | オンライン・だれでも |
 
-[過去のイベント](community/history.md){ .md-button } [:fontawesome-brands-discord: Siv3D Discord サーバーに参加する](https://discord.gg/mzevvsY){ .md-button .md-button--primary }
+[過去のイベント](community/history.md){:target="_blank" .md-button } [:fontawesome-brands-discord: Siv3D Discord サーバーに参加する](https://discord.gg/mzevvsY){:target="_blank" .md-button .md-button--primary }
 
 
 ## C++ によるゲーム・アプリ開発を効率化
@@ -190,7 +191,7 @@ C++ のスキルを活かしたいプログラマーや、C++ での開発を学
 <div class="sponsor"><a href="https://www.bandainamcostudios.com/" target="_blank"><img src="https://siv3d.jp/sponsors/バンダイナムコスタジオ.png" alt="バンダイナムコスタジオ"></a></div>
 
 ### 過去のイベント
-[バンダイナムコスタジオ杯 Siv3D ゲームジャム | 結果発表ページ](event/gamejam2023.md){ .md-button }
+[バンダイナムコスタジオ杯 Siv3D ゲームジャム | 結果発表ページ](event/gamejam2023.md){:target="_blank" .md-button }
 
 
 ## 個人スポンサー

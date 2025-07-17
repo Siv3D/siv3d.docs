@@ -9,18 +9,18 @@
 ### 1.1 追加のサードパーティ・ライブラリをダウンロードする
 ◆ Siv3D のライブラリ本体のビルドに必要な C++ ライブラリ**「Boost」**を準備します。
 
-[https://www.boost.org/users/history/version_1_83_0.html :material-open-in-new:](https://www.boost.org/users/history/version_1_83_0.html) から `boost_1_83_0` の圧縮されたソースコードをダウンロードし、展開します。配布されているファイル形式は `.7z` と `.zip` があります。使用しているコンピュータで `.7z` の展開ができる場合は `.7z` のほうが展開にかかる所用時間が短いです。Boost は大量のファイルから構成されるため、Windows OS 標準の ZIP 展開機能を使用すると展開の完了まで数分近く待たされることがあります。
+[https://www.boost.org/users/history/version_1_83_0.html :material-open-in-new:](https://www.boost.org/users/history/version_1_83_0.html){:target="_blank"} から `boost_1_83_0` の圧縮されたソースコードをダウンロードし、展開します。配布されているファイル形式は `.7z` と `.zip` があります。使用しているコンピュータで `.7z` の展開ができる場合は `.7z` のほうが展開にかかる所用時間が短いです。Boost は大量のファイルから構成されるため、Windows OS 標準の ZIP 展開機能を使用すると展開の完了まで数分近く待たされることがあります。
 
 ??? info "Boost とは"
-    [Boost](https://www.boost.org/) は 20 年以上の歴史がある、C++ で最も有名なライブラリの 1 つです。様々な目的のために作られた大小さまざま、作者もさまざまなライブラリ群で構成されています。C++11 で標準ライブラリに入った `std::shared_ptr`, C++17 で標準ライブラリに入った `std::optional`, `<filesystem>` はそれぞれ Boost.SmartPtr, Boost.Optional, Boost.Fileystem ライブラリをベースに設計されました。Siv3D では、幾何問題の計算処理のために Boost.Geometry, C++17 をサポートしない環境におけるファイルシステム処理のために Boost.Filesystem, 子プロセスの作成・通信のために Boost.Process, 多倍長計算のために Boost.MultiPrecision, CSV パーサのために Boost.Tokenizer など、いくつかの Boost ライブラリの機能を使用しています。
+    [Boost :material-open-in-new:](https://www.boost.org/){:target="_blank"} は 20 年以上の歴史がある、C++ で最も有名なライブラリの 1 つです。様々な目的のために作られた大小さまざま、作者もさまざまなライブラリ群で構成されています。C++11 で標準ライブラリに入った `std::shared_ptr`, C++17 で標準ライブラリに入った `std::optional`, `<filesystem>` はそれぞれ Boost.SmartPtr, Boost.Optional, Boost.Fileystem ライブラリをベースに設計されました。Siv3D では、幾何問題の計算処理のために Boost.Geometry, C++17 をサポートしない環境におけるファイルシステム処理のために Boost.Filesystem, 子プロセスの作成・通信のために Boost.Process, 多倍長計算のために Boost.MultiPrecision, CSV パーサのために Boost.Tokenizer など、いくつかの Boost ライブラリの機能を使用しています。
 
 ??? info ".7z の展開ソフト"
-    `.7z` の展開に使えるソフトウェアは [7-Zip :material-open-in-new:](https://sevenzip.osdn.jp/) が最も有名です。
+    `.7z` の展開に使えるソフトウェアは [7-Zip :material-open-in-new:](https://sevenzip.osdn.jp/){:target="_blank"} が最も有名です。
 
 ### 1.2 Siv3D の開発ブランチからソースコードを入手する
 ◆ Siv3D の最新コードを公式リポジトリから入手します。
 
-[OpenSiv3D 公式リポジトリの main ブランチ :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D) が最新安定版です。「Code」からリポジトリをクローンするか、ZIP ファイルでソースコードをダウンロードします（「Download ZIP」）。
+[OpenSiv3D 公式リポジトリの main ブランチ :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D){:target="_blank"} が最新安定版です。「Code」からリポジトリをクローンするか、ZIP ファイルでソースコードをダウンロードします（「Download ZIP」）。
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/download/ubuntu/repo.png)
 
@@ -47,16 +47,16 @@ Windows 版の Siv3D ライブラリビルドで `error C2039: '​CheckForDupli
 ### 2.1 追加のサードパーティ・ライブラリをダウンロードする
 ◆ Siv3D のライブラリ本体のビルドに必要な C++ ライブラリ**「Boost」**を準備します。
 
-[https://www.boost.org/users/history/version_1_83_0.html :material-open-in-new:](https://www.boost.org/users/history/version_1_83_0.html) から `boost_1_83_0` の圧縮されたソースコードをダウンロードし、展開します。
+[https://www.boost.org/users/history/version_1_83_0.html :material-open-in-new:](https://www.boost.org/users/history/version_1_83_0.html){:target="_blank"} から `boost_1_83_0` の圧縮されたソースコードをダウンロードし、展開します。
 
 ??? info "Boost とは"
-    [Boost](https://www.boost.org/) は 20 年以上の歴史がある、C++ で最も有名なライブラリの 1 つです。様々な目的のために作られた大小さまざま、作者もさまざまなライブラリ群で構成されています。C++11 で標準ライブラリに入った `std::shared_ptr`, C++17 で標準ライブラリに入った `std::optional`, `<filesystem>` はそれぞれ Boost.SmartPtr, Boost.Optional, Boost.Fileystem ライブラリをベースに設計されました。Siv3D では、幾何問題の計算処理のために Boost.Geometry, C++17 をサポートしない環境におけるファイルシステム処理のために Boost.Filesystem, 子プロセスの作成・通信のために Boost.Process, 多倍長計算のために Boost.MultiPrecision, CSV パーサのために Boost.Tokenizer など、いくつかの Boost ライブラリの機能を使用しています。
+    [Boost :material-open-in-new:](https://www.boost.org/){:target="_blank"} は 20 年以上の歴史がある、C++ で最も有名なライブラリの 1 つです。様々な目的のために作られた大小さまざま、作者もさまざまなライブラリ群で構成されています。C++11 で標準ライブラリに入った `std::shared_ptr`, C++17 で標準ライブラリに入った `std::optional`, `<filesystem>` はそれぞれ Boost.SmartPtr, Boost.Optional, Boost.Fileystem ライブラリをベースに設計されました。Siv3D では、幾何問題の計算処理のために Boost.Geometry, C++17 をサポートしない環境におけるファイルシステム処理のために Boost.Filesystem, 子プロセスの作成・通信のために Boost.Process, 多倍長計算のために Boost.MultiPrecision, CSV パーサのために Boost.Tokenizer など、いくつかの Boost ライブラリの機能を使用しています。
 
 
 ### 2.2 Siv3D の開発ブランチからソースコードを入手する
 ◆ Siv3D の最新コードを公式リポジトリから入手します。
 
-[OpenSiv3D 公式リポジトリの main ブランチ :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D) が最新安定版です。「Code」からリポジトリをクローンするか、ZIP ファイルでソースコードをダウンロードします（「Download ZIP」）。
+[OpenSiv3D 公式リポジトリの main ブランチ :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D){:target="_blank"} が最新安定版です。「Code」からリポジトリをクローンするか、ZIP ファイルでソースコードをダウンロードします（「Download ZIP」）。
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/download/ubuntu/repo.png)
 

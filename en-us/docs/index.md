@@ -42,12 +42,13 @@
 
 | Date | Event | Audience |
 | --- | --- | --- |
+| 2025-09-29 | Siv3D Implementation Meetup at the University of Electro-Communications 2025 | UEC students and faculty |
 | 2025-06-21 | [Siv3D Implementation Meetup in Osaka 2025 :material-open-in-new:](https://connpass.com/event/357822/){:target="_blank"} | Everyone |
 | 2024-12-15 | [Siv3D Study Session in Kyoto 2024 :material-open-in-new:](https://connpass.com/event/334897/){:target="_blank"} | Everyone |
 | 2024-12-14 | [Siv3D Implementation Meetup in Kyoto 2024 :material-open-in-new:](https://connpass.com/event/332833/){:target="_blank"} | Everyone |
 | 2024-12-01～25 | [Siv3D Advent Calendar 2024 :material-open-in-new:](https://qiita.com/advent-calendar/2024/siv3d){:target="_blank"} | Online・Everyone |
 
-[Past Events](community/history.md){ .md-button } [:fontawesome-brands-discord: Join Siv3D Discord Server](https://discord.gg/mzevvsY){ .md-button .md-button--primary }
+[Past Events](community/history.md){:target="_blank" .md-button } [:fontawesome-brands-discord: Join Siv3D Discord Server](https://discord.gg/mzevvsY){:target="_blank" .md-button .md-button--primary }
 
 
 ## Streamlining Game and Application Development with C++
@@ -190,7 +191,7 @@ For programmers who want to leverage their C++ skills or those who want to learn
 <div class="sponsor"><a href="https://www.bandainamcostudios.com/" target="_blank"><img src="https://siv3d.jp/sponsors/バンダイナムコスタジオ.png" alt="Bandai Namco Studios"></a></div>
 
 ### Past Events
-[Bandai Namco Studios Cup Siv3D Game Jam | Results Page](event/gamejam2023.md){ .md-button }
+[Bandai Namco Studios Cup Siv3D Game Jam | Results Page](event/gamejam2023.md){:target="_blank" .md-button }
 
 
 ## Individual Sponsors
