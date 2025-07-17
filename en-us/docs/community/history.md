@@ -3,7 +3,7 @@
 ## About Event Organization
 If you can gather a certain number of participants, we will visit anywhere in the country for free to hold Siv3D study sessions. Please consult via Discord, DM, or email.
 
-[Siv3D Free Visit Study Session Guide (PDF Material) :material-open-in-new:](https://www.dropbox.com/s/eiz3ohkqdt70w1g/Siv3D%20%E8%A8%AA%E5%95%8F%E5%8B%89%E5%BC%B7%E4%BC%9A%E3%81%AE%E6%A1%88%E5%86%85.pdf?dl=0){ .md-button }
+[Siv3D Free Visit Study Session Guide (PDF Material) :material-open-in-new:](https://www.dropbox.com/s/eiz3ohkqdt70w1g/Siv3D%20%E8%A8%AA%E5%95%8F%E5%8B%89%E5%BC%B7%E4%BC%9A%E3%81%AE%E6%A1%88%E5%86%85.pdf?dl=0){:target="_blank" .md-button }
 
 ## 2024
 

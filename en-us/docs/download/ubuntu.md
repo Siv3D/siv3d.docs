@@ -12,7 +12,7 @@ The development environment required for Siv3D programming on Ubuntu is as follo
 | Development Environment | GCC 9.3.0 (+ Boost 1.71.0) / GCC 11.2 (+ Boost 1.74.0) / Clang 14.0.0 (+ Boost 1.74.0) |
 
 ## 2. Get the Latest Siv3D Code
-The `main` branch of the [official OpenSiv3D repository :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D) contains the latest stable version. Clone the repository using "Code" > "Clone", or download the source code as a ZIP file ("Download ZIP").
+The `main` branch of the [official OpenSiv3D repository :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D){:target="_blank"} contains the latest stable version. Clone the repository using "Code" > "Clone", or download the source code as a ZIP file ("Download ZIP").
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/download/ubuntu/repo.png)
 

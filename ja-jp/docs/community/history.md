@@ -3,7 +3,7 @@
 ## イベントの開催について
 一定人数の参加者を集めれば、全国どこにでも無料で訪問して Siv3D 勉強会を開催しています。Discord や DM, またはメールでご相談ください。
 
-[Siv3D 無料訪問勉強会の案内（PDF 資料） :material-open-in-new:](https://www.dropbox.com/s/eiz3ohkqdt70w1g/Siv3D%20%E8%A8%AA%E5%95%8F%E5%8B%89%E5%BC%B7%E4%BC%9A%E3%81%AE%E6%A1%88%E5%86%85.pdf?dl=0){ .md-button }
+[Siv3D 無料訪問勉強会の案内（PDF 資料） :material-open-in-new:](https://www.dropbox.com/s/eiz3ohkqdt70w1g/Siv3D%20%E8%A8%AA%E5%95%8F%E5%8B%89%E5%BC%B7%E4%BC%9A%E3%81%AE%E6%A1%88%E5%86%85.pdf?dl=0){:target="_blank" .md-button }
 
 ## 2024 年
 

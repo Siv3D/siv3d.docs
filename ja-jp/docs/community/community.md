@@ -27,7 +27,7 @@ Siv3D の新機能を作るいくつかのチャレンジ課題の中から好�
 ## 5. 𝕏（旧 Twitter）
 ハッシュタグ `#Siv3D` や `#OpenSiv3D` が付いたツイートを巡回しています。𝕏 の仕様で検索結果に表示されないこともあります。確実に返答がほしい場合は [@Reputeless :material-open-in-new:](https://x.com/Reputeless){:target="_blank"} にリプライを送ってください。迅速な解決につながるよう、現象やエラーメッセージ、コンパイラの出力等をスクリーンショットで添付し、[GitHub Gist](../tools/gist.md){:target="_blank"} で問題箇所のソースコードを共有してください。
 
-- [Siv3D に関するツイートを検索 :material-open-in-new:](https://x.com/search?q=Siv3D%20OR%20OpenSiv3D&src=typed_query&f=live)
+- [Siv3D に関するツイートを検索 :material-open-in-new:](https://x.com/search?q=Siv3D%20OR%20OpenSiv3D&src=typed_query&f=live){:target="_blank"}
 
 ## 6. GitHub
 不具合の報告や新機能、ドキュメントのリクエストは Siv3D の GitHub リポジトリの Issues に投稿してください。フォーマットは自由ですが、情報が不足している場合は棄却される場合があります。

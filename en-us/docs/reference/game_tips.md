@@ -13,7 +13,7 @@ From Siv3D v0.6.12, MSDF format fonts can also render complex character shapes b
 | [851 ChikaraDzuyoku-kanaA :material-open-in-new:](http://pm85122.onamae.jp/851ch-dz.html){:target="_blank"} | Custom License |
 | [07 LogoTypeGothic Condense :material-open-in-new:](http://www.fontna.com/blog/1345/){:target="_blank"} | M+ FONT LICENSE |
 | [x12y12pxMaruMinya :material-open-in-new:](https://booth.pm/ja/items/4927023){:target="_blank"} | Custom License |
-| [Rounded-X Mgen+ 1pp heavy :material-open-in-new:](http://jikasei.me/font/rounded-mgenplus/) | SIL Open Font License |
+| [Rounded-X Mgen+ 1pp heavy :material-open-in-new:](http://jikasei.me/font/rounded-mgenplus/){:target="_blank"} | SIL Open Font License |
 | [Memoir-shikaku :material-open-in-new:](http://modi.jpn.org/font_memoir.php){:target="_blank"} | Custom License |
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/reference/game_tips/1.png)

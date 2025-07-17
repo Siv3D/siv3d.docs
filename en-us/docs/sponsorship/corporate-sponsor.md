@@ -20,8 +20,8 @@ reputeless@gmail.com
 
 ### Siv3D Activity Reports
 - Issue 8 - November 2024
-- [Issue 7 - July 2024 :material-open-in-new:](https://siv3d.jp/sponsorship/report7.pdf){:target="_blank:"}
-- [Issue 6 - March 2024 :material-open-in-new:](https://siv3d.jp/sponsorship/report6.pdf){:target="_blank:"}
+- [Issue 7 - July 2024 :material-open-in-new:](https://siv3d.jp/sponsorship/report7.pdf){:target="_blank"}
+- [Issue 6 - March 2024 :material-open-in-new:](https://siv3d.jp/sponsorship/report6.pdf){:target="_blank"}
 - [Issue 5 - December 2023 :material-open-in-new:](https://siv3d.jp/sponsorship/report5.pdf){:target="_blank"}
 - [Issue 4 - September 2023 :material-open-in-new:](https://siv3d.jp/sponsorship/report4.pdf){:target="_blank"}
 - [Issue 3 - June 2023 :material-open-in-new:](https://siv3d.jp/sponsorship/report3.pdf){:target="_blank"}

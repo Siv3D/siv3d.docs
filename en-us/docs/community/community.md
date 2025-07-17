@@ -29,7 +29,7 @@ In this event, you choose from several challenge tasks for creating new Siv3D fe
 ## 5. 𝕏 (formerly Twitter)
 We monitor tweets with the hashtags `#Siv3D` or `#OpenSiv3D`. Due to 𝕏's platform limitations, some tweets may not appear in search results. For a guaranteed response, please reply to [@Reputeless :material-open-in-new:](https://x.com/Reputeless){:target="_blank"}. To help us resolve your issue quickly, please attach screenshots of the problem, error messages, or compiler output, and share the relevant source code via [GitHub Gist](../tools/gist.md){:target="_blank"}.
 
-- [Search for Siv3D-related tweets :material-open-in-new:](https://x.com/search?q=Siv3D%20OR%20OpenSiv3D&src=typed_query&f=live)
+- [Search for Siv3D-related tweets :material-open-in-new:](https://x.com/search?q=Siv3D%20OR%20OpenSiv3D&src=typed_query&f=live){:target="_blank"}
 
 ## 6. GitHub
 Please post bug reports, feature requests, and documentation requests to the Issues section of the Siv3D GitHub repository. The format is flexible, but submissions may be rejected if they lack sufficient information.

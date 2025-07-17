@@ -12,7 +12,7 @@ Siv3D v0.6.12 から、MSDF 形式の Font についても、複雑な字形を�
 | [851チカラヅヨク-かなA :material-open-in-new:](http://pm85122.onamae.jp/851ch-dz.html){:target="_blank"} | 独自ライセンス |
 | [07ロゴたいぷゴシックCondense :material-open-in-new:](http://www.fontna.com/blog/1345/){:target="_blank"} | M+ FONT LICENSE |
 | [x12y12pxMaruMinya :material-open-in-new:](https://booth.pm/ja/items/4927023){:target="_blank"} | 独自ライセンス |
-| [Rounded-X Mgen+ 1pp heavy :material-open-in-new:](http://jikasei.me/font/rounded-mgenplus/) | SIL Open Font License |
+| [Rounded-X Mgen+ 1pp heavy :material-open-in-new:](http://jikasei.me/font/rounded-mgenplus/){:target="_blank"} | SIL Open Font License |
 | [めもわーる-しかく :material-open-in-new:](http://modi.jpn.org/font_memoir.php){:target="_blank"} | 独自ライセンス |
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/reference/game_tips/1.png)
