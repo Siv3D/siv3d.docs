@@ -222,7 +222,7 @@
 ## 58.4 遷移演出のカスタマイズ（1）
 - フェードイン・フェードアウト時の画面の色を変更するには `SceneManager` の `.setFadeColor(color)` を呼びます
 - シーンの切り替え時間をカスタマイズするには、`.changeScene(次のシーンのステート, 遷移時間)` を使います（デフォルトでは 2 秒）
-- 最初のシーンのフェードインについては `.changeScene()` が使えないため、代わりに `ScneManager` の `.init(state, 遷移時間)` を使います
+- 最初のシーンのフェードインについては `.changeScene()` が使えないため、代わりに `SceneManager` の `.init(state, 遷移時間)` を使います
 
 <video src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial3/scene-manager/4.mp4?raw=true" autoplay loop muted playsinline></video>
 
