@@ -317,7 +317,7 @@
 ??? summary "v0.6.10 | 2023-05-17"
 	#### 重要
 	- Visual Studio 2022 17.6 でのビルドの問題を修正しました ([#1011](https://github.com/Siv3D/OpenSiv3D/issues/1011))
-		- v0.6.9 以前のプロジェクトでは、[プロジェクトのプロパティから「ISO C++23 標準ライブラリモジュールのビルド」を無効にする](https://github.com/Siv3D/OpenSiv3D/issues/1011){:target="_blank"}ことで解決します。
+		- v0.6.9 以前のプロジェクトでは、[プロジェクトのプロパティから「ISO C++23 標準ライブラリモジュールのビルド」を無効にする :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D/issues/1011){:target="_blank"}ことで解決します。
 
 	#### 新機能
 	- `JSON` において Binary Values に対応しました ([#1010](https://github.com/Siv3D/OpenSiv3D/issues/1010))

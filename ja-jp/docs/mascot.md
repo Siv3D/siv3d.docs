@@ -21,14 +21,14 @@
 
 ## 3. 関連ファイル
 - Siv3D プロジェクトに以下のファイルが同梱されています：
-    - 公式画像 [`example/siv3d-kun.png`](https://github.com/Siv3D/OpenSiv3D/blob/main/WindowsDesktop/App/example/siv3d-kun.png){:target="_blank"} 
-    - 3D モデル [`example/obj/siv3d-kun.obj`](https://github.com/Siv3D/OpenSiv3D/blob/main/WindowsDesktop/App/example/obj/siv3d-kun.obj){:target="_blank"} 
-    - ドット絵 [`example/spritesheet/siv3d-kun-16.png`](https://github.com/Siv3D/OpenSiv3D/blob/main/WindowsDesktop/App/example/spritesheet/siv3d-kun-16.png){:target="_blank"} 
+    - 公式画像 [`example/siv3d-kun.png` :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D/blob/main/WindowsDesktop/App/example/siv3d-kun.png){:target="_blank"} 
+    - 3D モデル [`example/obj/siv3d-kun.obj` :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D/blob/main/WindowsDesktop/App/example/obj/siv3d-kun.obj){:target="_blank"} 
+    - ドット絵 [`example/spritesheet/siv3d-kun-16.png` :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D/blob/main/WindowsDesktop/App/example/spritesheet/siv3d-kun-16.png){:target="_blank"} 
 
 ## 4. ギャラリー
 
 ### 3D モデル
-- [Siv3D くん VRM モデル :material-open-in-new:](https://hub.vroid.com/characters/7116531265367998868/models/9089745600456691557){:target="_blank"}  ([itakawa 様](https://hub.vroid.com/users/20056775){:target="_blank"}  提供)
+- [Siv3D くん VRM モデル :material-open-in-new:](https://hub.vroid.com/characters/7116531265367998868/models/9089745600456691557){:target="_blank"}  ([itakawa 様 :material-open-in-new:](https://hub.vroid.com/users/20056775){:target="_blank"}  提供)
 
 <div class="noshadow-75"><img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/mascot/vrm.png"></div>
 

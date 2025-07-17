@@ -317,7 +317,7 @@
 ??? summary "v0.6.10 | 2023-05-17"
 	#### Important
 	- Fixed build issues with Visual Studio 2022 17.6 ([#1011](https://github.com/Siv3D/OpenSiv3D/issues/1011))
-		- For projects using v0.6.9 or earlier, [disable "Build ISO C++23 Standard Library Modules" from project properties](https://github.com/Siv3D/OpenSiv3D/issues/1011){:target="_blank"} to resolve the issue.
+		- For projects using v0.6.9 or earlier, [disable "Build ISO C++23 Standard Library Modules" from project properties :material-open-in-new:](https://github.com/Siv3D/OpenSiv3D/issues/1011){:target="_blank"} to resolve the issue.
 
 	#### New Features
 	- Added Binary Values support for `JSON` ([#1010](https://github.com/Siv3D/OpenSiv3D/issues/1010))

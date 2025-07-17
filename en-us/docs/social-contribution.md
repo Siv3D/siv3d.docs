@@ -6,8 +6,8 @@ Siv3D is engaged in multifaceted social contribution activities aimed at popular
 - We ran the Siv3D Development Internship Program in the summer of 2024, with four students participating.
 
 ## 2. Academic and Talent Development
-- Delivered a lecture on C++ library development at [**Security Camp 2024 National Convention :material-open-in-new:**](https://www.ipa.go.jp/jinzai/security-camp/2024/camp/zenkoku/index.html){:target="_blank"}, an initiative for discovering and nurturing information security talent.
-- Delivered a lecture on C++ programming at [**Security Mini Camp in Kumamoto 2024 :material-open-in-new:**](https://www.security-camp.or.jp/minicamp/kumamoto2024.html){:target="_blank"}, an initiative for discovering and nurturing information security talent.
+- Delivered a lecture on C++ library development at [**Security Camp 2024 National Convention** :material-open-in-new:](https://www.ipa.go.jp/jinzai/security-camp/2024/camp/zenkoku/index.html){:target="_blank"}, an initiative for discovering and nurturing information security talent.
+- Delivered a lecture on C++ programming at [**Security Mini Camp in Kumamoto 2024** :material-open-in-new:](https://www.security-camp.or.jp/minicamp/kumamoto2024.html){:target="_blank"}, an initiative for discovering and nurturing information security talent.
 - Gave an invited talk on Siv3D and C++ development at a summer seminar hosted by the Japanese Committee for the International Olympiad in Informatics.
 - Conducted classes using Siv3D in the C++ programming course at Sophia University.
 - Served as a Bronze Sponsor for the 83rd National Convention of the Information Processing Society of Japan.

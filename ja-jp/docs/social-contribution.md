@@ -6,8 +6,8 @@ Siv3D は、プログラミング教育の普及とソフトウェア開発コ�
 - Siv3D 開発インターンシッププログラムを 2024 年夏に実施し、学生 4 名が参加しました
 
 ## 2. 学術・人材育成事業
-- 情報セキュリティ人材の発掘・育成事業 [**セキュリティ・キャンプ 2024 全国大会 :material-open-in-new:**](https://www.ipa.go.jp/jinzai/security-camp/2024/camp/zenkoku/index.html){:target="_blank"}  にて、C++ ライブラリ開発に関する講義を行いました
-- 情報セキュリティ人材の発掘・育成事業 [**セキュリティ・ミニキャンプ in 熊本 2024 :material-open-in-new:**](https://www.security-camp.or.jp/minicamp/kumamoto2024.html){:target="_blank"}  にて、C++ プログラミングに関する講義を行いました
+- 情報セキュリティ人材の発掘・育成事業 [**セキュリティ・キャンプ 2024 全国大会** :material-open-in-new:](https://www.ipa.go.jp/jinzai/security-camp/2024/camp/zenkoku/index.html){:target="_blank"}  にて、C++ ライブラリ開発に関する講義を行いました
+- 情報セキュリティ人材の発掘・育成事業 [**セキュリティ・ミニキャンプ in 熊本 2024** :material-open-in-new:](https://www.security-camp.or.jp/minicamp/kumamoto2024.html){:target="_blank"}  にて、C++ プログラミングに関する講義を行いました
 - 一般社団法人情報オリンピック日本委員会による夏季セミナーにて、Siv3D と C++ 開発に関する招待講演を行いました
 - 上智大学の C++ プログラミング講義にて、Siv3D を活用した授業を行いました
 - 情報処理学会第 83 回全国大会に、ブロンズスポンサーとして協賛しました
