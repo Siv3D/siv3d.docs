@@ -825,7 +825,7 @@ void Main()
 	- `TextStyle::Outline(輪郭スケール, 輪郭の色)`
 	- `TextStyle::Outline(内側方向の輪郭スケール, 外側方向の輪郭スケール, 輪郭の色)`
 - 輪郭スケールが大きすぎると、描画結果にノイズが生じます
-- 書体によって異なりますが、最大で 0.2～0.25 が目安です
+- 書体によって異なりますが、最大で 0.2〜0.25 が目安です
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/20.png)
 
@@ -853,7 +853,7 @@ void Main()
 	- `TextStyle::OutlineShadow(輪郭スケール, 輪郭の色, 影のオフセット, 影の色)`
 	- `TextStyle::OutlineShadow(内側方向の輪郭スケール, 外側方向の輪郭スケール, 輪郭の色, 影のオフセット, 影の色)`
 - 輪郭スケールが大きすぎると、描画結果にノイズが生じます
-- 書体によって異なりますが、最大で 0.2～0.25 が目安です
+- 書体によって異なりますが、最大で 0.2〜0.25 が目安です
 	
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/2025/tutorial2/font/21.png)
 
