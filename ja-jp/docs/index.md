@@ -42,7 +42,8 @@
 
 | 日付 | イベント | 対象者 |
 | --- | --- | --- |
-| 2025-09-29 | Siv3D 実装会 in 電気通信大学 2025 | 電気通信大学の学生・教職員 |
+| 2025-09-29 | [Siv3D 実装会 in 電気通信大学 2025 :material-open-in-new:](https://connpass.com/event/362266/){:target="_blank"} | 電気通信大学の学生・教職員 |
+| 2025-07-25 | Siv3D 講座 in NPCA 夏合宿 2025 | 灘校パソコン研究部 |
 | 2025-06-21 | [Siv3D 実装会 in 大阪 2025 :material-open-in-new:](https://connpass.com/event/357822/){:target="_blank"} | だれでも |
 | 2024-12-15 | [Siv3D 勉強会 in 京都 2024 :material-open-in-new:](https://connpass.com/event/334897/){:target="_blank"} | だれでも |
 | 2024-12-14 | [Siv3D 実装会 in 京都 2024 :material-open-in-new:](https://connpass.com/event/332833/){:target="_blank"} | だれでも |

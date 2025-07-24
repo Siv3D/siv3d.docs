@@ -42,7 +42,8 @@
 
 | Date | Event | Audience |
 | --- | --- | --- |
-| 2025-09-29 | Siv3D Implementation Meetup at the University of Electro-Communications 2025 | UEC students and faculty |
+| 2025-09-29 | [Siv3D Implementation Meetup at the University of Electro-Communications 2025 :material-open-in-new:](https://connpass.com/event/362266/){:target="_blank"} | UEC students and faculty |
+| 2025-07-25 | Siv3D Lecture at NPCA Summer Camp 2025 | Nada High School students |
 | 2025-06-21 | [Siv3D Implementation Meetup in Osaka 2025 :material-open-in-new:](https://connpass.com/event/357822/){:target="_blank"} | Everyone |
 | 2024-12-15 | [Siv3D Study Session in Kyoto 2024 :material-open-in-new:](https://connpass.com/event/334897/){:target="_blank"} | Everyone |
 | 2024-12-14 | [Siv3D Implementation Meetup in Kyoto 2024 :material-open-in-new:](https://connpass.com/event/332833/){:target="_blank"} | Everyone |
