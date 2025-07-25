@@ -86,7 +86,7 @@ void Main()
 - `.drawFrame()` can be written in two ways:
 	- `.drawFrame(thickness, color)`
 	- `.drawFrame(inner thickness, outer thickness, color)`
-- Inner and outer directions represent thickness toward the inside and outside from the reference circle, and the final thickness is the sum of both
+- Inner and outer directions represent thickness toward the inside and outside from the reference rectangle, and the final thickness is the sum of both
 - Specify values of 0.0 or greater for all thicknesses
 - When `color` is omitted, it becomes white like with `.draw()`
 
