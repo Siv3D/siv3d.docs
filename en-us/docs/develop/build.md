@@ -42,6 +42,12 @@ Build the "Siv3D-Test" project. Since the necessary library files don't exist fo
 
 If you get the error `error C2039: '​CheckForDuplicateEntries': is not a member of 'Microsoft::WRL::Details'` when building the Windows version Siv3D library, it can be resolved by installing a newer Windows 10 SDK (version 10.0.18362.0 or later) using Visual Studio Installer.
 
+### 1.5 (Optional) Overwrite Existing SDK Files
+◆ Use the following steps if you want to use your self-built library from existing or new projects.
+
+After building Siv3D yourself, `Siv3D.lib` (Release build) and `Siv3D_d.lib` (Debug build) are generated. By overwriting the files in your installed OpenSiv3D SDK with these static library files and the headers used for the build (`Siv3D/include/` folder), you can use your self-built version of Siv3D from existing and new projects. For safety, it is recommended to back up the library and header files before overwriting.
+
+
 ## 2. macOS
 
 ### 2.1 Download Additional Third-Party Libraries
@@ -77,6 +83,13 @@ Open `macOS/OpenSiv3D.xcodeproj` in the OpenSiv3D project folder obtained in 2.2
 ◆ Build Siv3D test apps with Xcode.
 
 Next, build the target "Siv3D-Test". There is only one source code file: `macOS/Main.cpp`. The build takes a few seconds. When the build is complete, `Siv3D-Test.app` is generated.
+
+
+### 2.6 (Optional) Overwrite Existing SDK Files
+
+◆ Use the following steps if you want to use your self-built library from existing or new projects.
+
+After building Siv3D yourself, the static library `libSiv3D.a` is generated. By overwriting the files in your installed OpenSiv3D SDK with this static library and the headers used for the build (`Siv3D/include/` folder), you can use your self-built version of Siv3D from existing and new projects. For safety, it is recommended to back up the library and header files before overwriting.
 
 
 ## 3. Linux
