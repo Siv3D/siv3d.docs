@@ -1053,3 +1053,306 @@ A sample top-down 2D shooting game using 2D physics features.
 ![](https://raw.githubusercontent.com/Reputeless/games/main/games/005/B.png)
 
 [Game Patterns | 2D physics destruction game :material-open-in-new:](https://github.com/Reputeless/games/blob/main/games/005/B.md){:target="_blank" .md-button}
+
+
+## 12. 2D Platformer
+- A sample 2D platformer that supports left/right movement, jumping, and dropping through floors.
+
+<video src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/p2/12.mp4?raw=true" autoplay loop muted playsinline></video>
+
+??? memo "Code"
+	```cpp
+	# include <Siv3D.hpp> // Siv3D v0.6.16
+
+	/// @brief Player state
+	struct PlayerState
+	{
+		/// @brief Player size (distance from the center to the head, and from the center to the feet)
+		static constexpr double PlayerSizeHalf = 30.0;
+
+		/// @brief Tolerance (epsilon) for collision detection
+		static constexpr double ContactEpsilon = 2.0;
+
+		/// @brief Jump impulse magnitude
+		static constexpr double JumpImpulse = 12.0;
+
+		/// @brief Force for left/right movement
+		static constexpr double WalkForce = 4000.0;
+
+		/// @brief Strength of air resistance proportional to the player's horizontal speed
+		static constexpr double LinearDrag = 16.0;
+
+		/// @brief Player velocity
+		Vec2 velocity{ 0, 0 };
+
+		/// @brief Player position
+		Vec2 position{ 0, 0 };
+
+		/// @brief Time since the last jump
+		double jumpTime = 0.0;
+
+		/// @brief Flag indicating whether the player is standing on a floor (i.e., can jump)
+		bool isStandingOnFloor = false;
+
+		/// @brief Flag indicating whether the Down key is pressed
+		bool downKeyPressed = false;
+
+		/// @brief Returns whether the player is rising.
+		/// @param epsilon Velocity threshold to be considered rising
+		/// @return true if the player is rising, otherwise false
+		bool isRising(double epsilon = 1.0) const
+		{
+			return (velocity.y < -epsilon);
+		}
+
+		/// @brief Returns the player's foot Y coordinate.
+		/// @return The player's foot Y coordinate
+		double footY() const
+		{
+			return (position.y + PlayerSizeHalf);
+		}
+
+		/// @brief Visualizes the player's state.
+		void draw() const
+		{
+			if (isRising())
+			{
+				Line{ position.x, (position.y + 12), position.x, (position.y - 12) }
+					.drawArrow(8, SizeF{ 18, 10 }, ColorF{ 0.1 });
+			}
+			else if (downKeyPressed)
+			{
+				Line{ position.x, (position.y - 12), position.x, (position.y + 12) }
+					.drawArrow(8, SizeF{ 18, 10 }, ColorF{ 0.1 });
+			}
+
+			if (isStandingOnFloor)
+			{
+				position.withY(footY()).asCircle(6).draw(ColorF{ 0.1 });
+			}
+		}
+	};
+
+	/// @brief Updates the player's movement.
+	/// @param playerBody Player body
+	/// @param playerState Player state
+	/// @param deltaTime Time delta used for the update
+	void UpdatePlayer(P2Body& playerBody, PlayerState& playerState, double deltaTime = Scene::DeltaTime())
+	{
+		// Left/right movement
+		{
+			// Air resistance proportional to the current speed
+			const double drag = (playerBody.getVelocity().x * -PlayerState::LinearDrag);
+
+			if (KeyLeft.pressed())
+			{
+				// If the left key is pressed, apply force to the left
+				playerBody.applyForce(Vec2{ ((-PlayerState::WalkForce + drag) * deltaTime), 0 });
+			}
+			else if (KeyRight.pressed())
+			{
+				// If the right key is pressed, apply force to the right
+				playerBody.applyForce(Vec2{ ((PlayerState::WalkForce + drag) * deltaTime), 0 });
+			}
+		}
+
+		// While descending, not standing on a floor
+		if (playerBody.getVelocity().y > 0)
+		{
+			playerState.isStandingOnFloor = false;
+		}
+
+		// Jump
+		{
+			playerState.jumpTime += deltaTime;
+
+			if (playerState.isStandingOnFloor && KeyUp.down())
+			{
+				// Apply an impulse upward
+				playerBody.applyLinearImpulse(Vec2{ 0, -PlayerState::JumpImpulse });
+
+				// Reset jump timer
+				playerState.jumpTime = 0.0;
+
+				// After jumping, the player is no longer standing on a floor
+				playerState.isStandingOnFloor = false;
+			}
+		}
+
+		// Update whether the Down key is pressed
+		playerState.downKeyPressed = KeyDown.pressed();
+	}
+
+	/// @brief Determines whether a floor is passable.
+	/// @param floor Floor body to test
+	/// @param playerState Player state
+	/// @return true if passable, otherwise false
+	static bool IsPassable(const P2Body& floor, const PlayerState& playerState)
+	{
+		// Always passable when the Down key is pressed
+		if (playerState.downKeyPressed)
+		{
+			return true;
+		}
+
+		// Always passable while the player is rising
+		if (playerState.isRising())
+		{
+			return true;
+		}
+
+		// While descending, only floors above the player's feet (smaller Y) are passable
+		return (floor.getPos().y < (playerState.footY() - PlayerState::ContactEpsilon));
+	}
+
+	/// @brief Determines whether the player has landed on a floor.
+	/// @param world World
+	/// @param playerBody Player body
+	/// @param playerState Player state
+	/// @return true if landed, otherwise false
+	static bool HasLanded(const P2World& world, const P2Body& playerBody, const PlayerState& playerState)
+	{
+		for (auto&& [pair, collision] : world.getCollisions())
+		{
+			// Consider only collisions involving the player
+			if ((pair.a == playerBody.id()) || (pair.b == playerBody.id()))
+			{
+				for (const auto& contact : collision)
+				{
+					// If the contact point is near the player's feet, treat as landed
+					if (contact.point.y > (playerState.footY() - PlayerState::ContactEpsilon))
+					{
+						return true;
+					}
+				}
+			}
+		}
+
+		return false;
+	}
+
+	/// @brief Draws a pass-through floor.
+	/// @param floor Pass-through floor body
+	/// @param playerState Player state
+	void DrawFloor(const P2Body& floor, const PlayerState& playerState)
+	{
+		const auto pLine = std::dynamic_pointer_cast<P2Line>(floor.getPtr(0));
+
+		if (IsPassable(floor, playerState))
+		{
+			// If passable, draw as a dotted line
+			pLine->getLine().draw(LineStyle::SquareDot, 5);
+		}
+		else
+		{
+			// If not passable, draw as a normal line
+			pLine->getLine().draw(5);
+		}
+	}
+
+	void Main()
+	{
+		Window::Resize(1280, 720);
+
+		constexpr double SimulationStepTime = (1.0 / 200.0);
+		double simulationAccumulatedTime = 0.0;
+		P2World world;
+
+		// Default collision filter for walls
+		constexpr P2Filter SolidFloorFilter{ .categoryBits = 0b0001, .maskBits = 0b1111 };
+
+		// Collision filter for pass-through state
+		constexpr P2Filter PassableFloorFilter{ .categoryBits = 0b0010, .maskBits = 0b1111 };
+
+		// Player collision filter
+		constexpr P2Filter NormalCharacterFilter{ .categoryBits = 0b0100, .maskBits = 0b1101 };
+
+		// Enemy character collision filter
+		constexpr P2Filter EnemyCharacterFilter{ .categoryBits = 0b1000, .maskBits = 0b1111 };
+
+		// Ground body
+		const P2Body groundFloor = world.createRect(P2Static, Vec2{ 0, 0 }, SizeF{ 800, 10 }, P2Material{ .restitution = 0.0 }, SolidFloorFilter);
+
+		// Pass-through floor bodies
+		Array<P2Body> floors;
+		floors << world.createLine(P2Static, Vec2{ -200, -100 }, Line{ -150, 0, 150, 0 }, OneSided::No, P2Material{ .restitution = 0.0 }, SolidFloorFilter);
+		floors << world.createLine(P2Static, Vec2{ -200, -200 }, Line{ -150, 0, 150, 0 }, OneSided::No, P2Material{ .restitution = 0.0 }, SolidFloorFilter);
+		floors << world.createLine(P2Static, Vec2{ -200, -300 }, Line{ -150, 0, 150, 0 }, OneSided::No, P2Material{ .restitution = 0.0 }, SolidFloorFilter);
+
+		// Enemy character body
+		const P2Body enemyBody = world.createRect(P2Dynamic, Vec2{ -200, -400 }, SizeF{ 30, 30 }, P2Material{ .density = 0.02, .restitution = 0.0, .friction = 1.0 }, EnemyCharacterFilter)
+			.setFixedRotation(true);
+
+		// Player body
+		P2Body playerBody = world.createRect(P2Dynamic, Vec2{ 0, -300 }, SizeF{ 40, (PlayerState::PlayerSizeHalf * 2) }, P2Material{ .density = 0.1, .restitution = 0.0 }, NormalCharacterFilter)
+			.setFixedRotation(true);
+
+		// Fixed camera
+		Camera2D fixedCamera{ Vec2{ 0, -200 }, 1.5, CameraControl::None_ };
+
+		// Player state
+		PlayerState playerState{
+			.velocity = playerBody.getVelocity(),
+			.position = playerBody.getPos()
+		};
+
+		while (System::Update())
+		{
+			// Move the player
+			UpdatePlayer(playerBody, playerState);
+
+			for (simulationAccumulatedTime += Scene::DeltaTime();
+				(SimulationStepTime <= simulationAccumulatedTime); simulationAccumulatedTime -= SimulationStepTime)
+			{
+				// For each pass-through floor
+				for (auto& floor : floors)
+				{
+					// Switch collision filter based on the player's state
+					const bool isPassable = IsPassable(floor, playerState);
+					floor.shape(0).setFilter(isPassable ? PassableFloorFilter : SolidFloorFilter);
+				}
+
+				// Step the world forward
+				world.update(SimulationStepTime);
+
+				// Update player state at each step
+				{
+					playerState.velocity = playerBody.getVelocity();
+					playerState.position = playerBody.getPos();
+
+					if ((0.1 <= playerState.jumpTime) && HasLanded(world, playerBody, playerState))
+					{
+						playerState.isStandingOnFloor = true;
+					}
+				}
+			}
+
+			fixedCamera.update();
+			{
+				const auto t = fixedCamera.createTransformer();
+
+				// Draw background
+				fixedCamera.getRegion().draw(Arg::top(0.2, 0.6, 0.9), Arg::bottom(0.2, 0.5, 0.4));
+
+				// Draw ground
+				groundFloor.draw(ColorF{ 0.6 });
+
+				// Draw pass-through floors
+				for (const auto& floor : floors)
+				{
+					DrawFloor(floor, playerState);
+				}
+
+				// Draw player
+				playerBody.draw(ColorF{ 0.6, 0.8, 0.7 });
+				playerState.draw();
+
+				// Draw enemy character
+				enemyBody.draw(ColorF{ 1.0, 0.6, 0.8 });
+			}
+
+			fixedCamera.draw(Palette::Orange);
+		}
+	}
+	```
+

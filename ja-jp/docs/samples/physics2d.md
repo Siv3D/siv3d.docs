@@ -1055,3 +1055,304 @@
 [ゲーム典型 | 2D 物理演算による破壊ゲーム :material-open-in-new:](https://github.com/Reputeless/games/blob/main/games/005/B.md){:target="_blank" .md-button}
 
 
+## 12. 2D プラットフォーマー
+- 左右移動やジャンプ、床の通り抜けなどが可能な 2D プラットフォーマーのサンプルです
+
+<video src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/samples/p2/12.mp4?raw=true" autoplay loop muted playsinline></video>
+
+??? memo "コード"
+	```cpp
+	# include <Siv3D.hpp> // Siv3D v0.6.16
+
+	/// @brief プレイヤーの状態
+	struct PlayerState
+	{
+		/// @brief プレイヤーのサイズ（中心から頭、および中心から足までの距離）
+		static constexpr double PlayerSizeHalf = 30.0;
+
+		/// @brief プレイヤーの衝突判定のための許容誤差
+		static constexpr double ContactEpsilon = 2.0;
+
+		/// @brief ジャンプのインパルスの強さ
+		static constexpr double JumpImpulse = 12.0;
+
+		/// @brief 左右移動の力
+		static constexpr double WalkForce = 4000.0;
+
+		/// @brief プレイヤーの左右速度に比例する空気抵抗の強さ
+		static constexpr double LinearDrag = 16.0;
+
+		/// @brief プレイヤーの速度
+		Vec2 velocity{ 0, 0 };
+
+		/// @brief プレイヤーの位置
+		Vec2 position{ 0, 0 };
+
+		/// @brief 最後にジャンプしてからの時間
+		double jumpTime = 0.0;
+
+		/// @brief プレイヤーが床の上に立っているか（ジャンプできるか）を示すフラグ
+		bool isStandingOnFloor = false;
+
+		/// @brief 下キーが押されているかどうかを示すフラグ
+		bool downKeyPressed = false;
+
+		/// @brief プレイヤーが上昇しているかどうかを返します。
+		/// @param epsilon 上昇とみなすための速度の閾値
+		/// @return プレイヤーが上昇している場合 true, それ以外の場合は false
+		bool isRising(double epsilon = 1.0) const
+		{
+			return (velocity.y < -epsilon);
+		}
+
+		/// @brief プレイヤーの足の Y 座標を返します。
+		/// @return プレイヤーの足の Y 座標
+		double footY() const
+		{
+			return (position.y + PlayerSizeHalf);
+		}
+
+		/// @brief プレイヤーの状態を可視化します。
+		void draw() const
+		{
+			if (isRising())
+			{
+				Line{ position.x, (position.y + 12), position.x, (position.y - 12) }
+					.drawArrow(8, SizeF{ 18, 10 }, ColorF{ 0.1 });
+			}
+			else if (downKeyPressed)
+			{
+				Line{ position.x, (position.y - 12), position.x, (position.y + 12) }
+					.drawArrow(8, SizeF{ 18, 10 }, ColorF{ 0.1 });
+			}
+
+			if (isStandingOnFloor)
+			{
+				position.withY(footY()).asCircle(6).draw(ColorF{ 0.1 });
+			}
+		}
+	};
+
+	/// @brief プレイヤーの動きを更新します。
+	/// @param playerBody プレイヤーのボディ
+	/// @param playerState プレイヤーの状態
+	/// @param deltaTime 更新に使用する時間の差分
+	void UpdatePlayer(P2Body& playerBody, PlayerState& playerState, double deltaTime = Scene::DeltaTime())
+	{
+		// 左右移動
+		{
+			// 現在の速度に比例する空気抵抗
+			const double drag = (playerBody.getVelocity().x * -PlayerState::LinearDrag);
+
+			if (KeyLeft.pressed())
+			{
+				// 左キーが押されている場合、左方向に力を加える
+				playerBody.applyForce(Vec2{ ((-PlayerState::WalkForce + drag) * deltaTime), 0 });
+			}
+			else if (KeyRight.pressed())
+			{
+				// 右キーが押されている場合、右方向に力を加える
+				playerBody.applyForce(Vec2{ ((PlayerState::WalkForce + drag) * deltaTime), 0 });
+			}
+		}
+
+		// 下降中は床の上に立っていない
+		if (playerBody.getVelocity().y > 0)
+		{
+			playerState.isStandingOnFloor = false;
+		}
+
+		// ジャンプ
+		{
+			playerState.jumpTime += deltaTime;
+
+			if (playerState.isStandingOnFloor && KeyUp.down())
+			{
+				// 上方向にインパルスを与える
+				playerBody.applyLinearImpulse(Vec2{ 0, -PlayerState::JumpImpulse });
+
+				// ジャンプ経過時間をリセット
+				playerState.jumpTime = 0.0;
+
+				// ジャンプしたので床の上に立っていない
+				playerState.isStandingOnFloor = false;
+			}
+		}
+
+		// ↓ キーが押されているかどうかを更新
+		playerState.downKeyPressed = KeyDown.pressed();
+	}
+
+	/// @brief 床が通過可能かどうかを判定します。
+	/// @param floor 通過可能かどうかを判定する床のボディ
+	/// @param playerState プレイヤーの状態
+	/// @return 通過可能な場合 true, それ以外の場合は false
+	static bool IsPassable(const P2Body& floor, const PlayerState& playerState)
+	{
+		// 下キーが押されている場合は必ず通過可能
+		if (playerState.downKeyPressed)
+		{
+			return true;
+		}
+
+		// プレイヤーが上昇している場合は必ず通過可能
+		if (playerState.isRising())
+		{
+			return true;
+		}
+
+		// プレイヤーが下降している場合、プレイヤーの足より上にある（Y 座標が小さい）床のみ通過可能
+		return (floor.getPos().y < (playerState.footY() - PlayerState::ContactEpsilon));
+	}
+
+	/// @brief プレイヤーが床に着地したかどうかを判定します。
+	/// @param world ワールド
+	/// @param playerBody プレイヤーのボディ
+	/// @param playerState プレイヤーの状態
+	/// @return 着地した場合 true, それ以外の場合は false
+	static bool HasLanded(const P2World& world, const P2Body& playerBody, const PlayerState& playerState)
+	{
+		for (auto&& [pair, collision] : world.getCollisions())
+		{
+			// プレイヤーが関わる衝突のみを対象とする
+			if ((pair.a == playerBody.id()) || (pair.b == playerBody.id()))
+			{
+				for (const auto& contact : collision)
+				{
+					// 衝突点がプレイヤーの足元である場合、着地とみなす
+					if (contact.point.y > (playerState.footY() - PlayerState::ContactEpsilon))
+					{
+						return true;
+					}
+				}
+			}
+		}
+
+		return false;
+	}
+
+	/// @brief 通過可能床を描画します。
+	/// @param floor 通過可能床のボディ
+	/// @param playerState プレイヤーの状態
+	void DrawFloor(const P2Body& floor, const PlayerState& playerState)
+	{
+		const auto pLine = std::dynamic_pointer_cast<P2Line>(floor.getPtr(0));
+
+		if (IsPassable(floor, playerState))
+		{
+			// 通過可能な場合、点線で描画する
+			pLine->getLine().draw(LineStyle::SquareDot, 5);
+		}
+		else
+		{
+			// 通過不可能な場合通常の線で描画する
+			pLine->getLine().draw(5);
+		}
+	}
+
+	void Main()
+	{
+		Window::Resize(1280, 720);
+
+		constexpr double SimulationStepTime = (1.0 / 200.0);
+		double simulationAccumulatedTime = 0.0;
+		P2World world;
+
+		// デフォルトの壁の干渉フィルタ
+		constexpr P2Filter SolidFloorFilter{ .categoryBits = 0b0001, .maskBits = 0b1111 };
+
+		// すり抜け状態の壁の干渉フィルタ
+		constexpr P2Filter PassableFloorFilter{ .categoryBits = 0b0010, .maskBits = 0b1111 };
+
+		// プレイヤーの干渉フィルタ
+		constexpr P2Filter NormalCharacterFilter{ .categoryBits = 0b0100, .maskBits = 0b1101 };
+
+		// 敵キャラクターの干渉フィルタ
+		constexpr P2Filter EnemyCharacterFilter{ .categoryBits = 0b1000, .maskBits = 0b1111 };
+
+		// 地面ボディ
+		const P2Body groundFloor = world.createRect(P2Static, Vec2{ 0, 0 }, SizeF{ 800, 10 }, P2Material{ .restitution = 0.0 }, SolidFloorFilter);
+
+		// 通過可能床ボディ
+		Array<P2Body> floors;
+		floors << world.createLine(P2Static, Vec2{ -200, -100 }, Line{ -150, 0, 150, 0 }, OneSided::No, P2Material{ .restitution = 0.0 }, SolidFloorFilter);
+		floors << world.createLine(P2Static, Vec2{ -200, -200 }, Line{ -150, 0, 150, 0 }, OneSided::No, P2Material{ .restitution = 0.0 }, SolidFloorFilter);
+		floors << world.createLine(P2Static, Vec2{ -200, -300 }, Line{ -150, 0, 150, 0 }, OneSided::No, P2Material{ .restitution = 0.0 }, SolidFloorFilter);
+
+		// 敵キャラクターのボディ
+		const P2Body enemyBody = world.createRect(P2Dynamic, Vec2{ -200, -400 }, SizeF{ 30, 30 }, P2Material{ .density = 0.02, .restitution = 0.0, .friction = 1.0 }, EnemyCharacterFilter)
+			.setFixedRotation(true);
+
+		// プレイヤーのボディ
+		P2Body playerBody = world.createRect(P2Dynamic, Vec2{ 0, -300 }, SizeF{ 40, (PlayerState::PlayerSizeHalf * 2) }, P2Material{ .density = 0.1, .restitution = 0.0 }, NormalCharacterFilter)
+			.setFixedRotation(true);
+
+		// 固定カメラ
+		Camera2D fixedCamera{ Vec2{ 0, -200 }, 1.5, CameraControl::None_ };
+
+		// プレイヤーの状態
+		PlayerState playerState{
+			.velocity = playerBody.getVelocity(),
+			.position = playerBody.getPos()
+		};
+
+		while (System::Update())
+		{
+			// プレイヤーを移動させる
+			UpdatePlayer(playerBody, playerState);
+
+			for (simulationAccumulatedTime += Scene::DeltaTime();
+				(SimulationStepTime <= simulationAccumulatedTime); simulationAccumulatedTime -= SimulationStepTime)
+			{
+				// 各通過可能床について
+				for (auto& floor : floors)
+				{
+					// プレイヤーの状態に干渉フィルタを切り替える
+					const bool isPassable = IsPassable(floor, playerState);
+					floor.shape(0).setFilter(isPassable ? PassableFloorFilter : SolidFloorFilter);
+				}
+
+				// ワールドのステップを進める
+				world.update(SimulationStepTime);
+
+				// ステップを進めるたびにプレイヤーの状態も更新する
+				{
+					playerState.velocity = playerBody.getVelocity();
+					playerState.position = playerBody.getPos();
+
+					if ((0.1 <= playerState.jumpTime) && HasLanded(world, playerBody, playerState))
+					{
+						playerState.isStandingOnFloor = true;
+					}
+				}
+			}
+
+			fixedCamera.update();
+			{
+				const auto t = fixedCamera.createTransformer();
+
+				// 背景を描く
+				fixedCamera.getRegion().draw(Arg::top(0.2, 0.6, 0.9), Arg::bottom(0.2, 0.5, 0.4));
+
+				// 地面を描く
+				groundFloor.draw(ColorF{ 0.6 });
+
+				// 通過可能床を描く
+				for (const auto& floor : floors)
+				{
+					DrawFloor(floor, playerState);
+				}
+
+				// プレイヤーを描く
+				playerBody.draw(ColorF{ 0.6, 0.8, 0.7 });
+				playerState.draw();
+
+				// 敵キャラクターを描く
+				enemyBody.draw(ColorF{ 1.0, 0.6, 0.8 });
+			}
+
+			fixedCamera.draw(Palette::Orange);
+		}
+	}
+	```
+
