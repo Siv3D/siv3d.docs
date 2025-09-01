@@ -54,9 +54,6 @@
 | 2025-09-29 | [Siv3D Implementation Meetup at the University of Electro-Communications 2025 :material-open-in-new:](https://connpass.com/event/362266/){:target="_blank"} | UEC students and faculty |
 | 2025-07-25 | Siv3D Lecture at NPCA Summer Camp 2025 | Nada High School students |
 | 2025-06-21 | [Siv3D Implementation Meetup in Osaka 2025 :material-open-in-new:](https://connpass.com/event/357822/){:target="_blank"} | Everyone |
-| 2024-12-15 | [Siv3D Study Session in Kyoto 2024 :material-open-in-new:](https://connpass.com/event/334897/){:target="_blank"} | Everyone |
-| 2024-12-14 | [Siv3D Implementation Meetup in Kyoto 2024 :material-open-in-new:](https://connpass.com/event/332833/){:target="_blank"} | Everyone |
-| 2024-12-01～25 | [Siv3D Advent Calendar 2024 :material-open-in-new:](https://qiita.com/advent-calendar/2024/siv3d){:target="_blank"} | Online・Everyone |
 
 [Past Events](community/history.md){:target="_blank" .md-button } [:fontawesome-brands-discord: Join Siv3D Discord Server](https://discord.gg/mzevvsY){:target="_blank" .md-button .md-button--primary }
 
