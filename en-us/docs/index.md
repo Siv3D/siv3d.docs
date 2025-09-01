@@ -38,10 +38,19 @@
 
 </div>
 
+## Siv3D Game Jam 2025 – Registration Open
+<center>A two-week online game development event</center>
+
+<a href="https://bandainamcostudios.connpass.com/event/364446/" target="_blank">
+<img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/bnscup2023.png" alt="Bandai Namco Studios Cup | Siv3D Game Jam">
+</a>
+
 ## Community
 
 | Date | Event | Audience |
 | --- | --- | --- |
+| 2025-11-30 | Siv3D Study Session at Kyushu Institute of Technology (planned) |  |
+| 2025-10-18～11-02 | [Bandai Namco Studios Cup \| Siv3D Game Jam 2025 :material-open-in-new:](https://bandainamcostudios.connpass.com/event/364446/){:target="_blank"} | Everyone |
 | 2025-09-29 | [Siv3D Implementation Meetup at the University of Electro-Communications 2025 :material-open-in-new:](https://connpass.com/event/362266/){:target="_blank"} | UEC students and faculty |
 | 2025-07-25 | Siv3D Lecture at NPCA Summer Camp 2025 | Nada High School students |
 | 2025-06-21 | [Siv3D Implementation Meetup in Osaka 2025 :material-open-in-new:](https://connpass.com/event/357822/){:target="_blank"} | Everyone |

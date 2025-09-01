@@ -38,10 +38,19 @@
 
 </div>
 
+## Siv3D ゲームジャム 2025 参加者募集中
+<center>オンラインで開催される 2 週間のゲーム制作イベント</center>
+
+<a href="https://bandainamcostudios.connpass.com/event/364446/" target="_blank">
+<img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/bnscup2023.png" alt="バンダイナムコスタジオ杯 | Siv3D ゲームジャム">
+</a>
+
 ## コミュニティ
 
 | 日付 | イベント | 対象者 |
 | --- | --- | --- |
+| 2025-11-30 | Siv3D 勉強会 in 九州工業大学（予定） |  |
+| 2025-10-18～11-02 | [バンダイナムコスタジオ杯 \| Siv3D ゲームジャム 2025 :material-open-in-new:](https://bandainamcostudios.connpass.com/event/364446/){:target="_blank"} | だれでも |
 | 2025-09-29 | [Siv3D 実装会 in 電気通信大学 2025 :material-open-in-new:](https://connpass.com/event/362266/){:target="_blank"} | 電気通信大学の学生・教職員 |
 | 2025-07-25 | Siv3D 講座 in NPCA 夏合宿 2025 | 灘校パソコン研究部 |
 | 2025-06-21 | [Siv3D 実装会 in 大阪 2025 :material-open-in-new:](https://connpass.com/event/357822/){:target="_blank"} | だれでも |
