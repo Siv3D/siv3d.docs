@@ -609,10 +609,10 @@ struct TouchEffect : IEffect
 	{
 		for (int32 i = 0; i < 200; ++i)
 		{
-			const Vec2 velocoty = RandomVec2(28.0);
+			const Vec2 velocity = RandomVec2(28.0);
 			Particle particle{
-				.velocity = velocoty,
-				.start = velocoty,
+				.velocity = velocity,
+				.start = velocity,
 				.r = Random(6.0, 12.0),
 				.angle = Random(360_deg),
 				.cw = RandomBool(),
@@ -623,10 +623,10 @@ struct TouchEffect : IEffect
 
 		for (int32 i = 0; i < 8; ++i)
 		{
-			const Vec2 velocoty = RandomVec2(28.0);
+			const Vec2 velocity = RandomVec2(28.0);
 			Star star{
-				.velocity = velocoty,
-				.start = (velocoty + RandomVec2(2.0)),
+				.velocity = velocity,
+				.start = (velocity + RandomVec2(2.0)),
 				.angle = Random(360_deg),
 				.scale = Random(0.6, 1.4),
 				.color = HSV{ Random(50.0, 70.0), 0.4, 1.0 },
