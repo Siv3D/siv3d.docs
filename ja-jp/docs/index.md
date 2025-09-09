@@ -42,7 +42,7 @@
 <center>オンラインで開催される 2 週間のゲーム制作イベント</center>
 
 <a href="https://bandainamcostudios.connpass.com/event/364446/" target="_blank">
-<img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/bnscup2023.png" alt="バンダイナムコスタジオ杯 | Siv3D ゲームジャム">
+<img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/bnscup.png" alt="バンダイナムコスタジオ杯 | Siv3D ゲームジャム">
 </a>
 
 ## コミュニティ

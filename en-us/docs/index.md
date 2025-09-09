@@ -42,7 +42,7 @@
 <center>A two-week online game development event</center>
 
 <a href="https://bandainamcostudios.connpass.com/event/364446/" target="_blank">
-<img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/bnscup2023.png" alt="Bandai Namco Studios Cup | Siv3D Game Jam">
+<img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/bnscup.png" alt="Bandai Namco Studios Cup | Siv3D Game Jam">
 </a>
 
 ## Community

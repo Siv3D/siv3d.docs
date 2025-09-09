@@ -224,8 +224,9 @@ nav:
     - コントリビューションガイド: develop/commit.md
     - コーディングスタイル: develop/coding-style.md
   - イベント:
-    - ゲームジャム: event/gamejam.md
-    - ゲームジャム入賞作品: event/gamejam2023.md
+    - ゲームジャム 2025: event/gamejam.md
+    - ゲームジャム 2023: event/gamejam2023info.md
+    - ゲームジャム 2023 入賞作品: event/gamejam2023.md
   - 協賛企業の募集:
     - 協賛企業の募集について: sponsorship/corporate-sponsor.md
     - 協賛特典: sponsorship/corporate-sponsor-guideline.md
