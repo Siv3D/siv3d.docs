@@ -71,6 +71,8 @@
 		- Xcode 15.2 以前： メニューバーから **Product &gt; Destination &gt; Destination Architectures** から、**Show Rosetta Destinations** を選択します
 	- Rosetta オプションが表示されたら、それを選択します
 
+	![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/download/rosetta.png)
+
 ??? summary "サンプルプログラムを実行するときのファイルアクセス許可のダイアログの回避"
 	- macOS Catalina 以降で実行のたびにファイルアクセス許可のダイアログが出現することがあります
 	- プロジェクトフォルダ全体を、`(ユーザ名)/デスクトップ` や `(ユーザ名)/ダウンロード` フォルダではなく、`(ユーザ名)/アプリケーション` フォルダ（root のアプリケーションフォルダではなく、ユーザホームのアプリケーションフォルダ）以下へ移動させることで回避できます

@@ -71,6 +71,8 @@
 		- Xcode 15.2 and earlier: From the menu bar, select **Product &gt; Destination &gt; Destination Architectures** and then **Show Rosetta Destinations**.
 	- Once the Rosetta option is displayed, select it.
 
+	![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/download/rosetta.png)
+
 ??? summary "Avoiding File Access Permission Dialogs"
 	- On macOS Catalina and later, file access permission dialogs may appear every time you run the program.
 	- This can be avoided by moving the entire project folder to the `(username)/Applications` folder (the user's Applications folder, not the root Applications folder) instead of the `(username)/Desktop` or `(username)/Downloads` folders.
