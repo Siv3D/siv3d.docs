@@ -28,15 +28,18 @@
 ### 2.1 開会式 | 10 月 18 日（土）15:00-15:30（14:30 頃 Zoom 開場）
 - イベントに関する説明と、お題の発表を行います
 
-<!-- [開会式スライド　:material-open-in-new:](#){:target="_blank" .md-button } 
-[お題 :material-open-in-new:](#){:target="_blank" .md-button }  -->
+[開会式 Zoom :material-open-in-new:](https://bandainamcostudios.zoom.us/j/93839515977?pwd=AO4rPZ8YX49pYUsaykchpYANy4UJAY.1){:target="_blank" .md-button .md-button--primary } 
+[説明スライド（開会式後掲載）　:material-open-in-new:](#){:target="_blank" .md-button }  [お題スライド（開会式後掲載）　:material-open-in-new:](#){:target="_blank" .md-button } 
+
 
 ### 2.2 中間発表 | 10 月 25 日（土）15:00-16:30（14:30 頃 Zoom 開場）
 - 司会者が画面共有をして各チームの作品紹介ページを訪れ、短いコメントや質問をします
 - 質問された**作品の担当者はマイクで返答してください**。プレゼン等の準備は不要です
 - 中間発表までに、イベント Cosense 上に**作品紹介ページ**を作成しておいてください
 
-<!-- [中間発表スライド :material-open-in-new:](#){:target="_blank" .md-button }  -->
+[中間発表 Zoom :material-open-in-new:](https://bandainamcostudios.zoom.us/j/96521439359?pwd=6dytGvav0CXeBkjWAKMbbjegKWHNFQ.1){:target="_blank" .md-button .md-button--primary } 
+[中間発表アナウンス（中間発表後掲載）　:material-open-in-new:](#){:target="_blank" .md-button } 
+
 
 ### 2.3 作品発表 | 11 月 2 日（日）15:00-17:00（14:30 頃 Zoom 開場）
 - 各チームの代表が順番に画面を共有し、チームや作品について**最大 90 秒トーク**します
@@ -46,12 +49,11 @@
 - 作品発表までに、イベント Cosense 上の作品紹介ページを完成させ、[**作品登録フォーム**](#5-作品登録フォーム最終日用)から作品登録を行ってください
 - 未完成の場合でも、そこまでの進捗や今後の展望を発表してください
 
-<!-- [作品紹介ページ（Cosense）:material-open-in-new:](https://scrapbox.io/bnscup2025/){:target="_blank" .md-button }
-
-[全体連絡スライド :material-open-in-new:](#){:target="_blank" .md-button }  -->
+[作品発表 Zoom :material-open-in-new:](https://bandainamcostudios.zoom.us/j/99356136191?pwd=ULViCTczZdNgXFkFm23ov14bYOPezD.1){:target="_blank" .md-button .md-button--primary } [作品紹介ページ（Cosense）:material-open-in-new:](https://scrapbox.io/bnscup2025/){:target="_blank" .md-button .md-button--primary }
+[全体アナウンス（作品発表後掲載）　:material-open-in-new:](#){:target="_blank" .md-button } 
 
 ### 2.4 コメントシート・賞品送付
-- 11 月後半以降に審査会を開催します
+- 11 月以降に審査会を開催します
 - 12 月以降をめどに、コメントシートと賞品が送付されます
 
 
@@ -116,20 +118,16 @@
 - イベントに関する重要なお知らせを確認できます
 
 ### 4.2 作品紹介ページ | Cosense
-- 参加者は **イベント専用 Cosense** に参加し、**作品紹介ページ**や、**自己紹介ページ**を作成します
+- 参加者は、[**イベント専用 Cosense** :material-open-in-new:](https://scrapbox.io/bnscup2025/){:target="_blank"} に**作品紹介ページ**や、**自己紹介ページ**を作成します
+- Cosense への**招待 URL（編集権限付与）**を、Siv3D Discord サーバの `#bnscup2025` チャンネル、または開会式前に Connpass システムから送られるメールで受け取ってください
+	- 開会式までに招待 URL を受け取っていない場合は連絡をください
+- 文章、画像、動画（YouTube）、コードなどを書き込んで、自由にページを作成できます
+- 他チームのページにコメントを書き込んで交流することもできます
 
-[イベント専用 Cosense :material-open-in-new:](https://scrapbox.io/bnscup2025/){:target="_blank" .md-button } 
-
-- Cosense の**編集権限**を、Siv3D Discord サーバの `#bnscup2025` チャンネル、または開会式前に Connpass システムから送られるメールで受け取ってください
-	- 開会式までに編集権限を受け取っていない場合は連絡をください
-- 画像、動画（YouTube）、コード、URL などを Google ドキュメントのように簡単に書き込み、ページを自由に作成できます
-- 他チームのページに質問やコメントを書き込んでの交流も可能です
-- 編集履歴の記録と、定期的なバックアップがあります
-
-### 4.3 Siv3D Discord サーバと、サーバ内イベント専用チャンネル
+### 4.3 Siv3D Discord サーバ内、イベント専用チャンネル
 - イベントや開発に関する投稿や質問ができます
-- Siv3D Discord サーバに参加済みの Discord ID を Connpass の参加登録フォームに記入した場合、`#bnscup2025` チャンネルに招待されます
-- フォーム申請後に `#bnscup2025` チャンネルに参加した場合は、お手数ですが Siv3D Discord サーバ `#welcome` チャンネル記載の手順で個別に連絡をください
+- **Siv3D Discord サーバに参加済みの Discord ID** を Connpass の参加登録フォームに記入した場合、`#bnscup2025` チャンネルに追加されます
+- フォーム申請後に `#bnscup2025` チャンネルに参加した場合は、お手数ですが Siv3D Discord サーバ `#welcome` チャンネル記載の手順で個別に連絡をください。手動で追加します
 
 ### 4.4 𝕏 ハッシュタグ
 - [#bnscup2025 #Siv3D:material-open-in-new:](https://x.com/search?q=Siv3D%20OR%20OpenSiv3D%20OR%20%2523bnscup2025&src=typed_query&f=live){:target="_blank"}
@@ -137,14 +135,19 @@
 
 
 ## 5. 作品登録フォーム（最終日用）
+- 作品と開発メンバーの情報を登録します
 - （準備中）
 
 
-## 6. 作品の提出方法
+## 6. 作品の提出方法（最終日用）
+- 作品の実行に必要なファイルを ZIP ファイルにまとめて提出します
 - （準備中）
 
 
-## 7. ソースファイルの提出方法
+## 7. ソースファイルの提出方法（最終日用）
+- GitHub リポジトリの URL またはソースコード一式を ZIP ファイルで提出します
+- **イベント期間以前**のコミット履歴が含まれていても問題ありません
+- [（参考）Siv3D 用の .gitignore :material-open-in-new:](https://siv3d.github.io/ja-jp/tools/gitignore/){:target="_blank"}
 - （準備中）
 
 
