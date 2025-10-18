@@ -41,7 +41,7 @@
 ## Siv3D ゲームジャム 2025 参加者募集中
 <center>オンラインで開催される 2 週間のゲーム制作イベント</center>
 
-<a href="https://bandainamcostudios.connpass.com/event/364446/" target="_blank">
+<a href="https://siv3d.github.io/ja-jp/event/gamejam/" target="_blank">
 <img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/bnscup.png" alt="バンダイナムコスタジオ杯 | Siv3D ゲームジャム">
 </a>
 

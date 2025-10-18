@@ -41,7 +41,7 @@
 ## Siv3D Game Jam 2025 – Registration Open
 <center>A two-week online game development event</center>
 
-<a href="https://bandainamcostudios.connpass.com/event/364446/" target="_blank">
+<a href="https://siv3d.github.io/en-us/event/gamejam/" target="_blank">
 <img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/bnscup.png" alt="Bandai Namco Studios Cup | Siv3D Game Jam">
 </a>
 

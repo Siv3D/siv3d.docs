@@ -29,7 +29,7 @@
 - イベントに関する説明と、お題の発表を行います
 
 [開会式 Zoom :material-open-in-new:](https://bandainamcostudios.zoom.us/j/93839515977?pwd=AO4rPZ8YX49pYUsaykchpYANy4UJAY.1){:target="_blank" .md-button .md-button--primary } 
-[説明スライド（開会式後掲載）　:material-open-in-new:](#){:target="_blank" .md-button }  [お題スライド（開会式後掲載）　:material-open-in-new:](#){:target="_blank" .md-button } 
+[説明スライド　:material-open-in-new:](https://www.dropbox.com/scl/fi/z7kd46ghkumc2mn3aum9g/Siv3D-2025.pdf?rlkey=to8ynz10qohw02nk2y86he4qx&dl=0){:target="_blank" .md-button }  [お題スライド　:material-open-in-new:](https://www.dropbox.com/scl/fi/vhnwxwyyhadkvwdfn4ehc/Siv3D-2025.pdf?rlkey=eyy1be8006j9k1j8zxe5hmulg&dl=0){:target="_blank" .md-button } 
 
 
 ### 2.2 中間発表 | 10 月 25 日（土）15:00-16:30（14:30 頃 Zoom 開場）
