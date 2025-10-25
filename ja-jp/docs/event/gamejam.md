@@ -36,8 +36,7 @@
 - 質問された**作品の担当者はマイクで返答してください**。プレゼン等の準備は不要です
 - 中間発表までに、イベント Cosense 上に**作品紹介ページ**を作成しておいてください
 
-[中間発表 Zoom :material-open-in-new:](https://bandainamcostudios.zoom.us/j/96521439359?pwd=6dytGvav0CXeBkjWAKMbbjegKWHNFQ.1){:target="_blank" .md-button .md-button--primary } 
-[中間発表アナウンス（中間発表後掲載）　:material-open-in-new:](#){:target="_blank" .md-button } 
+[説明スライド :material-open-in-new:](https://www.dropbox.com/scl/fi/hwfornxzx8hyrclwqz9bk/Siv3D-2025.pdf?rlkey=zz8yxrkshgkxhqiiujd5lfj9i&dl=0){:target="_blank" .md-button .md-button--primary } 
 
 
 ### 2.3 作品発表 | 11 月 2 日（日）15:00-17:00（14:30 頃 Zoom 開場）
