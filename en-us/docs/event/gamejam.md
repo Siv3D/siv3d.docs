@@ -42,7 +42,7 @@
 - ムービーやスライドなどを用意すると良いでしょう
 - 詳細な情報やプレイ動画は作品紹介ページからも閲覧できるため、要点やアピールポイントを伝えることに集中してください
 - **質疑応答はありません**
-- 作品発表までに、イベント Cosense 上の作品紹介ページを完成させ、[**作品登録フォーム**](#5-作品登録フォーム最終日用)から作品登録を行ってください
+- 作品発表までに、イベント Cosense 上の作品紹介ページを完成させ、[**作品登録フォーム**](#5-作品登録フォーム)から作品登録を行ってください
 - 未完成の場合でも、そこまでの進捗や今後の展望を発表してください
 
 [作品発表 Zoom :material-open-in-new:](https://bandainamcostudios.zoom.us/j/99356136191?pwd=ULViCTczZdNgXFkFm23ov14bYOPezD.1){:target="_blank" .md-button .md-button--primary } [作品紹介ページ（Cosense）:material-open-in-new:](https://scrapbox.io/bnscup2025/){:target="_blank" .md-button .md-button--primary }
@@ -175,8 +175,8 @@ void Main()
 📁 my_game
 ├─ 📄 game.exe
 └─ 📁 asset
-	├─ 📄 title.png
-	└─ 📄 bgm.mp3
+    ├─ 📄 title.png
+    └─ 📄 bgm.mp3
 ```
 
 #### 例 3
