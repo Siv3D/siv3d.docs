@@ -38,8 +38,7 @@
 
 </div>
 
-## Siv3D ゲームジャム 2025 参加者募集中
-<center>オンラインで開催される 2 週間のゲーム制作イベント</center>
+## Siv3D ゲームジャム 2025
 
 <a href="https://siv3d.github.io/ja-jp/event/gamejam/" target="_blank">
 <img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/bnscup.png" alt="バンダイナムコスタジオ杯 | Siv3D ゲームジャム">
@@ -49,7 +48,8 @@
 
 | 日付 | イベント | 対象者 |
 | --- | --- | --- |
-| 2025-11-30 | Siv3D 勉強会 in 九州工業大学（予定） |  |
+| 2025-12-1～25 | [Siv3D Advent Calendar 2025 :material-open-in-new:](https://qiita.com/advent-calendar/2025/siv3d){:target="_blank"} | だれでも |
+| 2025-11-30 | [Siv3D 勉強会 in 九州工業大学 :material-open-in-new:](https://connpass.com/event/369230/){:target="_blank"} |  |
 | 2025-10-18～11-02 | [バンダイナムコスタジオ杯 \| Siv3D ゲームジャム 2025 :material-open-in-new:](https://bandainamcostudios.connpass.com/event/364446/){:target="_blank"} | だれでも |
 | 2025-09-29 | [Siv3D 実装会 in 電気通信大学 2025 :material-open-in-new:](https://connpass.com/event/362266/){:target="_blank"} | 電気通信大学の学生・教職員 |
 | 2025-07-25 | Siv3D 講座 in NPCA 夏合宿 2025 | 灘校パソコン研究部 |
@@ -193,9 +193,6 @@ C++ のスキルを活かしたいプログラマーや、C++ での開発を学
 | <iframe src="https://www.youtube-nocookie.com/embed/3ns8QqGWry4?si=v6JKWmueG9RVxVL0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> | <iframe src="https://www.youtube-nocookie.com/embed/S--QI455r3Q?si=jEabVpHLloiLO_gy" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> |
 
 [さらに確認する](./steam.md){:target="_blank" .md-button .md-button}
-
-## 法人協賛
-<div class="sponsor"><a href="https://www.bandainamcostudios.com/" target="_blank"><img src="https://siv3d.jp/sponsors/バンダイナムコスタジオ.png" alt="バンダイナムコスタジオ"></a></div>
 
 ### 過去のイベント
 [バンダイナムコスタジオ杯 Siv3D ゲームジャム | 結果発表ページ](event/gamejam2023.md){:target="_blank" .md-button }

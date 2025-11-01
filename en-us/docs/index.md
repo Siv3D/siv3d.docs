@@ -38,8 +38,7 @@
 
 </div>
 
-## Siv3D Game Jam 2025 – Registration Open
-<center>A two-week online game development event</center>
+## Siv3D Game Jam 2025
 
 <a href="https://siv3d.github.io/en-us/event/gamejam/" target="_blank">
 <img src="https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/bnscup.png" alt="Bandai Namco Studios Cup | Siv3D Game Jam">
@@ -49,7 +48,8 @@
 
 | Date | Event | Audience |
 | --- | --- | --- |
-| 2025-11-30 | Siv3D Study Session at Kyushu Institute of Technology (planned) |  |
+| 2025-12-1～25 | [Siv3D Advent Calendar 2025 :material-open-in-new:](https://qiita.com/advent-calendar/2025/siv3d){:target="_blank"} | Everyone |
+| 2025-11-30 | [Siv3D Study Session at Kyushu Institute of Technology :material-open-in-new:](https://connpass.com/event/369230/){:target="_blank"} |  |
 | 2025-10-18～11-02 | [Bandai Namco Studios Cup \| Siv3D Game Jam 2025 :material-open-in-new:](https://bandainamcostudios.connpass.com/event/364446/){:target="_blank"} | Everyone |
 | 2025-09-29 | [Siv3D Implementation Meetup at the University of Electro-Communications 2025 :material-open-in-new:](https://connpass.com/event/362266/){:target="_blank"} | UEC students and faculty |
 | 2025-07-25 | Siv3D Lecture at NPCA Summer Camp 2025 | Nada High School students |
@@ -193,9 +193,6 @@ For programmers who want to leverage their C++ skills or those who want to learn
 | <iframe src="https://www.youtube-nocookie.com/embed/3ns8QqGWry4?si=v6JKWmueG9RVxVL0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> | <iframe src="https://www.youtube-nocookie.com/embed/S--QI455r3Q?si=jEabVpHLloiLO_gy" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> |
 
 [View More](./steam.md){:target="_blank" .md-button .md-button}
-
-## Corporate Sponsors
-<div class="sponsor"><a href="https://www.bandainamcostudios.com/" target="_blank"><img src="https://siv3d.jp/sponsors/バンダイナムコスタジオ.png" alt="Bandai Namco Studios"></a></div>
 
 ### Past Events
 [Bandai Namco Studios Cup Siv3D Game Jam | Results Page](event/gamejam2023.md){:target="_blank" .md-button }

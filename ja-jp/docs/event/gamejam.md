@@ -134,6 +134,8 @@
 
 [作品登録フォーム :material-open-in-new:](https://forms.gle/9zvQGhAhuaxG8j9L8){:target="_blank" .md-button .md-button--primary } 
 
+- 提出後もフォームの内容を編集できます
+
 !!!note "作品登録フォームを利用できない場合"
 	- 教育機関発行のメールアドレスで利用する場合、ファイルアップロードが制限されていてフォームを利用できない場合があります。その場合はファイルアップロード欄の無い [簡易版作品登録フォーム :material-open-in-new:](https://forms.gle/1EEVVt4rVd8PLSMZ8){:target="_blank"} を利用してください
 
