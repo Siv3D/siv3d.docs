@@ -45,7 +45,7 @@
 - 作品発表までに、イベント Cosense 上の作品紹介ページを完成させ、[**作品登録フォーム**](#5-作品登録フォーム)から作品登録を行ってください
 - 未完成の場合でも、そこまでの進捗や今後の展望を発表してください
 
-[作品紹介ページ（Cosense）:material-open-in-new:](https://scrapbox.io/bnscup2025/){:target="_blank" .md-button .md-button--primary } [説明スライド :material-open-in-new:](https://www.dropbox.com/scl/fi/5aoor67sdgkqkt7gmyslu/Siv3D-2025.pdf?rlkey=80c5cl0aw1syd4s5e0iga4uv2&dl=0){:target="_blank" .md-button } 
+[作品紹介ページ（Cosense）:material-open-in-new:](https://scrapbox.io/bnscup2025/){:target="_blank" .md-button .md-button--primary } [説明スライド :material-open-in-new:](https://www.dropbox.com/scl/fi/5aoor67sdgkqkt7gmyslu/Siv3D-2025.pdf?rlkey=80c5cl0aw1syd4s5e0iga4uv2&dl=0){:target="_blank" .md-button .md-button--primary } 
 
 ### 2.4 コメントシート・賞品送付
 - 11 月以降に審査会を開催します
