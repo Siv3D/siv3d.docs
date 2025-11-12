@@ -154,7 +154,7 @@ For programmers who want to leverage their C++ skills or those who want to learn
 
     ---
 
-    The Siv3D SDK installer for Windows is only 120 MB. Installation is completed with just a few clicks and appears in the Visual Studio menu. All information needed for development is available in the official tutorials, eliminating the need to search for books or introductory articles.
+    The Siv3D SDK installer for Windows is only 180 MB. Installation is completed with just a few clicks and appears in the Visual Studio menu. All information needed for development is available in the official tutorials, eliminating the need to search for books or introductory articles.
 
 -   __3. Concise Code__
 
