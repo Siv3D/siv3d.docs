@@ -10,15 +10,15 @@
 | CPU | Intel または AMD 製の CPU |
 | 映像出力 | モニタなど、何らかの映像出力装置があること |
 | 音声出力 | 何らかの音声出力装置があること |
-| 開発環境 | **Microsoft Visual C++ 2022 17.13 以降**<br>（インストーラ内で「C++ によるデスクトップ開発」を追加インストールしてください） |
+| 開発環境 | **Microsoft Visual C++ 2022 17.14** または **Microsoft Visual C++ 2026**<br>（インストーラ内で「C++ によるデスクトップ開発」を追加インストールしてください） |
 
 ??? summary "インストールする Visual Studio のエディション"
-	- Windows で Siv3D プログラミングをする場合、**「Visual Studio Community 2022（ビジュアル・スタジオ・コミュニティ 2022）」**を使うのが便利です
+	- Windows で Siv3D プログラミングをする場合、**「Visual Studio Community 2022 / 2026（ビジュアル・スタジオ・コミュニティ 2022 / 2026）」**を使うのが便利です
 	- これは世界中のプロのソフトウェア開発者が使う「Visual Studio」という統合開発環境の無料版です
 	- 学生や個人の開発であれば、Visual Studio の有料版と同じ機能を無料で使えます
 
 ??? summary "Visual Studio のインストール手順"
-	- [Visual Studio ダウンロードページ :material-open-in-new:](https://visualstudio.microsoft.com/ja/downloads/){:target="_blank"} から**「Visual Studio 2022 コミュニティ」**のインストーラをダウンロードし、実行します
+	- [Visual Studio ダウンロードページ :material-open-in-new:](https://visualstudio.microsoft.com/ja/downloads/){:target="_blank"} から**「Visual Studio 2026 コミュニティ」**のインストーラをダウンロードし、実行します
 	- インストーラを実行すると、プログラミング言語や開発ツールを選択する、次のような画面が出てきます。この中から**「C++ によるデスクトップ開発」**を選択します（右側の「インストールの詳細」に表示される項目は Visual Studio のバージョンによって異なるため、気にする必要はありません）
 
 	![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/download/windows/vs_installer_desktop.png)
@@ -30,7 +30,7 @@
 
 |  |  |
 |--|--|
-| OS | Windows 7 SP1 (64-bit) / Windows 8.1 (64-bit) / Windows 10 (64-bit) /  Windows 11 |
+| OS | Windows 8.1 (64-bit) / Windows 10 (64-bit) /  Windows 11 |
 | CPU | Intel または AMD 製の CPU |
 | 映像出力 | モニタなど、何らかの映像出力装置があること |
 | 音声出力 | 何らかの音声出力装置があること |
@@ -47,7 +47,9 @@
 	- Siv3D のインストーラは、以下を自動で行います：
 		- SDK の配置（デフォルトではドキュメントフォルダ）
 		- SDK を配置したパスへのユーザ環境変数の設定
-		- Siv3D プロジェクト用の Visual Studio プロジェクトテンプレートのコピー (通常は `ドキュメント/Visual Studio 2022/Templates/ProjectTemplates/`)
+		- Siv3D プロジェクト用の Visual Studio プロジェクトテンプレートのコピー
+			- `ドキュメント/Visual Studio 2022/Templates/ProjectTemplates/OpenSiv3D_0.x.xx.zip`（Visual Studio 2022 の場合）
+			- `ドキュメント/Visual Studio 18/Templates/ProjectTemplates/OpenSiv3D_0.x.xx.zip`（Visual Studio 2026 の場合）
 		- アンインストーラの登録
 
 ??? summary "SDK をアンインストールするには"
@@ -83,8 +85,9 @@
 1. プロジェクト名と保存場所を入力し（任意）、**作成** を押します
 
 ??? warning "プロジェクト テンプレートの項目に「OpenSiv3D」が見つからない場合"
+	- Visual Studio 2026 の場合、下記の「2022」を「18」に読み替えてください
 	- OneDrive を有効化した Windows PC では「ドキュメント」フォルダが 2 つ存在することがあります
-	- その場合、Visual Studio が参照するドキュメントフォルダと、「Siv3D プロジェクト用の Visual Studio プロジェクトテンプレート」の配置されたドキュメントフォルダが一致せず、Visual Studio がプロジェクトテンプレートを見つけられない問題が発生します
+	- その場合、Visual Studio が参照するドキュメントフォルダと、「Siv3D プロジェクト用の Visual Studio プロジェクトテンプレート」の配置されたドキュメントフォルダが一致せず、Visual Studio がプロジェクトテンプレートを見つけられない問題が発生することがあります
 	- まずは、`OpenSiv3D_●.●.●.zip` という**プロジェクトテンプレートファイル**が、`C:\Users\●●●\Documents\Visual Studio 2022\Templates\ProjectTemplates` に存在することを確認します
 	- その後、以下の 2 つの解決法のいずれかを選びます
 

@@ -10,15 +10,15 @@
 | CPU | Intel or AMD CPU |
 | Video Output | Any video output device such as a monitor |
 | Audio Output | Any audio output device |
-| Development Environment | **Microsoft Visual C++ 2022 17.13 or later**<br>(Please install the "Desktop development with C++" workload) |
+| Development Environment | **Microsoft Visual C++ 2022 17.14** or **Microsoft Visual C++ 2026**<br>(Please install the "Desktop development with C++" workload) |
 
 ??? summary "Which Visual Studio Edition to Install"
-	- For Siv3D programming on Windows, we recommend using **"Visual Studio Community 2022"**.
+	- For Siv3D programming on Windows, we recommend using **"Visual Studio Community 2022 / 2026"**.
 	- This is the free version of "Visual Studio," an integrated development environment used by professional software developers worldwide.
 	- For students and individual developers, it offers the same features as the paid editions of Visual Studio for free.
 
 ??? summary "Visual Studio Installation Steps"
-	- Download the installer for **"Visual Studio 2022 Community"** from the [Visual Studio download page :material-open-in-new:](https://visualstudio.microsoft.com/ja/downloads/){:target="_blank"} and run it.
+	- Download the installer for **"Visual Studio 2026 Community"** from the [Visual Studio download page :material-open-in-new:](https://visualstudio.microsoft.com/ja/downloads/){:target="_blank"} and run it.
 	- When you run the installer, a screen for selecting workloads (sets of tools) will appear. Select **"Desktop development with C++"**. (The individual components shown on the right under "Installation details" may vary depending on your Visual Studio version; you don't need to worry about them.)
 
 	![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v6/download/windows/vs_installer_desktop.png)
@@ -30,7 +30,7 @@
 
 |  |  |
 |--|--|
-| OS | Windows 7 SP1 (64-bit) / Windows 8.1 (64-bit) / Windows 10 (64-bit) / Windows 11 |
+| OS | Windows 8.1 (64-bit) / Windows 10 (64-bit) / Windows 11 |
 | CPU | Intel or AMD CPU |
 | Video Output | Any video output device such as a monitor |
 | Audio Output | Any audio output device |
@@ -47,7 +47,9 @@
 	- The Siv3D installer automatically performs the following actions:
 		- Places the SDK files (in the Documents folder by default).
 		- Sets a user environment variable to the path where the SDK is located.
-		- Copies the Siv3D Visual Studio project template (usually to `Documents\Visual Studio 2022\Templates\ProjectTemplates\`).
+		- Copies the Siv3D Visual Studio project templat
+			- `Documents\Visual Studio 2022\Templates\ProjectTemplates\OpenSiv3D_0.x.xx.zip` (for Visual Studio 2022)
+			- `Documents\Visual Studio 18\Templates\ProjectTemplates\OpenSiv3D_0.x.xx.zip` (for Visual Studio 2026)
 		- Registers an uninstaller.
 
 ??? summary "To uninstall the SDK"
@@ -83,6 +85,7 @@
 1. Enter a project name and choose a location (optional), then click **Create**.
 
 ??? warning "If you can't find 'OpenSiv3D' in the project templates"
+	- If you are using Visual Studio 2026, please replace "2022" with "18".
 	- On Windows PCs with OneDrive enabled, there can sometimes be two "Documents" folders.
 	- If this happens, the Documents folder that Visual Studio uses might not be the same one where the Siv3D project template was installed, causing Visual Studio to not find the template.
 	- First, verify that the project template file, `OpenSiv3D_vX.X.X.zip`, exists in `C:\Users\YourUsername\Documents\Visual Studio 2022\Templates\ProjectTemplates`.
