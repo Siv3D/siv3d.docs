@@ -62,7 +62,7 @@
 - 開催期間: 2 週間（2023 年 10 月 21 日 ～ 2023 年 11 月 5 日）
 - テーマ「すくう」
 
-[イベントページ](./gamejam.md){:target="_blank" .md-button } 
+[イベントページ](./gamejam2023info.md){:target="_blank" .md-button } 
 
 ### 審査員
 

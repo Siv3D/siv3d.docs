@@ -10,7 +10,7 @@
 	- お題：（当日発表）
 	- 任意のお題：**「図工、美術、音楽の授業で活用できるような作品」**（CESA 賞対象）
 
-[:material-ticket:　Siv3D ゲームジャム 2025 に参加する](https://bandainamcostudios.connpass.com/event/364446/){:target="_blank" .md-button .md-button--primary }
+[Winning Works](./gamejam2025.md){:target="_blank" .md-button } 
 
 ## 2. スケジュール
 |日付|時間|内容|
