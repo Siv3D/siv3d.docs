@@ -8,8 +8,11 @@ In the Bandai Namco Studios Cup Siv3D Game Jam 2025, **56 works by 185 participa
 |                                     **Excellence Award / CESA Award**                                    | [芯車 :material-open-in-new:](https://scrapbox.io/bnscup2025/%E8%8A%AF%E8%BB%8A){:target="_blank"}                                                                                 | めんつゆ                                                                   |
 |                                           **Excellence Award**                                           | [Blazing Spiceholics :material-open-in-new:](https://scrapbox.io/bnscup2025/Blazing_Spiceholics){:target="_blank"}                                                               | voidProc                                                               |
 |                                        **Jury Award (Yamaguchi)**                                        | [KIRISAKI :material-open-in-new:](https://scrapbox.io/bnscup2025/KIRISAKI){:target="_blank"}                                                                                     | Aikawa                                                                 |
-|                                          **Jury Award (Ozawa)**                                          | [浸食！インクウォーズ :material-open-in-new:](https://scrapbox.io/bnscup2025/%E6%B5%B8%E9%A3%9F%EF%BC%81%E3%82%A4%E3%83%B3%E3%82%AF%E3%82%A6%E3%82%A9%E3%83%BC%E3%82%BA){:target="_blank"} | ふうし, Ogebosama, MozzarellaKou,<br>あきかん,タケマサ,<br>Maily_Cardian, tomosan |
-| [View all entries :material-open-in-new:](https://scrapbox.io/bnscup2025/){:target="_blank" .md-button } |                                                                                                                                                                                  |                                                                        |
+|                                          **Jury Award (Ozawa)**                                          | [浸食！インクウォーズ :material-open-in-new:](https://scrapbox.io/bnscup2025/%E6%B5%B8%E9%A3%9F%EF%BC%81%E3%82%A4%E3%83%B3%E3%82%AF%E3%82%A6%E3%82%A9%E3%83%BC%E3%82%BA){:target="_blank"} | ふうし, Ogebosama, MozzarellaKou, あきかん, タケマサ, Maily_Cardian, tomosan |
+
+---
+  
+[View all entries :material-open-in-new:](https://scrapbox.io/bnscup2025/){:target="_blank" .md-button }
 
 ## Grand Prize | GOAT
 

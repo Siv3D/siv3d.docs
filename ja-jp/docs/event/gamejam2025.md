@@ -4,10 +4,13 @@
 | 賞 | 作品名 | 作者 |
 |:---:| --- | --- |
 | **最優秀賞** | [GOAT :material-open-in-new:](https://scrapbox.io/bnscup2025/GOAT){:target="_blank"} | YOU, 神釜, fsheinsya |
-| **優秀賞・CESA 賞** | [芯車 :material-open-in-new:](https://scrapbox.io/bnscup2025/%E8%8A%AF%E8%BB%8A){:target="_blank"} | めんつゆ |
+| **優秀賞・<br>CESA 賞** | [芯車 :material-open-in-new:](https://scrapbox.io/bnscup2025/%E8%8A%AF%E8%BB%8A){:target="_blank"} | めんつゆ |
 | **優秀賞** | [Blazing Spiceholics :material-open-in-new:](https://scrapbox.io/bnscup2025/Blazing_Spiceholics){:target="_blank"} | voidProc |
-| **審査員賞（山口）** | [KIRISAKI :material-open-in-new:](https://scrapbox.io/bnscup2025/KIRISAKI){:target="_blank"} | Aikawa |
-| **審査員賞（小澤）** | [浸食！インクウォーズ :material-open-in-new:](https://scrapbox.io/bnscup2025/%E6%B5%B8%E9%A3%9F%EF%BC%81%E3%82%A4%E3%83%B3%E3%82%AF%E3%82%A6%E3%82%A9%E3%83%BC%E3%82%BA){:target="_blank"} | ふうし, Ogebosama, MozzarellaKou,<br>あきかん,タケマサ,<br>Maily_Cardian, tomosan |
+| **審査員賞<br>（山口）** | [KIRISAKI :material-open-in-new:](https://scrapbox.io/bnscup2025/KIRISAKI){:target="_blank"} | Aikawa |
+| **審査員賞<br>（小澤）** | [浸食！インクウォーズ :material-open-in-new:](https://scrapbox.io/bnscup2025/%E6%B5%B8%E9%A3%9F%EF%BC%81%E3%82%A4%E3%83%B3%E3%82%AF%E3%82%A6%E3%82%A9%E3%83%BC%E3%82%BA){:target="_blank"} | ふうし, Ogebosama, MozzarellaKou, あきかん, タケマサ, Maily_Cardian, tomosan |
+
+---
+  
 [すべての参加作品を見る :material-open-in-new:](https://scrapbox.io/bnscup2025/){:target="_blank" .md-button } 
 
 ## 最優秀賞 | GOAT
