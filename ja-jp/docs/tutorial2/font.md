@@ -1209,7 +1209,7 @@ void DrawGlyphs(const Font& font, const TextStyle& textStyle, const String& text
 	const double fontHeight = (font.height() * scale);
 
 	const ScopedCustomShader2D shader{ Font::GetPixelShader(font.method(), textStyle.type) };
-	Graphics2D::SetSDFParameters(textStyle);
+	Graphics2D::SetMSDFParameters(textStyle);
 
 	Vec2 penPos{ basePos };
 	int32 index = 0;

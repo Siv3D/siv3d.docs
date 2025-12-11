@@ -237,7 +237,7 @@ void Main()
 		{
 			const ScopedCustomShader2D shader{ Font::GetPixelShader(font.method(), TextStyle::Type::Default) };
 
-			Graphics2D::SetSDFParameters(TextStyle::Default());
+			Graphics2D::SetMSDFParameters(TextStyle::Default());
 
 			int32 i = 0;
 
