@@ -1,60 +1,60 @@
-# お手本に似せてランダムに絵を描く
+# Random Painting to Match a Reference
 
 | | | | |
 |:--:|:--:|:--:|:--:|
-| **難易度** | 中級 | **時間** | 60 分～ |
+| **Difficulty** | Intermediate | **Time** | 60 min+ |
 
-## 1. 画像を開いて表示する
-- まずはじめに、模写の対象となるお手本画像を読み込む機能を作ります
-- ここでは、ボタンを押して画像ファイルを選択し、適切なサイズにリサイズしたあと、それを画面の左側に表示するところまで実装します
+## 1. Open and Display an Image
+- First, create a function to load the reference image that will be copied.
+- Here, we will implement the ability to select an image file via a button, resize it to an appropriate size, and display it on the left side of the screen.
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/study/2025/24/1.png)
 
-??? note "コード"
+??? note "Code"
 	```cpp
 	# include <Siv3D.hpp>
 
 	void Main()
 	{
-		// 画面サイズの設定
+		// Set window size
 		Window::Resize(1280, 720);
 
-		// キャンバスの最大サイズ（大きいと処理に時間がかかる）
+		// Maximum canvas size (larger sizes take longer to process)
 		static constexpr Size MaxCanvasSize{ 640, 720 };
 
-		// お手本画像（メインメモリ上）
+		// Reference image (in main memory)
 		Image targetImage;
-		// お手本画像を描画するためのテクスチャ（VRAM 上）
+		// Texture to draw the reference image (in VRAM)
 		Texture targetTexture;
 
 		while (System::Update())
 		{
-			// 背景を描く
+			// Draw background
 			{
 				Rect{ MaxCanvasSize }.draw(Arg::top(0.7), Arg::bottom(0.2));
 				Rect{ MaxCanvasSize.x, 0, MaxCanvasSize }.draw(Arg::top(0.7, 0.3, 0.4), Arg::bottom(0.6, 0.1, 0.4));
 			}
 
-			// お手本画像を画面の左側に表示
+			// Display reference image on the left
 			if (targetTexture)
 			{
 				targetTexture.scaled(0.92).drawAt(MaxCanvasSize / 2);
 			}
 
-			// お手本画像を開くボタン
+			// Button to open reference image
 			if (SimpleGUI::Button(U"Open", Vec2{ 30, 30 }, 100))
 			{
-				if (Image image = Dialog::OpenImage()) // 画像を正しく開けた場合
+				if (Image image = Dialog::OpenImage()) // If image opened successfully
 				{
-					// キャンバスの最大サイズに合わせてリサイズ
+					// Resize to fit max canvas size
 					targetImage = image.fitted(MaxCanvasSize);
-					// 透過は無視して不透明にする
+					// Ignore transparency and make opaque
 					for (auto& pixel : targetImage)
 					{
 						pixel.a = 255;
 					}
 
-					// お手本テクスチャを新規作成
+					// Create new reference texture
 					targetTexture = Texture{ targetImage };
 				}
 			}
@@ -62,75 +62,75 @@
 	}
 	```
 
-## 2. キャンバスを作成して表示する
-- お手本画像の隣に、絵を描くためのキャンバスを用意します。
-- 左側にお手本、右側にキャンバスを並べることで、プログラムがどのように絵を再現していくかを見比べることができるようになります
-- 現時点では、キャンバスは白紙です
+## 2. Create and Display a Canvas
+- Prepare a canvas for drawing next to the reference image.
+- By placing the reference on the left and the canvas on the right, you can compare and see how the program reproduces the image.
+- At this stage, the canvas is blank.
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/study/2025/24/2.png)
 
-??? note "コード"
+??? note "Code"
 	```cpp hl_lines="16-19 35-39 57-61"
 	# include <Siv3D.hpp>
 
 	void Main()
 	{
-		// 画面サイズの設定
+		// Set window size
 		Window::Resize(1280, 720);
 
-		// キャンバスの最大サイズ（大きいと処理に時間がかかる）
+		// Maximum canvas size (larger sizes take longer to process)
 		static constexpr Size MaxCanvasSize{ 640, 720 };
 
-		// お手本画像（メインメモリ上）
+		// Reference image (in main memory)
 		Image targetImage;
-		// お手本画像を描画するためのテクスチャ（VRAM 上）
+		// Texture to draw the reference image (in VRAM)
 		Texture targetTexture;
 
-		// キャンバス画像（メインメモリ上）
+		// Canvas image (in main memory)
 		Image canvas;
-		// キャンバスの内容を描画するための動的テクスチャ（VRAM 上）
+		// Dynamic texture to draw canvas content (in VRAM)
 		DynamicTexture canvasTexture;
 
 		while (System::Update())
 		{
-			// 背景を描く
+			// Draw background
 			{
 				Rect{ MaxCanvasSize }.draw(Arg::top(0.7), Arg::bottom(0.2));
 				Rect{ MaxCanvasSize.x, 0, MaxCanvasSize }.draw(Arg::top(0.7, 0.3, 0.4), Arg::bottom(0.6, 0.1, 0.4));
 			}
 
-			// お手本画像を画面の左側に表示
+			// Display reference image on the left
 			if (targetTexture)
 			{
 				targetTexture.scaled(0.92).drawAt(MaxCanvasSize / 2);
 			}
 
-			// キャンバスを画面の右側に表示
+			// Display canvas on the right
 			if (canvasTexture)
 			{
 				canvasTexture.scaled(0.92).drawAt(MaxCanvasSize * Vec2{ 1.5, 0.5 });
 			}
 
-			// お手本画像を開くボタン
+			// Button to open reference image
 			if (SimpleGUI::Button(U"Open", Vec2{ 30, 30 }, 100))
 			{
-				if (Image image = Dialog::OpenImage()) // 画像を正しく開けた場合
+				if (Image image = Dialog::OpenImage()) // If image opened successfully
 				{
-					// キャンバスの最大サイズに合わせてリサイズ
+					// Resize to fit max canvas size
 					targetImage = image.fitted(MaxCanvasSize);
-					// 透過は無視して不透明にする
+					// Ignore transparency and make opaque
 					for (auto& pixel : targetImage)
 					{
 						pixel.a = 255;
 					}
 
-					// お手本テクスチャを新規作成
+					// Create new reference texture
 					targetTexture = Texture{ targetImage };
 
-					// お手本画像と同じサイズでキャンバスを新規作成
+					// Create new canvas with same size as reference
 					canvas = Image{ targetImage.size(), Color{ 255 } };
 
-					// 新しいキャンバスサイズで動的テクスチャを作成
+					// Create dynamic texture with new canvas size
 					canvasTexture = DynamicTexture{ canvas };
 				}
 			}
@@ -138,138 +138,138 @@
 	}
 	```
 
-## 3. ランダムに円を書き込む
-- ここからいよいよ描画処理に入ります。まずはシンプルに、キャンバス上のランダムな位置に、ランダムな大きさの「円」を描き込んでみます
-- 今の段階では「お手本に似ているかどうか」の判断を行わず、無条件で円を描き続けるため、キャンバスはすぐに灰色の円で埋め尽くされます
+## 3. Draw Random Circles
+- From here, we start the drawing process. First, simply draw a "circle" of a random size at a random position on the canvas.
+- At this stage, we don't judge "similarity to the reference," so we just keep drawing unconditionally. The canvas will quickly be filled with gray circles.
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/study/2025/24/3.png)
 
-??? note "コード"
+??? note "Code"
 	```cpp hl_lines="3-21 40-41 87-101"
 	# include <Siv3D.hpp>
 
-	/// @brief ランダムな円をキャンバスに描画します。
-	/// @param target お手本画像
-	/// @param canvas キャンバス画像
-	/// @param currentDistance 現在の距離
+	/// @brief Draws a random circle on the canvas.
+	/// @param target Reference image
+	/// @param canvas Canvas image
+	/// @param currentDistance Current distance
 	void DrawRandomCircle(const Image& target, Image& canvas)
 	{
-		// キャンバスのサイズ
+		// Canvas size
 		const Size canvasSize = canvas.size();
-		// 円の中心座標をランダムに決定
+		// Randomly determine circle center
 		const Point center{ Random(canvasSize.x - 1), Random(canvasSize.y - 1) };
-		// 円の半径をランダムに決定
+		// Randomly determine circle radius
 		const int32 radius = Random(5, 30);
 
-		// 円の色
+		// Circle color
 		Color color{ 64, 64, 64 };
 
-		// 円をキャンバスに書き込む
+		// Paint circle onto canvas
 		Circle{ center, radius }.paint(canvas, color, Antialiased::Yes);
 	}
 
 	void Main()
 	{
-		// 画面サイズの設定
+		// Set window size
 		Window::Resize(1280, 720);
 
-		// キャンバスの最大サイズ（大きいと処理に時間がかかる）
+		// Maximum canvas size (larger sizes take longer to process)
 		static constexpr Size MaxCanvasSize{ 640, 720 };
 
-		// お手本画像（メインメモリ上）
+		// Reference image (in main memory)
 		Image targetImage;
-		// お手本画像を描画するためのテクスチャ（VRAM 上）
+		// Texture to draw the reference image (in VRAM)
 		Texture targetTexture;
 
-		// キャンバス画像（メインメモリ上）
+		// Canvas image (in main memory)
 		Image canvas;
-		// キャンバスの内容を描画するための動的テクスチャ（VRAM 上）
+		// Dynamic texture to draw canvas content (in VRAM)
 		DynamicTexture canvasTexture;
-		// 新しいキャンバスの状態の候補画像（メインメモリ上）
+		// Candidate image for new canvas state (in main memory)
 		Image candidateImage;
 
 		while (System::Update())
 		{
-			// 背景を描く
+			// Draw background
 			{
 				Rect{ MaxCanvasSize }.draw(Arg::top(0.7), Arg::bottom(0.2));
 				Rect{ MaxCanvasSize.x, 0, MaxCanvasSize }.draw(Arg::top(0.7, 0.3, 0.4), Arg::bottom(0.6, 0.1, 0.4));
 			}
 
-			// お手本画像を画面の左側に表示
+			// Display reference image on the left
 			if (targetTexture)
 			{
 				targetTexture.scaled(0.92).drawAt(MaxCanvasSize / 2);
 			}
 
-			// キャンバスを画面の右側に表示
+			// Display canvas on the right
 			if (canvasTexture)
 			{
 				canvasTexture.scaled(0.92).drawAt(MaxCanvasSize * Vec2{ 1.5, 0.5 });
 			}
 
-			// お手本画像を開くボタン
+			// Button to open reference image
 			if (SimpleGUI::Button(U"Open", Vec2{ 30, 30 }, 100))
 			{
-				if (Image image = Dialog::OpenImage()) // 画像を正しく開けた場合
+				if (Image image = Dialog::OpenImage()) // If image opened successfully
 				{
-					// キャンバスの最大サイズに合わせてリサイズ
+					// Resize to fit max canvas size
 					targetImage = image.fitted(MaxCanvasSize);
-					// 透過は無視して不透明にする
+					// Ignore transparency and make opaque
 					for (auto& pixel : targetImage)
 					{
 						pixel.a = 255;
 					}
 
-					// お手本テクスチャを新規作成
+					// Create new reference texture
 					targetTexture = Texture{ targetImage };
 
-					// お手本画像と同じサイズでキャンバスを新規作成
+					// Create new canvas with same size as reference
 					canvas = Image{ targetImage.size(), Color{ 255 } };
 
-					// 新しいキャンバスサイズで動的テクスチャを作成
+					// Create dynamic texture with new canvas size
 					canvasTexture = DynamicTexture{ canvas };
 				}
 			}
 
-			// 次の状態の作成
+			// Create next state
 			if (targetImage && canvas)
 			{
-				// キャンバスの候補画像を現在のキャンバスの状態と一致させる
+				// Match candidate image to current canvas state
 				candidateImage = canvas;
 
-				// 候補画像にランダムな円を描画
+				// Draw random circle on candidate image
 				DrawRandomCircle(targetImage, candidateImage);
 
-				// 無条件で採用する（将来的には距離が縮まった場合のみ採用するようにする）
+				// Accept unconditionally (will change to accept only if distance decreases later)
 				canvas = candidateImage;
 
-				// 動的テクスチャを、新しいキャンバスの内容で更新
+				// Update dynamic texture with new canvas content
 				canvasTexture.fill(canvas);
 			}
 		}
 	}
 	```
 
-## 4. お手本画像との差分を計算し、近づいた場合のみ採用する
-- ここがこのプログラムで最も重要な部分です
-- 「今のキャンバス」と「試しに円を描いたキャンバス」のそれぞれについて、お手本画像との色の違い（距離）を計算します
-- 円を描いた方が、少しでもお手本に近づいた場合だけ、その結果を採用するようにします
-- これを繰り返すことで、最初はただの円の集まりだったものが、徐々に、お手本のシルエットを浮かび上がらせていきます
+## 4. Calculate Difference and Adopt Only If Improved
+- This is the most critical part of this program.
+- Calculate the color difference (distance) from the reference image for both the "current canvas" and the "canvas with a trial circle drawn".
+- Only adopt the result if drawing the circle brings the canvas closer to the reference.
+- By repeating this, what started as a collection of circles will gradually reveal the silhouette of the reference.
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/study/2025/24/4.png)
 
-??? note "コード"
+??? note "Code"
 	```cpp hl_lines="3-49 55-56 71-72 95-97 137-138 148-149 155 157-163 165-170"
 	# include <Siv3D.hpp>
 
-	// 距離の型（各ピクセルの色の差の絶対値の総和で、高々 255 * 3 * ピクセル数）
+	// Distance type (Sum of absolute differences of pixel colors, max 255 * 3 * pixel count)
 	using DistanceType = int32;
 
-	/// @brief 2 つの画像の距離（各ピクセルの色の差の絶対値の総和）を返します。
-	/// @param a 一方の画像
-	/// @param b もう一方の画像
-	/// @return 各ピクセルの色の差の絶対値の総和。画像のサイズが異なる場合は -1 を返す
+	/// @brief Returns the distance between two images (sum of absolute color differences).
+	/// @param a One image
+	/// @param b The other image
+	/// @return Sum of absolute color differences. Returns -1 if image sizes differ.
 	DistanceType Distance(const Image& a, const Image& b)
 	{
 		if (a.size() != b.size())
@@ -277,7 +277,7 @@
 			return -1;
 		}
 
-		// オーバーヘッドを避けるためにポインタでループ
+		// Loop using pointers to avoid overhead
 		const size_t pixelCount = a.num_pixels();
 		const Color* pA = a.data();
 		const Color* pAEnd = (pA + pixelCount);
@@ -294,7 +294,7 @@
 		}
 
 		/*
-		// シンプルな二重ループ版（オーバーヘッドが大きい）
+		// Simple double loop version (high overhead)
 		for (int32 y = 0; y < a.height(); ++y)
 		{
 			for (int32 x = 0; x < a.width(); ++x)
@@ -311,113 +311,113 @@
 		return result;
 	}
 
-	/// @brief ランダムな円をキャンバスに描画します。
-	/// @param target お手本画像
-	/// @param canvas キャンバス画像
-	/// @param currentDistance 現在の距離
-	/// @return 新しい距離
+	/// @brief Draws a random circle on the canvas.
+	/// @param target Reference image
+	/// @param canvas Canvas image
+	/// @param currentDistance Current distance
+	/// @return New distance
 	DistanceType DrawRandomCircle(const Image& target, Image& canvas)
 	{
-		// キャンバスのサイズ
+		// Canvas size
 		const Size canvasSize = canvas.size();
-		// 円の中心座標をランダムに決定
+		// Randomly determine circle center
 		const Point center{ Random(canvasSize.x - 1), Random(canvasSize.y - 1) };
-		// 円の半径をランダムに決定
+		// Randomly determine circle radius
 		const int32 radius = Random(5, 30);
 
-		// 円の色
+		// Circle color
 		Color color{ 64, 64, 64 };
 
-		// 円をキャンバスに書き込む
+		// Paint circle onto canvas
 		Circle{ center, radius }.paint(canvas, color, Antialiased::Yes);
 
-		// 書き込み後の新しい距離を返す
+		// Return new distance after painting
 		return Distance(target, canvas);
 	}
 
 	void Main()
 	{
-		// 画面サイズの設定
+		// Set window size
 		Window::Resize(1280, 720);
 
-		// キャンバスの最大サイズ（大きいと処理に時間がかかる）
+		// Maximum canvas size (larger sizes take longer to process)
 		static constexpr Size MaxCanvasSize{ 640, 720 };
 
-		// お手本画像（メインメモリ上）
+		// Reference image (in main memory)
 		Image targetImage;
-		// お手本画像を描画するためのテクスチャ（VRAM 上）
+		// Texture to draw the reference image (in VRAM)
 		Texture targetTexture;
 
-		// キャンバス画像（メインメモリ上）
+		// Canvas image (in main memory)
 		Image canvas;
-		// キャンバスの内容を描画するための動的テクスチャ（VRAM 上）
+		// Dynamic texture to draw canvas content (in VRAM)
 		DynamicTexture canvasTexture;
-		// 新しいキャンバスの状態の候補画像（メインメモリ上）
+		// Candidate image for new canvas state (in main memory)
 		Image candidateImage;
 
-		// 2 つの画像の距離
-		DistanceType initialDistance = 0; // 初期距離
-		DistanceType currentDistance = 0; // 現在の距離
+		// Distance between two images
+		DistanceType initialDistance = 0; // Initial distance
+		DistanceType currentDistance = 0; // Current distance
 
 		while (System::Update())
 		{
-			// 背景を描く
+			// Draw background
 			{
 				Rect{ MaxCanvasSize }.draw(Arg::top(0.7), Arg::bottom(0.2));
 				Rect{ MaxCanvasSize.x, 0, MaxCanvasSize }.draw(Arg::top(0.7, 0.3, 0.4), Arg::bottom(0.6, 0.1, 0.4));
 			}
 
-			// お手本画像を画面の左側に表示
+			// Display reference image on the left
 			if (targetTexture)
 			{
 				targetTexture.scaled(0.92).drawAt(MaxCanvasSize / 2);
 			}
 
-			// キャンバスを画面の右側に表示
+			// Display canvas on the right
 			if (canvasTexture)
 			{
 				canvasTexture.scaled(0.92).drawAt(MaxCanvasSize * Vec2{ 1.5, 0.5 });
 			}
 
-			// お手本画像を開くボタン
+			// Button to open reference image
 			if (SimpleGUI::Button(U"Open", Vec2{ 30, 30 }, 100))
 			{
-				if (Image image = Dialog::OpenImage()) // 画像を正しく開けた場合
+				if (Image image = Dialog::OpenImage()) // If image opened successfully
 				{
-					// キャンバスの最大サイズに合わせてリサイズ
+					// Resize to fit max canvas size
 					targetImage = image.fitted(MaxCanvasSize);
-					// 透過は無視して不透明にする
+					// Ignore transparency and make opaque
 					for (auto& pixel : targetImage)
 					{
 						pixel.a = 255;
 					}
 
-					// お手本テクスチャを新規作成
+					// Create new reference texture
 					targetTexture = Texture{ targetImage };
 
-					// お手本画像と同じサイズでキャンバスを新規作成
+					// Create new canvas with same size as reference
 					canvas = Image{ targetImage.size(), Color{ 255 } };
-					// 距離を初期化
+					// Initialize distance
 					initialDistance = currentDistance = Distance(targetImage, canvas);
 
-					// 新しいキャンバスサイズで動的テクスチャを作成
+					// Create dynamic texture with new canvas size
 					canvasTexture = DynamicTexture{ canvas };
 				}
 			}
 
-			// 次の状態の作成
+			// Create next state
 			if (targetImage && canvas)
 			{
-				// この試行でキャンバスが更新されたか
+				// Whether the canvas was updated in this trial
 				bool updated = false;
 
-				// キャンバスの候補画像を現在のキャンバスの状態と一致させる
+				// Match candidate image to current canvas state
 				candidateImage = canvas;
 
-				// 候補画像にランダムな円を描画
+				// Draw random circle on candidate image
 				const DistanceType newDistance = DrawRandomCircle(targetImage, candidateImage);
 
-				// 候補画像の方が距離が近ければ、採用する
+				// If candidate is closer, accept it
 				if (newDistance < currentDistance)
 				{
 					canvas = candidateImage;
@@ -425,10 +425,10 @@
 					updated = true;
 				}
 
-				// キャンバスが更新されていたら
+				// If canvas was updated
 				if (updated)
 				{
-					// 動的テクスチャを、新しいキャンバスの内容で更新
+					// Update dynamic texture with new canvas content
 					canvasTexture.fill(canvas);
 				}
 			}
@@ -436,24 +436,24 @@
 	}
 	```
 
-## 5. 距離や進捗を表示する
-- 絵が変化していく様子は目で見ても分かりますが、数値として確認できるとより実感が湧きます
-- 現在のキャンバスがお手本とどれくらい離れているかを示す「距離」と、開始時からどれくらい改善したかを示す「進捗率」を画面に表示してみましょう
-- 数字が減っていく様子を眺めるだけでも、不思議な達成感を得られます
+## 5. Display Distance and Progress
+- Although you can see the drawing change, it's more tangible if you can verify it numerically.
+- Let's display the "Distance" indicating how far the current canvas is from the reference, and the "Progress Rate" indicating how much it has improved since the start.
+- Just watching the numbers decrease provides a strange sense of accomplishment.
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/study/2025/24/5.png)
 
-??? note "コード"
+??? note "Code"
 	```cpp hl_lines="80-81 176-183"
 	# include <Siv3D.hpp>
 
-	// 距離の型（各ピクセルの色の差の絶対値の総和で、高々 255 * 3 * ピクセル数）
+	// Distance type (Sum of absolute differences of pixel colors, max 255 * 3 * pixel count)
 	using DistanceType = int32;
 
-	/// @brief 2 つの画像の距離（各ピクセルの色の差の絶対値の総和）を返します。
-	/// @param a 一方の画像
-	/// @param b もう一方の画像
-	/// @return 各ピクセルの色の差の絶対値の総和。画像のサイズが異なる場合は -1 を返す
+	/// @brief Returns the distance between two images (sum of absolute color differences).
+	/// @param a One image
+	/// @param b The other image
+	/// @return Sum of absolute color differences. Returns -1 if image sizes differ.
 	DistanceType Distance(const Image& a, const Image& b)
 	{
 		if (a.size() != b.size())
@@ -461,7 +461,7 @@
 			return -1;
 		}
 
-		// オーバーヘッドを避けるためにポインタでループ
+		// Loop using pointers to avoid overhead
 		const size_t pixelCount = a.num_pixels();
 		const Color* pA = a.data();
 		const Color* pAEnd = (pA + pixelCount);
@@ -478,7 +478,7 @@
 		}
 
 		/*
-		// シンプルな二重ループ版（オーバーヘッドが大きい）
+		// Simple double loop version (high overhead)
 		for (int32 y = 0; y < a.height(); ++y)
 		{
 			for (int32 x = 0; x < a.width(); ++x)
@@ -495,116 +495,116 @@
 		return result;
 	}
 
-	/// @brief ランダムな円をキャンバスに描画します。
-	/// @param target お手本画像
-	/// @param canvas キャンバス画像
-	/// @param currentDistance 現在の距離
-	/// @return 新しい距離
+	/// @brief Draws a random circle on the canvas.
+	/// @param target Reference image
+	/// @param canvas Canvas image
+	/// @param currentDistance Current distance
+	/// @return New distance
 	DistanceType DrawRandomCircle(const Image& target, Image& canvas)
 	{
-		// キャンバスのサイズ
+		// Canvas size
 		const Size canvasSize = canvas.size();
-		// 円の中心座標をランダムに決定
+		// Randomly determine circle center
 		const Point center{ Random(canvasSize.x - 1), Random(canvasSize.y - 1) };
-		// 円の半径をランダムに決定
+		// Randomly determine circle radius
 		const int32 radius = Random(5, 30);
 
-		// 円の色
+		// Circle color
 		Color color{ 64, 64, 64 };
 
-		// 円をキャンバスに書き込む
+		// Paint circle onto canvas
 		Circle{ center, radius }.paint(canvas, color, Antialiased::Yes);
 
-		// 書き込み後の新しい距離を返す
+		// Return new distance after painting
 		return Distance(target, canvas);
 	}
 
 	void Main()
 	{
-		// 画面サイズの設定
+		// Set window size
 		Window::Resize(1280, 720);
 
-		// 距離表示用のフォント
+		// Font for displaying distance
 		const Font font{ FontMethod::MSDF, 36, Typeface::Bold };
 
-		// キャンバスの最大サイズ（大きいと処理に時間がかかる）
+		// Maximum canvas size (larger sizes take longer to process)
 		static constexpr Size MaxCanvasSize{ 640, 720 };
 
-		// お手本画像（メインメモリ上）
+		// Reference image (in main memory)
 		Image targetImage;
-		// お手本画像を描画するためのテクスチャ（VRAM 上）
+		// Texture to draw the reference image (in VRAM)
 		Texture targetTexture;
 
-		// キャンバス画像（メインメモリ上）
+		// Canvas image (in main memory)
 		Image canvas;
-		// キャンバスの内容を描画するための動的テクスチャ（VRAM 上）
+		// Dynamic texture to draw canvas content (in VRAM)
 		DynamicTexture canvasTexture;
-		// 新しいキャンバスの状態の候補画像（メインメモリ上）
+		// Candidate image for new canvas state (in main memory)
 		Image candidateImage;
 
-		// 2 つの画像の距離
-		DistanceType initialDistance = 0; // 初期距離
-		DistanceType currentDistance = 0; // 現在の距離
+		// Distance between two images
+		DistanceType initialDistance = 0; // Initial distance
+		DistanceType currentDistance = 0; // Current distance
 
 		while (System::Update())
 		{
-			// 背景を描く
+			// Draw background
 			{
 				Rect{ MaxCanvasSize }.draw(Arg::top(0.7), Arg::bottom(0.2));
 				Rect{ MaxCanvasSize.x, 0, MaxCanvasSize }.draw(Arg::top(0.7, 0.3, 0.4), Arg::bottom(0.6, 0.1, 0.4));
 			}
 
-			// お手本画像を画面の左側に表示
+			// Display reference image on the left
 			if (targetTexture)
 			{
 				targetTexture.scaled(0.92).drawAt(MaxCanvasSize / 2);
 			}
 
-			// キャンバスを画面の右側に表示
+			// Display canvas on the right
 			if (canvasTexture)
 			{
 				canvasTexture.scaled(0.92).drawAt(MaxCanvasSize * Vec2{ 1.5, 0.5 });
 			}
 
-			// お手本画像を開くボタン
+			// Button to open reference image
 			if (SimpleGUI::Button(U"Open", Vec2{ 30, 30 }, 100))
 			{
-				if (Image image = Dialog::OpenImage()) // 画像を正しく開けた場合
+				if (Image image = Dialog::OpenImage()) // If image opened successfully
 				{
-					// キャンバスの最大サイズに合わせてリサイズ
+					// Resize to fit max canvas size
 					targetImage = image.fitted(MaxCanvasSize);
-					// 透過は無視して不透明にする
+					// Ignore transparency and make opaque
 					for (auto& pixel : targetImage)
 					{
 						pixel.a = 255;
 					}
 
-					// お手本テクスチャを新規作成
+					// Create new reference texture
 					targetTexture = Texture{ targetImage };
 
-					// お手本画像と同じサイズでキャンバスを新規作成
+					// Create new canvas with same size as reference
 					canvas = Image{ targetImage.size(), Color{ 255 } };
-					// 距離を初期化
+					// Initialize distance
 					initialDistance = currentDistance = Distance(targetImage, canvas);
 
-					// 新しいキャンバスサイズで動的テクスチャを作成
+					// Create dynamic texture with new canvas size
 					canvasTexture = DynamicTexture{ canvas };
 				}
 			}
 
-			// 次の状態の作成
+			// Create next state
 			if (targetImage && canvas)
 			{
-				// この試行でキャンバスが更新されたか
+				// Whether the canvas was updated in this trial
 				bool updated = false;
 
-				// キャンバスの候補画像を現在のキャンバスの状態と一致させる
+				// Match candidate image to current canvas state
 				candidateImage = canvas;
 
-				// 候補画像にランダムな円を描画
+				// Draw random circle on candidate image
 				const DistanceType newDistance = DrawRandomCircle(targetImage, candidateImage);
 
-				// 候補画像の方が距離が近ければ、採用する
+				// If candidate is closer, accept it
 				if (newDistance < currentDistance)
 				{
 					canvas = candidateImage;
@@ -612,43 +612,43 @@
 					updated = true;
 				}
 
-				// キャンバスが更新されていたら
+				// If canvas was updated
 				if (updated)
 				{
-					// 動的テクスチャを、新しいキャンバスの内容で更新
+					// Update dynamic texture with new canvas content
 					canvasTexture.fill(canvas);
 				}
 			}
 
-			// 距離の表示
+			// Display distance and progress
 			{
-				const double progress = initialDistance ? (1.0 - (static_cast<double>(currentDistance) / initialDistance)) : 0.0; // 進捗率
-				const String currentText = ThousandsSeparate(currentDistance); // 現在の距離（カンマ区切り）
-				const String progressText = U" ({:.3f}%)"_fmt(progress * 100.0); // 進捗率（%）
-				// 距離や進捗率を表示
+				const double progress = initialDistance ? (1.0 - (static_cast<double>(currentDistance) / initialDistance)) : 0.0; // Progress rate
+				const String currentText = ThousandsSeparate(currentDistance); // Current distance (comma separated)
+				const String progressText = U" ({:.3f}%)"_fmt(progress * 100.0); // Progress rate (%)
+				// Draw distance text
 				font(currentText + progressText).draw(TextStyle::OutlineShadow(0.0, 0.15, ColorF{ 0.0 }, Vec2{ 0.5, 0.5 }, ColorF{ 0.0 }), 32, Vec2{ 200, 20 }, Palette::White);
 			}
 		}
 	}
 	```
 
-## 6. 色付きの円を書き込む
-- ここまでは灰色の円でしたが、お手本画像から色を抽出してみましょう
-- 円の中心座標にあるお手本の色を拾い、さらに少しだけ色味や透明度をランダムに変化させて描き込みます
+## 6. Draw Colored Circles
+- Up to this point, the circles were gray. Now let's extract colors from the reference image.
+- We pick the reference color at the circle's center coordinates and then randomly vary the color tone and transparency slightly before painting.
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/study/2025/24/6.png)
 
-??? note "コード"
+??? note "Code"
 	```cpp hl_lines="66-75"
 	# include <Siv3D.hpp>
 
-	// 距離の型（各ピクセルの色の差の絶対値の総和で、高々 255 * 3 * ピクセル数）
+	// Distance type (Sum of absolute differences of pixel colors, max 255 * 3 * pixel count)
 	using DistanceType = int32;
 
-	/// @brief 2 つの画像の距離（各ピクセルの色の差の絶対値の総和）を返します。
-	/// @param a 一方の画像
-	/// @param b もう一方の画像
-	/// @return 各ピクセルの色の差の絶対値の総和。画像のサイズが異なる場合は -1 を返す
+	/// @brief Returns the distance between two images (sum of absolute color differences).
+	/// @param a One image
+	/// @param b The other image
+	/// @return Sum of absolute color differences. Returns -1 if image sizes differ.
 	DistanceType Distance(const Image& a, const Image& b)
 	{
 		if (a.size() != b.size())
@@ -656,7 +656,7 @@
 			return -1;
 		}
 
-		// オーバーヘッドを避けるためにポインタでループ
+		// Loop using pointers to avoid overhead
 		const size_t pixelCount = a.num_pixels();
 		const Color* pA = a.data();
 		const Color* pAEnd = (pA + pixelCount);
@@ -673,7 +673,7 @@
 		}
 
 		/*
-		// シンプルな二重ループ版（オーバーヘッドが大きい）
+		// Simple double loop version (high overhead)
 		for (int32 y = 0; y < a.height(); ++y)
 		{
 			for (int32 x = 0; x < a.width(); ++x)
@@ -690,125 +690,125 @@
 		return result;
 	}
 
-	/// @brief ランダムな円をキャンバスに描画します。
-	/// @param target お手本画像
-	/// @param canvas キャンバス画像
-	/// @param currentDistance 現在の距離
-	/// @return 新しい距離
+	/// @brief Draws a random circle on the canvas.
+	/// @param target Reference image
+	/// @param canvas Canvas image
+	/// @param currentDistance Current distance
+	/// @return New distance
 	DistanceType DrawRandomCircle(const Image& target, Image& canvas)
 	{
-		// キャンバスのサイズ
+		// Canvas size
 		const Size canvasSize = canvas.size();
-		// 円の中心座標をランダムに決定
+		// Randomly determine circle center
 		const Point center{ Random(canvasSize.x - 1), Random(canvasSize.y - 1) };
-		// 円の半径をランダムに決定
+		// Randomly determine circle radius
 		const int32 radius = Random(5, 30);
 
-		// 円の色
+		// Get color from reference image
 		Color color = target[center];
-		// 色を少し変化させる
+		// Slightly vary the color
 		{
 			HSV hsv{ color };
-			hsv.h += Random(-10.0, 10.0); // 色相を ±10 度変化させる
-			hsv.s = Clamp(hsv.s * Random(0.9, 1.1), 0.0, 1.0); // 彩度を 0.9 ～ 1.1 倍に変化させる
-			hsv.v = Clamp(hsv.v * Random(0.9, 1.1), 0.0, 1.0); // 明度を 0.9 ～ 1.1 倍に変化させる
-			hsv.a = Random(0.4, 1.0); // 透明度もランダムに変化させる
+			hsv.h += Random(-10.0, 10.0); // Vary hue by ±10 degrees
+			hsv.s = Clamp(hsv.s * Random(0.9, 1.1), 0.0, 1.0); // Vary saturation by 0.9 to 1.1x
+			hsv.v = Clamp(hsv.v * Random(0.9, 1.1), 0.0, 1.0); // Vary value by 0.9 to 1.1x
+			hsv.a = Random(0.4, 1.0); // Vary alpha randomly
 			color = ColorF{ hsv };
 		}
 
-		// 円をキャンバスに書き込む
+		// Paint circle onto canvas
 		Circle{ center, radius }.paint(canvas, color, Antialiased::Yes);
 
-		// 書き込み後の新しい距離を返す
+		// Return new distance after painting
 		return Distance(target, canvas);
 	}
 
 	void Main()
 	{
-		// 画面サイズの設定
+		// Set window size
 		Window::Resize(1280, 720);
 
-		// 距離表示用のフォント
+		// Font for displaying distance
 		const Font font{ FontMethod::MSDF, 36, Typeface::Bold };
 
-		// キャンバスの最大サイズ（大きいと処理に時間がかかる）
+		// Maximum canvas size (larger sizes take longer to process)
 		static constexpr Size MaxCanvasSize{ 640, 720 };
 
-		// お手本画像（メインメモリ上）
+		// Reference image (in main memory)
 		Image targetImage;
-		// お手本画像を描画するためのテクスチャ（VRAM 上）
+		// Texture to draw the reference image (in VRAM)
 		Texture targetTexture;
 
-		// キャンバス画像（メインメモリ上）
+		// Canvas image (in main memory)
 		Image canvas;
-		// キャンバスの内容を描画するための動的テクスチャ（VRAM 上）
+		// Dynamic texture to draw canvas content (in VRAM)
 		DynamicTexture canvasTexture;
-		// 新しいキャンバスの状態の候補画像（メインメモリ上）
+		// Candidate image for new canvas state (in main memory)
 		Image candidateImage;
 
-		// 2 つの画像の距離
-		DistanceType initialDistance = 0; // 初期距離
-		DistanceType currentDistance = 0; // 現在の距離
+		// Distance between two images
+		DistanceType initialDistance = 0; // Initial distance
+		DistanceType currentDistance = 0; // Current distance
 
 		while (System::Update())
 		{
-			// 背景を描く
+			// Draw background
 			{
 				Rect{ MaxCanvasSize }.draw(Arg::top(0.7), Arg::bottom(0.2));
 				Rect{ MaxCanvasSize.x, 0, MaxCanvasSize }.draw(Arg::top(0.7, 0.3, 0.4), Arg::bottom(0.6, 0.1, 0.4));
 			}
 
-			// お手本画像を画面の左側に表示
+			// Display reference image on the left
 			if (targetTexture)
 			{
 				targetTexture.scaled(0.92).drawAt(MaxCanvasSize / 2);
 			}
 
-			// キャンバスを画面の右側に表示
+			// Display canvas on the right
 			if (canvasTexture)
 			{
 				canvasTexture.scaled(0.92).drawAt(MaxCanvasSize * Vec2{ 1.5, 0.5 });
 			}
 
-			// お手本画像を開くボタン
+			// Button to open reference image
 			if (SimpleGUI::Button(U"Open", Vec2{ 30, 30 }, 100))
 			{
-				if (Image image = Dialog::OpenImage()) // 画像を正しく開けた場合
+				if (Image image = Dialog::OpenImage()) // If image opened successfully
 				{
-					// キャンバスの最大サイズに合わせてリサイズ
+					// Resize to fit max canvas size
 					targetImage = image.fitted(MaxCanvasSize);
-					// 透過は無視して不透明にする
+					// Ignore transparency and make opaque
 					for (auto& pixel : targetImage)
 					{
 						pixel.a = 255;
 					}
 
-					// お手本テクスチャを新規作成
+					// Create new reference texture
 					targetTexture = Texture{ targetImage };
 
-					// お手本画像と同じサイズでキャンバスを新規作成
+					// Create new canvas with same size as reference
 					canvas = Image{ targetImage.size(), Color{ 255 } };
-					// 距離を初期化
+					// Initialize distance
 					initialDistance = currentDistance = Distance(targetImage, canvas);
 
-					// 新しいキャンバスサイズで動的テクスチャを作成
+					// Create dynamic texture with new canvas size
 					canvasTexture = DynamicTexture{ canvas };
 				}
 			}
 
-			// 次の状態の作成
+			// Create next state
 			if (targetImage && canvas)
 			{
-				// この試行でキャンバスが更新されたか
+				// Whether the canvas was updated in this trial
 				bool updated = false;
 
-				// キャンバスの候補画像を現在のキャンバスの状態と一致させる
+				// Match candidate image to current canvas state
 				candidateImage = canvas;
 
-				// 候補画像にランダムな円を描画
+				// Draw random circle on candidate image
 				const DistanceType newDistance = DrawRandomCircle(targetImage, candidateImage);
 
-				// 候補画像の方が距離が近ければ、採用する
+				// If candidate is closer, accept it
 				if (newDistance < currentDistance)
 				{
 					canvas = candidateImage;
@@ -816,20 +816,20 @@
 					updated = true;
 				}
 
-				// キャンバスが更新されていたら
+				// If canvas was updated
 				if (updated)
 				{
-					// 動的テクスチャを、新しいキャンバスの内容で更新
+					// Update dynamic texture with new canvas content
 					canvasTexture.fill(canvas);
 				}
 			}
 
-			// 距離の表示
+			// Display distance and progress
 			{
-				const double progress = initialDistance ? (1.0 - (static_cast<double>(currentDistance) / initialDistance)) : 0.0; // 進捗率
-				const String currentText = ThousandsSeparate(currentDistance); // 現在の距離（カンマ区切り）
-				const String progressText = U" ({:.3f}%)"_fmt(progress * 100.0); // 進捗率（%）
-				// 距離や進捗率を表示
+				const double progress = initialDistance ? (1.0 - (static_cast<double>(currentDistance) / initialDistance)) : 0.0; // Progress rate
+				const String currentText = ThousandsSeparate(currentDistance); // Current distance (comma separated)
+				const String progressText = U" ({:.3f}%)"_fmt(progress * 100.0); // Progress rate (%)
+				// Draw distance text
 				font(currentText + progressText).draw(TextStyle::OutlineShadow(0.0, 0.15, ColorF{ 0.0 }, Vec2{ 0.5, 0.5 }, ColorF{ 0.0 }), 32, Vec2{ 200, 20 }, Palette::White);
 			}
 		}
@@ -837,24 +837,24 @@
 	```
 
 
-## 7. 毎フレーム複数回試行する
-- これまでは 1 フレームにつき 1 回しか円を描く試行をしていなかったため、絵の完成には時間がかかりました
-- 「円を描いて、近づいたら採用」というループを、1 フレームで複数回（ここでは 5 回）回すように変更します。これによって描画のペースが速くなります
-- あまり多くしすぎると逆にフレームレートが低下するため、適切な回数を選んでください
+## 7. Try Multiple Times Per Frame
+- Until now, we were only attempting to draw a circle once per frame, so it took time to complete the picture.
+- Change the loop to run multiple times (here, 5 times) per frame for the "draw a circle, adopt if closer" process. This will speed up the drawing pace.
+- Be careful not to increase it too much, or the frame rate will drop.
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/study/2025/24/7.png)
 
-??? note "コード"
+??? note "Code"
 	```cpp hl_lines="163-165 179"
 	# include <Siv3D.hpp>
 
-	// 距離の型（各ピクセルの色の差の絶対値の総和で、高々 255 * 3 * ピクセル数）
+	// Distance type (Sum of absolute differences of pixel colors, max 255 * 3 * pixel count)
 	using DistanceType = int32;
 
-	/// @brief 2 つの画像の距離（各ピクセルの色の差の絶対値の総和）を返します。
-	/// @param a 一方の画像
-	/// @param b もう一方の画像
-	/// @return 各ピクセルの色の差の絶対値の総和。画像のサイズが異なる場合は -1 を返す
+	/// @brief Returns the distance between two images (sum of absolute color differences).
+	/// @param a One image
+	/// @param b The other image
+	/// @return Sum of absolute color differences. Returns -1 if image sizes differ.
 	DistanceType Distance(const Image& a, const Image& b)
 	{
 		if (a.size() != b.size())
@@ -862,7 +862,7 @@
 			return -1;
 		}
 
-		// オーバーヘッドを避けるためにポインタでループ
+		// Loop using pointers to avoid overhead
 		const size_t pixelCount = a.num_pixels();
 		const Color* pA = a.data();
 		const Color* pAEnd = (pA + pixelCount);
@@ -879,7 +879,7 @@
 		}
 
 		/*
-		// シンプルな二重ループ版（オーバーヘッドが大きい）
+		// Simple double loop version (high overhead)
 		for (int32 y = 0; y < a.height(); ++y)
 		{
 			for (int32 x = 0; x < a.width(); ++x)
@@ -896,128 +896,128 @@
 		return result;
 	}
 
-	/// @brief ランダムな円をキャンバスに描画します。
-	/// @param target お手本画像
-	/// @param canvas キャンバス画像
-	/// @param currentDistance 現在の距離
-	/// @return 新しい距離
+	/// @brief Draws a random circle on the canvas.
+	/// @param target Reference image
+	/// @param canvas Canvas image
+	/// @param currentDistance Current distance
+	/// @return New distance
 	DistanceType DrawRandomCircle(const Image& target, Image& canvas)
 	{
-		// キャンバスのサイズ
+		// Canvas size
 		const Size canvasSize = canvas.size();
-		// 円の中心座標をランダムに決定
+		// Randomly determine circle center
 		const Point center{ Random(canvasSize.x - 1), Random(canvasSize.y - 1) };
-		// 円の半径をランダムに決定
+		// Randomly determine circle radius
 		const int32 radius = Random(5, 30);
 
-		// 円の色
+		// Get color from reference image
 		Color color = target[center];
-		// 色を少し変化させる
+		// Slightly vary the color
 		{
 			HSV hsv{ color };
-			hsv.h += Random(-10.0, 10.0); // 色相を ±10 度変化させる
-			hsv.s = Clamp(hsv.s * Random(0.9, 1.1), 0.0, 1.0); // 彩度を 0.9 ～ 1.1 倍に変化させる
-			hsv.v = Clamp(hsv.v * Random(0.9, 1.1), 0.0, 1.0); // 明度を 0.9 ～ 1.1 倍に変化させる
-			hsv.a = Random(0.4, 1.0); // 透明度もランダムに変化させる
+			hsv.h += Random(-10.0, 10.0); // Vary hue by ±10 degrees
+			hsv.s = Clamp(hsv.s * Random(0.9, 1.1), 0.0, 1.0); // Vary saturation by 0.9 to 1.1x
+			hsv.v = Clamp(hsv.v * Random(0.9, 1.1), 0.0, 1.0); // Vary value by 0.9 to 1.1x
+			hsv.a = Random(0.4, 1.0); // Vary alpha randomly
 			color = ColorF{ hsv };
 		}
 
-		// 円をキャンバスに書き込む
+		// Paint circle onto canvas
 		Circle{ center, radius }.paint(canvas, color, Antialiased::Yes);
 
-		// 書き込み後の新しい距離を返す
+		// Return new distance after painting
 		return Distance(target, canvas);
 	}
 
 	void Main()
 	{
-		// 画面サイズの設定
+		// Set window size
 		Window::Resize(1280, 720);
 
-		// 距離表示用のフォント
+		// Font for displaying distance
 		const Font font{ FontMethod::MSDF, 36, Typeface::Bold };
 
-		// キャンバスの最大サイズ（大きいと処理に時間がかかる）
+		// Maximum canvas size (larger sizes take longer to process)
 		static constexpr Size MaxCanvasSize{ 640, 720 };
 
-		// お手本画像（メインメモリ上）
+		// Reference image (in main memory)
 		Image targetImage;
-		// お手本画像を描画するためのテクスチャ（VRAM 上）
+		// Texture to draw the reference image (in VRAM)
 		Texture targetTexture;
 
-		// キャンバス画像（メインメモリ上）
+		// Canvas image (in main memory)
 		Image canvas;
-		// キャンバスの内容を描画するための動的テクスチャ（VRAM 上）
+		// Dynamic texture to draw canvas content (in VRAM)
 		DynamicTexture canvasTexture;
-		// 新しいキャンバスの状態の候補画像（メインメモリ上）
+		// Candidate image for new canvas state (in main memory)
 		Image candidateImage;
 
-		// 2 つの画像の距離
-		DistanceType initialDistance = 0; // 初期距離
-		DistanceType currentDistance = 0; // 現在の距離
+		// Distance between two images
+		DistanceType initialDistance = 0; // Initial distance
+		DistanceType currentDistance = 0; // Current distance
 
 		while (System::Update())
 		{
-			// 背景を描く
+			// Draw background
 			{
 				Rect{ MaxCanvasSize }.draw(Arg::top(0.7), Arg::bottom(0.2));
 				Rect{ MaxCanvasSize.x, 0, MaxCanvasSize }.draw(Arg::top(0.7, 0.3, 0.4), Arg::bottom(0.6, 0.1, 0.4));
 			}
 
-			// お手本画像を画面の左側に表示
+			// Display reference image on the left
 			if (targetTexture)
 			{
 				targetTexture.scaled(0.92).drawAt(MaxCanvasSize / 2);
 			}
 
-			// キャンバスを画面の右側に表示
+			// Display canvas on the right
 			if (canvasTexture)
 			{
 				canvasTexture.scaled(0.92).drawAt(MaxCanvasSize * Vec2{ 1.5, 0.5 });
 			}
 
-			// お手本画像を開くボタン
+			// Button to open reference image
 			if (SimpleGUI::Button(U"Open", Vec2{ 30, 30 }, 100))
 			{
-				if (Image image = Dialog::OpenImage()) // 画像を正しく開けた場合
+				if (Image image = Dialog::OpenImage()) // If image opened successfully
 				{
-					// キャンバスの最大サイズに合わせてリサイズ
+					// Resize to fit max canvas size
 					targetImage = image.fitted(MaxCanvasSize);
-					// 透過は無視して不透明にする
+					// Ignore transparency and make opaque
 					for (auto& pixel : targetImage)
 					{
 						pixel.a = 255;
 					}
 
-					// お手本テクスチャを新規作成
+					// Create new reference texture
 					targetTexture = Texture{ targetImage };
 
-					// お手本画像と同じサイズでキャンバスを新規作成
+					// Create new canvas with same size as reference
 					canvas = Image{ targetImage.size(), Color{ 255 } };
-					// 距離を初期化
+					// Initialize distance
 					initialDistance = currentDistance = Distance(targetImage, canvas);
 
-					// 新しいキャンバスサイズで動的テクスチャを作成
+					// Create dynamic texture with new canvas size
 					canvasTexture = DynamicTexture{ canvas };
 				}
 			}
 
-			// 次の状態の作成
+			// Create next state
 			if (targetImage && canvas)
 			{
-				// この試行でキャンバスが更新されたか
+				// Whether the canvas was updated in this trial
 				bool updated = false;
 
-				// 毎フレーム 5 回試行
+				// Try 5 times per frame
 				for (int32 i = 0; i < 5; ++i)
 				{
-					// キャンバスの候補画像を現在のキャンバスの状態と一致させる
+					// Match candidate image to current canvas state
 					candidateImage = canvas;
 
-					// 候補画像にランダムな円を描画
+					// Draw random circle on candidate image
 					const DistanceType newDistance = DrawRandomCircle(targetImage, candidateImage);
 
-					// 候補画像の方が距離が近ければ、採用する
+					// If candidate is closer, accept it
 					if (newDistance < currentDistance)
 					{
 						canvas = candidateImage;
@@ -1026,44 +1026,44 @@
 					}
 				}
 
-				// キャンバスが更新されていたら
+				// If canvas was updated
 				if (updated)
 				{
-					// 動的テクスチャを、新しいキャンバスの内容で更新
+					// Update dynamic texture with new canvas content
 					canvasTexture.fill(canvas);
 				}
 			}
 
-			// 距離の表示
+			// Display distance and progress
 			{
-				const double progress = initialDistance ? (1.0 - (static_cast<double>(currentDistance) / initialDistance)) : 0.0; // 進捗率
-				const String currentText = ThousandsSeparate(currentDistance); // 現在の距離（カンマ区切り）
-				const String progressText = U" ({:.3f}%)"_fmt(progress * 100.0); // 進捗率（%）
-				// 距離や進捗率を表示
+				const double progress = initialDistance ? (1.0 - (static_cast<double>(currentDistance) / initialDistance)) : 0.0; // Progress rate
+				const String currentText = ThousandsSeparate(currentDistance); // Current distance (comma separated)
+				const String progressText = U" ({:.3f}%)"_fmt(progress * 100.0); // Progress rate (%)
+				// Draw distance text
 				font(currentText + progressText).draw(TextStyle::OutlineShadow(0.0, 0.15, ColorF{ 0.0 }, Vec2{ 0.5, 0.5 }, ColorF{ 0.0 }), 32, Vec2{ 200, 20 }, Palette::White);
 			}
 		}
 	}
 	```
 
-## 8. 線を書き込む
-- 描く図形を「円」から「線分」に変えてみましょう。
-- ランダムな角度や長さの線で構成することで、色鉛筆で描いたようなタッチに変化します
-- 描く図形の種類やパラメータを変えるだけで、生成されるアートの質感が大きく変わるのがこのプログラムの面白いところです
+## 8. Draw Lines
+- Let's change the shape we draw from "circles" to "line segments".
+- By constructing the image with lines of random angles and lengths, it changes to a touch that looks like a colored pencil sketch.
+- The interesting part of this program is that the texture of the generated art changes significantly just by changing the type of shapes and parameters drawn.
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/study/2025/24/8.png)
 
-??? note "コード"
+??? note "Code"
 	```cpp hl_lines="84-121 208-209"
 	# include <Siv3D.hpp>
 
-	// 距離の型（各ピクセルの色の差の絶対値の総和で、高々 255 * 3 * ピクセル数）
+	// Distance type (Sum of absolute differences of pixel colors, max 255 * 3 * pixel count)
 	using DistanceType = int32;
 
-	/// @brief 2 つの画像の距離（各ピクセルの色の差の絶対値の総和）を返します。
-	/// @param a 一方の画像
-	/// @param b もう一方の画像
-	/// @return 各ピクセルの色の差の絶対値の総和。画像のサイズが異なる場合は -1 を返す
+	/// @brief Returns the distance between two images (sum of absolute color differences).
+	/// @param a One image
+	/// @param b The other image
+	/// @return Sum of absolute color differences. Returns -1 if image sizes differ.
 	DistanceType Distance(const Image& a, const Image& b)
 	{
 		if (a.size() != b.size())
@@ -1071,7 +1071,7 @@
 			return -1;
 		}
 
-		// オーバーヘッドを避けるためにポインタでループ
+		// Loop using pointers to avoid overhead
 		const size_t pixelCount = a.num_pixels();
 		const Color* pA = a.data();
 		const Color* pAEnd = (pA + pixelCount);
@@ -1088,7 +1088,7 @@
 		}
 
 		/*
-		// シンプルな二重ループ版（オーバーヘッドが大きい）
+		// Simple double loop version (high overhead)
 		for (int32 y = 0; y < a.height(); ++y)
 		{
 			for (int32 x = 0; x < a.width(); ++x)
@@ -1105,167 +1105,167 @@
 		return result;
 	}
 
-	/// @brief ランダムな円をキャンバスに描画します。
-	/// @param target お手本画像
-	/// @param canvas キャンバス画像
-	/// @param currentDistance 現在の距離
-	/// @return 新しい距離
+	/// @brief Draws a random circle on the canvas.
+	/// @param target Reference image
+	/// @param canvas Canvas image
+	/// @param currentDistance Current distance
+	/// @return New distance
 	DistanceType DrawRandomCircle(const Image& target, Image& canvas)
 	{
-		// キャンバスのサイズ
+		// Canvas size
 		const Size canvasSize = canvas.size();
-		// 円の中心座標をランダムに決定
+		// Randomly determine circle center
 		const Point center{ Random(canvasSize.x - 1), Random(canvasSize.y - 1) };
-		// 円の半径をランダムに決定
+		// Randomly determine circle radius
 		const int32 radius = Random(5, 30);
 
-		// 円の色
+		// Get color from reference image
 		Color color = target[center];
-		// 色を少し変化させる
+		// Slightly vary the color
 		{
 			HSV hsv{ color };
-			hsv.h += Random(-10.0, 10.0); // 色相を ±10 度変化させる
-			hsv.s = Clamp(hsv.s * Random(0.9, 1.1), 0.0, 1.0); // 彩度を 0.9 ～ 1.1 倍に変化させる
-			hsv.v = Clamp(hsv.v * Random(0.9, 1.1), 0.0, 1.0); // 明度を 0.9 ～ 1.1 倍に変化させる
-			hsv.a = Random(0.4, 1.0); // 透明度もランダムに変化させる
+			hsv.h += Random(-10.0, 10.0); // Vary hue by ±10 degrees
+			hsv.s = Clamp(hsv.s * Random(0.9, 1.1), 0.0, 1.0); // Vary saturation by 0.9 to 1.1x
+			hsv.v = Clamp(hsv.v * Random(0.9, 1.1), 0.0, 1.0); // Vary value by 0.9 to 1.1x
+			hsv.a = Random(0.4, 1.0); // Vary alpha randomly
 			color = ColorF{ hsv };
 		}
 
-		// 円をキャンバスに書き込む
+		// Paint circle onto canvas
 		Circle{ center, radius }.paint(canvas, color, Antialiased::Yes);
 
-		// 書き込み後の新しい距離を返す
+		// Return new distance after painting
 		return Distance(target, canvas);
 	}
 
-	/// @brief ランダムな線分をキャンバスに描画します。
-	/// @param target お手本画像
-	/// @param canvas キャンバス画像
-	/// @param currentDistance 現在の距離
-	/// @return 新しい距離
+	/// @brief Draws a random line segment on the canvas.
+	/// @param target Reference image
+	/// @param canvas Canvas image
+	/// @param currentDistance Current distance
+	/// @return New distance
 	DistanceType DrawRandomStroke(const Image& target, Image& canvas)
 	{
-		// キャンバスのサイズ
+		// Canvas size
 		const Size canvasSize = canvas.size();
-		// 線分の中心座標をランダムに決定
+		// Randomly determine line center
 		const Point center{ Random(canvasSize.x - 1), Random(canvasSize.y - 1) };
-		// 線分の長さをランダムに決定
+		// Randomly determine line length
 		const int32 length = Random(10, 50);
-		// 線分の方向（12 時方向が 0 度、時計回りに増加）をランダムに決定
+		// Randomly determine line angle (0 deg is 12 o'clock, clockwise)
 		const double angle = Random(225_deg, 235_deg);
-		// 線分の太さ
+		// Line thickness
 		const int32 thickness = 2;
 
-		// 円の色をお手本画像から取得
+		// Get color from reference image
 		Color color = target[center];
-		// 色を少し変化させる
+		// Slightly vary the color
 		{
 			HSV hsv{ color };
-			hsv.h += Random(-10.0, 10.0); // 色相を ±10 度変化させる
-			hsv.s = Clamp(hsv.s * Random(0.9, 1.1), 0.0, 1.0); // 彩度を 0.9 ～ 1.1 倍に変化させる
-			hsv.v = Clamp(hsv.v * Random(0.9, 1.1), 0.0, 1.0); // 明度を 0.9 ～ 1.1 倍に変化させる
-			hsv.a = Random(0.4, 1.0); // 透明度もランダムに変化させる
+			hsv.h += Random(-10.0, 10.0); // Vary hue by ±10 degrees
+			hsv.s = Clamp(hsv.s * Random(0.9, 1.1), 0.0, 1.0); // Vary saturation by 0.9 to 1.1x
+			hsv.v = Clamp(hsv.v * Random(0.9, 1.1), 0.0, 1.0); // Vary value by 0.9 to 1.1x
+			hsv.a = Random(0.4, 1.0); // Vary alpha randomly
 			color = ColorF{ hsv };
 		}
 
-		// 線分をキャンバスに書き込む
-		const Vec2 p0 = center + Circular{ (length / 2.0), (angle - 180_deg) }.toVec2(); // 線分の始点
-		const Vec2 p1 = center + Circular{ (length / 2.0), angle }.toVec2(); // 線分の終点
+		// Paint line segment onto canvas
+		const Vec2 p0 = center + Circular{ (length / 2.0), (angle - 180_deg) }.toVec2(); // Line start point
+		const Vec2 p1 = center + Circular{ (length / 2.0), angle }.toVec2(); // Line end point
 		Line{ p0, p1 }.paint(canvas, thickness, color);
 
-		// 書き込み後の新しい距離を返す
+		// Return new distance after painting
 		return Distance(target, canvas);
 	}
 
 	void Main()
 	{
-		// 画面サイズの設定
+		// Set window size
 		Window::Resize(1280, 720);
 
-		// 距離表示用のフォント
+		// Font for displaying distance
 		const Font font{ FontMethod::MSDF, 36, Typeface::Bold };
 
-		// キャンバスの最大サイズ（大きいと処理に時間がかかる）
+		// Maximum canvas size (larger sizes take longer to process)
 		static constexpr Size MaxCanvasSize{ 640, 720 };
 
-		// お手本画像（メインメモリ上）
+		// Reference image (in main memory)
 		Image targetImage;
-		// お手本画像を描画するためのテクスチャ（VRAM 上）
+		// Texture to draw the reference image (in VRAM)
 		Texture targetTexture;
 
-		// キャンバス画像（メインメモリ上）
+		// Canvas image (in main memory)
 		Image canvas;
-		// キャンバスの内容を描画するための動的テクスチャ（VRAM 上）
+		// Dynamic texture to draw canvas content (in VRAM)
 		DynamicTexture canvasTexture;
-		// 新しいキャンバスの状態の候補画像（メインメモリ上）
+		// Candidate image for new canvas state (in main memory)
 		Image candidateImage;
 
-		// 2 つの画像の距離
-		DistanceType initialDistance = 0; // 初期距離
-		DistanceType currentDistance = 0; // 現在の距離
+		// Distance between two images
+		DistanceType initialDistance = 0; // Initial distance
+		DistanceType currentDistance = 0; // Current distance
 
 		while (System::Update())
 		{
-			// 背景を描く
+			// Draw background
 			{
 				Rect{ MaxCanvasSize }.draw(Arg::top(0.7), Arg::bottom(0.2));
 				Rect{ MaxCanvasSize.x, 0, MaxCanvasSize }.draw(Arg::top(0.7, 0.3, 0.4), Arg::bottom(0.6, 0.1, 0.4));
 			}
 
-			// お手本画像を画面の左側に表示
+			// Display reference image on the left
 			if (targetTexture)
 			{
 				targetTexture.scaled(0.92).drawAt(MaxCanvasSize / 2);
 			}
 
-			// キャンバスを画面の右側に表示
+			// Display canvas on the right
 			if (canvasTexture)
 			{
 				canvasTexture.scaled(0.92).drawAt(MaxCanvasSize * Vec2{ 1.5, 0.5 });
 			}
 
-			// お手本画像を開くボタン
+			// Button to open reference image
 			if (SimpleGUI::Button(U"Open", Vec2{ 30, 30 }, 100))
 			{
-				if (Image image = Dialog::OpenImage()) // 画像を正しく開けた場合
+				if (Image image = Dialog::OpenImage()) // If image opened successfully
 				{
-					// キャンバスの最大サイズに合わせてリサイズ
+					// Resize to fit max canvas size
 					targetImage = image.fitted(MaxCanvasSize);
-					// 透過は無視して不透明にする
+					// Ignore transparency and make opaque
 					for (auto& pixel : targetImage)
 					{
 						pixel.a = 255;
 					}
 
-					// お手本テクスチャを新規作成
+					// Create new reference texture
 					targetTexture = Texture{ targetImage };
 
-					// お手本画像と同じサイズでキャンバスを新規作成
+					// Create new canvas with same size as reference
 					canvas = Image{ targetImage.size(), Color{ 255 } };
-					// 距離を初期化
+					// Initialize distance
 					initialDistance = currentDistance = Distance(targetImage, canvas);
 
-					// 新しいキャンバスサイズで動的テクスチャを作成
+					// Create dynamic texture with new canvas size
 					canvasTexture = DynamicTexture{ canvas };
 				}
 			}
 
-			// 次の状態の作成
+			// Create next state
 			if (targetImage && canvas)
 			{
-				// この試行でキャンバスが更新されたか
+				// Whether the canvas was updated in this trial
 				bool updated = false;
 
-				// 毎フレーム 5 回試行
+				// Try 5 times per frame
 				for (int32 i = 0; i < 5; ++i)
 				{
-					// キャンバスの候補画像を現在のキャンバスの状態と一致させる
+					// Match candidate image to current canvas state
 					candidateImage = canvas;
 
-					// 候補画像にランダムな線分を描画
+					// Draw random line on candidate image
 					const DistanceType newDistance = DrawRandomStroke(targetImage, candidateImage);
 
-					// 候補画像の方が距離が近ければ、採用する
+					// If candidate is closer, accept it
 					if (newDistance < currentDistance)
 					{
 						canvas = candidateImage;
@@ -1274,42 +1274,42 @@
 					}
 				}
 
-				// キャンバスが更新されていたら
+				// If canvas was updated
 				if (updated)
 				{
-					// 動的テクスチャを、新しいキャンバスの内容で更新
+					// Update dynamic texture with new canvas content
 					canvasTexture.fill(canvas);
 				}
 			}
 
-			// 距離の表示
+			// Display distance and progress
 			{
-				const double progress = initialDistance ? (1.0 - (static_cast<double>(currentDistance) / initialDistance)) : 0.0; // 進捗率
-				const String currentText = ThousandsSeparate(currentDistance); // 現在の距離（カンマ区切り）
-				const String progressText = U" ({:.3f}%)"_fmt(progress * 100.0); // 進捗率（%）
-				// 距離や進捗率を表示
+				const double progress = initialDistance ? (1.0 - (static_cast<double>(currentDistance) / initialDistance)) : 0.0; // Progress rate
+				const String currentText = ThousandsSeparate(currentDistance); // Current distance (comma separated)
+				const String progressText = U" ({:.3f}%)"_fmt(progress * 100.0); // Progress rate (%)
+				// Draw distance text
 				font(currentText + progressText).draw(TextStyle::OutlineShadow(0.0, 0.15, ColorF{ 0.0 }, Vec2{ 0.5, 0.5 }, ColorF{ 0.0 }), 32, Vec2{ 200, 20 }, Palette::White);
 			}
 		}
 	}
 	```
 
-## 9. キャンバス画像を保存する
-- 「Save」ボタンを追加し、現在のキャンバスの状態を PNG ファイルなどで書き出せるようにします
+## 9. Save Canvas Image
+- Add a "Save" button to allow exporting the current canvas state as a PNG file.
 
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/study/2025/24/9.png)
 
-??? note "コード"
+??? note "Code"
 	```cpp hl_lines="196-201"
 	# include <Siv3D.hpp>
 
-	// 距離の型（各ピクセルの色の差の絶対値の総和で、高々 255 * 3 * ピクセル数）
+	// Distance type (Sum of absolute differences of pixel colors, max 255 * 3 * pixel count)
 	using DistanceType = int32;
 
-	/// @brief 2 つの画像の距離（各ピクセルの色の差の絶対値の総和）を返します。
-	/// @param a 一方の画像
-	/// @param b もう一方の画像
-	/// @return 各ピクセルの色の差の絶対値の総和。画像のサイズが異なる場合は -1 を返す
+	/// @brief Returns the distance between two images (sum of absolute color differences).
+	/// @param a One image
+	/// @param b The other image
+	/// @return Sum of absolute color differences. Returns -1 if image sizes differ.
 	DistanceType Distance(const Image& a, const Image& b)
 	{
 		if (a.size() != b.size())
@@ -1317,7 +1317,7 @@
 			return -1;
 		}
 
-		// オーバーヘッドを避けるためにポインタでループ
+		// Loop using pointers to avoid overhead
 		const size_t pixelCount = a.num_pixels();
 		const Color* pA = a.data();
 		const Color* pAEnd = (pA + pixelCount);
@@ -1334,7 +1334,7 @@
 		}
 
 		/*
-		// シンプルな二重ループ版（オーバーヘッドが大きい）
+		// Simple double loop version (high overhead)
 		for (int32 y = 0; y < a.height(); ++y)
 		{
 			for (int32 x = 0; x < a.width(); ++x)
@@ -1351,174 +1351,174 @@
 		return result;
 	}
 
-	/// @brief ランダムな円をキャンバスに描画します。
-	/// @param target お手本画像
-	/// @param canvas キャンバス画像
-	/// @param currentDistance 現在の距離
-	/// @return 新しい距離
+	/// @brief Draws a random circle on the canvas.
+	/// @param target Reference image
+	/// @param canvas Canvas image
+	/// @param currentDistance Current distance
+	/// @return New distance
 	DistanceType DrawRandomCircle(const Image& target, Image& canvas)
 	{
-		// キャンバスのサイズ
+		// Canvas size
 		const Size canvasSize = canvas.size();
-		// 円の中心座標をランダムに決定
+		// Randomly determine circle center
 		const Point center{ Random(canvasSize.x - 1), Random(canvasSize.y - 1) };
-		// 円の半径をランダムに決定
+		// Randomly determine circle radius
 		const int32 radius = Random(5, 30);
 
-		// 円の色
+		// Get color from reference image
 		Color color = target[center];
-		// 色を少し変化させる
+		// Slightly vary the color
 		{
 			HSV hsv{ color };
-			hsv.h += Random(-10.0, 10.0); // 色相を ±10 度変化させる
-			hsv.s = Clamp(hsv.s * Random(0.9, 1.1), 0.0, 1.0); // 彩度を 0.9 ～ 1.1 倍に変化させる
-			hsv.v = Clamp(hsv.v * Random(0.9, 1.1), 0.0, 1.0); // 明度を 0.9 ～ 1.1 倍に変化させる
-			hsv.a = Random(0.4, 1.0); // 透明度もランダムに変化させる
+			hsv.h += Random(-10.0, 10.0); // Vary hue by ±10 degrees
+			hsv.s = Clamp(hsv.s * Random(0.9, 1.1), 0.0, 1.0); // Vary saturation by 0.9 to 1.1x
+			hsv.v = Clamp(hsv.v * Random(0.9, 1.1), 0.0, 1.0); // Vary value by 0.9 to 1.1x
+			hsv.a = Random(0.4, 1.0); // Vary alpha randomly
 			color = ColorF{ hsv };
 		}
 
-		// 円をキャンバスに書き込む
+		// Paint circle onto canvas
 		Circle{ center, radius }.paint(canvas, color, Antialiased::Yes);
 
-		// 書き込み後の新しい距離を返す
+		// Return new distance after painting
 		return Distance(target, canvas);
 	}
 
-	/// @brief ランダムな線分をキャンバスに描画します。
-	/// @param target お手本画像
-	/// @param canvas キャンバス画像
-	/// @param currentDistance 現在の距離
-	/// @return 新しい距離
+	/// @brief Draws a random line segment on the canvas.
+	/// @param target Reference image
+	/// @param canvas Canvas image
+	/// @param currentDistance Current distance
+	/// @return New distance
 	DistanceType DrawRandomStroke(const Image& target, Image& canvas)
 	{
-		// キャンバスのサイズ
+		// Canvas size
 		const Size canvasSize = canvas.size();
-		// 線分の中心座標をランダムに決定
+		// Randomly determine line center
 		const Point center{ Random(canvasSize.x - 1), Random(canvasSize.y - 1) };
-		// 線分の長さをランダムに決定
+		// Randomly determine line length
 		const int32 length = Random(10, 50);
-		// 線分の方向（12 時方向が 0 度、時計回りに増加）をランダムに決定
+		// Randomly determine line angle (0 deg is 12 o'clock, clockwise)
 		const double angle = Random(225_deg, 235_deg);
-		// 線分の太さ
+		// Line thickness
 		const int32 thickness = 2;
 
-		// 円の色をお手本画像から取得
+		// Get color from reference image
 		Color color = target[center];
-		// 色を少し変化させる
+		// Slightly vary the color
 		{
 			HSV hsv{ color };
-			hsv.h += Random(-10.0, 10.0); // 色相を ±10 度変化させる
-			hsv.s = Clamp(hsv.s * Random(0.9, 1.1), 0.0, 1.0); // 彩度を 0.9 ～ 1.1 倍に変化させる
-			hsv.v = Clamp(hsv.v * Random(0.9, 1.1), 0.0, 1.0); // 明度を 0.9 ～ 1.1 倍に変化させる
-			hsv.a = Random(0.4, 1.0); // 透明度もランダムに変化させる
+			hsv.h += Random(-10.0, 10.0); // Vary hue by ±10 degrees
+			hsv.s = Clamp(hsv.s * Random(0.9, 1.1), 0.0, 1.0); // Vary saturation by 0.9 to 1.1x
+			hsv.v = Clamp(hsv.v * Random(0.9, 1.1), 0.0, 1.0); // Vary value by 0.9 to 1.1x
+			hsv.a = Random(0.4, 1.0); // Vary alpha randomly
 			color = ColorF{ hsv };
 		}
 
-		// 線分をキャンバスに書き込む
-		const Vec2 p0 = center + Circular{ (length / 2.0), (angle - 180_deg) }.toVec2(); // 線分の始点
-		const Vec2 p1 = center + Circular{ (length / 2.0), angle }.toVec2(); // 線分の終点
+		// Paint line segment onto canvas
+		const Vec2 p0 = center + Circular{ (length / 2.0), (angle - 180_deg) }.toVec2(); // Line start point
+		const Vec2 p1 = center + Circular{ (length / 2.0), angle }.toVec2(); // Line end point
 		Line{ p0, p1 }.paint(canvas, thickness, color);
 
-		// 書き込み後の新しい距離を返す
+		// Return new distance after painting
 		return Distance(target, canvas);
 	}
 
 	void Main()
 	{
-		// 画面サイズの設定
+		// Set window size
 		Window::Resize(1280, 720);
 
-		// 距離表示用のフォント
+		// Font for displaying distance
 		const Font font{ FontMethod::MSDF, 36, Typeface::Bold };
 
-		// キャンバスの最大サイズ（大きいと処理に時間がかかる）
+		// Maximum canvas size (larger sizes take longer to process)
 		static constexpr Size MaxCanvasSize{ 640, 720 };
 
-		// お手本画像（メインメモリ上）
+		// Reference image (in main memory)
 		Image targetImage;
-		// お手本画像を描画するためのテクスチャ（VRAM 上）
+		// Texture to draw the reference image (in VRAM)
 		Texture targetTexture;
 
-		// キャンバス画像（メインメモリ上）
+		// Canvas image (in main memory)
 		Image canvas;
-		// キャンバスの内容を描画するための動的テクスチャ（VRAM 上）
+		// Dynamic texture to draw canvas content (in VRAM)
 		DynamicTexture canvasTexture;
-		// 新しいキャンバスの状態の候補画像（メインメモリ上）
+		// Candidate image for new canvas state (in main memory)
 		Image candidateImage;
 
-		// 2 つの画像の距離
-		DistanceType initialDistance = 0; // 初期距離
-		DistanceType currentDistance = 0; // 現在の距離
+		// Distance between two images
+		DistanceType initialDistance = 0; // Initial distance
+		DistanceType currentDistance = 0; // Current distance
 
 		while (System::Update())
 		{
-			// 背景を描く
+			// Draw background
 			{
 				Rect{ MaxCanvasSize }.draw(Arg::top(0.7), Arg::bottom(0.2));
 				Rect{ MaxCanvasSize.x, 0, MaxCanvasSize }.draw(Arg::top(0.7, 0.3, 0.4), Arg::bottom(0.6, 0.1, 0.4));
 			}
 
-			// お手本画像を画面の左側に表示
+			// Display reference image on the left
 			if (targetTexture)
 			{
 				targetTexture.scaled(0.92).drawAt(MaxCanvasSize / 2);
 			}
 
-			// キャンバスを画面の右側に表示
+			// Display canvas on the right
 			if (canvasTexture)
 			{
 				canvasTexture.scaled(0.92).drawAt(MaxCanvasSize * Vec2{ 1.5, 0.5 });
 			}
 
-			// お手本画像を開くボタン
+			// Button to open reference image
 			if (SimpleGUI::Button(U"Open", Vec2{ 30, 30 }, 100))
 			{
-				if (Image image = Dialog::OpenImage()) // 画像を正しく開けた場合
+				if (Image image = Dialog::OpenImage()) // If image opened successfully
 				{
-					// キャンバスの最大サイズに合わせてリサイズ
+					// Resize to fit max canvas size
 					targetImage = image.fitted(MaxCanvasSize);
-					// 透過は無視して不透明にする
+					// Ignore transparency and make opaque
 					for (auto& pixel : targetImage)
 					{
 						pixel.a = 255;
 					}
 
-					// お手本テクスチャを新規作成
+					// Create new reference texture
 					targetTexture = Texture{ targetImage };
 
-					// お手本画像と同じサイズでキャンバスを新規作成
+					// Create new canvas with same size as reference
 					canvas = Image{ targetImage.size(), Color{ 255 } };
-					// 距離を初期化
+					// Initialize distance
 					initialDistance = currentDistance = Distance(targetImage, canvas);
 
-					// 新しいキャンバスサイズで動的テクスチャを作成
+					// Create dynamic texture with new canvas size
 					canvasTexture = DynamicTexture{ canvas };
 				}
 			}
 
-			// キャンバスを保存するボタン
+			// Button to save canvas
 			if (canvas && SimpleGUI::Button(U"Save", Vec2{ 30, 70 }, 100))
 			{
-				// 画像をファイルダイアログを使って保存
+				// Save image using file dialog
 				canvas.saveWithDialog();
 			}
 
-			// 次の状態の作成
+			// Create next state
 			if (targetImage && canvas)
 			{
-				// この試行でキャンバスが更新されたか
+				// Whether the canvas was updated in this trial
 				bool updated = false;
 
-				// 毎フレーム 5 回試行
+				// Try 5 times per frame
 				for (int32 i = 0; i < 5; ++i)
 				{
-					// キャンバスの候補画像を現在のキャンバスの状態と一致させる
+					// Match candidate image to current canvas state
 					candidateImage = canvas;
 
-					// 候補画像にランダムな線分を描画
+					// Draw random line on candidate image
 					const DistanceType newDistance = DrawRandomStroke(targetImage, candidateImage);
 
-					// 候補画像の方が距離が近ければ、採用する
+					// If candidate is closer, accept it
 					if (newDistance < currentDistance)
 					{
 						canvas = candidateImage;
@@ -1527,20 +1527,20 @@
 					}
 				}
 
-				// キャンバスが更新されていたら
+				// If canvas was updated
 				if (updated)
 				{
-					// 動的テクスチャを、新しいキャンバスの内容で更新
+					// Update dynamic texture with new canvas content
 					canvasTexture.fill(canvas);
 				}
 			}
 
-			// 距離の表示
+			// Display distance and progress
 			{
-				const double progress = initialDistance ? (1.0 - (static_cast<double>(currentDistance) / initialDistance)) : 0.0; // 進捗率
-				const String currentText = ThousandsSeparate(currentDistance); // 現在の距離（カンマ区切り）
-				const String progressText = U" ({:.3f}%)"_fmt(progress * 100.0); // 進捗率（%）
-				// 距離や進捗率を表示
+				const double progress = initialDistance ? (1.0 - (static_cast<double>(currentDistance) / initialDistance)) : 0.0; // Progress rate
+				const String currentText = ThousandsSeparate(currentDistance); // Current distance (comma separated)
+				const String progressText = U" ({:.3f}%)"_fmt(progress * 100.0); // Progress rate (%)
+				// Draw distance text
 				font(currentText + progressText).draw(TextStyle::OutlineShadow(0.0, 0.15, ColorF{ 0.0 }, Vec2{ 0.5, 0.5 }, ColorF{ 0.0 }), 32, Vec2{ 200, 20 }, Palette::White);
 			}
 		}
@@ -1548,19 +1548,19 @@
 	```
 
 
-## 10. 高速化のヒント
-- Windows の場合、Visual Studio の Release ビルドで実行すると数倍高速化します
-- 現在のコードでは、小さな円を一つ描くたびに「画像全体の全ピクセル」を走査して距離を計算し直しています
-- これを、「描画によって変化した矩形範囲（バウンディングボックス）のみ」を比較するように変更することで、計算量を大幅に減らせます
-- 実装のヒント: `DrawRandomCircle` や `DrawRandomStroke` 関数に `currentDistance` を引数として渡せるようにします。関数内では画像全体を見るのではなく、書き込んだ図形の範囲内だけで距離の増減（差分）を計算し、それを `currentDistance` に反映させた値を返すように改良します
+## 10. Optimization Hints
+- On Windows, running the Release build in Visual Studio will speed it up several times.
+- The current code rescans "all pixels of the entire image" to recalculate the distance every time a small circle is drawn.
+- You can significantly reduce the computational load by changing this to compare only the "rectangular area (bounding box) changed by drawing."
+- Implementation hint: Pass `currentDistance` as an argument to `DrawRandomCircle` or `DrawRandomStroke`. Inside the function, instead of looking at the whole image, calculate the increase/decrease (difference) in distance only within the range of the drawn shape, and return the value reflected in `currentDistance`.
 
 
-## 11. 参考になるチュートリアル
-- [チュートリアル 8. 背景の色を変える](../tutorial/background/){:target="_blank"}
-	- HSV 表色系についての説明があります
-- [チュートリアル 26. 図形を描く](../tutorial2/shape/){:target="_blank"}
-	- 各種図形クラスに `.paint()` メンバ関数が用意されていて、画像に直接描き込むことができます
-- [チュートリアル 38. GUI](../tutorial2/gui/){:target="_blank"}
-	- ラジオボタン、スライダー、カラーピッカーなど、様々な GUI コンポーネントの使い方が解説されています
-- [チュートリアル 39. ランダム](../tutorial2/random/){:target="_blank"}
-- [チュートリアル 63. 画像処理](../tutorial4/image/){:target="_blank"}
+## 11. Useful Tutorials
+- [Tutorial 8. Changing the Background Color](../tutorial/background/){:target="_blank"}
+	- Explains the HSV color system.
+- [Tutorial 26. Drawing Shapes](../tutorial2/shape/){:target="_blank"}
+	- Various shape classes have a `.paint()` member function that allows you to draw directly onto an image.
+- [Tutorial 38. GUI](../tutorial2/gui/){:target="_blank"}
+	- Explains how to use various GUI components like radio buttons, sliders, and color pickers.
+- [Tutorial 39. Random](../tutorial2/random/){:target="_blank"}
+- [Tutorial 63. Image Processing](../tutorial4/image/){:target="_blank"}
