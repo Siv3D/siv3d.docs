@@ -2,7 +2,7 @@
 
 | | | | |
 |:--:|:--:|:--:|:--:|
-| **Difficulty** | Intermediate | **Time** | 60 minutes~ |
+| **Difficulty** | Intermediate | **Time** | 60 min+ |
 
 ## 1. Draw UI to a render texture
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/course/quadwarp/1.png)

@@ -132,7 +132,7 @@ nav:
     - 45. Shape Intersection Detection: tutorial3/geometry2d.md
     - 46. Hash Set: tutorial3/hashset.md
     - 47. Hash Table: tutorial3/hashtable.md
-    - 48. 2D Render State: tutorial3/2d-render-state.md
+    - 48. 2D Render States: tutorial3/2d-render-state.md
     - 49. 2D Camera and Transformations: tutorial3/camera2d.md
     - 50. Asset Management: tutorial3/asset.md
     - 51. Effects: tutorial3/effect.md
@@ -194,6 +194,8 @@ nav:
     - Utilizing Polymorphism: course/polymorphism.md
     - Radar Chart: course/radar-chart.md
     - Creating a Perspective UI with QuadWarp: course/quadwarp.md
+    - Creating Original Damage Effects: course/damage-number.md
+    - Random Painting to Match a Reference: course/random-painting.md
   - API:
     - Siv3D Class List: api/classes.md
   - Articles:

@@ -1,7 +1,7 @@
-# 48. 2D Render State
+# 48. 2D Render States
 Learn how to customize 2D rendering settings (render state) to achieve various screen effects.
 
-## 48.1 Overview of 2D Render State
+## 48.1 Overview of 2D Render States
 - In 2D rendering, you can modify the following settings:
 
 ### 48.1.1 Color Multiplication

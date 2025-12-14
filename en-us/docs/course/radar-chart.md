@@ -2,7 +2,7 @@
 
 | | | | |
 |:--:|:--:|:--:|:--:|
-| **Difficulty** | Intermediate | **Time** | 60 minutes~ |
+| **Difficulty** | Intermediate | **Time** | 60 min+ |
 
 Using statistical data, we will draw a radar chart comparing the per capita food expenditure amounts in Japanese cities (1. Cereals, 2. Seafood, 3. Meat, 4. Dairy products, 5. Vegetables & Seaweed, 6. Fruits). The statistical data used in this course is based on [SSDSE (Standard Statistical Dataset for Education) :material-open-in-new:](https://www.nstac.go.jp/use/literacy/ssdse/){:target="_blank"} published by the National Statistics Center, converted to a UTF-8 format CSV file.
 

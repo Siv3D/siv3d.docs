@@ -2,7 +2,7 @@
 
 | | | | |
 |:--:|:--:|:--:|:--:|
-| **Difficulty** | Beginner | **Time** | 30 minutes~ |
+| **Difficulty** | Beginner | **Time** | 30 min+ |
 
 ## 1. Set the background color
 

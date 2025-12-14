@@ -2,7 +2,7 @@
 
 | | | | |
 |:--:|:--:|:--:|:--:|
-| **Difficulty** | Intermediate | **Time** | 60 minutes~ |
+| **Difficulty** | Intermediate | **Time** | 60 min+ |
 
 ## 1. Crab Class
 ![](https://raw.githubusercontent.com/Siv3D/siv3d.site.resource/main/v7/course/polymorphism/1.png)

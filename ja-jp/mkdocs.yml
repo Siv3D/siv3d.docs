@@ -194,6 +194,8 @@ nav:
     - 多態性の活用: course/polymorphism.md
     - レーダーチャート: course/radar-chart.md
     - 奥行き型 UI の作成: course/quadwarp.md
+    - オリジナルのダメージ演出を作る: course/damage-number.md
+    - お手本に似せてランダムに絵を描く: course/random-painting.md
   - API:
     - クラス一覧: api/classes.md
   - 記事:
