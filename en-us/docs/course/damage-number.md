@@ -4,6 +4,10 @@
 |:--:|:--:|:--:|:--:|
 | **Difficulty** | Intermediate | **Time** | 90 min+ |
 
+In RPGs and action games, "damage numbers" pop out the instant an attack hits an enemy. There is a world of difference in player satisfaction between simply displaying a static number and crafting a polished effect with attention to motion and color.
+
+In this course, you will programmatically control the movement, scaling, and color transitions of these numbers to create your very own "satisfying hit effects." If you feel your game looks a bit plain, let's solve that problem in just 90 minutes. Experience the joy of breathing life into your game screen through creative ideas and clever implementation.
+
 ???info "Reference Case: 'Xenoblade Chronicles 3'"
 	<iframe width="100%" height="315" src="https://www.youtube.com/embed/0sB_VO-0gZ4?si=ODAqjSpp5_DJNxvF&rel=0&loop=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
@@ -2925,11 +2929,11 @@
 	```
 
 ## 12. Useful Tutorials
-- [Tutorial 26. Drawing Shapes](../tutorial2/shape/){:target="_blank"}
-- [Tutorial 30. Time and Motion](../tutorial2/time/){:target="_blank"}
+- [Tutorial 26. Drawing Shapes](../../tutorial2/shape/){:target="_blank"}
+- [Tutorial 30. Time and Motion](../../tutorial2/time/){:target="_blank"}
 	- Explains how to handle time and easing functions.
-- [Tutorial 34. Drawing Text](../tutorial2/font/){:target="_blank"}
-- [Tutorial 39. Random](../tutorial2/random/){:target="_blank"}
-- [Tutorial 48. 2D Render States](../tutorial3/2d-render-state/){:target="_blank"}
-- [Tutorial 51. Effects](../tutorial3/effect/){:target="_blank"}
+- [Tutorial 34. Drawing Text](../../tutorial2/font/){:target="_blank"}
+- [Tutorial 39. Random](../../tutorial2/random/){:target="_blank"}
+- [Tutorial 48. 2D Render States](../../tutorial3/2d-render-state/){:target="_blank"}
+- [Tutorial 51. Effects](../../tutorial3/effect/){:target="_blank"}
 	- Explains effects in general, including non-text effects. Can be added or applied to damage animations.

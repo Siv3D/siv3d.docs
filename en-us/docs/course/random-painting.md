@@ -4,6 +4,12 @@
 |:--:|:--:|:--:|:--:|
 | **Difficulty** | Intermediate | **Time** | 60 min+ |
 
+When we say "making a computer draw," we aren't talking about the currently trending generative AI. Instead, we use nothing but a simple program and random numbers.
+
+The program starts by randomly drawing lines and placing shapes on a blank canvas. By keeping only the attempts that bring the result closer to the reference image, what begins as mere scribbles gradually—but surely—transforms into "expressive geometric art."
+
+Let's enjoy this slightly mysterious and creative process together, watching the chaotic screen converge into a beautiful painting as the program strives to mimic the reference.
+
 ## 1. Open and Display an Image
 - First, create a function to load the reference image that will be copied.
 - Here, we will implement the ability to select an image file via a button, resize it to an appropriate size, and display it on the left side of the screen.
@@ -1556,11 +1562,11 @@
 
 
 ## 11. Useful Tutorials
-- [Tutorial 8. Changing the Background Color](../tutorial/background/){:target="_blank"}
+- [Tutorial 8. Changing the Background Color](../../tutorial/background/){:target="_blank"}
 	- Explains the HSV color system.
-- [Tutorial 26. Drawing Shapes](../tutorial2/shape/){:target="_blank"}
+- [Tutorial 26. Drawing Shapes](../../tutorial2/shape/){:target="_blank"}
 	- Various shape classes have a `.paint()` member function that allows you to draw directly onto an image.
-- [Tutorial 38. GUI](../tutorial2/gui/){:target="_blank"}
+- [Tutorial 38. GUI](../../tutorial2/gui/){:target="_blank"}
 	- Explains how to use various GUI components like radio buttons, sliders, and color pickers.
-- [Tutorial 39. Random](../tutorial2/random/){:target="_blank"}
-- [Tutorial 63. Image Processing](../tutorial4/image/){:target="_blank"}
+- [Tutorial 39. Random](../../tutorial2/random/){:target="_blank"}
+- [Tutorial 63. Image Processing](../../tutorial4/image/){:target="_blank"}

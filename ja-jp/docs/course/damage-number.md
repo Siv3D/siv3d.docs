@@ -4,6 +4,10 @@
 |:--:|:--:|:--:|:--:|
 | **難易度** | 中級 | **時間** | 90 分～ |
 
+RPG やアクションゲームで、敵に攻撃がヒットした瞬間に飛び出す「ダメージ数」。ただ数字を表示するだけの演出と、動きや色彩にこだわった演出とでは、プレイヤーが得られる爽快感がまるで違います。
+
+このコースでは、数字の動き、大きさの変化、色の移り変わりをプログラムで制御して、自分だけの「気持ちいいヒット演出」を作り上げます。「自分のゲームの見た目が地味」と感じているなら、この 90 分でその悩みを解決しましょう。アイデアと実装の工夫で、ゲーム画面に命を吹き込む楽しさを体験できます。
+
 ???info "参考事例『ゼノブレイド3』より"
 	<iframe width="100%" height="315" src="https://www.youtube.com/embed/0sB_VO-0gZ4?si=ODAqjSpp5_DJNxvF&rel=0&loop=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
@@ -2925,11 +2929,11 @@
 	```
 
 ## 12. 参考になるチュートリアル
-- [チュートリアル 26. 図形を描く](../tutorial2/shape/){:target="_blank"}
-- [チュートリアル 30. 時間と動き](../tutorial2/time/){:target="_blank"}
+- [チュートリアル 26. 図形を描く](../../tutorial2/shape/){:target="_blank"}
+- [チュートリアル 30. 時間と動き](../../tutorial2/time/){:target="_blank"}
 	- 時間の扱いやイージングに関する機能の説明があります
-- [チュートリアル 34. 文字を描く](../tutorial2/font/){:target="_blank"}
-- [チュートリアル 39. ランダム](../tutorial2/random/){:target="_blank"}
-- [チュートリアル 48. 2D レンダーステート](../tutorial3/2d-render-state/){:target="_blank"}
-- [チュートリアル 51. エフェクト](../tutorial3/effect/){:target="_blank"}
+- [チュートリアル 34. 文字を描く](../../tutorial2/font/){:target="_blank"}
+- [チュートリアル 39. ランダム](../../tutorial2/random/){:target="_blank"}
+- [チュートリアル 48. 2D レンダーステート](../../tutorial3/2d-render-state/){:target="_blank"}
+- [チュートリアル 51. エフェクト](../../tutorial3/effect/){:target="_blank"}
 	- 文字以外のエフェクトも含め、エフェクト全般の説明があります。ダメージ演出にも追加・応用できます
