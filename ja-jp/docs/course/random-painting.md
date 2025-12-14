@@ -1562,11 +1562,11 @@
 
 
 ## 11. 参考になるチュートリアル
-- [チュートリアル 8. 背景の色を変える](../../tutorial/background/){:target="_blank"}
+- [チュートリアル 8. 背景の色を変える](../tutorial/background.md){:target="_blank"}
 	- HSV 表色系についての説明があります
-- [チュートリアル 26. 図形を描く](../../tutorial2/shape/){:target="_blank"}
+- [チュートリアル 26. 図形を描く](../tutorial2/shape.md){:target="_blank"}
 	- 各種図形クラスに `.paint()` メンバ関数が用意されていて、画像に直接描き込むことができます
-- [チュートリアル 38. GUI](../../tutorial2/gui/){:target="_blank"}
+- [チュートリアル 38. GUI](../tutorial2/gui.md){:target="_blank"}
 	- ラジオボタン、スライダー、カラーピッカーなど、様々な GUI コンポーネントの使い方が解説されています
-- [チュートリアル 39. ランダム](../../tutorial2/random/){:target="_blank"}
-- [チュートリアル 63. 画像処理](../../tutorial4/image/){:target="_blank"}
+- [チュートリアル 39. ランダム](../tutorial2/random.md){:target="_blank"}
+- [チュートリアル 63. 画像処理](../tutorial4/image.md){:target="_blank"}

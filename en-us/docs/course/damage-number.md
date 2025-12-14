@@ -2929,11 +2929,11 @@ In this course, you will programmatically control the movement, scaling, and col
 	```
 
 ## 12. Useful Tutorials
-- [Tutorial 26. Drawing Shapes](../../tutorial2/shape/){:target="_blank"}
-- [Tutorial 30. Time and Motion](../../tutorial2/time/){:target="_blank"}
+- [Tutorial 26. Drawing Shapes](../tutorial2/shape.md){:target="_blank"}
+- [Tutorial 30. Time and Motion](../tutorial2/time.md){:target="_blank"}
 	- Explains how to handle time and easing functions.
-- [Tutorial 34. Drawing Text](../../tutorial2/font/){:target="_blank"}
-- [Tutorial 39. Random](../../tutorial2/random/){:target="_blank"}
-- [Tutorial 48. 2D Render States](../../tutorial3/2d-render-state/){:target="_blank"}
-- [Tutorial 51. Effects](../../tutorial3/effect/){:target="_blank"}
+- [Tutorial 34. Drawing Text](../tutorial2/font.md){:target="_blank"}
+- [Tutorial 39. Random](../tutorial2/random.md){:target="_blank"}
+- [Tutorial 48. 2D Render States](../tutorial3/2d-render-state.md){:target="_blank"}
+- [Tutorial 51. Effects](../tutorial3/effect.md){:target="_blank"}
 	- Explains effects in general, including non-text effects. Can be added or applied to damage animations.

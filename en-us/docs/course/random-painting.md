@@ -1562,11 +1562,11 @@ Let's enjoy this slightly mysterious and creative process together, watching the
 
 
 ## 11. Useful Tutorials
-- [Tutorial 8. Changing the Background Color](../../tutorial/background/){:target="_blank"}
+- [Tutorial 8. Changing the Background Color](../tutorial/background.md){:target="_blank"}
 	- Explains the HSV color system.
-- [Tutorial 26. Drawing Shapes](../../tutorial2/shape/){:target="_blank"}
+- [Tutorial 26. Drawing Shapes](../tutorial2/shape.md){:target="_blank"}
 	- Various shape classes have a `.paint()` member function that allows you to draw directly onto an image.
-- [Tutorial 38. GUI](../../tutorial2/gui/){:target="_blank"}
+- [Tutorial 38. GUI](../tutorial2/gui.md){:target="_blank"}
 	- Explains how to use various GUI components like radio buttons, sliders, and color pickers.
-- [Tutorial 39. Random](../../tutorial2/random/){:target="_blank"}
-- [Tutorial 63. Image Processing](../../tutorial4/image/){:target="_blank"}
+- [Tutorial 39. Random](../tutorial2/random.md){:target="_blank"}
+- [Tutorial 63. Image Processing](../tutorial4/image.md){:target="_blank"}
