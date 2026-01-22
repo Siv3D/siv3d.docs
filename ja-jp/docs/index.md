@@ -203,6 +203,7 @@ C++ のスキルを活かしたいプログラマーや、C++ での開発を学
 #### Gold Sponsor 
 - [TOMOAKI12345](https://github.com/TOMOAKI12345){:target="_blank"}
 - [CubeSoft, Inc.](https://www.cube-soft.jp/){:target="_blank"}
+- [おおやま](https://www.ise.ous.ac.jp/laboratory/t-oyama.html){:target="_blank"}
 
 #### Silver Sponsor
 - [sknjpn](https://x.com/sknjpn){:target="_blank"}
@@ -211,7 +212,7 @@ C++ のスキルを活かしたいプログラマーや、C++ での開発を学
 - [kt2763](https://github.com/kt2763){:target="_blank"}
 
 #### Bronze Sponsor
-アゲハマ, Fuyutsubaki, 😊, 🐝, jacking75, Chris Ohk, ysaito, おおやま, ShivAlley, lamuda, fal_rnd, As Project, IZUNA, nasatame, sashi, 🌶️, PlumRice, 緑獺おがめ
+アゲハマ, Fuyutsubaki, 😊, 🐝, jacking75, Chris Ohk, ysaito, ShivAlley, lamuda, fal_rnd, As Project, IZUNA, nasatame, sashi, 🌶️, PlumRice, 緑獺おがめ
 
 ---
 
