@@ -209,7 +209,6 @@ C++ のスキルを活かしたいプログラマーや、C++ での開発を学
 - [sknjpn](https://x.com/sknjpn){:target="_blank"}
 - 野菜ジュース
 - [kagamiz](https://github.com/kagamiz){:target="_blank"}
-- [ysaito](https://x.com/ysaito8015){:target="_blank"}
 
 #### Bronze Sponsor
 アゲハマ, Fuyutsubaki, 😊, 🐝, jacking75, Chris Ohk, ShivAlley, lamuda, fal_rnd, As Project, nasatame, 🌶️, 緑獺おがめ

@@ -6,13 +6,13 @@
 
 |  |  |
 |--|--|
-| OS | macOS Ventura / Sonoma / Sequoia |
+| OS | macOS Ventura / Sonoma / Sequoia / Tahoe |
 | CPU | Intel 製の CPU / Apple Silicon（Rosetta モード） |
 | GPU | OpenGL 4.1 サポート |
 | 映像出力 | モニタなど、何らかの映像出力装置があること |
 | 開発環境 | Xcode 14.3 以降 |
 
-- Apple Silicon（M1 - M4）には、現在開発中の Siv3D v0.8.0 からネイティブ対応します
+- Apple Silicon（M1 - M5）には、現在開発中の Siv3D v0.8.0 からネイティブ対応します
 - それまでは Rosetta モードで動作します
 
 ??? summary "Xcode をインストールできない場合"
@@ -24,12 +24,12 @@
 
 |  |  |
 |--|--|
-| OS | macOS Mojave / Catalina / Big Sur / Monterey / Ventura / Sonoma / Sequoia |
+| OS | macOS Monterey / Ventura / Sonoma / Sequoia / Tahoe |
 | CPU | Intel 製の CPU / Apple Silicon（Rosetta モード） |
 | GPU | OpenGL 4.1 サポート |
 | 映像出力 | モニタなど、何らかの映像出力装置があること |
 
-- Apple Silicon（M1 - M4）には、現在開発中の Siv3D v0.8.0 からネイティブ対応します
+- Apple Silicon（M1 - M5）には、現在開発中の Siv3D v0.8.0 からネイティブ対応します
 - それまでは Rosetta モードで動作します
 
 
@@ -61,11 +61,11 @@
 ## 3. Siv3D アプリをビルドする
 1. プロジェクトテンプレートの中にあるプロジェクトファイル `examples/empty/empty.xcodeproj` を Xcode で開きます
 1. サンプルプログラム（Main.cpp）が最初から用意されています
-1. M1 - M4 Mac の場合は、後述の手順で Rosetta モードを有効にします
+1. M1 - M5 Mac の場合は、後述の手順で Rosetta モードを有効にします
 1. **実行ボタン ▶️** を押すと、プログラムをビルドして実行します
 1. 実行中のプログラムは、++esc++ を押すか、ウィンドウを閉じると終了します
 
-??? summary "M1 - M4 Mac における Rosetta モードの有効化"
+??? summary "M1 - M5 Mac における Rosetta モードの有効化"
 	- Xcode で Rosetta オプションを表示する方法は、Xcode のバージョンによって異なります：
 		- Xcode 15.3 以降： メニューバーから **Product &gt; Destination &gt; Show All Run Destinations** を押します
 		- Xcode 15.2 以前： メニューバーから **Product &gt; Destination &gt; Destination Architectures** から、**Show Rosetta Destinations** を選択します

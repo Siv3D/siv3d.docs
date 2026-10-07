@@ -6,13 +6,13 @@
 
 |  |  |
 |--|--|
-| OS | macOS Ventura / Sonoma / Sequoia |
+| OS | macOS Ventura / Sonoma / Sequoia / Tahoe |
 | CPU | Intel CPU / Apple Silicon (Rosetta mode) |
 | GPU | OpenGL 4.1 support |
 | Video Output | Any video output device such as a monitor |
 | Development Environment | Xcode 14.3 or later |
 
-- Apple Silicon (M1 - M4) will have native support starting from Siv3D v0.8.0, which is currently in development.
+- Apple Silicon (M1 - M5) will have native support starting from Siv3D v0.8.0, which is currently in development.
 - Until then, it operates in Rosetta mode.
 
 ??? summary "If you cannot install Xcode"
@@ -24,12 +24,12 @@
 
 |  |  |
 |--|--|
-| OS | macOS Mojave / Catalina / Big Sur / Monterey / Ventura / Sonoma / Sequoia |
+| OS | macOS Monterey / Ventura / Sonoma / Sequoia / Tahoe |
 | CPU | Intel CPU / Apple Silicon (Rosetta mode) |
 | GPU | OpenGL 4.1 support |
 | Video Output | Any video output device such as a monitor |
 
-- Apple Silicon (M1 - M4) will have native support starting from Siv3D v0.8.0, which is currently in development.
+- Apple Silicon (M1 - M5) will have native support starting from Siv3D v0.8.0, which is currently in development.
 - Until then, it operates in Rosetta mode.
 
 
@@ -61,11 +61,11 @@
 ## 3. Build a Siv3D App
 1. Open the project file `examples/empty/empty.xcodeproj` from the project templates in Xcode.
 1. A sample program (Main.cpp) is provided by default.
-1. For M1 - M4 Macs, enable Rosetta mode by following the steps described below.
+1. For M1 - M5 Macs, enable Rosetta mode by following the steps described below.
 1. Press the **Run button ▶️** to build and run the program.
 1. To exit the running program, press ++esc++ or close the window.
 
-??? summary "Enabling Rosetta Mode on M1 - M4 Macs"
+??? summary "Enabling Rosetta Mode on M1 - M5 Macs"
 	- The method to display Rosetta options in Xcode varies depending on the Xcode version:
 		- Xcode 15.3 and later: From the menu bar, select **Product &gt; Destination &gt; Show All Run Destinations**.
 		- Xcode 15.2 and earlier: From the menu bar, select **Product &gt; Destination &gt; Destination Architectures** and then **Show Rosetta Destinations**.
